@@ -8,6 +8,7 @@ Travellan aims to create an automatized solution for trip planning on mobile dev
 ## Collaborators
 
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
+- [mkowalczyk97](https://github.com/mkowalczyk97)
 
 
 ## Boilerplate Credits
