@@ -4,9 +4,29 @@
  * Use it to define generic component styles (e.g. the default text styles, default button styles...).
  */
 import Colors from './Colors'
+import Fonts from './Fonts'
 
 export default {
+  screenBackground: {
+    backgroundColor: Colors.background,
+  },
   button: {
+    width: 150, // refactor for responsive design
+    margin: 30,
+    padding: 15,
     backgroundColor: Colors.primary,
   },
+  buttonText: {
+    // ...Fonts.bold,
+    ...Fonts.button,
+    color: Colors.text,
+    fontWeight: 'bold', // refactor to text decorations in App/Theme/Fonts.js
+    textAlign: 'center',
+    textShadowColor: 'black', 
+    textShadowOffset: { width: 1, height: 0 },
+    textShadowRadius: 10, 
+  },
+  text: {
+    color: Colors.text,
+  }
 }

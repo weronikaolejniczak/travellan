@@ -1,13 +1,10 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from 'App/Theme'
+import { Helpers } from 'App/Theme'
 
 export default StyleSheet.create({
-  container: {
-    backgroundColor: Colors.primary,
-  },
-  logo: {
-    backgroundColor: Colors.white,
-    height: 70,
-    width: 70,
+  logoContainer: {
+    ...Helpers.fullWidth,
+    height: 300,
+    marginBottom: 10,
   },
 })

@@ -1,66 +1,58 @@
 import React from 'react'
-import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
+import { Text, View, TouchableOpacity, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
-import { liveInEurope } from 'App/Stores/Example/Selectors'
-import Style from './ExampleScreenStyle'
-import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import ExampleActions from 'App/Stores/Main/Actions'
+import { liveInEurope } from 'App/Stores/Main/Selectors'
+import styles from './MainScreenStyle'
+import { ApplicationStyles, Helpers, Images } from 'App/Theme'
 
 /**
- * This is an example of a container component.
  *
  * This screen displays a little help message and informations about a fake user.
- * Feel free to remove it.
  */
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu.',
-  android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu.',
-})
-
-class ExampleScreen extends React.Component {
+class MainScreen extends React.Component {
   componentDidMount() {
     this._fetchUser()
   }
 
   render() {
     return (
-      <View
-        style={[
+      <View style={[
+          ApplicationStyles.screenBackground,
           Helpers.fill,
-          Helpers.rowMain,
-          Metrics.mediumHorizontalMargin,
-          Metrics.mediumVerticalMargin,
-        ]}
-      >
-        {this.props.userIsLoading ? (
+      ]}>
+        {this.props.userIsLoading ? 
+        (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <View style={Style.logoContainer}>
+            <View style={styles.logoContainer}>
               <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
             </View>
-            <Text style={Style.text}>To get started, edit App.js</Text>
-            <Text style={Style.instructions}>{instructions}</Text>
+
             {this.props.userErrorMessage ? (
-              <Text style={Style.error}>{this.props.userErrorMessage}</Text>
+              <Text style={styles.error}>{this.props.userErrorMessage}</Text>
             ) : (
+
               <View>
-                <Text style={Style.result}>
+                <Text style={[styles.result, ApplicationStyles.text]}>
                   {"I'm a fake user, my name is "}
                   {this.props.user.name}
                 </Text>
-                <Text style={Style.result}>
+                <Text style={[styles.result, ApplicationStyles.text]}>
                   {this.props.liveInEurope ? 'I live in Europe !' : "I don't live in Europe."}
                 </Text>
               </View>
             )}
-            <Button
+            
+            <TouchableOpacity
               style={ApplicationStyles.button}
               onPress={() => this._fetchUser()}
-              title="Refresh"
-            />
+            >
+              <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text> 
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -72,7 +64,7 @@ class ExampleScreen extends React.Component {
   }
 }
 
-ExampleScreen.propTypes = {
+MainScreen.propTypes = {
   user: PropTypes.object,
   userIsLoading: PropTypes.bool,
   userErrorMessage: PropTypes.string,
@@ -94,4 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ExampleScreen)
+)(MainScreen)

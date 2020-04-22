@@ -10,8 +10,6 @@ const in200s = isWithin(200, 299)
 
 /**
  * This is an example of a service that connects to a 3rd party API.
- *
- * Feel free to remove this example from your application.
  */
 const userApiClient = axios.create({
   /**

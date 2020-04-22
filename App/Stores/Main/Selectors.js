@@ -3,7 +3,7 @@
  *
  * Selectors can be used in sagas or components to avoid duplicating that logic.
  *
- * Writing selectors is optional as it is not always necessary, we provide a simple example below.
+ * Writing selectors is optional as it is not always necessary.
  */
 
 export const liveInEurope = (state) => {

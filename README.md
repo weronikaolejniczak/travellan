@@ -9,12 +9,14 @@ Travellan aims to create an automatized solution for trip planning on mobile dev
 
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
 - [mkowalczyk97](https://github.com/mkowalczyk97)
+- []()
+- []()
 
 
 ## Boilerplate Credits
 
-This project is templated with a [React Native](https://facebook.github.io/react-native/) boilerplate. The boilerplate provides **an architecture optimized for building solid cross-platform mobile applications** through separation of concerns between the UI and business logic. It is extremely documented so that each piece of code that lands in your application can be understood and used.
-[TheCodingMachine](https://www.thecodingmachine.com/) is a web and mobile agency based in Paris and Lyon, France. You'll find [an overview of all our open source projects on our website](https://thecodingmachine.io/open-source) and on [Github](https://github.com/thecodingmachine).
+This project is templated with a [React Native](https://facebook.github.io/react-native/) boilerplate. The boilerplate provides **an architecture optimized for building solid cross-platform mobile applications** through separation of concerns between the UI and business logic.
+[TheCodingMachine](https://www.thecodingmachine.com/) is a web and mobile agency based in Paris and Lyon, France. You'll find [an overview of all their open source projects on our website](https://thecodingmachine.io/open-source) and on [Github](https://github.com/thecodingmachine).
 
 
 ## Architecture
@@ -44,19 +46,15 @@ The driving goal of the architecture of the boilerplate is separation of concern
 
 ## Content
 
-The boilerplate contains:
-
 - a [React Native](https://facebook.github.io/react-native/) (v**0.61.5**) application (in "[ejected](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md)" mode to allow using dependencies that rely on native code)
 - a [clear directory layout](#directory-layout) to provide a base architecture for your application
 - [Redux](https://redux.js.org/) (v4.0.1) to help manage state
 - [Redux Persist](https://github.com/rt2zz/redux-persist) (v5.10.0) to persist the Redux state
 - [Redux Sagas](https://redux-saga.js.org) (v1.0.2) to separate side-effects and logic from state and UI logic
-- [React Navigation](https://reactnavigation.org/) (v3.11.2) with a [`NavigationService`](App/Services/NavigationService.js) to handle routing and navigation in the app, with a splash screen setup by default
+- [React Navigation](https://reactnavigation.org/) (v3.11.2) with a [`NavigationService`](App/Services/NavigationService.js) to handle routing and navigation in the app, with a splash screen
 - [reduxsauce](https://github.com/infinitered/reduxsauce) (v1.0.1) to facilitate using Redux
 - [axios](https://github.com/axios/axios) to make API calls (v0.19.0)
 - [prettier](https://prettier.io/) and [eslint](https://eslint.org/) preconfigured for React Native
-
-The boilerplate includes an example (displaying fake user data) from UI components to the saga. The example is easy to remove so that it doesn't get in the way.
 
 
 ## Directory layout
@@ -74,11 +72,6 @@ The boilerplate includes an example (displaying fake user data) from UI componen
 For more information on each directory, click the link and read the directory's README.
 
 
-## Updates
-
-The boilerplate will follow new React-Native releases as soon as libraries and tools used here are compatible.
-
-
 ## Requirements
 
 Node 8 or greater is required. Development for iOS requires a Mac and Xcode 9 or up, and will target iOS 9 and up.
@@ -94,15 +87,10 @@ You also need to install the dependencies required by React Native:
 Assuming you have all the requirements installed, you can setup and run the project by running:
 
 - `yarn install` to install the dependencies
-- create your [configuration file `App/Config/index.js`](App/Config) from `index.dev.js` (if you are in dev environment) and fill the missing values
-- run the following steps for your platform
+- run the following steps:
 
 ### Android
 
-- only the first time you run the project, you need to generate a debug key with:
-  - `cd android/app`
-  - `keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000`
-  - `cd ../..` to come back to the root folder
 - `yarn start` to start the metro bundler, in a dedicated terminal
 - `yarn android` to run the Android application (remember to start a simulator or connect an Android phone)
 
@@ -130,9 +118,18 @@ Assuming you have all the requirements installed, you can setup and run the proj
   
 ## Troubleshooting
 
-none
+### Android 
+
+#### Invalid regular expression after installing dependencies
+Downgrading Node.js helps.
+
+#### BatchedBridge error
+Error: `Could not get BatchedBridge, make sure your bundle is packaged properly`
+Solution:
+- `yarn start --reset-cache`
+- `yarn android`
 
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+--

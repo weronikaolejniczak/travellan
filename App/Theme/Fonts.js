@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 const size = {
-  h1: 38,
-  h2: 34,
-  h3: 30,
+  h1: 34,
+  h2: 30,
+  h3: 26,
+  button: 19,
   input: 18,
   regular: 17,
   medium: 14,
@@ -13,6 +14,7 @@ const size = {
 export default StyleSheet.create({
   h1: {
     fontSize: size.h1,
+    fontFamily: 'Montserrat',
   },
   h2: {
     fontSize: size.h2,
@@ -22,5 +24,8 @@ export default StyleSheet.create({
   },
   normal: {
     fontSize: size.regular,
+  },
+  button: {
+    fontSize: size.button,
   },
 })
