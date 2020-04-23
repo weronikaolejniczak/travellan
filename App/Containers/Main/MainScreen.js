@@ -46,13 +46,14 @@ class MainScreen extends React.Component {
                 </Text>
               </View>
             )}
-            
-            <TouchableOpacity
-              style={ApplicationStyles.button}
-              onPress={() => this._fetchUser()}
-            >
-              <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text> 
-            </TouchableOpacity>
+            <View style={{justifyItems: 'center'}}>
+              <TouchableOpacity
+                style={ApplicationStyles.button}
+                onPress={() => this._fetchUser()}
+                >
+                <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text> 
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>

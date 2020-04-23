@@ -124,9 +124,17 @@ Assuming you have all the requirements installed, you can setup and run the proj
 Downgrading Node.js helps.
 
 #### BatchedBridge error
-Error: `Could not get BatchedBridge, make sure your bundle is packaged properly`
+Error: `Could not get BatchedBridge, make sure your bundle is packaged properly.`
 Solution:
 - `yarn start --reset-cache`
+- `yarn android`
+
+#### Failed to install the app
+Error: `Failed to install the app. Make sure you have the Android development environment set up.`
+Solution:
+- `cd android`
+- `./gradlew clean` (on Unix-based CLI)
+- `cd ..`
 - `yarn android`
 
 
