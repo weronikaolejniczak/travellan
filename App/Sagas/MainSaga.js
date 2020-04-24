@@ -5,7 +5,7 @@ import { userService } from 'App/Services/UserService'
 /**
  * A saga can contain multiple functions.
  * This saga contains only one to fetch fake user informations.
- * 
+ *
  */
 export function* fetchUser() {
   // Dispatch a redux action using `put()`

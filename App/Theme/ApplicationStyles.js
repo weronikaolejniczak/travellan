@@ -12,8 +12,9 @@ export default {
   },
   button: {
     width: 150, // refactor for responsive design
-    margin: 30,
+    margin: 10,
     padding: 15,
+    borderRadius: 4,
     backgroundColor: Colors.primary,
   },
   buttonText: {
@@ -22,11 +23,8 @@ export default {
     color: Colors.text,
     fontWeight: 'bold', // refactor to text decorations in App/Theme/Fonts.js
     textAlign: 'center',
-    textShadowColor: 'black', 
-    textShadowOffset: { width: 1, height: 0 },
-    textShadowRadius: 10, 
   },
   text: {
     color: Colors.text,
-  }
+  },
 }

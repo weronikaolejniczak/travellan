@@ -4,7 +4,6 @@ const size = {
   h1: 34,
   h2: 30,
   h3: 26,
-  button: 19,
   input: 18,
   regular: 17,
   medium: 14,
@@ -26,6 +25,6 @@ export default StyleSheet.create({
     fontSize: size.regular,
   },
   button: {
-    fontSize: size.button,
+    fontSize: size.input,
   },
 })

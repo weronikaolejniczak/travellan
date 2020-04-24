@@ -6,6 +6,7 @@ import ExampleActions from 'App/Stores/Main/Actions'
 import { liveInEurope } from 'App/Stores/Main/Selectors'
 import styles from './MainScreenStyle'
 import { ApplicationStyles, Helpers, Images } from 'App/Theme'
+import { TextInput } from 'react-native-gesture-handler'
 
 /**
  *
@@ -19,15 +20,11 @@ class MainScreen extends React.Component {
 
   render() {
     return (
-      <View style={[
-          ApplicationStyles.screenBackground,
-          Helpers.fill,
-      ]}>
-        {this.props.userIsLoading ? 
-        (
+      <View style={[ApplicationStyles.screenBackground, Helpers.fill]}>
+        {this.props.userIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <View>
+          <View style={{margin: 30, flex: 1, justifyContent: 'center'}}>
             <View style={styles.logoContainer}>
               <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
             </View>
@@ -35,7 +32,6 @@ class MainScreen extends React.Component {
             {this.props.userErrorMessage ? (
               <Text style={styles.error}>{this.props.userErrorMessage}</Text>
             ) : (
-
               <View>
                 <Text style={[styles.result, ApplicationStyles.text]}>
                   {"I'm a fake user, my name is "}
@@ -46,12 +42,14 @@ class MainScreen extends React.Component {
                 </Text>
               </View>
             )}
-            <View style={{justifyItems: 'center'}}>
-              <TouchableOpacity
-                style={ApplicationStyles.button}
-                onPress={() => this._fetchUser()}
-                >
-                <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text> 
+            
+            <View style={Helpers.center}>
+              <TouchableOpacity style={[ApplicationStyles.button]} onPress={() => this._fetchUser()}>
+                <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[ApplicationStyles.button]}>
+                <Text style={ApplicationStyles.buttonText}>{'Continue'.toUpperCase()}</Text>
               </TouchableOpacity>
             </View>
           </View>
