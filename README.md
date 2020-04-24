@@ -9,7 +9,7 @@ Travellan aims to create an automatized solution for trip planning on mobile dev
 
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
 - [mkowalczyk97](https://github.com/mkowalczyk97)
-- []()
+- [CalderBriar](https://github.com/CalderBriar)
 - []()
 
 
