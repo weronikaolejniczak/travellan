@@ -6,11 +6,13 @@ import ExampleActions from 'App/Stores/Main/Actions'
 import { liveInEurope } from 'App/Stores/Main/Selectors'
 import styles from './MainScreenStyle'
 import { ApplicationStyles, Helpers, Images } from 'App/Theme'
-import { TextInput } from 'react-native-gesture-handler'
+import NavigationService from 'App/Services/NavigationService'
+
 
 /**
- *
+ * 
  * This screen displays a little help message and informations about a fake user.
+ * 
  */
 
 class MainScreen extends React.Component {
@@ -42,16 +44,17 @@ class MainScreen extends React.Component {
                 </Text>
               </View>
             )}
-            
+
             <View style={Helpers.center}>
               <TouchableOpacity style={[ApplicationStyles.button]} onPress={() => this._fetchUser()}>
                 <Text style={ApplicationStyles.buttonText}>{'Refresh'.toUpperCase()}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[ApplicationStyles.button]}>
+              <TouchableOpacity style={[ApplicationStyles.button]} onPress={() => this._openMenu()}>
                 <Text style={ApplicationStyles.buttonText}>{'Continue'.toUpperCase()}</Text>
               </TouchableOpacity>
             </View>
+
           </View>
         )}
       </View>
@@ -60,6 +63,10 @@ class MainScreen extends React.Component {
 
   _fetchUser() {
     this.props.fetchUser()
+  }
+
+  _openMenu() {
+    NavigationService.navigate('MenuScreen')
   }
 }
 
