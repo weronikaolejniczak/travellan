@@ -8,8 +8,12 @@ export default class MenuScreen extends React.Component {
     render() {
         return (
             <ScrollView style={[ApplicationStyles.screenBackground, Helpers.fill]}>
+                <View style={{margin: 20}}>
+                    <Text style={[ApplicationStyles.text, styles.headerText]}>My trips</Text>
+                </View>
+
                 <View>
-                    <Text style={[ApplicationStyles.text, styles.text]}>Menu screen</Text>
+                    <Text style={[ApplicationStyles.text, styles.text]}>List</Text>
                 </View>
             </ScrollView>
         )
