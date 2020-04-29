@@ -121,7 +121,24 @@ Assuming you have all the requirements installed, you can setup and run the proj
 ### Android 
 
 #### Invalid regular expression after installing dependencies
-Downgrading Node.js helps.
+Downgrading Node.js helps though it's not the optimal solution. As it turns out, the invalid regular expression is always there, newer versions of Node.js just don't tolerate it anymore.
+Have to wait for the fix, meanwhile 
+`nano ./node_modules/metro-config/src/defaults/blacklist.js`
+and change 
+`var sharedBlacklist = [
+  /node_modules[/\\]react[/\\]dist[/\\].*/,
+  /website\/node_modules\/.*/,
+  /heapCapture\/bundle\.js/,
+  /.*\/__tests__\/.*/
+];`
+to 
+`var sharedBlacklist = [
+  /node_modules[\/\\]react[\/\\]dist[\/\\].*/,
+  /website\/node_modules\/.*/,
+  /heapCapture\/bundle\.js/,
+  /.*\/__tests__\/.*/
+];`
+Remember that each time you install a new dependency/reinstall node modules the error will reappear.
 
 #### BatchedBridge error
 Error: `Could not get BatchedBridge, make sure your bundle is packaged properly.`
@@ -136,8 +153,8 @@ Solution:
 - `./gradlew clean` (on Unix-based CLI)
 - `cd ..`
 - `yarn android`
-
+If that doesn't help, make sure your emulator and metro server are running, and that you have all necessary Android SDK installed on your machine.
 
 ## License
 
---
+TODO
