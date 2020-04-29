@@ -2,7 +2,7 @@ import { Metrics, Fonts, Colors } from 'App/Theme'
 
 const styles = {
     headerText: {
-        ...Fonts.h2,
+        ...Fonts.h3,
         marginBottom: Metrics.tiny,
         textAlign: 'center',
     },

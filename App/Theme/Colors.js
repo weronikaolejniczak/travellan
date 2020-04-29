@@ -12,7 +12,7 @@ export default {
   text: '#ffffff',
   background: '#111111',
 
-  primary: '#ff8d00',
+  primary: '#FF9800',
 
   success: '#28a745',
   error: '#dc3545',
