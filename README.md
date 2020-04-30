@@ -10,7 +10,7 @@ Travellan aims to create an automatized solution for trip planning on mobile dev
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
 - [mkowalczyk97](https://github.com/mkowalczyk97)
 - [CalderBriar](https://github.com/CalderBriar)
-- []()
+- [Shanhavael](https://github.com/Shanhavael/travellan-project)
 
 
 ## Boilerplate Credits
@@ -26,21 +26,21 @@ The driving goal of the architecture of the boilerplate is separation of concern
 - **Presentational components are separated from containers** (aka "screens").
 
     Presentational components are small components that are concerned with *how things look*. Containers usually define whole application screens and are concerned with *how things work*: they include presentational components and wire everything together.
-    
+
     You can [read more about it here](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 
 - **State is managed using global [Redux](https://redux.js.org/) stores**.
 
     When applications grow, sharing state and its changes can become very hard. Questions like "How can I access this data?" or "When did this change?" are common, just like passing data around components just to be able to use it in nested components.
-    
+
     With Redux, state is shared using global *stores*, and changes are predictable: *actions* are applied by *reducers* to the state. While the pattern can be a bit much for small projects, the clear separation of responsibilities and predictability helps with bigger applications.
-    
+
     You can [read more about it here](https://redux.js.org/introduction/motivation).
-    
+
 - **Application side-effects (API calls, etc.) are separated from UI and state manipulation using [Redux Saga](https://redux-saga.js.org/)**.
 
     Using Redux Saga has two benefits: keeping application side-effects and related business logic out of UI components, as well as executing that logic in an asynchronous way without ending in callback hell.
-    
+
     Sagas are triggered by Redux actions and can also trigger Redux actions to alter state. By using JavaScript generators (`yield`), sagas are written in a synchronous-like manner while still executing asynchronously.
 
 
@@ -63,7 +63,7 @@ The driving goal of the architecture of the boilerplate is separation of concern
 - [`App/Config`](App/Config): configuration of the application
 - [`App/Containers`](App/Containers): container components, i.e. the application's screens
 - [`App/Assets`](App/Assets): assets (image, audio files, ...) used by the application
-- [`App/Navigators`](App/Navigators): react navigation navigators 
+- [`App/Navigators`](App/Navigators): react navigation navigators
 - [`App/Sagas`](App/Sagas): redux sagas
 - [`App/Services`](App/Services): application services, e.g. API clients
 - [`App/Stores`](App/Stores): redux [actions, reducers and stores](https://redux.js.org/basics)
@@ -112,21 +112,21 @@ Assuming you have all the requirements installed, you can setup and run the proj
 
 ### Package dependencies
 
-- You may want to use [CocoaPods](https://cocoapods.org/) to manage your dependencies (iOS only) 
+- You may want to use [CocoaPods](https://cocoapods.org/) to manage your dependencies (iOS only)
   - [Using CocoaPods to manage your package dependencies](docs/setup%20cocoapods.md)
-  
-  
+
+
 ## Troubleshooting
 
-### Android 
+### Android
 
 #### Invalid regular expression after installing dependencies
 Downgrading Node.js helps though it's not the optimal solution. As it turns out, the invalid regular expression is always there, newer versions of Node.js just don't tolerate it anymore.
-Have to wait for the fix, meanwhile 
+Have to wait for the fix, meanwhile
 
 `nano ./node_modules/metro-config/src/defaults/blacklist.js`
 
-and change 
+and change
 
 `var sharedBlacklist = [
   /node_modules[/\\]react[/\\]dist[/\\].*/,
@@ -135,7 +135,7 @@ and change
   /.*\/__tests__\/.*/
 ];`
 
-to 
+to
 
 `var sharedBlacklist = [
   /node_modules[\/\\]react[\/\\]dist[\/\\].*/,
