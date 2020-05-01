@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Platform} from 'react-native';
 import {useSelector} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import TripItem from '../../Components/MyTrips/TripItem'
-
+import TripItem from '../../Components/MyTrips/TripItem';
+import HeaderButton from '../../Components/UI/HeaderButton';
 
 const TripsOverviewScreen = (props) => {
   const trips = useSelector((state) => state.trips.availableTrips);
@@ -26,6 +27,22 @@ const TripsOverviewScreen = (props) => {
       />
     </View>
   );
+};
+
+export const tripsScreenOptions = (navData) => {
+  return {
+    headerRight: (props) => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Create a trip"
+          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          onPress={() => {
+            navData.navigation.navigate('Create a trip');
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default TripsOverviewScreen;
