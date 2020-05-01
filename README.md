@@ -1,101 +1,30 @@
 # Travellan Project
-
 ## Overview
-
 Travellan aims to create an automatized solution for trip planning on mobile devices.
 
-
 ## Collaborators
-
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
 - [mkowalczyk97](https://github.com/mkowalczyk97)
 - [CalderBriar](https://github.com/CalderBriar)
 - [Shanhavael](https://github.com/Shanhavael/travellan-project)
 
-
-## Boilerplate Credits
-
-This project is templated with a [React Native](https://facebook.github.io/react-native/) boilerplate. The boilerplate provides **an architecture optimized for building solid cross-platform mobile applications** through separation of concerns between the UI and business logic.
-[TheCodingMachine](https://www.thecodingmachine.com/) is a web and mobile agency based in Paris and Lyon, France. You'll find [an overview of all their open source projects on our website](https://thecodingmachine.io/open-source) and on [Github](https://github.com/thecodingmachine).
-
-
-## Architecture
-
-The driving goal of the architecture of the boilerplate is separation of concerns (SoC). Namely:
-
-- **Presentational components are separated from containers** (aka "screens").
-
-    Presentational components are small components that are concerned with *how things look*. Containers usually define whole application screens and are concerned with *how things work*: they include presentational components and wire everything together.
-
-    You can [read more about it here](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
-
-- **State is managed using global [Redux](https://redux.js.org/) stores**.
-
-    When applications grow, sharing state and its changes can become very hard. Questions like "How can I access this data?" or "When did this change?" are common, just like passing data around components just to be able to use it in nested components.
-
-    With Redux, state is shared using global *stores*, and changes are predictable: *actions* are applied by *reducers* to the state. While the pattern can be a bit much for small projects, the clear separation of responsibilities and predictability helps with bigger applications.
-
-    You can [read more about it here](https://redux.js.org/introduction/motivation).
-
-- **Application side-effects (API calls, etc.) are separated from UI and state manipulation using [Redux Saga](https://redux-saga.js.org/)**.
-
-    Using Redux Saga has two benefits: keeping application side-effects and related business logic out of UI components, as well as executing that logic in an asynchronous way without ending in callback hell.
-
-    Sagas are triggered by Redux actions and can also trigger Redux actions to alter state. By using JavaScript generators (`yield`), sagas are written in a synchronous-like manner while still executing asynchronously.
-
-
-## Content
-
-- a [React Native](https://facebook.github.io/react-native/) (v**0.61.5**) application (in "[ejected](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md)" mode to allow using dependencies that rely on native code)
-- a [clear directory layout](#directory-layout) to provide a base architecture for your application
-- [Redux](https://redux.js.org/) (v4.0.1) to help manage state
-- [Redux Persist](https://github.com/rt2zz/redux-persist) (v5.10.0) to persist the Redux state
-- [Redux Sagas](https://redux-saga.js.org) (v1.0.2) to separate side-effects and logic from state and UI logic
-- [React Navigation](https://reactnavigation.org/) (v3.11.2) with a [`NavigationService`](App/Services/NavigationService.js) to handle routing and navigation in the app, with a splash screen
-- [reduxsauce](https://github.com/infinitered/reduxsauce) (v1.0.1) to facilitate using Redux
-- [axios](https://github.com/axios/axios) to make API calls (v0.19.0)
-- [prettier](https://prettier.io/) and [eslint](https://eslint.org/) preconfigured for React Native
-
-
-## Directory layout
-
-- [`App/Components`](App/Components): presentational components
-- [`App/Config`](App/Config): configuration of the application
-- [`App/Containers`](App/Containers): container components, i.e. the application's screens
-- [`App/Assets`](App/Assets): assets (image, audio files, ...) used by the application
-- [`App/Navigators`](App/Navigators): react navigation navigators
-- [`App/Sagas`](App/Sagas): redux sagas
-- [`App/Services`](App/Services): application services, e.g. API clients
-- [`App/Stores`](App/Stores): redux [actions, reducers and stores](https://redux.js.org/basics)
-- [`App/Theme`](App/Theme): base styles for the application
-
-For more information on each directory, click the link and read the directory's README.
-
-
 ## Requirements
-
 Node 8 or greater is required. Development for iOS requires a Mac and Xcode 9 or up, and will target iOS 9 and up.
-
 You also need to install the dependencies required by React Native:
-
 - for [Android development](https://facebook.github.io/react-native/docs/getting-started.html#installing-dependencies-3)
 - for [iOS development](https://facebook.github.io/react-native/docs/getting-started.html#installing-dependencies)
 
 
 ## Running the project
-
 Assuming you have all the requirements installed, you can setup and run the project by running:
-
 - `yarn install` to install the dependencies
 - run the following steps:
 
 ### Android
-
 - `yarn start` to start the metro bundler, in a dedicated terminal
 - `yarn android` to run the Android application (remember to start a simulator or connect an Android phone)
 
 ### iOS
-
 - `cd ios`
 - `pod install` to install pod dependencies
 - `cd ..` to come back to the root folder
@@ -103,47 +32,26 @@ Assuming you have all the requirements installed, you can setup and run the proj
 - `yarn ios` to run the iOS application (remember to start a simulator or connect an iPhone phone)
 
 
-## Useful documentation
-
-### Deployment
-
-- Using [Fastlane](https://fastlane.tools/) to automate builds and store deployments (iOS and Android)
-  - [Distributing beta builds](docs/beta%20builds.md)
-
-### Package dependencies
-
-- You may want to use [CocoaPods](https://cocoapods.org/) to manage your dependencies (iOS only)
-  - [Using CocoaPods to manage your package dependencies](docs/setup%20cocoapods.md)
-
-
 ## Troubleshooting
-
 ### Android
-
 #### Invalid regular expression after installing dependencies
 Downgrading Node.js helps though it's not the optimal solution. As it turns out, the invalid regular expression is always there, newer versions of Node.js just don't tolerate it anymore.
 Have to wait for the fix, meanwhile
-
 `nano ./node_modules/metro-config/src/defaults/blacklist.js`
-
 and change
-
 `var sharedBlacklist = [
   /node_modules[/\\]react[/\\]dist[/\\].*/,
   /website\/node_modules\/.*/,
   /heapCapture\/bundle\.js/,
   /.*\/__tests__\/.*/
 ];`
-
 to
-
 `var sharedBlacklist = [
   /node_modules[\/\\]react[\/\\]dist[\/\\].*/,
   /website\/node_modules\/.*/,
   /heapCapture\/bundle\.js/,
   /.*\/__tests__\/.*/
 ];`
-
 Remember that each time you install a new dependency/reinstall node modules the error will reappear.
 
 #### BatchedBridge error
@@ -162,5 +70,3 @@ Solution:
 If that doesn't help, make sure your emulator and metro server are running, and that you have all necessary Android SDK installed on your machine.
 
 ## License
-
-TODO
