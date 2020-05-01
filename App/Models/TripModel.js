@@ -26,3 +26,5 @@ class Trip {
             this.pointsOfInterest = pointsOfInterest;
         }
 }
+
+export default Trip;

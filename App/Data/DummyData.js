@@ -1,4 +1,4 @@
-import Trip from '../Models/TripModel'
+import Trip from '../Models/TripModel';
 
 /**
  * Dummy trips
@@ -17,8 +17,8 @@ import Trip from '../Models/TripModel'
  */
 
 const TRIPS = [
-    // trip1
-    new Trip(
+  // trip1
+  new Trip(
         1, 
         1, 
         'Barcelona',
@@ -87,4 +87,6 @@ const TRIPS = [
         {},
         [{}, {}, {}, {}],
     ),
-]
+];
+
+export default TRIPS;
