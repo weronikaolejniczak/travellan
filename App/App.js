@@ -8,7 +8,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, Button } from 'react-n
 
 import tripsReducer from './Stores/Reducers/Trips';
 import TripsOverviewScreen from './Screens/MyTrips/TripsOverviewScreen';
-import EditTripScreen from './Screens/MyTrips/EditTripScreen';
+import NewTripScreen from './Screens/MyTrips/NewTripScreen';
 import Colors from './Constants/Colors';
 
 const rootReducer = combineReducers({
@@ -44,18 +44,16 @@ export default function App() {
               headerRight: () => (
                 <TouchableOpacity  activeOpacity={0.5}>
                   <Image
-                    component={EditTripScreen}
+                    component={NewTripScreen}
                     source={require('./Images/plusSign.png')}
                   />
+
                 </TouchableOpacity>
+                
               ),
                 
               }
             } />
-          
-  
-            
-      
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
