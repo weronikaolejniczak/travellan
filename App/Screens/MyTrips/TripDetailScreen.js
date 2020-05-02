@@ -15,7 +15,12 @@ const TripDetailScreen = (props) => {
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
       <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
-      <Button title="Edit general info" onPress={() => {}} />
+      <Button
+        title="See the trip on the map"
+        onPress={() => {
+          props.navigation.navigate('Map');
+        }}
+      />
       <View style={{margin: 20}}>
         <Text style={[styles.text, styles.header]}>
           <Text style={{fontWeight: 'bold'}}>From:</Text>{' '}

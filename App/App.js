@@ -13,6 +13,7 @@ import NewTripScreen from './Screens/MyTrips/NewTripScreen';
 import TripDetailScreen, {
   tripDetailScreenOptions,
 } from './Screens/MyTrips/TripDetailScreen';
+import MapScreen from './Screens/Map/MapScreen';
 import Colors from './Constants/Colors';
 
 // refactor combineReducers to be elsewhere
@@ -55,6 +56,7 @@ export default function App() {
             component={TripDetailScreen}
             options={tripDetailScreenOptions}
           />
+          <Stack.Screen name="Map" component={MapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
