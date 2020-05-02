@@ -1,11 +1,14 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, FlatList, Platform} from 'react-native';
+import {View, FlatList, Alert, Platform} from 'react-native';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
+
+const deleteTrip = () => {}; // TODO
 
 const TripsOverviewScreen = (props) => {
   const trips = useSelector((state) => state.trips.availableTrips);
@@ -20,8 +23,24 @@ const TripsOverviewScreen = (props) => {
             destination={itemData.item.destination}
             startDate={itemData.item.startDate}
             endDate={itemData.item.endDate}
-            onViewDetail={() => {}}
-            deleteTrip={() => {}}
+            onViewDetail={() => {
+              props.navigation.navigate('Details', {
+                tripId: itemData.item.id,
+                tripDestination: itemData.item.destination,
+              });
+            }}
+            deleteTrip={() => {
+              /* Alert.alert('Delete trip', 'Are you sure?', [
+                {
+                  text: 'Cancel',
+                  onPress: () => {},
+                },
+                {
+                  text: 'Ok',
+                  onPress: deleteTrip(),
+                },
+              ]); */
+            }}
           />
         )}
       />
@@ -29,6 +48,10 @@ const TripsOverviewScreen = (props) => {
   );
 };
 
+/**
+ * we export screenOptions to use in our Stack.Navigator
+ * @param {*} navData: lets us use "navigation" prop from within this function
+ */
 export const tripsScreenOptions = (navData) => {
   return {
     headerRight: (props) => (

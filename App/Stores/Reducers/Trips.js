@@ -1,6 +1,5 @@
 import TRIPS from '../../Data/DummyData';
 
-
 const initialState = {
   availableTrips: TRIPS,
 };
