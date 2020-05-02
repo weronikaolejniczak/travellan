@@ -1,9 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {ScrollView, View, Text, Image, Button, StyleSheet} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 // imports from within the module
-// import {Colors} from '../../Constants/Colors';
+import {Colors} from '../../Constants/Colors';
 
 // REFACTOR to use constants
 const TripDetailScreen = (props) => {
@@ -15,12 +22,6 @@ const TripDetailScreen = (props) => {
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
       <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
-      <Button
-        title="See the trip on the map"
-        onPress={() => {
-          props.navigation.navigate('Map');
-        }}
-      />
       <View style={{margin: 20}}>
         <Text style={[styles.text, styles.header]}>
           <Text style={{fontWeight: 'bold'}}>From:</Text>{' '}
@@ -30,6 +31,44 @@ const TripDetailScreen = (props) => {
           <Text style={{fontWeight: 'bold'}}>Until:</Text>{' '}
           {selectedTrip.endDate}
         </Text>
+      </View>
+      <View>
+        <View style={styles.justifyRow}>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Transport</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Accommodation</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.justifyRow}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Map');
+            }}>
+            <Text style={styles.buttonText}>Map</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Daily plan</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.justifyRow}>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Weather forecast</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Budget</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.justifyRow}>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Notes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>X</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -50,11 +89,28 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   header: {
-    fontSize: 22,
+    fontSize: 20,
   },
   image: {
     width: '100%',
-    height: 250,
+    height: 200,
+  },
+  button: {
+    borderRadius: 10,
+    backgroundColor: '#FF8C00',
+    alignItems: 'center',
+    width: '40%',
+    padding: 15,
+    margin: 10,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFFFFF',
+  },
+  justifyRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 
