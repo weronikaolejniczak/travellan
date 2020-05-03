@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 // imports from within the module
-import {Colors} from '../../Constants/Colors';
+// import {Colors} from '../../Constants/Colors';
 
 // REFACTOR to use constants
 const TripDetailScreen = (props) => {
@@ -34,10 +34,18 @@ const TripDetailScreen = (props) => {
       </View>
       <View>
         <View style={styles.justifyRow}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Transport');
+            }}>
             <Text style={styles.buttonText}>Transport</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Accommodation');
+            }}>
             <Text style={styles.buttonText}>Accommodation</Text>
           </TouchableOpacity>
         </View>
@@ -49,24 +57,40 @@ const TripDetailScreen = (props) => {
             }}>
             <Text style={styles.buttonText}>Map</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Daily plan');
+            }}>
             <Text style={styles.buttonText}>Daily plan</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.justifyRow}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Weather forecast</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Weather');
+            }}>
+            <Text style={styles.buttonText}>Weather</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Budget');
+            }}>
             <Text style={styles.buttonText}>Budget</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.justifyRow}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Notes');
+            }}>
             <Text style={styles.buttonText}>Notes</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>X</Text>
+            <Text style={styles.buttonText}>Events</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -84,6 +108,7 @@ export const tripDetailScreenOptions = (navData) => {
   };
 };
 
+// REFACTOR!
 const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
