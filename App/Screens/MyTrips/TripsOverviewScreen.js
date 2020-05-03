@@ -2,16 +2,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
-
-const deleteTrip = () => {}; // TODO
+import * as tripActions from '../../Stores/Actions/Trips';
 
 const TripsOverviewScreen = (props) => {
   const trips = useSelector((state) => state.trips.availableTrips);
+  const dispatch = useDispatch();
   return (
     <View style={{backgroundColor: '#333333', flex: 1}}>
       <FlatList
@@ -30,16 +30,8 @@ const TripsOverviewScreen = (props) => {
               });
             }}
             deleteTrip={() => {
-              /* Alert.alert('Delete trip', 'Are you sure?', [
-                {
-                  text: 'Cancel',
-                  onPress: () => {},
-                },
-                {
-                  text: 'Ok',
-                  onPress: deleteTrip(),
-                },
-              ]); */
+              console.log('Deleting!');
+              dispatch(tripActions.deleteTrip(itemData.item.id));
             }}
           />
         )}

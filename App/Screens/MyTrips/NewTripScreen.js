@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import * as tripActions from '../../Stores/Actions/Trips';
 
 // ! REFACTOR
 const NewTripScreen = (props) => {
+  const dispatch = useDispatch();
+
   const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [budget, setBudget] = useState('');
 
   const submitHandler = useCallback(() => {
-    console.log('Submitting');
-  }, []);
+    dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
+  }, [dispatch, destination, startDate, endDate, budget]);
 
   return (
     <ScrollView style={styles.form}>
@@ -55,7 +59,7 @@ const NewTripScreen = (props) => {
         />
       </View>
       <View style={{alignItems: 'center', margin: 20}}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>

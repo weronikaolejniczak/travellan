@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
@@ -39,12 +38,11 @@ const TripItem = (props) => {
             </View>
             <View style={styles.actions}>
               <View style={{paddingHorizontal: 10}}>
-                <Icon
-                  name="delete"
-                  color={Colors.text}
-                  onPress={props.deleTrip}
-                  //reverse
-                />
+                <TouchableOpacity style={styles.button}>
+                  <Text style={{color: Colors.text, fontWeight: 'bold'}}>
+                    Delete
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -102,9 +100,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+  button: {
+    borderRadius: 10,
+    backgroundColor: '#FF8C00',
+    padding: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFFFFF',
+  },
   alignRow: {
+    marginHorizontal: 20,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
 });
 
