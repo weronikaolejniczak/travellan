@@ -1,17 +1,19 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  Button,
   StyleSheet,
   Platform,
 } from 'react-native';
+import {Icon} from 'react-native-elements';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
 
+// REFACTOR!
 const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
@@ -36,11 +38,14 @@ const TripItem = (props) => {
               </Text>
             </View>
             <View style={styles.actions}>
-              <Button
-                color={Colors.primary}
-                title="Delete Trip"
-                onPress={props.deleTrip} // no function link yet!
-              />
+              <View style={{paddingHorizontal: 10}}>
+                <Icon
+                  name="delete"
+                  color={Colors.text}
+                  onPress={props.deleTrip}
+                  //reverse
+                />
+              </View>
             </View>
           </View>
         </TouchableCmp>
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: '65%',
+    height: '66%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: 'hidden', // ensures that any child can't overlap what we set up
@@ -79,8 +84,8 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
-    padding: 10,
+    height: '20%',
+    padding: 15,
   },
   text: {
     color: '#FFFFFF',
@@ -93,15 +98,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actions: {
-    margin: 30,
-    height: '25%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   alignRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });
 

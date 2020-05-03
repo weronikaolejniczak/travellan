@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, FlatList, Alert, Platform} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
@@ -16,7 +16,7 @@ const TripsOverviewScreen = (props) => {
     <View style={{backgroundColor: '#333333', flex: 1}}>
       <FlatList
         data={trips}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={(itemData) => (
           <TripItem
             image={itemData.item.imageUrl}
@@ -55,11 +55,16 @@ const TripsOverviewScreen = (props) => {
 
 export const tripsScreenOptions = (navData) => {
   return {
+    headerLeft: (props) => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item title="Menu" iconName="menu" onPress={() => {}} />
+      </HeaderButtons>
+    ),
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="add"
           onPress={() => {
             navData.navigation.navigate('Create a trip');
           }}

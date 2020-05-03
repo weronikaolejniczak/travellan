@@ -1,8 +1,8 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {HeaderButton} from 'react-navigation-header-buttons';
-import Icon from 'react-native-ionicons';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+//
 import Colors from '../../Constants/Colors';
 
 const CustomHeaderButton = (props) => {
@@ -10,7 +10,7 @@ const CustomHeaderButton = (props) => {
     <HeaderButton
       {...props}
       IconComponent={Icon}
-      iconSize={23}
+      iconSize={25}
       color={Platform.OS === 'android' ? '#FFFFFF' : Colors.primary}
     />
   );
