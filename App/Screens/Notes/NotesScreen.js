@@ -1,40 +1,46 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
-import { ScrollView, Text, TouchableOpacity,View, StyleSheet, FlatList } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import NOTES from '../../Data/DummyNote';
 import NoteItem from '../../Components/MyTrips/NoteItem';
 
-
-
 const NotesScreen = (props) => {
-  const notes= NOTES;
+  const notes = NOTES;
 
   return (
-    <ScrollView style={{ backgroundColor: '#222222', flex: 1 }}>
-      <View style={{ alignItems: 'center', margin: 20 }}>
-        <TouchableOpacity style={styles.button} onPress={() => {props.navigation.navigate('Add Note');}}>
+    <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
+      <View style={{alignItems: 'center', margin: 20}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            props.navigation.navigate('Add Note');
+          }}>
           <Text style={styles.buttonText}>Add New Note</Text>
         </TouchableOpacity>
       </View>
       <View>
-        <FlatList 
-        data={notes} 
+        <FlatList
+          data={notes}
           renderItem={(itemData) => (
             <NoteItem
-            keyExtractor={(item) => item.title.toString()}
-            title={itemData.item.title}
-            description={itemData.item.description}
-    
-            ></NoteItem>
+              keyExtractor={(item) => item.title.toString()}
+              title={itemData.item.title}
+              description={itemData.item.description}
+            />
           )}
         />
       </View>
-      
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   button: {
@@ -51,6 +57,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
-
 
 export default NotesScreen;

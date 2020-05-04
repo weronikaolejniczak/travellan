@@ -8,29 +8,28 @@ import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging p
 /**
  * Imports from within the module
  */
-//
+// reducers
 import tripsReducer from './Stores/Reducers/Trips';
-import notesReducer from './Stores/Reducers/Notes';
-//
+// constants
 import Colors from './Constants/Colors';
-//
+// trips overview screen
 import TripsOverviewScreen, {
   tripsScreenOptions,
 } from './Screens/MyTrips/TripsOverviewScreen';
 import TripDetailScreen, {
   tripDetailScreenOptions,
 } from './Screens/MyTrips/TripDetailScreen';
-//
+// 'create a new trip' screen
 import NewTripScreen from './Screens/MyTrips/NewTripScreen';
-//
+// functionalities screens
 import TransportScreen from './Screens/Transport/TransportScreen';
 import AccommodationScreen from './Screens/Accommodation/AccommodationScreen';
 import MapScreen from './Screens/Map/MapScreen';
-import DailyPlanScreen from './Screens/Functionalities/DailyPlanScreen';
-import WeatherScreen from './Screens/Functionalities/WeatherScreen';
-import BudgetScreen from './Screens/Functionalities/BudgetScreen';
-import NotesScreen from './Screens/Functionalities/NotesScreen';
-import AddNote from './Screens/Functionalities/AddNote';
+import DailyPlanScreen from './Screens/DailyPlan/DailyPlanScreen';
+import WeatherScreen from './Screens/Weather/WeatherScreen';
+import BudgetScreen from './Screens/Budget/BudgetScreen';
+import NotesScreen from './Screens/Notes/NotesScreen';
+import AddNote from './Screens/Notes/AddNoteScreen';
 
 // refactor combineReducers to be elsewhere
 const rootReducer = combineReducers({
@@ -40,8 +39,10 @@ const rootReducer = combineReducers({
 // delete devtools before deployment
 const store = createStore(rootReducer, composeWithDevTools());
 
+// stack navigator
 const Stack = createStackNavigator();
 
+// default navigation options
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Colors.primary,
