@@ -10,6 +10,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging p
  */
 //
 import tripsReducer from './Stores/Reducers/Trips';
+import notesReducer from './Stores/Reducers/Notes';
 //
 import Colors from './Constants/Colors';
 //
@@ -29,6 +30,7 @@ import DailyPlanScreen from './Screens/Functionalities/DailyPlanScreen';
 import WeatherScreen from './Screens/Functionalities/WeatherScreen';
 import BudgetScreen from './Screens/Functionalities/BudgetScreen';
 import NotesScreen from './Screens/Functionalities/NotesScreen';
+import AddNote from './Screens/Functionalities/AddNote';
 
 // refactor combineReducers to be elsewhere
 const rootReducer = combineReducers({
@@ -78,6 +80,7 @@ export default function App() {
           <Stack.Screen name="Weather" component={WeatherScreen} />
           <Stack.Screen name="Budget" component={BudgetScreen} />
           <Stack.Screen name="Notes" component={NotesScreen} />
+          <Stack.Screen name="Add Note" component={AddNote} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
