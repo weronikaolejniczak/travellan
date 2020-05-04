@@ -3,7 +3,7 @@ export const CREATE_NOTE = 'CREATE_NOTE';
 
 
 
-export const createNote = (title,description) => {
+export const createNote = (title, description) => {
   return {
     type: CREATE_NOTE,
     noteData: {

@@ -10,6 +10,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging p
  */
 //
 import tripsReducer from './Stores/Reducers/Trips';
+import notesReducer from './Stores/Reducers/Notes';
 //
 import Colors from './Constants/Colors';
 //

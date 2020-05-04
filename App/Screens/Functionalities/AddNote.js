@@ -12,7 +12,8 @@ const AddNote = (props) => {
 
     const submitHandler = useCallback(() => {
         dispatch(noteActions.createNote(title,description));
-      },  [dispatch, title,description]);
+      },  [dispatch, title, description]);
+
 
   return (
     <ScrollView style={styles.form}>

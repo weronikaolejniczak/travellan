@@ -3,13 +3,12 @@ import React, {useState, useCallback} from 'react';
 import { ScrollView, Text, TouchableOpacity,View, StyleSheet, FlatList } from 'react-native';
 import {useDispatch} from 'react-redux';
 import NOTES from '../../Data/DummyNote';
+import NoteItem from '../../Components/MyTrips/NoteItem';
+
+
 
 const NotesScreen = (props) => {
   const notes= NOTES;
-  const dispatch = useDispatch();
-  const submitHandler = useCallback(() => {
-    
-  }, []);
 
   return (
     <ScrollView style={{ backgroundColor: '#222222', flex: 1 }}>
@@ -19,9 +18,15 @@ const NotesScreen = (props) => {
         </TouchableOpacity>
       </View>
       <View>
-        <FlatList data={notes} 
-          renderItem={ ({item}) => (
-            <Text style={styles.button}>{item.title}{item.description}</Text>
+        <FlatList 
+        data={notes} 
+          renderItem={(itemData) => (
+            <NoteItem
+            keyExtractor={(item) => item.title.toString()}
+            title={itemData.item.title}
+            description={itemData.item.description}
+    
+            ></NoteItem>
           )}
         />
       </View>
