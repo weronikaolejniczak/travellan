@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
-import { ScrollView, Text, TouchableOpacity,View, StyleSheet } from 'react-native';
+import { ScrollView, Text, TouchableOpacity,View, StyleSheet, FlatList } from 'react-native';
 import {useDispatch} from 'react-redux';
+import NOTES from '../../Data/DummyNote';
 
 const NotesScreen = (props) => {
-  
+  const notes= NOTES;
   const dispatch = useDispatch();
   const submitHandler = useCallback(() => {
     
@@ -17,6 +18,14 @@ const NotesScreen = (props) => {
           <Text style={styles.buttonText}>Add New Note</Text>
         </TouchableOpacity>
       </View>
+      <View>
+        <FlatList data={notes} 
+          renderItem={ ({item}) => (
+            <Text style={styles.button}>{item.title}{item.description}</Text>
+          )}
+        />
+      </View>
+      
     </ScrollView>
   );
 };

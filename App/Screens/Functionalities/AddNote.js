@@ -2,6 +2,8 @@
 import React, { useState, useCallback } from 'react';
 import {ScrollView, Text, StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
+import * as noteActions from '../../Stores/Actions/Note';
+
 
 const AddNote = (props) => {
     const dispatch = useDispatch();
@@ -9,7 +11,8 @@ const AddNote = (props) => {
     const [description, setDescription] = useState('');
 
     const submitHandler = useCallback(() => {
-      }, []);
+        dispatch(noteActions.createNote(title,description));
+      },  [dispatch, title,description]);
 
   return (
     <ScrollView style={styles.form}>
