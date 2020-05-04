@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {Text, View, TouchableOpacity, FlatList, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
@@ -66,14 +66,18 @@ export const tripsScreenOptions = (navData) => {
   return {
     headerLeft: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Menu" iconName="menu" onPress={() => {}} />
+        <Item
+          title="Menu"
+          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+          onPress={() => {}}
+        />
       </HeaderButtons>
     ),
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          iconName="add"
+          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
             navData.navigation.navigate('Create a trip');
           }}
