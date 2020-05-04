@@ -4,6 +4,7 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging purposes
 /**
  * Imports from within the module
  */
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   trips: tripsReducer,
 });
 
-const store = createStore(rootReducer);
+// delete devtools before deployment
+const store = createStore(rootReducer, composeWithDevTools());
 
 const Stack = createStackNavigator();
 

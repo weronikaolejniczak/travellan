@@ -23,27 +23,21 @@ const TripItem = (props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
-          <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{uri: props.image}} />
-          </View>
-          <View style={styles.alignRow}>
-            <View style={styles.details}>
-              <Text style={[styles.text, styles.destination]}>
-                {props.destination}
-              </Text>
-              <Text style={[styles.text, styles.date]}>
-                {props.startDate} - {props.endDate}
-              </Text>
+        <TouchableCmp onPress={props.onSelect} useForeground>
+          <View>
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{uri: props.image}} />
             </View>
-            <View style={styles.actions}>
-              <View style={{paddingHorizontal: 10}}>
-                <TouchableOpacity style={styles.button}>
-                  <Text style={{color: Colors.text, fontWeight: 'bold'}}>
-                    Delete
-                  </Text>
-                </TouchableOpacity>
+            <View style={styles.alignRow}>
+              <View style={styles.details}>
+                <Text style={[styles.text, styles.destination]}>
+                  {props.destination}
+                </Text>
+                <Text style={[styles.text, styles.date]}>
+                  {props.startDate} - {props.endDate}
+                </Text>
               </View>
+              <View style={styles.actions}>{props.children}</View>
             </View>
           </View>
         </TouchableCmp>
@@ -96,20 +90,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actions: {
+    paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  button: {
-    borderRadius: 10,
-    backgroundColor: '#FF8C00',
-    padding: 15,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#FFFFFF',
   },
   alignRow: {
     marginHorizontal: 20,

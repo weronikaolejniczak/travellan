@@ -1,17 +1,26 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
+import Colors from '../../Constants/Colors';
 
 const TripsOverviewScreen = (props) => {
   const trips = useSelector((state) => state.trips.availableTrips);
   const dispatch = useDispatch();
+
+  const selectItemHandler = (id, destination) => {
+    props.navigation.navigate('Details', {
+      tripId: id,
+      tripDestination: destination,
+    });
+  };
+
   return (
     <View style={{backgroundColor: '#333333', flex: 1}}>
       <FlatList
@@ -23,17 +32,25 @@ const TripsOverviewScreen = (props) => {
             destination={itemData.item.destination}
             startDate={itemData.item.startDate}
             endDate={itemData.item.endDate}
-            onViewDetail={() => {
-              props.navigation.navigate('Details', {
-                tripId: itemData.item.id,
-                tripDestination: itemData.item.destination,
-              });
-            }}
-            deleteTrip={() => {
-              console.log('Deleting!');
-              dispatch(tripActions.deleteTrip(itemData.item.id));
-            }}
-          />
+            onSelect={() => {
+              selectItemHandler(itemData.item.id, itemData.item.destination);
+            }}>
+            <TouchableOpacity
+              style={{
+                borderRadius: 10,
+                backgroundColor: '#FF8C00',
+                padding: 15,
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                dispatch(tripActions.deleteTrip(itemData.item.id));
+              }}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: 16, color: '#FFFFFF'}}>
+                Delete
+              </Text>
+            </TouchableOpacity>
+          </TripItem>
         )}
       />
     </View>
