@@ -1,8 +1,8 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {HeaderButton} from 'react-navigation-header-buttons';
-import Icon from 'react-native-ionicons';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+//
 import Colors from '../../Constants/Colors';
 
 const CustomHeaderButton = (props) => {

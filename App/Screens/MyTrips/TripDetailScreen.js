@@ -22,17 +22,19 @@ const TripDetailScreen = (props) => {
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
       <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
-      <View style={{margin: 20}}>
-        <Text style={[styles.text, styles.header]}>
-          <Text style={{fontWeight: 'bold'}}>From:</Text>{' '}
-          {selectedTrip.startDate}
-        </Text>
-        <Text style={[styles.text, styles.header]}>
-          <Text style={{fontWeight: 'bold'}}>Until:</Text>{' '}
-          {selectedTrip.endDate}
-        </Text>
-      </View>
       <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{margin: 20, marginHorizontal: 35}}>
+            <Text style={[styles.text, styles.header]}>
+              <Text style={{fontWeight: 'bold'}}>From:</Text>{' '}
+              {selectedTrip.startDate}
+            </Text>
+            <Text style={[styles.text, styles.header]}>
+              <Text style={{fontWeight: 'bold'}}>Until:</Text>{' '}
+              {selectedTrip.endDate}
+            </Text>
+          </View>
+        </View>
         <View style={styles.justifyRow}>
           <TouchableOpacity
             style={styles.button}

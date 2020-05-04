@@ -1,10 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  Button,
   StyleSheet,
   Platform,
 } from 'react-native';
@@ -12,6 +12,7 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
 
+// REFACTOR!
 const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
@@ -22,25 +23,21 @@ const TripItem = (props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
-          <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{uri: props.image}} />
-          </View>
-          <View style={styles.alignRow}>
-            <View style={styles.details}>
-              <Text style={[styles.text, styles.destination]}>
-                {props.destination}
-              </Text>
-              <Text style={[styles.text, styles.date]}>
-                {props.startDate} - {props.endDate}
-              </Text>
+        <TouchableCmp onPress={props.onSelect} useForeground>
+          <View>
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{uri: props.image}} />
             </View>
-            <View style={styles.actions}>
-              <Button
-                color={Colors.primary}
-                title="Delete Trip"
-                onPress={props.deleTrip} // no function link yet!
-              />
+            <View style={styles.alignRow}>
+              <View style={styles.details}>
+                <Text style={[styles.text, styles.destination]}>
+                  {props.destination}
+                </Text>
+                <Text style={[styles.text, styles.date]}>
+                  {props.startDate} - {props.endDate}
+                </Text>
+              </View>
+              <View style={styles.actions}>{props.children}</View>
             </View>
           </View>
         </TouchableCmp>
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: '65%',
+    height: '66%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: 'hidden', // ensures that any child can't overlap what we set up
@@ -79,8 +76,8 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
-    padding: 10,
+    height: '20%',
+    padding: 15,
   },
   text: {
     color: '#FFFFFF',
@@ -93,15 +90,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actions: {
-    margin: 30,
-    height: '25%',
+    paddingHorizontal: 10,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   alignRow: {
+    marginHorizontal: 20,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
 

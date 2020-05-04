@@ -4,6 +4,7 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging purposes
 /**
  * Imports from within the module
  */
@@ -28,13 +29,15 @@ import DailyPlanScreen from './Screens/Functionalities/DailyPlanScreen';
 import WeatherScreen from './Screens/Functionalities/WeatherScreen';
 import BudgetScreen from './Screens/Functionalities/BudgetScreen';
 import NotesScreen from './Screens/Functionalities/NotesScreen';
+import AddNote from './Screens/Functionalities/AddNote';
 
 // refactor combineReducers to be elsewhere
 const rootReducer = combineReducers({
   trips: tripsReducer,
 });
 
-const store = createStore(rootReducer);
+// delete devtools before deployment
+const store = createStore(rootReducer, composeWithDevTools());
 
 const Stack = createStackNavigator();
 
@@ -76,6 +79,7 @@ export default function App() {
           <Stack.Screen name="Weather" component={WeatherScreen} />
           <Stack.Screen name="Budget" component={BudgetScreen} />
           <Stack.Screen name="Notes" component={NotesScreen} />
+          <Stack.Screen name="Add Note" component={AddNote} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

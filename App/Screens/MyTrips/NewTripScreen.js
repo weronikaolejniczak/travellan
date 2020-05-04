@@ -8,43 +8,25 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import * as tripActions from '../../Stores/Actions/Trips';
 
+// ! REFACTOR
 const NewTripScreen = (props) => {
-  const [id, setId] = useState('');
-  const [ownerId, setOwnerId] = useState('');
+  const dispatch = useDispatch();
+
   const [destination, setDestination] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [budget, setBudget] = useState('');
-  const [notes, setNotes] = useState('');
-  const [transportInfo, setTransportInfo] = useState('');
-  const [accommodationInfo, setAccommodationInfo] = useState('');
-  const [pointsOfInterest, setPointsOfInterest] = useState('');
 
   const submitHandler = useCallback(() => {
-    console.log('Submitting');
-  }, []);
+    dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
+  }, [dispatch, destination, startDate, endDate, budget]);
 
   return (
     <ScrollView style={styles.form}>
-      {/* <View>
-        <Text style={styles.label}>Id</Text>
-        <TextInput
-          style={styles.input}
-          value={id}
-          onChangeText={(text) => setId(text)}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>OwnerId</Text>
-        <TextInput
-          style={styles.input}
-          value={ownerId}
-          onChangeText={(text) => setOwnerId(text)}
-        />
-      </View> */}
-      <View>
+      <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>Where are you headed?</Text>
         <TextInput
           style={styles.input}
@@ -52,15 +34,7 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setDestination(text)}
         />
       </View>
-      {/* <View>
-        <Text style={styles.label}>image Url</Text>
-        <TextInput
-          style={styles.input}
-          value={imageUrl}
-          onChangeText={(text) => setImageUrl(text)}
-        />
-      </View> */}
-      <View>
+      <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>When do you want to go?</Text>
         <TextInput
           style={styles.input}
@@ -68,7 +42,7 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setStartDate(text)}
         />
       </View>
-      <View>
+      <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>Until when?</Text>
         <TextInput
           style={styles.input}
@@ -76,7 +50,7 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setEndDate(text)}
         />
       </View>
-      <View>
+      <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>What is your budget?</Text>
         <TextInput
           style={styles.input}
@@ -84,40 +58,8 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setBudget(text)}
         />
       </View>
-      {/* <View>
-        <Text style={styles.label}>Notes</Text>
-        <TextInput
-          style={styles.input}
-          value={notes}
-          onChangeText={(text) => setNotes(text)}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>Transport Info</Text>
-        <TextInput
-          style={styles.input}
-          value={transportInfo}
-          onChangeText={(text) => setTransportInfo(text)}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>Accommodation Info</Text>
-        <TextInput
-          style={styles.input}
-          value={accommodationInfo}
-          onChangeText={(text) => setAccommodationInfo(text)}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>Points of Interest</Text>
-        <TextInput
-          style={styles.input}
-          value={pointsOfInterest}
-          onChangeText={(text) => setPointsOfInterest(text)}
-        />
-      </View> */}
       <View style={{alignItems: 'center', margin: 20}}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -131,8 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    backgroundColor: '#222222',
-    flex: 1,
     fontFamily: 'open-sans-bold',
     marginRight: '10%',
     marginLeft: '10%',
@@ -142,6 +82,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
+    color: '#FFFFFF',
+    fontSize: 20,
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderBottomColor: '#FFA500',
