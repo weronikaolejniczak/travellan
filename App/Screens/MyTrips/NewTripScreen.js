@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -67,6 +67,7 @@ const NewTripScreen = (props) => {
   );
 };
 
+// ! REFACTOR
 const styles = StyleSheet.create({
   form: {
     backgroundColor: '#222222',
