@@ -16,7 +16,7 @@ import {useSelector} from 'react-redux';
 const TripDetailScreen = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((prod) => prod.id === tripId),
+    state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
   return (
@@ -55,7 +55,7 @@ const TripDetailScreen = (props) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              props.navigation.navigate('Map');
+              props.navigation.navigate('Map', {tripId: selectedTrip.id});
             }}>
             <Text style={styles.buttonText}>Map</Text>
           </TouchableOpacity>

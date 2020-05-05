@@ -3,6 +3,7 @@ class Trip {
     id,
     ownerId,
     destination,
+    region,
     imageUrl,
     startDate,
     endDate,
@@ -15,6 +16,7 @@ class Trip {
     this.id = id;
     this.ownerId = ownerId;
     this.destination = destination;
+    this.region = region;
     this.imageUrl = imageUrl;
     this.startDate = startDate;
     this.endDate = endDate;

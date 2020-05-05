@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -7,10 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Dimensions
 } from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
+
+const {height, width} = Dimensions.get('window');
 
 // REFACTOR!
 const TripItem = (props) => {
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     backgroundColor: Colors.background,
-    height: 270,
+    height: 0.39 * height,
     margin: 15,
   },
   touchable: {

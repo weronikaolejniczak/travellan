@@ -1,61 +1,41 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
 import {
-  View,
-  Text,
   ScrollView,
-  TextInput,
+  Text,
   StyleSheet,
+  View,
+  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import * as tripActions from '../../Stores/Actions/Trips';
+import * as noteActions from '../../Stores/Actions/Note';
 
-// ! REFACTOR
-const NewTripScreen = (props) => {
+const AddNote = (props) => {
   const dispatch = useDispatch();
-
-  const [destination, setDestination] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [budget, setBudget] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const submitHandler = useCallback(() => {
-    dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
-  }, [dispatch, destination, startDate, endDate, budget]);
+    dispatch(noteActions.createNote(title, description));
+  }, [dispatch, title, description]);
 
   return (
     <ScrollView style={styles.form}>
       <View style={{paddingVertical: 15}}>
-        <Text style={styles.label}>Where are you headed?</Text>
+        <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.input}
-          value={destination}
-          onChangeText={(text) => setDestination(text)}
+          value={title}
+          onChangeText={(text) => setTitle(text)}
         />
       </View>
       <View style={{paddingVertical: 15}}>
-        <Text style={styles.label}>When do you want to go?</Text>
+        <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.input}
-          value={startDate}
-          onChangeText={(text) => setStartDate(text)}
-        />
-      </View>
-      <View style={{paddingVertical: 15}}>
-        <Text style={styles.label}>Until when?</Text>
-        <TextInput
-          style={styles.input}
-          value={endDate}
-          onChangeText={(text) => setEndDate(text)}
-        />
-      </View>
-      <View style={{paddingVertical: 15}}>
-        <Text style={styles.label}>What is your budget?</Text>
-        <TextInput
-          style={styles.input}
-          value={budget}
-          onChangeText={(text) => setBudget(text)}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
         />
       </View>
       <View style={{alignItems: 'center', margin: 20}}>
@@ -67,7 +47,6 @@ const NewTripScreen = (props) => {
   );
 };
 
-// ! REFACTOR
 const styles = StyleSheet.create({
   form: {
     backgroundColor: '#222222',
@@ -109,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewTripScreen;
+export default AddNote;

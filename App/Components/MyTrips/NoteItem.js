@@ -27,16 +27,16 @@ const NoteItem = (props) => {
           <View>
             <View style={styles.alignRow}>
               <View style={styles.details}>
-                <Text style={[styles.text, styles.date]}>
-                  {props.title}
-                </Text>
+                <Text style={[styles.text, styles.date]}>{props.title}</Text>
               </View>
               <View style={styles.actions}>{props.children}</View>
             </View>
           </View>
         </TouchableCmp>
       </View>
-      <View><Text>{props.description}</Text></View>
+      <View>
+        <Text>{props.description}</Text>
+      </View>
     </View>
   );
 };

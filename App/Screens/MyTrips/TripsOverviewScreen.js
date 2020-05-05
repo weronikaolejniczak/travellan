@@ -1,7 +1,13 @@
-/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  FlatList,
+  Platform,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
@@ -43,7 +49,23 @@ const TripsOverviewScreen = (props) => {
                 alignItems: 'center',
               }}
               onPress={() => {
-                dispatch(tripActions.deleteTrip(itemData.item.id));
+                Alert.alert(
+                  'Delete a trip',
+                  'Are you sure?',
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Delete',
+                      onPress: () =>
+                        dispatch(tripActions.deleteTrip(itemData.item.id)),
+                    },
+                  ],
+                  {cancelable: true},
+                );
               }}>
               <Text
                 style={{fontWeight: 'bold', fontSize: 16, color: '#FFFFFF'}}>
@@ -66,14 +88,18 @@ export const tripsScreenOptions = (navData) => {
   return {
     headerLeft: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Menu" iconName="menu" onPress={() => {}} />
+        <Item
+          title="Menu"
+          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+          onPress={() => {}}
+        />
       </HeaderButtons>
     ),
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          iconName="add"
+          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
             navData.navigation.navigate('Create a trip');
           }}
