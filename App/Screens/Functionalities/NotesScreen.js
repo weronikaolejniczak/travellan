@@ -8,6 +8,8 @@ import NoteItem from '../../Components/MyTrips/NoteItem';
 
 
 const NotesScreen = (props) => {
+  
+
   const notes= NOTES;
 
   return (
@@ -25,7 +27,6 @@ const NotesScreen = (props) => {
             keyExtractor={(item) => item.title.toString()}
             title={itemData.item.title}
             description={itemData.item.description}
-    
             ></NoteItem>
           )}
         />

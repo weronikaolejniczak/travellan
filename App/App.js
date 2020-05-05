@@ -35,6 +35,7 @@ import AddNote from './Screens/Functionalities/AddNote';
 // refactor combineReducers to be elsewhere
 const rootReducer = combineReducers({
   trips: tripsReducer,
+  notes: notesReducer,
 });
 
 // delete devtools before deployment

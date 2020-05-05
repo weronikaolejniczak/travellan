@@ -80,8 +80,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     textTransform: 'capitalize',
     fontSize: 22,
-
-
   },
   destination: {
     fontSize: 22,
