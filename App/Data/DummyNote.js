@@ -9,13 +9,13 @@ import Note from '../Models/NotesModel'
 
  const NOTES = [
      new Note(
-         'test',
-         'abc',
+         'Dummy Note #1',
+         'Dummy Discription #1',
      ),
      new Note(
-         'xxx',
-         'abc',
+         'Dummy Note #2',
+         'Dummy Discription #2',
      ),
  ];
 
- export default NOTES;
+ export default NOTES; 
