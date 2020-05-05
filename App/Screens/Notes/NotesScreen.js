@@ -8,18 +8,14 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import NOTES from '../../Data/DummyNote';
 import NoteItem from '../../Components/MyTrips/NoteItem';
 
 const NotesScreen = (props) => {
-<<<<<<< HEAD:App/Screens/Functionalities/NotesScreen.js
   
 
-  const notes= NOTES;
-=======
-  const notes = NOTES;
->>>>>>> 4f5dbf8dc68cda25d40f97be11d4f4e19eb82a87:App/Screens/Notes/NotesScreen.js
+  const notes= useSelector(state => state.notes.availableNotes);
 
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
@@ -37,17 +33,10 @@ const NotesScreen = (props) => {
           data={notes}
           renderItem={(itemData) => (
             <NoteItem
-<<<<<<< HEAD:App/Screens/Functionalities/NotesScreen.js
             keyExtractor={(item) => item.title.toString()}
             title={itemData.item.title}
             description={itemData.item.description}
             ></NoteItem>
-=======
-              keyExtractor={(item) => item.title.toString()}
-              title={itemData.item.title}
-              description={itemData.item.description}
-            />
->>>>>>> 4f5dbf8dc68cda25d40f97be11d4f4e19eb82a87:App/Screens/Notes/NotesScreen.js
           )}
         />
       </View>
