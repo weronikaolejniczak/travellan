@@ -9,10 +9,10 @@ import Trip from '../Models/TripModel';
     [date]              startDate,
     [date]              endDate
     [float]             budget,
-    [list of strings]   notes,
-    [dict]              transportInfo,
-    [dict]              accommodationInfo,
-    [dict of dict]      pointsOfInterest
+    [list of objects]   notes,
+    [list of objects]   transportInfo,
+    [list of objects]   accommodationInfo,
+    [list of objects]   pointsOfInterest
  *
  */
 
@@ -42,8 +42,35 @@ const TRIPS = [
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra rhoncus sapien, eget pulvinar purus. Aliquam in libero nibh. Nulla nec gravida risus. Nunc mollis nisi a lacus pellentesque pharetra et vehicula tortor. Nam mattis facilisis lectus sed feugiat. Nulla nec ultrices lectus. Sed sollicitudin a nulla at pellentesque. Ut vel est leo. In sit amet ante sagittis, sollicitudin dolor at, imperdiet sem.',
       },
     ],
-    {},
-    {},
+    [
+      {
+        id: 1,
+        to: true,
+        from: false,
+        date: '2021-6-21',
+        hour: '12:30',
+        means: 'airplane',
+        details: {
+          class: 'A',
+          seat: 'E45',
+          carrier: 'Ryanair',
+        },
+      },
+      {
+        id: 2,
+        to: false,
+        from: true,
+        date: '2021-6-25',
+        hour: '14:45',
+        means: 'airplane',
+        details: {
+          class: 'A',
+          seat: 'F31',
+          carrier: 'Ryanair',
+        },
+      },
+    ],
+    [],
     [{}, {}, {}, {}],
   ),
   // trip2
@@ -62,8 +89,8 @@ const TRIPS = [
     '2021-2-15',
     1450.5,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Paris!'}],
-    {},
-    {},
+    [],
+    [],
     [{}, {}, {}, {}],
   ),
   // trip3
@@ -82,8 +109,8 @@ const TRIPS = [
     '2021-4-21',
     3420.0,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Tokyo!'}],
-    {},
-    {},
+    [],
+    [],
     [{}, {}, {}, {}],
   ),
   // trip4
@@ -102,8 +129,8 @@ const TRIPS = [
     '2021-8-30',
     1505.75,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Warsaw!'}],
-    {},
-    {},
+    [],
+    [],
     [{}, {}, {}, {}],
   ),
   // trip5
@@ -122,8 +149,8 @@ const TRIPS = [
     '2021-11-20',
     600.0,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Milan!'}],
-    {},
-    {},
+    [],
+    [],
     [{}, {}, {}, {}],
   ),
 ];
