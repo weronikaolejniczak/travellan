@@ -12,6 +12,9 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
 
+
+
+
 // REFACTOR!
 const NoteItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -20,22 +23,22 @@ const NoteItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
+  
   return (
     <View style={styles.product}>
-      <View style={styles.touchable}>
+      
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={styles.alignRow}>
               <View style={styles.details}>
-                <Text style={[styles.text, styles.date]}>{props.title}</Text>
+                <Text style={styles.title}>{props.title}</Text>
               </View>
-              <View style={styles.actions}>{props.children}</View>
             </View>
           </View>
         </TouchableCmp>
-      </View>
+      
       <View>
-        <Text>{props.description}</Text>
+      <Text style={styles.description}>{props.description}</Text>
       </View>
     </View>
   );
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     height: 120,
     margin: 15,
+    
   },
   touchable: {
     borderRadius: 10,
@@ -72,21 +76,26 @@ const styles = StyleSheet.create({
   details: {
     alignItems: 'center',
     height: '20%',
-    padding: 15,
+    padding: 5,
   },
-  text: {
+  title: {
     color: '#FF8C00',
     fontWeight: 'bold',
-    textAlign: 'left',
+    textAlign: 'center',
     textTransform: 'capitalize',
     fontSize: 22,
+  },
+  description: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    marginLeft: 5,
   },
   destination: {
     fontSize: 22,
     marginVertical: 4,
   },
   date: {
-    fontSize: 14,
+    fontSize: 20,
   },
   actions: {
     paddingHorizontal: 10,
@@ -95,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   alignRow: {
-    marginHorizontal: 20,
+    marginHorizontal: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

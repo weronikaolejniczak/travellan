@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback} from 'react';
+import React from 'react';
 import {
   ScrollView,
   Text,
@@ -7,13 +7,19 @@ import {
   View,
   StyleSheet,
   FlatList,
+  Button,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import NOTES from '../../Data/DummyNote';
+import {useSelector} from 'react-redux';
+import { Icon, } from 'react-native-elements';
+
 import NoteItem from '../../Components/MyTrips/NoteItem';
 
+
+
+
 const NotesScreen = (props) => {
-  const notes = NOTES;
+  
+  const notes= useSelector(state => state.notes.availableNotes);
 
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
@@ -27,14 +33,16 @@ const NotesScreen = (props) => {
         </TouchableOpacity>
       </View>
       <View>
+        
         <FlatList
           data={notes}
           renderItem={(itemData) => (
             <NoteItem
-              keyExtractor={(item) => item.title.toString()}
-              title={itemData.item.title}
-              description={itemData.item.description}
-            />
+            keyExtractor={(item) => item.title.toString()}
+            title={itemData.item.title}
+            description={itemData.item.description}
+            >
+            </NoteItem>
           )}
         />
       </View>
