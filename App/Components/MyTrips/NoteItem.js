@@ -12,9 +12,6 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
 import Colors from '../../Constants/Colors';
 
-
-
-
 // REFACTOR!
 const NoteItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -23,22 +20,20 @@ const NoteItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  
   return (
     <View style={styles.product}>
-      
-        <TouchableCmp onPress={props.onSelect} useForeground>
-          <View>
-            <View style={styles.alignRow}>
-              <View style={styles.details}>
-                <Text style={styles.title}>{props.title}</Text>
-              </View>
+      <TouchableCmp onPress={props.onSelect} useForeground>
+        <View>
+          <View style={styles.alignRow}>
+            <View style={styles.details}>
+              <Text style={styles.title}>{props.title}</Text>
             </View>
           </View>
-        </TouchableCmp>
-      
+        </View>
+      </TouchableCmp>
+
       <View>
-      <Text style={styles.description}>{props.description}</Text>
+        <Text style={styles.description}>{props.description}</Text>
       </View>
     </View>
   );
@@ -56,7 +51,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     height: 120,
     margin: 15,
-    
   },
   touchable: {
     borderRadius: 10,

@@ -7,7 +7,7 @@ import Trip from '../Models/TripModel';
     [string]            destination,
     [string]            imageUrl,
     [date]              startDate,
-    [date]              endDate
+    [date]              endDate,
     [float]             budget,
     [list of objects]   notes,
     [list of objects]   transportInfo,

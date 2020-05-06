@@ -7,49 +7,22 @@ import {
   TouchableOpacity,
   FlatList,
   Platform,
+  StyleSheet,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
 import Colors from '../../Constants/Colors';
 
-const TripsOverviewScreen = (props) => {
-  const trips = useSelector((state) => state.trips.availableTrips);
-  const dispatch = useDispatch();
-
-  const selectItemHandler = (id, destination) => {
-    props.navigation.navigate('Details', {
-      tripId: id,
-      tripDestination: destination,
-    });
-  };
-
-  return (
-    <View style={{backgroundColor: '#333333', flex: 1}}>
-      <FlatList
-        data={trips}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={(itemData) => (
-          <TripItem
-            image={itemData.item.imageUrl}
-            destination={itemData.item.destination}
-            startDate={itemData.item.startDate}
-            endDate={itemData.item.endDate}
-            onSelect={() => {
-              selectItemHandler(itemData.item.id, itemData.item.destination);
-            }}>
-            <TouchableOpacity
-              style={{
-                borderRadius: 10,
-                backgroundColor: '#FF8C00',
-                padding: 15,
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                Alert.alert(
+/**
+ * REFACTOR
+ * Clicking on delete button displays an alert.
+ * Preferable way but doesn't work because clicking on the button also triggers parent's onSelect function:
+                  Alert.alert(
                   'Delete a trip',
                   'Are you sure?',
                   [
@@ -66,15 +39,74 @@ const TripsOverviewScreen = (props) => {
                   ],
                   {cancelable: true},
                 );
-              }}>
-              <Text
-                style={{fontWeight: 'bold', fontSize: 16, color: '#FFFFFF'}}>
-                Delete
-              </Text>
-            </TouchableOpacity>
-          </TripItem>
-        )}
-      />
+                }
+ */
+
+const TripsOverviewScreen = (props) => {
+  const trips = useSelector((state) => state.trips.availableTrips);
+  const dispatch = useDispatch();
+
+  const selectItemHandler = (id, destination) => {
+    props.navigation.navigate('Details', {
+      tripId: id,
+      tripDestination: destination,
+    });
+  };
+
+  return (
+    <View style={{backgroundColor: '#333333', flex: 1}}>
+      {trips.length === 0 ? (
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Text style={[styles.text, styles.triplessText]}>
+            There are no trips!
+          </Text>
+          <Text style={[styles.text, styles.triplessText]}>
+            Create one with the
+          </Text>
+          <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
+          <Text style={[styles.text, styles.triplessText]}>sign above!</Text>
+        </View>
+      ) : (
+        <View style={{flex: 1}}>
+          <FlatList
+            data={trips}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={(itemData) => (
+              <TripItem
+                image={itemData.item.imageUrl}
+                destination={itemData.item.destination}
+                startDate={itemData.item.startDate}
+                endDate={itemData.item.endDate}
+                onSelect={() => {
+                  selectItemHandler(
+                    itemData.item.id,
+                    itemData.item.destination,
+                  );
+                }}>
+                <TouchableOpacity
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#FF8C00',
+                    padding: 15,
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    dispatch(tripActions.deleteTrip(itemData.item.id));
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 16,
+                      color: '#FFFFFF',
+                    }}>
+                    Delete
+                  </Text>
+                </TouchableOpacity>
+              </TripItem>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -108,5 +140,14 @@ export const tripsScreenOptions = (navData) => {
     ),
   };
 };
+
+const styles = StyleSheet.create({
+  text: {
+    color: '#FFFFFF',
+  },
+  triplessText: {
+    fontSize: 20,
+  },
+});
 
 export default TripsOverviewScreen;

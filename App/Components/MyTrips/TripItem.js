@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 // imports from within the module
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     backgroundColor: Colors.background,
-    height: 0.39 * height,
-    margin: 15,
+    height: 0.4 * height,
+    margin: 12,
   },
   touchable: {
     borderRadius: 10,
