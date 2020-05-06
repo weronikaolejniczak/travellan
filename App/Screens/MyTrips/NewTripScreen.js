@@ -14,6 +14,7 @@ import * as tripActions from '../../Stores/Actions/Trips';
 // ! REFACTOR
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
+  const fetchImage = (url) => {};
 
   const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState('');

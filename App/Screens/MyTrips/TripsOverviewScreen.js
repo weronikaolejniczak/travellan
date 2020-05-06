@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Text,
   View,
-  Alert,
+  // Alert,
   TouchableOpacity,
   FlatList,
   Platform,
@@ -12,11 +12,11 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+// imports from within the module
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
-import Colors from '../../Constants/Colors';
+// import Colors from '../../Constants/Colors';
 
 /**
  * REFACTOR

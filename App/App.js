@@ -23,7 +23,9 @@ import TripDetailScreen, {
 // 'create a new trip' screen
 import NewTripScreen from './Screens/MyTrips/NewTripScreen';
 // functionalities screens
-import TransportScreen from './Screens/Transport/TransportScreen';
+import TransportScreen, {
+  transportScreenOptions,
+} from './Screens/Transport/TransportScreen';
 import AccommodationScreen from './Screens/Accommodation/AccommodationScreen';
 import MapScreen from './Screens/Map/MapScreen';
 import DailyPlanScreen from './Screens/DailyPlan/DailyPlanScreen';
@@ -76,7 +78,11 @@ export default function App() {
             component={TripDetailScreen}
             options={tripDetailScreenOptions}
           />
-          <Stack.Screen name="Transport" component={TransportScreen} />
+          <Stack.Screen
+            name="Transport"
+            component={TransportScreen}
+            options={transportScreenOptions}
+          />
           <Stack.Screen name="Accommodation" component={AccommodationScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Daily plan" component={DailyPlanScreen} />

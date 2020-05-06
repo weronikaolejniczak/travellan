@@ -45,10 +45,10 @@ const TripDetailScreen = (props) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              props.navigation.navigate('Transport');
+              props.navigation.navigate('Transport', {trip: selectedTrip});
             }}>
             <Text style={styles.buttonText}>Transport</Text>
-            <Icon name="md-airplane" size={42} color="#FFFFFF" />
+            <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -102,7 +102,7 @@ const TripDetailScreen = (props) => {
               props.navigation.navigate('Notes');
             }}>
             <Text style={styles.buttonText}>Notes</Text>
-            <Icon name="md-folder" size={42} color="#FFFFFF" />
+            <Icon name="md-journal" size={42} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => {}}>
             <Text style={styles.buttonText}>Events</Text>

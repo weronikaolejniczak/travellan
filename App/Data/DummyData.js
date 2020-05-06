@@ -19,19 +19,28 @@ import Trip from '../Models/TripModel';
 const TRIPS = [
   // trip1
   new Trip(
+    // id
     1,
+    // ownerId
     1,
+    // destination
     'Barcelona',
+    // region
     {
       latitude: 41.385063,
       longitude: 2.173404,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },
+    // image url
     'https://images.unsplash.com/photo-1562883676-8c7feb83f09b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80',
+    // start date
     '2021-6-21',
+    // end date
     '2021-6-25',
+    // budget
     2000.5,
+    // notes
     [
       {id: 1, title: 'Hello, World!', body: 'Lalala, going to Barcelona!'},
       {id: 2, title: 'Pack', body: 'bathing suit, umbrella, lots of suncream'},
@@ -42,6 +51,7 @@ const TRIPS = [
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra rhoncus sapien, eget pulvinar purus. Aliquam in libero nibh. Nulla nec gravida risus. Nunc mollis nisi a lacus pellentesque pharetra et vehicula tortor. Nam mattis facilisis lectus sed feugiat. Nulla nec ultrices lectus. Sed sollicitudin a nulla at pellentesque. Ut vel est leo. In sit amet ante sagittis, sollicitudin dolor at, imperdiet sem.',
       },
     ],
+    // transport tickets
     [
       {
         id: 1,
@@ -49,6 +59,9 @@ const TRIPS = [
         from: false,
         date: '2021-6-21',
         hour: '12:30',
+        fromPlace: 'Poznań Airport Bukowska 285, 60-189 Poznań',
+        toPlace:
+          'Josep Tarradellas Barcelona-El Prat Airport, 08820 El Prat de Llobregat, Barcelona, Spain',
         means: 'airplane',
         details: {
           class: 'A',
@@ -62,6 +75,9 @@ const TRIPS = [
         from: true,
         date: '2021-6-25',
         hour: '14:45',
+        fromPlace:
+          'Josep Tarradellas Barcelona-El Prat Airport, 08820 El Prat de Llobregat, Barcelona, Spain',
+        toPlace: 'Poznań Airport Bukowska 285, 60-189 Poznań',
         means: 'airplane',
         details: {
           class: 'A',
@@ -70,7 +86,9 @@ const TRIPS = [
         },
       },
     ],
+    // accommodation
     [],
+    // points of interest
     [{}, {}, {}, {}],
   ),
   // trip2
