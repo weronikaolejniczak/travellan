@@ -13,8 +13,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /**
  * IMPORTS FROM WITHIN THE MODULE
  */
+import Card from '../../Components/UI/Card';
 import Colors from '../../Constants/Colors';
 
+// refactor Metrics
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.82;
 export const cardWidth = width * 0.82;
@@ -24,10 +26,11 @@ export const spacingForCardInset = width * 0.1 - 13;
  * Accommodation item component used in AccommodationScreen for reservations listing.
  * TODO:
  * refactor icons for better touchable response and clickability
+ * refactor action bar
  */
 const AccommodationItem = (props) => {
   return (
-    <View style={styles.card}>
+    <Card style={styles.accommodation}>
       <View style={styles.actions}>
         <TouchableOpacity
           onPress={() => {
@@ -73,7 +76,7 @@ const AccommodationItem = (props) => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </Card>
   );
 };
 
@@ -85,20 +88,14 @@ const AccommodationItem = (props) => {
  * refactor into seperate file AccommodationItemStyle
  */
 const styles = StyleSheet.create({
-  card: {
+  accommodation: {
     width: cardWidth,
     height: cardHeight,
-    backgroundColor: Colors.cards,
-    shadowColor: Colors.shadow,
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 5,
+    borderRadius: 15,
     marginHorizontal: width * 0.025,
     paddingTop: height * 0.101,
     paddingBottom: height * 0.02,
     paddingHorizontal: width * 0.03,
-    borderRadius: 15,
   },
   // refactor triple Colors.text
   header: {

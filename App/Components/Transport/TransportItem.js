@@ -11,8 +11,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /**
  * IMPORTS FROM WITHIN THE MODULE
  */
+import Card from '../../Components/UI/Card';
 import Colors from '../../Constants/Colors';
 
+// refactor Metrics
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.82;
 export const cardWidth = width * 0.82;
@@ -23,10 +25,11 @@ export const spacingForCardInset = width * 0.1 - 13;
  * TODO:
  * refactor icons for better touchable response and clickability
  * refactor metrics for responsive design
+ * refactor action bar
  */
 const TransportItem = (props) => {
   return (
-    <View style={styles.card}>
+    <Card style={styles.transport}>
       <View style={styles.actions}>
         <TouchableOpacity
           onPress={() => {
@@ -79,7 +82,7 @@ const TransportItem = (props) => {
           </Text>
         </View>
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -90,15 +93,9 @@ const TransportItem = (props) => {
  * refactor Metrics
  */
 const styles = StyleSheet.create({
-  card: {
+  transport: {
     width: cardWidth,
     height: cardHeight,
-    backgroundColor: Colors.cards,
-    shadowColor: Colors.shadow,
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 5,
     marginHorizontal: 10,
     padding: 25,
     borderRadius: 15,

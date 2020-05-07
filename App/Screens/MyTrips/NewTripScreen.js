@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
 import {
   View,
@@ -9,9 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
 import * as tripActions from '../../Stores/Actions/Trips';
 
-// ! REFACTOR
+/**
+ * 'CREATING A TRIP' SCREEN
+ */
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
   const fetchImage = (url) => {};
@@ -23,11 +27,16 @@ const NewTripScreen = (props) => {
 
   const submitHandler = useCallback(() => {
     dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
+    props.navigation.goBack();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, destination, startDate, endDate, budget]);
 
+  /**
+   * This could be refactored into a component to minimize repetition.
+   */
   return (
     <ScrollView style={styles.form}>
-      <View style={{paddingVertical: 15}}>
+      <View style={styles.metrics}>
         <Text style={styles.label}>Where are you headed?</Text>
         <TextInput
           style={styles.input}
@@ -35,7 +44,8 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setDestination(text)}
         />
       </View>
-      <View style={{paddingVertical: 15}}>
+
+      <View style={styles.metrics}>
         <Text style={styles.label}>When do you want to go?</Text>
         <TextInput
           style={styles.input}
@@ -43,15 +53,17 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setStartDate(text)}
         />
       </View>
-      <View style={{paddingVertical: 15}}>
-        <Text style={styles.label}>Until when?</Text>
+
+      <View style={styles.metrics}>
+        <Text style={styles.label}>Until...?</Text>
         <TextInput
           style={styles.input}
           value={endDate}
           onChangeText={(text) => setEndDate(text)}
         />
       </View>
-      <View style={{paddingVertical: 15}}>
+
+      <View style={styles.metrics}>
         <Text style={styles.label}>What is your budget?</Text>
         <TextInput
           style={styles.input}
@@ -59,7 +71,8 @@ const NewTripScreen = (props) => {
           onChangeText={(text) => setBudget(text)}
         />
       </View>
-      <View style={{alignItems: 'center', margin: 20}}>
+
+      <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
@@ -68,14 +81,21 @@ const NewTripScreen = (props) => {
   );
 };
 
-// ! REFACTOR
+/**
+ * TODO:
+ * refactor Colors
+ * refactor Fonts
+ * refactor Metrics
+ */
 const styles = StyleSheet.create({
   form: {
     backgroundColor: '#222222',
     flex: 1,
   },
+  metrics: {
+    paddingVertical: 15,
+  },
   label: {
-    fontFamily: 'open-sans-bold',
     marginRight: '10%',
     marginLeft: '10%',
     marginTop: '5%',
@@ -94,6 +114,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginLeft: '10%',
     marginRight: '10%',
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    margin: 20,
   },
   button: {
     borderRadius: 10,

@@ -12,6 +12,7 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 /**
  * IMPORTS FROM WITHIN THE MODULE
  */
+import Card from '../../Components/UI/Card';
 import Colors from '../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
@@ -27,7 +28,7 @@ const TripItem = (props) => {
   }
 
   return (
-    <View style={styles.product}>
+    <Card style={styles.trip}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -48,7 +49,7 @@ const TripItem = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -59,14 +60,7 @@ const TripItem = (props) => {
  * refactor Metrics
  */
 const styles = StyleSheet.create({
-  product: {
-    shadowColor: '#000000',
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: Colors.background,
+  trip: {
     height: 0.4 * height,
     marginHorizontal: width * 0.04,
     marginVertical: height * 0.015,
@@ -74,6 +68,11 @@ const styles = StyleSheet.create({
   touchable: {
     borderRadius: 10,
     overflow: 'hidden',
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   imageContainer: {
     width: '100%',
@@ -86,11 +85,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  details: {
-    alignItems: 'center',
-    height: '20%',
-    padding: 15,
-  },
   text: {
     color: Colors.text,
   },
@@ -101,10 +95,10 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 14,
   },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+  details: {
     alignItems: 'center',
+    height: '20%',
+    padding: 15,
   },
   alignRow: {
     marginHorizontal: 20,
