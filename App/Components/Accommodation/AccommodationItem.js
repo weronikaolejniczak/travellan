@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
  * IMPORTS FROM WITHIN THE MODULE
  */
 import Card from '../../Components/UI/Card';
+import ReadMore from '../../Components/UI/ReadMore';
 import Colors from '../../Constants/Colors';
 
 // refactor Metrics
@@ -72,7 +73,7 @@ const AccommodationItem = (props) => {
           <Text>{'\n'}</Text>
           <Text style={[styles.text, styles.h2]}>Description</Text>
           <View style={[styles.textAlign]}>
-            <Text style={[styles.text]}>{props.description}</Text>
+            <ReadMore longText={props.description} />
           </View>
         </View>
       </ScrollView>
