@@ -9,12 +9,16 @@ import {
   Dimensions,
 } from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
-// imports from within the module
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
 import Colors from '../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
 
-// REFACTOR!
+/**
+ * Trip item component used in TripsOverviewScreen for trips listing.
+ */
 const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
@@ -48,7 +52,12 @@ const TripItem = (props) => {
   );
 };
 
-// REFACTOR to use constants
+/**
+ * TODO:
+ * refactor Colors
+ * refactor Fonts
+ * refactor Metrics
+ */
 const styles = StyleSheet.create({
   product: {
     shadowColor: '#000000',
@@ -59,7 +68,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.background,
     height: 0.4 * height,
-    margin: 12,
+    marginHorizontal: width * 0.04,
+    marginVertical: height * 0.015,
   },
   touchable: {
     borderRadius: 10,
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: '66%',
+    height: '65%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: 'hidden', // ensures that any child can't overlap what we set up
@@ -82,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   text: {
-    color: '#FFFFFF',
+    color: Colors.text,
   },
   destination: {
     fontSize: 22,
@@ -92,7 +102,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actions: {
-    paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

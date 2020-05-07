@@ -1,13 +1,28 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {ScrollView, Text} from 'react-native';
+import {ScrollView, Text, StyleSheet} from 'react-native';
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
+import Colors from '../../Constants/Colors';
 
 const DailyPlanScreen = (props) => {
   return (
-    <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
-      <Text>Daily plan</Text>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
+      <Text style={styles.text}>Daily plan</Text>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: Colors.text,
+  },
+});
 
 export default DailyPlanScreen;

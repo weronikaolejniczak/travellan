@@ -26,7 +26,9 @@ import NewTripScreen from './Screens/MyTrips/NewTripScreen';
 import TransportScreen, {
   transportScreenOptions,
 } from './Screens/Transport/TransportScreen';
-import AccommodationScreen from './Screens/Accommodation/AccommodationScreen';
+import AccommodationScreen, {
+  accommodationScreenOptions,
+} from './Screens/Accommodation/AccommodationScreen';
 import MapScreen from './Screens/Map/MapScreen';
 import DailyPlanScreen from './Screens/DailyPlan/DailyPlanScreen';
 import WeatherScreen from './Screens/Weather/WeatherScreen';
@@ -83,7 +85,11 @@ export default function App() {
             component={TransportScreen}
             options={transportScreenOptions}
           />
-          <Stack.Screen name="Accommodation" component={AccommodationScreen} />
+          <Stack.Screen
+            name="Accommodation"
+            component={AccommodationScreen}
+            options={accommodationScreenOptions}
+          />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Daily plan" component={DailyPlanScreen} />
           <Stack.Screen name="Weather" component={WeatherScreen} />

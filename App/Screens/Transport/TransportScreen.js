@@ -9,14 +9,21 @@ import {
   StyleSheet,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-// imports from within the module
+import Icon from 'react-native-vector-icons/Ionicons';
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
 import HeaderButton from '../../Components/UI/HeaderButton';
 import TransportItem from '../../Components/Transport/TransportItem';
 import {
-  CARD_WIDTH,
-  SPACING_FOR_CARD_INSET,
+  cardWidth,
+  spacingForCardInset,
 } from '../../Components/Transport/TransportItem';
+import Colors from '../../Constants/Colors';
 
+/**
+ * TRANSPORT SCREEN
+ */
 const TransportScreen = (props) => {
   const trip = props.route.params.trip;
   const transport = trip.transportInfo;
@@ -25,35 +32,18 @@ const TransportScreen = (props) => {
     <ScrollView
       pagingEnabled
       snapToAlignment="center"
-      contentInset={{
-        // iOS ONLY
-        top: 0,
-        left: SPACING_FOR_CARD_INSET,
-        bottom: 0,
-        right: SPACING_FOR_CARD_INSET,
-      }}
-      style={{backgroundColor: '#222222', flex: 1}}
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: 'center',
-        paddingHorizontal:
-          Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
-      }}
+      contentInset={styles.contentInsetIOS}
+      style={styles.scrollview}
+      contentContainerStyle={styles.contentContainer}
       centerContent={true}>
       <View>
         {transport.length > 0 ? (
           <FlatList
             horizontal
             decelerationRate={0}
-            snapToInterval={CARD_WIDTH + 20} // REFACTOR THIS NUMBER TO BE RESPONSIVE
+            snapToInterval={cardWidth + 20} // REFACTOR THIS NUMBER TO BE RESPONSIVE
             snapToAlignment="center"
-            contentInset={{
-              // iOS ONLY
-              top: 0,
-              left: SPACING_FOR_CARD_INSET,
-              bottom: 0,
-              right: SPACING_FOR_CARD_INSET,
-            }}
+            contentInset={styles.contentInsetIOS}
             data={transport}
             keyExtractor={(item) => item.id.toString()}
             renderItem={(itemData) => (
@@ -70,10 +60,19 @@ const TransportScreen = (props) => {
             )}
           />
         ) : (
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={[styles.text, styles.transportlessText]}>
-              Add a ticket!
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={[styles.text, styles.itemlessText]}>
+              There are no tickets!
             </Text>
+
+            <Text style={[styles.text, styles.itemlessText]}>
+              Add one with the
+            </Text>
+
+            <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
+
+            <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
           </View>
         )}
       </View>
@@ -96,11 +95,33 @@ export const transportScreenOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    color: '#FFFFFF',
+  scrollview: {
+    backgroundColor: Colors.background,
+    flex: 1,
   },
-  transportlessText: {
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
+  },
+  contentInsetIOS: {
+    top: 0,
+    left: spacingForCardInset,
+    bottom: 0,
+    right: spacingForCardInset,
+  },
+  columnAndRowCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: Colors.text,
+  },
+  itemlessText: {
     fontSize: 20,
+  },
+  icon: {
+    margin: 10,
   },
 });
 

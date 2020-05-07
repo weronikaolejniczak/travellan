@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Text,
   View,
-  // Alert,
+  Alert,
   TouchableOpacity,
   FlatList,
   Platform,
@@ -85,22 +85,15 @@ const TripsOverviewScreen = (props) => {
                 }}>
                 <TouchableOpacity
                   style={{
-                    borderRadius: 10,
+                    borderRadius: 50,
+                    padding: 10,
+                    paddingHorizontal: 15,
                     backgroundColor: '#FF8C00',
-                    padding: 15,
-                    alignItems: 'center',
                   }}
                   onPress={() => {
                     dispatch(tripActions.deleteTrip(itemData.item.id));
                   }}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 16,
-                      color: '#FFFFFF',
-                    }}>
-                    Delete
-                  </Text>
+                  <Icon name="md-trash" size={30} color="#FFFFFF" />
                 </TouchableOpacity>
               </TripItem>
             )}

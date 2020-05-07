@@ -30,7 +30,11 @@ const TripDetailScreen = (props) => {
       <View>
         <View
           style={[
-            {margin: 20, height: height * 0.08, justifyContent: 'center'},
+            {
+              margin: height * 0.03,
+              height: height * 0.08,
+              justifyContent: 'center',
+            },
           ]}>
           <Text
             style={[
@@ -53,7 +57,7 @@ const TripDetailScreen = (props) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              props.navigation.navigate('Accommodation');
+              props.navigation.navigate('Accommodation', {trip: selectedTrip});
             }}>
             <Text style={styles.buttonText}>Accommodation</Text>
             <Icon name="md-bed" size={42} color="#FFFFFF" />
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
     width: '40%',
     height: height * 0.19,
     padding: 15,
-    margin: 10,
+    margin: height * 0.01,
   },
   buttonText: {
     fontWeight: 'bold',
