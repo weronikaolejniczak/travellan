@@ -26,53 +26,69 @@ const TransportItem = (props) => {
           name="md-trash"
           size={30}
           color="#FFFFFF"
-          style={{marginRight: 25}}
+          style={{marginRight: 30}}
           onPress={() => {
-            Alert.alert('Hello!');
+            Alert.alert(`Delete ${props.id}. ticket`);
           }}
         />
-        <Icon name="md-brush" size={30} color="#FFFFFF" onPress={() => {}} />
-      </View>
-      <Text style={[styles.header]}>{props.means} ticket</Text>
-      {props.to === true ? (
-        <Text style={[styles.subtitle]}>to {props.destination}</Text>
-      ) : (
-        <Text style={[styles.subtitle]}>from {props.destination}</Text>
-      )}
-      <View>
-        <Image />
-        <Text>{'\n'}</Text>
-      </View>
-      <View
-        style={{margin: 20, flexDirection: 'row', justifyContent: 'center'}}>
         <Icon
-          name="md-calendar"
-          size={42}
+          name="md-brush"
+          size={30}
           color="#FFFFFF"
-          style={{marginRight: 20}}
+          style={{marginRight: 30}}
+          onPress={() => {
+            Alert.alert('Edit ticket');
+          }}
         />
-        <Text style={[styles.text]}>
-          Leave on {props.date} {'\n'}
-          at {props.hour}
-        </Text>
-      </View>
-      <View
-        style={{
-          margin: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
         <Icon
-          name="md-text"
-          size={42}
+          name="md-qr-scanner"
+          size={30}
           color="#FFFFFF"
-          style={{marginRight: 20}}
+          style={{marginRight: 30}}
+          onPress={() => {
+            Alert.alert('Show QR code');
+          }}
         />
-        <Text style={[styles.text]}>
-          from {props.fromPlace} {'\n'}
-          {'\n'}
-          to {props.toPlace}
-        </Text>
+      </View>
+      <View style={{marginTop: 50, marginBottom: 20, alignItems: 'center'}}>
+        <Text style={[styles.header]}>{props.means} ticket</Text>
+        {props.to === true ? (
+          <Text style={[styles.subtitle]}>to {props.destination}</Text>
+        ) : (
+          <Text style={[styles.subtitle]}>from {props.destination}</Text>
+        )}
+      </View>
+      <View style={{flexDirection: 'column'}}>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            name="md-calendar"
+            size={42}
+            color="#FFFFFF"
+            style={{marginRight: 20}}
+          />
+          <Text style={[styles.text]}>
+            Leave on {props.date} {'\n'}
+            at {props.hour}
+          </Text>
+        </View>
+        <View
+          style={{
+            margin: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <Icon
+            name="md-more"
+            size={42}
+            color="#FFFFFF"
+            style={{marginRight: 20}}
+          />
+          <Text style={[styles.text]}>
+            from {props.fromPlace} {'\n'}
+            {'\n'}
+            to {props.toPlace}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -82,8 +98,6 @@ const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#111111',
     shadowColor: '#000000',
     shadowOpacity: 0.3,

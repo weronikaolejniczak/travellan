@@ -58,6 +58,7 @@ const TransportScreen = (props) => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={(itemData) => (
               <TransportItem
+                id={itemData.item.id}
                 means={itemData.item.means}
                 to={itemData.item.to}
                 destination={trip.destination}
