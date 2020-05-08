@@ -35,9 +35,9 @@ const TRIPS = [
     // image url
     'https://images.unsplash.com/photo-1562883676-8c7feb83f09b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80',
     // start date
-    '2021-6-21',
+    '2021-06-21',
     // end date
-    '2021-6-25',
+    '2021-06-25',
     // budget
     2000.5,
     // notes
@@ -57,7 +57,7 @@ const TRIPS = [
         id: 1,
         to: true,
         from: false,
-        date: '2021-6-21',
+        date: '2021-06-21',
         hour: '12:30',
         fromPlace: 'Poznań Airport Bukowska 285, 60-189 Poznań',
         toPlace:
@@ -73,7 +73,7 @@ const TRIPS = [
         id: 2,
         to: false,
         from: true,
-        date: '2021-6-25',
+        date: '2021-06-25',
         hour: '14:45',
         fromPlace:
           'Josep Tarradellas Barcelona-El Prat Airport, 08820 El Prat de Llobregat, Barcelona, Spain',
@@ -113,8 +113,8 @@ const TRIPS = [
       longitudeDelta: 0.0421,
     },
     'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80',
-    '2021-2-13',
-    '2021-2-15',
+    '2021-02-13',
+    '2021-02-15',
     1450.5,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Paris!'}],
     [],
@@ -133,8 +133,8 @@ const TRIPS = [
       longitudeDelta: 0.0421,
     },
     'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60',
-    '2021-4-10',
-    '2021-4-21',
+    '2021-04-10',
+    '2021-04-21',
     3420.0,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Tokyo!'}],
     [],
@@ -153,8 +153,8 @@ const TRIPS = [
       longitudeDelta: 0.0421,
     },
     'https://images.unsplash.com/photo-1519197924294-4ba991a11128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60',
-    '2021-8-27',
-    '2021-8-30',
+    '2021-08-27',
+    '2021-08-30',
     1505.75,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Warsaw!'}],
     [],

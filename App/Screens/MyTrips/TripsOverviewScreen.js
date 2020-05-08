@@ -115,6 +115,7 @@ export const tripsScreenOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Menu"
+          style={{marginLeft: 8}}
           iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
           onPress={() => {}}
         />
@@ -124,6 +125,7 @@ export const tripsScreenOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
+          style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
             navData.navigation.navigate('Create a trip');

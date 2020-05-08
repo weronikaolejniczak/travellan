@@ -16,7 +16,7 @@ const ReadMore = (props) => {
     return text
       .replace(/([.?!])\s*(?=[A-Z])/g, '$1|')
       .split('|')
-      .slice(0, 3)
+      .slice(0, 2)
       .join(' ');
   };
 

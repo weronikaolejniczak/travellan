@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState, useCallback} from 'react';
 import {
   View,
@@ -18,18 +19,68 @@ import * as tripActions from '../../Stores/Actions/Trips';
  */
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
-  const fetchImage = (url) => {};
+
+  /**
+   * state variables and state setter functions
+   */
+  const [submitted, setSubmitted] = useState(false);
 
   const [destination, setDestination] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [budget, setBudget] = useState('');
+  const [destinationIsValid, setDestinationIsValid] = useState(false);
 
+  const [startDate, setStartDate] = useState('');
+  const [startDateIsValid, setStartDateIsValid] = useState(false);
+
+  const [endDate, setEndDate] = useState('');
+  const [endDateIsValid, setEndDateIsValid] = useState(false);
+
+  const [budget, setBudget] = useState('');
+  const [budgetIsValid, setBudgetIsValid] = useState(false);
+
+  /**
+   * handlers
+   */
   const submitHandler = useCallback(() => {
-    dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
-    props.navigation.goBack();
+    if (!destinationIsValid || !startDateIsValid || !endDateIsValid || !budgetIsValid) {
+      setSubmitted(true);
+    } else {
+      dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
+      props.navigation.goBack();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, destination, startDate, endDate, budget]);
+
+  /**
+   * refactor handlers with condition and setters functions
+   */
+  let destinationRegex = new RegExp("^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$");
+  const destinationChangeHandler = (text) => {
+    (text.trim().length === 0 || !destinationRegex.test(text))
+      ? setDestinationIsValid(false)
+      : setDestinationIsValid(true);
+    setDestination(text);
+  };
+
+  const startDateChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setStartDateIsValid(false)
+      : setStartDateIsValid(true);
+    setStartDate(text);
+  };
+
+  const endDateChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setEndDateIsValid(false)
+      : setEndDateIsValid(true);
+    setEndDate(text);
+  };
+
+  const budgetChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setBudgetIsValid(false)
+      : setBudgetIsValid(true);
+    setBudget(text);
+  };
 
   /**
    * This could be refactored into a component to minimize repetition.
@@ -41,17 +92,27 @@ const NewTripScreen = (props) => {
         <TextInput
           style={styles.input}
           value={destination}
-          onChangeText={(text) => setDestination(text)}
+          onChangeText={destinationChangeHandler}
         />
+        {!destinationIsValid && submitted && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.error}>Enter a valid city and/or country!</Text>
+        </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>When do you want to go?</Text>
+        <Text style={styles.label}>When?</Text>
         <TextInput
           style={styles.input}
           value={startDate}
-          onChangeText={(text) => setStartDate(text)}
+          onChangeText={startDateChangeHandler}
         />
+        {!startDateIsValid && submitted && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
+        </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
@@ -59,8 +120,13 @@ const NewTripScreen = (props) => {
         <TextInput
           style={styles.input}
           value={endDate}
-          onChangeText={(text) => setEndDate(text)}
+          onChangeText={endDateChangeHandler}
         />
+        {!endDateIsValid && submitted && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
+        </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
@@ -68,8 +134,13 @@ const NewTripScreen = (props) => {
         <TextInput
           style={styles.input}
           value={budget}
-          onChangeText={(text) => setBudget(text)}
+          onChangeText={budgetChangeHandler}
         />
+        {!budgetIsValid && submitted && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.error}>Enter a valid budget!</Text>
+        </View>
+        )}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -93,7 +164,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   metrics: {
-    paddingVertical: 15,
+    paddingVertical: 10,
   },
   label: {
     marginRight: '10%',
@@ -114,6 +185,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginLeft: '10%',
     marginRight: '10%',
+  },
+  errorContainer: {
+    marginVertical: 5,
+    marginHorizontal: 40,
+  },
+  error: {
+    color: 'red',
   },
   buttonContainer: {
     alignItems: 'center',

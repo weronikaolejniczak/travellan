@@ -28,7 +28,7 @@ const TripDetailScreen = (props) => {
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
       <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
       <View>
-        <View
+        <View // date
           style={[
             {
               margin: height * 0.03,
@@ -45,7 +45,9 @@ const TripDetailScreen = (props) => {
             {selectedTrip.startDate} - {selectedTrip.endDate}
           </Text>
         </View>
-        <View style={styles.justifyRow}>
+
+        <View // 1st row of functionalities buttons
+          style={styles.justifyRow}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -54,6 +56,7 @@ const TripDetailScreen = (props) => {
             <Text style={styles.buttonText}>Transport</Text>
             <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -63,7 +66,9 @@ const TripDetailScreen = (props) => {
             <Icon name="md-bed" size={42} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={styles.justifyRow}>
+
+        <View // 2nd row of functionalities buttons
+          style={styles.justifyRow}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -72,6 +77,7 @@ const TripDetailScreen = (props) => {
             <Text style={styles.buttonText}>Map</Text>
             <Icon name="md-map" size={42} color="#FFFFFF" />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -81,7 +87,9 @@ const TripDetailScreen = (props) => {
             <Icon name="md-calendar" size={42} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={styles.justifyRow}>
+
+        <View // 3rd row of functionalities buttons
+          style={styles.justifyRow}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -90,6 +98,7 @@ const TripDetailScreen = (props) => {
             <Text style={styles.buttonText}>Weather</Text>
             <Icon name="md-cloudy" size={42} color="#FFFFFF" />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -99,7 +108,9 @@ const TripDetailScreen = (props) => {
             <Icon name="md-wallet" size={42} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={styles.justifyRow}>
+
+        <View // 4th row of functionalities buttons
+          style={styles.justifyRow}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -108,6 +119,7 @@ const TripDetailScreen = (props) => {
             <Text style={styles.buttonText}>Notes</Text>
             <Icon name="md-journal" size={42} color="#FFFFFF" />
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.button} onPress={() => {}}>
             <Text style={styles.buttonText}>Events</Text>
             <Icon name="md-bonfire" size={42} color="#FFFFFF" />

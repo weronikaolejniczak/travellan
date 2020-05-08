@@ -86,6 +86,7 @@ export const transportScreenOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
+          style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {}}
         />
