@@ -3,8 +3,8 @@ import Trip from '../Models/TripModel';
 /**
  * Dummy trips
  *  [int]               id,
-    [int]               ownerId,
     [string]            destination,
+    [object]            region
     [string]            imageUrl,
     [date]              startDate,
     [date]              endDate,
@@ -20,8 +20,6 @@ const TRIPS = [
   // trip1
   new Trip(
     // id
-    1,
-    // ownerId
     1,
     // destination
     'Barcelona',
@@ -104,7 +102,6 @@ const TRIPS = [
   // trip2
   new Trip(
     2,
-    1,
     'Paris',
     {
       latitude: 48.864716,
@@ -124,7 +121,6 @@ const TRIPS = [
   // trip3
   new Trip(
     3,
-    1,
     'Tokyo',
     {
       latitude: 35.689487,
@@ -144,7 +140,6 @@ const TRIPS = [
   // trip4
   new Trip(
     4,
-    1,
     'Warsaw',
     {
       latitude: 52.229675,
@@ -164,7 +159,6 @@ const TRIPS = [
   // trip5
   new Trip(
     5,
-    1,
     'Milan',
     {
       latitude: 45.464203,

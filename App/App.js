@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {composeWithDevTools} from 'redux-devtools-extension'; // for debugging purposes
+import thunk from 'redux-thunk';
 /**
  * Imports from within the module
  */
@@ -42,8 +42,7 @@ const rootReducer = combineReducers({
   notes: notesReducer,
 });
 
-// delete devtools before deployment
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 // stack navigator
 const Stack = createStackNavigator();

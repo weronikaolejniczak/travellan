@@ -1,7 +1,6 @@
 class Trip {
   constructor(
     id,
-    ownerId,
     destination,
     region,
     imageUrl,
@@ -14,7 +13,6 @@ class Trip {
     pointsOfInterest,
   ) {
     this.id = id;
-    this.ownerId = ownerId;
     this.destination = destination;
     this.region = region;
     this.imageUrl = imageUrl;

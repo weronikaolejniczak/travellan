@@ -27,6 +27,8 @@ const TripItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
+  //{props.destination === 'Saint Tropez' && console.log(`image: ${props.image}, startDate: ${props.startDate}, endDate: ${props.endDate}`)}
+
   return (
     <Card style={styles.trip}>
       <View style={styles.touchable}>

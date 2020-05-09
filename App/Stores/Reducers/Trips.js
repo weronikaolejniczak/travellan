@@ -10,18 +10,24 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_TRIP:
       const newTrip = new Trip(
-        new Date().toString(),
-        1,
+        new Date().toString(), // DUMMY ID
         action.tripData.destination,
-        '',
+        {
+          latitude: 48.864716,
+          longitude: 2.349014,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }, // refactor for fetched coordinates
+        action.tripData.imageUrl,
         action.tripData.startDate,
         action.tripData.endDate,
         action.tripData.budget,
-        {},
-        {},
-        {},
         [],
+        [],
+        [],
+        []
       );
+
       return {
         ...state,
         availableTrips: state.availableTrips.concat(newTrip),
