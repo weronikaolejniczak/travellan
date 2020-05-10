@@ -1,22 +1,15 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-// imports from within the module
-// import {Colors} from '../../Constants/Colors';
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
+import {tripDetailScreenStyle as styles} from './TripDetailScreenStyle';
 
-const {height, width} = Dimensions.get('window');
-
-// REFACTOR to use constants
+/**
+ * Trip detail screen - displays details about each trip
+ */
 const TripDetailScreen = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
@@ -24,26 +17,14 @@ const TripDetailScreen = (props) => {
   );
 
   return (
-    <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
+    <ScrollView style={styles.container}>
       <View>
         <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
       </View>
 
       <View>
-        <View
-          style={[
-            {
-              margin: height * 0.03,
-              height: height * 0.08,
-              justifyContent: 'center',
-            },
-          ]}>
-          <Text
-            style={[
-              styles.text,
-              styles.header,
-              {fontWeight: 'bold', textAlign: 'center'},
-            ]}>
+        <View style={styles.dateContainer}>
+          <Text style={[styles.text, styles.header, styles.date]}>
             {selectedTrip.startDate} - {selectedTrip.endDate}
           </Text>
         </View>
@@ -145,38 +126,5 @@ export const tripDetailScreenOptions = (navData) => {
     headerTitle: navData.route.params.tripDestination,
   };
 };
-
-// REFACTOR!
-const styles = StyleSheet.create({
-  text: {
-    color: '#FFFFFF',
-  },
-  header: {
-    fontSize: 24,
-  },
-  image: {
-    width: '100%',
-    height: height * 0.51,
-  },
-  button: {
-    borderRadius: 10,
-    backgroundColor: '#FF8C00',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '40%',
-    height: height * 0.19,
-    padding: 15,
-    margin: height * 0.01,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
-  justifyRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-});
 
 export default TripDetailScreen;
