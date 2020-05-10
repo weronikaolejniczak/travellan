@@ -1,24 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, Text, Alert, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
-import Colors from '../../Constants/Colors';
-
-// refactor Metrics
-const {height, width} = Dimensions.get('window');
-export const cardHeight = height * 0.82;
-export const cardWidth = width * 0.82;
-export const spacingForCardInset = width * 0.1 - 13;
+import {transportItemStyle as styles} from './TransportItemStyle';
 
 /**
  * Transport item component used in TransportScreen for tickets listing.
@@ -26,6 +11,7 @@ export const spacingForCardInset = width * 0.1 - 13;
  * refactor icons for better touchable response and clickability
  * refactor metrics for responsive design
  * refactor action bar
+ * refactor inline styles
  */
 const TransportItem = (props) => {
   return (
@@ -85,62 +71,5 @@ const TransportItem = (props) => {
     </Card>
   );
 };
-
-/**
- * TODO:
- * refactor Colors
- * refactor Fonts
- * refactor Metrics
- */
-const styles = StyleSheet.create({
-  transport: {
-    width: cardWidth,
-    height: cardHeight,
-    marginHorizontal: 10,
-    padding: 25,
-    borderRadius: 15,
-  },
-  actions: {
-    flexDirection: 'row',
-    padding: 15,
-    backgroundColor: Colors.primary,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-  },
-  // refactor the triple Colors.text
-  header: {
-    color: Colors.text,
-    fontSize: 24,
-  },
-  subtitle: {
-    color: Colors.text,
-    fontSize: 20,
-  },
-  text: {
-    fontSize: 16,
-    color: Colors.text,
-  },
-  icon: {
-    fontSize: 30,
-    color: Colors.text,
-    marginRight: 20,
-  },
-  columnDirection: {
-    flexDirection: 'column',
-  },
-  rowDirection: {
-    flexDirection: 'row',
-  },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
-  rowCenter: {
-    alignItems: 'center',
-  },
-});
 
 export default TransportItem;

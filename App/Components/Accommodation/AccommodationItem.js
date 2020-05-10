@@ -6,8 +6,7 @@ import Card from '../../Components/UI/Card';
 import ReadMore from '../../Components/UI/ReadMore';
 import {accommodationItemStyle as styles} from './AccommodationItemStyle';
 
-/**
- * Accommodation item component used in AccommodationScreen for reservations listing
+/** Accommodation item component used in AccommodationScreen for reservations listing
  * TODO:
  * refactor icons for better touchable response and clickability
  * refactor action bar
