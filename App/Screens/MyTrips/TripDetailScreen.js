@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 // imports from within the module
 // import {Colors} from '../../Constants/Colors';
 
@@ -26,9 +25,12 @@ const TripDetailScreen = (props) => {
 
   return (
     <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
-      <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
       <View>
-        <View // date
+        <Image style={styles.image} source={{uri: selectedTrip.imageUrl}} />
+      </View>
+
+      <View>
+        <View
           style={[
             {
               margin: height * 0.03,
@@ -46,84 +48,88 @@ const TripDetailScreen = (props) => {
           </Text>
         </View>
 
-        <View // 1st row of functionalities buttons
-          style={styles.justifyRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Transport', {trip: selectedTrip});
-            }}>
-            <Text style={styles.buttonText}>Transport</Text>
-            <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
+        <View>
+          <View // 1st row of functionalities buttons
+            style={styles.justifyRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Transport', {trip: selectedTrip});
+              }}>
+              <Text style={styles.buttonText}>Transport</Text>
+              <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Accommodation', {trip: selectedTrip});
-            }}>
-            <Text style={styles.buttonText}>Accommodation</Text>
-            <Icon name="md-bed" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Housing', {
+                  trip: selectedTrip,
+                });
+              }}>
+              <Text style={styles.buttonText}>Housing</Text>
+              <Icon name="md-bed" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
 
-        <View // 2nd row of functionalities buttons
-          style={styles.justifyRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Map', {tripId: selectedTrip.id});
-            }}>
-            <Text style={styles.buttonText}>Map</Text>
-            <Icon name="md-map" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
+          <View // 2nd row of functionalities buttons
+            style={styles.justifyRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Map', {tripId: selectedTrip.id});
+              }}>
+              <Text style={styles.buttonText}>Map</Text>
+              <Icon name="md-map" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Daily plan');
-            }}>
-            <Text style={styles.buttonText}>Daily plan</Text>
-            <Icon name="md-calendar" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Daily plan');
+              }}>
+              <Text style={styles.buttonText}>Daily plan</Text>
+              <Icon name="md-calendar" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
 
-        <View // 3rd row of functionalities buttons
-          style={styles.justifyRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Weather');
-            }}>
-            <Text style={styles.buttonText}>Weather</Text>
-            <Icon name="md-cloudy" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
+          <View // 3rd row of functionalities buttons
+            style={styles.justifyRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Weather');
+              }}>
+              <Text style={styles.buttonText}>Weather</Text>
+              <Icon name="md-cloudy" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Budget');
-            }}>
-            <Text style={styles.buttonText}>Budget</Text>
-            <Icon name="md-wallet" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Budget');
+              }}>
+              <Text style={styles.buttonText}>Budget</Text>
+              <Icon name="md-wallet" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
 
-        <View // 4th row of functionalities buttons
-          style={styles.justifyRow}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.navigation.navigate('Notes');
-            }}>
-            <Text style={styles.buttonText}>Notes</Text>
-            <Icon name="md-journal" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
+          <View // 4th row of functionalities buttons
+            style={styles.justifyRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Notes');
+              }}>
+              <Text style={styles.buttonText}>Notes</Text>
+              <Icon name="md-journal" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Events</Text>
-            <Icon name="md-bonfire" size={42} color="#FFFFFF" />
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => {}}>
+              <Text style={styles.buttonText}>Events</Text>
+              <Icon name="md-bonfire" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -150,7 +156,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: height * 0.3,
+    height: height * 0.51,
   },
   button: {
     borderRadius: 10,

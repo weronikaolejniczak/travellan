@@ -61,13 +61,15 @@ const NewTripScreen = (props) => {
     setDestination(text);
   };
 
+  let dateRegex = new RegExp();
+  // from ->
   const startDateChangeHandler = (text) => {
     text.trim().length === 0
       ? setStartDateIsValid(false)
       : setStartDateIsValid(true);
     setStartDate(text);
   };
-
+  // until <-
   const endDateChangeHandler = (text) => {
     text.trim().length === 0
       ? setEndDateIsValid(false)

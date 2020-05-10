@@ -15,7 +15,9 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 import Card from '../../Components/UI/Card';
 import Colors from '../../Constants/Colors';
 
+// constants for responsive design
 const {height, width} = Dimensions.get('window');
+const cardHeight = 0.4 * height;
 
 /**
  * Trip item component used in TripsOverviewScreen for trips listing.
@@ -27,12 +29,10 @@ const TripItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  //{props.destination === 'Saint Tropez' && console.log(`image: ${props.image}, startDate: ${props.startDate}, endDate: ${props.endDate}`)}
-
   return (
-    <Card style={styles.trip}>
+    <Card style={styles.tripCard}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onSelect} useForeground>
+        <TouchableCmp onPress={props.onSelect}>
           <View>
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{uri: props.image}} />
@@ -46,10 +46,10 @@ const TripItem = (props) => {
                   {props.startDate} - {props.endDate}
                 </Text>
               </View>
-              <View style={styles.actions}>{props.children}</View>
             </View>
           </View>
         </TouchableCmp>
+        <View style={styles.actions}>{props.children}</View>
       </View>
     </Card>
   );
@@ -62,33 +62,37 @@ const TripItem = (props) => {
  * refactor Metrics
  */
 const styles = StyleSheet.create({
-  trip: {
-    height: 0.4 * height,
+  tripCard: {
+    height: cardHeight,
     marginHorizontal: width * 0.04,
-    marginVertical: height * 0.015,
+    marginVertical: height * 0.02,
   },
   touchable: {
     borderRadius: 10,
     overflow: 'hidden',
   },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
   imageContainer: {
     width: '100%',
-    height: '65%',
+    height: cardHeight * 0.65,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    overflow: 'hidden', // ensures that any child can't overlap what we set up
   },
   image: {
     width: '100%',
     height: '100%',
   },
+  actions: {
+    position: 'absolute',
+    left: '80%',
+    top: cardHeight * 0.715,
+  },
   text: {
     color: Colors.text,
+  },
+  details: {
+    alignItems: 'center',
+    height: cardHeight * 0.35,
+    padding: '4%',
   },
   destination: {
     fontSize: 22,
@@ -97,13 +101,8 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 14,
   },
-  details: {
-    alignItems: 'center',
-    height: '20%',
-    padding: 15,
-  },
   alignRow: {
-    marginHorizontal: 20,
+    marginHorizontal: '4%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

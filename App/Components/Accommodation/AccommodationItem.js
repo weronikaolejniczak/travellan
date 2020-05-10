@@ -56,16 +56,7 @@ const AccommodationItem = (props) => {
       </View>
 
       <ScrollView>
-        <View style={styles.imageContainer}>
-          <Image
-            // TODO: image doesn't show
-            styles={styles.image}
-            source={{uri: props.image}}
-            // resizeMode={'cover'}
-          />
-        </View>
-
-        <View>
+        <View style={{marginTop: 10}}>
           <Text style={[styles.text, styles.header]}>{props.name}</Text>
           <Text style={[styles.text, styles.subtitle]}>{props.address}</Text>
           <Text>{'\n'}</Text>

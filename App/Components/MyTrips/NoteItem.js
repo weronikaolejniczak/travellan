@@ -27,6 +27,7 @@ const NoteItem = (props) => {
           <View style={styles.alignRow}>
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
+              {props.children}
             </View>
           </View>
         </View>

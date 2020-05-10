@@ -85,7 +85,7 @@ export default function App() {
             options={transportScreenOptions}
           />
           <Stack.Screen
-            name="Accommodation"
+            name="Housing"
             component={AccommodationScreen}
             options={accommodationScreenOptions}
           />

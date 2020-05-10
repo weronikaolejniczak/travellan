@@ -1,22 +1,27 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   Text,
   View,
   Alert,
-  TouchableOpacity,
+  TouchableHighlight,
   FlatList,
   Platform,
+  Dimensions,
   StyleSheet,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-// imports from within the module
+/**
+ * IMPORTS FROM WITHIN THE MODULE
+ */
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
-// import Colors from '../../Constants/Colors';
+import Colors from '../../Constants/Colors';
+
+// constants for responsive design
+const {height, width} = Dimensions.get('window');
 
 /**
  * REFACTOR
@@ -54,9 +59,9 @@ const TripsOverviewScreen = (props) => {
   };
 
   return (
-    <View style={{backgroundColor: '#333333', flex: 1}}>
+    <View style={styles.container}>
       {trips.length === 0 ? (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <View style={styles.triplessContainer}>
           <Text style={[styles.text, styles.triplessText]}>
             There are no trips!
           </Text>
@@ -67,7 +72,7 @@ const TripsOverviewScreen = (props) => {
           <Text style={[styles.text, styles.triplessText]}>sign above!</Text>
         </View>
       ) : (
-        <View style={{flex: 1}}>
+        <View>
           <FlatList
             data={trips}
             keyExtractor={(item) => item.id.toString()}
@@ -83,18 +88,29 @@ const TripsOverviewScreen = (props) => {
                     itemData.item.destination,
                   );
                 }}>
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 50,
-                    padding: 10,
-                    paddingHorizontal: 15,
-                    backgroundColor: '#FF8C00',
-                  }}
+                <TouchableHighlight
+                  style={styles.deleteButton}
                   onPress={() => {
-                    dispatch(tripActions.deleteTrip(itemData.item.id));
+                    Alert.alert(
+                      'Delete a trip',
+                      'Are you sure?',
+                      [
+                        {
+                          text: 'Cancel',
+                          onPress: () => console.log('Cancel Pressed'),
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'OK',
+                          onPress: () =>
+                            dispatch(tripActions.deleteTrip(itemData.item.id)),
+                        },
+                      ],
+                      {cancelable: true},
+                    );
                   }}>
-                  <Icon name="md-trash" size={30} color="#FFFFFF" />
-                </TouchableOpacity>
+                  <Icon name="md-trash" style={styles.deleteIcon} />
+                </TouchableHighlight>
               </TripItem>
             )}
           />
@@ -137,11 +153,34 @@ export const tripsScreenOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  container: {
+    backgroundColor: Colors.background,
+    flex: 1,
+  },
+  triplessContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
   text: {
-    color: '#FFFFFF',
+    color: Colors.text,
   },
   triplessText: {
     fontSize: 20,
+  },
+  deleteButton: {
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    borderRadius: 50,
+    padding: 10,
+    paddingHorizontal: 15,
+  },
+  deleteIcon: {
+    fontSize: 30,
+    color: Colors.primary,
   },
 });
 
