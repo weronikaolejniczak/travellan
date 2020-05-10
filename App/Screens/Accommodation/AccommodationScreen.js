@@ -1,27 +1,18 @@
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  FlatList,
-  Platform,
-  StyleSheet,
-} from 'react-native';
+import {View, ScrollView, Text, FlatList, Platform} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
-import AccommodationItem from '../../Components/Accommodation/AccommodationItem';
-import {
+import AccommodationItem, {
   cardWidth,
-  spacingForCardInset,
 } from '../../Components/Accommodation/AccommodationItem';
-import Colors from '../../Constants/Colors';
+import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
 
-/**
- * ACCOMMODATION SCREEN
+/** ACCOMMODATION SCREEN - displays stored reservations
+ * TODO:
+ * refactor inline styles
+ * refactor repeated itemless screen (for all other screens as well)
  */
 const AccommodationScreen = (props) => {
   const trip = props.route.params.trip;
@@ -89,41 +80,5 @@ export const accommodationScreenOptions = (navData) => {
     ),
   };
 };
-
-/**
- * TODO:
- * refactor Fonts
- * refactor Metrics
- */
-const styles = StyleSheet.create({
-  scrollview: {
-    backgroundColor: Colors.background,
-    flex: 1,
-  },
-  contentContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
-  },
-  contentInsetIOS: {
-    top: 0,
-    left: spacingForCardInset,
-    bottom: 0,
-    right: spacingForCardInset,
-  },
-  columnAndRowCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: Colors.text,
-  },
-  itemlessText: {
-    fontSize: 20,
-  },
-  icon: {
-    margin: 10,
-  },
-});
 
 export default AccommodationScreen;
