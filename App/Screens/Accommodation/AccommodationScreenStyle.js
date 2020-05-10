@@ -1,5 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
-import {spacingForCardInset} from '../../Components/Accommodation/AccommodationItem';
+import {spacingForCardInset} from '../../Components/Accommodation/AccommodationItemStyle';
 import Colors from '../../Constants/Colors';
 
 /**
