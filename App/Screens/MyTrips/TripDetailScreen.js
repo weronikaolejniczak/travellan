@@ -9,6 +9,8 @@ import {tripDetailScreenStyle as styles} from './TripDetailScreenStyle';
 
 /**
  * Trip detail screen - displays details about each trip
+ * TODO:
+ * refactor repeating elements into reusable components
  */
 const TripDetailScreen = (props) => {
   const tripId = props.route.params.tripId;

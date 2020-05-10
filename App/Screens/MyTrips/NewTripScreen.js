@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
   ScrollView,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -13,9 +11,12 @@ import {useDispatch} from 'react-redux';
  * IMPORTS FROM WITHIN THE MODULE
  */
 import * as tripActions from '../../Stores/Actions/Trips';
+import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 
 /**
- * 'CREATING A TRIP' SCREEN
+ * Creating a new trip screen - here a user can input basic information to create a new trip
+ * TODO:
+ * refactor repeating elements into reusable components
  */
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const NewTripScreen = (props) => {
    * handlers
    */
   const submitHandler = useCallback(() => {
-    if (!destinationIsValid || !startDateIsValid || !endDateIsValid || !budgetIsValid) {
+    if (
+      !destinationIsValid ||
+      !startDateIsValid ||
+      !endDateIsValid ||
+      !budgetIsValid
+    ) {
       setSubmitted(true);
     } else {
       dispatch(tripActions.createTrip(destination, startDate, endDate, budget));
@@ -53,7 +59,9 @@ const NewTripScreen = (props) => {
   /**
    * refactor handlers with condition and setters functions
    */
-  let destinationRegex = new RegExp("^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$");
+  let destinationRegex = new RegExp(
+    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$"
+  );
   const destinationChangeHandler = (text) => {
     (text.trim().length === 0 || !destinationRegex.test(text))
       ? setDestinationIsValid(false)
@@ -61,7 +69,6 @@ const NewTripScreen = (props) => {
     setDestination(text);
   };
 
-  let dateRegex = new RegExp();
   // from ->
   const startDateChangeHandler = (text) => {
     text.trim().length === 0
@@ -77,10 +84,9 @@ const NewTripScreen = (props) => {
     setEndDate(text);
   };
 
+  // let budgetRegex = new RegExp();
   const budgetChangeHandler = (text) => {
-    text.trim().length === 0
-      ? setBudgetIsValid(false)
-      : setBudgetIsValid(true);
+    text.trim().length === 0 ? setBudgetIsValid(false) : setBudgetIsValid(true);
     setBudget(text);
   };
 
@@ -97,9 +103,9 @@ const NewTripScreen = (props) => {
           onChangeText={destinationChangeHandler}
         />
         {!destinationIsValid && submitted && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.error}>Enter a valid city and/or country!</Text>
-        </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a valid city and/or country!</Text>
+          </View>
         )}
       </View>
 
@@ -111,9 +117,9 @@ const NewTripScreen = (props) => {
           onChangeText={startDateChangeHandler}
         />
         {!startDateIsValid && submitted && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
-        </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
+          </View>
         )}
       </View>
 
@@ -125,9 +131,9 @@ const NewTripScreen = (props) => {
           onChangeText={endDateChangeHandler}
         />
         {!endDateIsValid && submitted && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
-        </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a valid date! (yyyy-mm-dd)</Text>
+          </View>
         )}
       </View>
 
@@ -139,9 +145,9 @@ const NewTripScreen = (props) => {
           onChangeText={budgetChangeHandler}
         />
         {!budgetIsValid && submitted && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.error}>Enter a valid budget!</Text>
-        </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a valid budget!</Text>
+          </View>
         )}
       </View>
 
@@ -153,65 +159,5 @@ const NewTripScreen = (props) => {
     </ScrollView>
   );
 };
-
-/**
- * TODO:
- * refactor Colors
- * refactor Fonts
- * refactor Metrics
- */
-const styles = StyleSheet.create({
-  form: {
-    backgroundColor: '#222222',
-    flex: 1,
-  },
-  metrics: {
-    paddingVertical: 10,
-  },
-  label: {
-    marginRight: '10%',
-    marginLeft: '10%',
-    marginTop: '5%',
-    color: '#FF8C00',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  input: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: '#FFA500',
-    borderBottomWidth: 1,
-    marginVertical: 2,
-    marginHorizontal: 2,
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-  errorContainer: {
-    marginVertical: 5,
-    marginHorizontal: 40,
-  },
-  error: {
-    color: 'red',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    margin: 20,
-  },
-  button: {
-    borderRadius: 10,
-    backgroundColor: '#FF8C00',
-    alignItems: 'center',
-    width: '40%',
-    padding: 15,
-    margin: 10,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
-});
 
 export default NewTripScreen;

@@ -5,7 +5,8 @@
 export default {
   shadow: '#000000', // pitch black
   cards: '#111111', // light black
-  background: '#333333', // dark grey
-  text: '#FFFFFF', // white
+  background: '#222222', // dark grey
   primary: '#FF8C00', // dark orange
+  text: '#FFFFFF', // white
+  error: 'red',
 };
