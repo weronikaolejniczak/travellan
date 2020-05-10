@@ -1,28 +1,17 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  FlatList,
-  Platform,
-  StyleSheet,
-} from 'react-native';
+import {View, ScrollView, Text, FlatList, Platform} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
 import TransportItem from '../../Components/Transport/TransportItem';
-import {
-  cardWidth,
-  spacingForCardInset,
-} from '../../Components/Transport/TransportItem';
-import Colors from '../../Constants/Colors';
+import {cardWidth} from '../../Components/Transport/TransportItem';
+import {transportScreenStyle as styles} from './TransportScreenStyle';
 
-/**
- * TRANSPORT SCREEN
+/** TRANSPORT SCREEN - displays stored transport tickets
+ * TODO:
+ * refactor inline styles
+ * refactor values to be responsive
  */
 const TransportScreen = (props) => {
   const trip = props.route.params.trip;
@@ -41,7 +30,7 @@ const TransportScreen = (props) => {
           <FlatList
             horizontal
             decelerationRate={0}
-            snapToInterval={cardWidth + 20} // REFACTOR THIS NUMBER TO BE RESPONSIVE
+            snapToInterval={cardWidth + 20}
             snapToAlignment="center"
             contentInset={styles.contentInsetIOS}
             data={transport}
@@ -94,36 +83,5 @@ export const transportScreenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  scrollview: {
-    backgroundColor: Colors.background,
-    flex: 1,
-  },
-  contentContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
-  },
-  contentInsetIOS: {
-    top: 0,
-    left: spacingForCardInset,
-    bottom: 0,
-    right: spacingForCardInset,
-  },
-  columnAndRowCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: Colors.text,
-  },
-  itemlessText: {
-    fontSize: 20,
-  },
-  icon: {
-    margin: 10,
-  },
-});
 
 export default TransportScreen;
