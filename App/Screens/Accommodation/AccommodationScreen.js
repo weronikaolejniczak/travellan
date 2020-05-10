@@ -4,9 +4,8 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
-import AccommodationItem, {
-  cardWidth,
-} from '../../Components/Accommodation/AccommodationItem';
+import AccommodationItem from '../../Components/Accommodation/AccommodationItem';
+import {cardWidth} from '../../Components/Accommodation/AccommodationItemStyle';
 import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
 
 /** ACCOMMODATION SCREEN - displays stored reservations
@@ -20,16 +19,13 @@ const AccommodationScreen = (props) => {
 
   return (
     <ScrollView
-      pagingEnabled
-      snapToAlignment="center"
-      contentInset={styles.contentInsetIOS}
       style={styles.scrollview}
-      contentContainerStyle={styles.contentContainer}
-      centerContent={true}>
+      contentContainerStyle={styles.contentContainer}>
       <View>
         {accommodation.length > 0 ? (
           <FlatList
             horizontal
+            pagingEnabled
             decelerationRate={0}
             snapToInterval={cardWidth + 20} // REFACTOR THIS NUMBER TO BE RESPONSIVE
             snapToAlignment="center"

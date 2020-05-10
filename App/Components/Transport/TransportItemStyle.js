@@ -14,7 +14,7 @@ export const spacingForCardInset = width * 0.1 - 13;
  * refactor Metrics
  */
 export const transportItemStyle = StyleSheet.create({
-  transport: {
+  transportCard: {
     width: cardWidth,
     height: cardHeight,
     marginHorizontal: 10,

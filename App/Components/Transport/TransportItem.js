@@ -15,7 +15,7 @@ import {transportItemStyle as styles} from './TransportItemStyle';
  */
 const TransportItem = (props) => {
   return (
-    <Card style={styles.transport}>
+    <Card style={styles.transportCard}>
       <View style={styles.actions}>
         <TouchableOpacity
           onPress={() => {

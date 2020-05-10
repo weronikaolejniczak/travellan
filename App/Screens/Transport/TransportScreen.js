@@ -5,13 +5,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
 import TransportItem from '../../Components/Transport/TransportItem';
-import {cardWidth} from '../../Components/Transport/TransportItem';
+import {cardWidth} from '../../Components/Transport/TransportItemStyle';
 import {transportScreenStyle as styles} from './TransportScreenStyle';
 
 /** TRANSPORT SCREEN - displays stored transport tickets
  * TODO:
  * refactor inline styles
  * refactor values to be responsive
+ * refactor repeated itemless screen
  */
 const TransportScreen = (props) => {
   const trip = props.route.params.trip;
@@ -19,16 +20,13 @@ const TransportScreen = (props) => {
 
   return (
     <ScrollView
-      pagingEnabled
-      snapToAlignment="center"
-      contentInset={styles.contentInsetIOS}
       style={styles.scrollview}
-      contentContainerStyle={styles.contentContainer}
-      centerContent={true}>
+      contentContainerStyle={styles.contentContainer}>
       <View>
         {transport.length > 0 ? (
           <FlatList
             horizontal
+            pagingEnabled
             decelerationRate={0}
             snapToInterval={cardWidth + 20}
             snapToAlignment="center"
