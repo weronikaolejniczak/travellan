@@ -16,7 +16,6 @@ export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch) {
     let imageUrl = await fetchImage(destination);
     imageUrl = imageUrl.toString();
-    console.log(`${imageUrl} type: ${typeof imageUrl}`); // logs correct value
 
     dispatch({
       type: CREATE_TRIP,

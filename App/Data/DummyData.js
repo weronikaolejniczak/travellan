@@ -97,7 +97,7 @@ const TRIPS = [
       },
     ],
     // points of interest
-    [{}, {}, {}, {}],
+    [],
   ),
   // trip2
   new Trip(
@@ -114,9 +114,39 @@ const TRIPS = [
     '2021-02-15',
     1450.5,
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Paris!'}],
+    [
+      {
+        id: 1,
+        to: true,
+        from: false,
+        date: '2021-02-13',
+        hour: '6:45',
+        fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
+        toPlace: "Gare Saint-Lazare, 13 Rue d'Amsterdam, 75008 Paris, France",
+        means: 'train',
+        details: {
+          carriage: '13',
+          seat: '61',
+        },
+      },
+      {
+        id: 1,
+        to: false,
+        from: true,
+        date: '2021-02-15',
+        hour: '11:30',
+        fromPlace: 'Paris-Charles De Gaulle, 95700 Roissy-en-France, France',
+        toPlace: 'Poznań Airport Bukowska 285, 60-189 Poznań',
+        means: 'airplane',
+        details: {
+          class: 'B',
+          seat: 'C11',
+          carrier: 'Wizzair',
+        },
+      },
+    ],
     [],
     [],
-    [{}, {}, {}, {}],
   ),
   // trip3
   new Trip(
@@ -135,7 +165,7 @@ const TRIPS = [
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Tokyo!'}],
     [],
     [],
-    [{}, {}, {}, {}],
+    [],
   ),
   // trip4
   new Trip(
@@ -154,7 +184,7 @@ const TRIPS = [
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Warsaw!'}],
     [],
     [],
-    [{}, {}, {}, {}],
+    [],
   ),
   // trip5
   new Trip(
@@ -173,7 +203,7 @@ const TRIPS = [
     [{id: 1, title: 'Hello, World!', body: 'Lalala, going to Milan!'}],
     [],
     [],
-    [{}, {}, {}, {}],
+    [],
   ),
 ];
 
