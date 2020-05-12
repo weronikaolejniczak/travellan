@@ -8,19 +8,19 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Icon } from 'react-native-elements';
+import {useSelector} from 'react-redux';
+import {Icon} from 'react-native-elements';
 
 import NoteItem from '../../Components/MyTrips/NoteItem';
 
 const NotesScreen = (props) => {
   const trip = props.route.params.trip;
   const notes = trip.notes;
-  const tripId= trip.id;
+  const tripId = trip.id;
 
   return (
-    <ScrollView style={{ backgroundColor: '#222222', flex: 1 }}>
-      <View style={{ alignItems: 'center', margin: 10 }}>
+    <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
+      <View style={{alignItems: 'center', margin: 10}}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -38,9 +38,8 @@ const NotesScreen = (props) => {
             <NoteItem
               keyExtractor={(item) => item.id.toString()}
               title={itemData.item.title}
-              description={itemData.item.description}>
-            </NoteItem>
-
+              description={itemData.item.description}
+            />
           )}
         />
       </View>

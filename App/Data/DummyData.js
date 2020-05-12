@@ -17,7 +17,7 @@ import Trip from '../Models/TripModel';
     Dummy Notes:
       [int]       id,
       [string]    title,
-      [string]    description, 
+      [string]    description,
  *
  */
 
@@ -45,8 +45,16 @@ const TRIPS = [
     2000.5,
     // notes
     [
-      {id: 1, title: 'Hello, World!', description: 'Lalala, going to Barcelona!'},
-      {id: 2, title: 'Pack', description: 'bathing suit, umbrella, lots of suncream'},
+      {
+        id: 1,
+        title: 'Hello, World!',
+        description: 'Lalala, going to Barcelona!',
+      },
+      {
+        id: 2,
+        title: 'Pack',
+        description: 'bathing suit, umbrella, lots of suncream',
+      },
       {
         id: 3,
         title: 'Lorem ipsum',

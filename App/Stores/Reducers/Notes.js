@@ -1,10 +1,10 @@
 import TRIPS from '../../Data/DummyData';
 import {CREATE_NOTE, DELETE_NOTE} from '../Actions/Note';
 import Note from '../../Models/NotesModel';
-import { tripId } from '../../Screens/Notes/AddNoteScreen'
+import {tripId} from '../../Screens/Notes/AddNoteScreen';
 
 const initialState = {
-  availableNotes: TRIPS
+  availableNotes: TRIPS,
 };
 
 export default (state = initialState, action) => {
@@ -19,13 +19,13 @@ export default (state = initialState, action) => {
         ...state,
         availableNotes: state.availableNotes.concat(newNote),
       };
-      case DELETE_NOTE:
-        return {
-          ...state,
-          availableNotes: state.availableNotes.filter(
-            (note) => note.title !== action.pid,
-          ),
-        };
-    }
+    case DELETE_NOTE:
+      return {
+        ...state,
+        availableNotes: state.availableNotes.filter(
+          (note) => note.title !== action.pid,
+        ),
+      };
+  }
   return state;
 };

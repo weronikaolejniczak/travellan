@@ -10,13 +10,13 @@ import {
 import {useDispatch} from 'react-redux';
 import * as noteActions from '../../Stores/Actions/Note';
 import {newNoteScreenStyle as styles} from './AddNoteScreenStyle';
-export const tripId = props.route.params.tripId;
 
 const AddNote = (props) => {
   const dispatch = useDispatch();
+  const tripId = props.route.params.tripId;
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
 
   const submitHandler = useCallback(() => {
     dispatch(noteActions.createNote(title, description));

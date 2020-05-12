@@ -60,10 +60,10 @@ const NewTripScreen = (props) => {
    * refactor handlers with condition and setters functions
    */
   let destinationRegex = new RegExp(
-    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$"
+    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
   const destinationChangeHandler = (text) => {
-    (text.trim().length === 0 || !destinationRegex.test(text))
+    text.trim().length === 0 || !destinationRegex.test(text)
       ? setDestinationIsValid(false)
       : setDestinationIsValid(true);
     setDestination(text);
