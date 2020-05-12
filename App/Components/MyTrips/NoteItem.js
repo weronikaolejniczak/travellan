@@ -3,16 +3,24 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
-  StyleSheet,
   Platform,
+  Alert,
 } from 'react-native';
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
-// imports from within the module
+import { TouchableNativeFeedback, ScrollView } from 'react-native-gesture-handler';
+
 import Colors from '../../Constants/Colors';
+import { noteItemStyle as styles } from './NoteItemStyle';
+import Card from '../../Components/UI/Card';
+import Icon from 'react-native-vector-icons/Ionicons';
+import ReadMore from '../../Components/UI/ReadMore';
+
 
 // REFACTOR!
+
+//TODO
+// READMORE COMPONENT
+
 const NoteItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
@@ -21,88 +29,32 @@ const NoteItem = (props) => {
   }
 
   return (
-    <View style={styles.product}>
-      <TouchableCmp onPress={props.onSelect} useForeground>
-        <View>
-          <View style={styles.alignRow}>
-            <View style={styles.details}>
-              <Text style={styles.title}>{props.title}</Text>
-              {props.children}
-            </View>
-          </View>
-        </View>
-      </TouchableCmp>
-
-      <View>
-        <Text style={styles.description}>{props.description}</Text>
+    <Card style={styles.noteCard}>
+      <View style={styles.actions}>
+        <Text numberOfLines={1} style={styles.subtitle}>{props.title}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert('Edit note');
+          }}>
+          <Icon name="md-brush" style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(`Delete note`);
+          }}>
+          <Icon name="md-trash" style={styles.icon} />
+        </TouchableOpacity>
       </View>
-    </View>
+      <ScrollView style={{ marginTop: 50 }}>
+      <View style={[styles.allignText]}>
+        <Text style={styles.text}>{props.description}</Text>
+      </View>
+      </ScrollView>
+    </Card>
+
   );
 };
 
-// REFACTOR to use constants
-const styles = StyleSheet.create({
-  product: {
-    shadowColor: '#000000',
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: Colors.background,
-    height: 120,
-    margin: 15,
-  },
-  touchable: {
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  imageContainer: {
-    width: '100%',
-    height: '66%',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: 'hidden', // ensures that any child can't overlap what we set up
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  details: {
-    alignItems: 'center',
-    height: '20%',
-    padding: 5,
-  },
-  title: {
-    color: '#FF8C00',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'capitalize',
-    fontSize: 22,
-  },
-  description: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    marginLeft: 5,
-  },
-  destination: {
-    fontSize: 22,
-    marginVertical: 4,
-  },
-  date: {
-    fontSize: 20,
-  },
-  actions: {
-    paddingHorizontal: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  alignRow: {
-    marginHorizontal: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});
+
 
 export default NoteItem;
