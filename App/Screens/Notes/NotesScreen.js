@@ -14,7 +14,9 @@ import { Icon } from 'react-native-elements';
 import NoteItem from '../../Components/MyTrips/NoteItem';
 
 const NotesScreen = (props) => {
-  const notes = useSelector((state) => state.notes.availableNotes);
+  const trip = props.route.params.trip;
+  const notes = trip.notes;
+  const tripId= trip.id;
 
   return (
     <ScrollView style={{ backgroundColor: '#222222', flex: 1 }}>
@@ -22,7 +24,9 @@ const NotesScreen = (props) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            props.navigation.navigate('Add Note');
+            props.navigation.navigate('Add Note', {
+              tripId: tripId,
+            });
           }}>
           <Text style={styles.buttonText}>Add new note</Text>
         </TouchableOpacity>
@@ -32,7 +36,7 @@ const NotesScreen = (props) => {
           data={notes}
           renderItem={(itemData) => (
             <NoteItem
-              keyExtractor={(item) => item.title.toString()}
+              keyExtractor={(item) => item.id.toString()}
               title={itemData.item.title}
               description={itemData.item.description}>
             </NoteItem>

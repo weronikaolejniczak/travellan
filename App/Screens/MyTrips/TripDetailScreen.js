@@ -102,7 +102,9 @@ const TripDetailScreen = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Notes');
+                props.navigation.navigate('Notes', {
+                  trip: selectedTrip,
+                });
               }}>
               <Text style={styles.buttonText}>Notes</Text>
               <Icon name="md-journal" size={42} color="#FFFFFF" />
