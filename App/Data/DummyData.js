@@ -103,10 +103,12 @@ const TRIPS = [
         id: 1,
         name: 'Hotel Barcelona 1882',
         address: '482 Carrer de Còrsega, Gràcia, 08025 Barcelona, Spain',
+        coordinates: {},
         imageUrl:
           'https://r-cf.bstatic.com/images/hotel/max1024x768/171/171784314.jpg',
         description:
           "Set in Barcelona, 400 m from Sagrada Familia, Hotel Barcelona 1882 has an outdoor pool and a fitness center. The 4-star hotel has air-conditioned rooms with a private bathroom and free WiFi. At the hotel, each room comes with a desk. The rooms are fitted with a flat-screen TV, and certain rooms include a city view. All rooms feature a wardrobe. A buffet breakfast with show cooking is served every morning at the property. Hotel Barcelona 1882 offers a terrace with views of Sagrada Familia. Every Wednesday morning free yoga classes are available for guests. Staff are ready to help around the clock. Free walking tours of the Eixample and Sagrada Familia's surrounding are offered every Saturday. Guest can use the free bicycle service. La Pedrera is a 14-minute walk from the accommodations. The nearest airport is Barcelona El Prat Airport, 8.7 mi from Hotel Barcelona 1882. This is our guests' favorite part of Barcelona, according to independent reviews. Couples in particular like the location – they rated it 9.0 for a two-person trip.",
+        reservationDetails: {},
       },
     ],
     // points of interest

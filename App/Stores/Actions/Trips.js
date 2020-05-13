@@ -21,7 +21,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
       type: CREATE_TRIP,
       tripData: {
         destination,
-        imageUrl, // UNEXPECTED: saves into imageUrl the value of startDate, EXPECTED: saves into imageUrl the value of fetched data stored in url
+        imageUrl,
         startDate,
         endDate,
         budget,

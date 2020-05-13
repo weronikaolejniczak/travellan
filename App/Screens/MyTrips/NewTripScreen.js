@@ -7,14 +7,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import * as tripActions from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 
-/**
- * Creating a new trip screen - here a user can input basic information to create a new trip
+/** 'CREATE A NEW TRIP' SCREEN - here a user can input basic information to create a new trip
  * TODO:
  * refactor repeating elements into reusable components
  */

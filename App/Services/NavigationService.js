@@ -15,6 +15,7 @@ import TransportScreen, {
 import AccommodationScreen, {
   accommodationScreenOptions,
 } from '../Screens/Accommodation/AccommodationScreen';
+import AddAccommodationScreen from '../Screens/Accommodation/AddAccommodationScreen';
 import MapScreen from '../Screens/Map/MapScreen';
 import DailyPlanScreen from '../Screens/DailyPlan/DailyPlanScreen';
 import WeatherScreen from '../Screens/Weather/WeatherScreen';
@@ -51,6 +52,10 @@ export default function Navigation() {
           name="Housing"
           component={AccommodationScreen}
           options={accommodationScreenOptions}
+        />
+        <Stack.Screen
+          name="Add accommodation"
+          component={AddAccommodationScreen}
         />
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Daily plan" component={DailyPlanScreen} />

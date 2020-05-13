@@ -2,7 +2,7 @@ import TRIPS from '../../Data/DummyData';
 import {CREATE_TRIP, DELETE_TRIP} from '../Actions/Trips';
 import Trip from '../../Models/TripModel';
 
-const initialState = {
+export const initialState = {
   availableTrips: TRIPS,
 };
 
@@ -32,6 +32,7 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: state.availableTrips.concat(newTrip),
       };
+
     case DELETE_TRIP:
       return {
         ...state,
@@ -40,5 +41,6 @@ export default (state = initialState, action) => {
         ),
       };
   }
+
   return state;
 };
