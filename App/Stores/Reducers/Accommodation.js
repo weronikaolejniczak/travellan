@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_RESERVATION:
       const tripId = action.parentId;
-      const tripIndex = state.availableProducts.findIndex(
+      const tripIndex = state.availableTrips.findIndex(
         (trip) => trip.id === tripId,
       );
 

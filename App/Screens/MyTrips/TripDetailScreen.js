@@ -2,9 +2,7 @@ import React from 'react';
 import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import {tripDetailScreenStyle as styles} from './TripDetailScreenStyle';
 
 /**
@@ -69,10 +67,10 @@ const TripDetailScreen = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Daily plan');
+                props.navigation.navigate('Weather');
               }}>
-              <Text style={styles.buttonText}>Daily plan</Text>
-              <Icon name="md-calendar" size={42} color="#FFFFFF" />
+              <Text style={styles.buttonText}>Weather</Text>
+              <Icon name="md-cloudy" size={42} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
 
@@ -81,24 +79,12 @@ const TripDetailScreen = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Weather');
-              }}>
-              <Text style={styles.buttonText}>Weather</Text>
-              <Icon name="md-cloudy" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
                 props.navigation.navigate('Budget');
               }}>
               <Text style={styles.buttonText}>Budget</Text>
               <Icon name="md-wallet" size={42} color="#FFFFFF" />
             </TouchableOpacity>
-          </View>
 
-          <View // 4th row of functionalities buttons
-            style={styles.justifyRow}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -108,11 +94,6 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Notes</Text>
               <Icon name="md-journal" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Events</Text>
-              <Icon name="md-bonfire" size={42} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
         </View>

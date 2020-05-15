@@ -101,6 +101,7 @@ const TripsOverviewScreen = (props) => {
 
 export const tripsScreenOptions = (navData) => {
   return {
+    /* MENU BUTTON - uncomment for next release
     headerLeft: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
@@ -110,7 +111,7 @@ export const tripsScreenOptions = (navData) => {
           onPress={() => {}}
         />
       </HeaderButtons>
-    ),
+    ), */
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

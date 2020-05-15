@@ -71,7 +71,9 @@ export const accommodationScreenOptions = (navData) => {
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            navData.navigation.navigate('Add accommodation');
+            navData.navigation.navigate('Add accommodation', {
+              tripId: navData.route.params.trip.id,
+            });
           }}
         />
       </HeaderButtons>
