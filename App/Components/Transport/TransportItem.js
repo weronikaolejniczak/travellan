@@ -24,6 +24,7 @@ const TransportItem = (props) => {
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
 
+        {/* EDIT TICKET INFO
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Edit ticket');
@@ -31,12 +32,13 @@ const TransportItem = (props) => {
           <Icon name="md-brush" style={styles.icon} />
         </TouchableOpacity>
 
+        SHOW QR CODE
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
           <Icon name="md-qr-scanner" style={styles.icon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={[styles.rowCenter, {marginTop: 50, marginBottom: 20}]}>

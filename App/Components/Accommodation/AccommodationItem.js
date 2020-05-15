@@ -23,6 +23,7 @@ const AccommodationItem = (props) => {
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
 
+        {/* EDIT RESERVATION INFO
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Edit reservation');
@@ -30,12 +31,13 @@ const AccommodationItem = (props) => {
           <Icon name="md-brush" style={styles.icon} />
         </TouchableOpacity>
 
+        SHOW ON MAP
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Show on map');
           }}>
           <Icon name="md-map" style={styles.icon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ScrollView>
@@ -43,8 +45,8 @@ const AccommodationItem = (props) => {
           <Text style={[styles.text, styles.header]}>{props.name}</Text>
           <Text style={[styles.text, styles.subtitle]}>{props.address}</Text>
           <Text>{'\n'}</Text>
-          <Text style={[styles.text, styles.h2]}>Benefits</Text>
-          <Text>{'\n'}</Text>
+          {/* <Text style={[styles.text, styles.h2]}>Benefits</Text>
+          <Text>{'\n'}</Text> */}
           <Text style={[styles.text, styles.h2]}>Description</Text>
           <View style={[styles.textAlign]}>
             <ReadMore longText={props.description} />
