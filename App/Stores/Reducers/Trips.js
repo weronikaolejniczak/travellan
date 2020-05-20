@@ -1,5 +1,5 @@
 import TRIPS from '../../Data/DummyData';
-import {CREATE_TRIP, DELETE_TRIP} from '../Actions/Trips';
+import {CREATE_TRIP, DELETE_TRIP, SET_TRIPS} from '../Actions/Trips';
 import Trip from '../../Models/TripModel';
 
 export const initialState = {
@@ -8,9 +8,13 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_TRIPS:
+      return {
+        availableTrips: action.trips
+      };
     case CREATE_TRIP:
       const newTrip = new Trip(
-        new Date().toString(), // DUMMY ID
+        action.tripData.id,
         action.tripData.destination,
         {
           latitude: 48.864716,

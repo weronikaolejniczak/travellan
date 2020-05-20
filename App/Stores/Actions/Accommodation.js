@@ -7,10 +7,6 @@ export const deleteReservation = (tripId, reservationId) => {
 };
 
 /**
- * 'update a reservation' action based on user input
- */
-
-/**
  * 'create a reservation' action based on user input
  */
 export const CREATE_RESERVATION = 'CREATE_RESERVATION';
