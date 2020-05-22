@@ -11,4 +11,7 @@ export const weatherScreenStyle = StyleSheet.create({
   text: {
     color: Colors.text,
   },
+  header: {
+    
+  }
 });

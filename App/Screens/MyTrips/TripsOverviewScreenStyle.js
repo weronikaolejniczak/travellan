@@ -35,4 +35,9 @@ export const tripsOverviewScreenStyle = StyleSheet.create({
     fontSize: 30,
     color: Colors.primary,
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

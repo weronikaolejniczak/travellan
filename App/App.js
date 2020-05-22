@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {store} from './Stores/index';
 import Navigation from './Services/NavigationService';
+//import ReduxThunk from 'redux-thunk';
 
 /** Main application function
  */

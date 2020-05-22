@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,8 @@ import {
   TouchableHighlight,
   FlatList,
   Platform,
+  ActivityIndicator,
+  StyleSheet
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -17,13 +19,24 @@ import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
 import {tripsOverviewScreenStyle as styles} from './TripsOverviewScreenStyle';
+import Colors from '../../Constants/Colors';
 
 /**
  * Trips overview screen - displays stored trips in the form of cards
  */
 const TripsOverviewScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const trips = useSelector((state) => state.trips.availableTrips);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadTrips = async () => {
+      setIsLoading(true);
+      await dispatch(tripActions.fetchTrips());
+      setIsLoading(false);
+    }
+    loadTrips();
+  }, [dispatch]);
 
   const selectItemHandler = (id, destination) => {
     props.navigation.navigate('Details', {
@@ -31,6 +44,13 @@ const TripsOverviewScreen = (props) => {
       tripDestination: destination,
     });
   };
+
+  if (isLoading) {
+    return ( <View style={styles.centered}>
+      <ActivityIndicator size='large' color={Colors.primary}/>
+    </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -126,5 +146,6 @@ export const tripsScreenOptions = (navData) => {
     ),
   };
 };
+
 
 export default TripsOverviewScreen;
