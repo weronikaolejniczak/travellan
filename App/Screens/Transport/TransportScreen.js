@@ -23,7 +23,7 @@ const TransportScreen = (props) => {
       style={styles.scrollview}
       contentContainerStyle={styles.contentContainer}>
       <View>
-        {transport.length > 0 ? (
+        {transport !== undefined ? (
           <FlatList
             horizontal
             pagingEnabled

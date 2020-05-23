@@ -16,13 +16,14 @@ import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
 const AccommodationScreen = (props) => {
   const trip = props.route.params.trip;
   const accommodation = trip.accommodationInfo;
+  console.log(accommodation);
 
   return (
     <ScrollView
       style={styles.scrollview}
       contentContainerStyle={styles.contentContainer}>
       <View>
-        {accommodation.length > 0 ? (
+        {accommodation !== undefined ? (
           <FlatList
             horizontal
             pagingEnabled
