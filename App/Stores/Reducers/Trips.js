@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_TRIPS:
       return {
-        availableTrips: action.trips
+        availableTrips: action.trips,
       };
     case CREATE_TRIP:
       const newTrip = new Trip(
