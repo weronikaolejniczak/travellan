@@ -121,7 +121,7 @@ export const fetchTrips = () => {
 
     //adding trips from database one by one using the stored keys
     for (const key in resData) {
-      console.log(resData[key].imageUrl);
+      //console.log(resData[key].imageUrl);
       //resData[key].imageUrl = resData[key].imageUrl.toString();
       loadedTrips.push(
         new Trip(

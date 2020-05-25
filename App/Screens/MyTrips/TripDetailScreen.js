@@ -25,7 +25,8 @@ const TripDetailScreen = (props) => {
       <View>
         <View style={styles.dateContainer}>
           <Text style={[styles.text, styles.header, styles.date]}>
-            {selectedTrip.startDate} - {selectedTrip.endDate}
+            {selectedTrip.startDate.split(' ').slice(1, 4).join(' ')} -{' '}
+            {selectedTrip.endDate.split(' ').slice(1, 4).join(' ')}
           </Text>
         </View>
 

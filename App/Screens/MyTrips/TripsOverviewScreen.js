@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -7,7 +7,7 @@ import {
   FlatList,
   Platform,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -34,7 +34,7 @@ const TripsOverviewScreen = (props) => {
       setIsLoading(true);
       await dispatch(tripActions.fetchTrips());
       setIsLoading(false);
-    }
+    };
     loadTrips();
   }, [dispatch]);
 
@@ -46,9 +46,10 @@ const TripsOverviewScreen = (props) => {
   };
 
   if (isLoading) {
-    return ( <View style={styles.centered}>
-      <ActivityIndicator size='large' color={Colors.primary}/>
-    </View>
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
     );
   }
 
@@ -74,8 +75,11 @@ const TripsOverviewScreen = (props) => {
               <TripItem
                 image={itemData.item.imageUrl}
                 destination={itemData.item.destination}
-                startDate={itemData.item.startDate}
-                endDate={itemData.item.endDate}
+                startDate={itemData.item.startDate
+                  .split(' ')
+                  .slice(1, 4)
+                  .join(' ')}
+                endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
                 onSelect={() => {
                   selectItemHandler(
                     itemData.item.id,
@@ -86,12 +90,11 @@ const TripsOverviewScreen = (props) => {
                   style={styles.deleteButton}
                   onPress={() => {
                     Alert.alert(
-                      'Delete a trip',
+                      `Delete a trip to ${itemData.item.destination}`,
                       'Are you sure?',
                       [
                         {
                           text: 'Cancel',
-                          onPress: () => console.log('Cancel Pressed'),
                           style: 'cancel',
                         },
                         {
@@ -146,6 +149,5 @@ export const tripsScreenOptions = (navData) => {
     ),
   };
 };
-
 
 export default TripsOverviewScreen;

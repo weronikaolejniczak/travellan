@@ -12,7 +12,9 @@ import TripDetailScreen, {
   tripDetailScreenOptions,
 } from '../Screens/MyTrips/TripDetailScreen';
 /** 'CREATE A NEW TRIP' SCREEN */
-import NewTripScreen from '../Screens/MyTrips/NewTripScreen';
+import NewTripScreen, {
+  newTripScreenOptions,
+} from '../Screens/MyTrips/NewTripScreen';
 /** TRANSPORT SCREENS */
 import TransportScreen, {
   transportScreenOptions,
@@ -46,7 +48,11 @@ export default function Navigation() {
           component={TripsOverviewScreen}
           options={tripsScreenOptions}
         />
-        <Stack.Screen name="Create a trip" component={NewTripScreen} />
+        <Stack.Screen
+          name="Create a trip"
+          component={NewTripScreen}
+          options={newTripScreenOptions}
+        />
         <Stack.Screen
           name="Details"
           component={TripDetailScreen}
