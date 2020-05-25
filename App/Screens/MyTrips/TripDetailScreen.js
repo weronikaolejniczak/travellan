@@ -16,6 +16,9 @@ const TripDetailScreen = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
+  const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
+  const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -25,8 +28,13 @@ const TripDetailScreen = (props) => {
       <View>
         <View style={styles.dateContainer}>
           <Text style={[styles.text, styles.header, styles.date]}>
-            {selectedTrip.startDate.split(' ').slice(1, 4).join(' ')} -{' '}
-            {selectedTrip.endDate.split(' ').slice(1, 4).join(' ')}
+            {startDate === endDate ? (
+              <Text style={[styles.text, styles.date]}>{startDate}</Text>
+            ) : (
+              <Text style={[styles.text, styles.date]}>
+                {startDate} - {endDate}
+              </Text>
+            )}
           </Text>
         </View>
 

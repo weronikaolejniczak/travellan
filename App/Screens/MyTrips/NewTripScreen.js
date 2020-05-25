@@ -1,9 +1,10 @@
 import React, {useState, useCallback} from 'react';
 import {
-  View,
   Text,
+  View,
   ScrollView,
   TextInput,
+  Switch,
   TouchableOpacity,
   Platform,
 } from 'react-native';
@@ -15,33 +16,43 @@ import {useDispatch} from 'react-redux';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
+import Colors from '../../Constants/Colors';
 
 /** 'CREATE A NEW TRIP' SCREEN - here a user can input basic information to create a new trip
  * TODO:
  * refactor repeating elements into reusable components
+ * refactor inline styles
+ * TOO LONG
  */
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
 
   /** state variables and state setter functions */
-  const [submitted, setSubmitted] = useState(false);
-
+  // destination
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
+  const [destinationSubmitted, setDestinationSubmitted] = useState(false);
 
+  // dates
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
-
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
 
-  const [budget, setBudget] = useState('');
+  // budget
+  const [budget, setBudget] = useState();
   const [budgetIsValid, setBudgetIsValid] = useState(false);
+  const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
+  const [budgetSubmitted, setBudgetSubmitted] = useState(false);
 
   /** handlers */
+  // submitting
   const submitHandler = useCallback(() => {
     if (!destinationIsValid || !budgetIsValid) {
-      setSubmitted(true);
+      setDestinationSubmitted(true);
+      if (budgetIsEnabled) {
+        setBudgetSubmitted(true);
+      }
     } else {
       dispatch(
         tripActions.createTrip(
@@ -57,6 +68,7 @@ const NewTripScreen = (props) => {
   }, [dispatch, destination, startDate, endDate, budget]);
 
   /** refactor handlers with condition and setters functions */
+  // destination handler
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
@@ -67,7 +79,7 @@ const NewTripScreen = (props) => {
     setDestination(text);
   };
 
-  /** date picker handlers */
+  // date picker handlers
   const startDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
@@ -88,10 +100,31 @@ const NewTripScreen = (props) => {
     setShowEndDate(true);
   };
 
-  // let budgetRegex = new RegExp();
+  const clearBudget = () => {
+    setBudget('0');
+    setBudgetIsValid(true);
+    setBudgetSubmitted(false);
+  };
+
+  const resetBudget = () => {
+    setBudget();
+    setBudgetIsValid(false);
+  };
+
+  // budget handlers
+  const toggleBudgetSwitch = () => {
+    setBudgetIsEnabled((previousState) => !previousState);
+    !budgetIsEnabled ? resetBudget() : clearBudget();
+  };
+
+  let budgetRegex = new RegExp();
   const budgetChangeHandler = (text) => {
-    text.trim().length === 0 ? setBudgetIsValid(false) : setBudgetIsValid(true);
-    setBudget(text);
+    if (budgetIsEnabled) {
+      !(!budgetRegex.test(text) || text.trim().length === 0)
+        ? setBudgetIsValid(true)
+        : setBudgetIsValid(false);
+      setBudget(text);
+    }
   };
 
   /** this could be refactored into a component to minimize repetition
@@ -106,7 +139,7 @@ const NewTripScreen = (props) => {
   return (
     <ScrollView style={styles.form}>
       <View style={styles.metrics}>
-        <Text style={styles.label}>Where are you headed?</Text>
+        <Text style={styles.label}>Trip destination</Text>
         <TextInput
           style={styles.input}
           placeholder="City and/or country"
@@ -114,7 +147,7 @@ const NewTripScreen = (props) => {
           value={destination}
           onChangeText={destinationChangeHandler}
         />
-        {!destinationIsValid && submitted && (
+        {!destinationIsValid && destinationSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid city and/or country!</Text>
           </View>
@@ -122,7 +155,7 @@ const NewTripScreen = (props) => {
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>From</Text>
+        <Text style={styles.label}>Start date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showStartDatepicker} style={styles.picker}>
             <View
@@ -149,7 +182,7 @@ const NewTripScreen = (props) => {
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>until</Text>
+        <Text style={styles.label}>End date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showEndDatepicker} style={styles.picker}>
             <View
@@ -176,15 +209,40 @@ const NewTripScreen = (props) => {
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>What is your budget?</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Number"
-          placeholderTextColor="grey"
-          value={budget}
-          onChangeText={budgetChangeHandler}
-        />
-        {!budgetIsValid && submitted && (
+        <View
+          style={[
+            {
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            },
+          ]}>
+          <Text style={styles.label}>Budget</Text>
+          <View>
+            <Switch
+              trackColor={{
+                false: Colors.switchDisabledTrack,
+                true: Colors.switchEnabledTrack,
+              }}
+              thumbColor={Colors.switchThumb}
+              ios_backgroundColor={Colors.background}
+              onValueChange={toggleBudgetSwitch}
+              value={budgetIsEnabled}
+            />
+          </View>
+        </View>
+        {budgetIsEnabled && (
+          <TextInput
+            style={styles.input}
+            placeholder={'Number'}
+            placeholderTextColor="grey"
+            value={budget}
+            onChangeText={budgetChangeHandler}
+          />
+        )}
+
+        {budgetIsEnabled && !budgetIsValid && budgetSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid budget!</Text>
           </View>

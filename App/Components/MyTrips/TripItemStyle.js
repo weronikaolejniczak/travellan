@@ -40,7 +40,7 @@ export const tripItemStyle = StyleSheet.create({
     color: Colors.text,
   },
   details: {
-    alignItems: 'center',
+    //alignItems: 'center',
     height: cardHeight * 0.35,
     padding: '4%',
   },

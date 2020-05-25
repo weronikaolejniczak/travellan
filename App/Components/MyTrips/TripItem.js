@@ -30,9 +30,15 @@ const TripItem = (props) => {
                 <Text style={[styles.text, styles.destination]}>
                   {props.destination}
                 </Text>
-                <Text style={[styles.text, styles.date]}>
-                  {props.startDate} - {props.endDate}
-                </Text>
+                {props.startDate === props.endDate ? (
+                  <Text style={[styles.text, styles.date]}>
+                    {props.startDate}
+                  </Text>
+                ) : (
+                  <Text style={[styles.text, styles.date]}>
+                    {props.startDate} - {props.endDate}
+                  </Text>
+                )}
               </View>
             </View>
           </View>
