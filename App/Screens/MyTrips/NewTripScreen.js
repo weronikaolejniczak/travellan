@@ -117,7 +117,7 @@ const NewTripScreen = (props) => {
     !budgetIsEnabled ? resetBudget() : clearBudget();
   };
 
-  let budgetRegex = new RegExp();
+  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     if (budgetIsEnabled) {
       !(!budgetRegex.test(text) || text.trim().length === 0)
