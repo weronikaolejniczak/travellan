@@ -54,7 +54,7 @@ const TripDetailScreen = (props) => {
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Housing', {
-                  trip: selectedTrip,
+                  tripId: selectedTrip.id,
                 });
               }}>
               <Text style={styles.buttonText}>Housing</Text>

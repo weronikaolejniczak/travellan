@@ -20,6 +20,7 @@ const AddAccommodationScreen = (props) => {
   const [reservationDetails, setReservationDetails] = useState('');
 
   const tripId = props.route.params.tripId;
+  console.log(`tripId in AddAccommodationScreen: ${tripId}`);
 
   const submitHandler = useCallback(() => {
     dispatch(

@@ -1,6 +1,6 @@
 import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
-import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Trips';
+import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
 import Accommodation from '../../Models/AccommodationModel';
 import Trip from '../../Models/TripModel';
 
@@ -61,35 +61,11 @@ export default (state = initialState, action) => {
       const tripIndex = state.availableTrips.findIndex(
         (trip) => trip.id === tripId,
       );
-
-      const newReservation = new Accommodation(
-        new Date().toString(), // DUMMY ID
-        action.reservationData.name,
-        action.reservationData.address,
-        {},
-        '',
-        'Description',
-        action.reservationData.reservationDetails,
-      );
-
-      const updatedTrip = new Trip(
-        tripId,
-        state.availableTrips[tripIndex].destination,
-        state.availableTrips[tripIndex].region,
-        state.availableTrips[tripIndex].imageUrl,
-        state.availableTrips[tripIndex].startDate,
-        state.availableTrips[tripIndex].endDate,
-        state.availableTrips[tripIndex].budget,
-        state.availableTrips[tripIndex].notes,
-        state.availableTrips[tripIndex].transportInfo,
-        state.availableTrips[tripIndex].accommodationInfo.concat(
-          newReservation,
-        ),
-        state.availableTrips[tripIndex].pointsOfInterest,
-      );
+      console.log(`3. reducer with passed ${tripId}`);
 
       const updatedAvailableTrips = [...state.availableTrips];
-      updatedAvailableTrips[tripIndex] = updatedTrip;
+      updatedAvailableTrips[tripIndex].accommodationInfo =
+        action.accommodationInfo;
 
       return {
         ...state,
