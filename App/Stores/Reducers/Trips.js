@@ -61,7 +61,6 @@ export default (state = initialState, action) => {
       const tripIndex = state.availableTrips.findIndex(
         (trip) => trip.id === tripId,
       );
-      console.log(`3. reducer with passed ${tripId}`);
 
       const updatedAvailableTrips = [...state.availableTrips];
       updatedAvailableTrips[tripIndex].accommodationInfo =

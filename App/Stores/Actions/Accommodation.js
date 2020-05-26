@@ -15,8 +15,6 @@ export const createReservation = (
   address,
   reservationDetails,
 ) => {
-  console.log(`2. action dispatched for ${tripId}`);
-
   const newReservation = new Accommodation(
     new Date().toString(), // DUMMY ID
     name,
@@ -30,12 +28,13 @@ export const createReservation = (
 
   // PATCH updates some of the keys for a defined path without replacing all of the data
   return async function (dispatch) {
-    const trip = await fetch(
+    const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
     );
 
-    let accommodationInfo = trip.accommodationInfo;
-    console.log(accommodationInfo);
+    const resData = await response.json();
+
+    let accommodationInfo = resData.accommodationInfo;
 
     accommodationInfo === undefined
       ? (accommodationInfo = [newReservation])

@@ -21,7 +21,6 @@ const AccommodationScreen = (props) => {
   );
 
   const accommodation = selectedTrip.accommodationInfo;
-  console.log(`accommodation in AccommodationScreen: ${accommodation}`);
 
   return (
     <ScrollView
@@ -74,9 +73,6 @@ export const accommodationScreenOptions = (navData) => {
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            console.log(
-              `1. navigating to adding accommodation with parameter ${navData.route.params.tripId}`,
-            );
             navData.navigation.navigate('Add accommodation', {
               tripId: navData.route.params.tripId,
             });
