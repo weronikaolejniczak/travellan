@@ -19,10 +19,12 @@ const AddAccommodationScreen = (props) => {
   const [housingAddress, setHousingAddress] = useState('');
   const [reservationDetails, setReservationDetails] = useState('');
 
+  const tripId = props.route.params.tripId;
+
   const submitHandler = useCallback(() => {
     dispatch(
       accommodationActions.createReservation(
-        props.route.params.tripId,
+        tripId,
         housingName,
         housingAddress,
         reservationDetails,
@@ -30,7 +32,7 @@ const AddAccommodationScreen = (props) => {
     );
     props.navigation.goBack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, housingName, housingAddress, reservationDetails]);
+  }, [dispatch, tripId, housingName, housingAddress, reservationDetails]);
 
   return (
     <ScrollView style={styles.container}>

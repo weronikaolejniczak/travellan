@@ -48,13 +48,10 @@ const AccommodationScreen = (props) => {
             <Text style={[styles.text, styles.itemlessText]}>
               There are no reservations!
             </Text>
-
             <Text style={[styles.text, styles.itemlessText]}>
               Add one with the
             </Text>
-
             <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
-
             <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
           </View>
         )}
