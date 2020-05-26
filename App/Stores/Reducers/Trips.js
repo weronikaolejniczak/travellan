@@ -1,7 +1,6 @@
 import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
 import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
-import Accommodation from '../../Models/AccommodationModel';
 import Trip from '../../Models/TripModel';
 
 export const initialState = {
