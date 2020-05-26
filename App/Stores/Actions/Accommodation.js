@@ -16,6 +16,9 @@ export const deleteReservation = (tripId, reservationId) => {
     // take accommodationInfo stored in the trip and assign it to local variable for later logic
     let accommodationInfo = resData.accommodationInfo;
 
+    // change accommodationInfo to exclude the reservation we want to delete
+    // with the help of reservationId
+
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,

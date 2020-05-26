@@ -50,6 +50,10 @@ export default (state = initialState, action) => {
 
     /** RESERVATIONS */
     case DELETE_RESERVATION:
+      // update the available trips, when in the particular trip's accommodation there is
+      // everything except the reservation we'd like to delete;
+      // could conflict with code in the case CREATE_RESERVATION - solve
+
       return {
         ...state,
         availableTrips: state.availableTrips,
