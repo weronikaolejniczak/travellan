@@ -6,7 +6,7 @@ import {
   CREATE_RESERVATION,
 } from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
-import {CREATE_NOTE} from '../Actions/Note';
+import {CREATE_NOTE, DELETE_NOTE} from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
@@ -71,15 +71,27 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-
-    /** NOTES */
     case CREATE_NOTE:
-      updatedAvailableTrips[tripIndex].notes = action.notes;
+    
+
+      const updatedAvailableTrips = [...state.availableTrips];
+      updatedAvailableTrips[tripIndex].notes =
+        action.notes;
 
       return {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
+      case DELETE_NOTE:
+      
+      updatedAvailableTrips[tripIndex].notes =
+        action.notes;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+
   }
 
   return state;
