@@ -71,27 +71,23 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
+
+    /** NOTES */
     case CREATE_NOTE:
-    
-
-      const updatedAvailableTrips = [...state.availableTrips];
-      updatedAvailableTrips[tripIndex].notes =
-        action.notes;
-
-      return {
-        ...state,
-        availableTrips: updatedAvailableTrips,
-      };
-      case DELETE_NOTE:
-      
-      updatedAvailableTrips[tripIndex].notes =
-        action.notes;
+      updatedAvailableTrips[tripIndex].notes = action.notes;
 
       return {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
 
+    case DELETE_NOTE:
+      updatedAvailableTrips[tripIndex].notes = action.notes;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
   }
 
   return state;
