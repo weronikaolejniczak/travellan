@@ -19,9 +19,9 @@ const AddNote = (props) => {
   const [description, setDescription] = useState('');
 
   const submitHandler = useCallback(() => {
-    dispatch(noteActions.createNote(title, description));
+    dispatch(noteActions.createNote(tripId, title, description));
     props.navigation.goBack();
-  }, [dispatch, title, description]);
+  }, [dispatch, tripId, title, description]);
 
   return (
     <ScrollView style={styles.form}>

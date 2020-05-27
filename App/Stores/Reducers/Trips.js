@@ -2,6 +2,7 @@ import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
 import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
+import { CREATE_NOTE } from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
@@ -73,6 +74,20 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
+    case CREATE_NOTE:
+      const Id = action.tripId;
+      const Index = state.availableTrips.findIndex(
+        (trip) => trip.id === Id,
+      );
+
+      const updatedAvailableTripsForNotes = [...state.availableTrips];
+      updatedAvailableTripsForNotes[Index].notes =
+        action.notes;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTripsForNotes,
+      }
   }
 
   return state;
