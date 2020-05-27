@@ -75,13 +75,13 @@ export default (state = initialState, action) => {
         availableTrips: updatedAvailableTrips,
       };
     case CREATE_NOTE:
-      const Id = action.tripId;
-      const Index = state.availableTrips.findIndex(
-        (trip) => trip.id === Id,
+      const TripIdForNotes = action.tripId;
+      const TripIndexForNotes = state.availableTrips.findIndex(
+        (trip) => trip.id === TripIdForNotes,
       );
 
       const updatedAvailableTripsForNotes = [...state.availableTrips];
-      updatedAvailableTripsForNotes[Index].notes =
+      updatedAvailableTripsForNotes[TripIndexForNotes].notes =
         action.notes;
 
       return {
