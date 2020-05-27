@@ -2,13 +2,20 @@ import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
 import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
-import { CREATE_NOTE } from '../Actions/Note';
+import {CREATE_NOTE} from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
 };
 
 export default (state = initialState, action) => {
+  const tripId = action.tripId;
+  const tripIndex = state.availableTrips.findIndex(
+    (trip) => trip.id === tripId,
+  );
+
+  const updatedAvailableTrips = [...state.availableTrips];
+
   switch (action.type) {
     /** TRIPS */
     case SET_TRIPS:
@@ -50,23 +57,10 @@ export default (state = initialState, action) => {
       };
 
     /** RESERVATIONS */
+    // since DELETE_RESERVATION and CREATE_RESERVATION are the same, maybe case for both? if possible
     case DELETE_RESERVATION:
       // update the available trips, when in the particular trip's accommodation there is
       // everything except the reservation we'd like to delete;
-      // could conflict with code in the case CREATE_RESERVATION - solve
-
-      return {
-        ...state,
-        availableTrips: state.availableTrips,
-      };
-
-    case CREATE_RESERVATION:
-      const tripId = action.tripId;
-      const tripIndex = state.availableTrips.findIndex(
-        (trip) => trip.id === tripId,
-      );
-
-      const updatedAvailableTrips = [...state.availableTrips];
       updatedAvailableTrips[tripIndex].accommodationInfo =
         action.accommodationInfo;
 
@@ -74,20 +68,24 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-    case CREATE_NOTE:
-      const Id = action.tripId;
-      const Index = state.availableTrips.findIndex(
-        (trip) => trip.id === Id,
-      );
 
-      const updatedAvailableTripsForNotes = [...state.availableTrips];
-      updatedAvailableTripsForNotes[Index].notes =
-        action.notes;
+    case CREATE_RESERVATION:
+      updatedAvailableTrips[tripIndex].accommodationInfo =
+        action.accommodationInfo;
 
       return {
         ...state,
-        availableTrips: updatedAvailableTripsForNotes,
-      }
+        availableTrips: updatedAvailableTrips,
+      };
+
+    /** NOTES */
+    case CREATE_NOTE:
+      updatedAvailableTrips[tripIndex].notes = action.notes;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
   }
 
   return state;
