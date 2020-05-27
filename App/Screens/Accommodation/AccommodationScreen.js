@@ -45,7 +45,7 @@ const AccommodationScreen = (props) => {
 
   if (isLoading) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );

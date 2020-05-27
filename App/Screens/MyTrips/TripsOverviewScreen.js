@@ -11,18 +11,14 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import TripItem from '../../Components/MyTrips/TripItem';
 import HeaderButton from '../../Components/UI/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
 import {tripsOverviewScreenStyle as styles} from './TripsOverviewScreenStyle';
 import Colors from '../../Constants/Colors';
 
-/**
- * Trips overview screen - displays stored trips in the form of cards
- */
+/** Trips overview screen - displays stored trips in the form of cards */
 const TripsOverviewScreen = (props) => {
   const dispatch = useDispatch();
 
@@ -48,7 +44,7 @@ const TripsOverviewScreen = (props) => {
 
   if (isLoading) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
