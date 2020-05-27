@@ -34,7 +34,7 @@ export const deleteNote = (tripId, noteId) => {
       },
     );
 
-    dispatch({type: DELETE_NOTE, parentId: tripId, pid: noteId});
+    dispatch({type: DELETE_NOTE, parentId: tripId, pid: noteId, notes});
   };
 };
 

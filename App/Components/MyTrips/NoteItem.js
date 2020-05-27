@@ -8,7 +8,7 @@ import {
 import {useDispatch} from 'react-redux';
 import Colors from '../../Constants/Colors';
 import {noteItemStyle as styles} from './NoteItemStyle';
-import Card from '../../Components/UI/Card';
+import Card from '../UI/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as noteActions from '../../Stores/Actions/Note'
 

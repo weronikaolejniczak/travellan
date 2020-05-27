@@ -81,7 +81,7 @@ export default (state = initialState, action) => {
     
 
       const updatedAvailableTrips = [...state.availableTrips];
-      updatedAvailableTrips[TripIndex].notes =
+      updatedAvailableTrips[tripIndex].notes =
         action.notes;
 
       return {
@@ -89,8 +89,7 @@ export default (state = initialState, action) => {
         availableTrips: updatedAvailableTrips,
       };
       case DELETE_NOTE:
-      // update the available trips, when in the particular trip's accommodation there is
-      // everything except the reservation we'd like to delete;
+      
       updatedAvailableTrips[tripIndex].notes =
         action.notes;
 
