@@ -2,13 +2,20 @@ import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
 import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
-import { CREATE_NOTE } from '../Actions/Note';
+import {CREATE_NOTE, DELETE_NOTE} from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
 };
 
 export default (state = initialState, action) => {
+  const tripId = action.tripId;
+  const tripIndex = state.availableTrips.findIndex(
+    (trip) => trip.id === tripId,
+  );
+
+  const updatedAvailableTrips = [...state.availableTrips];
+
   switch (action.type) {
     /** TRIPS */
     case SET_TRIPS:
@@ -50,23 +57,19 @@ export default (state = initialState, action) => {
       };
 
     /** RESERVATIONS */
+    // since DELETE_RESERVATION and CREATE_RESERVATION are the same, maybe case for both? if possible
     case DELETE_RESERVATION:
       // update the available trips, when in the particular trip's accommodation there is
       // everything except the reservation we'd like to delete;
-      // could conflict with code in the case CREATE_RESERVATION - solve
+      updatedAvailableTrips[tripIndex].accommodationInfo =
+        action.accommodationInfo;
 
       return {
         ...state,
-        availableTrips: state.availableTrips,
+        availableTrips: updatedAvailableTrips,
       };
 
     case CREATE_RESERVATION:
-      const tripId = action.tripId;
-      const tripIndex = state.availableTrips.findIndex(
-        (trip) => trip.id === tripId,
-      );
-
-      const updatedAvailableTrips = [...state.availableTrips];
       updatedAvailableTrips[tripIndex].accommodationInfo =
         action.accommodationInfo;
 
@@ -75,19 +78,27 @@ export default (state = initialState, action) => {
         availableTrips: updatedAvailableTrips,
       };
     case CREATE_NOTE:
-      const TripIdForNotes = action.tripId;
-      const TripIndexForNotes = state.availableTrips.findIndex(
-        (trip) => trip.id === TripIdForNotes,
-      );
+    
 
-      const updatedAvailableTripsForNotes = [...state.availableTrips];
-      updatedAvailableTripsForNotes[TripIndexForNotes].notes =
+      const updatedAvailableTrips = [...state.availableTrips];
+      updatedAvailableTrips[TripIndex].notes =
         action.notes;
 
       return {
         ...state,
-        availableTrips: updatedAvailableTripsForNotes,
-      }
+        availableTrips: updatedAvailableTrips,
+      };
+      case DELETE_NOTE:
+      // update the available trips, when in the particular trip's accommodation there is
+      // everything except the reservation we'd like to delete;
+      updatedAvailableTrips[tripIndex].notes =
+        action.notes;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+
   }
 
   return state;

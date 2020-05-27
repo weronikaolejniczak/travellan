@@ -37,6 +37,8 @@ const NotesScreen = (props) => {
           renderItem={(itemData) => (
             <NoteItem
               keyExtractor={(item) => item.id.toString()}
+              tripId={tripId}
+              id={itemData.item.id}
               title={itemData.item.title}
               description={itemData.item.description}
             />
