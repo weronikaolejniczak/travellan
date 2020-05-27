@@ -1,15 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
   FlatList,
 } from 'react-native';
 import { NotesScreenStyles as styles} from './NotesScreenStyle';
-import HeaderButton from '../../Components/UI/HeaderButton';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+
 
 import NoteItem from '../../Components/MyTrips/NoteItem'
 
@@ -48,23 +46,5 @@ const NotesScreen = (props) => {
   );
 };
 
-export const notesScreenOptions = (navData) => {
-  return {
-    headerRight: (props) => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create new note"
-          style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-          onPress={() => {
-            navData.navigation.navigate('Add Note', {
-              tripId: navData.route.params.tripId,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
 
 export default NotesScreen;

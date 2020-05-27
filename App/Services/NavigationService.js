@@ -75,7 +75,7 @@ export default function Navigation() {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
         <Stack.Screen name="Budget" component={BudgetScreen} />
-        <Stack.Screen name="Notes" component={NotesScreen} options={notesScreenOptions}/>
+        <Stack.Screen name="Notes" component={NotesScreen}/>
         <Stack.Screen name="Add Note" component={AddNote} />
       </Stack.Navigator>
     </NavigationContainer>
