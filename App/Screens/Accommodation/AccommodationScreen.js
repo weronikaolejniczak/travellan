@@ -40,6 +40,7 @@ const AccommodationScreen = (props) => {
             renderItem={(itemData) => (
               <AccommodationItem
                 id={itemData.item.id}
+                tripId={tripId}
                 name={itemData.item.name}
                 address={itemData.item.address}
                 image={itemData.item.imageUrl}

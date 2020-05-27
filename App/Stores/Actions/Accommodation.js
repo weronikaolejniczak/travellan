@@ -15,9 +15,29 @@ export const deleteReservation = (tripId, reservationId) => {
 
     // take accommodationInfo stored in the trip and assign it to local variable for later logic
     let accommodationInfo = resData.accommodationInfo;
+    console.log('\naccommodation before deleting:\n');
+    console.log(accommodationInfo);
 
     // change accommodationInfo to exclude the reservation we want to delete
     // with the help of reservationId
+    /**
+      let accommodation = [
+        {id: 1, name: 'hello1'},
+        {id: 2, name: 'hello2'},
+        {id: 3, name: 'hello3'}
+      ];
+      const accommodationId = 1;
+
+      let updatedAccomodation = accommodation
+        .filter(item => !(item.id === accommodationId));
+
+      console.log(updatedAccomodation);
+     */
+    accommodationInfo = accommodationInfo.filter(
+      (item) => !(item.id === reservationId),
+    );
+    console.log('\naccommodation after deleting:\n');
+    console.log(accommodationInfo);
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
@@ -33,7 +53,7 @@ export const deleteReservation = (tripId, reservationId) => {
       },
     );
 
-    dispatch({type: DELETE_RESERVATION, parentId: tripId, pid: reservationId});
+    dispatch({type: DELETE_RESERVATION, tripId: tripId});
   };
 };
 
