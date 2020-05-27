@@ -1,6 +1,10 @@
 import TRIPS from '../../Data/DummyData';
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
-import {DELETE_RESERVATION, CREATE_RESERVATION} from '../Actions/Accommodation';
+import {
+  SET_RESERVATIONS,
+  DELETE_RESERVATION,
+  CREATE_RESERVATION,
+} from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
 import {CREATE_NOTE} from '../Actions/Note';
 
@@ -57,18 +61,8 @@ export default (state = initialState, action) => {
       };
 
     /** RESERVATIONS */
-    // since DELETE_RESERVATION and CREATE_RESERVATION are the same, maybe case for both? if possible
+    case SET_RESERVATIONS:
     case DELETE_RESERVATION:
-      // update the available trips, when in the particular trip's accommodation there is
-      // everything except the reservation we'd like to delete;
-      updatedAvailableTrips[tripIndex].accommodationInfo =
-        action.accommodationInfo;
-
-      return {
-        ...state,
-        availableTrips: updatedAvailableTrips,
-      };
-
     case CREATE_RESERVATION:
       updatedAvailableTrips[tripIndex].accommodationInfo =
         action.accommodationInfo;

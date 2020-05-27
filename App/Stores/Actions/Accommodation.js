@@ -1,7 +1,25 @@
 import Accommodation from '../../Models/AccommodationModel';
 
+export const SET_RESERVATIONS = 'SET_RESERVATIONS';
 export const DELETE_RESERVATION = 'DELETE_RESERVATION';
 export const CREATE_RESERVATION = 'CREATE_RESERVATION';
+
+/** 'fetch reservations' action based on id of trip */
+export const fetchReservations = (tripId) => {
+  return async function (dispatch) {
+    const response = await fetch(
+      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+    );
+
+    // await json body of response
+    const resData = await response.json();
+
+    // take accommodationInfo stored in the trip and assign it to local variable for later logic
+    let accommodationInfo = resData.accommodationInfo;
+
+    dispatch({type: SET_RESERVATIONS, tripId, accommodationInfo});
+  };
+};
 
 /** 'delete a reservation' action based on id of reservation */
 export const deleteReservation = (tripId, reservationId) => {
@@ -15,29 +33,12 @@ export const deleteReservation = (tripId, reservationId) => {
 
     // take accommodationInfo stored in the trip and assign it to local variable for later logic
     let accommodationInfo = resData.accommodationInfo;
-    console.log('\naccommodation before deleting:\n');
-    console.log(accommodationInfo);
 
     // change accommodationInfo to exclude the reservation we want to delete
     // with the help of reservationId
-    /**
-      let accommodation = [
-        {id: 1, name: 'hello1'},
-        {id: 2, name: 'hello2'},
-        {id: 3, name: 'hello3'}
-      ];
-      const accommodationId = 1;
-
-      let updatedAccomodation = accommodation
-        .filter(item => !(item.id === accommodationId));
-
-      console.log(updatedAccomodation);
-     */
     accommodationInfo = accommodationInfo.filter(
       (item) => !(item.id === reservationId),
     );
-    console.log('\naccommodation after deleting:\n');
-    console.log(accommodationInfo);
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
@@ -53,7 +54,7 @@ export const deleteReservation = (tripId, reservationId) => {
       },
     );
 
-    dispatch({type: DELETE_RESERVATION, tripId: tripId});
+    dispatch({type: DELETE_RESERVATION, tripId});
   };
 };
 

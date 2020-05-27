@@ -7,7 +7,6 @@ import {
   FlatList,
   Platform,
   ActivityIndicator,
-  StyleSheet,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -25,9 +24,11 @@ import Colors from '../../Constants/Colors';
  * Trips overview screen - displays stored trips in the form of cards
  */
 const TripsOverviewScreen = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const trips = useSelector((state) => state.trips.availableTrips);
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const trips = useSelector((state) => state.trips.availableTrips);
 
   useEffect(() => {
     const loadTrips = async () => {
