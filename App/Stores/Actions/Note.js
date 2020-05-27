@@ -2,6 +2,23 @@ import Note from '../../Models/NotesModel';
 
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const CREATE_NOTE = 'CREATE_NOTE';
+export const SET_NOTES = 'SET_NOTES';
+
+export const fetchNotes = (tripId) => {
+  return async function (dispatch) {
+    const response = await fetch(
+      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+    );
+
+    // await json body of response
+    const resData = await response.json();
+
+    // take accommodationInfo stored in the trip and assign it to local variable for later logic
+    let notes = resData.notes;
+
+    dispatch({type: SET_NOTES, tripId, notes});
+  };
+};
 
 export const deleteNote = (tripId, noteId) => {
   return async function (dispatch) {
@@ -32,7 +49,7 @@ export const deleteNote = (tripId, noteId) => {
       },
     );
 
-    dispatch({type: DELETE_NOTE, parentId: tripId, pid: noteId, notes});
+    dispatch({type: DELETE_NOTE, parentId: tripId});
   };
 };
 

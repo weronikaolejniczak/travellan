@@ -1,20 +1,44 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   TouchableOpacity,
   View,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { NotesScreenStyles as styles} from './NotesScreenStyle';
-
-
+import {useSelector, useDispatch} from 'react-redux';
+import * as noteActions from '../../Stores/Actions/Note'
+import Colors from '../../Constants/Colors';
 import NoteItem from '../../Components/MyTrips/NoteItem'
 
 const NotesScreen = (props) => {
   const trip = props.route.params.trip;
   const notes = trip.notes;
   const tripId = trip.id;
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      setIsLoading(true);
+      await dispatch(noteActions.fetchNotes(tripId));
+      setIsLoading(false);
+    };
+    loadNotes();
+  }, [dispatch, tripId]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+
+
 
   return (
     <View style={{backgroundColor: '#222222', flex: 1}}>

@@ -35,12 +35,6 @@ const NoteItem = (props) => {
           {props.title}
         </Text>
         <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Edit note');
-          }}>
-          <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={submitHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
