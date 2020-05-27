@@ -18,7 +18,6 @@ const AccommodationItem = (props) => {
   const dispatch = useDispatch();
 
   const tripId = props.tripId;
-  console.log(tripId);
   const reservationId = props.id;
 
   const deleteReservationHandler = useCallback(() => {
