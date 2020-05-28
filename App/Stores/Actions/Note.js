@@ -49,7 +49,7 @@ export const deleteNote = (tripId, noteId) => {
       },
     );
 
-    dispatch({type: DELETE_NOTE, parentId: tripId});
+    dispatch({type: DELETE_NOTE, tripId});
   };
 };
 
