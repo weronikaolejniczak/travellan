@@ -1,6 +1,6 @@
 import {fetchImage} from '../../Services/ImageService';
 import Trip from '../../Models/TripModel';
-
+import {fetchCoords} from '../../Services/CoordinatesService'
 /**
  * 'delete a trip' action based in tripId
  */
@@ -26,10 +26,15 @@ export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch) {
     let imageUrl = await fetchImage(destination);
     imageUrl = imageUrl.toString();
+    //latitude = await fetchCoordinates(destination);
+    //longitude = await fetchCoordinates(destination);
     //Placeholders - delete as soon as real parts are ready
-    let region = {
-      latitude: 45.464203,
-      longitude: 9.189982,
+    //let region = await fetchCoords(destination);
+    var location = await fetchCoords(destination);
+    let region =
+    {
+      latitude: location.lat,
+      longitude: location.lon,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
