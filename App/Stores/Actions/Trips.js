@@ -1,9 +1,12 @@
 import {fetchImage} from '../../Services/ImageService';
 import Trip from '../../Models/TripModel';
-
-export const SET_TRIPS = 'SET_TRIPS';
+import {fetchCoords} from '../../Services/CoordinatesService'
+/**
+ * 'delete a trip' action based in tripId
+ */
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
+export const SET_TRIPS = 'SET_TRIPS';
 
 // fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
@@ -61,10 +64,15 @@ export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch) {
     let imageUrl = await fetchImage(destination);
     imageUrl = imageUrl.toString();
-    // placeholders - delete as soon as real parts are ready
-    let region = {
-      latitude: 45.464203,
-      longitude: 9.189982,
+    //latitude = await fetchCoordinates(destination);
+    //longitude = await fetchCoordinates(destination);
+    //Placeholders - delete as soon as real parts are ready
+    //let region = await fetchCoords(destination);
+    var location = await fetchCoords(destination);
+    let region =
+    {
+      latitude: location.lat,
+      longitude: location.lon,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };

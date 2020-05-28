@@ -46,12 +46,7 @@ export default (state = initialState, action) => {
       const newTrip = new Trip(
         action.tripData.id,
         action.tripData.destination,
-        {
-          latitude: 48.864716,
-          longitude: 2.349014,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }, // refactor for fetched coordinates
+        action.tripData.region, // refactor for fetched coordinates
         action.tripData.imageUrl,
         action.tripData.startDate,
         action.tripData.endDate,
