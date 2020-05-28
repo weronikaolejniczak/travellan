@@ -1,26 +1,50 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  StyleSheet,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {Icon} from 'react-native-elements';
-
-import NoteItem from '../../Components/MyTrips/NoteItem';
+import { NotesScreenStyles as styles} from './NotesScreenStyle';
+import {useDispatch} from 'react-redux';
+import * as noteActions from '../../Stores/Actions/Note'
+import Colors from '../../Constants/Colors';
+import NoteItem from '../../Components/MyTrips/NoteItem'
+import HeaderButton from '../../Components/UI/HeaderButton';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 const NotesScreen = (props) => {
   const trip = props.route.params.trip;
   const notes = trip.notes;
   const tripId = trip.id;
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      setIsLoading(true);
+      await dispatch(noteActions.fetchNotes(tripId));
+      setIsLoading(false);
+    };
+    loadNotes();
+  }, [dispatch, tripId]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+
+
 
   return (
-    <ScrollView style={{backgroundColor: '#222222', flex: 1}}>
-      <View style={{alignItems: 'center', margin: 10}}>
+    <View style={{backgroundColor: '#222222', flex: 1}}>
+      <View style={{alignItems: 'center', margin: 10, }}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -31,36 +55,22 @@ const NotesScreen = (props) => {
           <Text style={styles.buttonText}>Add new note</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <FlatList
+      <FlatList
           data={notes}
           renderItem={(itemData) => (
             <NoteItem
               keyExtractor={(item) => item.id.toString()}
+              tripId={tripId}
+              id={itemData.item.id}
               title={itemData.item.title}
               description={itemData.item.description}
             />
           )}
         />
-      </View>
-    </ScrollView>
+    </View>
+      
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 10,
-    backgroundColor: '#FF8C00',
-    alignItems: 'center',
-    width: '40%',
-    padding: 15,
-    margin: 10,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
-});
 
 export default NotesScreen;

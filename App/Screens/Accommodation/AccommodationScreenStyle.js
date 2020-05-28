@@ -27,6 +27,11 @@ export const accommodationScreenStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   text: {
     color: Colors.text,
   },

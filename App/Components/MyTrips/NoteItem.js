@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity, Platform, Alert} from 'react-native';
 import {
   TouchableNativeFeedback,
   ScrollView,
 } from 'react-native-gesture-handler';
-
+import {useDispatch} from 'react-redux';
 import Colors from '../../Constants/Colors';
 import {noteItemStyle as styles} from './NoteItemStyle';
-import Card from '../../Components/UI/Card';
+import Card from '../UI/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ReadMore from '../../Components/UI/ReadMore';
+import * as noteActions from '../../Stores/Actions/Note'
 
 // REFACTOR!
 
@@ -23,6 +23,10 @@ const NoteItem = (props) => {
   if (Platform.OS === 'android' && Platform.Version > 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+  const dispatch = useDispatch();
+  const submitHandler = useCallback(() => {
+    dispatch(noteActions.deleteNote(props.tripId, props.id));
+  }, [dispatch, props.tripId, props.id]);
 
   return (
     <Card style={styles.noteCard}>
@@ -31,15 +35,7 @@ const NoteItem = (props) => {
           {props.title}
         </Text>
         <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Edit note');
-          }}>
-          <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Delete note');
-          }}>
+          onPress={submitHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
       </View>

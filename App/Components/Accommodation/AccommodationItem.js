@@ -1,9 +1,11 @@
-import React from 'react';
-import {View, ScrollView, Text, TouchableOpacity, Alert} from 'react-native';
+import React, {useCallback} from 'react';
+import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
 import ReadMore from '../../Components/UI/ReadMore';
+import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {accommodationItemStyle as styles} from './AccommodationItemStyle';
 
 /** Accommodation item component used in AccommodationScreen for reservations listing
@@ -13,13 +15,19 @@ import {accommodationItemStyle as styles} from './AccommodationItemStyle';
  * refactor inline styles
  */
 const AccommodationItem = (props) => {
+  const dispatch = useDispatch();
+
+  const tripId = props.tripId;
+  const reservationId = props.id;
+
+  const deleteReservationHandler = useCallback(() => {
+    dispatch(accommodationActions.deleteReservation(tripId, reservationId));
+  }, [dispatch, tripId, reservationId]);
+
   return (
     <Card style={styles.accommodation}>
       <View style={styles.actions}>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert(`Delete ${props.id}. reservation`);
-          }}>
+        <TouchableOpacity onPress={deleteReservationHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
 

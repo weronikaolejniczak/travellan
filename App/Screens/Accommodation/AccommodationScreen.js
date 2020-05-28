@@ -1,12 +1,22 @@
-import React from 'react';
-import {View, ScrollView, Text, FlatList, Platform} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  FlatList,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
 import AccommodationItem from '../../Components/Accommodation/AccommodationItem';
+import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {cardWidth} from '../../Components/Accommodation/AccommodationItemStyle';
 import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
+import Colors from '../../Constants/Colors';
 
 /** ACCOMMODATION SCREEN - displays stored reservations
  * TODO:
@@ -14,9 +24,32 @@ import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
  * refactor repeated itemless screen (for all other screens as well)
  */
 const AccommodationScreen = (props) => {
-  const trip = props.route.params.trip;
-  const accommodation = trip.accommodationInfo;
-  console.log(accommodation);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+
+  const accommodation = selectedTrip.accommodationInfo;
+
+  useEffect(() => {
+    const loadReservations = async () => {
+      setIsLoading(true);
+      await dispatch(accommodationActions.fetchReservations(tripId));
+      setIsLoading(false);
+    };
+    loadReservations();
+  }, [dispatch, tripId]);
+
+  if (isLoading) {
+    return (
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -36,6 +69,7 @@ const AccommodationScreen = (props) => {
             renderItem={(itemData) => (
               <AccommodationItem
                 id={itemData.item.id}
+                tripId={tripId}
                 name={itemData.item.name}
                 address={itemData.item.address}
                 image={itemData.item.imageUrl}
@@ -48,13 +82,10 @@ const AccommodationScreen = (props) => {
             <Text style={[styles.text, styles.itemlessText]}>
               There are no reservations!
             </Text>
-
             <Text style={[styles.text, styles.itemlessText]}>
               Add one with the
             </Text>
-
             <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
-
             <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
           </View>
         )}
@@ -73,7 +104,7 @@ export const accommodationScreenOptions = (navData) => {
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
             navData.navigation.navigate('Add accommodation', {
-              tripId: navData.route.params.trip.id,
+              tripId: navData.route.params.tripId,
             });
           }}
         />

@@ -1,17 +1,41 @@
 import TRIPS from '../../Data/DummyData';
-import {CREATE_TRIP, DELETE_TRIP, SET_TRIPS} from '../Actions/Trips';
+import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
+import {
+  SET_RESERVATIONS,
+  DELETE_RESERVATION,
+  CREATE_RESERVATION,
+} from '../Actions/Accommodation';
 import Trip from '../../Models/TripModel';
+import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
 };
 
+
 export default (state = initialState, action) => {
+  const tripId = action.tripId;
+  const tripIndex = state.availableTrips.findIndex(
+    (trip) => trip.id === tripId,
+  );
+
+  const updatedAvailableTrips = [...state.availableTrips];
+
   switch (action.type) {
+    /** TRIPS */
     case SET_TRIPS:
       return {
         availableTrips: action.trips,
       };
+
+    case DELETE_TRIP:
+      return {
+        ...state,
+        availableTrips: state.availableTrips.filter(
+          (item) => item.id !== action.pid,
+        ),
+      };
+
     case CREATE_TRIP:
       const newTrip = new Trip(
         action.tripData.id,
@@ -32,13 +56,28 @@ export default (state = initialState, action) => {
         availableTrips: state.availableTrips.concat(newTrip),
       };
 
-    case DELETE_TRIP:
+    /** RESERVATIONS */
+    case SET_RESERVATIONS:
+    case DELETE_RESERVATION:
+    case CREATE_RESERVATION:
+      updatedAvailableTrips[tripIndex].accommodationInfo =
+        action.accommodationInfo;
+
       return {
         ...state,
-        availableTrips: state.availableTrips.filter(
-          (item) => item.id !== action.pid,
-        ),
+        availableTrips: updatedAvailableTrips,
       };
+      //** NOTES */
+    case CREATE_NOTE:
+    case DELETE_NOTE:
+    case SET_NOTES:
+          updatedAvailableTrips[tripIndex].notes =
+            action.notes;
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+
   }
 
   return state;
