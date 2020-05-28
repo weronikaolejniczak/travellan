@@ -8,10 +8,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NotesScreenStyles as styles} from './NotesScreenStyle';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import * as noteActions from '../../Stores/Actions/Note'
 import Colors from '../../Constants/Colors';
 import NoteItem from '../../Components/MyTrips/NoteItem'
+import HeaderButton from '../../Components/UI/HeaderButton';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 const NotesScreen = (props) => {
   const trip = props.route.params.trip;
