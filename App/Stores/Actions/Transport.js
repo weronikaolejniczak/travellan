@@ -1,8 +1,8 @@
 import Transport from '../../Models/TransportModel';
 
-export const SET_TRANSPORT = 'SET_RESERVATIONS';
-export const DELETE_TRANSPORT = 'DELETE_RESERVATION';
-export const CREATE_TRANSPORT = 'CREATE_RESERVATION';
+export const SET_TRANSPORT = 'SET_TRANSPORT';
+export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
+export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
 
 /** 'fetch transport' action based on id of trip */
 export const fetchTransport = (tripId) => {
