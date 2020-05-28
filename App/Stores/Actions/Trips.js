@@ -6,6 +6,7 @@ import {fetchCoords} from '../../Services/CoordinatesService'
  */
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
+export const SET_TRIPS = 'SET_TRIPS';
 
 // fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
