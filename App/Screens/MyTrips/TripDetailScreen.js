@@ -39,29 +39,6 @@ const TripDetailScreen = (props) => {
         </View>
 
         <View>
-          <View // 1st row of functionalities buttons
-            style={styles.justifyRow}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Transport', {trip: selectedTrip});
-              }}>
-              <Text style={styles.buttonText}>Transport</Text>
-              <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Housing', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Housing</Text>
-              <Icon name="md-bed" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-          </View>
-
           <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
@@ -103,6 +80,29 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Notes</Text>
               <Icon name="md-journal" size={42} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
+
+          <View // 1st row of functionalities buttons
+            style={styles.justifyRow}>
+            {/* <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Transport', {trip: selectedTrip});
+              }}>
+              <Text style={styles.buttonText}>Transport</Text>
+              <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
+            </TouchableOpacity> */}
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Housing', {
+                  tripId: selectedTrip.id,
+                });
+              }}>
+              <Text style={styles.buttonText}>Housing</Text>
+              <Icon name="md-bed" size={42} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
         </View>
