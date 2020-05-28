@@ -19,6 +19,7 @@ import NewTripScreen, {
 import TransportScreen, {
   transportScreenOptions,
 } from '../Screens/Transport/TransportScreen';
+import AddTransportScreen from '../Screens/Transport/AddTransportScreen';
 /** ACCOMMODATION SCREENS */
 import AccommodationScreen, {
   accommodationScreenOptions,
@@ -31,7 +32,7 @@ import WeatherScreen from '../Screens/Weather/WeatherScreen';
 /** BUDGET SCREEN */
 import BudgetScreen from '../Screens/Budget/BudgetScreen';
 /** NOTES SCREENS */
-import NotesScreen, { notesScreenOptions } from '../Screens/Notes/NotesScreen';
+import NotesScreen /*, { notesScreenOptions } */ from '../Screens/Notes/NotesScreen';
 import AddNote from '../Screens/Notes/AddNoteScreen';
 /** CONSTANTS */
 import Colors from '../Constants/Colors';
@@ -62,6 +63,11 @@ export default function Navigation() {
           name="Transport"
           component={TransportScreen}
           options={transportScreenOptions}
+        />
+        <Stack.Screen
+          name="Add transport"
+          component={AddTransportScreen}
+          //options={transportScreenOptions}
         />
         <Stack.Screen
           name="Housing"

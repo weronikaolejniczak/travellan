@@ -1,17 +1,23 @@
 import TRIPS from '../../Data/DummyData';
+/** MODELS */
+import Trip from '../../Models/TripModel';
+/** ACTIONS */
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
+import {
+  SET_TRANSPORT,
+  DELETE_TRANSPORT,
+  CREATE_TRANSPORT,
+} from '../Actions/Transport';
 import {
   SET_RESERVATIONS,
   DELETE_RESERVATION,
   CREATE_RESERVATION,
 } from '../Actions/Accommodation';
-import Trip from '../../Models/TripModel';
 import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from '../Actions/Note';
 
 export const initialState = {
   availableTrips: TRIPS,
 };
-
 
 export default (state = initialState, action) => {
   const tripId = action.tripId;
@@ -61,6 +67,17 @@ export default (state = initialState, action) => {
         availableTrips: state.availableTrips.concat(newTrip),
       };
 
+    /** TRANSPORT TICKETS */
+    case SET_TRANSPORT:
+    case DELETE_TRANSPORT:
+    case CREATE_TRANSPORT:
+      updatedAvailableTrips[tripIndex].transportInfo = action.transportInfo;
+
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+
     /** RESERVATIONS */
     case SET_RESERVATIONS:
     case DELETE_RESERVATION:
@@ -72,17 +89,16 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-      //** NOTES */
-    case CREATE_NOTE:
-    case DELETE_NOTE:
+
+    /** NOTES */
     case SET_NOTES:
-          updatedAvailableTrips[tripIndex].notes =
-            action.notes;
+    case DELETE_NOTE:
+    case CREATE_NOTE:
+      updatedAvailableTrips[tripIndex].notes = action.notes;
       return {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-
   }
 
   return state;

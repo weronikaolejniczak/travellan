@@ -73,7 +73,7 @@ const TripDetailScreen = (props) => {
               <Icon name="md-map" size={42} color="#FFFFFF" />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather');
@@ -92,7 +92,7 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Budget</Text>
               <Icon name="md-wallet" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={styles.button}

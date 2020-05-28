@@ -75,7 +75,11 @@ export const transportScreenOptions = (navData) => {
           title="Create a trip"
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-          onPress={() => {}}
+          onPress={() => {
+            navData.navigation.navigate('Add transport', {
+              tripId: navData.route.params.tripId,
+            });
+          }}
         />
       </HeaderButtons>
     ),
