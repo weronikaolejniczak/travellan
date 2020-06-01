@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import {useSelector, setState} from 'react-redux';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 // imports from within the module
 import {mapStyle} from './MapScreenStyle';
@@ -21,15 +21,8 @@ const MapScreen = (props) => {
   const extractRegion = () => {
     return selectedTrip.region;
   };
-
   
-  locateCurrentPosition = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        console.log(JSON.stringify(position));
-      }
-    )
-  }
+
   
   return (
     <MapView
@@ -38,6 +31,7 @@ const MapScreen = (props) => {
       customMapStyle={mapStyle}
       initialRegion={extractRegion()}
       showsUserLocation={true}
+
     >
       <Marker
       coordinate={extractRegion()}
