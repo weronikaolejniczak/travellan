@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, Alert, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
 import {transportItemStyle as styles} from './TransportItemStyle';
+import * as transportActions from '../../Stores/Actions/Transport';
 
 /**
  * Transport item component used in TransportScreen for tickets listing.
@@ -14,13 +16,19 @@ import {transportItemStyle as styles} from './TransportItemStyle';
  * refactor inline styles
  */
 const TransportItem = (props) => {
+  const dispatch = useDispatch();
+
+  const tripId = props.tripId;
+  const ticketId = props.id;
+
+  const deleteTicketHandler = useCallback(() => {
+    dispatch(transportActions.deleteTransport(tripId, ticketId));
+  }, [dispatch, tripId, ticketId]);
+
   return (
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert(`Delete ${props.id}. ticket`);
-          }}>
+        <TouchableOpacity onPress={deleteTicketHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
 
