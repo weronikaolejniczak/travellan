@@ -61,9 +61,8 @@ const MapScreen = (props) => {
       showsMyLocationButton={true}
       onPress={ (event) => getMarkerCoords(event)}
     >
-      <Marker
-      coordinate={marker}>
-      </Marker>
+      <MapView.Marker coordinate={extractRegion()}/>
+      <MapView.Marker coordinate={marker}/>
       
     </MapView>
     
