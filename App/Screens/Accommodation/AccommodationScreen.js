@@ -74,6 +74,7 @@ const AccommodationScreen = (props) => {
                 address={itemData.item.address}
                 image={itemData.item.imageUrl}
                 description={itemData.item.description}
+                reservationDetails={itemData.item.reservationDetails}
               />
             )}
           />

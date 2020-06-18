@@ -58,24 +58,33 @@ const TransportItem = (props) => {
         )}
       </View>
 
-      <View style={styles.columnDirection}>
-        <View style={styles.rowDirection}>
+      <View style={[styles.rowDirection, {margin: 10}]}>
+        <View style={styles.item}>
           <Icon name="md-calendar" style={styles.icon} />
-
+        </View>
+        <View style={styles.item}>
           <Text style={[styles.text]}>
             Leave on {props.date} {'\n'}
             at {props.hour}
           </Text>
         </View>
+      </View>
 
-        <View style={[styles.rowDirection, styles.spaceBetween, {margin: 20}]}>
-          <Icon name="md-more" style={styles.icon} />
+      <View style={[styles.rowDirection, {margin: 10}]}>
+        <View style={styles.item}>
+          <Icon name="md-arrow-round-down" style={styles.icon} />
+        </View>
+        <View style={styles.item}>
+          <Text style={[styles.text]}>from {props.fromPlace}</Text>
+        </View>
+      </View>
 
-          <Text style={[styles.text]}>
-            from {props.fromPlace} {'\n'}
-            {'\n'}
-            to {props.toPlace}
-          </Text>
+      <View style={[styles.rowDirection, {margin: 10}]}>
+        <View style={styles.item}>
+          <Icon name="md-arrow-round-forward" style={styles.icon} />
+        </View>
+        <View style={styles.item}>
+          <Text style={[styles.text]}>to {props.toPlace}</Text>
         </View>
       </View>
     </Card>

@@ -59,6 +59,9 @@ const AccommodationItem = (props) => {
           <View style={[styles.textAlign]}>
             <ReadMore longText={props.description} />
           </View>
+          <Text>{'\n'}</Text>
+          <Text style={[styles.text, styles.h2]}>Reservation info</Text>
+          <Text style={[styles.text]}>{props.reservationDetails}</Text>
         </View>
       </ScrollView>
     </Card>

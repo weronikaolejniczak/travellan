@@ -17,6 +17,7 @@ const AddAccommodationScreen = (props) => {
 
   const [housingName, setHousingName] = useState('');
   const [housingAddress, setHousingAddress] = useState('');
+  const [description, setDescription] = useState('');
   const [reservationDetails, setReservationDetails] = useState('');
 
   const tripId = props.route.params.tripId;
@@ -27,12 +28,20 @@ const AddAccommodationScreen = (props) => {
         tripId,
         housingName,
         housingAddress,
+        description,
         reservationDetails,
       ),
     );
     props.navigation.goBack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, tripId, housingName, housingAddress, reservationDetails]);
+  }, [
+    dispatch,
+    tripId,
+    housingName,
+    housingAddress,
+    description,
+    reservationDetails,
+  ]);
 
   return (
     <ScrollView style={styles.container}>
@@ -51,6 +60,15 @@ const AddAccommodationScreen = (props) => {
           style={styles.input}
           value={housingAddress}
           onChangeText={setHousingAddress}
+        />
+      </View>
+
+      <View style={styles.metrics}>
+        <Text style={styles.label}>Description</Text>
+        <TextInput
+          style={styles.input}
+          value={description}
+          onChangeText={setDescription}
         />
       </View>
 
