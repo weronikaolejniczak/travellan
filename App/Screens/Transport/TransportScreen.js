@@ -87,13 +87,10 @@ const TransportScreen = (props) => {
             <Text style={[styles.text, styles.itemlessText]}>
               There are no tickets!
             </Text>
-
             <Text style={[styles.text, styles.itemlessText]}>
               Add one with the
             </Text>
-
             <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
-
             <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
           </View>
         )}
