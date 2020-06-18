@@ -91,6 +91,7 @@ const AddTransportScreen = (props) => {
 
       <View style={styles.metrics}>
         <Text style={styles.label}>Hour of departure</Text>
+        {/* HOURPICKER */}
         <TextInput style={styles.input} value={hour} onChangeText={setHour} />
       </View>
 

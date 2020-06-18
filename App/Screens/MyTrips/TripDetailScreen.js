@@ -39,7 +39,7 @@ const TripDetailScreen = (props) => {
         </View>
 
         <View>
-          <View // 2nd row of functionalities buttons
+          <View // 1st row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
               style={styles.button}
@@ -57,10 +57,10 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Weather</Text>
               <Icon name="md-cloudy" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
-          <View // 3rd row of functionalities buttons
+          <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
               style={styles.button}
@@ -69,7 +69,7 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Budget</Text>
               <Icon name="md-wallet" size={42} color="#FFFFFF" />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
@@ -83,16 +83,18 @@ const TripDetailScreen = (props) => {
             </TouchableOpacity>
           </View>
 
-          <View // 1st row of functionalities buttons
+          <View // 3rd row of functionalities buttons
             style={styles.justifyRow}>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Transport', {trip: selectedTrip});
+                props.navigation.navigate('Transport', {
+                  tripId: selectedTrip.id,
+                });
               }}>
               <Text style={styles.buttonText}>Transport</Text>
               <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
