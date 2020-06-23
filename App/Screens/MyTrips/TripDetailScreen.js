@@ -50,15 +50,15 @@ const TripDetailScreen = (props) => {
               <Icon name="md-map" size={42} color="#FFFFFF" />
             </TouchableOpacity>
 
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather');
               }}>
               <Text style={styles.buttonText}>Weather</Text>
               <Icon name="md-cloudy" size={42} color="#FFFFFF" />
-            </TouchableOpacity> */}
-            {/* </View>
+            </TouchableOpacity>
+          </View>
 
           <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
@@ -69,7 +69,7 @@ const TripDetailScreen = (props) => {
               }}>
               <Text style={styles.buttonText}>Budget</Text>
               <Icon name="md-wallet" size={42} color="#FFFFFF" />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
