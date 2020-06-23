@@ -1,28 +1,23 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, Platform, Alert} from 'react-native';
-import {
-  TouchableNativeFeedback,
-  ScrollView,
-} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
-import Colors from '../../Constants/Colors';
-import {noteItemStyle as styles} from './NoteItemStyle';
-import Card from '../UI/Card';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  //Platform,
+  //Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as noteActions from '../../Stores/Actions/Note'
+/* IMPORTS FROM WITHIN THE MODULE */
+import Card from '../UI/Card';
+import ReadMore from '../../Components/UI/ReadMore';
+import * as noteActions from '../../Stores/Actions/Note';
+import {noteItemStyle as styles} from './NoteItemStyle';
+//import Colors from '../../Constants/Colors';
 
 // REFACTOR!
-
-//TODO
-// READMORE COMPONENT
-
 const NoteItem = (props) => {
-  let TouchableCmp = TouchableOpacity;
-
-  if (Platform.OS === 'android' && Platform.Version > 21) {
-    TouchableCmp = TouchableNativeFeedback;
-  }
   const dispatch = useDispatch();
   const submitHandler = useCallback(() => {
     dispatch(noteActions.deleteNote(props.tripId, props.id));
@@ -30,18 +25,20 @@ const NoteItem = (props) => {
 
   return (
     <Card style={styles.noteCard}>
+      {/* ACTIONS BAR */}
       <View style={styles.actions}>
         <Text numberOfLines={1} style={styles.subtitle}>
           {props.title}
         </Text>
-        <TouchableOpacity
-          onPress={submitHandler}>
+        {/* DELETE BUTTON */}
+        <TouchableOpacity onPress={submitHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
       </View>
+      {/* NOTE CONTENT */}
       <ScrollView style={{marginTop: 50}}>
-        <View style={[styles.allignText]}>
-          <Text style={styles.text}>{props.description}</Text>
+        <View style={[styles.alignText]}>
+          <ReadMore longText={props.description} />
         </View>
       </ScrollView>
     </Card>

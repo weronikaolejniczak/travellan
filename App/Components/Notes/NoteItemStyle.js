@@ -16,11 +16,11 @@ export const spacingForCardInset = width * 0.1 - 13;
 export const noteItemStyle = StyleSheet.create({
   noteCard: {
     width: cardWidth,
-    height: cardHeight,
     marginHorizontal: 10,
     padding: 25,
     borderRadius: 15,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
     marginLeft: 35,
   },
   actions: {
@@ -65,7 +65,7 @@ export const noteItemStyle = StyleSheet.create({
   spaceBetween: {
     justifyContent: 'space-between',
   },
-  allignText: {
+  alignText: {
     alignItems: 'flex-start',
   },
 });
