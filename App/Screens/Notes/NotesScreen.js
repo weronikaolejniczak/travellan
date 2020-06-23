@@ -44,7 +44,7 @@ const NotesScreen = (props) => {
 
   return (
     <View style={{backgroundColor: '#222222', flex: 1}}>
-      {!notes ? (
+      {notes ? (
         <FlatList
           data={notes}
           renderItem={(itemData) => (

@@ -3,26 +3,37 @@ import {
   Text,
   View,
   //Alert,
+  Switch,
   TouchableOpacity,
   ScrollView,
   TextInput,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import * as transportActions from '../../Stores/Actions/Transport';
 import {addTransportScreenStyle as styles} from './AddTransportScreenStyle';
+import Colors from '../../Constants/Colors';
 
 const AddTransportScreen = (props) => {
   const dispatch = useDispatch();
 
   const [to, setToDestination] = useState(false);
   const [from, setFromDestination] = useState(false);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [hour, setHour] = useState('');
   const [fromPlace, setFromPlace] = useState('');
   const [toPlace, setToPlace] = useState('');
   const [means, setMeans] = useState('');
   const [details, setDetails] = useState('');
+
+  //
+  const toggleToDestinationSwitch = () =>
+    setToDestination((previousState) => !previousState);
+
+  //
+  const toggleFromDestinationSwitch = () =>
+    setFromDestination((previousState) => !previousState);
 
   const tripId = props.route.params.tripId;
 
@@ -48,7 +59,7 @@ const AddTransportScreen = (props) => {
         tripId,
         to,
         from,
-        date,
+        date.toString().split(' ').slice(1, 4).join(' '),
         hour,
         fromPlace,
         toPlace,
@@ -74,25 +85,69 @@ const AddTransportScreen = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.metrics}>
-        <Text style={styles.label}>Ticket 'to'</Text>
-        {/* SWITCH */}
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text style={styles.label}>Ticket 'to'</Text>
+          {/* SWITCH */}
+          <Switch
+            trackColor={{
+              false: Colors.switchDisabledTrack,
+              true: Colors.switchEnabledTrack,
+            }}
+            thumbColor={Colors.switchThumb}
+            ios_backgroundColor={Colors.background}
+            onValueChange={toggleToDestinationSwitch}
+            value={to}
+          />
+        </View>
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>Ticket 'from'</Text>
-        {/* SWITCH */}
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text style={styles.label}>Ticket 'from'</Text>
+          {/* SWITCH */}
+          <Switch
+            trackColor={{
+              false: Colors.switchDisabledTrack,
+              true: Colors.switchEnabledTrack,
+            }}
+            thumbColor={Colors.switchThumb}
+            ios_backgroundColor={Colors.background}
+            onValueChange={toggleFromDestinationSwitch}
+            value={from}
+          />
+        </View>
       </View>
 
       <View style={styles.metrics}>
         <Text style={styles.label}>Date of departure</Text>
         {/* DATEPICKER */}
-        <TextInput style={styles.input} value={date} onChangeText={setDate} />
+        <View style={styles.pickerContainer}>
+          <TouchableOpacity onPress={{}} style={styles.picker}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Icon name="md-calendar" style={styles.icon} />
+              <Text style={styles.pickerText}>
+                {date.toString().split(' ').slice(1, 4).join(' ')}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.metrics}>
         <Text style={styles.label}>Hour of departure</Text>
         {/* HOURPICKER */}
-        <TextInput style={styles.input} value={hour} onChangeText={setHour} />
+        <View style={styles.pickerContainer}>
+          <TouchableOpacity onPress={{}} style={styles.picker}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Icon name="md-calendar" style={styles.icon} />
+              <Text style={styles.pickerText}>
+                {date.toString().split(' ').slice(1, 4).join(' ')}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.metrics}>

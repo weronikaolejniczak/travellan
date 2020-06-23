@@ -32,6 +32,26 @@ export const addTransportScreenStyle = StyleSheet.create({
     marginLeft: '10%',
     marginRight: '10%',
   },
+  pickerContainer: {
+    alignItems: 'center',
+  },
+  picker: {
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: Colors.primary,
+    marginTop: 15,
+    padding: 15,
+    paddingHorizontal: '20%',
+  },
+  pickerText: {
+    color: Colors.text,
+    fontSize: 20,
+  },
+  icon: {
+    fontSize: 30,
+    color: Colors.text,
+    marginRight: 30,
+  },
   buttonContainer: {
     alignItems: 'center',
     margin: 20,

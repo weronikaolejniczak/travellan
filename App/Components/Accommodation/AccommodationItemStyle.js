@@ -42,7 +42,7 @@ export const accommodationItemStyle = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    padding: 15,
+    padding: cardHeight * 0.018,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

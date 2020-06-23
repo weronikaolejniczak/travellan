@@ -58,33 +58,53 @@ const TransportItem = (props) => {
         )}
       </View>
 
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-calendar" style={styles.icon} />
+      {/* DEPARTURE */}
+      <View>
+        <Text style={[styles.subtitle]}>Departure</Text>
+        <View style={[styles.rowDirection, {margin: 10}]}>
+          <View style={styles.item}>
+            <Icon name="md-calendar" style={styles.icon} />
+          </View>
+          <View style={styles.item}>
+            <Text style={[styles.text]}>
+              Leave on {props.date} {'\n'}
+              at {props.hour}
+            </Text>
+          </View>
         </View>
-        <View style={styles.item}>
-          <Text style={[styles.text]}>
-            Leave on {props.date} {'\n'}
-            at {props.hour}
-          </Text>
+
+        <View style={[styles.rowDirection, {margin: 10}]}>
+          <View style={styles.item}>
+            <Icon name="md-arrow-round-down" style={styles.icon} />
+          </View>
+          <View style={styles.item}>
+            <Text style={[styles.text]}>from {props.fromPlace}</Text>
+          </View>
         </View>
       </View>
 
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-arrow-round-down" style={styles.icon} />
+      {/* ARRIVAL */}
+      <View style={{marginTop: 10}}>
+        <Text style={[styles.subtitle]}>Arrival</Text>
+        <View style={[styles.rowDirection, {margin: 10}]}>
+          <View style={styles.item}>
+            <Icon name="md-calendar" style={styles.icon} />
+          </View>
+          <View style={styles.item}>
+            <Text style={[styles.text]}>
+              Leave on {props.date} {'\n'}
+              at {props.hour}
+            </Text>
+          </View>
         </View>
-        <View style={styles.item}>
-          <Text style={[styles.text]}>from {props.fromPlace}</Text>
-        </View>
-      </View>
 
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-arrow-round-forward" style={styles.icon} />
-        </View>
-        <View style={styles.item}>
-          <Text style={[styles.text]}>to {props.toPlace}</Text>
+        <View style={[styles.rowDirection, {margin: 10}]}>
+          <View style={styles.item}>
+            <Icon name="md-arrow-round-forward" style={styles.icon} />
+          </View>
+          <View style={styles.item}>
+            <Text style={[styles.text]}>to {props.toPlace}</Text>
+          </View>
         </View>
       </View>
     </Card>
