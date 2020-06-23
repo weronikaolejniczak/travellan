@@ -25,7 +25,8 @@ export const noteItemStyle = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    padding: 10,
+    paddingHorizontal: cardHeight * 0.08,
+    padding: cardHeight * 0.025,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -54,7 +55,6 @@ export const noteItemStyle = StyleSheet.create({
   icon: {
     fontSize: 30,
     color: Colors.text,
-    marginRight: 20,
   },
   columnDirection: {
     flexDirection: 'column',
