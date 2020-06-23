@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   Text,
   View,
@@ -45,8 +45,8 @@ const NewTripScreen = (props) => {
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
 
-  /** handlers */
-  // submitting
+  /** HANDLERS */
+  // submit handler
   const submitHandler = useCallback(() => {
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
@@ -64,8 +64,17 @@ const NewTripScreen = (props) => {
       );
       props.navigation.goBack();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, destination, startDate, endDate, budget]);
+  }, [
+    props.navigation,
+    dispatch,
+    destinationIsValid,
+    budgetIsValid,
+    budgetIsEnabled,
+    destination,
+    startDate,
+    endDate,
+    budget,
+  ]);
 
   /** refactor handlers with condition and setters functions */
   // destination handler
@@ -214,23 +223,20 @@ const NewTripScreen = (props) => {
             {
               flex: 1,
               flexDirection: 'row',
-              justifyContent: 'flex-start',
               alignItems: 'center',
             },
           ]}>
           <Text style={styles.label}>Budget</Text>
-          <View>
-            <Switch
-              trackColor={{
-                false: Colors.switchDisabledTrack,
-                true: Colors.switchEnabledTrack,
-              }}
-              thumbColor={Colors.switchThumb}
-              ios_backgroundColor={Colors.background}
-              onValueChange={toggleBudgetSwitch}
-              value={budgetIsEnabled}
-            />
-          </View>
+          <Switch
+            trackColor={{
+              false: Colors.switchDisabledTrack,
+              true: Colors.switchEnabledTrack,
+            }}
+            thumbColor={Colors.switchThumb}
+            ios_backgroundColor={Colors.background}
+            onValueChange={toggleBudgetSwitch}
+            value={budgetIsEnabled}
+          />
         </View>
         {budgetIsEnabled && (
           <TextInput
@@ -239,6 +245,7 @@ const NewTripScreen = (props) => {
             placeholderTextColor="grey"
             value={budget}
             onChangeText={budgetChangeHandler}
+            keyboardType={'numeric'}
           />
         )}
 
@@ -259,9 +266,9 @@ const NewTripScreen = (props) => {
 };
 
 /** we export newTripScreenOptions to use in our Stack.Navigator */
-export const newTripScreenOptions = () => {
+export const newTripScreenOptions = (navData) => {
   return {
-    headerRight: () => (
+    /* headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
@@ -269,10 +276,10 @@ export const newTripScreenOptions = () => {
           iconName={
             Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
           }
-          onPress={() => {}} // SUBMIT
+          onPress={submitHandler(destination, startDate, endDate, budget)} // SUBMIT
         />
       </HeaderButtons>
-    ),
+    ), */
   };
 };
 

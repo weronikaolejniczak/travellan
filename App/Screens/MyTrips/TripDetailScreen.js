@@ -65,7 +65,9 @@ const TripDetailScreen = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Budget');
+                props.navigation.navigate('Budget', {
+                  tripId: selectedTrip.id,
+                });
               }}>
               <Text style={styles.buttonText}>Budget</Text>
               <Icon name="md-wallet" size={42} color="#FFFFFF" />
@@ -75,7 +77,7 @@ const TripDetailScreen = (props) => {
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Notes', {
-                  trip: selectedTrip,
+                  tripId: selectedTrip.id,
                 });
               }}>
               <Text style={styles.buttonText}>Notes</Text>

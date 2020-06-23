@@ -179,6 +179,7 @@ const AddTransportScreen = (props) => {
           style={styles.input}
           value={details}
           onChangeText={setDetails}
+          multiline
         />
       </View>
 

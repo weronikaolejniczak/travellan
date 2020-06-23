@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
 import {
   ScrollView,
@@ -21,10 +20,11 @@ const AddNote = (props) => {
   const submitHandler = useCallback(() => {
     dispatch(noteActions.createNote(tripId, title, description));
     props.navigation.goBack();
-  }, [dispatch, tripId, title, description]);
+  }, [props.navigation, dispatch, tripId, title, description]);
 
   return (
     <ScrollView style={styles.form}>
+      {/* TITLE INPUT */}
       <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>Title</Text>
         <TextInput
@@ -33,14 +33,17 @@ const AddNote = (props) => {
           onChangeText={(text) => setTitle(text)}
         />
       </View>
+      {/* DESCRIPTION INPUT */}
       <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.input}
           value={description}
           onChangeText={(text) => setDescription(text)}
+          multiline
         />
       </View>
+      {/* SUBMIT BUTTON */}
       <View style={{alignItems: 'center', margin: 20}}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>
