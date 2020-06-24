@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -47,7 +46,7 @@ const NotesScreen = (props) => {
   }
 
   return (
-    <View style={{backgroundColor: '#222222', flex: 1}}>
+    <View style={{backgroundColor: '#222222', flex: 1, alignItems: 'center'}}>
       {notes ? (
         <FlatList
           data={notes}

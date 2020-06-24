@@ -4,8 +4,8 @@ import Colors from '../../Constants/Colors';
 // constants for responsive design
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.4;
-export const cardWidth = width * 0.82;
-export const spacingForCardInset = width * 0.1 - 13;
+export const cardWidth = width * 0.9;
+export const spacingForCardInset = width * 0.03;
 
 /**
  * TODO:
@@ -16,12 +16,9 @@ export const spacingForCardInset = width * 0.1 - 13;
 export const noteItemStyle = StyleSheet.create({
   noteCard: {
     width: cardWidth,
-    marginHorizontal: 10,
-    padding: 25,
-    borderRadius: 15,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 35,
+    paddingHorizontal: cardWidth * 0.1,
+    paddingVertical: cardHeight * 0.05,
+    marginVertical: cardHeight * 0.05,
   },
   actions: {
     flexDirection: 'row',
