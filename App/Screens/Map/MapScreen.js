@@ -31,7 +31,7 @@ const MapScreen = (props) => {
           latitude,
         });
       },
-      (error) => alert(error.message),
+      (error) => console.log(error.message),
       {timeout: 20000, maximumAge: 1000},
     );
   }, [currentPosition]);
