@@ -55,10 +55,6 @@ const AccommodationScreen = (props) => {
     });
   }, [dispatch, loadReservations]);
 
-  let scrollX = new Animated.Value(0);
-  // position will be a value between 0 and photos.length - 1 assuming you don't scroll pass the ends of the ScrollView
-  let position = Animated.divide(scrollX, cardWidth);
-
   if (isLoading) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
@@ -85,6 +81,10 @@ const AccommodationScreen = (props) => {
       </ScrollView>
     );
   }
+
+  let scrollX = new Animated.Value(0);
+  // position will be a value between 0 and photos.length - 1 assuming you don't scroll pass the ends of the ScrollView
+  let position = Animated.divide(scrollX, cardWidth);
 
   return (
     <ScrollView

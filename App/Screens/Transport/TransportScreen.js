@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -27,6 +27,8 @@ import Colors from '../../Constants/Colors';
  */
 const TransportScreen = (props) => {
   const dispatch = useDispatch();
+  const [error, setError] = useState();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const tripId = props.route.params.tripId;
@@ -34,22 +36,50 @@ const TransportScreen = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
-  const transportInfo = selectedTrip.transportInfo;
+  const transport = selectedTrip.transportInfo;
+
+  const loadTransport = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(transportActions.fetchTransport(tripId));
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setError, tripId]);
 
   useEffect(() => {
-    const loadTransport = async () => {
-      setIsLoading(true);
-      await dispatch(transportActions.fetchTransport(tripId));
+    setIsLoading(true);
+    loadTransport().then(() => {
       setIsLoading(false);
-    };
-    loadTransport();
-  }, [dispatch, tripId]);
+    });
+  }, [dispatch, loadTransport]);
 
   if (isLoading) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />
       </View>
+    );
+  }
+
+  if (!isLoading && transport === undefined) {
+    return (
+      <ScrollView
+        style={styles.scrollview}
+        contentContainerStyle={styles.contentContainer}>
+        <View style={[styles.itemlessContainer, styles.columnAndRowCenter]}>
+          <Text style={[styles.text, styles.itemlessText]}>
+            There are no tickets!
+          </Text>
+          <Text style={[styles.text, styles.itemlessText]}>
+            Add one with the
+          </Text>
+          <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
+          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
+        </View>
+      </ScrollView>
     );
   }
 
@@ -61,74 +91,63 @@ const TransportScreen = (props) => {
     <ScrollView
       style={styles.scrollview}
       contentContainerStyle={styles.contentContainer}>
-      {transportInfo !== undefined ? (
-        <View>
-          <FlatList
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            // the onScroll prop will pass a nativeEvent object to a function
-            onScroll={Animated.event(
-              // Animated.event returns a function that takes an array where the first element...
-              [{nativeEvent: {contentOffset: {x: scrollX}}}], // ... is an object that maps any nativeEvent prop to a variable
-            )} // in this case we are mapping the value of nativeEvent.contentOffset.x to this.scrollX
-            scrollEventThrottle={16} // this will ensure that this ScrollView's onScroll prop is called no faster than 16ms between each function call
-            decelerationRate={0}
-            snapToInterval={cardWidth + 20}
-            snapToAlignment="center"
-            contentInset={styles.contentInsetIOS}
-            data={transportInfo}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={(itemData) => (
-              <TransportItem
-                tripId={tripId}
-                id={itemData.item.id}
-                means={itemData.item.means}
-                to={itemData.item.to}
-                destination={selectedTrip.destination}
-                date={itemData.item.date}
-                hour={itemData.item.hour}
-                fromPlace={itemData.item.fromPlace}
-                toPlace={itemData.item.toPlace}
-              />
-            )}
-          />
-          <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-            {transportInfo.map((_, i) => {
-              let opacity = position.interpolate({
-                inputRange: [i - 1, i, i + 1], // each dot will need to have an opacity of 1 when position is equal to their index (i)
-                outputRange: [0.3, 1, 0.3], // when position is not i, the opacity of the dot will animate to 0.3
-                extrapolate: 'clamp', // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
-              });
+      <View>
+        <FlatList
+          onRefresh={loadTransport}
+          refreshing={isRefreshing}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          // the onScroll prop will pass a nativeEvent object to a function
+          onScroll={Animated.event(
+            // Animated.event returns a function that takes an array where the first element...
+            [{nativeEvent: {contentOffset: {x: scrollX}}}], // ... is an object that maps any nativeEvent prop to a variable
+          )} // in this case we are mapping the value of nativeEvent.contentOffset.x to this.scrollX
+          scrollEventThrottle={16} // this will ensure that this ScrollView's onScroll prop is called no faster than 16ms between each function call
+          decelerationRate={0}
+          snapToInterval={cardWidth + 20}
+          snapToAlignment="center"
+          contentInset={styles.contentInsetIOS}
+          data={transport}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={(itemData) => (
+            <TransportItem
+              tripId={tripId}
+              id={itemData.item.id}
+              means={itemData.item.means}
+              to={itemData.item.to}
+              destination={selectedTrip.destination}
+              date={itemData.item.date}
+              hour={itemData.item.hour}
+              fromPlace={itemData.item.fromPlace}
+              toPlace={itemData.item.toPlace}
+            />
+          )}
+        />
+        <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+          {transport.map((_, i) => {
+            let opacity = position.interpolate({
+              inputRange: [i - 1, i, i + 1], // each dot will need to have an opacity of 1 when position is equal to their index (i)
+              outputRange: [0.3, 1, 0.3], // when position is not i, the opacity of the dot will animate to 0.3
+              extrapolate: 'clamp', // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
+            });
 
-              return (
-                <Animated.View
-                  key={i}
-                  style={{
-                    opacity,
-                    height: 10,
-                    width: 10,
-                    backgroundColor: Colors.primary,
-                    margin: 8,
-                    borderRadius: 5,
-                  }}
-                />
-              );
-            })}
-          </View>
+            return (
+              <Animated.View
+                key={i}
+                style={{
+                  opacity,
+                  height: 10,
+                  width: 10,
+                  backgroundColor: Colors.primary,
+                  margin: 8,
+                  borderRadius: 5,
+                }}
+              />
+            );
+          })}
         </View>
-      ) : (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Text style={[styles.text, styles.itemlessText]}>
-            There are no tickets!
-          </Text>
-          <Text style={[styles.text, styles.itemlessText]}>
-            Add one with the
-          </Text>
-          <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
-          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
-        </View>
-      )}
+      </View>
     </ScrollView>
   );
 };
