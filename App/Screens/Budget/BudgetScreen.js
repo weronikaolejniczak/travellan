@@ -3,6 +3,7 @@ import {ScrollView, View, Text, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
+import Card from '../../Components/UI/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -28,15 +29,20 @@ const BudgetScreen = (props) => {
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.budgetHolder}>
-        {budget < 0 ? (
-          <Text style={styles.negativeBudget}>{budget}</Text>
-        ) : (
-          <Text style={styles.positiveBudget}>{budget}</Text>
-        )}
+        <Card style={styles.budgetCard}>
+          <View style={styles.justifyRow}>
+            <Text style={styles.label}>Balance: </Text>
+            {budget < 0 ? (
+              <Text style={styles.negativeBudget}>{budget}</Text>
+            ) : (
+              <Text style={styles.positiveBudget}>{budget}</Text>
+            )}
+          </View>
+        </Card>
       </View>
 
       <View>
-        <Text>Operations</Text>
+        <Text style={styles.label}>Operations</Text>
       </View>
       <View style={[styles.justifyRow, {alignItems: 'center'}]}>
         {/* AMOUNT INPUT */}
@@ -56,8 +62,8 @@ const BudgetScreen = (props) => {
         </TouchableOpacity>
       </View>
 
-      <View>
-        <Text>History</Text>
+      <View style={{marginTop: '10%'}}>
+        <Text style={styles.label}>History</Text>
       </View>
     </ScrollView>
   );

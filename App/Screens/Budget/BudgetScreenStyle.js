@@ -1,10 +1,19 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import Colors from '../../Constants/Colors';
+
+const {height, width} = Dimensions.get('window');
 
 export const budgetScreenStyle = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  label: {
+    marginRight: '10%',
+    marginLeft: '10%',
+    color: Colors.text,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   input: {
     color: Colors.text,
@@ -33,6 +42,10 @@ export const budgetScreenStyle = StyleSheet.create({
   budgetHolder: {
     margin: '10%',
   },
+  budgetCard: {
+    paddingHorizontal: width * 0.01,
+    paddingVertical: height * 0.01,
+  },
   negativeBudget: {
     fontSize: 27,
     color: Colors.error,
@@ -43,5 +56,6 @@ export const budgetScreenStyle = StyleSheet.create({
   },
   justifyRow: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });
