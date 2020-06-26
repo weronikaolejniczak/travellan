@@ -50,6 +50,12 @@ export const transportItemStyle = StyleSheet.create({
     color: Colors.text,
     marginRight: 20,
   },
+  counterContainer: {
+    backgroundColor: Colors.primary,
+    borderRadius: 50,
+    paddingHorizontal: cardWidth * 0.035,
+    paddingVertical: cardHeight * 0.01,
+  },
   columnDirection: {
     flexDirection: 'column',
   },

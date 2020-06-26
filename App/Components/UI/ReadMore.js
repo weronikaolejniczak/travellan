@@ -1,12 +1,9 @@
 import React, {useState, useCallback} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import Colors from '../../Constants/Colors';
 
-/**
- * Custom component for 'read more/show less' functionality.
+/** Custom component for 'read more/show less' functionality.
  * When used, a longText should be passed as such:
  * <ReadMore longText={props.description} />
  */

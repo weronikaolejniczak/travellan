@@ -113,14 +113,11 @@ const TransportScreen = (props) => {
           renderItem={(itemData) => (
             <TransportItem
               tripId={tripId}
-              id={itemData.item.id}
-              means={itemData.item.means}
-              to={itemData.item.to}
               destination={selectedTrip.destination}
-              date={itemData.item.date}
-              hour={itemData.item.hour}
-              fromPlace={itemData.item.fromPlace}
-              toPlace={itemData.item.toPlace}
+              id={itemData.item.id}
+              to={itemData.item.to}
+              from={itemData.item.from}
+              stages={itemData.item.stages}
             />
           )}
         />

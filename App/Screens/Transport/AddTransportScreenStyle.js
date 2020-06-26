@@ -47,10 +47,22 @@ export const addTransportScreenStyle = StyleSheet.create({
     color: Colors.text,
     fontSize: 20,
   },
+  returnIcon: {
+    fontSize: 25,
+    color: Colors.text,
+    paddingVertical: 7,
+  },
   icon: {
     fontSize: 30,
     color: Colors.text,
-    marginRight: 30,
+    //marginRight: 30,
+    paddingHorizontal: 7,
+  },
+  iconButton: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    alignItems: 'center',
   },
   buttonContainer: {
     alignItems: 'center',
