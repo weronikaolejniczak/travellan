@@ -27,7 +27,7 @@ import Colors from '../../Constants/Colors';
  */
 const TransportScreen = (props) => {
   const dispatch = useDispatch();
-  const [error, setError] = useState();
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,19 +35,17 @@ const TransportScreen = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
   const transport = selectedTrip.transportInfo;
 
   const loadTransport = useCallback(async () => {
-    setError(null);
     setIsRefreshing(true);
     try {
       await dispatch(transportActions.fetchTransport(tripId));
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
     }
     setIsRefreshing(false);
-  }, [dispatch, setError, tripId]);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -129,19 +127,7 @@ const TransportScreen = (props) => {
               extrapolate: 'clamp', // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
             });
 
-            return (
-              <Animated.View
-                key={i}
-                style={{
-                  opacity,
-                  height: 10,
-                  width: 10,
-                  backgroundColor: Colors.primary,
-                  margin: 8,
-                  borderRadius: 5,
-                }}
-              />
-            );
+            return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
           })}
         </View>
       </View>

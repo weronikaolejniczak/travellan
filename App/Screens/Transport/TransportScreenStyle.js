@@ -36,4 +36,11 @@ export const transportScreenStyle = StyleSheet.create({
   icon: {
     margin: 10,
   },
+  dot: {
+    height: 10,
+    width: 10,
+    backgroundColor: Colors.primary,
+    margin: 8,
+    borderRadius: 5,
+  },
 });

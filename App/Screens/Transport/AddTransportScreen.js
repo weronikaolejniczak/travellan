@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {
   Text,
   View,
-  //Alert,
+  Alert,
   FlatList,
   TextInput,
   Switch,
@@ -51,6 +51,7 @@ const AddTransportScreen = (props) => {
 
   /** ARRAY OF STAGES */
   const [stages, setStages] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   /** HANDLERS */
   // cut date into displayable form
@@ -104,6 +105,28 @@ const AddTransportScreen = (props) => {
     toggleModal();
     clear();
     console.log(stages);
+  };
+
+  const deleteHandler = (item) => {
+    Alert.alert(
+      'Delete a stage',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            stages.splice(stages.indexOf(item), 1);
+            setRefresh(true);
+            setRefresh(false);
+          },
+        },
+      ],
+      {cancelable: true},
+    );
   };
 
   const submitHandler = useCallback(() => {
@@ -337,31 +360,52 @@ const AddTransportScreen = (props) => {
         <FlatList
           style={{marginHorizontal: '10%'}}
           data={stages}
+          extraData={refresh}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <Card style={styles.card}>
-              <Text style={[styles.title, styles.text, {fontWeight: 'bold'}]}>
-                {item.means} ticket
-              </Text>
-              <View style={{flexDirection: 'row', marginTop: '5%'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Text style={[styles.title, styles.text, {fontWeight: 'bold'}]}>
+                  {item.means} ticket
+                </Text>
+                <TouchableOpacity
+                  onPress={() => deleteHandler(item)}
+                  style={{padding: '1%'}}>
+                  <Icon
+                    name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                    style={[styles.icon, {color: Colors.primary}]}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  marginTop: '5%',
+                }}>
                 <View>
                   <Text style={[{color: Colors.primary, fontWeight: 'bold'}]}>
                     DEPARTURE
                   </Text>
                   <Text style={styles.text}>
-                    Date: {cutDate(item.dateOfDeparture)} {'\n'}
-                    Hour: {item.hourOfDeparture} {'\n'}
-                    Address: {item.fromPlace}
+                    {cutDate(item.dateOfDeparture)} {'\n'}
+                    {item.hourOfDeparture} {'\n'}
+                    {item.fromPlace}
                   </Text>
                 </View>
-                <View style={{marginLeft: '10%'}}>
+                <View style={{marginLeft: '5%'}}>
                   <Text style={[{color: Colors.primary, fontWeight: 'bold'}]}>
                     ARRIVAL
                   </Text>
                   <Text style={styles.text}>
-                    Date: {cutDate(item.dateOfArrival)} {'\n'}
-                    Hour: {item.hourOfArrival} {'\n'}
-                    Address: {item.toPlace}
+                    {cutDate(item.dateOfArrival)} {'\n'}
+                    {item.hourOfArrival} {'\n'}
+                    {item.toPlace}
                   </Text>
                 </View>
               </View>
