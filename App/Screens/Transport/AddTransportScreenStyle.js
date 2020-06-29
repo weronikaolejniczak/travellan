@@ -6,6 +6,12 @@ export const addTransportScreenStyle = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  card: {
+    padding: 15,
+    marginTop: 10,
+    marginHorizontal: 30,
+    justifyContent: 'center',
+  },
   text: {
     color: Colors.text,
   },

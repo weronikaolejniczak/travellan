@@ -1,4 +1,5 @@
 /* {
+    id: 0,
     dateOfDeparture: '2021-02-14',
     hourOfDeparture: '2:35'
     fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
@@ -13,6 +14,7 @@
 } */
 class TransportStage {
   constructor(
+    id,
     dateOfDeparture,
     hourOfDeparture,
     fromPlace,
@@ -22,6 +24,7 @@ class TransportStage {
     means,
     details,
   ) {
+    this.id = id;
     this.dateOfDeparture = dateOfDeparture;
     this.hourOfDeparture = hourOfDeparture;
     this.fromPlace = fromPlace;

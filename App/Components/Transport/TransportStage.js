@@ -10,6 +10,7 @@ import Colors from '../../Constants/Colors';
     from: false,
     stages: [
       {
+        id: 0,
         dateOfDeparture: '2021-02-14',
         hourOfDeparture: '2:35'
         fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
@@ -31,7 +32,7 @@ const TransportStage = (props) => {
 
   return (
     <View style={{marginTop: 20}}>
-      <Text style={[styles.subtitle]}>{stage.means} ticket</Text>
+      {/* <Text style={[styles.subtitle]}>{stage.means} ticket</Text> */}
       <View style={[styles.rowDirection]}>
         {/* ICONS AND LINES */}
         <View
@@ -68,8 +69,8 @@ const TransportStage = (props) => {
               </View>
               <View style={styles.item}>
                 <Text style={[styles.text]}>
-                  Leave on {stage.dateOfDeparture.toString()} {'\n'}
-                  at {stage.hourOfDeparture.toString()}
+                  {stage.dateOfDeparture.toString()} {'\n'}
+                  {stage.hourOfDeparture.toString()}
                 </Text>
               </View>
             </View>
@@ -79,7 +80,7 @@ const TransportStage = (props) => {
                 <Icon name="md-arrow-round-down" style={styles.icon} />
               </View>
               <View style={styles.item}>
-                <Text style={[styles.text]}>from {stage.fromPlace}</Text>
+                <Text style={[styles.text]}>{stage.fromPlace}</Text>
               </View>
             </View>
           </View>
@@ -93,8 +94,8 @@ const TransportStage = (props) => {
               </View>
               <View style={styles.item}>
                 <Text style={[styles.text]}>
-                  Leave on {stage.dateOfArrival.toString()} {'\n'}
-                  at {stage.hourOfArrival.toString()}
+                  {stage.dateOfArrival.toString()} {'\n'}
+                  {stage.hourOfArrival.toString()}
                 </Text>
               </View>
             </View>
@@ -104,7 +105,7 @@ const TransportStage = (props) => {
                 <Icon name="md-arrow-round-forward" style={styles.icon} />
               </View>
               <View style={styles.item}>
-                <Text style={[styles.text]}>to {stage.toPlace}</Text>
+                <Text style={[styles.text]}>{stage.toPlace}</Text>
               </View>
             </View>
           </View>

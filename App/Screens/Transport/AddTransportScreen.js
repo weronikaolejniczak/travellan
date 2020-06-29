@@ -3,6 +3,7 @@ import {
   Text,
   View,
   //Alert,
+  FlatList,
   TextInput,
   Switch,
   TouchableOpacity,
@@ -14,6 +15,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import TransportStage from '../../Models/TransportStage';
 import * as transportActions from '../../Stores/Actions/Transport';
+import Card from '../../Components/UI/Card';
 import {addTransportScreenStyle as styles} from './AddTransportScreenStyle';
 import Colors from '../../Constants/Colors';
 
@@ -22,27 +24,30 @@ const AddTransportScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
 
-  // is it a 'to' or 'from' ticket?
+  /** TYPE OF TICKET BOOLEAN VARIABLES */
   const [to, setToDestination] = useState(true);
   const [from, setFromDestination] = useState(false);
-  // modal
+
+  /** MODAL CONTROLLER */
   const [showModal, setShowModal] = useState(false);
 
-  // for each transport stage
-  // DEPARTURE
+  /** STAGE VARIABLES  */
   const [dateOfDeparture, setDateOfDeparture] = useState(new Date());
   const [hourOfDeparture, setHourOfDeparture] = useState(new Date().getHours());
   const [fromPlace, setFromPlace] = useState('');
-  // ARRIVAL
   const [dateOfArrival, setDateOfArrival] = useState(new Date());
   const [hourOfArrival, setHourOfArrival] = useState(new Date().getHours());
   const [toPlace, setToPlace] = useState('');
-  // ADDITIONAL
   const [means, setMeans] = useState('');
   const [details, setDetails] = useState('');
 
-  // stages
+  /** ARRAY OF STAGES */
   const [stages, setStages] = useState([]);
+
+  /** HANDLERS */
+  // cut date into displayable form
+  const cutDate = (string) =>
+    string.toString().split(' ').slice(1, 4).join(' ');
 
   // toggle switch for 'to' attribute of the ticket
   const toggleToDestinationSwitch = () => {
@@ -61,6 +66,7 @@ const AddTransportScreen = (props) => {
     setShowModal((previousState) => !previousState);
   };
 
+  // clear values for transport stages values holders
   const clear = () => {
     setDateOfDeparture(new Date());
     setHourOfDeparture('');
@@ -72,30 +78,10 @@ const AddTransportScreen = (props) => {
     setDetails('');
   };
 
-  /* {
-    id: 1,
-    to: true,
-    from: false,
-    stages: [
-      {
-        dateOfDeparture: '2021-02-14',
-        hourOfDeparture: '2:35'
-        fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
-        dateOfArrival: '2021-02-13',
-        hourOfArrival: '6:45',
-        toPlace: "Gare Saint-Lazare, 13 Rue d'Amsterdam, 75008 Paris, France",
-        means: 'train',
-        details: {
-          carriage: '13',
-          seat: '61',
-        },
-      }
-    ]
-  }, */
+  // add stage of transport handler
   const addHandler = () => {
-    console.log(stages);
-
     let stage = new TransportStage(
+      new Date().toString(),
       dateOfDeparture,
       hourOfDeparture,
       fromPlace,
@@ -145,11 +131,7 @@ const AddTransportScreen = (props) => {
                     }}>
                     <Icon name="md-calendar" style={styles.icon} />
                     <Text style={styles.pickerText}>
-                      {dateOfDeparture
-                        .toString()
-                        .split(' ')
-                        .slice(1, 4)
-                        .join(' ')}
+                      {cutDate(dateOfDeparture)}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -166,7 +148,7 @@ const AddTransportScreen = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Icon name="md-calendar" style={styles.icon} />
+                    <Icon name="md-clock" style={styles.icon} />
                     <Text style={styles.pickerText}>{hourOfDeparture}</Text>
                   </View>
                 </TouchableOpacity>
@@ -199,11 +181,7 @@ const AddTransportScreen = (props) => {
                     }}>
                     <Icon name="md-calendar" style={styles.icon} />
                     <Text style={styles.pickerText}>
-                      {dateOfArrival
-                        .toString()
-                        .split(' ')
-                        .slice(1, 4)
-                        .join(' ')}
+                      {cutDate(dateOfArrival)}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -220,7 +198,7 @@ const AddTransportScreen = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Icon name="md-calendar" style={styles.icon} />
+                    <Icon name="md-clock" style={styles.icon} />
                     <Text style={styles.pickerText}>{hourOfArrival}</Text>
                   </View>
                 </TouchableOpacity>
@@ -244,7 +222,7 @@ const AddTransportScreen = (props) => {
               Additional information
             </Text>
             <View style={styles.metrics}>
-              <Text style={styles.label}>Means of transportation</Text>
+              <Text style={styles.label}>Means of transport</Text>
               <TextInput
                 style={styles.input}
                 value={means}
@@ -314,10 +292,17 @@ const AddTransportScreen = (props) => {
             <Icon name="md-add" style={styles.icon} />
           </TouchableOpacity>
         </View>
+
         {/** LIST OF STAGES */}
-        <Text style={[{marginTop: '3%', marginLeft: '10%'}, styles.text]}>
-          {stages.length}
-        </Text>
+        <FlatList
+          data={stages}
+          keyExtractor={(item) => item.id}
+          renderItem={({stage}) => (
+            <Card style={styles.card}>
+              <Text style={styles.text}>Date of departure: {stage}</Text>
+            </Card>
+          )}
+        />
       </View>
 
       {/* SUBMIT BUTTON */}
