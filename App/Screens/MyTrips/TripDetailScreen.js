@@ -22,7 +22,7 @@ const TripDetailScreen = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
-  const author = 'Darth Vader';
+  const author = 'Darth Vader'; // refactor to be the author of the photo
   const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
   const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
 
@@ -37,10 +37,10 @@ const TripDetailScreen = (props) => {
             colors={['rgba(0,0,0,0.00)', '#222222']}
             start={{x: 0.0, y: 0.0}}
             end={{x: 0.0, y: 1.0}}
-            locations={[0.5, 1]}
-            style={[{flex: 1, opacity: 0.92}]}>
+            locations={[0.6, 1]}
+            style={[{flex: 1}]}>
             <View style={styles.dateContainer}>
-              <Text style={[styles.text]}>{author} @Unsplash</Text>
+              <Text style={[styles.text]}>Photo by {author} @Unsplash</Text>
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
                   <Text style={[styles.text, styles.date]}>{startDate}</Text>

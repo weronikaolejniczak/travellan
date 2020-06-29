@@ -30,6 +30,10 @@ const TransportStage = (props) => {
   const stage = props.stage;
   console.log(stage);
 
+  /**
+   * <Text style={[styles.subtitle]}>{props.index + 1}</Text>
+   * 
+   */
   return (
     <View style={{marginTop: 20}}>
       {/* <Text style={[styles.subtitle]}>{stage.means} ticket</Text> */}
@@ -49,7 +53,7 @@ const TransportStage = (props) => {
           <View
             style={{
               borderColor: Colors.primary,
-              height: 200,
+              height: '80%',
               borderLeftWidth: 3,
             }}
           />

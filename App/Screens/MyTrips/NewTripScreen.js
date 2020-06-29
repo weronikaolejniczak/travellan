@@ -93,6 +93,9 @@ const NewTripScreen = (props) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
     setStartDate(currentDate);
+
+    // set endDate to currentDate if it is earlier than the day selected for startDate
+    currentDate > endDate ? setEndDate(currentDate) : '';
   };
 
   const showStartDatepicker = () => {
@@ -147,6 +150,7 @@ const NewTripScreen = (props) => {
    */
   return (
     <ScrollView style={styles.form}>
+      {/* DESTINATION */}
       <View style={styles.metrics}>
         <Text style={styles.label}>Trip destination</Text>
         <TextInput
@@ -163,13 +167,19 @@ const NewTripScreen = (props) => {
         )}
       </View>
 
+      {/* START DATE */}
       <View style={styles.metrics}>
         <Text style={styles.label}>Start date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showStartDatepicker} style={styles.picker}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Icon name="md-calendar" style={styles.icon} />
+              <Icon
+                name={
+                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
+                }
+                style={styles.icon}
+              />
               <Text style={styles.pickerText}>
                 {startDate.toString().split(' ').slice(1, 4).join(' ')}
               </Text>
@@ -190,13 +200,19 @@ const NewTripScreen = (props) => {
         )}
       </View>
 
+      {/* END DATE */}
       <View style={styles.metrics}>
         <Text style={styles.label}>End date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showEndDatepicker} style={styles.picker}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Icon name="md-calendar" style={styles.icon} />
+              <Icon
+                name={
+                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
+                }
+                style={styles.icon}
+              />
               <Text style={styles.pickerText}>
                 {endDate.toString().split(' ').slice(1, 4).join(' ')}
               </Text>
@@ -217,6 +233,7 @@ const NewTripScreen = (props) => {
         )}
       </View>
 
+      {/* BUDGET */}
       <View style={styles.metrics}>
         <View
           style={[
