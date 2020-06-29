@@ -57,7 +57,7 @@ export const transportItemStyle = StyleSheet.create({
   },
   verticalLine: {
     borderColor: Colors.primary,
-    height: cardHeight * 0.05,
+    height: cardHeight * 0.075,
     borderLeftWidth: 3,
   },
   horizontalLine: {
@@ -66,10 +66,14 @@ export const transportItemStyle = StyleSheet.create({
     borderBottomWidth: 1,
   },
   counterContainer: {
-    backgroundColor: Colors.primary,
-    borderRadius: 50,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     paddingHorizontal: cardWidth * 0.035,
     paddingVertical: cardHeight * 0.01,
+    backgroundColor: Colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   columnDirection: {
     flexDirection: 'column',

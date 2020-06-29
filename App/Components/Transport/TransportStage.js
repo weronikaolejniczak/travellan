@@ -32,7 +32,10 @@ const TransportStage = (props) => {
           <View style={[styles.verticalLine]} />
           {/* 2nd NUMBER */}
           <TouchableOpacity style={[styles.counterContainer]}>
-            <Text style={[styles.subtitle]}>{props.index + 1}</Text>
+            <Icon
+              name={Platform.OS === 'android' ? 'md-more' : 'ios-more'}
+              style={[styles.subtitle, {fontSize: 24}]}
+            />
           </TouchableOpacity>
         </View>
 
@@ -44,7 +47,11 @@ const TransportStage = (props) => {
             <View
               style={[
                 styles.rowDirection,
-                {justifyContent: 'space-around', alignItems: 'center'},
+                {
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  marginVertical: 10,
+                },
               ]}>
               <Icon
                 name={
@@ -57,7 +64,7 @@ const TransportStage = (props) => {
               </Text>
               <Icon
                 name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
-                style={styles.icon}
+                style={[styles.icon, {marginLeft: 20}]}
               />
               <Text style={[styles.text]}>{stage.hourOfDeparture}</Text>
             </View>
@@ -67,7 +74,14 @@ const TransportStage = (props) => {
           {/* ARRIVAL */}
           <View style={[{marginTop: cardHeight * 0.03}]}>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Arrival</Text>
-            <View style={[styles.rowDirection]}>
+            <View
+              style={[
+                styles.rowDirection,
+                {
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  marginVertical: 10,
+                },]}>
               <Icon
                 name={
                   Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
@@ -79,7 +93,7 @@ const TransportStage = (props) => {
               </Text>
               <Icon
                 name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
-                style={styles.icon}
+                style={[styles.icon, {marginLeft: 20}]}
               />
               <Text style={[styles.text]}>{stage.hourOfArrival}</Text>
             </View>

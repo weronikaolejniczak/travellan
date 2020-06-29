@@ -1,12 +1,19 @@
 import React, {useCallback} from 'react';
-import {View, ScrollView, Text, Alert, TouchableOpacity} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
 import TransportStage from '../../Components/Transport/TransportStage';
 import * as transportActions from '../../Stores/Actions/Transport';
-import {transportItemStyle as styles} from './TransportItemStyle';
+import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
 
 /** TRANSPORT ITEM COMPONENT used in TransportScreen for tickets listing
  * TODO:
@@ -30,29 +37,56 @@ const TransportItem = (props) => {
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
         {/* DELETE TICKET */}
-        <TouchableOpacity onPress={deleteTicketHandler}>
-          <Icon name="md-trash" style={styles.icon} />
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(
+              'Delete a ticket',
+              'Are you sure?',
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: deleteTicketHandler,
+                },
+              ],
+              {cancelable: true},
+            );
+          }}>
+          <Icon
+            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+            style={styles.icon}
+          />
         </TouchableOpacity>
 
         {/* EDIT TICKET INFO */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             Alert.alert('Edit ticket');
           }}>
           <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* SHOW QR CODE */}
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
-          <Icon name="md-qr-scanner" style={styles.icon} />
+          <Icon
+            name={
+              Platform.OS === 'android' ? 'md-qr-scanner' : 'ios-qr-scanner'
+            }
+            style={styles.icon}
+          />
         </TouchableOpacity>
       </View>
 
       {/* TO/FROM DESTINATION */}
-      <ScrollView style={[{marginTop: 20}]}>
+      <ScrollView
+        style={[{marginTop: cardHeight * 0.0465}]}
+        indicatorStyle={'white'}>
         <View style={[styles.rowCenter, {paddingVertical: 30}]}>
           {props.to === true ? (
             <Text style={[styles.header]}>to {props.destination}</Text>
