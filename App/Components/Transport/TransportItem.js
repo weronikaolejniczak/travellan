@@ -1,14 +1,14 @@
 import React, {useCallback} from 'react';
-import {View, Text, Alert, TouchableOpacity} from 'react-native';
+import {View, ScrollView, Text, Alert, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
-import {transportItemStyle as styles} from './TransportItemStyle';
+import TransportStage from '../../Components/Transport/TransportStage';
 import * as transportActions from '../../Stores/Actions/Transport';
+import {transportItemStyle as styles} from './TransportItemStyle';
 
-/**
- * Transport item component used in TransportScreen for tickets listing.
+/** TRANSPORT ITEM COMPONENT used in TransportScreen for tickets listing
  * TODO:
  * refactor icons for better touchable response and clickability
  * refactor metrics for responsive design
@@ -20,6 +20,7 @@ const TransportItem = (props) => {
 
   const tripId = props.tripId;
   const ticketId = props.id;
+  const transportTransfers = props.stages.length - 1;
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
@@ -28,11 +29,12 @@ const TransportItem = (props) => {
   return (
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
+        {/* DELETE TICKET */}
         <TouchableOpacity onPress={deleteTicketHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
 
-        {/* EDIT TICKET INFO
+        {/* EDIT TICKET INFO */}
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Edit ticket');
@@ -40,53 +42,37 @@ const TransportItem = (props) => {
           <Icon name="md-brush" style={styles.icon} />
         </TouchableOpacity>
 
-        SHOW QR CODE
+        {/* SHOW QR CODE */}
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
           <Icon name="md-qr-scanner" style={styles.icon} />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
 
-      <View style={[styles.rowCenter, {marginTop: 50, marginBottom: 20}]}>
-        <Text style={[styles.header]}>{props.means} ticket</Text>
-        {props.to === true ? (
-          <Text style={[styles.subtitle]}>to {props.destination}</Text>
-        ) : (
-          <Text style={[styles.subtitle]}>from {props.destination}</Text>
-        )}
-      </View>
-
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-calendar" style={styles.icon} />
-        </View>
-        <View style={styles.item}>
+      {/* TO/FROM DESTINATION */}
+      <ScrollView style={[{marginTop: 20}]}>
+        <View style={[styles.rowCenter, {paddingVertical: 30}]}>
+          {props.to === true ? (
+            <Text style={[styles.header]}>to {props.destination}</Text>
+          ) : (
+            <Text style={[styles.header]}>from {props.destination}</Text>
+          )}
           <Text style={[styles.text]}>
-            Leave on {props.date} {'\n'}
-            at {props.hour}
+            {transportTransfers === 1
+              ? `${transportTransfers} transport transfer`
+              : `${transportTransfers} transport transfers`}
           </Text>
         </View>
-      </View>
 
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-arrow-round-down" style={styles.icon} />
+        {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
+        <View>
+          {props.stages.map((i) => {
+            return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
+          })}
         </View>
-        <View style={styles.item}>
-          <Text style={[styles.text]}>from {props.fromPlace}</Text>
-        </View>
-      </View>
-
-      <View style={[styles.rowDirection, {margin: 10}]}>
-        <View style={styles.item}>
-          <Icon name="md-arrow-round-forward" style={styles.icon} />
-        </View>
-        <View style={styles.item}>
-          <Text style={[styles.text]}>to {props.toPlace}</Text>
-        </View>
-      </View>
+      </ScrollView>
     </Card>
   );
 };

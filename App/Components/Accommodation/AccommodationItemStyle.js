@@ -2,9 +2,9 @@ import {StyleSheet, Dimensions} from 'react-native';
 import Colors from '../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
-export const cardHeight = height * 0.82;
-export const cardWidth = width * 0.82;
-export const spacingForCardInset = width * 0.1 - 13;
+export const cardHeight = height * 0.83;
+export const cardWidth = width * 0.9;
+export const spacingForCardInset = width * 0.03;
 
 /**
  * TODO:
@@ -42,7 +42,7 @@ export const accommodationItemStyle = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    padding: 15,
+    padding: cardHeight * 0.018,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

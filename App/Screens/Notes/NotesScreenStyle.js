@@ -14,6 +14,12 @@ export const NotesScreenStyles = StyleSheet.create({
     fontSize: 16,
     color: '#FFFFFF',
   },
+  text: {
+    color: '#FFFFFF',
+  },
+  itemlessText: {
+    fontSize: 20,
+  },
   centered: {
     flex: 1,
     justifyContent: 'center',

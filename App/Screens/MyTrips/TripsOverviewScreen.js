@@ -60,7 +60,11 @@ const TripsOverviewScreen = (props) => {
           <Text style={[styles.text, styles.triplessText]}>
             Create one with the
           </Text>
-          <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
+          <Icon
+            name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+            size={32}
+            style={[styles.text, {margin: 10}]}
+          />
           <Text style={[styles.text, styles.triplessText]}>sign above!</Text>
         </View>
       ) : (
@@ -103,7 +107,10 @@ const TripsOverviewScreen = (props) => {
                       {cancelable: true},
                     );
                   }}>
-                  <Icon name="md-trash" style={styles.deleteIcon} />
+                  <Icon
+                    name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                    style={styles.deleteIcon}
+                  />
                 </TouchableHighlight>
               </TripItem>
             )}
@@ -121,7 +128,7 @@ const TripsOverviewScreen = (props) => {
 
 export const tripsScreenOptions = (navData) => {
   return {
-    /* MENU BUTTON - uncomment for next release
+    /* MENU BUTTON
     headerLeft: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

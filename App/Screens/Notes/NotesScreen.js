@@ -1,6 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   //TouchableOpacity,
@@ -16,13 +15,17 @@ import HeaderButton from '../../Components/UI/HeaderButton';
 import {NotesScreenStyles as styles} from './NotesScreenStyle';
 import * as noteActions from '../../Stores/Actions/Note';
 import Colors from '../../Constants/Colors';
-import NoteItem from '../../Components/MyTrips/NoteItem';
+import NoteItem from '../../Components/Notes/NoteItem';
 
 const NotesScreen = (props) => {
-  const trip = props.route.params.trip;
-  const notes = trip.notes;
-  const tripId = trip.id;
   const dispatch = useDispatch();
+  const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+
+  const notes = selectedTrip.notes;
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -43,8 +46,8 @@ const NotesScreen = (props) => {
   }
 
   return (
-    <View style={{backgroundColor: '#222222', flex: 1}}>
-      {!notes ? (
+    <View style={{backgroundColor: '#222222', flex: 1, alignItems: 'center'}}>
+      {notes ? (
         <FlatList
           data={notes}
           renderItem={(itemData) => (

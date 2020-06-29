@@ -4,6 +4,7 @@
  */
 export default {
   white: '#FFFFFF',
+  green: '#06C258',
   shadow: '#000000', // pitch black
   cards: '#111111', // light black
   background: '#222222', // dark grey
