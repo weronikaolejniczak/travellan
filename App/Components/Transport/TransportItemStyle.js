@@ -50,6 +50,21 @@ export const transportItemStyle = StyleSheet.create({
     color: Colors.text,
     marginRight: 20,
   },
+  iconsAndLinesContainer: {
+    marginRight: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  verticalLine: {
+    borderColor: Colors.primary,
+    height: cardHeight * 0.05,
+    borderLeftWidth: 3,
+  },
+  horizontalLine: {
+    marginVertical: 10,
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 1,
+  },
   counterContainer: {
     backgroundColor: Colors.primary,
     borderRadius: 50,

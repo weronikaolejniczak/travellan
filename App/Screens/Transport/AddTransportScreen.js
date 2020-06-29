@@ -46,8 +46,7 @@ const AddTransportScreen = (props) => {
 
   /** HANDLERS */
   // cut date into displayable form
-  const cutDate = (string) =>
-    string.toString().split(' ').slice(1, 4).join(' ');
+  const cutDate = (date) => date.toString().split(' ').slice(1, 4).join(' ');
 
   // toggle switch for 'to' attribute of the ticket
   const toggleToDestinationSwitch = () => {
@@ -82,10 +81,10 @@ const AddTransportScreen = (props) => {
   const addHandler = () => {
     let stage = new TransportStage(
       new Date().toString(),
-      dateOfDeparture,
+      dateOfDeparture.toString(),
       hourOfDeparture,
       fromPlace,
-      dateOfArrival,
+      dateOfArrival.toString(),
       hourOfArrival,
       toPlace,
       means,

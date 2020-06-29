@@ -7,10 +7,8 @@ import Card from '../../Components/UI/Card';
 import TransportStage from '../../Components/Transport/TransportStage';
 import * as transportActions from '../../Stores/Actions/Transport';
 import {transportItemStyle as styles} from './TransportItemStyle';
-// import Colors from '../../Constants/Colors';
 
-/**
- * Transport item component used in TransportScreen for tickets listing.
+/** TRANSPORT ITEM COMPONENT used in TransportScreen for tickets listing
  * TODO:
  * refactor icons for better touchable response and clickability
  * refactor metrics for responsive design
@@ -22,6 +20,7 @@ const TransportItem = (props) => {
 
   const tripId = props.tripId;
   const ticketId = props.id;
+  const transportTransfers = props.stages.length - 1;
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
@@ -30,6 +29,7 @@ const TransportItem = (props) => {
   return (
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
+        {/* DELETE TICKET */}
         <TouchableOpacity onPress={deleteTicketHandler}>
           <Icon name="md-trash" style={styles.icon} />
         </TouchableOpacity>
@@ -52,16 +52,21 @@ const TransportItem = (props) => {
       </View>
 
       {/* TO/FROM DESTINATION */}
-
-      <ScrollView style={{marginTop: 26}}>
-        <View style={[styles.rowCenter, {marginTop: 50, marginBottom: 20}]}>
+      <ScrollView style={[{marginTop: 20}]}>
+        <View style={[styles.rowCenter, {paddingVertical: 30}]}>
           {props.to === true ? (
             <Text style={[styles.header]}>to {props.destination}</Text>
           ) : (
             <Text style={[styles.header]}>from {props.destination}</Text>
           )}
+          <Text style={[styles.text]}>
+            {transportTransfers === 1
+              ? `${transportTransfers} transport transfer`
+              : `${transportTransfers} transport transfers`}
+          </Text>
         </View>
 
+        {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
         <View>
           {props.stages.map((i) => {
             return <TransportStage stage={i} index={props.stages.indexOf(i)} />;

@@ -1,117 +1,89 @@
-import React, {useState, useCallback} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import React from 'react';
+import {View, Text, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import {transportItemStyle as styles} from './TransportItemStyle';
+import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
 import Colors from '../../Constants/Colors';
-/* {
-    id: 1,
-    to: true,
-    from: false,
-    stages: [
-      {
-        id: 0,
-        dateOfDeparture: '2021-02-14',
-        hourOfDeparture: '2:35'
-        fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
-        dateOfArrival: '2021-02-13',
-        hourOfArrival: '6:45',
-        toPlace: "Gare Saint-Lazare, 13 Rue d'Amsterdam, 75008 Paris, France",
-        means: 'train',
-        details: {
-          carriage: '13',
-          seat: '61',
-        },
-      }
-    ]
-  }, */
 
+/** TRANSPORT STAGE COMPONENT */
 const TransportStage = (props) => {
   const stage = props.stage;
-  console.log(stage);
 
-  /**
-   * <Text style={[styles.subtitle]}>{props.index + 1}</Text>
-   * 
-   */
   return (
-    <View style={{marginTop: 20}}>
-      {/* <Text style={[styles.subtitle]}>{stage.means} ticket</Text> */}
+    <View>
+      <View style={[styles.horizontalLine]} />
       <View style={[styles.rowDirection]}>
-        {/* ICONS AND LINES */}
-        <View
-          style={{
-            marginRight: 20,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
+        {/* 1st COLUMN - ICONS AND LINES */}
+        <View style={[styles.iconsAndLinesContainer]}>
           {/* 1st NUMBER */}
           <TouchableOpacity style={[styles.counterContainer]}>
             <Text style={[styles.subtitle]}>{props.index + 1}</Text>
           </TouchableOpacity>
           {/* LINE */}
-          <View
-            style={{
-              borderColor: Colors.primary,
-              height: '80%',
-              borderLeftWidth: 3,
-            }}
-          />
+          <View style={[styles.verticalLine]} />
+          {/* TRANSPORT ICON */}
+          <TouchableOpacity style={[styles.counterContainer]}>
+            <Icon
+              name={Platform.OS === 'android' ? 'md-train' : 'ios-train'}
+              style={[styles.subtitle, {fontSize: 24}]}
+            />
+          </TouchableOpacity>
+          {/* LINE */}
+          <View style={[styles.verticalLine]} />
           {/* 2nd NUMBER */}
           <TouchableOpacity style={[styles.counterContainer]}>
             <Text style={[styles.subtitle]}>{props.index + 1}</Text>
           </TouchableOpacity>
         </View>
 
-        {/* DEPARTURE */}
+        {/* 2nd COLUMN - DEPARTURE AND ARRIVAL*/}
         <View>
+          {/* DEPARTURE */}
           <View>
-            <Text style={[styles.subtitle]}>Departure</Text>
-            <View style={[styles.rowDirection, {margin: 10}]}>
-              <View style={styles.item}>
-                <Icon name="md-calendar" style={styles.icon} />
-              </View>
-              <View style={styles.item}>
-                <Text style={[styles.text]}>
-                  {stage.dateOfDeparture.toString()} {'\n'}
-                  {stage.hourOfDeparture.toString()}
-                </Text>
-              </View>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>Departure</Text>
+            <View
+              style={[
+                styles.rowDirection,
+                {justifyContent: 'space-around', alignItems: 'center'},
+              ]}>
+              <Icon
+                name={
+                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
+                }
+                style={styles.icon}
+              />
+              <Text style={[styles.text]}>
+                {stage.dateOfDeparture.split(' ').slice(1, 4).join(' ')}
+              </Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
+                style={styles.icon}
+              />
+              <Text style={[styles.text]}>{stage.hourOfDeparture}</Text>
             </View>
-
-            <View style={[styles.rowDirection, {margin: 10}]}>
-              <View style={styles.item}>
-                <Icon name="md-arrow-round-down" style={styles.icon} />
-              </View>
-              <View style={styles.item}>
-                <Text style={[styles.text]}>{stage.fromPlace}</Text>
-              </View>
-            </View>
+            <Text style={[styles.text]}>{stage.fromPlace}</Text>
           </View>
 
           {/* ARRIVAL */}
-          <View style={{marginTop: 10}}>
-            <Text style={[styles.subtitle]}>Arrival</Text>
-            <View style={[styles.rowDirection, {margin: 10}]}>
-              <View style={styles.item}>
-                <Icon name="md-calendar" style={styles.icon} />
-              </View>
-              <View style={styles.item}>
-                <Text style={[styles.text]}>
-                  {stage.dateOfArrival.toString()} {'\n'}
-                  {stage.hourOfArrival.toString()}
-                </Text>
-              </View>
+          <View style={[{marginTop: cardHeight * 0.03}]}>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>Arrival</Text>
+            <View style={[styles.rowDirection]}>
+              <Icon
+                name={
+                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
+                }
+                style={styles.icon}
+              />
+              <Text style={[styles.text]}>
+                {stage.dateOfArrival.split(' ').slice(1, 4).join(' ')}
+              </Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
+                style={styles.icon}
+              />
+              <Text style={[styles.text]}>{stage.hourOfArrival}</Text>
             </View>
-
-            <View style={[styles.rowDirection, {margin: 10}]}>
-              <View style={styles.item}>
-                <Icon name="md-arrow-round-forward" style={styles.icon} />
-              </View>
-              <View style={styles.item}>
-                <Text style={[styles.text]}>{stage.toPlace}</Text>
-              </View>
-            </View>
+            <Text style={[styles.text]}>{stage.toPlace}</Text>
           </View>
         </View>
       </View>
