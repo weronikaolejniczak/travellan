@@ -87,4 +87,9 @@ export const transportItemStyle = StyleSheet.create({
   rowCenter: {
     alignItems: 'center',
   },
+  textAndIconContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
 });

@@ -3,7 +3,6 @@ import {View, Text, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
-import Colors from '../../Constants/Colors';
 
 /** TRANSPORT STAGE COMPONENT */
 const TransportStage = (props) => {
@@ -44,15 +43,7 @@ const TransportStage = (props) => {
           {/* DEPARTURE */}
           <View>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Departure</Text>
-            <View
-              style={[
-                styles.rowDirection,
-                {
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  marginVertical: 10,
-                },
-              ]}>
+            <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={
                   Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
@@ -74,14 +65,7 @@ const TransportStage = (props) => {
           {/* ARRIVAL */}
           <View style={[{marginTop: cardHeight * 0.03}]}>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Arrival</Text>
-            <View
-              style={[
-                styles.rowDirection,
-                {
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  marginVertical: 10,
-                },]}>
+            <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={
                   Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
