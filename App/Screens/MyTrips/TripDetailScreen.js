@@ -22,17 +22,17 @@ const TripDetailScreen = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
-  const author = 'Darth Vader'; // refactor to be the author of the photo
+  const author = selectedTrip.image.authorName;
+  const username = selectedTrip.image.username;
+  const imageUrl = selectedTrip.image.imageUrl;
   const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
   const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
 
   return (
     <ScrollView style={styles.container}>
       <View>
-        <ImageBackground
-          style={styles.image}
-          source={{uri: selectedTrip.imageUrl}}>
-          {/* <LinearGradient colors={['red', 'yellow', 'green']} /> */}
+        {/* IMAGE */}
+        <ImageBackground style={styles.image} source={{uri: imageUrl}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.00)', '#222222']}
             start={{x: 0.0, y: 0.0}}
@@ -40,7 +40,11 @@ const TripDetailScreen = (props) => {
             locations={[0.6, 1]}
             style={[{flex: 1}]}>
             <View style={styles.dateContainer}>
-              <Text style={[styles.text]}>Photo by {author} @Unsplash</Text>
+              {/* UNSPLASH ARTIST CREDITS */}
+              <Text style={[styles.text]}>
+                Photo by {author} @Unsplash/{username}
+              </Text>
+              {/* START DATE AND END DATE OF THE TRIP */}
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
                   <Text style={[styles.text, styles.date]}>{startDate}</Text>

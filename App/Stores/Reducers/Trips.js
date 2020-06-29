@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
         action.tripData.id,
         action.tripData.destination,
         action.tripData.region, // refactor for fetched coordinates
-        action.tripData.imageUrl,
+        action.tripData.image,
         action.tripData.startDate,
         action.tripData.endDate,
         action.tripData.budget,

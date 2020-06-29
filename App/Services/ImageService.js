@@ -10,6 +10,14 @@ export async function fetchImage(keyword) {
     .get(
       `https://api.unsplash.com/search/photos?page=1&query=${keyword}&client_id=${client_id}`,
     )
-    .then((json) => json.data.results[0].urls.regular)
+    .then((json) => {
+      let imageUrl = json.data.results[0].urls.regular.toString();
+      let authorName = json.data.results[0].user.name.toString();
+      let username = json.data.results[0].user.username.toString();
+
+      let image = {imageUrl, authorName, username};
+
+      return image;
+    })
     .catch(() => placeholderUrl);
 }

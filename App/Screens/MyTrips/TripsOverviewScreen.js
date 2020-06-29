@@ -18,13 +18,12 @@ import * as tripActions from '../../Stores/Actions/Trips';
 import {tripsOverviewScreenStyle as styles} from './TripsOverviewScreenStyle';
 import Colors from '../../Constants/Colors';
 
-/** Trips overview screen - displays stored trips in the form of cards */
+/** TRIPS OVERVIEW SCREEN - displays stored trips in the form of cards */
 const TripsOverviewScreen = (props) => {
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const trips = useSelector((state) => state.trips.availableTrips);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadTrips = async () => {
@@ -74,7 +73,7 @@ const TripsOverviewScreen = (props) => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={(itemData) => (
               <TripItem
-                image={itemData.item.imageUrl}
+                image={itemData.item.image}
                 destination={itemData.item.destination}
                 startDate={itemData.item.startDate
                   .split(' ')
