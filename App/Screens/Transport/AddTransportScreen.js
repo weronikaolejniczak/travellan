@@ -12,6 +12,8 @@ import {
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {SinglePickerMaterialDialog} from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import TransportStage from '../../Models/TransportStage';
@@ -35,6 +37,7 @@ const AddTransportScreen = (props) => {
       ? '0' + new Date().getMinutes()
       : new Date().getMinutes();
   const initialHour = new Date().getHours() + ':' + initialMinutes;
+  const initialMeans = ['train', 'bus', 'airplane', 'bike', 'boat'];
 
   /** MODAL CONTROLLER */
   const [showModal, setShowModal] = useState(false);
@@ -46,12 +49,15 @@ const AddTransportScreen = (props) => {
   const [dateOfArrival, setDateOfArrival] = useState(new Date());
   const [hourOfArrival, setHourOfArrival] = useState(initialHour);
   const [toPlace, setToPlace] = useState('');
-  const [means, setMeans] = useState('');
+  const [means, setMeans] = useState('train');
   const [details, setDetails] = useState('');
 
   /** ARRAY OF STAGES */
   const [stages, setStages] = useState([]);
   const [refresh, setRefresh] = useState(false);
+
+  /** MEANS */
+  const [singlePickerVisible, setSinglePickerVisible] = useState(false);
 
   /** HANDLERS */
   // cut date into displayable form
@@ -82,7 +88,7 @@ const AddTransportScreen = (props) => {
     setDateOfArrival(new Date());
     setHourOfArrival(initialHour);
     setToPlace('');
-    setMeans('');
+    setMeans('train');
     setDetails('');
   };
 
@@ -280,10 +286,31 @@ const AddTransportScreen = (props) => {
 
             <View style={styles.metrics}>
               <Text style={styles.label}>Means of transport</Text>
-              <TextInput
-                style={styles.input}
-                value={means}
-                onChangeText={setMeans}
+              <View style={styles.pickerContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSinglePickerVisible(true);
+                  }}
+                  style={styles.picker}>
+                  <View style={styles.rowAndCenter}>
+                    <Text style={styles.pickerText}>{means}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <SinglePickerMaterialDialog
+                title={'Means of transport:'}
+                items={initialMeans.map((row, index) => ({
+                  value: index,
+                  label: row,
+                }))}
+                colorAccent={Colors.primary}
+                visible={singlePickerVisible}
+                selectedItem={{label: 'means', value: means}}
+                onCancel={() => setSinglePickerVisible(false)}
+                onOk={(result) => {
+                  setSinglePickerVisible(false);
+                  setMeans(initialMeans[result.selectedItem.value]);
+                }}
               />
             </View>
 
@@ -369,9 +396,10 @@ const AddTransportScreen = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
+                  marginLeft: '10%',
                 }}>
                 <Text style={[styles.title, styles.text, {fontWeight: 'bold'}]}>
-                  {item.means} ticket
+                  {item.means}
                 </Text>
                 <TouchableOpacity
                   onPress={() => deleteHandler(item)}

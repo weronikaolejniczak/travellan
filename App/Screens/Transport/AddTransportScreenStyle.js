@@ -40,14 +40,14 @@ export const addTransportScreenStyle = StyleSheet.create({
     marginRight: '10%',
   },
   pickerContainer: {
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   picker: {
-    width: '70%',
     borderWidth: 2,
     borderRadius: 10,
     borderColor: Colors.primary,
     marginTop: '5%',
+    marginRight: '10%',
     padding: '4%',
   },
   pickerText: {

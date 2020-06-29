@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import {View, Text, Alert, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
+import Colors from '../../Constants/Colors';
 
 /** TRANSPORT STAGE COMPONENT */
 const TransportStage = (props) => {
@@ -15,22 +16,30 @@ const TransportStage = (props) => {
         {/* 1st COLUMN - ICONS AND LINES */}
         <View style={[styles.iconsAndLinesContainer]}>
           {/* 1st NUMBER */}
-          <TouchableOpacity style={[styles.counterContainer]}>
+          <TouchableOpacity activeOpacity={1} style={[styles.counterContainer]}>
             <Text style={[styles.subtitle]}>{props.index + 1}</Text>
           </TouchableOpacity>
           {/* LINE */}
           <View style={[styles.verticalLine]} />
           {/* TRANSPORT ICON */}
-          <TouchableOpacity style={[styles.counterContainer]}>
+          <TouchableOpacity activeOpacity={1} style={[styles.counterContainer]}>
             <Icon
-              name={Platform.OS === 'android' ? 'md-train' : 'ios-train'}
+              name={
+                Platform.OS === 'android'
+                  ? `md-${stage.means}`
+                  : `ios-${stage.means}`
+              }
               style={[styles.subtitle, {fontSize: 24}]}
             />
           </TouchableOpacity>
           {/* LINE */}
           <View style={[styles.verticalLine]} />
-          {/* 2nd NUMBER */}
-          <TouchableOpacity style={[styles.counterContainer]}>
+          {/* MORE ICON - ticket info */}
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert('Connection details', `${stage.details}`);
+            }}
+            style={[styles.counterContainer]}>
             <Icon
               name={Platform.OS === 'android' ? 'md-more' : 'ios-more'}
               style={[styles.subtitle, {fontSize: 24}]}
@@ -42,7 +51,10 @@ const TransportStage = (props) => {
         <View>
           {/* DEPARTURE */}
           <View>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>Departure</Text>
+            <Text
+              style={{color: Colors.primary, fontSize: 16, fontWeight: 'bold'}}>
+              Departure
+            </Text>
             <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={
@@ -64,7 +76,10 @@ const TransportStage = (props) => {
 
           {/* ARRIVAL */}
           <View style={[{marginTop: cardHeight * 0.03}]}>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>Arrival</Text>
+            <Text
+              style={{color: Colors.primary, fontSize: 16, fontWeight: 'bold'}}>
+              Arrival
+            </Text>
             <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={

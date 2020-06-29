@@ -120,11 +120,8 @@ const TripsOverviewScreen = (props) => {
   );
 };
 
-/**
- * we export screenOptions to use in our Stack.Navigator
- * @param {*} navData: lets us use "navigation" prop from within this function
- */
-
+/** we export screenOptions to use in our Stack.Navigator
+ * @param {*} navData: lets us use "navigation" prop from within this function */
 export const tripsScreenOptions = (navData) => {
   return {
     /* MENU BUTTON
