@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {View, ScrollView, Text, Alert, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -21,7 +21,24 @@ const AccommodationItem = (props) => {
   const reservationId = props.id;
 
   const deleteReservationHandler = useCallback(() => {
-    dispatch(accommodationActions.deleteReservation(tripId, reservationId));
+    Alert.alert(
+      'Delete accommodation',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () =>
+            dispatch(
+              accommodationActions.deleteReservation(tripId, reservationId),
+            ),
+        },
+      ],
+      {cancelable: true},
+    );
   }, [dispatch, tripId, reservationId]);
 
   return (

@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {
   Text,
   View,
-  //Alert,
+  Alert,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -33,8 +33,8 @@ const AddAccommodationScreen = (props) => {
       ),
     );
     props.navigation.goBack();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    props.navigation,
     dispatch,
     tripId,
     housingName,
