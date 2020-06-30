@@ -7,7 +7,6 @@ const cardHeight = 0.4 * height;
 
 /**
  * TODO:
- * refactor Colors
  * refactor Fonts
  * refactor Metrics
  */

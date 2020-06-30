@@ -19,5 +19,13 @@ export async function fetchImage(keyword) {
 
       return image;
     })
-    .catch(() => placeholderUrl);
+    .catch(() => {
+      let imageUrl = placeholderUrl;
+      let authorName = 'Annie Spratt';
+      let username = 'anniespratt';
+
+      let image = {imageUrl, authorName, username};
+
+      return image;
+    });
 }
