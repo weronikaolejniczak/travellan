@@ -1,11 +1,10 @@
 import React, {useState, useCallback} from 'react';
 import {
-  Text,
   View,
-  Alert,
-  TouchableOpacity,
   ScrollView,
+  Text,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -14,32 +13,80 @@ import {addAccommodationScreenStyle as styles} from './AddAccommodationScreenSty
 
 const AddAccommodationScreen = (props) => {
   const dispatch = useDispatch();
-
-  const [housingName, setHousingName] = useState('');
-  const [housingAddress, setHousingAddress] = useState('');
-  const [description, setDescription] = useState('');
-  const [reservationDetails, setReservationDetails] = useState('');
-
   const tripId = props.route.params.tripId;
 
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
+  // housing name
+  const [housingName, setHousingName] = useState('');
+  const [housingNameIsValid, setHousingNameIsValid] = useState(false);
+  const [housingNameSubmitted, setHousingNameSubmitted] = useState(false);
+
+  // address
+  const [housingAddress, setHousingAddress] = useState('');
+  const [housingAddressIsValid, setHousingAddressIsValid] = useState(false);
+  const [housingAddressSubmitted, setHousingAddressSubmitted] = useState(false);
+
+  // description
+  const [description, setDescription] = useState('');
+  const [descriptionIsValid, setDescriptionIsValid] = useState(false);
+  const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
+
+  // reservation details
+  const [reservationDetails, setReservationDetails] = useState('');
+
+  /** HANDLERS */
+  // housing name validation handler
+  const housingNameChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setHousingNameIsValid(false)
+      : setHousingNameIsValid(true);
+    setHousingName(text);
+  };
+
+  // address validation handler
+  const housingAddressChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setHousingAddressIsValid(false)
+      : setHousingAddressIsValid(true);
+    setHousingAddress(text);
+  };
+
+  // description validation handler
+  const descriptionChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setDescriptionIsValid(false)
+      : setDescriptionIsValid(true);
+    setDescription(text);
+  };
+
+  // submit handler
   const submitHandler = useCallback(() => {
-    dispatch(
-      accommodationActions.createReservation(
-        tripId,
-        housingName,
-        housingAddress,
-        description,
-        reservationDetails,
-      ),
-    );
-    props.navigation.goBack();
+    if (!housingNameIsValid || !housingAddressIsValid || !descriptionIsValid) {
+      setHousingNameSubmitted(true);
+      setHousingAddressSubmitted(true);
+      setDescriptionSubmitted(true);
+    } else {
+      dispatch(
+        accommodationActions.createReservation(
+          tripId,
+          housingName,
+          housingAddress,
+          description,
+          reservationDetails,
+        ),
+      );
+      props.navigation.goBack();
+    }
   }, [
     props.navigation,
     dispatch,
     tripId,
     housingName,
+    housingNameIsValid,
     housingAddress,
+    housingAddressIsValid,
     description,
+    descriptionIsValid,
     reservationDetails,
   ]);
 
@@ -50,8 +97,13 @@ const AddAccommodationScreen = (props) => {
         <TextInput
           style={styles.input}
           value={housingName}
-          onChangeText={setHousingName}
+          onChangeText={housingNameChangeHandler}
         />
+        {!housingNameIsValid && housingNameSubmitted && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a housing name!</Text>
+          </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
@@ -59,8 +111,13 @@ const AddAccommodationScreen = (props) => {
         <TextInput
           style={styles.input}
           value={housingAddress}
-          onChangeText={setHousingAddress}
+          onChangeText={housingAddressChangeHandler}
         />
+        {!housingAddressIsValid && housingAddressSubmitted && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a valid address!</Text>
+          </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
@@ -68,13 +125,19 @@ const AddAccommodationScreen = (props) => {
         <TextInput
           style={styles.input}
           value={description}
-          onChangeText={setDescription}
+          onChangeText={descriptionChangeHandler}
         />
+        {!descriptionIsValid && descriptionSubmitted && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter a description!</Text>
+          </View>
+        )}
       </View>
 
       <View style={styles.metrics}>
         <Text style={styles.label}>Reservation details</Text>
         <TextInput
+          multiline
           style={styles.input}
           value={reservationDetails}
           onChangeText={setReservationDetails}
