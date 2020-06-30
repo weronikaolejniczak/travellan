@@ -91,7 +91,7 @@ const AddAccommodationScreen = (props) => {
   ]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView indicatorStyle={'white'} style={styles.container}>
       <View style={styles.metrics}>
         <Text style={styles.label}>Name</Text>
         <TextInput
@@ -123,6 +123,7 @@ const AddAccommodationScreen = (props) => {
       <View style={styles.metrics}>
         <Text style={styles.label}>Description</Text>
         <TextInput
+          multiline
           style={styles.input}
           value={description}
           onChangeText={descriptionChangeHandler}

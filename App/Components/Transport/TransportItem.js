@@ -101,7 +101,7 @@ const TransportItem = (props) => {
         </View>
 
         {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
-        <View>
+        <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
           {props.stages.map((i) => {
             return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
           })}

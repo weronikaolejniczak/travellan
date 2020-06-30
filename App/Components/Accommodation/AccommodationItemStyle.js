@@ -17,9 +17,21 @@ export const accommodationItemStyle = StyleSheet.create({
     height: cardHeight,
     borderRadius: 15,
     marginHorizontal: width * 0.025,
-    paddingTop: height * 0.101,
+    paddingTop: height * 0.06,
     paddingBottom: height * 0.02,
+  },
+  container: {
+    paddingTop: height * 0.02,
     paddingHorizontal: width * 0.03,
+  },
+  headerOverImg: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: height * 0.27,
   },
   header: {
     color: Colors.text,
@@ -55,5 +67,15 @@ export const accommodationItemStyle = StyleSheet.create({
     fontSize: 30,
     color: Colors.text,
     marginRight: 30,
+  },
+  benefitIcon: {
+    fontSize: 30,
+    color: Colors.primary,
+  },
+  benefitsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: '2%',
   },
 });

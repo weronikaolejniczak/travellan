@@ -18,7 +18,7 @@ export const transportItemStyle = StyleSheet.create({
     width: cardWidth,
     height: cardHeight,
     marginHorizontal: 10,
-    padding: 25,
+    paddingTop: height * 0.0365,
     borderRadius: 15,
   },
   actions: {
