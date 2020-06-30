@@ -11,6 +11,18 @@ export const addTransportScreenStyle = StyleSheet.create({
     marginTop: 10,
     justifyContent: 'center',
   },
+  stageItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: '10%',
+  },
+  stageItemBody: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '5%',
+    marginHorizontal: '10%',
+  },
   text: {
     color: Colors.text,
   },
@@ -87,6 +99,12 @@ export const addTransportScreenStyle = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.text,
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  error: {
+    color: Colors.error,
   },
   rowAndCenter: {
     flexDirection: 'row',

@@ -27,15 +27,14 @@ import Colors from '../../Constants/Colors';
  */
 const TransportScreen = (props) => {
   const dispatch = useDispatch();
-
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const transport = selectedTrip.transportInfo;
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const loadTransport = useCallback(async () => {
     setIsRefreshing(true);

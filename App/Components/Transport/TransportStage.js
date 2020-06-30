@@ -37,7 +37,10 @@ const TransportStage = (props) => {
           {/* MORE ICON - ticket info */}
           <TouchableOpacity
             onPress={() => {
-              Alert.alert('Connection details', `${stage.details}`);
+              Alert.alert(
+                'Connection details',
+                `${stage.details ? stage.details : 'No details'}`,
+              );
             }}
             style={[styles.counterContainer]}>
             <Icon

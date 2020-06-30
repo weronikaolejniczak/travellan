@@ -70,7 +70,7 @@ const TransportItem = (props) => {
         </TouchableOpacity> */}
 
         {/* SHOW QR CODE */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
@@ -80,7 +80,7 @@ const TransportItem = (props) => {
             }
             style={styles.icon}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {/* TO/FROM DESTINATION */}

@@ -66,9 +66,9 @@ export const transportItemStyle = StyleSheet.create({
     borderBottomWidth: 1,
   },
   counterContainer: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     paddingHorizontal: cardWidth * 0.035,
     paddingVertical: cardHeight * 0.01,
     backgroundColor: Colors.primary,

@@ -1,13 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  Text,
-  //TouchableOpacity,
-  View,
-  FlatList,
-  Platform,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, FlatList, Platform, ActivityIndicator} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -23,19 +16,27 @@ const NotesScreen = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
   const notes = selectedTrip.notes;
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const loadNotes = async () => {
-      setIsLoading(true);
+  const loadNotes = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
       await dispatch(noteActions.fetchNotes(tripId));
-      setIsLoading(false);
-    };
-    loadNotes();
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsRefreshing(false);
   }, [dispatch, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadNotes().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadNotes]);
 
   if (isLoading) {
     return (
@@ -49,10 +50,12 @@ const NotesScreen = (props) => {
     <View style={{backgroundColor: '#222222', flex: 1, alignItems: 'center'}}>
       {notes ? (
         <FlatList
+          onRefresh={loadNotes}
+          refreshing={isRefreshing}
           data={notes}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={(itemData) => (
             <NoteItem
-              keyExtractor={(item) => item.id.toString()}
               tripId={tripId}
               id={itemData.item.id}
               title={itemData.item.title}
