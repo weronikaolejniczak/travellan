@@ -5,6 +5,7 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -59,41 +60,8 @@ const TripDetailScreen = (props) => {
       </View>
 
       <View>
-        {/* <View style={styles.dateContainer}>
-          <Text style={[styles.text, styles.header, styles.date]}>
-            {startDate === endDate ? (
-              <Text style={[styles.text, styles.date]}>{startDate}</Text>
-            ) : (
-              <Text style={[styles.text, styles.date]}>
-                {startDate} - {endDate}
-              </Text>
-            )}
-          </Text>
-        </View> */}
-
         <View>
           <View // 1st row of functionalities buttons
-            style={styles.justifyRow}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Map', {tripId: selectedTrip.id});
-              }}>
-              <Text style={styles.buttonText}>Map</Text>
-              <Icon name="md-map" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Weather');
-              }}>
-              <Text style={styles.buttonText}>Weather</Text>
-              <Icon name="md-cloudy" size={42} color="#FFFFFF" />
-            </TouchableOpacity>
-          </View>
-
-          <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
               style={styles.button}
@@ -103,7 +71,11 @@ const TripDetailScreen = (props) => {
                 });
               }}>
               <Text style={styles.buttonText}>Budget</Text>
-              <Icon name="md-wallet" size={42} color="#FFFFFF" />
+              <Icon
+                name={Platform.OS === 'android' ? 'md-wallet' : 'ios-wallet'}
+                size={42}
+                color="#FFFFFF"
+              />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -114,11 +86,15 @@ const TripDetailScreen = (props) => {
                 });
               }}>
               <Text style={styles.buttonText}>Notes</Text>
-              <Icon name="md-journal" size={42} color="#FFFFFF" />
+              <Icon
+                name={Platform.OS === 'android' ? 'md-journal' : 'ios-journal'}
+                size={42}
+                color="#FFFFFF"
+              />
             </TouchableOpacity>
           </View>
 
-          <View // 3rd row of functionalities buttons
+          <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
               style={styles.button}
@@ -128,7 +104,15 @@ const TripDetailScreen = (props) => {
                 });
               }}>
               <Text style={styles.buttonText}>Transport</Text>
-              <Icon name="md-paper-plane" size={42} color="#FFFFFF" />
+              <Icon
+                name={
+                  Platform.OS === 'android'
+                    ? 'md-paper-plane'
+                    : 'ios-paper-plane'
+                }
+                size={42}
+                color="#FFFFFF"
+              />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -139,8 +123,43 @@ const TripDetailScreen = (props) => {
                 });
               }}>
               <Text style={styles.buttonText}>Housing</Text>
-              <Icon name="md-bed" size={42} color="#FFFFFF" />
+              <Icon
+                name={Platform.OS === 'android' ? 'md-bed' : 'ios-bed'}
+                size={42}
+                color="#FFFFFF"
+              />
             </TouchableOpacity>
+          </View>
+
+          <View // 3rd row of functionalities buttons
+            style={styles.justifyRow}>
+            <TouchableOpacity
+              style={[styles.button, {width: '83.5%'}]}
+              onPress={() => {
+                props.navigation.navigate('Map', {tripId: selectedTrip.id});
+              }}>
+              <Text style={styles.buttonText}>Map</Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-map' : 'ios-map'}
+                size={42}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity>
+
+            {/* <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Weather', {
+                  tripId: selectedTrip.id,
+                });
+              }}>
+              <Text style={styles.buttonText}>Weather</Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-cloudy' : 'ios-cloudy'}
+                size={42}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
