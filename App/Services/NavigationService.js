@@ -1,8 +1,13 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  createSwitchNavigator
+} from '@react-navigation/stack';
 
 /** SCREENS */
+/** AUTHORIZATION/LOGIN/SIGNUP SCREEN */
+import AuthScreen, {authScreenOptions,} from '../Screens/User/AuthScreen';
 /** TRIP OVERVIEW SCREEN */
 import TripsOverviewScreen, {
   tripsScreenOptions,
@@ -36,14 +41,24 @@ import NotesScreen /*, { notesScreenOptions } */ from '../Screens/Notes/NotesScr
 import AddNote from '../Screens/Notes/AddNoteScreen';
 /** CONSTANTS */
 import Colors from '../Constants/Colors';
+import Trip from '../Models/TripModel';
+import { createAppContainer } from 'react-navigation';
 
 /** STACK NAVIGATOR */
 const Stack = createStackNavigator();
+
+
+
 
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
+       <Stack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={authScreenOptions}
+        />
         <Stack.Screen
           name="My trips"
           component={TripsOverviewScreen}
@@ -98,3 +113,21 @@ const defaultNavOptions = {
     fontWeight: 'bold',
   },
 };
+/** IN THE FUTURE I will change Navigation to this manner( but let it sleep here for know)
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: AuthScreen
+  },
+  {
+  defaultNavigationOptions: defaultNavOptions
+  }
+);
+
+const MainNavigator = createSwitchNavigator({
+  Auth: AuthNavigator,
+  Trip : Stack
+});
+
+export default createAppContainer(MainNavigator);
+
+*/
