@@ -1,9 +1,11 @@
 /**
  * COLORS CONSTANTS
- * For now, dark mode.
+ * For now, dark mode
  */
 export default {
+  /** STANDARD */
   white: '#FFFFFF',
+  green: '#06C258',
   shadow: '#000000', // pitch black
   cards: '#111111', // light black
   background: '#222222', // dark grey

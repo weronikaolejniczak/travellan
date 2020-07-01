@@ -1,25 +1,25 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../Constants/Colors';
 
 export const newNoteScreenStyle = StyleSheet.create({
   form: {
-    backgroundColor: '#222222',
     flex: 1,
+    backgroundColor: Colors.background,
   },
   label: {
-    fontFamily: 'open-sans-bold',
     marginRight: '10%',
     marginLeft: '10%',
     marginTop: '5%',
-    color: '#FF8C00',
+    color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
   },
   input: {
-    color: '#FFFFFF',
+    color: Colors.text,
     fontSize: 20,
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderBottomColor: '#FFA500',
+    borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
     marginVertical: 2,
     marginHorizontal: 2,
@@ -28,7 +28,7 @@ export const newNoteScreenStyle = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    backgroundColor: '#FF8C00',
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
     padding: 15,
@@ -37,6 +37,13 @@ export const newNoteScreenStyle = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#FFFFFF',
+    color: Colors.text,
+  },
+  errorContainer: {
+    marginVertical: 5,
+    marginHorizontal: 40,
+  },
+  error: {
+    color: Colors.error,
   },
 });

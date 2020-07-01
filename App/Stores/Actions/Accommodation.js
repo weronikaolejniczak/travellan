@@ -63,6 +63,7 @@ export const createReservation = (
   tripId,
   name,
   address,
+  description,
   reservationDetails,
 ) => {
   const newReservation = new Accommodation(
@@ -72,7 +73,7 @@ export const createReservation = (
     // DUMMY DATA
     {},
     '',
-    'Description',
+    description,
     reservationDetails,
   );
 

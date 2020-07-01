@@ -22,6 +22,11 @@ export const transportScreenStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   text: {
     color: Colors.text,
   },
@@ -30,5 +35,12 @@ export const transportScreenStyle = StyleSheet.create({
   },
   icon: {
     margin: 10,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    backgroundColor: Colors.primary,
+    margin: 8,
+    borderRadius: 5,
   },
 });

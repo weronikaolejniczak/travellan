@@ -56,44 +56,33 @@ export const deleteTransport = (tripId, ticketId) => {
   };
 };
 
-/**
- * {
+/* {
     id: 1,
     to: true,
     from: false,
-    date: '2021-02-13',
-    hour: '6:45',
-    fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
-    toPlace: "Gare Saint-Lazare, 13 Rue d'Amsterdam, 75008 Paris, France",
-    means: 'train',
-    details: {
-      carriage: '13',
-      seat: '61',
-    },
-   },
-*/
+    stages: [
+      {
+        dateOfDeparture: '2021-02-14',
+        hourOfDeparture: '2:35'
+        fromPlace: 'Poznań Główny railway station, Dworcowa 2, 61-801 Poznań',
+        dateOfArrival: '2021-02-13',
+        hourOfArrival: '6:45',
+        toPlace: "Gare Saint-Lazare, 13 Rue d'Amsterdam, 75008 Paris, France",
+        means: 'train',
+        details: {
+          carriage: '13',
+          seat: '61',
+        },
+      }
+    ]
+  }, */
 /** 'create a ticket' action based on user input */
-export const createTransport = (
-  tripId,
-  to,
-  from,
-  date,
-  hour,
-  fromPlace,
-  toPlace,
-  means,
-  details,
-) => {
+export const createTransport = (tripId, to, from, stages) => {
   const newTransport = new Transport(
     new Date().toString(), // DUMMY ID
     to,
     from,
-    date,
-    hour,
-    fromPlace,
-    toPlace,
-    means,
-    details,
+    stages,
   );
 
   return async function (dispatch) {

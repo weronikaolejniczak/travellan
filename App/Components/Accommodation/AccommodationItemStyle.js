@@ -2,9 +2,9 @@ import {StyleSheet, Dimensions} from 'react-native';
 import Colors from '../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
-export const cardHeight = height * 0.82;
-export const cardWidth = width * 0.82;
-export const spacingForCardInset = width * 0.1 - 13;
+export const cardHeight = height * 0.83;
+export const cardWidth = width * 0.9;
+export const spacingForCardInset = width * 0.03;
 
 /**
  * TODO:
@@ -17,9 +17,21 @@ export const accommodationItemStyle = StyleSheet.create({
     height: cardHeight,
     borderRadius: 15,
     marginHorizontal: width * 0.025,
-    paddingTop: height * 0.101,
+    paddingTop: height * 0.06,
     paddingBottom: height * 0.02,
+  },
+  container: {
+    paddingTop: height * 0.02,
     paddingHorizontal: width * 0.03,
+  },
+  headerOverImg: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: height * 0.27,
   },
   header: {
     color: Colors.text,
@@ -34,7 +46,6 @@ export const accommodationItemStyle = StyleSheet.create({
     fontSize: 20,
   },
   text: {
-    fontSize: 16,
     color: Colors.text,
   },
   textAlign: {
@@ -42,7 +53,7 @@ export const accommodationItemStyle = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    padding: 15,
+    padding: cardHeight * 0.018,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -55,5 +66,15 @@ export const accommodationItemStyle = StyleSheet.create({
     fontSize: 30,
     color: Colors.text,
     marginRight: 30,
+  },
+  benefitIcon: {
+    fontSize: 24,
+    color: Colors.primary,
+  },
+  benefitsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: '2%',
   },
 });

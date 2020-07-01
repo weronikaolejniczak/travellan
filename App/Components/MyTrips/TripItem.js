@@ -1,15 +1,11 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
-/**
- * IMPORTS FROM WITHIN THE MODULE
- */
+/** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
 import {tripItemStyle as styles} from './TripItemStyle';
 
-/**
- * Trip item component used in TripsOverviewScreen for trips listing
- */
+/** TRIP ITEM COMPONENT used in TripsOverviewScreen for trips listing */
 const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
@@ -23,7 +19,10 @@ const TripItem = (props) => {
         <TouchableCmp onPress={props.onSelect}>
           <View>
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{uri: props.image}} />
+              <Image
+                style={styles.image}
+                source={{uri: props.image.imageUrl}}
+              />
             </View>
             <View style={styles.alignRow}>
               <View style={styles.details}>

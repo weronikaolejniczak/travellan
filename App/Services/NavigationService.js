@@ -37,7 +37,7 @@ import WeatherScreen from '../Screens/Weather/WeatherScreen';
 /** BUDGET SCREEN */
 import BudgetScreen from '../Screens/Budget/BudgetScreen';
 /** NOTES SCREENS */
-import NotesScreen /*, { notesScreenOptions } */ from '../Screens/Notes/NotesScreen';
+import NotesScreen, {notesScreenOptions} from '../Screens/Notes/NotesScreen';
 import AddNote from '../Screens/Notes/AddNoteScreen';
 /** CONSTANTS */
 import Colors from '../Constants/Colors';
@@ -96,8 +96,12 @@ export default function Navigation() {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
         <Stack.Screen name="Budget" component={BudgetScreen} />
-        <Stack.Screen name="Notes" component={NotesScreen}/>
-        <Stack.Screen name="Add Note" component={AddNote} />
+        <Stack.Screen
+          name="Notes"
+          component={NotesScreen}
+          options={notesScreenOptions}
+        />
+        <Stack.Screen name="Add note" component={AddNote} />
       </Stack.Navigator>
     </NavigationContainer>
   );

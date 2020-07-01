@@ -18,13 +18,12 @@ import * as tripActions from '../../Stores/Actions/Trips';
 import {tripsOverviewScreenStyle as styles} from './TripsOverviewScreenStyle';
 import Colors from '../../Constants/Colors';
 
-/** Trips overview screen - displays stored trips in the form of cards */
+/** TRIPS OVERVIEW SCREEN - displays stored trips in the form of cards */
 const TripsOverviewScreen = (props) => {
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const trips = useSelector((state) => state.trips.availableTrips);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadTrips = async () => {
@@ -60,7 +59,11 @@ const TripsOverviewScreen = (props) => {
           <Text style={[styles.text, styles.triplessText]}>
             Create one with the
           </Text>
-          <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
+          <Icon
+            name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+            size={32}
+            style={[styles.text, {margin: 10}]}
+          />
           <Text style={[styles.text, styles.triplessText]}>sign above!</Text>
         </View>
       ) : (
@@ -70,7 +73,7 @@ const TripsOverviewScreen = (props) => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={(itemData) => (
               <TripItem
-                image={itemData.item.imageUrl}
+                image={itemData.item.image}
                 destination={itemData.item.destination}
                 startDate={itemData.item.startDate
                   .split(' ')
@@ -103,7 +106,10 @@ const TripsOverviewScreen = (props) => {
                       {cancelable: true},
                     );
                   }}>
-                  <Icon name="md-trash" style={styles.deleteIcon} />
+                  <Icon
+                    name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                    style={styles.deleteIcon}
+                  />
                 </TouchableHighlight>
               </TripItem>
             )}
@@ -114,14 +120,11 @@ const TripsOverviewScreen = (props) => {
   );
 };
 
-/**
- * we export screenOptions to use in our Stack.Navigator
- * @param {*} navData: lets us use "navigation" prop from within this function
- */
-
+/** we export screenOptions to use in our Stack.Navigator
+ * @param {*} navData: lets us use "navigation" prop from within this function */
 export const tripsScreenOptions = (navData) => {
   return {
-    /* MENU BUTTON - uncomment for next release
+    /* MENU BUTTON
     headerLeft: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

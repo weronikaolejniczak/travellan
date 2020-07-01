@@ -10,7 +10,7 @@ export const tripDetailScreenStyle = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: height * 0.51,
+    height: height * 0.44,
   },
   text: {
     color: Colors.text,
@@ -19,9 +19,10 @@ export const tripDetailScreenStyle = StyleSheet.create({
     fontSize: 24,
   },
   dateContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     margin: height * 0.03,
-    height: height * 0.08,
-    justifyContent: 'center',
   },
   date: {
     fontWeight: 'bold',

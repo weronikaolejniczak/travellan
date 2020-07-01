@@ -13,11 +13,11 @@ export const newTripScreenStyle = StyleSheet.create({
   },
   metrics: {
     paddingVertical: 10,
+    marginTop: '5%',
   },
   label: {
-    marginRight: '10%',
+    marginRight: '5%',
     marginLeft: '10%',
-    marginTop: '5%',
     color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',

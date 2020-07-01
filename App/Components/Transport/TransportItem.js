@@ -1,12 +1,21 @@
-import React from 'react';
-import {View, Text, Alert, TouchableOpacity} from 'react-native';
+import React, {useCallback} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
-import {transportItemStyle as styles} from './TransportItemStyle';
+import TransportStage from '../../Components/Transport/TransportStage';
+import * as transportActions from '../../Stores/Actions/Transport';
+import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
 
-/**
- * Transport item component used in TransportScreen for tickets listing.
+/** TRANSPORT ITEM COMPONENT used in TransportScreen for tickets listing
  * TODO:
  * refactor icons for better touchable response and clickability
  * refactor metrics for responsive design
@@ -14,62 +23,90 @@ import {transportItemStyle as styles} from './TransportItemStyle';
  * refactor inline styles
  */
 const TransportItem = (props) => {
+  const dispatch = useDispatch();
+
+  const tripId = props.tripId;
+  const ticketId = props.id;
+  const transportTransfers = props.stages.length - 1;
+
+  const deleteTicketHandler = useCallback(() => {
+    dispatch(transportActions.deleteTransport(tripId, ticketId));
+  }, [dispatch, tripId, ticketId]);
+
   return (
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
+        {/* DELETE TICKET */}
         <TouchableOpacity
           onPress={() => {
-            Alert.alert(`Delete ${props.id}. ticket`);
+            Alert.alert(
+              'Delete a ticket',
+              'Are you sure?',
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: deleteTicketHandler,
+                },
+              ],
+              {cancelable: true},
+            );
           }}>
-          <Icon name="md-trash" style={styles.icon} />
+          <Icon
+            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+            style={styles.icon}
+          />
         </TouchableOpacity>
 
-        {/* EDIT TICKET INFO
-        <TouchableOpacity
+        {/* EDIT TICKET INFO */}
+        {/* <TouchableOpacity
           onPress={() => {
             Alert.alert('Edit ticket');
           }}>
           <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        SHOW QR CODE
-        <TouchableOpacity
+        {/* SHOW QR CODE */}
+        {/* <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
-          <Icon name="md-qr-scanner" style={styles.icon} />
+          <Icon
+            name={
+              Platform.OS === 'android' ? 'md-qr-scanner' : 'ios-qr-scanner'
+            }
+            style={styles.icon}
+          />
         </TouchableOpacity> */}
       </View>
 
-      <View style={[styles.rowCenter, {marginTop: 50, marginBottom: 20}]}>
-        <Text style={[styles.header]}>{props.means} ticket</Text>
-        {props.to === true ? (
-          <Text style={[styles.subtitle]}>to {props.destination}</Text>
-        ) : (
-          <Text style={[styles.subtitle]}>from {props.destination}</Text>
-        )}
-      </View>
-
-      <View style={styles.columnDirection}>
-        <View style={styles.rowDirection}>
-          <Icon name="md-calendar" style={styles.icon} />
-
+      {/* TO/FROM DESTINATION */}
+      <ScrollView
+        style={[{marginTop: cardHeight * 0.0465}]}
+        indicatorStyle={'white'}>
+        <View style={[styles.rowCenter, {paddingVertical: 30}]}>
+          {props.to === true ? (
+            <Text style={[styles.header]}>to {props.destination}</Text>
+          ) : (
+            <Text style={[styles.header]}>from {props.destination}</Text>
+          )}
           <Text style={[styles.text]}>
-            Leave on {props.date} {'\n'}
-            at {props.hour}
+            {transportTransfers === 1
+              ? `${transportTransfers} transport transfer`
+              : `${transportTransfers} transport transfers`}
           </Text>
         </View>
 
-        <View style={[styles.rowDirection, styles.spaceBetween, {margin: 20}]}>
-          <Icon name="md-more" style={styles.icon} />
-
-          <Text style={[styles.text]}>
-            from {props.fromPlace} {'\n'}
-            {'\n'}
-            to {props.toPlace}
-          </Text>
+        {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
+        <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
+          {props.stages.map((i) => {
+            return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
+          })}
         </View>
-      </View>
+      </ScrollView>
     </Card>
   );
 };
