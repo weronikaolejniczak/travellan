@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import {View, Text, Alert, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
@@ -12,27 +12,41 @@ const TransportStage = (props) => {
   return (
     <View>
       <View style={[styles.horizontalLine]} />
-      <View style={[styles.rowDirection]}>
+      <View style={[{alignItems: 'center'}, styles.rowDirection]}>
         {/* 1st COLUMN - ICONS AND LINES */}
         <View style={[styles.iconsAndLinesContainer]}>
           {/* 1st NUMBER */}
-          <TouchableOpacity style={[styles.counterContainer]}>
+          <TouchableOpacity activeOpacity={1} style={[styles.counterContainer]}>
             <Text style={[styles.subtitle]}>{props.index + 1}</Text>
           </TouchableOpacity>
           {/* LINE */}
           <View style={[styles.verticalLine]} />
           {/* TRANSPORT ICON */}
-          <TouchableOpacity style={[styles.counterContainer]}>
+          <TouchableOpacity activeOpacity={1} style={[styles.counterContainer]}>
             <Icon
-              name={Platform.OS === 'android' ? 'md-train' : 'ios-train'}
+              name={
+                Platform.OS === 'android'
+                  ? `md-${stage.means}`
+                  : `ios-${stage.means}`
+              }
               style={[styles.subtitle, {fontSize: 24}]}
             />
           </TouchableOpacity>
           {/* LINE */}
           <View style={[styles.verticalLine]} />
-          {/* 2nd NUMBER */}
-          <TouchableOpacity style={[styles.counterContainer]}>
-            <Text style={[styles.subtitle]}>{props.index + 1}</Text>
+          {/* MORE ICON - ticket info */}
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Connection details',
+                `${stage.details ? stage.details : 'No details'}`,
+              );
+            }}
+            style={[styles.counterContainer]}>
+            <Icon
+              name={Platform.OS === 'android' ? 'md-more' : 'ios-more'}
+              style={[styles.subtitle, {fontSize: 24}]}
+            />
           </TouchableOpacity>
         </View>
 
@@ -40,12 +54,11 @@ const TransportStage = (props) => {
         <View>
           {/* DEPARTURE */}
           <View>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>Departure</Text>
-            <View
-              style={[
-                styles.rowDirection,
-                {justifyContent: 'space-around', alignItems: 'center'},
-              ]}>
+            <Text
+              style={{color: Colors.primary, fontSize: 16, fontWeight: 'bold'}}>
+              Departure
+            </Text>
+            <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={
                   Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
@@ -57,7 +70,7 @@ const TransportStage = (props) => {
               </Text>
               <Icon
                 name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
-                style={styles.icon}
+                style={[styles.icon, {marginLeft: 20}]}
               />
               <Text style={[styles.text]}>{stage.hourOfDeparture}</Text>
             </View>
@@ -66,8 +79,11 @@ const TransportStage = (props) => {
 
           {/* ARRIVAL */}
           <View style={[{marginTop: cardHeight * 0.03}]}>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>Arrival</Text>
-            <View style={[styles.rowDirection]}>
+            <Text
+              style={{color: Colors.primary, fontSize: 16, fontWeight: 'bold'}}>
+              Arrival
+            </Text>
+            <View style={[styles.rowDirection, styles.textAndIconContainer]}>
               <Icon
                 name={
                   Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
@@ -79,7 +95,7 @@ const TransportStage = (props) => {
               </Text>
               <Icon
                 name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
-                style={styles.icon}
+                style={[styles.icon, {marginLeft: 20}]}
               />
               <Text style={[styles.text]}>{stage.hourOfArrival}</Text>
             </View>

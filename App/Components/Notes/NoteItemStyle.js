@@ -32,17 +32,19 @@ export const noteItemStyle = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  bodyMargin: {
+    marginTop: cardHeight * 0.2,
+  },
   // refactor the triple Colors.text
   header: {
     color: Colors.text,
     fontSize: 24,
   },
   subtitle: {
+    flex: 1,
     color: Colors.text,
     fontWeight: 'bold',
     fontSize: 18,
-    marginRight: 20,
-    flex: 1,
   },
   text: {
     fontSize: 14,

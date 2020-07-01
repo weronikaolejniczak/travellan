@@ -9,22 +9,36 @@ export const addTransportScreenStyle = StyleSheet.create({
   card: {
     padding: 15,
     marginTop: 10,
-    marginHorizontal: 30,
     justifyContent: 'center',
+  },
+  stageItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: '10%',
+  },
+  stageItemBody: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '5%',
+    marginHorizontal: '10%',
   },
   text: {
     color: Colors.text,
   },
+  title: {
+    fontSize: 18,
+  },
   metrics: {
     paddingVertical: 10,
     marginTop: '5%',
+    marginLeft: '10%',
   },
   label: {
     marginRight: '5%',
-    marginLeft: '10%',
-    color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
+    color: Colors.primary,
   },
   input: {
     color: Colors.text,
@@ -35,40 +49,39 @@ export const addTransportScreenStyle = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 2,
     marginHorizontal: 2,
-    marginLeft: '10%',
     marginRight: '10%',
   },
   pickerContainer: {
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   picker: {
     borderWidth: 2,
     borderRadius: 10,
     borderColor: Colors.primary,
-    marginTop: 15,
-    padding: 15,
-    paddingHorizontal: '20%',
+    marginTop: '5%',
+    marginRight: '10%',
+    padding: '4%',
   },
   pickerText: {
     color: Colors.text,
     fontSize: 20,
   },
   returnIcon: {
-    fontSize: 25,
     color: Colors.text,
+    fontSize: 25,
     paddingVertical: 7,
+    marginRight: '5%',
   },
   icon: {
     fontSize: 30,
     color: Colors.text,
-    //marginRight: 30,
-    paddingHorizontal: 7,
   },
   iconButton: {
-    borderRadius: 50,
+    alignItems: 'center',
+    paddingHorizontal: '2%',
     borderWidth: 2,
     borderColor: Colors.primary,
-    alignItems: 'center',
+    borderRadius: 50,
   },
   buttonContainer: {
     alignItems: 'center',
@@ -86,5 +99,15 @@ export const addTransportScreenStyle = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.text,
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  error: {
+    color: Colors.error,
+  },
+  rowAndCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

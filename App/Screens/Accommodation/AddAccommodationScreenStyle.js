@@ -49,4 +49,11 @@ export const addAccommodationScreenStyle = StyleSheet.create({
     fontSize: 16,
     color: Colors.text,
   },
+  errorContainer: {
+    marginVertical: 5,
+    marginHorizontal: 40,
+  },
+  error: {
+    color: Colors.error,
+  },
 });

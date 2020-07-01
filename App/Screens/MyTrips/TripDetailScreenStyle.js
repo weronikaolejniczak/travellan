@@ -10,7 +10,7 @@ export const tripDetailScreenStyle = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: height * 0.53,
+    height: height * 0.44,
   },
   text: {
     color: Colors.text,

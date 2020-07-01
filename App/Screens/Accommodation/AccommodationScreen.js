@@ -26,17 +26,18 @@ import Colors from '../../Constants/Colors';
  */
 const AccommodationScreen = (props) => {
   const dispatch = useDispatch();
-  const [error, setError] = useState();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
   const accommodation = selectedTrip.accommodationInfo;
 
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
+  const [error, setError] = useState();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  /** HANDLERS */
   const loadReservations = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
@@ -82,6 +83,7 @@ const AccommodationScreen = (props) => {
     );
   }
 
+  /** ANIMATE VARIABLES */
   let scrollX = new Animated.Value(0);
   // position will be a value between 0 and photos.length - 1 assuming you don't scroll pass the ends of the ScrollView
   let position = Animated.divide(scrollX, cardWidth);
@@ -121,7 +123,7 @@ const AccommodationScreen = (props) => {
             />
           )}
         />
-        <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+        <View style={styles.rowDirection}>
           {accommodation.map((_, i) => {
             let opacity = position.interpolate({
               inputRange: [i - 1, i, i + 1], // each dot will need to have an opacity of 1 when position is equal to their index (i)
@@ -129,19 +131,7 @@ const AccommodationScreen = (props) => {
               extrapolate: 'clamp', // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
             });
 
-            return (
-              <Animated.View
-                key={i}
-                style={{
-                  opacity,
-                  height: 10,
-                  width: 10,
-                  backgroundColor: Colors.primary,
-                  margin: 8,
-                  borderRadius: 5,
-                }}
-              />
-            );
+            return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
           })}
         </View>
       </View>

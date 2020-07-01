@@ -1,21 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  Text,
-  //TouchableOpacity,
-  View,
-  FlatList,
-  Platform,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, FlatList, Platform, ActivityIndicator} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/UI/HeaderButton';
-import {NotesScreenStyles as styles} from './NotesScreenStyle';
-import * as noteActions from '../../Stores/Actions/Note';
-import Colors from '../../Constants/Colors';
 import NoteItem from '../../Components/Notes/NoteItem';
+import * as noteActions from '../../Stores/Actions/Note';
+import {NotesScreenStyles as styles} from './NotesScreenStyle';
+import Colors from '../../Constants/Colors';
 
 const NotesScreen = (props) => {
   const dispatch = useDispatch();
@@ -23,19 +16,29 @@ const NotesScreen = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
   const notes = selectedTrip.notes;
 
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const loadNotes = async () => {
-      setIsLoading(true);
+  /** HANDLERS */
+  const loadNotes = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
       await dispatch(noteActions.fetchNotes(tripId));
-      setIsLoading(false);
-    };
-    loadNotes();
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsRefreshing(false);
   }, [dispatch, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadNotes().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadNotes]);
 
   if (isLoading) {
     return (
@@ -46,13 +49,15 @@ const NotesScreen = (props) => {
   }
 
   return (
-    <View style={{backgroundColor: '#222222', flex: 1, alignItems: 'center'}}>
+    <View style={styles.container}>
       {notes ? (
         <FlatList
+          onRefresh={loadNotes}
+          refreshing={isRefreshing}
           data={notes}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={(itemData) => (
             <NoteItem
-              keyExtractor={(item) => item.id.toString()}
               tripId={tripId}
               id={itemData.item.id}
               title={itemData.item.title}
@@ -61,14 +66,18 @@ const NotesScreen = (props) => {
           )}
         />
       ) : (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <View style={styles.itemlessContainer}>
           <Text style={[styles.text, styles.itemlessText]}>
             There are no notes!
           </Text>
           <Text style={[styles.text, styles.itemlessText]}>
             Add one with the
           </Text>
-          <Icon name="md-add" size={32} style={[styles.text, {margin: 10}]} />
+          <Icon
+            name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+            size={32}
+            style={[styles.text, {margin: 10}]}
+          />
           <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
         </View>
       )}
@@ -78,7 +87,7 @@ const NotesScreen = (props) => {
 
 export const notesScreenOptions = (navData) => {
   return {
-    headerRight: (props) => (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a note"

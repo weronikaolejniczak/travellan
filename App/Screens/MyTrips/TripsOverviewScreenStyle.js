@@ -1,17 +1,13 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Colors from '../../Constants/Colors';
-
-// constants for responsive design
-const {height, width} = Dimensions.get('window');
 
 export const tripsOverviewScreenStyle = StyleSheet.create({
   flex: {
     flex: 1,
   },
   container: {
-    backgroundColor: Colors.background,
-    paddingVertical: 10,
     flex: 1,
+    backgroundColor: Colors.background,
   },
   triplessContainer: {
     justifyContent: 'center',
@@ -38,6 +34,6 @@ export const tripsOverviewScreenStyle = StyleSheet.create({
   centered: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

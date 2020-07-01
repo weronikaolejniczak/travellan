@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   Text,
   View,
@@ -8,13 +8,11 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import HeaderButton from '../../Components/UI/HeaderButton';
-import * as tripActions from '../../Stores/Actions/Trips';
+import tripActions from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 import Colors from '../../Constants/Colors';
 
@@ -27,7 +25,7 @@ import Colors from '../../Constants/Colors';
 const NewTripScreen = (props) => {
   const dispatch = useDispatch();
 
-  /** state variables and state setter functions */
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   // destination
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
@@ -46,6 +44,72 @@ const NewTripScreen = (props) => {
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
 
   /** HANDLERS */
+  // destination validation handler
+  let destinationRegex = new RegExp(
+    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
+  );
+  const destinationChangeHandler = (text) => {
+    text.trim().length === 0 || !destinationRegex.test(text)
+      ? setDestinationIsValid(false)
+      : setDestinationIsValid(true);
+    setDestination(text);
+  };
+
+  // date picker handlers
+  // start date
+  const startDateChangeHandler = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShowStartDate(Platform.OS === 'ios');
+    setStartDate(currentDate);
+    // set endDate to currentDate if it is earlier than the day 
+    // selected for startDate
+    currentDate > endDate ? setEndDate(currentDate) : '';
+  };
+
+  const showStartDatepicker = () => {
+    setShowStartDate(true);
+  };
+
+  // end date
+  const endDateChangeHandler = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShowEndDate(Platform.OS === 'ios');
+    setEndDate(currentDate);
+  };
+
+  const showEndDatepicker = () => {
+    setShowEndDate(true);
+  };
+
+  // budget handlers
+  const clearBudget = () => {
+    setBudget('0');
+    setBudgetIsValid(true);
+    setBudgetSubmitted(false);
+  };
+
+  const resetBudget = () => {
+    setBudget();
+    setBudgetIsValid(false);
+  };
+
+  // budget handlers
+  const toggleBudgetSwitch = () => {
+    setBudgetIsEnabled((previousState) => !previousState);
+    !budgetIsEnabled ? resetBudget() : clearBudget();
+  };
+
+  // budget validation
+  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const budgetChangeHandler = (text) => {
+    if (budgetIsEnabled) {
+      !(!budgetRegex.test(text) || text.trim().length === 0)
+        ? setBudgetIsValid(true)
+        : setBudgetIsValid(false);
+      setBudget(text);
+    }
+  };
+
   // submit handler
   const submitHandler = useCallback(() => {
     if (!destinationIsValid || !budgetIsValid) {
@@ -76,78 +140,7 @@ const NewTripScreen = (props) => {
     budget,
   ]);
 
-  /** refactor handlers with condition and setters functions */
-  // destination handler
-  let destinationRegex = new RegExp(
-    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
-  );
-  const destinationChangeHandler = (text) => {
-    text.trim().length === 0 || !destinationRegex.test(text)
-      ? setDestinationIsValid(false)
-      : setDestinationIsValid(true);
-    setDestination(text);
-  };
-
-  // date picker handlers
-  const startDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowStartDate(Platform.OS === 'ios');
-    setStartDate(currentDate);
-
-    // set endDate to currentDate if it is earlier than the day selected for startDate
-    currentDate > endDate ? setEndDate(currentDate) : '';
-  };
-
-  const showStartDatepicker = () => {
-    setShowStartDate(true);
-  };
-
-  const endDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowEndDate(Platform.OS === 'ios');
-    setEndDate(currentDate);
-  };
-
-  const showEndDatepicker = () => {
-    setShowEndDate(true);
-  };
-
-  const clearBudget = () => {
-    setBudget('0');
-    setBudgetIsValid(true);
-    setBudgetSubmitted(false);
-  };
-
-  const resetBudget = () => {
-    setBudget();
-    setBudgetIsValid(false);
-  };
-
-  // budget handlers
-  const toggleBudgetSwitch = () => {
-    setBudgetIsEnabled((previousState) => !previousState);
-    !budgetIsEnabled ? resetBudget() : clearBudget();
-  };
-
-  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
-  const budgetChangeHandler = (text) => {
-    if (budgetIsEnabled) {
-      !(!budgetRegex.test(text) || text.trim().length === 0)
-        ? setBudgetIsValid(true)
-        : setBudgetIsValid(false);
-      setBudget(text);
-    }
-  };
-
-  /** this could be refactored into a component to minimize repetition
-   *
-   * IMPORTANT NOTE!
-   * for datepicker, if startDate is assigned a date, endDate cannot have for
-   * a value an earlier date, BUT if we if we reassign a later than endDate
-   * date to startDate and don't press the TouchableOpacity for triggering
-   * endDatepicker, then endDate will have as its value a date earlier than
-   * startDate will
-   */
+  /** this could be refactored into a component to minimize repetition */
   return (
     <ScrollView style={styles.form}>
       {/* DESTINATION */}

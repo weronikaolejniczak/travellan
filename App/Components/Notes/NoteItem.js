@@ -5,8 +5,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  //Platform,
-  //Alert,
+  Platform,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /* IMPORTS FROM WITHIN THE MODULE */
@@ -14,13 +14,30 @@ import Card from '../UI/Card';
 import ReadMore from '../../Components/UI/ReadMore';
 import * as noteActions from '../../Stores/Actions/Note';
 import {noteItemStyle as styles} from './NoteItemStyle';
-//import Colors from '../../Constants/Colors';
 
-// REFACTOR!
+/** NOTE ITEM COMPONENT */
 const NoteItem = (props) => {
   const dispatch = useDispatch();
+
+  /** HANDLERS */
   const submitHandler = useCallback(() => {
-    dispatch(noteActions.deleteNote(props.tripId, props.id));
+    Alert.alert(
+      'Delete a note',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            dispatch(noteActions.deleteNote(props.tripId, props.id));
+          },
+        },
+      ],
+      {cancelable: true},
+    );
   }, [dispatch, props.tripId, props.id]);
 
   return (
@@ -30,13 +47,18 @@ const NoteItem = (props) => {
         <Text numberOfLines={1} style={styles.subtitle}>
           {props.title}
         </Text>
+
         {/* DELETE BUTTON */}
         <TouchableOpacity onPress={submitHandler}>
-          <Icon name="md-trash" style={styles.icon} />
+          <Icon
+            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+            style={styles.icon}
+          />
         </TouchableOpacity>
       </View>
+
       {/* NOTE CONTENT */}
-      <ScrollView style={{marginTop: 50}}>
+      <ScrollView style={styles.bodyMargin}>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

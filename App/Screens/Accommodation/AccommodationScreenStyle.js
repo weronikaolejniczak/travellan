@@ -32,6 +32,10 @@ export const accommodationScreenStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  rowDirection: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   text: {
     color: Colors.text,
   },
@@ -40,5 +44,12 @@ export const accommodationScreenStyle = StyleSheet.create({
   },
   icon: {
     margin: 10,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    backgroundColor: Colors.primary,
+    margin: 8,
+    borderRadius: 5,
   },
 });

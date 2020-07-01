@@ -3,7 +3,7 @@ class Trip {
     id,
     destination,
     region,
-    imageUrl,
+    image,
     startDate,
     endDate,
     budget,
@@ -15,7 +15,7 @@ class Trip {
     this.id = id;
     this.destination = destination;
     this.region = region;
-    this.imageUrl = imageUrl;
+    this.image = image;
     this.startDate = startDate;
     this.endDate = endDate;
     // this.duration: difference between startDate and endDate

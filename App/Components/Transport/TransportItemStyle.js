@@ -18,7 +18,7 @@ export const transportItemStyle = StyleSheet.create({
     width: cardWidth,
     height: cardHeight,
     marginHorizontal: 10,
-    padding: 25,
+    paddingTop: height * 0.0365,
     borderRadius: 15,
   },
   actions: {
@@ -57,7 +57,7 @@ export const transportItemStyle = StyleSheet.create({
   },
   verticalLine: {
     borderColor: Colors.primary,
-    height: cardHeight * 0.05,
+    height: cardHeight * 0.075,
     borderLeftWidth: 3,
   },
   horizontalLine: {
@@ -66,10 +66,14 @@ export const transportItemStyle = StyleSheet.create({
     borderBottomWidth: 1,
   },
   counterContainer: {
-    backgroundColor: Colors.primary,
-    borderRadius: 50,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     paddingHorizontal: cardWidth * 0.035,
     paddingVertical: cardHeight * 0.01,
+    backgroundColor: Colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   columnDirection: {
     flexDirection: 'column',
@@ -82,5 +86,10 @@ export const transportItemStyle = StyleSheet.create({
   },
   rowCenter: {
     alignItems: 'center',
+  },
+  textAndIconContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
   },
 });

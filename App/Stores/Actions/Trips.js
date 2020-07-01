@@ -1,7 +1,8 @@
-import {fetchImage} from '../../Services/ImageService';
+/** MODELS */
 import Trip from '../../Models/TripModel';
+/** SERVICES */
+import {fetchImage} from '../../Services/ImageService';
 import {fetchCoords} from '../../Services/CoordinatesService';
-
 /** ACTIONS */
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
@@ -21,14 +22,12 @@ export const fetchTrips = () => {
 
     // adding trips from database one by one using the stored keys
     for (const key in resData) {
-      //console.log(resData[key].imageUrl);
-      //resData[key].imageUrl = resData[key].imageUrl.toString();
       loadedTrips.push(
         new Trip(
           key,
           resData[key].destination,
           resData[key].region,
-          resData[key].imageUrl,
+          resData[key].image,
           resData[key].startDate,
           resData[key].endDate,
           resData[key].budget,
@@ -39,7 +38,6 @@ export const fetchTrips = () => {
         ),
       );
     }
-    //console.log(resData);
     dispatch({type: SET_TRIPS, trips: loadedTrips});
   };
 };
@@ -61,13 +59,8 @@ export const deleteTrip = (tripId) => {
 /** 'create a trip' action based on user input */
 export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch) {
-    let imageUrl = await fetchImage(destination);
-    imageUrl = imageUrl.toString();
-    //latitude = await fetchCoordinates(destination);
-    //longitude = await fetchCoordinates(destination);
-    //Placeholders - delete as soon as real parts are ready
-    //let region = await fetchCoords(destination);
-    var location = await fetchCoords(destination);
+    let image = await fetchImage(destination);
+    let location = await fetchCoords(destination);
     let region = {
       latitude: location.lat,
       longitude: location.lon,
@@ -79,7 +72,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
     let accommodationInfo = [];
     let pointsOfInterest = [];
 
-    // POST Request to the database
+    // POST request to the database
     const response = await fetch(
       'https://travellan-project.firebaseio.com/Trips.json',
       {
@@ -90,7 +83,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
         body: JSON.stringify({
           destination,
           region,
-          imageUrl,
+          image,
           startDate,
           endDate,
           budget,
@@ -113,7 +106,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
         id: resData.name,
         destination,
         region,
-        imageUrl,
+        image,
         startDate,
         endDate,
         budget,
