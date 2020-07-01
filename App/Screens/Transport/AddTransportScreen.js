@@ -459,14 +459,14 @@ const AddTransportScreen = (props) => {
                 </TouchableOpacity>
               </View>
               <SinglePickerMaterialDialog
-                title={'Means of transport:'}
+                title={'Means of transport'}
                 items={initialMeans.map((row, index) => ({
                   value: index,
                   label: row,
                 }))}
                 colorAccent={Colors.primary}
                 visible={singlePickerVisible}
-                selectedItem={{label: 'means', value: means}}
+                selectedItem={{label: means, value: 0}}
                 onCancel={() => setSinglePickerVisible(false)}
                 onOk={(result) => {
                   setSinglePickerVisible(false);
@@ -593,7 +593,6 @@ const AddTransportScreen = (props) => {
         />
       ) : (
         <View style={{marginLeft: '10%'}}>
-          <Text style={styles.text}>No stages</Text>
           {noStages && (
             <View style={styles.errorContainer}>
               <Text style={styles.error}>Add a stage!</Text>

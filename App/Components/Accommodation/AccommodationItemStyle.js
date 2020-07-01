@@ -46,7 +46,6 @@ export const accommodationItemStyle = StyleSheet.create({
     fontSize: 20,
   },
   text: {
-    fontSize: 16,
     color: Colors.text,
   },
   textAlign: {
