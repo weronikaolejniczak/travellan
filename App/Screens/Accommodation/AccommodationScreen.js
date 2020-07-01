@@ -103,6 +103,7 @@ const AccommodationScreen = (props) => {
           onScroll={Animated.event(
             // Animated.event returns a function that takes an array where the first element...
             [{nativeEvent: {contentOffset: {x: scrollX}}}], // ... is an object that maps any nativeEvent prop to a variable
+            {useNativeDriver: false},
           )} // in this case we are mapping the value of nativeEvent.contentOffset.x to this.scrollX
           scrollEventThrottle={16} // this will ensure that this ScrollView's onScroll prop is called no faster than 16ms between each function call
           decelerationRate={0}
