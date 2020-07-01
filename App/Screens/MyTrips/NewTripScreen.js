@@ -12,7 +12,7 @@ import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import tripActions from '../../Stores/Actions/Trips';
+import {createTrip} from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 import Colors from '../../Constants/Colors';
 
@@ -119,7 +119,7 @@ const NewTripScreen = (props) => {
       }
     } else {
       dispatch(
-        tripActions.createTrip(
+        createTrip(
           destination,
           startDate.toString(),
           endDate.toString(),
