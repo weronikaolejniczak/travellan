@@ -124,7 +124,14 @@ const AccommodationItem = (props) => {
                     Alert.alert('Parking');
                   }}>
                   <MaterialCommunityIcon
-                    style={styles.benefitIcon}
+                    style={[
+                      styles.benefitIcon,
+                      {
+                        color: benefits.includes('parking')
+                          ? Colors.primary
+                          : '#636363',
+                      },
+                    ]}
                     name={'parking'}
                   />
                 </TouchableOpacity>
@@ -180,6 +187,13 @@ const AccommodationItem = (props) => {
                   <MaterialIcon style={styles.benefitIcon} name={'language'} />
                 </TouchableOpacity>
               </View>
+            </View>
+
+            {/* HOTEL HOURS */}
+            <View style={{marginTop: '7%'}}>
+              <Text style={[styles.text, styles.h2]}>Hotel hours</Text>
+              <Text style={[styles.text]}>Mon-Fri: 8:00 - 22:00</Text>
+              <Text style={[styles.text]}>Weekend: 6:00 - 0:00</Text>
             </View>
 
             {/* DESCRIPTION */}
