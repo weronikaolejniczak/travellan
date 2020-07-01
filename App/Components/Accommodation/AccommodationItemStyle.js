@@ -69,7 +69,7 @@ export const accommodationItemStyle = StyleSheet.create({
     marginRight: 30,
   },
   benefitIcon: {
-    fontSize: 30,
+    fontSize: 24,
     color: Colors.primary,
   },
   benefitsContainer: {

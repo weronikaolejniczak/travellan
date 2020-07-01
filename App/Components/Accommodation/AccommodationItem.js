@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -9,7 +9,9 @@ import {
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
@@ -28,6 +30,10 @@ const AccommodationItem = (props) => {
   const dispatch = useDispatch();
   const tripId = props.tripId;
   const reservationId = props.id;
+
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
+  let initialBenefits = [];
+  const [benefits, setBenefits] = useState(initialBenefits);
 
   /** HANDLERS */
   const deleteReservationHandler = useCallback(() => {
@@ -55,7 +61,10 @@ const AccommodationItem = (props) => {
     <Card style={styles.accommodation}>
       <View style={styles.actions}>
         <TouchableOpacity onPress={deleteReservationHandler}>
-          <Icon name="md-trash" style={styles.icon} />
+          <Ionicon
+            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+            style={styles.icon}
+          />
         </TouchableOpacity>
 
         {/* EDIT RESERVATION INFO
@@ -109,32 +118,67 @@ const AccommodationItem = (props) => {
             <View style={{marginTop: '7%'}}>
               <Text style={[styles.text, styles.h2]}>Benefits</Text>
               <View style={styles.benefitsContainer}>
-                <Icon
-                  style={styles.benefitIcon}
-                  name={
-                    Platform.OS === 'android'
-                      ? 'md-restaurant'
-                      : 'ios-restaurant'
-                  }
-                />
-                <Icon
-                  style={styles.benefitIcon}
-                  name={Platform.OS === 'android' ? 'md-cafe' : 'ios-cafe'}
-                />
-                <Icon
-                  style={styles.benefitIcon}
-                  name={
-                    Platform.OS === 'android' ? 'md-fitness' : 'ios-fitness'
-                  }
-                />
-                <Icon
-                  style={styles.benefitIcon}
-                  name={Platform.OS === 'android' ? 'md-wifi' : 'ios-wifi'}
-                />
-                <Icon
-                  style={styles.benefitIcon}
-                  name={Platform.OS === 'android' ? 'md-wine' : 'ios-wine'}
-                />
+                {/* PARKING */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Parking');
+                  }}>
+                  <MaterialCommunityIcon
+                    style={styles.benefitIcon}
+                    name={'parking'}
+                  />
+                </TouchableOpacity>
+
+                {/* SWIMMING POOLS */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Swimming pools');
+                  }}>
+                  <MaterialCommunityIcon
+                    style={styles.benefitIcon}
+                    name={'swim'}
+                  />
+                </TouchableOpacity>
+
+                {/* PETS */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Pets');
+                  }}>
+                  <MaterialIcon style={styles.benefitIcon} name={'pets'} />
+                </TouchableOpacity>
+
+                {/* SPA */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Spa');
+                  }}>
+                  <MaterialIcon style={styles.benefitIcon} name={'spa'} />
+                </TouchableOpacity>
+
+                {/* WIFI */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('WiFi');
+                  }}>
+                  <MaterialIcon style={styles.benefitIcon} name={'wifi'} />
+                </TouchableOpacity>
+
+                {/* BAR */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Bar');
+                  }}>
+                  <MaterialIcon style={styles.benefitIcon} name={'local-bar'} />
+                </TouchableOpacity>
+
+                {/* SPOKEN LANGUAGES */}
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert('Spoken languages');
+                  }}>
+                  <MaterialIcon style={styles.benefitIcon} name={'language'} />
+                </TouchableOpacity>
               </View>
             </View>
 

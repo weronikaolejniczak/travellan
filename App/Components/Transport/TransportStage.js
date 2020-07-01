@@ -12,7 +12,7 @@ const TransportStage = (props) => {
   return (
     <View>
       <View style={[styles.horizontalLine]} />
-      <View style={[styles.rowDirection]}>
+      <View style={[{alignItems: 'center'}, styles.rowDirection]}>
         {/* 1st COLUMN - ICONS AND LINES */}
         <View style={[styles.iconsAndLinesContainer]}>
           {/* 1st NUMBER */}
