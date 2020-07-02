@@ -145,7 +145,9 @@ const AddTransportScreen = (props) => {
   const dateOfArrivalChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || dateOfArrival;
     setShowDateOfArrival(Platform.OS === 'ios');
-    setDateOfArrival(currentDate);
+    currentDate < dateOfDeparture
+      ? setDateOfArrival(dateOfDeparture)
+      : setDateOfArrival(currentDate);
   };
 
   const showDateOfArrivalPicker = () => {
@@ -378,7 +380,7 @@ const AddTransportScreen = (props) => {
                   testID="dateTimePicker"
                   timeZoneOffsetInMinutes={0}
                   value={dateOfArrival}
-                  minimumDate={Date.now()}
+                  minimumDate={dateOfDeparture}
                   mode={'date'}
                   is24Hour={true}
                   display="default"
