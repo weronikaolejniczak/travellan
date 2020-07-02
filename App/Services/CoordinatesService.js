@@ -1,7 +1,8 @@
 import axios from 'axios';
-//import Geocoder from 'react-native-geocoding';
+import {COORDS_API} from 'react-native-dotenv'
 
-const api_key = 'nJ8ndusGuFZvpbaLoxrqJdLJEfeAMJkN';
+
+const api_key = COORDS_API;
 /* const placeholderCoords = {
     latitude = 0.0,
     longitude = 0.0

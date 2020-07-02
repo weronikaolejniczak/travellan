@@ -135,6 +135,7 @@ export const tripsScreenOptions = (navData) => {
         />
       </HeaderButtons>
     ), */
+    headerLeft: null,
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
@@ -144,6 +145,7 @@ export const tripsScreenOptions = (navData) => {
           onPress={() => {
             navData.navigation.navigate('Create a trip');
           }}
+          
         />
       </HeaderButtons>
     ),

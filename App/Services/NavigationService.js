@@ -1,8 +1,13 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  //createSwitchNavigator,
+} from '@react-navigation/stack';
 
 /** SCREENS */
+/** AUTHORIZATION/LOGIN/SIGNUP SCREEN */
+import AuthScreen, {authScreenOptions} from '../Screens/User/AuthScreen';
 /** TRIP OVERVIEW SCREEN */
 import TripsOverviewScreen, {
   tripsScreenOptions,
@@ -32,10 +37,11 @@ import WeatherScreen from '../Screens/Weather/WeatherScreen';
 /** BUDGET SCREEN */
 import BudgetScreen from '../Screens/Budget/BudgetScreen';
 /** NOTES SCREENS */
-import NotesScreen, {notesScreenOptions} from '../Screens/Notes/NotesScreen';
+import NotesScreen /*, { notesScreenOptions } */ from '../Screens/Notes/NotesScreen';
 import AddNote from '../Screens/Notes/AddNoteScreen';
 /** CONSTANTS */
 import Colors from '../Constants/Colors';
+//import {createAppContainer} from 'react-navigation';
 
 /** STACK NAVIGATOR */
 const Stack = createStackNavigator();
@@ -44,6 +50,11 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
+        <Stack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={authScreenOptions}
+        />
         <Stack.Screen
           name="My trips"
           component={TripsOverviewScreen}
@@ -81,12 +92,8 @@ export default function Navigation() {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
         <Stack.Screen name="Budget" component={BudgetScreen} />
-        <Stack.Screen
-          name="Notes"
-          component={NotesScreen}
-          options={notesScreenOptions}
-        />
-        <Stack.Screen name="Add note" component={AddNote} />
+        <Stack.Screen name="Notes" component={NotesScreen} />
+        <Stack.Screen name="Add Note" component={AddNote} />
       </Stack.Navigator>
     </NavigationContainer>
   );

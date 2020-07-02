@@ -10,10 +10,12 @@ export const SET_TRIPS = 'SET_TRIPS';
 
 // fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     // GET request to the database (default mode of fetch)
     const response = await fetch(
-      'https://travellan-project.firebaseio.com/Trips.json',
+      `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
     ); //.then(response => {    <- declares what happens after getting a response
     //...
     //}).catch(); <- listening to errors
@@ -44,9 +46,11 @@ export const fetchTrips = () => {
 
 /** 'delete a trip' action based in tripId */
 export const deleteTrip = (tripId) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
         method: 'DELETE',
       },
@@ -58,7 +62,9 @@ export const deleteTrip = (tripId) => {
 
 /** 'create a trip' action based on user input */
 export const createTrip = (destination, startDate, endDate, budget) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     let image = await fetchImage(destination);
     let location = await fetchCoords(destination);
     let region = {
@@ -74,7 +80,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
 
     // POST request to the database
     const response = await fetch(
-      'https://travellan-project.firebaseio.com/Trips.json',
+      `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
       {
         method: 'POST',
         headers: {
