@@ -10,7 +10,6 @@ export const AuthScreenStyle = StyleSheet.create({
   },
   authContainer: {
     width: '80%',
-    backgroundColor: Colors.background,
   },
   actionsContainer: {
     marginTop: 30,

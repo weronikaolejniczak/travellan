@@ -3,6 +3,8 @@ class Accommodation {
     id,
     name,
     address,
+    facilities,
+    hotelHours,
     coordinates,
     imageUrl,
     description,
@@ -11,6 +13,8 @@ class Accommodation {
     this.id = id;
     this.name = name;
     this.address = address;
+    this.facilities = facilities;
+    this.hotelHours = hotelHours;
     this.coordinates = coordinates;
     this.imageUrl = imageUrl;
     this.description = description;

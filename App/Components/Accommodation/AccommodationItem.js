@@ -20,6 +20,9 @@ import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {accommodationItemStyle as styles} from './AccommodationItemStyle';
 import Colors from '../../Constants/Colors';
 
+const imageUrl =
+  'https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80';
+
 /** Accommodation item component used in AccommodationScreen for reservations listing
  * TODO:
  * refactor icons for better touchable response and clickability
@@ -30,10 +33,6 @@ const AccommodationItem = (props) => {
   const dispatch = useDispatch();
   const tripId = props.tripId;
   const reservationId = props.id;
-
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
-  let initialBenefits = [];
-  const [benefits, setBenefits] = useState(initialBenefits);
 
   /** HANDLERS */
   const deleteReservationHandler = useCallback(() => {
@@ -56,6 +55,14 @@ const AccommodationItem = (props) => {
       {cancelable: true},
     );
   }, [dispatch, tripId, reservationId]);
+
+  const prepareFacilities = (facilitiesArray) => {
+    const result = facilitiesArray.map((element) => Object.values(element)[0]);
+
+    return result;
+  };
+
+  let facilities = prepareFacilities(props.facilities);
 
   return (
     <Card style={styles.accommodation}>
@@ -91,14 +98,13 @@ const AccommodationItem = (props) => {
           <ImageBackground
             style={styles.image}
             source={{
-              uri:
-                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+              uri: imageUrl,
             }}>
             <LinearGradient
               colors={['rgba(0,0,0,0.00)', Colors.cards]}
               start={{x: 0.0, y: 0.0}}
               end={{x: 0.0, y: 1.0}}
-              locations={[0.6, 1]}
+              locations={[0.4, 1]}
               style={[{flex: 1}]}>
               <View style={styles.headerOverImg}>
                 <Text style={[styles.text, styles.header]}>{props.name}</Text>
@@ -116,84 +122,87 @@ const AccommodationItem = (props) => {
 
             {/* BENEFITS */}
             <View style={{marginTop: '7%'}}>
-              <Text style={[styles.text, styles.h2]}>Benefits</Text>
+              <Text style={[styles.text, styles.h2]}>Facilities</Text>
               <View style={styles.benefitsContainer}>
                 {/* PARKING */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Parking');
-                  }}>
-                  <MaterialCommunityIcon
-                    style={[
-                      styles.benefitIcon,
-                      {
-                        color: benefits.includes('parking')
-                          ? Colors.primary
-                          : '#636363',
-                      },
-                    ]}
-                    name={'parking'}
-                  />
-                </TouchableOpacity>
-
+                <MaterialCommunityIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('parking')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'parking'}
+                />
                 {/* SWIMMING POOLS */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Swimming pools');
-                  }}>
-                  <MaterialCommunityIcon
-                    style={styles.benefitIcon}
-                    name={'swim'}
-                  />
-                </TouchableOpacity>
-
+                <MaterialCommunityIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('swimming pool')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'swim'}
+                />
                 {/* PETS */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Pets');
-                  }}>
-                  <MaterialIcon style={styles.benefitIcon} name={'pets'} />
-                </TouchableOpacity>
-
+                <MaterialIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('pets allowed')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'pets'}
+                />
                 {/* SPA */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Spa');
-                  }}>
-                  <MaterialIcon style={styles.benefitIcon} name={'spa'} />
-                </TouchableOpacity>
-
+                <MaterialIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('spa')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'spa'}
+                />
                 {/* WIFI */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('WiFi');
-                  }}>
-                  <MaterialIcon style={styles.benefitIcon} name={'wifi'} />
-                </TouchableOpacity>
-
+                <MaterialIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('wifi in rooms')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'wifi'}
+                />
                 {/* BAR */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Bar');
-                  }}>
-                  <MaterialIcon style={styles.benefitIcon} name={'local-bar'} />
-                </TouchableOpacity>
-
-                {/* SPOKEN LANGUAGES */}
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert('Spoken languages');
-                  }}>
-                  <MaterialIcon style={styles.benefitIcon} name={'language'} />
-                </TouchableOpacity>
+                <MaterialIcon
+                  style={[
+                    styles.benefitIcon,
+                    {
+                      color: facilities.includes('bar')
+                        ? Colors.primary
+                        : '#636363',
+                    },
+                  ]}
+                  name={'local-bar'}
+                />
               </View>
             </View>
 
             {/* HOTEL HOURS */}
             <View style={{marginTop: '7%'}}>
               <Text style={[styles.text, styles.h2]}>Hotel hours</Text>
-              <Text style={[styles.text]}>Mon-Fri: 8:00 - 22:00</Text>
-              <Text style={[styles.text]}>Weekend: 6:00 - 0:00</Text>
+              <Text style={[styles.text]}>{props.hotelHours}</Text>
             </View>
 
             {/* DESCRIPTION */}
@@ -205,7 +214,7 @@ const AccommodationItem = (props) => {
             </View>
 
             {/* RESERVATION INFO */}
-            <View style={{marginTop: '7%'}}>
+            <View style={{marginTop: '1%'}}>
               <Text style={[styles.text, styles.h2]}>Reservation info</Text>
               <Text style={[styles.text]}>
                 {props.reservationDetails.length === 0

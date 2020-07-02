@@ -5,11 +5,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
+import Card from '../../Components/UI/Card';
+import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
 import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {addAccommodationScreenStyle as styles} from './AddAccommodationScreenStyle';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const AddAccommodationScreen = (props) => {
   const dispatch = useDispatch();
@@ -25,6 +30,23 @@ const AddAccommodationScreen = (props) => {
   const [housingAddress, setHousingAddress] = useState('');
   const [housingAddressIsValid, setHousingAddressIsValid] = useState(false);
   const [housingAddressSubmitted, setHousingAddressSubmitted] = useState(false);
+
+  // facilities
+  const facilities = [
+    'parking',
+    'swimming pool',
+    'pets allowed',
+    'spa',
+    'wifi in rooms',
+    'bar',
+  ];
+  const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [multiPickerVisible, setMultiPickerVisible] = useState(false);
+
+  // hotel hours
+  const [hotelHours, setHotelHours] = useState('');
+  const [hotelHoursIsValid, setHotelHoursIsValid] = useState(false);
+  const [hotelHoursSubmitted, setHotelHoursSubmitted] = useState(false);
 
   // description
   const [description, setDescription] = useState('');
@@ -59,18 +81,34 @@ const AddAccommodationScreen = (props) => {
     setDescription(text);
   };
 
+  // hotel hours validation handler
+  const hotelHoursChangeHandler = (text) => {
+    text.trim().length === 0
+      ? setHotelHoursIsValid(false)
+      : setHotelHoursIsValid(true);
+    setHotelHours(text);
+  };
+
   // submit handler
   const submitHandler = useCallback(() => {
-    if (!housingNameIsValid || !housingAddressIsValid || !descriptionIsValid) {
+    if (
+      !housingNameIsValid ||
+      !housingAddressIsValid ||
+      !descriptionIsValid ||
+      !hotelHoursIsValid
+    ) {
       setHousingNameSubmitted(true);
       setHousingAddressSubmitted(true);
       setDescriptionSubmitted(true);
+      setHotelHoursSubmitted(true);
     } else {
       dispatch(
         accommodationActions.createReservation(
           tripId,
           housingName,
           housingAddress,
+          selectedFacilities,
+          hotelHours,
           description,
           reservationDetails,
         ),
@@ -85,6 +123,9 @@ const AddAccommodationScreen = (props) => {
     housingNameIsValid,
     housingAddress,
     housingAddressIsValid,
+    selectedFacilities,
+    hotelHours,
+    hotelHoursIsValid,
     description,
     descriptionIsValid,
     reservationDetails,
@@ -116,6 +157,58 @@ const AddAccommodationScreen = (props) => {
         {!housingAddressIsValid && housingAddressSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid address!</Text>
+          </View>
+        )}
+      </View>
+
+      <View style={styles.metrics}>
+        <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+          <Text style={styles.label}>Facilities</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setMultiPickerVisible(true);
+            }}
+            style={styles.iconButton}>
+            <Icon
+              name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
+        <MultiPickerMaterialDialog
+          title={'Pick accommodation facilities'}
+          colorAccent={Colors.primary}
+          items={facilities.map((row, index) => {
+            return {value: index, label: row};
+          })}
+          visible={multiPickerVisible}
+          selectedItems={selectedFacilities}
+          onCancel={() => setMultiPickerVisible(false)}
+          onOk={(result) => {
+            setMultiPickerVisible(false);
+            setSelectedFacilities(result.selectedItems);
+          }}
+        />
+        <View style={{marginHorizontal: '10%'}}>
+          {selectedFacilities.map((item) => (
+            <Card style={{marginTop: 10, padding: 15}}>
+              <Text style={styles.text}>{item.label}</Text>
+            </Card>
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.metrics}>
+        <Text style={styles.label}>Hotel hours</Text>
+        <TextInput
+          multiline
+          style={styles.input}
+          value={hotelHours}
+          onChangeText={hotelHoursChangeHandler}
+        />
+        {!hotelHoursIsValid && hotelHoursSubmitted && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Enter hotel hours</Text>
           </View>
         )}
       </View>

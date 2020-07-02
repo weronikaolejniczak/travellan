@@ -116,9 +116,11 @@ const AccommodationScreen = (props) => {
             <AccommodationItem
               id={itemData.item.id}
               tripId={tripId}
+              image={itemData.item.imageUrl}
               name={itemData.item.name}
               address={itemData.item.address}
-              image={itemData.item.imageUrl}
+              facilities={itemData.item.facilities}
+              hotelHours={itemData.item.hotelHours}
               description={itemData.item.description}
               reservationDetails={itemData.item.reservationDetails}
             />

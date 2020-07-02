@@ -67,6 +67,8 @@ export const createReservation = (
   tripId,
   name,
   address,
+  facilities,
+  hotelHours,
   description,
   reservationDetails,
 ) => {
@@ -74,9 +76,12 @@ export const createReservation = (
     new Date().toString(), // DUMMY ID
     name,
     address,
+    facilities,
+    hotelHours,
     // DUMMY DATA
     {},
     '',
+    // END OF DUMMY DATA
     description,
     reservationDetails,
   );
