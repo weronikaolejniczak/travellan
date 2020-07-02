@@ -14,7 +14,7 @@ import Card from '../../Components/UI/Card';
 import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
 import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {addAccommodationScreenStyle as styles} from './AddAccommodationScreenStyle';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Colors from '../../Constants/Colors';
 
 const AddAccommodationScreen = (props) => {
   const dispatch = useDispatch();
