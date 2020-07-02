@@ -3,18 +3,28 @@ import TRIPS from '../../Data/DummyData';
 import Trip from '../../Models/TripModel';
 /** ACTIONS */
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from '../Actions/Trips';
+// transport
 import {
   SET_TRANSPORT,
   DELETE_TRANSPORT,
   CREATE_TRANSPORT,
 } from '../Actions/Transport';
+// accommodation
 import {
   SET_RESERVATIONS,
   DELETE_RESERVATION,
   CREATE_RESERVATION,
 } from '../Actions/Accommodation';
+// notes
 import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from '../Actions/Note';
+// budget
+import {
+  FETCH_BUDGET,
+  SUBTRACT_FROM_BUDGET,
+  ADD_TO_BUDGET,
+} from '../Actions/Budget';
 
+/** TRIP REDUCER */
 export const initialState = {
   availableTrips: TRIPS,
 };
@@ -90,6 +100,16 @@ export default (state = initialState, action) => {
     case DELETE_NOTE:
     case CREATE_NOTE:
       updatedAvailableTrips[tripIndex].notes = action.notes;
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+
+    /** BUDGET */
+    case FETCH_BUDGET:
+    case SUBTRACT_FROM_BUDGET:
+    case ADD_TO_BUDGET:
+      updatedAvailableTrips[tripIndex].budget = action.budget;
       return {
         ...state,
         availableTrips: updatedAvailableTrips,

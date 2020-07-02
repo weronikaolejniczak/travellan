@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
+import Budget from '../../Models/BudgetModel';
 import {createTrip} from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 import Colors from '../../Constants/Colors';
@@ -42,6 +43,7 @@ const NewTripScreen = (props) => {
   const [budgetIsValid, setBudgetIsValid] = useState(false);
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
+  const [currency, setCurrency] = useState('PLN');
 
   /** HANDLERS */
   // destination validation handler
@@ -112,6 +114,11 @@ const NewTripScreen = (props) => {
 
   // submit handler
   const submitHandler = useCallback(() => {
+    let budgetToSubmit = new Budget(budget, currency, [
+      {amount: budget, title: 'initial budget'},
+    ]);
+    console.log(budgetToSubmit);
+
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
       if (budgetIsEnabled) {
@@ -123,7 +130,7 @@ const NewTripScreen = (props) => {
           destination,
           startDate.toString(),
           endDate.toString(),
-          budget,
+          budgetToSubmit,
         ),
       );
       props.navigation.goBack();
@@ -132,12 +139,13 @@ const NewTripScreen = (props) => {
     props.navigation,
     dispatch,
     destinationIsValid,
+    budget,
     budgetIsValid,
     budgetIsEnabled,
+    currency,
     destination,
     startDate,
     endDate,
-    budget,
   ]);
 
   /** this could be refactored into a component to minimize repetition */

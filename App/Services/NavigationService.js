@@ -2,12 +2,12 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
-  createSwitchNavigator
+  //createSwitchNavigator,
 } from '@react-navigation/stack';
 
 /** SCREENS */
 /** AUTHORIZATION/LOGIN/SIGNUP SCREEN */
-import AuthScreen, {authScreenOptions,} from '../Screens/User/AuthScreen';
+import AuthScreen, {authScreenOptions} from '../Screens/User/AuthScreen';
 /** TRIP OVERVIEW SCREEN */
 import TripsOverviewScreen, {
   tripsScreenOptions,
@@ -41,20 +41,16 @@ import NotesScreen /*, { notesScreenOptions } */ from '../Screens/Notes/NotesScr
 import AddNote from '../Screens/Notes/AddNoteScreen';
 /** CONSTANTS */
 import Colors from '../Constants/Colors';
-import Trip from '../Models/TripModel';
-import { createAppContainer } from 'react-navigation';
+//import {createAppContainer} from 'react-navigation';
 
 /** STACK NAVIGATOR */
 const Stack = createStackNavigator();
-
-
-
 
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
-      <Stack.Screen
+        <Stack.Screen
           name="AuthScreen"
           component={AuthScreen}
           options={authScreenOptions}
@@ -96,7 +92,7 @@ export default function Navigation() {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
         <Stack.Screen name="Budget" component={BudgetScreen} />
-        <Stack.Screen name="Notes" component={NotesScreen}/>
+        <Stack.Screen name="Notes" component={NotesScreen} />
         <Stack.Screen name="Add Note" component={AddNote} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -113,4 +109,3 @@ const defaultNavOptions = {
     fontWeight: 'bold',
   },
 };
-
