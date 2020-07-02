@@ -4,9 +4,11 @@ export const SUBTRACT_FROM_BUDGET = 'SUBTRACT_FROM_BUDGET';
 
 /** fetch budget */
 export const fetchBudget = (tripId) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -14,6 +16,7 @@ export const fetchBudget = (tripId) => {
 
     // take budget stored in the trip and assign it to local variable for later logic
     let budget = resData.budget;
+    console.log(budget);
 
     dispatch({type: FETCH_BUDGET, tripId, budget});
   };
@@ -21,9 +24,11 @@ export const fetchBudget = (tripId) => {
 
 /** add to budget */
 export const addToBudget = (tripId, amount, title) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -33,12 +38,13 @@ export const addToBudget = (tripId, amount, title) => {
     let budget = resData.budget;
 
     // ADD
-    budget.value += amount;
+    budget.value = (parseInt(budget.value, 10) + amount).toString();
+    console.log('budget value ' + budget.value);
     budget.history.push({amount: amount, title: title});
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {
@@ -56,9 +62,11 @@ export const addToBudget = (tripId, amount, title) => {
 
 /** subtract from budget */
 export const subtractFromBudget = (tripId, amount, title) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -68,12 +76,13 @@ export const subtractFromBudget = (tripId, amount, title) => {
     let budget = resData.budget;
 
     // SUBTRACT
-    budget.value -= amount;
+    budget.value = (parseInt(budget.value, 10) - amount).toString();
+    console.log('budget value ' + budget.value);
     budget.history.push({amount: amount, title: title});
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {

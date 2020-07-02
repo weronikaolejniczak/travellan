@@ -1,12 +1,24 @@
-import React, {useState, useCallback} from 'react';
-import {View, ScrollView, Text, TextInput, Platform} from 'react-native';
+import React, {useState, useCallback, useEffect} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
-import {addToBudget, subtractFromBudget} from '../../Stores/Actions/Budget';
+import {
+  fetchBudget,
+  addToBudget,
+  subtractFromBudget,
+} from '../../Stores/Actions/Budget';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Colors from '../../Constants/Colors';
 
 const BudgetScreen = (props) => {
   const dispatch = useDispatch();
@@ -16,21 +28,20 @@ const BudgetScreen = (props) => {
   );
   const budget = selectedTrip.budget;
 
-  console.log(budget);
-  console.log(budget.history);
-
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
-  const [amount, setAmount] = useState('0');
+  const [displayableAmount, setDisplayableAmount] = useState('');
   const [title, setTitle] = useState('');
 
   /** HANDLERS */
-  /* const addAmountHandler = useCallback(() => {
-    //dispatch(addToBudget(tripId, parseInt(amount, 10), title));
-  }, [dispatch, tripId, amount, title]);
+  const addAmountHandler = () => {
+    let amount = parseInt(displayableAmount, 10);
+    dispatch(addToBudget(tripId, parseInt(amount, 10), title));
+  };
 
-  const subtractAmountHandler = useCallback(() => {
-    //dispatch(subtractFromBudget(tripId, parseInt(amount, 10), title));
-  }, [dispatch, tripId, amount, title]); */
+  const subtractAmountHandler = () => {
+    let amount = parseInt(displayableAmount, 10);
+    dispatch(subtractFromBudget(tripId, parseInt(amount, 10), title));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -38,11 +49,15 @@ const BudgetScreen = (props) => {
         <Card style={styles.budgetCard}>
           <View style={styles.justifyRow}>
             <Text style={styles.label}>Balance: </Text>
-            {budget.value < 0 ? (
-              <Text style={styles.negativeBudget}>{budget.value}</Text>
+            {/* {budget.value ? (
+              budget.value < 0 ? (
+                <Text style={styles.negativeBudget}>{budget.value}</Text>
+              ) : (
+                <Text style={styles.positiveBudget}>{budget.value}</Text>
+              )
             ) : (
-              <Text style={styles.positiveBudget}>{budget.value}</Text>
-            )}
+              console.log('error')
+            )} */}
           </View>
         </Card>
       </View>
@@ -54,13 +69,13 @@ const BudgetScreen = (props) => {
         {/* AMOUNT INPUT */}
         <TextInput
           style={styles.input}
-          value={amount}
-          onChangeText={setAmount}
+          value={displayableAmount}
+          onChangeText={setDisplayableAmount}
           keyboardType={'numeric'}
         />
 
         {/* ADD BUTTON */}
-        <TouchableOpacity /* onPress={addAmountHandler()} */>
+        <TouchableOpacity onPress={() => addAmountHandler()}>
           <Icon
             name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
             style={styles.addIcon}
@@ -68,7 +83,7 @@ const BudgetScreen = (props) => {
         </TouchableOpacity>
 
         {/* SUBTRACT BUTTON */}
-        <TouchableOpacity /* onPress={subtractAmountHandler()} */>
+        <TouchableOpacity onPress={() => subtractAmountHandler()}>
           <Icon
             name={Platform.OS === 'android' ? 'md-remove' : 'ios-remove'}
             style={styles.removeIcon}
@@ -79,11 +94,9 @@ const BudgetScreen = (props) => {
       {/* <View style={{marginTop: '10%'}}>
         <Text style={styles.label}>History</Text>
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
-          {budget.history.map((index) => {
+          {budget.history.map((operation) => {
             <Card>
-              <Text>
-                {budget.history[index].title} + {budget.history[index].amount}
-              </Text>
+              <Text>{operation.title}</Text>
             </Card>;
           })}
         </View>
