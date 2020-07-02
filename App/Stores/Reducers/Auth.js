@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
                 token: action.token,
                 userId: action.userId
             };
-            default:
-                return: state;
+        default:
+            return state;
     }
 };

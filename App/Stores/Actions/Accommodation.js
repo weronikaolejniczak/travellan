@@ -6,9 +6,11 @@ export const CREATE_RESERVATION = 'CREATE_RESERVATION';
 
 /** 'fetch reservations' action based on id of trip */
 export const fetchReservations = (tripId) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -23,9 +25,11 @@ export const fetchReservations = (tripId) => {
 
 /** 'delete a reservation' action based on id of reservation */
 export const deleteReservation = (tripId, reservationId) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -42,7 +46,7 @@ export const deleteReservation = (tripId, reservationId) => {
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {
@@ -77,9 +81,11 @@ export const createReservation = (
     reservationDetails,
   );
 
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
 
     // await json body of response
@@ -94,7 +100,7 @@ export const createReservation = (
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${tripId}.json`,
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {

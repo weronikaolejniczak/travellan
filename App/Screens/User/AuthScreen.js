@@ -71,7 +71,7 @@ const AuthScreen = (props) => {
                 formState.inputValues.password
                 
             );
-            props.navigation.navigate("My trips");
+
         }
         setError(null);
         setIsLoading(true);
@@ -141,6 +141,7 @@ const AuthScreen = (props) => {
                                 color={Colors.accent}
                                 onPress={() => {
                                     setIsSignup(prevState => !prevState);
+                                    props.navigation.navigate("My trips");
                                 }}
                             />
                         </View>
