@@ -16,6 +16,7 @@ const BudgetScreen = (props) => {
   );
   const budget = selectedTrip.budget;
 
+  console.log(budget);
   console.log(budget.history);
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
@@ -24,11 +25,11 @@ const BudgetScreen = (props) => {
 
   /** HANDLERS */
   /* const addAmountHandler = useCallback(() => {
-    dispatch(addToBudget(tripId, parseInt(amount, 10), title));
+    //dispatch(addToBudget(tripId, parseInt(amount, 10), title));
   }, [dispatch, tripId, amount, title]);
 
   const subtractAmountHandler = useCallback(() => {
-    dispatch(subtractFromBudget(tripId, parseInt(amount, 10), title));
+    //dispatch(subtractFromBudget(tripId, parseInt(amount, 10), title));
   }, [dispatch, tripId, amount, title]); */
 
   return (
@@ -75,7 +76,7 @@ const BudgetScreen = (props) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{marginTop: '10%'}}>
+      {/* <View style={{marginTop: '10%'}}>
         <Text style={styles.label}>History</Text>
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
           {budget.history.map((index) => {
@@ -86,7 +87,7 @@ const BudgetScreen = (props) => {
             </Card>;
           })}
         </View>
-      </View>
+      </View> */}
     </ScrollView>
   );
 };

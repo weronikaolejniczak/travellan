@@ -117,7 +117,6 @@ const NewTripScreen = (props) => {
     let budgetToSubmit = new Budget(budget, currency, [
       {amount: budget, title: 'initial budget'},
     ]);
-    console.log(budgetToSubmit);
 
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
