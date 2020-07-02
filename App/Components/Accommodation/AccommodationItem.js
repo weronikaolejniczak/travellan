@@ -57,7 +57,13 @@ const AccommodationItem = (props) => {
   }, [dispatch, tripId, reservationId]);
 
   const prepareFacilities = (facilitiesArray) => {
-    const result = facilitiesArray.map((element) => Object.values(element)[0]);
+    let result = [];
+
+    if (facilitiesArray === undefined) {
+      console.log('error');
+    } else {
+      result = facilitiesArray.map((element) => Object.values(element)[0]);
+    }
 
     return result;
   };
