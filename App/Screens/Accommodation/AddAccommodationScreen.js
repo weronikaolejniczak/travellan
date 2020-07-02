@@ -31,8 +31,8 @@ const AddAccommodationScreen = (props) => {
   const [housingAddressIsValid, setHousingAddressIsValid] = useState(false);
   const [housingAddressSubmitted, setHousingAddressSubmitted] = useState(false);
 
-  // facilities
-  const facilities = [
+  // amenities
+  const amenities = [
     'parking',
     'swimming pool',
     'pets allowed',
@@ -40,7 +40,7 @@ const AddAccommodationScreen = (props) => {
     'wifi in rooms',
     'bar',
   ];
-  const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [multiPickerVisible, setMultiPickerVisible] = useState(false);
 
   // hotel hours
@@ -107,7 +107,7 @@ const AddAccommodationScreen = (props) => {
           tripId,
           housingName,
           housingAddress,
-          selectedFacilities,
+          selectedAmenities,
           hotelHours,
           description,
           reservationDetails,
@@ -123,7 +123,7 @@ const AddAccommodationScreen = (props) => {
     housingNameIsValid,
     housingAddress,
     housingAddressIsValid,
-    selectedFacilities,
+    selectedAmenities,
     hotelHours,
     hotelHoursIsValid,
     description,
@@ -163,7 +163,7 @@ const AddAccommodationScreen = (props) => {
 
       <View style={styles.metrics}>
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-          <Text style={styles.label}>Facilities</Text>
+          <Text style={styles.label}>Amenities</Text>
           <TouchableOpacity
             onPress={() => {
               setMultiPickerVisible(true);
@@ -176,21 +176,21 @@ const AddAccommodationScreen = (props) => {
           </TouchableOpacity>
         </View>
         <MultiPickerMaterialDialog
-          title={'Pick accommodation facilities'}
+          title={'Pick accommodation amenities'}
           colorAccent={Colors.primary}
-          items={facilities.map((row, index) => {
+          items={amenities.map((row, index) => {
             return {value: index, label: row};
           })}
           visible={multiPickerVisible}
-          selectedItems={selectedFacilities}
+          selectedItems={selectedAmenities}
           onCancel={() => setMultiPickerVisible(false)}
           onOk={(result) => {
             setMultiPickerVisible(false);
-            setSelectedFacilities(result.selectedItems);
+            setSelectedAmenities(result.selectedItems);
           }}
         />
         <View style={{marginHorizontal: '10%'}}>
-          {selectedFacilities.map((item) => (
+          {selectedAmenities.map((item) => (
             <Card style={{marginTop: 10, padding: 15}}>
               <Text style={styles.text}>{item.label}</Text>
             </Card>

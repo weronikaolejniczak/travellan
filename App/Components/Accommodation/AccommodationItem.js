@@ -128,7 +128,7 @@ const AccommodationItem = (props) => {
 
             {/* BENEFITS */}
             <View style={{marginTop: '7%'}}>
-              <Text style={[styles.text, styles.h2]}>Facilities</Text>
+              <Text style={[styles.text, styles.h2]}>Amenities</Text>
               <View style={styles.benefitsContainer}>
                 {/* PARKING */}
                 <MaterialCommunityIcon
