@@ -7,6 +7,7 @@ import Input from '../../Components/UI/Input';
 import Card from '../../Components/UI/Card';
 import Colors from '../../Constants/Colors';
 import * as authActions from '../../Stores/Actions/Auth';
+import { set } from 'react-native-reanimated';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -75,9 +76,12 @@ const AuthScreen = (props) => {
         }
         setError(null);
         setIsLoading(true);
+
         try {
             await dispatch(action);
-
+            if (!isSignup) {
+                props.navigation.navigate("My trips");
+            }
         } catch (err) {
             setError(err.message);
         }
@@ -141,7 +145,7 @@ const AuthScreen = (props) => {
                                 color={Colors.accent}
                                 onPress={() => {
                                     setIsSignup(prevState => !prevState);
-                                    props.navigation.navigate("My trips");
+                                   // props.navigation.navigate("My trips");
                                 }}
                             />
                         </View>

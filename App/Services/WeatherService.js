@@ -1,6 +1,7 @@
 import axios from 'axios';
+import {WEATHER_ID} from 'react-native-dotenv'
 
-const client_id = '2df95b92e6ee09336448af058e8a05d8'; // only for development
+const client_id = WEATHER_ID; // only for development
 
 /** fetch info from api.openweathermap.org */
 export async function fetchWeather(latitude, longitude) {
