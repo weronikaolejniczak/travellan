@@ -15,7 +15,7 @@ import Input from '../../Components/UI/Input';
 import Colors from '../../Constants/Colors';
 import * as authActions from '../../Stores/Actions/Auth';
 import {AuthScreenStyle as styles} from './AuthScreenStyle';
-import logo from '../../Assets/index';
+//import logo from '../../Assets/index';
 //import {set} from 'react-native-reanimated';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -158,7 +158,7 @@ const AuthScreen = (props) => {
                 </Text>
               </TouchableOpacity>
             )}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => {
                 setIsSignup((prevState) => !prevState);
@@ -167,7 +167,7 @@ const AuthScreen = (props) => {
               <Text style={styles.buttonText}>
                 {isSignup ? 'Login' : 'Sign up'}
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </ScrollView>
       </View>

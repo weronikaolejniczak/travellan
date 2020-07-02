@@ -94,9 +94,11 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   input: {
+    color: Colors.text,
+    fontSize: 14,
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderBottomColor: '#fff',
+    borderBottomColor: Colors.text,
     borderBottomWidth: 1,
   },
   errorContainer: {
