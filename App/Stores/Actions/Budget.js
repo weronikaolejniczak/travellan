@@ -36,9 +36,10 @@ export const addToBudget = (tripId, amount, title) => {
 
     // take budget stored in the trip and assign it to local variable for later logic
     let budget = resData.budget;
+    console.log('budget ' + JSON.stringify(budget));
 
     // ADD
-    budget.value = (parseInt(budget.value, 10) + amount).toString();
+    console.log(typeof budget.value);
     console.log('budget value ' + budget.value);
     budget.history.push({amount: amount, title: title});
 

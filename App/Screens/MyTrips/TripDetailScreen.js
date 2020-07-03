@@ -68,6 +68,7 @@ const TripDetailScreen = (props) => {
               onPress={() => {
                 props.navigation.navigate('Budget', {
                   tripId: selectedTrip.id,
+                  budget: selectedTrip.budget,
                 });
               }}>
               <Text style={styles.buttonText}>Budget</Text>
