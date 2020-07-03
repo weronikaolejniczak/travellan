@@ -42,6 +42,19 @@ export const accommodationScreenStyle = StyleSheet.create({
   itemlessText: {
     fontSize: 20,
   },
+  button: {
+    borderRadius: 10,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    width: '40%',
+    padding: 15,
+    margin: 10,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: Colors.text,
+  },
   icon: {
     margin: 10,
   },

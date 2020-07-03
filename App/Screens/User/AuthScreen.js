@@ -124,7 +124,7 @@ const AuthScreen = (props) => {
           <Input
             style={[styles.input]}
             id="email"
-            label="E-Mail"
+            label="E-mail"
             keyboardType="email-address"
             required
             email

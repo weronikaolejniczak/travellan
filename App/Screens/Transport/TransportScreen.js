@@ -4,6 +4,7 @@ import {
   ScrollView,
   Text,
   FlatList,
+  TouchableOpacity,
   Platform,
   ActivityIndicator,
   Animated,
@@ -75,6 +76,11 @@ const TransportScreen = (props) => {
           </Text>
           <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
           <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
+          <View style={{marginTop: '10%'}}>
+            <TouchableOpacity style={styles.button} onPress={loadTransport}>
+              <Text style={styles.buttonText}>Refresh</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     );

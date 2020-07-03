@@ -19,7 +19,7 @@ const BudgetScreen = (props) => {
   const tripId = props.route.params.tripId;
   const budget = props.route.params.budget;
   const budgetValue = budget.value;
-  console.log(budgetValue);
+  //console.log(budgetValue);
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [value, setValue] = useState();

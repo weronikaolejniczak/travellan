@@ -1,6 +1,13 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Text, View, FlatList, Platform, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -79,6 +86,11 @@ const NotesScreen = (props) => {
             style={[styles.text, {margin: 10}]}
           />
           <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
+          <View style={{marginTop: '10%'}}>
+            <TouchableOpacity style={styles.button} onPress={loadNotes}>
+              <Text style={styles.buttonText}>Refresh</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
