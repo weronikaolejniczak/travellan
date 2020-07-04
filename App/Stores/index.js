@@ -6,7 +6,7 @@ import authReducer from '../Stores/Reducers/Auth';
 
 const rootReducer = combineReducers({
   trips: tripsReducer,
-  auth: authReducer
+  auth: authReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

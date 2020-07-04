@@ -1,1 +1,3 @@
-export const logo = require('./Images/logo.png');
+const logo = require('./Images/logo.png');
+
+export default logo;
