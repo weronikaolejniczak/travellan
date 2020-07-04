@@ -3,7 +3,7 @@ import Colors from '../../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.83;
-export const cardWidth = width * 0.925;
+export const cardWidth = width * 0.923;
 export const spacingForCardInset = width * 0.03;
 
 /**
