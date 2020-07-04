@@ -1,16 +1,17 @@
 /**
- * COLORS CONSTANTS
- * For now, dark mode
+ * This file contains colors that are global to the application
  */
 export default {
   /** STANDARD */
+  transparent: 'rgba(0,0,0,0)',
   white: '#FFFFFF',
   green: '#06C258',
-  shadow: '#000000', // pitch black
-  cards: '#111111', // light black
-  background: '#222222', // dark grey
+  /** SPECIFIC */
+  shadow: '#000000',
+  cards: '#111111',
+  background: '#222222',
   primary: '#FF8C00', // dark orange
-  text: '#FFFFFF', // white
+  text: '#FFFFFF',
   error: 'red',
   switchEnabledTrack: '#FF8C00',
   switchDisabledTrack: '#767577',

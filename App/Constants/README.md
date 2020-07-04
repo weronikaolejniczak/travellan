@@ -1,0 +1,1 @@
+This directory contains constant for application style
