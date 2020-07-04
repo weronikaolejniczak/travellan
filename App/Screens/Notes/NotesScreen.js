@@ -47,7 +47,7 @@ const NotesScreen = (props) => {
     });
   }, [dispatch, loadNotes]);
 
-  if (isLoading) {
+  if (isLoading || isRefreshing) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />

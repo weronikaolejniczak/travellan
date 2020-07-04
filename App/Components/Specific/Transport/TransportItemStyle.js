@@ -4,7 +4,7 @@ import Colors from '../../../Constants/Colors';
 // refactor Metrics
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.83;
-export const cardWidth = width * 0.9;
+export const cardWidth = width * 0.915;
 export const spacingForCardInset = width * 0.03;
 
 /**
@@ -17,7 +17,7 @@ export const transportItemStyle = StyleSheet.create({
   transportCard: {
     width: cardWidth,
     height: cardHeight,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     paddingTop: height * 0.0365,
     borderRadius: 15,
   },

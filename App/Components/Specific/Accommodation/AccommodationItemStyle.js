@@ -3,7 +3,7 @@ import Colors from '../../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.83;
-export const cardWidth = width * 0.9;
+export const cardWidth = width * 0.925;
 export const spacingForCardInset = width * 0.03;
 
 /**
@@ -16,7 +16,7 @@ export const accommodationItemStyle = StyleSheet.create({
     width: cardWidth,
     height: cardHeight,
     borderRadius: 15,
-    marginHorizontal: width * 0.025,
+    marginHorizontal: width * 0.01,
     paddingTop: height * 0.06,
     paddingBottom: height * 0.02,
   },

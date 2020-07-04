@@ -57,7 +57,7 @@ const AccommodationScreen = (props) => {
     });
   }, [dispatch, loadReservations]);
 
-  if (isLoading) {
+  if (isLoading || isRefreshing) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />
@@ -65,7 +65,7 @@ const AccommodationScreen = (props) => {
     );
   }
 
-  if (!isLoading && accommodation === undefined) {
+  if (accommodation === undefined) {
     return (
       <ScrollView
         style={styles.scrollview}
