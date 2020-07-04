@@ -135,7 +135,7 @@ const TripDetailScreen = (props) => {
           <View // 3rd row of functionalities buttons
             style={styles.justifyRow}>
             <TouchableOpacity
-              style={[styles.button, {width: '83.5%'}]}
+              style={[styles.button]}
               onPress={() => {
                 props.navigation.navigate('Map', {tripId: selectedTrip.id});
               }}>
@@ -147,7 +147,7 @@ const TripDetailScreen = (props) => {
               />
             </TouchableOpacity>
 
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather', {
@@ -160,7 +160,7 @@ const TripDetailScreen = (props) => {
                 size={42}
                 color="#FFFFFF"
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </View>
