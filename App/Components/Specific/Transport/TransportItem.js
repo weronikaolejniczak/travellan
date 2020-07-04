@@ -11,8 +11,8 @@ import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
-import TransportStage from '../../Components/Transport/TransportStage';
-import * as transportActions from '../../Stores/Actions/Transport';
+import TransportStage from './TransportStage';
+import * as transportActions from '../../../Stores/Actions/Transport';
 import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
 
 /** TRANSPORT ITEM COMPONENT used in TransportScreen for tickets listing

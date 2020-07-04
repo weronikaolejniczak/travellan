@@ -11,8 +11,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 /* IMPORTS FROM WITHIN THE MODULE */
 import Card from '../UI/Card';
-import ReadMore from '../../Components/UI/ReadMore';
-import * as noteActions from '../../Stores/Actions/Note';
+import ReadMore from '../../Atoms/ReadMore';
+import * as noteActions from '../../../Stores/Actions/Note';
 import {noteItemStyle as styles} from './NoteItemStyle';
 
 /** NOTE ITEM COMPONENT */

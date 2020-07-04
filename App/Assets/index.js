@@ -1,3 +1,6 @@
-const logo = require('./Images/logo.png');
-
-export default logo;
+/**
+ * Images should be stored in the `App/Assets/Images` directory and referenced using variables defined here
+ */
+export default {
+  logo: require('App/Assets/Images/logo.png'),
+};

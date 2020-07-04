@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import Colors from '../../Constants/Colors';
+import Colors from '../../../Constants/Colors';
 
 const {height, width} = Dimensions.get('window');
 export const cardHeight = height * 0.83;

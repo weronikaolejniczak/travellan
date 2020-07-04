@@ -16,9 +16,9 @@ import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/UI/Card';
 import ReadMore from '../../Components/UI/ReadMore';
-import * as accommodationActions from '../../Stores/Actions/Accommodation';
+import * as accommodationActions from '../../../Stores/Actions/Accommodation';
 import {accommodationItemStyle as styles} from './AccommodationItemStyle';
-import Colors from '../../Constants/Colors';
+import Colors from '../../../Constants/Colors';
 
 const imageUrl =
   'https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80';
