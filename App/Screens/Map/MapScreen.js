@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -30,6 +31,7 @@ const MapScreen = (props) => {
   const [marker, setNewMarker] = useState(selectedTrip.region);
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
+  const [routeActive, setRouteActive] = useState(false);
   const [mapSearchActive, setMapSearchActive] = useState(false);
   const [placeToSearch, setPlaceToSearch] = useState('');
 
@@ -50,18 +52,11 @@ const MapScreen = (props) => {
     );
   }, [currentPosition]);
 
-  const searchActivityHandler = () => {
-    if (!mapSearchActive) {
-      setAddingMarkerActive(false);
-      setDeletingMarkerActive(false);
-    }
-    setMapSearchActive(!mapSearchActive);
-  };
-
   const addingActivityHandler = () => {
     if (!addingMarkerActive) {
       setDeletingMarkerActive(false);
       setMapSearchActive(false);
+      setRouteActive(false);
     }
     setAddingMarkerActive(!addingMarkerActive);
   };
@@ -70,8 +65,27 @@ const MapScreen = (props) => {
     if (!deletingMarkerActive) {
       setAddingMarkerActive(false);
       setMapSearchActive(false);
+      setRouteActive(false);
     }
     setDeletingMarkerActive(!deletingMarkerActive);
+  };
+
+  const routeActivityHandler = () => {
+    if (!routeActive) {
+      setAddingMarkerActive(false);
+      setDeletingMarkerActive(false);
+      setMapSearchActive(false);
+    }
+    setRouteActive(!routeActive);
+  };
+
+  const searchActivityHandler = () => {
+    if (!mapSearchActive) {
+      setAddingMarkerActive(false);
+      setDeletingMarkerActive(false);
+      setRouteActive(false);
+    }
+    setMapSearchActive(!mapSearchActive);
   };
 
   const getMarkerCoords = (coords) => {
@@ -123,11 +137,16 @@ const MapScreen = (props) => {
             </TouchableOpacity>
           </View>
           {/* SEE A ROUTE BETWEEN TWO MARKERS */}
-          {/* <View style={{}}>
-            <TouchableOpacity styles={styles.button}>
+          <View
+            style={{
+              backgroundColor: routeActive ? Colors.background : Colors.cards,
+            }}>
+            <TouchableOpacity
+              styles={styles.button}
+              onPress={routeActivityHandler}>
               <Icon name="map-marker-path" style={styles.icon} />
             </TouchableOpacity>
-          </View>*/}
+          </View>
           {/* SEARCH FOR PLACE */}
           <View
             style={{
