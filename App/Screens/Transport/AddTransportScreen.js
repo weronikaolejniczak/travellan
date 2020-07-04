@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import TransportStage from '../../Models/TransportStage';
 import * as transportActions from '../../Stores/Actions/Transport';
-import Card from '../../Components/UI/Card';
+import Card from '../../Components/Atoms/Card';
 import {addTransportScreenStyle as styles} from './AddTransportScreenStyle';
 import Colors from '../../Constants/Colors';
 

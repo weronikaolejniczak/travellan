@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
-import Input from '../../Components/UI/Input';
+import Input from '../../Components/Specific/Auth/Input';
 import Colors from '../../Constants/Colors';
 import * as authActions from '../../Stores/Actions/Auth';
 import {AuthScreenStyle as styles} from './AuthScreenStyle';

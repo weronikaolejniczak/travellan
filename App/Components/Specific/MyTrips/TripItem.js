@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 /** IMPORTS FROM WITHIN THE MODULE */
-import Card from '../../Components/UI/Card';
+import Card from '../../../Components/Atoms/Card';
 import {tripItemStyle as styles} from './TripItemStyle';
 
 /** TRIP ITEM COMPONENT used in TripsOverviewScreen for trips listing */

@@ -13,10 +13,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import HeaderButton from '../../Components/UI/HeaderButton';
-import AccommodationItem from '../../Components/Accommodation/AccommodationItem';
+import HeaderButton from '../../Components/Atoms/HeaderButton';
+import AccommodationItem from '../../Components/Specific/Accommodation/AccommodationItem';
 import * as accommodationActions from '../../Stores/Actions/Accommodation';
-import {cardWidth} from '../../Components/Accommodation/AccommodationItemStyle';
+import {cardWidth} from '../../Components/Specific/Accommodation/AccommodationItemStyle';
 import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
 import Colors from '../../Constants/Colors';
 

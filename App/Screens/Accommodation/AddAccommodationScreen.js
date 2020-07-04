@@ -10,7 +10,7 @@ import {
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import Card from '../../Components/UI/Card';
+import Card from '../../Components/Atoms/Card';
 import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
 import * as accommodationActions from '../../Stores/Actions/Accommodation';
 import {addAccommodationScreenStyle as styles} from './AddAccommodationScreenStyle';

@@ -12,8 +12,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import TripItem from '../../Components/MyTrips/TripItem';
-import HeaderButton from '../../Components/UI/HeaderButton';
+import TripItem from '../../Components/Specific/MyTrips/TripItem';
+import HeaderButton from '../../Components/Atoms/HeaderButton';
 import * as tripActions from '../../Stores/Actions/Trips';
 import {tripsOverviewScreenStyle as styles} from './TripsOverviewScreenStyle';
 import Colors from '../../Constants/Colors';

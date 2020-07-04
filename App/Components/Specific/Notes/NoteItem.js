@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /* IMPORTS FROM WITHIN THE MODULE */
-import Card from '../UI/Card';
+import Card from '../../Atoms/Card';
 import ReadMore from '../../Atoms/ReadMore';
 import * as noteActions from '../../../Stores/Actions/Note';
 import {noteItemStyle as styles} from './NoteItemStyle';

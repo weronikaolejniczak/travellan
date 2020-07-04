@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -14,8 +14,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
-import Card from '../../Components/UI/Card';
-import ReadMore from '../../Components/UI/ReadMore';
+import Card from '../../../Components/Atoms/Card';
+import ReadMore from '../../../Components/Atoms/ReadMore';
 import * as accommodationActions from '../../../Stores/Actions/Accommodation';
 import {accommodationItemStyle as styles} from './AccommodationItemStyle';
 import Colors from '../../../Constants/Colors';

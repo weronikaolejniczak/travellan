@@ -3,7 +3,7 @@ import {View, Text, Alert, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {transportItemStyle as styles, cardHeight} from './TransportItemStyle';
-import Colors from '../../Constants/Colors';
+import Colors from '../../../Constants/Colors';
 
 /** TRANSPORT STAGE COMPONENT */
 const TransportStage = (props) => {

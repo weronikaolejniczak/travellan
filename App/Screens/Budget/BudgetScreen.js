@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
-import Card from '../../Components/UI/Card';
+import Card from '../../Components/Atoms/Card';
 import {addToBudget, subtractFromBudget} from '../../Stores/Actions/Budget';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 

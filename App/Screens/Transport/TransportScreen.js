@@ -13,10 +13,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
-import HeaderButton from '../../Components/UI/HeaderButton';
-import TransportItem from '../../Components/Transport/TransportItem';
+import HeaderButton from '../../Components/Atoms/HeaderButton';
+import TransportItem from '../../Components/Specific/Transport/TransportItem';
 import * as transportActions from '../../Stores/Actions/Transport';
-import {cardWidth} from '../../Components/Transport/TransportItemStyle';
+import {cardWidth} from '../../Components/Specific/Transport/TransportItemStyle';
 import {transportScreenStyle as styles} from './TransportScreenStyle';
 import Colors from '../../Constants/Colors';
 
