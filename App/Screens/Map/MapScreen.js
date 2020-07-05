@@ -111,6 +111,11 @@ const MapScreen = (props) => {
         initialRegion={extractRegion()}
         showsUserLocation={true}
         showsMyLocationButton={true}
+        loadingEnabled={true}
+        loadingIndicatorColor={Colors.primary}
+        loadingBackgroundColor={Colors.background}
+        onPoiClick={(event) => console.log(event.nativeEvent)} // later used for showing more info
+        tintColor={Colors.primary}
         onPress={(event) => addingMarkerActive && getMarkerDetails(event)}>
         {markers.map(
           (marker) =>
@@ -122,6 +127,7 @@ const MapScreen = (props) => {
                 }}
                 title={marker.title}
                 description={marker.description}
+                pinColor={Colors.primary}
               />
             ),
         )}
