@@ -91,10 +91,14 @@ const MapScreen = (props) => {
   };
 
   const getMarkerDetails = (coords) => {
-    const title = markerTitle;
-    const {latitude, longitude} = coords.nativeEvent.coordinate;
-
-    setMarkers([...markers, {title, latitude, longitude}]);
+    if (markerTitle !== '') {
+      const title = markerTitle;
+      const {latitude, longitude} = coords.nativeEvent.coordinate;
+      setMarkers([...markers, {title, latitude, longitude}]);
+      setMarkerTitle('');
+    } else {
+      console.log('enter title!'); // refactor error to show in UI
+    }
   };
 
   return (
