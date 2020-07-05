@@ -1,8 +1,9 @@
 class POI {
-  constructor(id, title, coordinates) {
-    this.id = id;
+  constructor(title, latitude, longitude) {
+    this.id = new Date.now().toString();
     this.title = title;
-    this.coordinates = coordinates;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
 

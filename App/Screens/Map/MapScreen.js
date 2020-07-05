@@ -34,6 +34,8 @@ const MapScreen = (props) => {
   const [routeActive, setRouteActive] = useState(false);
   const [mapSearchActive, setMapSearchActive] = useState(false);
   const [placeToSearch, setPlaceToSearch] = useState('');
+  // temporary
+  const [markerTitle, setMarkerTitle] = useState('');
 
   /** HANDLERS */
   useEffect(() => {
@@ -89,10 +91,10 @@ const MapScreen = (props) => {
   };
 
   const getMarkerDetails = (coords) => {
-    //const id = new Date.now().toString();
-    const {longitude, latitude} = coords.nativeEvent.coordinate;
-    const title = '';
-    setMarkers([...markers, {title, longitude, latitude}]);
+    const title = markerTitle;
+    const {latitude, longitude} = coords.nativeEvent.coordinate;
+
+    setMarkers([...markers, {title, latitude, longitude}]);
   };
 
   return (
@@ -172,10 +174,11 @@ const MapScreen = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        {/** SEARCH BAR */}
+        {/** USER INPUT */}
         <View style={{alignItems: 'center'}}>
+          {/* SEARCH BAR: render when mapSearchActive is true */}
           {mapSearchActive && (
-            <View style={styles.searchBar}>
+            <View style={styles.inputContainer}>
               <TextInput
                 placeholder="Address or name of place"
                 placeholderTextColor={'grey'}
@@ -188,6 +191,18 @@ const MapScreen = (props) => {
                   <MaterialIcon name="search" style={styles.icon} />
                 </TouchableOpacity>
               </View>
+            </View>
+          )}
+          {/* TITLE: render when addingMarkerActive is true */}
+          {addingMarkerActive && (
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Add title"
+                placeholderTextColor={'grey'}
+                style={styles.input}
+                onChangeText={(text) => setMarkerTitle(text)}
+                value={markerTitle}
+              />
             </View>
           )}
         </View>
@@ -217,7 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  searchBar: {
+  inputContainer: {
     width: '100%',
     justifyContent: 'center',
     backgroundColor: Colors.cards,
