@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, ScrollView, Text, ActivityIndicator} from 'react-native';
+import {Button, View, ScrollView, Text, ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {fetchWeather} from '../../Services/WeatherService';
@@ -16,48 +16,24 @@ const WeatherScreen = (props) => {
   const latitude = region.latitude;
   const longitude = region.longitude;
 
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
-  const [currentWeather, setCurrentWeather] = useState();
-  const [dailyWeather, setDailyWeather] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  /** HANDLERS */
-  const loadWeather = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await fetchWeather(latitude, longitude).then((result) => {
-        setCurrentWeather(result.current);
-        setDailyWeather(result.daily);
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-    setIsLoading(false);
-  }, [latitude, longitude]);
-
-  useEffect(() => {
-    !isLoaded &&
-      loadWeather().then(() => {
-        setIsLoading(false);
-        setIsLoaded(true);
-      });
-  }, [isLoaded, loadWeather]);
-
-  if (isLoading) {
-    return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
-        <ActivityIndicator size="large" color={Colors.primary} />
-      </View>
-    );
+  const [info,setInfo]= useState({
+    name: "loading",
+    temp: "loading",
+    humidity: "loading",
+    desc: "loading",
+    icon: "loading",
+  })
+  
+  const getWeather = ()=>{
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&APPID=2cc313a48db97496e06a2253be1b2caf`)
+    .then(data=>data.json())
+    .then(results=>{
+      console.log(results)
+    })
   }
-
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Text style={styles.text}>
-        {isLoaded && new Date(currentWeather.dt).toTimeString()}
-        {isLoaded && new Date(dailyWeather[0].dt).toTimeString()}
-      </Text>
+      <Button title="test" onPress={getWeather()}/>
     </ScrollView>
   );
 };
