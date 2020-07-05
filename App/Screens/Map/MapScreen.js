@@ -88,10 +88,11 @@ const MapScreen = (props) => {
     setMapSearchActive(!mapSearchActive);
   };
 
-  const getMarkerCoords = (coords) => {
+  const getMarkerDetails = (coords) => {
+    const id = new Date.now().toString();
     const {longitude, latitude} = coords.nativeEvent.coordinate;
     const title = '';
-    setMarkers([...markers, {title, longitude, latitude}]);
+    setMarkers([...markers, {id, title, longitude, latitude}]);
   };
 
   return (
@@ -103,7 +104,7 @@ const MapScreen = (props) => {
         initialRegion={extractRegion()}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        onPress={(event) => addingMarkerActive && getMarkerCoords(event)}>
+        onPress={(event) => addingMarkerActive && getMarkerDetails(event)}>
         {markers.map(
           (marker) =>
             markers && (
