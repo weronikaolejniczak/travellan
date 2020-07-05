@@ -89,10 +89,10 @@ const MapScreen = (props) => {
   };
 
   const getMarkerDetails = (coords) => {
-    const id = new Date.now().toString();
+    //const id = new Date.now().toString();
     const {longitude, latitude} = coords.nativeEvent.coordinate;
     const title = '';
-    setMarkers([...markers, {id, title, longitude, latitude}]);
+    setMarkers([...markers, {title, longitude, latitude}]);
   };
 
   return (
