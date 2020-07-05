@@ -103,6 +103,7 @@ const MapScreen = (props) => {
 
   return (
     <View style={styles.flex}>
+      {/* DYNAMIC MAP VIEW */}
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.flex}
@@ -125,6 +126,7 @@ const MapScreen = (props) => {
             ),
         )}
       </MapView>
+      {/* INTERACTIVE OVERLAY */}
       <View style={styles.overlay}>
         <View style={styles.actionBar}>
           {/* ADD MARKER */}
