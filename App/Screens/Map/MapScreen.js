@@ -28,7 +28,7 @@ const MapScreen = (props) => {
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
-  const [marker, setNewMarker] = useState(selectedTrip.region);
+  const [markers, setMarkers] = useState([]);
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
   const [routeActive, setRouteActive] = useState(false);
@@ -90,11 +90,8 @@ const MapScreen = (props) => {
 
   const getMarkerCoords = (coords) => {
     const {longitude, latitude} = coords.nativeEvent.coordinate;
-    setNewMarker({
-      ...marker,
-      longitude,
-      latitude,
-    });
+    const title = '';
+    setMarkers([...markers, {title, longitude, latitude}]);
   };
 
   return (
@@ -106,8 +103,21 @@ const MapScreen = (props) => {
         initialRegion={extractRegion()}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        onPress={(event) => getMarkerCoords(event)}
-      />
+        onPress={(event) => addingMarkerActive && getMarkerCoords(event)}>
+        {markers.map(
+          (marker) =>
+            markers && (
+              <MapView.Marker
+                coordinate={{
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                }}
+                title={marker.title}
+                description={marker.description}
+              />
+            ),
+        )}
+      </MapView>
       <View style={styles.overlay}>
         <View style={styles.actionBar}>
           {/* ADD MARKER */}
