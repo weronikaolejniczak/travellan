@@ -41,15 +41,30 @@ const BudgetScreen = (props) => {
       {/* CURRENCY OPERATIONS AND HISTORY */}
       {selectedCurrency && (
         <View style={styles.detailsContainer}>
-          <Card style={{marginTop: '5%', padding: 15}}>
-            <Text style={styles.text}>{selectedCurrency.value}</Text>
+          {/* AMOUNT OF CURRENCY */}
+          <Card style={{alignItems: 'center', padding: 15}}>
+            <Text
+              style={[
+                styles.label,
+                selectedCurrency.value < 0 ? styles.negative : styles.positive,
+              ]}>
+              {selectedCurrency.value}
+            </Text>
           </Card>
-          <View style={{marginTop: '5%'}}>
+          {/* OPERATIONS */}
+          <View style={{marginTop: '10%'}}>
+            <Text style={[styles.text, styles.label]}>Operations</Text>
+          </View>
+          {/* HISTORY */}
+          <View style={{marginTop: '10%'}}>
             <Text style={[styles.text, styles.label]}>History</Text>
             {selectedCurrency.history.map((item) => (
               <Card style={{marginTop: '5%', padding: 15}}>
-                <View style={styles.justifyRow}>
-                  <Text style={styles.text}>{item.value}</Text>
+                <View style={[styles.justifyRow, styles.spaceBetween]}>
+                  <Text
+                    style={item.value < 0 ? styles.negative : styles.positive}>
+                    {item.value}
+                  </Text>
                   <Text style={styles.text}>{item.title}</Text>
                 </View>
               </Card>

@@ -21,33 +21,27 @@ export const budgetScreenStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 22,
   },
-  currencyHolder: {},
-  addIcon: {
-    fontSize: 27,
-    color: Colors.green,
-  },
-  removeIcon: {
-    fontSize: 27,
-    color: Colors.error,
-  },
   label: {
     fontSize: 22,
-  },
-  text: {
-    color: Colors.text,
   },
   icon: {
     fontSize: 27,
   },
-  negativeBudget: {
-    fontSize: 27,
+  text: {
+    color: Colors.text,
+  },
+  negative: {
+    fontWeight: 'bold',
     color: Colors.error,
   },
-  positiveBudget: {
-    fontSize: 27,
+  positive: {
+    fontWeight: 'bold',
     color: Colors.green,
   },
   justifyRow: {
     flexDirection: 'row',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
   },
 });
