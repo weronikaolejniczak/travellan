@@ -1,7 +1,5 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Colors from '../../Constants/Colors';
-
-const {height, width} = Dimensions.get('window');
 
 export const budgetScreenStyle = StyleSheet.create({
   contentContainer: {
@@ -14,7 +12,12 @@ export const budgetScreenStyle = StyleSheet.create({
   detailsContainer: {
     paddingHorizontal: '10%',
   },
-  currency: {
+  currencyActive: {
+    color: Colors.primary,
+    fontSize: 22,
+  },
+  currencyNonactive: {
+    color: 'grey',
     fontSize: 22,
   },
   addIcon: {

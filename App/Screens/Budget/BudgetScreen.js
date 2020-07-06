@@ -19,8 +19,15 @@ const BudgetScreen = (props) => {
           horizontal
           data={activeCurrencies}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => setSelectedCurrency(item)}>
-              <Text style={[styles.currency, {color: selectedCurrency.currency === item.currency ? Colors.primary : 'grey'}]}>
+            <TouchableOpacity
+              style={styles.currencyHolder}
+              onPress={() => setSelectedCurrency(item)}>
+              <Text
+                style={
+                  selectedCurrency.currency === item.currency
+                    ? styles.currencyActive
+                    : styles.currencyNonactive
+                }>
                 {item.currency}
               </Text>
             </TouchableOpacity>
