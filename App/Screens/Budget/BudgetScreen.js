@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, ScrollView, Text, TouchableOpacity, FlatList} from 'react-native';
-//import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
-//import Card from '../../Components/Atoms/Card';
+import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 import Colors from '../../Constants/Colors';
 import BUDGET from '../../Data/DummyBudget';
@@ -18,6 +18,9 @@ const BudgetScreen = (props) => {
         <FlatList
           horizontal
           data={activeCurrencies}
+          ItemSeparatorComponent={() => (
+            <Icon style={[styles.text, styles.icon]} name="power-on" />
+          )}
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.currencyHolder}
@@ -38,14 +41,20 @@ const BudgetScreen = (props) => {
       {/* CURRENCY OPERATIONS AND HISTORY */}
       {selectedCurrency && (
         <View style={styles.detailsContainer}>
-          <Text style={styles.text}>{selectedCurrency.value}</Text>
-          <Text style={styles.text}>{selectedCurrency.currency}</Text>
-          {selectedCurrency.history.map((item) => (
-            <View style={styles.justifyRow}>
-              <Text style={styles.text}>Title: {item.title}</Text>
-              <Text style={styles.text}>Value: {item.value}</Text>
-            </View>
-          ))}
+          <Card style={{marginTop: '5%', padding: 15}}>
+            <Text style={styles.text}>{selectedCurrency.value}</Text>
+          </Card>
+          <View style={{marginTop: '5%'}}>
+            <Text style={[styles.text, styles.label]}>History</Text>
+            {selectedCurrency.history.map((item) => (
+              <Card style={{marginTop: '5%', padding: 15}}>
+                <View style={styles.justifyRow}>
+                  <Text style={styles.text}>{item.value}</Text>
+                  <Text style={styles.text}>{item.title}</Text>
+                </View>
+              </Card>
+            ))}
+          </View>
         </View>
       )}
     </ScrollView>

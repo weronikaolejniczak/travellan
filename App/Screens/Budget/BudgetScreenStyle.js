@@ -7,6 +7,7 @@ export const budgetScreenStyle = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   currenciesContainer: {
+    padding: '5%',
     alignItems: 'center',
   },
   detailsContainer: {
@@ -20,6 +21,7 @@ export const budgetScreenStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 22,
   },
+  currencyHolder: {},
   addIcon: {
     fontSize: 27,
     color: Colors.green,
@@ -28,8 +30,14 @@ export const budgetScreenStyle = StyleSheet.create({
     fontSize: 27,
     color: Colors.error,
   },
+  label: {
+    fontSize: 22,
+  },
   text: {
     color: Colors.text,
+  },
+  icon: {
+    fontSize: 27,
   },
   negativeBudget: {
     fontSize: 27,
