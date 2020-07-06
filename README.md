@@ -1,6 +1,6 @@
 # Travellan Project
 ## Overview
-Travellan aims to create an automatized solution for trip planning on mobile devices.
+Travellan aims to create a semi-automatized solution for trip planning on mobile devices.
 
 ## Collaborators
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
