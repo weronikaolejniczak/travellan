@@ -8,27 +8,16 @@ export const budgetScreenStyle = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  label: {
-    marginRight: '10%',
-    marginLeft: '10%',
-    color: Colors.text,
-    fontSize: 20,
-    fontWeight: 'bold',
+  currenciesContainer: {
+    alignItems: 'center',
   },
-  input: {
-    color: Colors.text,
-    fontSize: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-    marginVertical: 2,
-    marginHorizontal: 2,
-    width: '55%',
-    marginLeft: '10%',
+  detailsContainer: {
+    paddingHorizontal: '10%',
+  },
+  currency: {
+    fontSize: 22,
   },
   addIcon: {
-    paddingHorizontal: '5%',
     fontSize: 27,
     color: Colors.green,
   },
@@ -38,13 +27,6 @@ export const budgetScreenStyle = StyleSheet.create({
   },
   text: {
     color: Colors.text,
-  },
-  budgetHolder: {
-    margin: '10%',
-  },
-  budgetCard: {
-    paddingHorizontal: width * 0.01,
-    paddingVertical: height * 0.01,
   },
   negativeBudget: {
     fontSize: 27,
@@ -56,6 +38,5 @@ export const budgetScreenStyle = StyleSheet.create({
   },
   justifyRow: {
     flexDirection: 'row',
-    alignItems: 'center',
   },
 });

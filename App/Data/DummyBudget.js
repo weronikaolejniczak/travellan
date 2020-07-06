@@ -12,7 +12,10 @@ import Budget from '../Models/BudgetModel';
  */
 const BUDGET = [
   // currency 1
-  new Budget(1, 2500, 'PLN', []),
+  new Budget(1, 2500, 'PLN', [
+    {id: 1, title: 'Shoes', value: '-100'},
+    {id: 2, title: 'Additional funds', value: '250'},
+  ]),
   // currency 2
   new Budget(2, 500, 'EUR', []),
 ];
