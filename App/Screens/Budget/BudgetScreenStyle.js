@@ -21,6 +21,14 @@ export const budgetScreenStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 22,
   },
+  valueCard: {
+    alignItems: 'center',
+    padding: 15,
+  },
+  operationCard: {
+    marginTop: '4%',
+    padding: '4%',
+  },
   input: {
     fontSize: 22,
     color: Colors.text,
@@ -30,6 +38,12 @@ export const budgetScreenStyle = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 2,
     marginHorizontal: 2,
+  },
+  actions: {
+    position: 'absolute',
+    right: 0,
+    justifyContent: 'center',
+    marginTop: '2%',
   },
   label: {
     fontSize: 22,
@@ -53,5 +67,14 @@ export const budgetScreenStyle = StyleSheet.create({
   },
   spaceBetween: {
     justifyContent: 'space-between',
+  },
+  bigMarginVertical: {
+    marginVertical: '10%',
+  },
+  smallMarginTop: {
+    marginTop: '2%',
+  },
+  bigMarginTop: {
+    marginTop: '10%',
   },
 });

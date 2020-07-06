@@ -77,7 +77,7 @@ const BudgetScreen = (props) => {
       {selectedCurrency && (
         <View style={styles.detailsContainer}>
           {/* AMOUNT OF CURRENCY */}
-          <Card style={{alignItems: 'center', padding: 15}}>
+          <Card style={styles.valueCard}>
             <Text
               style={[
                 styles.label,
@@ -91,10 +91,10 @@ const BudgetScreen = (props) => {
       {selectedCurrency && (
         <ScrollView contentContainerStyle={styles.detailsContainer}>
           {/* OPERATIONS */}
-          <View style={{marginTop: '10%'}}>
+          <View style={styles.bigMarginTop}>
             <Text style={[styles.text, styles.label]}>Operations</Text>
             {/* TITLE INPUT */}
-            <View style={{marginTop: '2%'}}>
+            <View style={styles.smallMarginTop}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter title"
@@ -104,7 +104,7 @@ const BudgetScreen = (props) => {
               />
             </View>
             {/* AMOUNT INPUT */}
-            <View style={{marginTop: '2%'}}>
+            <View style={styles.smallMarginTop}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter amount"
@@ -113,16 +113,7 @@ const BudgetScreen = (props) => {
                 onChangeText={(number) => setAmount(number)}
                 keyboardType={'numeric'}
               />
-              <View
-                style={[
-                  styles.justifyRow,
-                  {
-                    position: 'absolute', 
-                    right: 0, 
-                    justifyContent: 'center', 
-                    marginTop: '2%',
-                  },
-                ]}>
+              <View style={[styles.justifyRow, styles.actions]}>
                 {/* PLUS OPERATION */}
                 <TouchableOpacity onPress={() => addToAmount()}>
                   <Icon style={[styles.icon, styles.positive]} name="plus" />
@@ -135,13 +126,13 @@ const BudgetScreen = (props) => {
             </View>
           </View>
           {/* HISTORY */}
-          <View style={{marginVertical: '10%'}}>
+          <View style={styles.bigMarginVertical}>
             <Text style={[styles.text, styles.label]}>History</Text>
             {selectedCurrency.history
               .slice(0)
               .reverse()
               .map((item) => (
-                <Card style={{marginTop: '5%', padding: 15}}>
+                <Card style={styles.operationCard}>
                   <View style={[styles.justifyRow, styles.spaceBetween]}>
                     <Text
                       style={
