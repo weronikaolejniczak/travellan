@@ -15,9 +15,31 @@ import BUDGET from '../../Data/DummyBudget';
 
 const BudgetScreen = (props) => {
   const activeCurrencies = BUDGET;
+
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [selectedCurrency, setSelectedCurrency] = useState(activeCurrencies[0]);
+  const [displayableValue, setDisplayableValue] = useState(
+    selectedCurrency.value,
+  );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+
+  /** HANDLERS */
+  const clear = () => {
+    setTitle('');
+    setAmount('');
+  };
+
+  const addToAmount = () => {
+    console.log('title ' + title);
+    console.log('add ' + Math.abs(amount));
+    clear();
+  };
+  const subtractFromAmount = () => {
+    console.log('title ' + title);
+    console.log('subtract ' + Math.abs(amount));
+    clear();
+  };
 
   return (
     <View style={styles.contentContainer}>
@@ -34,6 +56,7 @@ const BudgetScreen = (props) => {
               style={styles.currencyHolder}
               onPress={() => {
                 setSelectedCurrency(item);
+                setDisplayableValue(item.value);
                 setTitle('');
                 setAmount('');
               }}>
@@ -58,9 +81,9 @@ const BudgetScreen = (props) => {
             <Text
               style={[
                 styles.label,
-                selectedCurrency.value < 0 ? styles.negative : styles.positive,
+                displayableValue < 0 ? styles.negative : styles.positive,
               ]}>
-              {selectedCurrency.value}
+              {displayableValue}
             </Text>
           </Card>
         </View>
@@ -93,14 +116,19 @@ const BudgetScreen = (props) => {
               <View
                 style={[
                   styles.justifyRow,
-                  {position: 'absolute', right: 0, justifyContent: 'center', marginTop: '2%'}
+                  {
+                    position: 'absolute', 
+                    right: 0, 
+                    justifyContent: 'center', 
+                    marginTop: '2%',
+                  },
                 ]}>
                 {/* PLUS OPERATION */}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => addToAmount()}>
                   <Icon style={[styles.icon, styles.positive]} name="plus" />
                 </TouchableOpacity>
                 {/* MINUS OPERATION */}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => subtractFromAmount()}>
                   <Icon style={[styles.icon, styles.negative]} name="minus" />
                 </TouchableOpacity>
               </View>
@@ -109,17 +137,22 @@ const BudgetScreen = (props) => {
           {/* HISTORY */}
           <View style={{marginVertical: '10%'}}>
             <Text style={[styles.text, styles.label]}>History</Text>
-            {selectedCurrency.history.map((item) => (
-              <Card style={{marginTop: '5%', padding: 15}}>
-                <View style={[styles.justifyRow, styles.spaceBetween]}>
-                  <Text
-                    style={item.value < 0 ? styles.negative : styles.positive}>
-                    {item.value}
-                  </Text>
-                  <Text style={styles.text}>{item.title}</Text>
-                </View>
-              </Card>
-            ))}
+            {selectedCurrency.history
+              .slice(0)
+              .reverse()
+              .map((item) => (
+                <Card style={{marginTop: '5%', padding: 15}}>
+                  <View style={[styles.justifyRow, styles.spaceBetween]}>
+                    <Text
+                      style={
+                        item.value < 0 ? styles.negative : styles.positive
+                      }>
+                      {item.value}
+                    </Text>
+                    <Text style={styles.text}>{item.title}</Text>
+                  </View>
+                </Card>
+              ))}
           </View>
         </ScrollView>
       )}
