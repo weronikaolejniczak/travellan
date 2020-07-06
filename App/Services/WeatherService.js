@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {WEATHER_ID} from 'react-native-dotenv'
+import {WEATHER_ID} from 'react-native-dotenv';
 
 const client_id = WEATHER_ID; // only for development
 

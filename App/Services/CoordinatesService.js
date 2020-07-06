@@ -1,6 +1,5 @@
 import axios from 'axios';
-import {COORDS_API} from 'react-native-dotenv'
-
+import {COORDS_API} from 'react-native-dotenv';
 
 const api_key = COORDS_API;
 /* const placeholderCoords = {

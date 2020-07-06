@@ -1,7 +1,7 @@
 export const SIGNUP = 'SIGNUP';
 export const LOGIN = 'LOGIN';
 
-import {MAIN_FIREBASE_API} from 'react-native-dotenv'
+import {MAIN_FIREBASE_API} from 'react-native-dotenv';
 
 const API_KEY = MAIN_FIREBASE_API;
 export const signup = (email, password) => {

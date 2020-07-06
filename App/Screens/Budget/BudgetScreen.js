@@ -1,18 +1,26 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Text, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
-import Colors from '../../Constants/Colors';
 import BUDGET from '../../Data/DummyBudget';
 
 const BudgetScreen = (props) => {
   const activeCurrencies = BUDGET;
   const [selectedCurrency, setSelectedCurrency] = useState(activeCurrencies[0]);
+  const [title, setTitle] = useState('');
+  const [amount, setAmount] = useState('');
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <View style={styles.contentContainer}>
       {/* HORIZONTAL FLATLIST OF CURRENCIES */}
       <View style={styles.currenciesContainer}>
         <FlatList
@@ -24,7 +32,11 @@ const BudgetScreen = (props) => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.currencyHolder}
-              onPress={() => setSelectedCurrency(item)}>
+              onPress={() => {
+                setSelectedCurrency(item);
+                setTitle('');
+                setAmount('');
+              }}>
               <Text
                 style={
                   selectedCurrency.currency === item.currency
@@ -51,12 +63,51 @@ const BudgetScreen = (props) => {
               {selectedCurrency.value}
             </Text>
           </Card>
+        </View>
+      )}
+      {selectedCurrency && (
+        <ScrollView contentContainerStyle={styles.detailsContainer}>
           {/* OPERATIONS */}
           <View style={{marginTop: '10%'}}>
             <Text style={[styles.text, styles.label]}>Operations</Text>
+            {/* TITLE INPUT */}
+            <View style={{marginTop: '2%'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter title"
+                placeholderTextColor="grey"
+                value={title}
+                onChangeText={(text) => setTitle(text)}
+              />
+            </View>
+            {/* AMOUNT INPUT */}
+            <View style={{marginTop: '2%'}}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter amount"
+                placeholderTextColor="grey"
+                value={amount}
+                onChangeText={(number) => setAmount(number)}
+                keyboardType={'numeric'}
+              />
+              <View
+                style={[
+                  styles.justifyRow,
+                  {position: 'absolute', right: 0, justifyContent: 'center', marginTop: '2%'}
+                ]}>
+                {/* PLUS OPERATION */}
+                <TouchableOpacity>
+                  <Icon style={[styles.icon, styles.positive]} name="plus" />
+                </TouchableOpacity>
+                {/* MINUS OPERATION */}
+                <TouchableOpacity>
+                  <Icon style={[styles.icon, styles.negative]} name="minus" />
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
           {/* HISTORY */}
-          <View style={{marginTop: '10%'}}>
+          <View style={{marginVertical: '10%'}}>
             <Text style={[styles.text, styles.label]}>History</Text>
             {selectedCurrency.history.map((item) => (
               <Card style={{marginTop: '5%', padding: 15}}>
@@ -70,9 +121,9 @@ const BudgetScreen = (props) => {
               </Card>
             ))}
           </View>
-        </View>
+        </ScrollView>
       )}
-    </ScrollView>
+    </View>
   );
 };
 

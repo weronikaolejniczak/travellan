@@ -145,7 +145,6 @@ export const tripsScreenOptions = (navData) => {
           onPress={() => {
             navData.navigation.navigate('Create a trip');
           }}
-          
         />
       </HeaderButtons>
     ),

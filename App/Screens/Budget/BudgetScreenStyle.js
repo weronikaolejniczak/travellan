@@ -21,6 +21,16 @@ export const budgetScreenStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 22,
   },
+  input: {
+    fontSize: 22,
+    color: Colors.text,
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 1,
+    marginVertical: 2,
+    marginHorizontal: 2,
+  },
   label: {
     fontSize: 22,
   },
