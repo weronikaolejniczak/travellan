@@ -1,4 +1,4 @@
-const CURRENCIES = {
+export const CURRENCIES = {
   AED: 'UAE Dirham',
   AFN: 'Afghani',
   ALL: 'Lek',
@@ -162,5 +162,3 @@ const CURRENCIES = {
   ZMW: 'Zambian Kwacha',
   ZWL: 'Zimbabwe Dollar',
 };
-
-export default CURRENCIES;
