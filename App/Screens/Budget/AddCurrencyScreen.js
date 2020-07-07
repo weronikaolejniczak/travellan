@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, Text} from 'react-native';
 
-const AddNote = (props) => {
+const AddCurrency = (props) => {
   return (
     <ScrollView>
       <Text>Hey</Text>
@@ -9,4 +9,4 @@ const AddNote = (props) => {
   );
 };
 
-export default AddNote;
+export default AddCurrency;

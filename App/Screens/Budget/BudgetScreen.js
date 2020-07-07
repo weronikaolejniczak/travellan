@@ -6,9 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Platform,
 } from 'react-native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
+import HeaderButton from '../../Components/Atoms/HeaderButton';
 import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 import BUDGET from '../../Data/DummyBudget';
@@ -177,6 +180,25 @@ const BudgetScreen = (props) => {
       )}
     </View>
   );
+};
+
+export const budgetScreenOptions = (navData) => {
+  return {
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Create a currency card"
+          style={{marginRight: 3}}
+          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          onPress={() => {
+            navData.navigation.navigate('Add currency', {
+              tripId: navData.route.params.tripId,
+            });
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default BudgetScreen;
