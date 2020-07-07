@@ -28,6 +28,22 @@ export const AddCurrencyScreenStyles = StyleSheet.create({
     marginVertical: 2,
     marginHorizontal: 2,
   },
+  pickerContainer: {
+    alignItems: 'center',
+  },
+  picker: {
+    width: '100%',
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: Colors.primary,
+    marginTop: 15,
+    padding: 15,
+    alignItems: 'center',
+  },
+  pickerText: {
+    color: Colors.text,
+    fontSize: 20,
+  },
   button: {
     borderRadius: 10,
     backgroundColor: Colors.primary,
