@@ -33,8 +33,10 @@ const MapScreen = (props) => {
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
   const [routeActive, setRouteActive] = useState(false);
   const [mapSearchActive, setMapSearchActive] = useState(false);
+  const [showPlaceInfo, setShowPlaceInfo] = useState(false);
   const [placeToSearch, setPlaceToSearch] = useState('');
   // temporary
+  const [activeMarker, setActiveMarker] = useState();
   const [markerTitle, setMarkerTitle] = useState('');
 
   /** HANDLERS */
@@ -114,9 +116,11 @@ const MapScreen = (props) => {
         loadingEnabled={true}
         loadingIndicatorColor={Colors.primary}
         loadingBackgroundColor={Colors.background}
-        onPoiClick={(event) => console.log(event.nativeEvent)} // later used for showing more info
         tintColor={Colors.primary}
-        onPress={(event) => addingMarkerActive && getMarkerDetails(event)}>
+        onPoiClick={(event) => console.log(event.nativeEvent)} // later used for showing more info
+        onPress={(event) =>
+          addingMarkerActive ? getMarkerDetails(event) : setShowPlaceInfo(false)
+        }>
         {markers.map(
           (marker) =>
             markers && (
@@ -128,6 +132,11 @@ const MapScreen = (props) => {
                 title={marker.title}
                 description={marker.description}
                 pinColor={Colors.primary}
+                onPress={(event) =>
+                  !addingMarkerActive &&
+                  (setShowPlaceInfo(true),
+                  setActiveMarker(event._dispatchInstances.memoizedProps))
+                }
               />
             ),
         )}
@@ -219,6 +228,24 @@ const MapScreen = (props) => {
           )}
         </View>
       </View>
+      {/* SHOW PLACE INFO: render when showPlaceInfo is true */}
+      {showPlaceInfo && (
+        <View
+          style={{
+            width: '67%',
+            height: '20%',
+            position: 'absolute',
+            bottom: 0,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            alignSelf: 'center',
+            backgroundColor: Colors.background,
+          }}>
+          <View style={{padding: 10}}>
+            <Text style={{color: Colors.text}}>{activeMarker.title}</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };

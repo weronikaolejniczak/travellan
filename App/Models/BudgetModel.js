@@ -1,5 +1,6 @@
 class Budget {
-  constructor(value, currency, history) {
+  constructor(id, value, currency, history) {
+    this.id = id;
     this.value = value;
     this.currency = currency;
     this.history = history;

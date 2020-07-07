@@ -1,61 +1,80 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Colors from '../../Constants/Colors';
-
-const {height, width} = Dimensions.get('window');
 
 export const budgetScreenStyle = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: Colors.background,
   },
-  label: {
-    marginRight: '10%',
-    marginLeft: '10%',
-    color: Colors.text,
-    fontSize: 20,
-    fontWeight: 'bold',
+  currenciesContainer: {
+    padding: '5%',
+    alignItems: 'center',
+  },
+  detailsContainer: {
+    paddingHorizontal: '10%',
+  },
+  currencyActive: {
+    color: Colors.primary,
+    fontSize: 22,
+  },
+  currencyNonactive: {
+    color: 'grey',
+    fontSize: 22,
+  },
+  valueCard: {
+    alignItems: 'center',
+    padding: 15,
+  },
+  operationCard: {
+    marginTop: '4%',
+    padding: '4%',
   },
   input: {
+    fontSize: 22,
     color: Colors.text,
-    fontSize: 20,
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
     marginVertical: 2,
     marginHorizontal: 2,
-    width: '55%',
-    marginLeft: '10%',
   },
-  addIcon: {
-    paddingHorizontal: '5%',
-    fontSize: 27,
-    color: Colors.green,
+  actions: {
+    position: 'absolute',
+    right: 0,
+    justifyContent: 'center',
+    marginTop: '2%',
   },
-  removeIcon: {
+  label: {
+    fontSize: 22,
+  },
+  icon: {
     fontSize: 27,
-    color: Colors.error,
   },
   text: {
     color: Colors.text,
   },
-  budgetHolder: {
-    margin: '10%',
-  },
-  budgetCard: {
-    paddingHorizontal: width * 0.01,
-    paddingVertical: height * 0.01,
-  },
-  negativeBudget: {
-    fontSize: 27,
+  negative: {
+    fontWeight: 'bold',
     color: Colors.error,
   },
-  positiveBudget: {
-    fontSize: 27,
+  positive: {
+    fontWeight: 'bold',
     color: Colors.green,
   },
   justifyRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  bigMarginVertical: {
+    marginVertical: '10%',
+  },
+  smallMarginTop: {
+    marginTop: '2%',
+  },
+  bigMarginTop: {
+    marginTop: '10%',
   },
 });

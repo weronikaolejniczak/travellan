@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {UNSPLASH_ID} from 'react-native-dotenv'
+import {UNSPLASH_ID} from 'react-native-dotenv';
 const client_id = UNSPLASH_ID;
 const placeholderUrl =
   'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1866&q=80';
