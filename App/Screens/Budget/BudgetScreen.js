@@ -31,14 +31,22 @@ const BudgetScreen = (props) => {
   };
 
   const addToAmount = () => {
-    console.log('title ' + title);
-    console.log('add ' + Math.abs(amount));
-    clear();
+    if (title && amount) {
+      console.log('title ' + title);
+      console.log('add ' + Math.abs(amount));
+      clear();
+    } else {
+      console.log('enter title and amount');
+    }
   };
   const subtractFromAmount = () => {
-    console.log('title ' + title);
-    console.log('subtract ' + Math.abs(amount));
-    clear();
+    if (title && amount) {
+      console.log('title ' + title);
+      console.log('subtract ' + Math.abs(amount));
+      clear();
+    } else {
+      console.log('enter title and amount');
+    }
   };
 
   return (
