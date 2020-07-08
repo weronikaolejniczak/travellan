@@ -11,17 +11,12 @@ import {
 import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ReactNativeAlgoliaPlaces from 'react-native-algolia-places';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Budget from '../../Models/BudgetModel';
 import {createTrip} from '../../Stores/Actions/Trips';
 import {newTripScreenStyle as styles} from './NewTripScreenStyle';
 import Colors from '../../Constants/Colors';
-//auto completion vars
-import {ALGOLIA_APP_ID} from 'react-native-dotenv'
-import {ALGOLIA_APP_KEY} from 'react-native-dotenv'
-const appId = ALGOLIA_APP_ID;
-const appKey = ALGOLIA_APP_KEY;
+
 /** 'CREATE A NEW TRIP' SCREEN - here a user can input basic information to create a new trip
  * TODO:
  * refactor repeating elements into reusable components
@@ -68,7 +63,7 @@ const NewTripScreen = (props) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
     setStartDate(currentDate);
-    // set endDate to currentDate if it is earlier than the day
+    // set endDate to currentDate if it is earlier than the day 
     // selected for startDate
     currentDate > endDate ? setEndDate(currentDate) : '';
   };
@@ -164,13 +159,6 @@ const NewTripScreen = (props) => {
           placeholderTextColor="grey"
           value={destination}
           onChangeText={destinationChangeHandler}
-        />
-        <ReactNativeAlgoliaPlaces
-          appId={appId}
-          appKey={appKey}
-          itemList={(item, i, destination) => (
-            <Text key={i + 'item'}>item.locale_names[0]</Text>
-          )}
         />
         {!destinationIsValid && destinationSubmitted && (
           <View style={styles.errorContainer}>
