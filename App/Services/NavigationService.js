@@ -35,7 +35,10 @@ import MapScreen from '../Screens/Map/MapScreen';
 /** WEATHER SCREEN */
 import WeatherScreen from '../Screens/Weather/WeatherScreen';
 /** BUDGET SCREEN */
-import BudgetScreen from '../Screens/Budget/BudgetScreen';
+import BudgetScreen, {
+  budgetScreenOptions,
+} from '../Screens/Budget/BudgetScreen';
+import AddCurrency from '../Screens/Budget/AddCurrencyScreen';
 /** NOTES SCREENS */
 import NotesScreen, {notesScreenOptions} from '../Screens/Notes/NotesScreen';
 import AddNote from '../Screens/Notes/AddNoteScreen';
@@ -50,11 +53,13 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
+        {/* AUTHENTICATION */}
         <Stack.Screen
           name="AuthScreen"
           component={AuthScreen}
           options={authScreenOptions}
         />
+        {/* TRIP FLOW */}
         <Stack.Screen
           name="My trips"
           component={TripsOverviewScreen}
@@ -70,16 +75,14 @@ export default function Navigation() {
           component={TripDetailScreen}
           options={tripDetailScreenOptions}
         />
+        {/* TRANSPORT */}
         <Stack.Screen
           name="Transport"
           component={TransportScreen}
           options={transportScreenOptions}
         />
-        <Stack.Screen
-          name="Add transport"
-          component={AddTransportScreen}
-          //options={transportScreenOptions}
-        />
+        <Stack.Screen name="Add transport" component={AddTransportScreen} />
+        {/* ACCOMMODATION */}
         <Stack.Screen
           name="Housing"
           component={AccommodationScreen}
@@ -89,9 +92,18 @@ export default function Navigation() {
           name="Add accommodation"
           component={AddAccommodationScreen}
         />
+        {/* MAP */}
         <Stack.Screen name="Map" component={MapScreen} />
+        {/* WEATHER */}
         <Stack.Screen name="Weather" component={WeatherScreen} />
-        <Stack.Screen name="Budget" component={BudgetScreen} />
+        {/* BUDGET */}
+        <Stack.Screen
+          name="Budget"
+          component={BudgetScreen}
+          options={budgetScreenOptions}
+        />
+        <Stack.Screen name="Add currency" component={AddCurrency} />
+        {/* NOTES */}
         <Stack.Screen
           name="Notes"
           component={NotesScreen}
