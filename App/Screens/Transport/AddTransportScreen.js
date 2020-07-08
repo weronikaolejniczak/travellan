@@ -27,14 +27,10 @@ import Colors from '../../Constants/Colors';
 const AddTransportScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-
-  //temp
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
 );
-  const [isLoading, setIsLoading] = useState(false);
-
-
+  
   /** TYPE OF TICKET BOOLEAN VARIABLES */
   const [to, setToDestination] = useState(true);
   const [from, setFromDestination] = useState(false);
@@ -98,6 +94,9 @@ const AddTransportScreen = (props) => {
   const toggleModal = () => {
     setShowModal((previousState) => !previousState);
   };
+
+  // loading check
+  const [isLoading, setIsLoading] = useState(false);
 
   /** VALIDATION HANDLERS */
   let addressRegex = new RegExp('');
@@ -248,7 +247,7 @@ const AddTransportScreen = (props) => {
       });
     } else {
     }
-    setIsLoading(true);
+    setIsLoading(false);
   }, [stages, dispatch, tripId, to, from, props.navigation, selectedTrip.id]);
 
   return (

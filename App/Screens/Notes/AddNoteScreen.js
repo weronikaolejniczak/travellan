@@ -15,7 +15,6 @@ import Colors from '../../Constants/Colors';
 const AddNote = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  //temp
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
@@ -26,12 +25,13 @@ const AddNote = (props) => {
   const [titleIsValid, setTitleIsValid] = useState(false);
   const [titleSubmitted, setTitleSubmitted] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   // description
   const [description, setDescription] = useState('');
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
+
+  // loading check
+  const [isLoading, setIsLoading] = useState(false);
 
   /** HANDLERS */
   // validation handlers
@@ -49,17 +49,17 @@ const AddNote = (props) => {
 
   // submit handler
   const submitHandler = useCallback(async () => {
+    setIsLoading(true);
     if (!titleIsValid || !descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
     } else {
-      setIsLoading(true);
       await dispatch(noteActions.createNote(tripId, title, description));
       props.navigation.navigate('Notes', {
         tripId: selectedTrip.id,
       });
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [
     props.navigation,
     dispatch,
@@ -105,12 +105,12 @@ const AddNote = (props) => {
 
       {/* SUBMIT BUTTON */}
       <View style={{alignItems: 'center', margin: 20}}>
-      {isLoading ? (
+        {isLoading ? (
           <ActivityIndicator size="small" color={Colors.white} />
         ) : (
           <TouchableOpacity style={styles.button} onPress={submitHandler}>
             <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         )}
       </View>
     </ScrollView>

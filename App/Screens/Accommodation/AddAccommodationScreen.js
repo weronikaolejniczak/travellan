@@ -20,8 +20,6 @@ import Colors from '../../Constants/Colors';
 const AddAccommodationScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-
-  //temp
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
@@ -31,7 +29,6 @@ const AddAccommodationScreen = (props) => {
   const [housingName, setHousingName] = useState('');
   const [housingNameIsValid, setHousingNameIsValid] = useState(false);
   const [housingNameSubmitted, setHousingNameSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   // address
   const [housingAddress, setHousingAddress] = useState('');
@@ -62,6 +59,9 @@ const AddAccommodationScreen = (props) => {
 
   // reservation details
   const [reservationDetails, setReservationDetails] = useState('');
+
+  // loading check
+  const [isLoading, setIsLoading] = useState(false);
 
   /** HANDLERS */
   // housing name validation handler
