@@ -10,8 +10,9 @@ import {
   ScrollView,
   Modal,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {SinglePickerMaterialDialog} from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -26,6 +27,13 @@ import Colors from '../../Constants/Colors';
 const AddTransportScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
+
+  //temp
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   /** TYPE OF TICKET BOOLEAN VARIABLES */
   const [to, setToDestination] = useState(true);
@@ -229,13 +237,19 @@ const AddTransportScreen = (props) => {
     );
   };
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
+    setIsLoading(true);
     if (stages.length > 0) {
-      dispatch(transportActions.createTransport(tripId, to, from, stages));
-      props.navigation.goBack();
+      await dispatch(
+        transportActions.createTransport(tripId, to, from, stages),
+      );
+      props.navigation.navigate('Transport', {
+        tripId: selectedTrip.id,
+      });
     } else {
     }
-  }, [props.navigation, dispatch, tripId, to, from, stages]);
+    setIsLoading(true);
+  }, [stages, dispatch, tripId, to, from, props.navigation, selectedTrip.id]);
 
   return (
     <View style={styles.container}>
@@ -605,9 +619,13 @@ const AddTransportScreen = (props) => {
 
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
+      {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.white} />
+        ) : (
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
+        )}
       </View>
     </View>
   );

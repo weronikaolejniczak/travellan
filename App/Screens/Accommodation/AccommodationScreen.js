@@ -28,6 +28,7 @@ import Colors from '../../Constants/Colors';
 const AccommodationScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
+  
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
