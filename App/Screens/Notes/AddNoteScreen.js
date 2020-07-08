@@ -5,20 +5,28 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as noteActions from '../../Stores/Actions/Note';
 import {newNoteScreenStyle as styles} from './AddNoteScreenStyle';
+import Colors from '../../Constants/Colors';
 
 const AddNote = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
+  //temp
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   // title
   const [title, setTitle] = useState('');
   const [titleIsValid, setTitleIsValid] = useState(false);
   const [titleSubmitted, setTitleSubmitted] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // description
   const [description, setDescription] = useState('');
@@ -40,13 +48,17 @@ const AddNote = (props) => {
   };
 
   // submit handler
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     if (!titleIsValid || !descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
     } else {
-      dispatch(noteActions.createNote(tripId, title, description));
-      props.navigation.goBack();
+      setIsLoading(true);
+      await dispatch(noteActions.createNote(tripId, title, description));
+      props.navigation.navigate('Notes', {
+        tripId: selectedTrip.id,
+      });
+      setIsLoading(false);
     }
   }, [
     props.navigation,
@@ -93,9 +105,13 @@ const AddNote = (props) => {
 
       {/* SUBMIT BUTTON */}
       <View style={{alignItems: 'center', margin: 20}}>
-        <TouchableOpacity style={styles.button} onPress={submitHandler}>
-          <Text style={styles.buttonText}>Submit</Text>
+      {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.white} />
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={submitHandler}>
+            <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
