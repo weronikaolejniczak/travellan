@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import ReactNativeAlgoliaPlaces from 'react-native-algolia-places';
 import {useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Input from '../../Components/Specific/Auth/Input';
@@ -18,12 +17,6 @@ import * as authActions from '../../Stores/Actions/Auth';
 import {AuthScreenStyle as styles} from './AuthScreenStyle';
 //import logo from '../../Assets/index';
 //import {set} from 'react-native-reanimated';
-
-import {ALGOLIA_APP_ID} from 'react-native-dotenv';
-import {ALGOLIA_APP_KEY} from 'react-native-dotenv';
-
-const APP_ID = ALGOLIA_APP_ID;
-const APP_KEY = ALGOLIA_APP_KEY;
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -178,10 +171,6 @@ const AuthScreen = (props) => {
           </View>
         </ScrollView>
       </View>
-      <ReactNativeAlgoliaPlaces appId= {APP_ID} appKey = {APP_KEY}
-        itemList={(item, i, textSearch) =>
-            <Text key={i + "item"}>item.locale_names[0]</Text>
-            }/>
     </KeyboardAvoidingView>
   );
 };

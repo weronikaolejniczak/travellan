@@ -6,8 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../Components/Atoms/Card';
@@ -20,11 +21,17 @@ const AddAccommodationScreen = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
 
+  //temp
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   // housing name
   const [housingName, setHousingName] = useState('');
   const [housingNameIsValid, setHousingNameIsValid] = useState(false);
   const [housingNameSubmitted, setHousingNameSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // address
   const [housingAddress, setHousingAddress] = useState('');
@@ -90,7 +97,7 @@ const AddAccommodationScreen = (props) => {
   };
 
   // submit handler
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     if (
       !housingNameIsValid ||
       !housingAddressIsValid ||
@@ -102,7 +109,8 @@ const AddAccommodationScreen = (props) => {
       setDescriptionSubmitted(true);
       setHotelHoursSubmitted(true);
     } else {
-      dispatch(
+      setIsLoading(true);
+      await dispatch(
         accommodationActions.createReservation(
           tripId,
           housingName,
@@ -113,7 +121,10 @@ const AddAccommodationScreen = (props) => {
           reservationDetails,
         ),
       );
-      props.navigation.goBack();
+      props.navigation.navigate('Housing', {
+        tripId: selectedTrip.id,
+      });
+      setIsLoading(false);
     }
   }, [
     props.navigation,
@@ -239,9 +250,13 @@ const AddAccommodationScreen = (props) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={submitHandler}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+        {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.white} />
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={submitHandler}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
