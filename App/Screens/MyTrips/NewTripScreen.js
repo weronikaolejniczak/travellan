@@ -63,7 +63,7 @@ const NewTripScreen = (props) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
     setStartDate(currentDate);
-    // set endDate to currentDate if it is earlier than the day
+    // set endDate to currentDate if it is earlier than the day 
     // selected for startDate
     currentDate > endDate ? setEndDate(currentDate) : '';
   };

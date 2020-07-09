@@ -5,14 +5,19 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as noteActions from '../../Stores/Actions/Note';
 import {newNoteScreenStyle as styles} from './AddNoteScreenStyle';
+import Colors from '../../Constants/Colors';
 
 const AddNote = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   // title
@@ -24,6 +29,9 @@ const AddNote = (props) => {
   const [description, setDescription] = useState('');
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
+
+  // loading check
+  const [isLoading, setIsLoading] = useState(false);
 
   /** HANDLERS */
   // validation handlers
@@ -40,14 +48,18 @@ const AddNote = (props) => {
   };
 
   // submit handler
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
+    setIsLoading(true);
     if (!titleIsValid || !descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
     } else {
-      dispatch(noteActions.createNote(tripId, title, description));
-      props.navigation.goBack();
+      await dispatch(noteActions.createNote(tripId, title, description));
+      props.navigation.navigate('Notes', {
+        tripId: selectedTrip.id,
+      });
     }
+    setIsLoading(false);
   }, [
     props.navigation,
     dispatch,
@@ -93,9 +105,13 @@ const AddNote = (props) => {
 
       {/* SUBMIT BUTTON */}
       <View style={{alignItems: 'center', margin: 20}}>
-        <TouchableOpacity style={styles.button} onPress={submitHandler}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+        {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.white} />
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={submitHandler}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
