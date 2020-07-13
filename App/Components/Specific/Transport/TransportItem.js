@@ -73,7 +73,7 @@ const TransportItem = (props) => {
           onPress={() => {
             Alert.alert('Attach document');
           }}>
-          <MaterialIcon name={'file-document'} style={styles.icon} />
+          <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>
       </View>
 
