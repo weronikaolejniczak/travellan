@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderButton from '../../Components/Atoms/HeaderButton';
 import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
+import Colors from '../../Constants/Colors';
 import BUDGET from '../../Data/DummyBudget';
 
 /** SCREEN DIMENSIONS */
@@ -39,19 +40,19 @@ const BudgetScreen = (props) => {
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
     ],
-    legend: ['Rainy Days'], // optional
+    legend: ['Spendings'], // optional
   };
 
   const chartConfig = {
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: '#08130D',
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    backgroundGradientFrom: Colors.background,
+    backgroundGradientFromOpacity: 0.0,
+    backgroundGradientTo: Colors.primary,
+    backgroundGradientToOpacity: 0.1,
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
@@ -76,6 +77,7 @@ const BudgetScreen = (props) => {
           id: changedCurrency.history.length + 1,
           title: title,
           value: amount,
+          date: Date.now(),
         });
       } else if (typeOfOperation === 'minus') {
         // change displayableValue
@@ -86,6 +88,7 @@ const BudgetScreen = (props) => {
           id: changedCurrency.history.length + 1,
           title: title,
           value: '-' + amount,
+          date: Date.now(),
         });
       } else {
         console.log('error regarding addition/subtraction');
@@ -152,10 +155,10 @@ const BudgetScreen = (props) => {
       {selectedCurrency && (
         <ScrollView contentContainerStyle={styles.detailsContainer}>
           {/* OPERATIONS */}
-          <View style={styles.bigMarginTop}>
+          <View style={styles.extraSmallMarginTop}>
             <Text style={[styles.text, styles.label]}>Operations</Text>
             {/* TITLE INPUT */}
-            <View style={styles.smallMarginTop}>
+            <View style={styles.extraSmallMarginTop}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter title"
@@ -165,7 +168,7 @@ const BudgetScreen = (props) => {
               />
             </View>
             {/* AMOUNT INPUT */}
-            <View style={styles.smallMarginTop}>
+            <View style={styles.extraSmallMarginTop}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter amount"
@@ -187,11 +190,11 @@ const BudgetScreen = (props) => {
             </View>
           </View>
           {/* HISTORY */}
-          <View style={styles.bigMarginVertical}>
+          <View style={styles.bigMarginTop}>
             <Text style={[styles.text, styles.label]}>History</Text>
             {/* LINECHART */}
             {!!selectedCurrency.history.length && (
-              <View style={styles.smallMarginTop}>
+              <View style={[styles.smallMarginTop, styles.chartContainer]}>
                 <LineChart
                   data={data}
                   width={screenWidth * 0.9}
@@ -202,7 +205,7 @@ const BudgetScreen = (props) => {
             )}
             {/* OPERATIONS */}
             {!selectedCurrency.history.length ? (
-              <View>
+              <View style={styles.smallMarginTop}>
                 <Text style={styles.text}>No operations to show</Text>
               </View>
             ) : (
@@ -211,6 +214,10 @@ const BudgetScreen = (props) => {
                 .reverse()
                 .map((item) => (
                   <Card style={styles.operationCard}>
+                    <Text style={styles.date}>
+                      {new Date(item.date).toLocaleDateString()} at{' '}
+                      {new Date(item.date).toLocaleTimeString()}
+                    </Text>
                     <View style={[styles.justifyRow, styles.spaceBetween]}>
                       <Text
                         style={
