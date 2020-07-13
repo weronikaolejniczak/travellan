@@ -30,6 +30,19 @@ export const budgetScreenStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 22,
   },
+  categoriesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  iconButton: {
+    padding: '1%',
+  },
+  activeCategory: {
+    color: Colors.primary,
+  },
+  nonactiveCategory: {
+    color: 'grey',
+  },
   valueCard: {
     alignItems: 'center',
     padding: 15,
@@ -50,11 +63,18 @@ export const budgetScreenStyle = StyleSheet.create({
     justifyContent: 'center',
     marginTop: '3%',
   },
+  seperator: {
+    width: '100%',
+    marginVertical: '5%',
+    borderBottomWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: 'grey',
+  },
   label: {
     fontSize: 18,
   },
   icon: {
-    fontSize: 27,
+    fontSize: 28,
   },
   text: {
     color: Colors.text,
@@ -72,9 +92,14 @@ export const budgetScreenStyle = StyleSheet.create({
   },
   justifyRow: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   spaceBetween: {
     justifyContent: 'space-between',
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   smallMarginTop: {
     marginTop: '5%',

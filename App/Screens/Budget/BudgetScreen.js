@@ -25,6 +25,19 @@ const screenWidth = Dimensions.get('window').width;
 /** BUDGET SCREEN */
 const BudgetScreen = (props) => {
   const activeCurrencies = BUDGET;
+  const categories = {
+    communication: 'phone',
+    eatingOut: 'silverware-fork-knife',
+    transport: 'airplane',
+    shopping: 'shopping',
+    health: 'heart-pulse',
+    gifts: 'gift',
+    home: 'home',
+    sports: 'dumbbell',
+    sightSeeing: 'camera',
+    entertainment: 'beer',
+  };
+  const icons = Object.values(categories);
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [selectedCurrency, setSelectedCurrency] = useState(activeCurrencies[0]);
@@ -33,6 +46,8 @@ const BudgetScreen = (props) => {
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+  const [category, setCategory] = useState('communication');
+  const [account, setAccount] = useState('card');
 
   /** LINE CHARTS VARIABLES AND HANDLERS */
   const prepareLabels = () => {
@@ -69,7 +84,7 @@ const BudgetScreen = (props) => {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ['Spendings'], // optional
+    legend: ['Budget value'], // optional
   };
 
   const chartConfig = {
@@ -89,6 +104,32 @@ const BudgetScreen = (props) => {
     setAmount('');
   };
 
+  const chooseCategory = (iconPressed) => {
+    setCategory(
+      Object.keys(categories).find((key) => categories[key] === iconPressed),
+    );
+  };
+
+  const calculateCard = () => {
+    let cardAmount = 0;
+    let cardHistory = selectedCurrency.history.filter(
+      (item) => item.account === 'card',
+    );
+    cardHistory.map((item) => (cardAmount += parseInt(item.value, 10)));
+
+    return cardAmount;
+  };
+
+  const calculateCash = () => {
+    let cashAmount = 0;
+    let cashHistory = selectedCurrency.history.filter(
+      (item) => item.account === 'cash',
+    );
+    cashHistory.map((item) => (cashAmount += parseInt(item.value, 10)));
+
+    return cashAmount;
+  };
+
   const modifyAmount = (typeOfOperation) => {
     if (title && amount) {
       const changedCurrency = selectedCurrency;
@@ -103,6 +144,8 @@ const BudgetScreen = (props) => {
           id: changedCurrency.history.length + 1,
           title: title,
           value: Math.abs(parseInt(amount, 10)),
+          category: category,
+          account: account,
           date: new Date(),
         });
       } else if (typeOfOperation === 'minus') {
@@ -115,6 +158,8 @@ const BudgetScreen = (props) => {
           id: changedCurrency.history.length + 1,
           title: title,
           value: -Math.abs(parseInt(amount, 10)),
+          category: category,
+          account: account,
           date: new Date(),
         });
       } else {
@@ -169,13 +214,50 @@ const BudgetScreen = (props) => {
         <View style={styles.detailsContainer}>
           {/* AMOUNT OF CURRENCY */}
           <Card style={styles.valueCard}>
-            <Text
-              style={[
-                styles.label,
-                displayableValue < 0 ? styles.negative : styles.positive,
-              ]}>
-              {displayableValue}
-            </Text>
+            {/* GENERAL BALANCE */}
+            <View style={styles.justifyRow}>
+              <Text style={[styles.label, styles.text]}>Total:{'   '}</Text>
+              <Text
+                style={[
+                  styles.label,
+                  displayableValue < 0 ? styles.negative : styles.positive,
+                ]}>
+                {displayableValue}
+              </Text>
+            </View>
+            {/* SEPARATOR */}
+            <View style={styles.seperator} />
+            {/* ACCOUNTS BALANCE */}
+            <View style={[styles.justifyRow]}>
+              {/* CARD */}
+              <View style={styles.justifyRow}>
+                <Icon
+                  name={'credit-card'}
+                  style={[styles.label, styles.text, {marginRight: '10%'}]}
+                />
+                <Text
+                  style={[
+                    styles.label,
+                    calculateCard() < 0 ? styles.negative : styles.positive,
+                  ]}>
+                  {calculateCard()}
+                </Text>
+              </View>
+              {/* CASH */}
+              <View style={styles.justifyRow}>
+                <Icon
+                  name={'cash'}
+                  style={[styles.label, styles.text, {marginRight: '10%'}]}
+                />
+                <Text
+                  style={[
+                    styles.label,
+                    calculateCash() < 0 ? styles.negative : styles.positive,
+                  ]}>
+                  {calculateCash()}
+                </Text>
+              </View>
+            </View>
           </Card>
         </View>
       )}
@@ -184,8 +266,94 @@ const BudgetScreen = (props) => {
           {/* OPERATIONS */}
           <View style={styles.extraSmallMarginTop}>
             <Text style={[styles.text, styles.label]}>Operations</Text>
+            {/* CATEGORIES */}
+            <View style={{marginTop: '5%'}}>
+              <Text style={styles.text}>Categories</Text>
+              <View
+                style={[
+                  styles.categoriesContainer,
+                  styles.extraSmallMarginTop,
+                ]}>
+                {icons.map((item) => (
+                  <TouchableOpacity
+                    style={styles.iconButton}
+                    onPress={() => chooseCategory(item)}>
+                    <Icon
+                      name={item}
+                      style={[
+                        styles.icon,
+                        categories[category] === item
+                          ? styles.activeCategory
+                          : styles.nonactiveCategory,
+                      ]}
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <View style={[styles.justifyRow, styles.center]}>
+                <Text style={[styles.text]}>chosen: </Text>
+                <Text style={[styles.activeCategory]}>{category}</Text>
+              </View>
+            </View>
+            {/* ACCOUNTS */}
+            <View style={{marginVertical: '5%'}}>
+              <Text style={styles.text}>Accounts</Text>
+              <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
+                {/* CASH */}
+                <View>
+                  <TouchableOpacity
+                    style={[styles.justifyRow, {alignItems: 'center'}]}
+                    onPress={() => setAccount('cash')}>
+                    <Icon
+                      name={'cash'}
+                      style={[{marginRight: '5%'},
+                        styles.icon,
+                        account === 'cash'
+                          ? styles.activeCategory
+                          : styles.nonactiveCategory,
+                      ]}
+                    />
+                    <Text
+                      style={[
+                        styles.label,
+                        account === 'cash'
+                          ? styles.activeCategory
+                          : styles.nonactiveCategory,
+                      ]}>
+                      Cash
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                {/* CARD */}
+                <View style={{marginLeft: '5%'}}>
+                  <TouchableOpacity
+                    style={[styles.justifyRow, {alignItems: 'center'}]}
+                    onPress={() => setAccount('card')}>
+                    <Icon
+                      name={'credit-card'}
+                      style={[{marginRight: '5%'},
+                        styles.icon,
+                        account === 'card'
+                          ? styles.activeCategory
+                          : styles.nonactiveCategory,
+                      ]}
+                    />
+                    <Text
+                      style={[
+                        styles.label,
+                        account === 'card'
+                          ? styles.activeCategory
+                          : styles.nonactiveCategory,
+                      ]}>
+                      Card
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
             {/* TITLE INPUT */}
-            <View style={styles.extraSmallMarginTop}>
+            <Text style={styles.text}>Operations</Text>
+            <View>
               <TextInput
                 style={styles.input}
                 placeholder="Enter title"
@@ -220,7 +388,7 @@ const BudgetScreen = (props) => {
           <View style={styles.bigMarginTop}>
             <Text style={[styles.text, styles.label]}>History</Text>
             {/* LINECHART */}
-            {!!selectedCurrency.history.length && (
+            {selectedCurrency.history.length > 1 && (
               <View style={[styles.smallMarginTop, styles.chartContainer]}>
                 <LineChart
                   data={data}
@@ -245,18 +413,29 @@ const BudgetScreen = (props) => {
                 .reverse()
                 .map((item) => (
                   <Card style={styles.operationCard}>
-                    <Text style={styles.date}>
-                      {new Date(item.date).toLocaleDateString()} at{' '}
-                      {new Date(item.date).toLocaleTimeString()}
-                    </Text>
-                    <View style={[styles.justifyRow, styles.spaceBetween]}>
-                      <Text
-                        style={
-                          item.value < 0 ? styles.negative : styles.positive
-                        }>
-                        {item.value}
-                      </Text>
-                      <Text style={styles.text}>{item.title}</Text>
+                    <View style={styles.justifyRow}>
+                      <View style={{marginRight: '10%'}}>
+                        <Icon
+                          name={categories[item.category]}
+                          style={[styles.icon, styles.text]}
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.date}>
+                          {new Date(item.date).toLocaleDateString()} at{' '}
+                          {new Date(item.date).toLocaleTimeString()}
+                        </Text>
+                        <View style={[styles.justifyRow]}>
+                          <Text
+                            style={
+                              item.value < 0 ? styles.negative : styles.positive
+                            }>
+                            {item.value}
+                            {'   '}
+                          </Text>
+                          <Text style={styles.text}>{item.title}</Text>
+                        </View>
+                      </View>
                     </View>
                   </Card>
                 ))
