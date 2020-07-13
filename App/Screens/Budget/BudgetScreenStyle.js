@@ -5,6 +5,7 @@ export const budgetScreenStyle = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: '12%',
   },
   currenciesContainer: {
     padding: '5%',

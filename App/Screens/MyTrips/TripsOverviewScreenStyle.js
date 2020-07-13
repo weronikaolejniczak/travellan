@@ -8,6 +8,7 @@ export const tripsOverviewScreenStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: '12%',
   },
   triplessContainer: {
     justifyContent: 'center',
@@ -18,7 +19,7 @@ export const tripsOverviewScreenStyle = StyleSheet.create({
     color: Colors.text,
   },
   triplessText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   deleteButton: {
     borderWidth: 2,

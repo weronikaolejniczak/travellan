@@ -7,32 +7,28 @@ import Colors from '../../Constants/Colors';
  * refactor Metrics
  */
 export const newTripScreenStyle = StyleSheet.create({
-  form: {
-    backgroundColor: Colors.background,
+  container: {
     flex: 1,
+    backgroundColor: Colors.background,
+    paddingHorizontal: '5%',
+    paddingTop: '12%',
   },
-  metrics: {
-    paddingVertical: 10,
+  bigMarginTop: {
+    marginTop: '10%',
+  },
+  smallMarginTop: {
     marginTop: '5%',
   },
   label: {
-    marginRight: '5%',
-    marginLeft: '10%',
     color: Colors.primary,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   input: {
     color: Colors.text,
-    fontSize: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
+    fontSize: 18,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
-    marginVertical: 2,
-    marginHorizontal: 2,
-    marginLeft: '10%',
-    marginRight: '10%',
   },
   errorContainer: {
     marginVertical: 5,
@@ -43,39 +39,47 @@ export const newTripScreenStyle = StyleSheet.create({
   },
   pickerContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   picker: {
+    width: '100%',
     borderWidth: 2,
-    borderRadius: 10,
+    borderStyle: 'dashed',
+    borderRadius: 25,
     borderColor: Colors.primary,
     marginTop: 15,
     padding: 15,
-    paddingHorizontal: '20%',
   },
   pickerText: {
     color: Colors.text,
-    fontSize: 20,
+    fontSize: 18,
   },
   icon: {
-    fontSize: 30,
     color: Colors.text,
-    marginRight: 30,
+    fontSize: 30,
+  },
+  switch: {
+    marginLeft: '5%',
   },
   buttonContainer: {
     alignItems: 'center',
-    margin: 20,
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 25,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
+    marginVertical: '5%',
     padding: 15,
-    margin: 10,
   },
   buttonText: {
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.text,
+  },
+  rowAndCenter: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

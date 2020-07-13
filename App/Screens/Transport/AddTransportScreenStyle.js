@@ -1,27 +1,42 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../Constants/Colors';
+import { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export const addTransportScreenStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: '12%',
+    paddingHorizontal: '5%',
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  modalContent: {
+    paddingHorizontal: '5%',
+  },
+  modalHeader: {
+    marginTop: '2%',
+  },
+  modalHeaderText: {
+    marginLeft: '5%',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   card: {
     padding: 15,
     marginTop: 10,
     justifyContent: 'center',
   },
-  stageItemHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginLeft: '10%',
-  },
   stageItemBody: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: '5%',
-    marginHorizontal: '10%',
+  },
+  stageIcons: {
+    marginRight: '5%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     color: Colors.text,
@@ -30,26 +45,24 @@ export const addTransportScreenStyle = StyleSheet.create({
     fontSize: 18,
   },
   metrics: {
-    paddingVertical: 10,
     marginTop: '5%',
-    marginLeft: '10%',
   },
   label: {
-    marginRight: '5%',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: Colors.primary,
   },
+  activeLabel: {
+    color: Colors.primary,
+  },
+  disactiveLabel: {
+    color: 'grey',
+  },
   input: {
     color: Colors.text,
-    fontSize: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
+    fontSize: 18,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
-    marginVertical: 2,
-    marginHorizontal: 2,
-    marginRight: '10%',
   },
   pickerContainer: {
     //alignItems: 'center',
@@ -59,12 +72,11 @@ export const addTransportScreenStyle = StyleSheet.create({
     borderRadius: 10,
     borderColor: Colors.primary,
     marginTop: '5%',
-    marginRight: '10%',
     padding: '4%',
   },
   pickerText: {
     color: Colors.text,
-    fontSize: 20,
+    fontSize: 18,
   },
   returnIcon: {
     color: Colors.text,
@@ -72,28 +84,33 @@ export const addTransportScreenStyle = StyleSheet.create({
     paddingVertical: 7,
     marginRight: '5%',
   },
+  activeRadioIcon: {
+    fontSize: 26,
+    color: Colors.primary,
+  },
+  nonactiveRadioIcon: {
+    fontSize: 26,
+    color: 'grey',
+  },
   icon: {
-    fontSize: 30,
+    fontSize: 26,
     color: Colors.text,
   },
   iconButton: {
     alignItems: 'center',
     paddingHorizontal: '2%',
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    borderRadius: 50,
   },
   buttonContainer: {
     alignItems: 'center',
     margin: 20,
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 25,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
     padding: 15,
-    margin: 10,
+    margin: '5%',
   },
   buttonText: {
     fontWeight: 'bold',
@@ -106,8 +123,9 @@ export const addTransportScreenStyle = StyleSheet.create({
   error: {
     color: Colors.error,
   },
-  rowAndCenter: {
+  rowAndAlign: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

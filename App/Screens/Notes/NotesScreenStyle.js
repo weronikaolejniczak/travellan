@@ -6,6 +6,7 @@ export const NotesScreenStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     alignItems: 'center',
+    paddingTop: '12%',
   },
   itemlessContainer: {
     flex: 1,
@@ -29,7 +30,7 @@ export const NotesScreenStyles = StyleSheet.create({
     color: Colors.text,
   },
   itemlessText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   centered: {
     flex: 1,

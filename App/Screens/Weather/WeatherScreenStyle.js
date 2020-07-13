@@ -7,6 +7,7 @@ export const weatherScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: '12%',
   },
   text: {
     color: Colors.text,

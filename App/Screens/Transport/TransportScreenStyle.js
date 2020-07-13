@@ -4,8 +4,9 @@ import Colors from '../../Constants/Colors';
 
 export const transportScreenStyle = StyleSheet.create({
   scrollview: {
-    backgroundColor: Colors.background,
     flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: '12%',
   },
   contentContainer: {
     flexGrow: 1,
@@ -44,7 +45,7 @@ export const transportScreenStyle = StyleSheet.create({
     color: Colors.text,
   },
   itemlessText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   icon: {
     margin: 10,

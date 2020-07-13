@@ -114,9 +114,7 @@ const NewTripScreen = (props) => {
 
   // submit handler
   const submitHandler = useCallback(() => {
-    let budgetToSubmit = new Budget(budget, currency, [
-      {amount: budget, title: 'initial budget'},
-    ]);
+    let budgetToSubmit = new Budget(budget, currency, []);
 
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
@@ -149,9 +147,9 @@ const NewTripScreen = (props) => {
 
   /** this could be refactored into a component to minimize repetition */
   return (
-    <ScrollView style={styles.form}>
+    <ScrollView style={styles.container}>
       {/* DESTINATION */}
-      <View style={styles.metrics}>
+      <View style={styles.smallMarginTop}>
         <Text style={styles.label}>Trip destination</Text>
         <TextInput
           style={styles.input}
@@ -168,7 +166,7 @@ const NewTripScreen = (props) => {
       </View>
 
       {/* START DATE */}
-      <View style={styles.metrics}>
+      <View style={styles.bigMarginTop}>
         <Text style={styles.label}>Start date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showStartDatepicker} style={styles.picker}>
@@ -201,7 +199,7 @@ const NewTripScreen = (props) => {
       </View>
 
       {/* END DATE */}
-      <View style={styles.metrics}>
+      <View style={styles.bigMarginTop}>
         <Text style={styles.label}>End date</Text>
         <View style={styles.pickerContainer}>
           <TouchableOpacity onPress={showEndDatepicker} style={styles.picker}>
@@ -234,17 +232,12 @@ const NewTripScreen = (props) => {
       </View>
 
       {/* BUDGET */}
-      <View style={styles.metrics}>
-        <View
-          style={[
-            {
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-            },
-          ]}>
+      <View style={styles.bigMarginTop}>
+        <View style={[styles.rowAndCenter]}>
           <Text style={styles.label}>Budget</Text>
+          {/* BUDGET SWITCH */}
           <Switch
+            style={styles.switch}
             trackColor={{
               false: Colors.switchDisabledTrack,
               true: Colors.switchEnabledTrack,
@@ -256,23 +249,27 @@ const NewTripScreen = (props) => {
           />
         </View>
         {budgetIsEnabled && (
-          <TextInput
-            style={styles.input}
-            placeholder={'Number'}
-            placeholderTextColor="grey"
-            value={budget}
-            onChangeText={budgetChangeHandler}
-            keyboardType={'numeric'}
-          />
+          <View>
+            {/* INITIAL AMOUNT */}
+            <TextInput
+              style={[styles.input]}
+              placeholder={'Number'}
+              placeholderTextColor="grey"
+              value={budget}
+              onChangeText={budgetChangeHandler}
+              keyboardType={'numeric'}
+            />
+            {/* CURRENCY */}
+          </View>
         )}
-
+        {/* ERROR */}
         {budgetIsEnabled && !budgetIsValid && budgetSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid budget!</Text>
           </View>
         )}
       </View>
-
+      {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
           <Text style={styles.buttonText}>Submit</Text>

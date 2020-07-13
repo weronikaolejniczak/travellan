@@ -5,22 +5,23 @@ export const AddCurrencyScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: '12%',
   },
   text: {
     color: Colors.text,
   },
   label: {
     color: Colors.primary,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   elementContainer: {
     marginTop: '5%',
-    marginHorizontal: '10%',
+    marginHorizontal: '5%',
   },
   input: {
     color: Colors.text,
-    fontSize: 20,
+    fontSize: 18,
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderBottomColor: Colors.primary,

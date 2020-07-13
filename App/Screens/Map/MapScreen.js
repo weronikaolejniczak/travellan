@@ -144,6 +144,14 @@ const MapScreen = (props) => {
       {/* INTERACTIVE OVERLAY */}
       <View style={styles.overlay}>
         <View style={styles.actionBar}>
+          {/* GO BACK */}
+          <View>
+            <TouchableOpacity
+              styles={styles.button}
+              onPress={() => props.navigation.goBack()}>
+              <MaterialIcon name="arrow-back" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
           {/* ADD MARKER */}
           <View
             style={{
@@ -265,6 +273,7 @@ const styles = StyleSheet.create({
     top: 0,
     position: 'absolute',
     width: '100%',
+    justifyContent: 'flex-end',
     backgroundColor: Colors.cards,
   },
   actionBar: {

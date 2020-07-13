@@ -11,6 +11,7 @@ export const accommodationScreenStyle = StyleSheet.create({
   scrollview: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: '12%',
   },
   contentContainer: {
     flexGrow: 1,
@@ -40,7 +41,7 @@ export const accommodationScreenStyle = StyleSheet.create({
     color: Colors.text,
   },
   itemlessText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   button: {
     borderRadius: 10,

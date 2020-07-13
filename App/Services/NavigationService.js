@@ -93,7 +93,11 @@ export default function Navigation() {
           component={AddAccommodationScreen}
         />
         {/* MAP */}
-        <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{headerShown: false}}
+        />
         {/* WEATHER */}
         <Stack.Screen name="Weather" component={WeatherScreen} />
         {/* BUDGET */}
@@ -117,8 +121,16 @@ export default function Navigation() {
 
 /** DEFAULT NAVIGATION OPTIONS */
 const defaultNavOptions = {
+  headerTransparent: {
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    zIndex: 100,
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   headerStyle: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.background,
   },
   headerTintColor: Colors.text,
   headerTitleStyle: {

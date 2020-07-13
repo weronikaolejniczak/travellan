@@ -71,7 +71,7 @@ const AddNote = (props) => {
   ]);
 
   return (
-    <ScrollView style={styles.form}>
+    <ScrollView style={styles.container}>
       {/* TITLE INPUT */}
       <View style={{paddingVertical: 15}}>
         <Text style={styles.label}>Title</Text>

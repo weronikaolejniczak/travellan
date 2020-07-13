@@ -127,19 +127,20 @@ const AddAccommodationScreen = (props) => {
       setIsLoading(false);
     }
   }, [
-    props.navigation,
+    housingNameIsValid,
+    housingAddressIsValid,
+    descriptionIsValid,
+    hotelHoursIsValid,
     dispatch,
     tripId,
     housingName,
-    housingNameIsValid,
     housingAddress,
-    housingAddressIsValid,
     selectedAmenities,
     hotelHours,
-    hotelHoursIsValid,
     description,
-    descriptionIsValid,
     reservationDetails,
+    props.navigation,
+    selectedTrip.id,
   ]);
 
   return (
@@ -200,9 +201,9 @@ const AddAccommodationScreen = (props) => {
             setSelectedAmenities(result.selectedItems);
           }}
         />
-        <View style={{marginHorizontal: '10%'}}>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           {selectedAmenities.map((item) => (
-            <Card style={{marginTop: 10, padding: 15}}>
+            <Card style={styles.amenityCard}>
               <Text style={styles.text}>{item.label}</Text>
             </Card>
           ))}
