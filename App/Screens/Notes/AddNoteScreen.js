@@ -61,19 +61,20 @@ const AddNote = (props) => {
     }
     setIsLoading(false);
   }, [
-    props.navigation,
+    titleIsValid,
+    descriptionIsValid,
     dispatch,
     tripId,
     title,
-    titleIsValid,
     description,
-    descriptionIsValid,
+    props.navigation,
+    selectedTrip.id,
   ]);
 
   return (
     <ScrollView style={styles.container}>
       {/* TITLE INPUT */}
-      <View style={{paddingVertical: 15}}>
+      <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.input}
@@ -88,7 +89,7 @@ const AddNote = (props) => {
       </View>
 
       {/* DESCRIPTION INPUT */}
-      <View style={{paddingVertical: 15}}>
+      <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.input}
@@ -104,7 +105,7 @@ const AddNote = (props) => {
       </View>
 
       {/* SUBMIT BUTTON */}
-      <View style={{alignItems: 'center', margin: 20}}>
+      <View style={styles.buttonContainer}>
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.white} />
         ) : (

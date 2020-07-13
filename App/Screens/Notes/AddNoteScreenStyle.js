@@ -19,18 +19,24 @@ export const newNoteScreenStyle = StyleSheet.create({
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
   },
+  buttonContainer: {
+    marginTop: '10%',
+    alignItems: 'center',
+  },
   button: {
     borderRadius: 25,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
     padding: 15,
-    marginVertical: '10%',
   },
   buttonText: {
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.text,
+  },
+  smallPaddingTop: {
+    paddingTop: '5%',
   },
   errorContainer: {
     marginVertical: 5,
