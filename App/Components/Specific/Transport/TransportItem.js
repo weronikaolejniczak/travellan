@@ -81,7 +81,7 @@ const TransportItem = (props) => {
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}
         indicatorStyle={'white'}>
-        <View style={[styles.rowCenter, {paddingVertical: 30}]}>
+        <View style={[styles.rowCenter, {paddingVertical: 15}]}>
           {props.to === true ? (
             <Text style={[styles.header]}>to {props.destination}</Text>
           ) : (
