@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from '../../../Components/Atoms/Card';
 import TransportStage from './TransportStage';
@@ -60,27 +61,20 @@ const TransportItem = (props) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-
-        {/* EDIT TICKET INFO */}
-        {/* <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Edit ticket');
-          }}>
-          <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity> */}
-
         {/* SHOW QR CODE */}
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             Alert.alert('Show QR code');
           }}>
-          <Icon
-            name={
-              Platform.OS === 'android' ? 'md-qr-scanner' : 'ios-qr-scanner'
-            }
-            style={styles.icon}
-          />
-        </TouchableOpacity> */}
+          <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
+        </TouchableOpacity>
+        {/* ATTACH TICKET */}
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert('Attach document');
+          }}>
+          <MaterialIcon name={'file-document'} style={styles.icon} />
+        </TouchableOpacity>
       </View>
 
       {/* TO/FROM DESTINATION */}
