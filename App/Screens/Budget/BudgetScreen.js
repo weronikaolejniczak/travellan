@@ -34,12 +34,37 @@ const BudgetScreen = (props) => {
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
 
-  /** LINE CHARTS VARIABLES */
+  /** LINE CHARTS VARIABLES AND HANDLERS */
+  const prepareLabels = () => {
+    // extract dates from history attribute of selectedCurrency
+    let labels = selectedCurrency.history.map((item) =>
+      item.date.toString().split(' ').splice(1, 2).join(' '),
+    );
+
+    return labels;
+  };
+
+  const prepareData = () => {
+    // extract values from history attribute of selectedCurrency and parse it into int
+    let dataToPrepare = selectedCurrency.history.map((item) =>
+      parseInt(item.value, 10),
+    );
+    // add initial value to preparedData
+    let preparedData = [dataToPrepare[0]];
+    // 'reduce' to get an array of budget after each operation
+    dataToPrepare.reduce((total, num) => {
+      preparedData.push(total + num);
+      return total + num;
+    });
+
+    return preparedData;
+  };
+
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: prepareLabels(),
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
+        data: prepareData(),
         color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
@@ -72,23 +97,25 @@ const BudgetScreen = (props) => {
         // change displayableValue
         setDisplayableValue(displayableValue + Math.abs(parseInt(amount, 10)));
         // modify selectedCurrency
-        changedCurrency.value += Math.abs(parseInt(amount, 10));
+        changedCurrency.value =
+          changedCurrency.value + Math.abs(parseInt(amount, 10));
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
-          value: amount,
-          date: Date.now(),
+          value: Math.abs(parseInt(amount, 10)),
+          date: new Date(),
         });
       } else if (typeOfOperation === 'minus') {
         // change displayableValue
-        setDisplayableValue(displayableValue - Math.abs(parseInt(amount, 10)));
+        setDisplayableValue(displayableValue + -Math.abs(parseInt(amount, 10)));
         // modify selectedCurrency
-        changedCurrency.value -= Math.abs(parseInt(amount, 10));
+        changedCurrency.value =
+          changedCurrency.value - Math.abs(parseInt(amount, 10));
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
-          value: '-' + amount,
-          date: Date.now(),
+          value: -Math.abs(parseInt(amount, 10)),
+          date: new Date(),
         });
       } else {
         console.log('error regarding addition/subtraction');
@@ -200,6 +227,10 @@ const BudgetScreen = (props) => {
                   width={screenWidth * 0.9}
                   height={220}
                   chartConfig={chartConfig}
+                  fromZero={true}
+                  onDataPointClick={(item) =>
+                    console.log(selectedCurrency.history[item.index])
+                  }
                 />
               </View>
             )}
