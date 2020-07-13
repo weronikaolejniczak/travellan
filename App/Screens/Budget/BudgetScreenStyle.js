@@ -11,7 +11,7 @@ export const budgetScreenStyle = StyleSheet.create({
     alignItems: 'center',
   },
   detailsContainer: {
-    paddingHorizontal: '10%',
+    paddingHorizontal: '5%',
   },
   currencyActive: {
     color: Colors.primary,
@@ -26,7 +26,7 @@ export const budgetScreenStyle = StyleSheet.create({
     padding: 15,
   },
   operationCard: {
-    marginTop: '4%',
+    marginTop: '2%',
     padding: '4%',
   },
   input: {

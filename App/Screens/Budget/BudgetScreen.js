@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
   Platform,
+  Dimensions,
 } from 'react-native';
+import {LineChart} from 'react-native-chart-kit';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -16,6 +18,10 @@ import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 import BUDGET from '../../Data/DummyBudget';
 
+/** SCREEN DIMENSIONS */
+const screenWidth = Dimensions.get('window').width;
+
+/** BUDGET SCREEN */
 const BudgetScreen = (props) => {
   const activeCurrencies = BUDGET;
 
@@ -26,6 +32,30 @@ const BudgetScreen = (props) => {
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+
+  /** LINE CHARTS VARIABLES */
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ['Rainy Days'], // optional
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#08130D',
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
 
   /** HANDLERS */
   const clear = () => {
@@ -159,22 +189,40 @@ const BudgetScreen = (props) => {
           {/* HISTORY */}
           <View style={styles.bigMarginVertical}>
             <Text style={[styles.text, styles.label]}>History</Text>
-            {selectedCurrency.history
-              .slice(0)
-              .reverse()
-              .map((item) => (
-                <Card style={styles.operationCard}>
-                  <View style={[styles.justifyRow, styles.spaceBetween]}>
-                    <Text
-                      style={
-                        item.value < 0 ? styles.negative : styles.positive
-                      }>
-                      {item.value}
-                    </Text>
-                    <Text style={styles.text}>{item.title}</Text>
-                  </View>
-                </Card>
-              ))}
+            {/* LINECHART */}
+            {!!selectedCurrency.history.length && (
+              <View style={styles.smallMarginTop}>
+                <LineChart
+                  data={data}
+                  width={screenWidth * 0.9}
+                  height={220}
+                  chartConfig={chartConfig}
+                />
+              </View>
+            )}
+            {/* OPERATIONS */}
+            {!selectedCurrency.history.length ? (
+              <View>
+                <Text style={styles.text}>No operations to show</Text>
+              </View>
+            ) : (
+              selectedCurrency.history
+                .slice(0)
+                .reverse()
+                .map((item) => (
+                  <Card style={styles.operationCard}>
+                    <View style={[styles.justifyRow, styles.spaceBetween]}>
+                      <Text
+                        style={
+                          item.value < 0 ? styles.negative : styles.positive
+                        }>
+                        {item.value}
+                      </Text>
+                      <Text style={styles.text}>{item.title}</Text>
+                    </View>
+                  </Card>
+                ))
+            )}
           </View>
         </ScrollView>
       )}
