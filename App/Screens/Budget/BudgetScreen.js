@@ -24,12 +24,14 @@ const screenWidth = Dimensions.get('window').width;
 
 /** BUDGET SCREEN */
 const BudgetScreen = (props) => {
+  const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const activeCurrencies = selectedTrip.budget;
   const categories = {
+    general: 'all-inclusive',
     communication: 'phone',
     eatingOut: 'silverware-fork-knife',
     transport: 'airplane',
@@ -40,6 +42,7 @@ const BudgetScreen = (props) => {
     sports: 'dumbbell',
     sightSeeing: 'camera',
     entertainment: 'beer',
+    savings: 'wallet',
   };
   const icons = Object.values(categories);
 
@@ -180,6 +183,52 @@ const BudgetScreen = (props) => {
       console.log('enter title and amount');
     }
   };
+
+  /* HANDLERS
+  const loadReservations = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(accommodationActions.fetchReservations(tripId));
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setError, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadReservations().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadReservations]);
+
+  if (isLoading || isRefreshing) {
+    return (
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (accommodation === undefined) {
+    return (
+      <ScrollView
+        style={styles.scrollview}
+        contentContainerStyle={styles.contentContainer}>
+        <View style={[styles.itemlessContainer, styles.columnAndRowCenter]}>
+          <Text style={[styles.text, styles.itemlessText]}>
+            There are no reservations!
+          </Text>
+          <Text style={[styles.text, styles.itemlessText]}>
+            Add one with the
+          </Text>
+          <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
+          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
+        </View>
+      </ScrollView>
+    );
+  } */
 
   return (
     <View style={styles.contentContainer}>
