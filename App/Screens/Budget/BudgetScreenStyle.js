@@ -8,8 +8,8 @@ export const budgetScreenStyle = StyleSheet.create({
     paddingTop: '12%',
   },
   currenciesContainer: {
-    padding: '5%',
     alignItems: 'center',
+    height: 50,
   },
   detailsContainer: {
     paddingHorizontal: '5%',
