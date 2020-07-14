@@ -63,7 +63,7 @@ const NewTripScreen = (props) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
     setStartDate(currentDate);
-    // set endDate to currentDate if it is earlier than the day 
+    // set endDate to currentDate if it is earlier than the day
     // selected for startDate
     currentDate > endDate ? setEndDate(currentDate) : '';
   };
@@ -114,7 +114,18 @@ const NewTripScreen = (props) => {
 
   // submit handler
   const submitHandler = useCallback(() => {
-    let budgetToSubmit = new Budget(budget, currency, []);
+    let budgetToSubmit = [
+      new Budget(0, parseInt(budget, 10), currency, [
+        {
+          id: 0,
+          title: 'Initial budget',
+          value: parseInt(budget, 10),
+          category: '',
+          account: 'card',
+          date: new Date(),
+        },
+      ]),
+    ];
 
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
@@ -259,7 +270,14 @@ const NewTripScreen = (props) => {
               onChangeText={budgetChangeHandler}
               keyboardType={'numeric'}
             />
-            {/* CURRENCY */}
+            {/* CURRENCY setCurrency */}
+            <TextInput
+              style={[styles.input]}
+              placeholder={'Currency'}
+              placeholderTextColor="grey"
+              value={currency}
+              onChangeText={(text) => setCurrency(text)}
+            />
           </View>
         )}
         {/* ERROR */}

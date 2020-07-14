@@ -9,6 +9,7 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {LineChart} from 'react-native-chart-kit';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,14 +18,17 @@ import HeaderButton from '../../Components/Atoms/HeaderButton';
 import Card from '../../Components/Atoms/Card';
 import {budgetScreenStyle as styles} from './BudgetScreenStyle';
 import Colors from '../../Constants/Colors';
-import BUDGET from '../../Data/DummyBudget';
 
 /** SCREEN DIMENSIONS */
 const screenWidth = Dimensions.get('window').width;
 
 /** BUDGET SCREEN */
 const BudgetScreen = (props) => {
-  const activeCurrencies = BUDGET;
+  const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+  const activeCurrencies = selectedTrip.budget;
   const categories = {
     communication: 'phone',
     eatingOut: 'silverware-fork-knife',
