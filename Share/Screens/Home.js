@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import ShareExtension from 'rn-extensions-share';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Colors from '../../App/Constants/Colors';
@@ -9,14 +9,17 @@ const Home = (props) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    type ? console.log('already') : getData();
+    type ? console.log('ALREADY ASSIGNED') : getData();
   }, [type]);
 
   const getData = async () => {
-    const response = await ShareExtension.data();
+    const response = await ShareExtension.data().catch(
+      console.log('NO INTENT'),
+    );
     const data = await response;
-    setType(data[0].type);
-    setValue(data[0].value);
+    data
+      ? (setType(data[0].type), setValue(data[0].value))
+      : console.log('DATA UNDEFINED');
   };
 
   return (
@@ -27,8 +30,11 @@ const Home = (props) => {
         alignItems: 'center',
         backgroundColor: Colors.background,
       }}>
-      <Text>{console.log(type)}</Text>
-      <Text>{console.log(value)}</Text>
+      <TouchableOpacity onPress={() => ShareExtension.close()}>
+        <Text style={{color: Colors.text, fontSize: 32}}>x</Text>
+      </TouchableOpacity>
+      <Text style={{color: Colors.text}}>{type}</Text>
+      <Text style={{color: Colors.text}}>{value}</Text>
     </View>
   );
 };
