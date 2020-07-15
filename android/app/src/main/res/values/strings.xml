@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Travellan</string>
+    <string name="title_activity_share">Travellan</string>
 </resources>
