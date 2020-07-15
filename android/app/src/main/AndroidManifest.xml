@@ -42,6 +42,8 @@
           <data android:mimeType="text/plain" />
           <!-- for sharing photos include -->
           <data android:mimeType="image/*" />
+          <!-- for pdf files -->
+          <data android:mimeType="application/pdf" />
           <!-- for all types -->
           <data android:mimeType="*/*" />
         </intent-filter>
