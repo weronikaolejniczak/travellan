@@ -1,37 +1,36 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text} from 'react-native';
 import ShareExtension from 'rn-extensions-share';
+/** IMPORTS FROM WITHIN THE MODULE */
+import Colors from '../../App/Constants/Colors';
 
-class Home extends React.Component {
-  state = {
-    type: '',
-    value: '',
+const Home = (props) => {
+  const [type, setType] = useState('');
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    type ? console.log('already') : getData();
+  }, [type]);
+
+  const getData = async () => {
+    const response = await ShareExtension.data();
+    const data = await response;
+    setType(data[0].type);
+    setValue(data[0].value);
   };
 
-  componentWillMount() {
-    ShareExtension.data().then(({type, value}) => {
-      this.setState({type, value});
-    });
-  }
-
-  render() {
-    const {type, value} = this.state;
-    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-          backgroundColor: 'red',
-        }}>
-        <TouchableOpacity onPress={() => ShareExtension.close()}>
-          <Text style={{fontSize: 36}}>X</Text>
-        </TouchableOpacity>
-        <Text style={{fontSize: 36}}>{type}</Text>
-        <Text style={{fontSize: 11}}>{value}</Text>
-      </View>
-    );
-  }
-}
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.background,
+      }}>
+      <Text>{console.log(type)}</Text>
+      <Text>{console.log(value)}</Text>
+    </View>
+  );
+};
 
 export default Home;
