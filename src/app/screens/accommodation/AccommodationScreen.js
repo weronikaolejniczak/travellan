@@ -1,0 +1,164 @@
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  FlatList,
+  Platform,
+  ActivityIndicator,
+  Animated,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import Icon from 'react-native-vector-icons/Ionicons';
+/** IMPORTS FROM WITHIN THE MODULE */
+import HeaderButton from '../../components/atoms/headerButton/HeaderButton';
+import AccommodationItem from '../../components/molecules/accommodation/AccommodationItem';
+import * as accommodationActions from '../../stores/actions/Accommodation';
+import {cardWidth} from '../../components/molecules/accommodation/AccommodationItemStyle';
+import {accommodationScreenStyle as styles} from './AccommodationScreenStyle';
+import Colors from '../../constants/Colors';
+
+/** ACCOMMODATION SCREEN - displays stored reservations
+ * TODO:
+ * refactor inline styles
+ * refactor repeated itemless screen (for all other screens as well)
+ */
+const AccommodationScreen = (props) => {
+  const dispatch = useDispatch();
+  const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+  const accommodation = selectedTrip.accommodationInfo;
+
+  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
+  const [error, setError] = useState();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  /** HANDLERS */
+  const loadReservations = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(accommodationActions.fetchReservations(tripId));
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setError, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadReservations().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadReservations]);
+
+  if (isLoading || isRefreshing) {
+    return (
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (accommodation === undefined) {
+    return (
+      <ScrollView
+        style={styles.scrollview}
+        contentContainerStyle={styles.contentContainer}>
+        <View style={[styles.itemlessContainer, styles.columnAndRowCenter]}>
+          <Text style={[styles.text, styles.itemlessText]}>
+            There are no reservations!
+          </Text>
+          <Text style={[styles.text, styles.itemlessText]}>
+            Add one with the
+          </Text>
+          <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
+          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
+        </View>
+      </ScrollView>
+    );
+  }
+
+  /** ANIMATE VARIABLES */
+  let scrollX = new Animated.Value(0);
+  // position will be a value between 0 and photos.length - 1 assuming you don't scroll pass the ends of the ScrollView
+  let position = Animated.divide(scrollX, cardWidth);
+
+  return (
+    <ScrollView
+      style={styles.scrollview}
+      contentContainerStyle={styles.contentContainer}>
+      <View>
+        <FlatList
+          onRefresh={loadReservations}
+          refreshing={isRefreshing}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          // the onScroll prop will pass a nativeEvent object to a function
+          onScroll={Animated.event(
+            // Animated.event returns a function that takes an array where the first element...
+            [{nativeEvent: {contentOffset: {x: scrollX}}}], // ... is an object that maps any nativeEvent prop to a variable
+            {useNativeDriver: false},
+          )} // in this case we are mapping the value of nativeEvent.contentOffset.x to this.scrollX
+          scrollEventThrottle={16} // this will ensure that this ScrollView's onScroll prop is called no faster than 16ms between each function call
+          decelerationRate={0}
+          snapToInterval={cardWidth + 20} // REFACTOR THIS NUMBER TO BE RESPONSIVE
+          snapToAlignment="center"
+          contentInset={styles.contentInsetIOS}
+          data={accommodation}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={(itemData) => (
+            <AccommodationItem
+              id={itemData.item.id}
+              tripId={tripId}
+              image={itemData.item.imageUrl}
+              name={itemData.item.name}
+              address={itemData.item.address}
+              facilities={itemData.item.facilities}
+              hotelHours={itemData.item.hotelHours}
+              description={itemData.item.description}
+              reservationDetails={itemData.item.reservationDetails}
+            />
+          )}
+        />
+        <View style={styles.rowDirection}>
+          {accommodation.map((_, i) => {
+            let opacity = position.interpolate({
+              inputRange: [i - 1, i, i + 1], // each dot will need to have an opacity of 1 when position is equal to their index (i)
+              outputRange: [0.3, 1, 0.3], // when position is not i, the opacity of the dot will animate to 0.3
+              extrapolate: 'clamp', // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
+            });
+
+            return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
+          })}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export const accommodationScreenOptions = (navData) => {
+  return {
+    headerRight: (props) => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Create a trip"
+          style={{marginRight: 3}}
+          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          onPress={() => {
+            navData.navigation.navigate('Add accommodation', {
+              tripId: navData.route.params.tripId,
+            });
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
+};
+
+export default AccommodationScreen;
