@@ -4,14 +4,12 @@ import {
   ScrollView,
   Text,
   FlatList,
-  TouchableOpacity,
   Platform,
   ActivityIndicator,
   Animated,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import ActionSheet from 'react-native-actionsheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from '../../Components/Atoms/HeaderButton';

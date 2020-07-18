@@ -1,7 +1,8 @@
-import React from 'react';
 import 'react-native-gesture-handler';
-import Home from './Screens/Home';
+import React from 'react';
+/** IMPORTS FROM WITHIN THE MODULE */
+import HomeScreen from './screens/HomeScreen';
 
 export default function Share() {
-  return <Home />;
+  return <HomeScreen />;
 }
