@@ -3,10 +3,19 @@ import {StyleSheet} from 'react-native';
 import Colors from '../../app/constants/Colors';
 
 export const homeScreenStyle = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
     padding: '5%',
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     margin: '2%',

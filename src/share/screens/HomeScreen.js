@@ -1,10 +1,17 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Linking,
+} from 'react-native';
 import ShareExtension from 'rn-extensions-share';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {store} from '../../app/stores/index';
 import {homeScreenStyle as styles} from './HomeScreenStyle';
 import ActionBar from '../components/atoms/ActionBar';
+import Button from '../components/atoms/Button';
 import ErrorStage from '../components/stages/ErrorStage';
 import ChoiceStage from '../components/stages/ChoiceStage';
 import Colors from '../../app/constants/Colors';
@@ -21,6 +28,7 @@ const HomeScreen = (props) => {
   const [mode, setMode] = useState(undefined);
   const [PDFMode, setPDFMode] = useState(undefined);
   const [actions, setActions] = useState(['close', 'continue']);
+  const [link, setLink] = useState(false);
   /* AUTHENTICATION */
   const [token, setToken] = useState(undefined);
   const [userId, setUserId] = useState(undefined);
@@ -50,6 +58,7 @@ const HomeScreen = (props) => {
       // set an error to 'Not logged in'.
       setError('You are not logged in.');
       setActions(['close']);
+      setLink(true);
     } else if (token !== null && userId !== null) {
       // Else, get the state from store, set trips variable to 'trips' reducer's availableTrips value.
       setTrips(store.getState().trips.availableTrips);
@@ -127,18 +136,31 @@ const HomeScreen = (props) => {
       />
 
       {/* ERROR - display error */}
-      {!error && <ErrorStage err={error} />}
+      {!!error && <ErrorStage err={error} />}
+
+      {/* LINK TO APP */}
+      {link && (
+        <View style={[styles.buttonContainer, styles.bigMarginTop]}>
+          <Button
+            title={'Open app'}
+            onPress={() => Linking.openURL('travellan://app')}
+          />
+        </View>
+      )}
 
       {/* CHOICE STAGE - if PDF, let user choose the type of PDF content: ticket, reservation */}
-      {!!error && mode === PDF && (
+      {!error && mode === PDF && (
         <ChoiceStage type={PDFMode} setType={() => setPDFMode()} />
       )}
 
       {/* VALIDATION STAGE - validate the element with user*/}
+      {}
 
       {/* ASSIGNMENT STAGE - assign the element to chosen trips */}
+      {}
 
       {/* STATUS STAGE - display the status of sharing */}
+      {}
     </View>
   );
 };
