@@ -39,6 +39,7 @@ const SaveIcon = (props) => {
 
 /* ACTION BAR */
 const ActionBar = (props) => {
+  console.log(props.actions);
   return (
     <View style={styles.actionsContainer}>
       {/* CLOSE BUTTON */}

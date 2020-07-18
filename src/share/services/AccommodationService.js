@@ -1,5 +1,5 @@
 /**
- * get value and type
+ * get value and mode
  *
  * if type === text, scheme === http/https, includes 'booking.com/hotel'
  *

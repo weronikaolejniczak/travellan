@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
-import ReadMore from '../../../../app/components/atoms/readMore/ReadMore';
-import Card from '../../../../app/components/atoms/card/Card';
-import Colors from '../../../../app/constants/Colors';
+import ReadMore from '../../../app/components/atoms/readMore/ReadMore';
+import Card from '../../../app/components/atoms/card/Card';
+import Colors from '../../../app/constants/Colors';
 
 const {height} = Dimensions.get('window');
 

@@ -4,22 +4,34 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
   Linking,
 } from 'react-native';
 import ShareExtension from 'rn-extensions-share';
 /** IMPORTS FROM WITHIN THE MODULE */
 import {store} from '../../app/stores/index';
 import {homeScreenStyle as styles} from './HomeScreenStyle';
+import parseAccommodation from '../services/AccommodationService';
 import ActionBar from '../components/atoms/ActionBar';
 import Button from '../components/atoms/Button';
 import ErrorStage from '../components/stages/ErrorStage';
 import ChoiceStage from '../components/stages/ChoiceStage';
+import ValidationStage from '../components/stages/ValidationStage';
+import AssignmentStage from '../components/stages/AssignmentStage';
 import Colors from '../../app/constants/Colors';
 
 /* MODES */
 const PDF = 'PDF';
 const BOOKING_COM = 'BOOKING_COM';
 const INCORRECT_TYPE = 'INCORRENT_TYPE';
+
+const CHOICE = 'CHOICE';
+const VALIDATION = 'VALIDATION';
+const ASSIGNMENT = 'ASSIGNMENT';
+const STATUS = 'STATUS';
+
+const PDF_STAGES = [CHOICE, VALIDATION, ASSIGNMENT, STATUS];
+const BOOKING_COM_STAGES = [VALIDATION, ASSIGNMENT, STATUS];
 
 const HomeScreen = (props) => {
   /* STATE VARIABLES AND STATE SETTING FUNCTIONS */
@@ -28,6 +40,7 @@ const HomeScreen = (props) => {
   const [mode, setMode] = useState(undefined);
   const [PDFMode, setPDFMode] = useState(undefined);
   const [actions, setActions] = useState(['close', 'continue']);
+  const [activeStage, setActiveStage] = useState(null);
   const [link, setLink] = useState(false);
   /* AUTHENTICATION */
   const [token, setToken] = useState(undefined);
@@ -87,6 +100,7 @@ const HomeScreen = (props) => {
           bookingRegex.test(res[0].value)
         ) {
           setMode(BOOKING_COM);
+          setActiveStage(BOOKING_COM_STAGES[0]);
         } else if (
           res &&
           !error &&
@@ -94,6 +108,7 @@ const HomeScreen = (props) => {
           PDFRegex.test(res[0].value)
         ) {
           setMode(PDF);
+          setActiveStage(PDF_STAGES[0]);
         } else {
           setMode(INCORRECT_TYPE);
           setError('Incorrect type.');
@@ -104,16 +119,6 @@ const HomeScreen = (props) => {
         setError(err);
       });
   }, [PDFRegex, bookingRegex, error]);
-
-  // Handle choosing trips' IDs by user.
-  const tripIdsHandler = (id) => {
-    tripIds.includes(id)
-      ? setTripIds(tripIds.filter((item) => item !== id))
-      : setTripIds([...new Set([...tripIds, id])]);
-  };
-
-  // Trim a string.
-  const trim = (string) => string.split(' ').slice(1, 4).join(' ');
 
   /** ACTIVITY INDICATOR */
   if (isLoading) {
@@ -129,14 +134,14 @@ const HomeScreen = (props) => {
       {/* ACTION BAR - display an action bar */}
       <ActionBar
         actions={actions}
-        close={() => ShareExtension.close()}
+        close={() => {}}
         goBack={() => {}}
         continue={() => {}}
         save={() => {}}
       />
 
       {/* ERROR - display error */}
-      {!!error && <ErrorStage err={error} />}
+      {error ? <ErrorStage err={error} /> : null}
 
       {/* LINK TO APP */}
       {link && (
@@ -149,15 +154,17 @@ const HomeScreen = (props) => {
       )}
 
       {/* CHOICE STAGE - if PDF, let user choose the type of PDF content: ticket, reservation */}
-      {!error && mode === PDF && (
+      {!error && activeStage === CHOICE && mode === PDF ? (
         <ChoiceStage type={PDFMode} setType={() => setPDFMode()} />
-      )}
+      ) : null}
 
       {/* VALIDATION STAGE - validate the element with user*/}
-      {}
+      {!error && activeStage === VALIDATION && <ValidationStage />}
 
       {/* ASSIGNMENT STAGE - assign the element to chosen trips */}
-      {}
+      {!error && activeStage === ASSIGNMENT && (
+        <AssignmentStage trips={trips} tripIds={tripIds} process={() => {}} />
+      )}
 
       {/* STATUS STAGE - display the status of sharing */}
       {}
