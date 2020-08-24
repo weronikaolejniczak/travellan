@@ -58,9 +58,16 @@ const TripDetails = (props) => {
       </View>
 
       <View>
+        {/* Information about the time left to departure
+          if there's no ticket added - counts the days
+          if there's a ticket added - counts the days and hours
+        */}
+
+        {/* Functionalities */}
         <View>
           <View // 1st row of functionalities buttons
             style={styles.justifyRow}>
+            {/* Budget */}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -77,6 +84,7 @@ const TripDetails = (props) => {
               />
             </TouchableOpacity>
 
+            {/* Notes */}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -95,6 +103,7 @@ const TripDetails = (props) => {
 
           <View // 2nd row of functionalities buttons
             style={styles.justifyRow}>
+            {/* Transport */}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -114,6 +123,7 @@ const TripDetails = (props) => {
               />
             </TouchableOpacity>
 
+            {/* Accommodation */}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -132,6 +142,7 @@ const TripDetails = (props) => {
 
           <View // 3rd row of functionalities buttons
             style={styles.justifyRow}>
+            {/* Map */}
             <TouchableOpacity
               style={[styles.button]}
               onPress={() => {
@@ -145,7 +156,8 @@ const TripDetails = (props) => {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* Weather */}
+            {/* <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather', {
@@ -158,7 +170,7 @@ const TripDetails = (props) => {
                 size={42}
                 color="#FFFFFF"
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
