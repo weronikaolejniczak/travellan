@@ -173,7 +173,7 @@ const Auth = (props) => {
   );
 };
 
-export const authScreenOptions = {
+export const authOptions = {
   headerShown: false,
   //headerTitle: 'Authenticate',
 };

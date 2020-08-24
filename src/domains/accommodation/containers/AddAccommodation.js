@@ -104,7 +104,7 @@ const AddAccommodation = (props) => {
           reservationDetails,
         ),
       );
-      props.navigation.navigate('Housing', {
+      props.navigation.navigate('Accommodation', {
         tripId: selectedTrip.id,
       });
       setIsLoading(false);

@@ -14,7 +14,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Card from 'components/card/Card';
 import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
-import {transportStyle as styles, cardHeight} from './TransportStyle';
+import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {

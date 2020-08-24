@@ -117,7 +117,7 @@ const TripDetails = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                props.navigation.navigate('Housing', {
+                props.navigation.navigate('Accommodation', {
                   tripId: selectedTrip.id,
                 });
               }}>

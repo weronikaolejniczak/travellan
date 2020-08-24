@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import Colors from 'constants/Colors';
 
-export const newNoteStyle = StyleSheet.create({
+export const addNoteStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,

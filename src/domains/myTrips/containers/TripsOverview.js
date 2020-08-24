@@ -122,7 +122,7 @@ const TripsOverview = (props) => {
 
 /** we export screenOptions to use in our Stack.Navigator
  * @param {*} navData: lets us use "navigation" prop from within this function */
-export const tripsScreenOptions = (navData) => {
+export const tripsOverviewOptions = (navData) => {
   return {
     /* MENU BUTTON
     headerLeft: (props) => (
@@ -139,11 +139,11 @@ export const tripsScreenOptions = (navData) => {
     headerRight: (props) => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="Create a trip"
+          title="New trip"
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            navData.navigation.navigate('Create a trip');
+            navData.navigation.navigate('New trip');
           }}
         />
       </HeaderButtons>

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as noteActions from 'notes/state/Actions';
-import {newNoteScreenStyle as styles} from './AddNoteStyle';
+import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
 
 const AddNote = (props) => {

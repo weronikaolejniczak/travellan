@@ -16,7 +16,7 @@ import HeaderButton from 'components/headerButton/HeaderButton';
 import AccommodationItem from 'accommodation/components/item/Accommodation';
 import * as accommodationActions from 'accommodation/state/Actions';
 import {cardWidth} from 'accommodation/components/item/AccommodationStyle'; // REFACTOR
-import {accommodationScreenStyle as styles} from './AccommodationStyle'; //REFACTOR
+import {accommodationStyle as styles} from './AccommodationStyle'; //REFACTOR
 import Colors from 'constants/Colors'; // REFACTOR
 
 /** ACCOMMODATION SCREEN - displays stored reservations */
