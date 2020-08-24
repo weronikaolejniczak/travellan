@@ -1,1 +1,0 @@
-This directory contains actions and reducers.
