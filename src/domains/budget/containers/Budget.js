@@ -15,7 +15,7 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from 'components/headerButton/HeaderButton';
-import Card from 'omponents/card/Card';
+import Card from 'components/card/Card';
 import {budgetStyle as styles} from './BudgetStyle';
 import Colors from 'constants/Colors';
 

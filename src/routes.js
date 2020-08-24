@@ -4,45 +4,39 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 /** SCREENS */
 // Authorization/login and signup containers.
-import Auth, {authOptions} from './domains/user/containers/Auth';
+import Auth, {authOptions} from 'user/containers/Auth';
 // Trip overview container.
 import TripsOverview, {
   tripsOverviewOptions,
-} from './domains/myTrips/containers/TripOverview';
+} from 'myTrips/containers/TripsOverview';
 // Trip details container.
-import TripDetails, {
-  tripDetailsOptions,
-} from './domains/myTrips/containers/TripDetails';
+import TripDetails, {tripDetailsOptions} from 'myTrips/containers/TripDetails';
 // Creating a new trip container.
-import NewTrip, {newTripOptions} from './domains/myTrips/containers/NewTrip';
+import NewTrip, {newTripOptions} from 'myTrips/containers/NewTrip';
 // Transport containers.
-import Transport, {
-  transportOptions,
-} from './domains/transport/containers/Transport';
-import AddTransport from './domains/transport/containers/AddTransport';
+import Transport, {transportOptions} from 'transport/containers/Transport';
+import AddTransport from 'transport/containers/AddTransport';
 // Accommodation containers.
 import Accommodation, {
   accommodationOptions,
-} from './domains/accommodation/containers/Accommodation';
-import AddAccommodation from './domains/accommodation/containers/AddAccommodation';
+} from 'accommodation/containers/Accommodation';
+import AddAccommodation from 'accommodation/containers/AddAccommodation';
 // Budget container.
-import Budget, {budgetOptions} from './domains/budget/containers/AddTransport';
-import AddCurrency from './domains/budget/containers/AddTransport';
+import Budget, {budgetOptions} from 'budget/containers/Budget';
+import AddCurrency from 'budget/containers/AddCurrency';
 // Notes container.
-import Notes, {notesOptions} from './domains/notes/containers/Notes';
-import AddNote from './domains/notes/containers/AddNote';
+import Notes, {notesOptions} from 'notes/containers/Notes';
+import AddNote from 'notes/containers/AddNote';
 // Map container.
-import Map from './domains/map/containers/Map';
+import Map from 'map/containers/Map';
 // Weather container.
-import Weather from './domains/weather/containers/Weather';
+import Weather from 'weather/containers/Weather';
 
 /** CONSTANTS */
-import Colors from './common/constants/Colors';
+import Colors from 'constants/Colors';
 
 /** STACK NAVIGATOR */
 const Stack = createStackNavigator();
-
-const s = new Date();
 
 export default function Navigation() {
   return (

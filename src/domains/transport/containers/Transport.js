@@ -13,9 +13,9 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from 'components/headerButton/HeaderButton';
-import TransportItem from 'components/transport/TransportItem';
+import TransportItem from 'transport/components/item/Transport';
 import * as transportActions from 'transport/state/Actions';
-import {cardWidth} from 'transport/component/item/TransportStyle';
+import {cardWidth} from 'transport/components/item/TransportStyle';
 import {transportStyle as styles} from './TransportStyle';
 import Colors from 'constants/Colors';
 

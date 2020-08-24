@@ -5,7 +5,7 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import HeaderButton from 'components/headerButton/HeaderButton';
-import NoteItem from 'components/notes/item/NoteItem';
+import NoteItem from 'notes/components/item/Note';
 import * as noteActions from 'notes/state/Actions';
 import {NotesStyles as styles} from './NotesStyle';
 import Colors from 'constants/Colors';

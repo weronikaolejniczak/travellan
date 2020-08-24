@@ -1,41 +1,33 @@
 /** MODELS */
-import Trip from '../../models/TripModel';
+import Trip from 'myTrips/models/Trip';
 
 /** ACTIONS */
 // Trips.
-import {
-  SET_TRIPS,
-  DELETE_TRIP,
-  CREATE_TRIP,
-} from '../../domains/myTrips/state/Actions';
+import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'myTrips/state/Actions';
 
 // Transport.
 import {
   SET_TRANSPORT,
   DELETE_TRANSPORT,
   CREATE_TRANSPORT,
-} from './actions/Transport';
+} from 'transport/state/Actions';
 
 // Accommodation.
 import {
   SET_RESERVATIONS,
   DELETE_RESERVATION,
   CREATE_RESERVATION,
-} from '../../domains/accommodation/state/Actions';
+} from 'accommodation/state/Actions';
 
 // Notes.
-import {
-  CREATE_NOTE,
-  DELETE_NOTE,
-  SET_NOTES,
-} from '../../domains/notes/state/Actions';
+import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from 'notes/state/Actions';
 
 // Budget.
 import {
   FETCH_BUDGET,
   SUBTRACT_FROM_BUDGET,
   ADD_TO_BUDGET,
-} from '../../domains/budget/state/Actions';
+} from 'budget/state/Actions';
 
 /** COMMON REDUCER */
 export const initialState = {

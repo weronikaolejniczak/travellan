@@ -14,7 +14,7 @@ import {useDispatch} from 'react-redux';
 import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
 import * as authActions from 'user/state/Actions';
-import {AuthScreenStyle as styles} from './AuthStyle';
+import {AuthStyle as styles} from './AuthStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -116,7 +116,7 @@ const Auth = (props) => {
           <View style={{marginBottom: 20, alignItems: 'center'}}>
             <Image
               style={{width: 200, height: 200, resizeMode: 'stretch'}}
-              source={require('../../assets/images/logo.png')}
+              source={require('assets/images/logo.png')}
             />
           </View>
           <Input

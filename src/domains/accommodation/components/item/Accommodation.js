@@ -17,7 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
 import * as accommodationActions from 'accommodation/state/Actions';
-import {accommodationItemStyle as styles} from './Accommodationtyle';
+import {accommodationItemStyle as styles} from './AccommodationStyle';
 import Colors from 'constants/Colors';
 
 const imageUrl =
