@@ -140,7 +140,7 @@ export const transportOptions = (navData) => {
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            navData.navigation.navigate('Add transport', {
+            navData.navigation.navigate('Add QR', {
               tripId: navData.route.params.tripId,
             });
           }}
