@@ -1,0 +1,1 @@
+This directory contains services specific for sharing functionality.
