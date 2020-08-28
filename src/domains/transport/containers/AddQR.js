@@ -1,19 +1,21 @@
-
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 
 import {
-  AppRegistry,
-  StyleSheet,
+  //AppRegistry,
+  //StyleSheet,
   Text,
-  TouchableOpacity,
-  Linking,
+  //TouchableOpacity,
+  //Linking,
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {RNCamera} from 'react-native-camera';
+import QRCode from 'react-native-qrcode-svg';
+//import code from 'react-native-aztec-qrcode';
+//import {RNCamera} from 'react-native-camera';
 import {AddQRStyle as styles} from './AddQRStyle';
+import {useDispatch, useSelector} from 'react-redux';
 /*
 class ScanScreen extends Component {
   onSuccess = e => {
@@ -22,34 +24,43 @@ class ScanScreen extends Component {
     );
   };
 */
+//class AddQR extends Component {
 const AddQR = (props) => {
-  /** 
-    state ={
-        qr:""
-    }
-    onRead = e => {
-        this.setState({qr: e})
-    }
-   */
+  //const dispatch = useDispatch();
+  // const tripId = props.route.params.tripId;
+  //const selectedTrip = useSelector((state) =>
+  //   state.trips.availableTrips.find((item) => item.id === tripId),
+  //);
+  const [QR, setQR] = useState('');
+  // eslint-disable-next-line no-undef
+  //const someHandler = () => {
+
+  const what = (e) => {
+    //onRead({qr: e});
+    console.log(e);
+    setQR(e.data);
+  };
+
   return (
     <QRCodeScanner
-      //onRead={this.onRead}
+      onRead={what}
       //flashMode={RNCamera.Constants.FlashMode.torch}
       topContent={
         <Text style={styles.centerText}>
-          Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text>{' '}
-          on your computer and scan the QR code.
+          <Text style={styles.textBold}>{QR}</Text>
+          {QR ? <QRCode value={QR} /> : null}
         </Text>
       }
-      bottomContent={
+      /**
+        bottomContent={
         <TouchableOpacity style={styles.buttonTouchable}>
           <Text style={styles.buttonText}>OK. Got it!</Text>
         </TouchableOpacity>
-      }
+        }
+      */
     />
   );
 };
 
 export default AddQR;
 //AppRegistry.registerComponent('default', () => ScanScreen);
-
