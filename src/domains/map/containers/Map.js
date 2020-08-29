@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 /* IMPORTS FROM WITHIN THE MODULE */
-import {mapStyle} from './MapStyle';
+import {googleMapStyle} from './GoogleMapStyle';
+import {mapStyle as styles} from './MapStyle';
 import Colors from 'constants/Colors';
 
 const Map = (props) => {
@@ -90,14 +85,43 @@ const Map = (props) => {
     setMapSearchActive(!mapSearchActive);
   };
 
-  const getMarkerDetails = (coords) => {
-    if (markerTitle !== '') {
-      const title = markerTitle;
-      const {latitude, longitude} = coords.nativeEvent.coordinate;
-      setMarkers([...markers, {title, latitude, longitude}]);
-      setMarkerTitle('');
+  // handles marker onPress action
+  const markerOnPressHandler = (coords) => {
+    const {latitude, longitude} = coords.nativeEvent.coordinate;
+    if (addingMarkerActive) {
+    } else if (deletingMarkerActive) {
+      // filter markers so that they exclude the marker with the coordinates
+      setMarkers(
+        markers.filter(
+          (marker) =>
+            !(marker.latitude === latitude && marker.longitude === longitude),
+        ),
+      );
     } else {
-      console.log('enter title!'); // refactor error to show in UI
+      //setShowPlaceInfo(true);
+      setActiveMarker(coords.nativeEvent);
+    }
+  };
+
+  // handles map onPress action
+  const mapOnPressHandler = (coords) => {
+    // save received coordinates to local variables
+    const {latitude, longitude} = coords.nativeEvent.coordinate;
+    // do something with saved coordinates
+    if (addingMarkerActive) {
+      if (markerTitle !== '') {
+        const title = markerTitle;
+        // add a marker with given coords to markers array
+        setMarkers([...markers, {title, latitude, longitude}]);
+        setMarkerTitle('');
+      } else {
+        console.log('enter title!'); // refactor error to show in UI
+      }
+    } else if (deletingMarkerActive) {
+    } else if (routeActive) {
+    } else if (mapSearchActive) {
+    } else {
+      //setShowPlaceInfo(false);
     }
   };
 
@@ -107,7 +131,7 @@ const Map = (props) => {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.flex}
-        customMapStyle={mapStyle}
+        customMapStyle={googleMapStyle}
         initialRegion={extractRegion()}
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -115,10 +139,12 @@ const Map = (props) => {
         loadingIndicatorColor={Colors.primary}
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
-        onPoiClick={(event) => console.log(event.nativeEvent)} // later used for showing more info
-        onPress={(event) =>
-          addingMarkerActive ? getMarkerDetails(event) : setShowPlaceInfo(false)
-        }>
+        onPoiClick={(event) => {
+          console.log(event.nativeEvent);
+          //setShowPlaceInfo(false);
+        }}
+        onPress={(event) => mapOnPressHandler(event)}>
+        {/* RENDER MARKERS */}
         {markers.map(
           (marker) =>
             markers && (
@@ -130,15 +156,12 @@ const Map = (props) => {
                 title={marker.title}
                 description={marker.description}
                 pinColor={Colors.primary}
-                onPress={(event) =>
-                  !addingMarkerActive &&
-                  (setShowPlaceInfo(true),
-                  setActiveMarker(event._dispatchInstances.memoizedProps))
-                }
+                onPress={(event) => markerOnPressHandler(event)}
               />
             ),
         )}
       </MapView>
+
       {/* INTERACTIVE OVERLAY */}
       <View style={styles.overlay}>
         <View style={styles.actionBar}>
@@ -150,6 +173,7 @@ const Map = (props) => {
               <MaterialIcon name="arrow-back" style={styles.icon} />
             </TouchableOpacity>
           </View>
+
           {/* ADD MARKER */}
           <View
             style={{
@@ -163,6 +187,7 @@ const Map = (props) => {
               <Icon name="map-marker-plus" style={styles.icon} />
             </TouchableOpacity>
           </View>
+
           {/* DELETE MARKER */}
           <View
             style={{
@@ -176,6 +201,7 @@ const Map = (props) => {
               <Icon name="map-marker-minus" style={styles.icon} />
             </TouchableOpacity>
           </View>
+
           {/* SEE A ROUTE BETWEEN TWO MARKERS */}
           <View
             style={{
@@ -187,6 +213,7 @@ const Map = (props) => {
               <Icon name="map-marker-path" style={styles.icon} />
             </TouchableOpacity>
           </View>
+
           {/* SEARCH FOR PLACE */}
           <View
             style={{
@@ -201,6 +228,7 @@ const Map = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+
         {/** USER INPUT */}
         <View style={{alignItems: 'center'}}>
           {/* SEARCH BAR: render when mapSearchActive is true */}
@@ -220,6 +248,7 @@ const Map = (props) => {
               </View>
             </View>
           )}
+
           {/* TITLE: render when addingMarkerActive is true */}
           {addingMarkerActive && (
             <View style={styles.inputContainer}>
@@ -234,19 +263,10 @@ const Map = (props) => {
           )}
         </View>
       </View>
+
       {/* SHOW PLACE INFO: render when showPlaceInfo is true */}
       {showPlaceInfo && (
-        <View
-          style={{
-            width: '67%',
-            height: '20%',
-            position: 'absolute',
-            bottom: 0,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            alignSelf: 'center',
-            backgroundColor: Colors.background,
-          }}>
+        <View style={styles.showInfoOverlay}>
           <View style={{padding: 10}}>
             <Text style={{color: Colors.text}}>{activeMarker.title}</Text>
           </View>
@@ -255,55 +275,5 @@ const Map = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  flex: {
-    flex: 1,
-  },
-  overlay: {
-    top: 0,
-    position: 'absolute',
-    width: '100%',
-    justifyContent: 'flex-end',
-    backgroundColor: Colors.cards,
-  },
-  actionBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  inputContainer: {
-    width: '100%',
-    justifyContent: 'center',
-    backgroundColor: Colors.cards,
-  },
-  input: {
-    width: '100%',
-    padding: 15,
-    paddingLeft: 20,
-    borderTopWidth: 1,
-    borderColor: Colors.text,
-    fontSize: 14,
-    color: Colors.text,
-  },
-  button: {
-    backgroundColor: Colors.text,
-    padding: 20,
-  },
-  icon: {
-    padding: 15,
-    fontSize: 28,
-    color: Colors.text,
-  },
-  text: {
-    color: Colors.text,
-  },
-});
 
 export default Map;

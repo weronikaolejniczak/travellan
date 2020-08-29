@@ -1,161 +1,63 @@
-export const mapStyle = [
-  {
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#242f3e',
-      },
-    ],
+import {StyleSheet} from 'react-native';
+/* imports from within the module */
+import Colors from 'constants/Colors';
+
+export const mapStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
   },
-  {
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#746855',
-      },
-    ],
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
-  {
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#242f3e',
-      },
-    ],
+  flex: {
+    flex: 1,
   },
-  {
-    featureType: 'administrative.locality',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#d59563',
-      },
-    ],
+  overlay: {
+    top: 0,
+    position: 'absolute',
+    width: '100%',
+    justifyContent: 'flex-end',
+    backgroundColor: Colors.cards,
   },
-  {
-    featureType: 'poi',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#d59563',
-      },
-    ],
+  actionBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
-  {
-    featureType: 'poi.park',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#263c3f',
-      },
-    ],
+  showInfoOverlay: {
+    width: '67%',
+    height: '20%',
+    position: 'absolute',
+    bottom: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    alignSelf: 'center',
+    backgroundColor: Colors.background,
   },
-  {
-    featureType: 'poi.park',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#6b9a76',
-      },
-    ],
+  inputContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    backgroundColor: Colors.cards,
   },
-  {
-    featureType: 'road',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#38414e',
-      },
-    ],
+  input: {
+    width: '100%',
+    padding: 15,
+    paddingLeft: 20,
+    borderTopWidth: 1,
+    borderColor: Colors.text,
+    fontSize: 14,
+    color: Colors.text,
   },
-  {
-    featureType: 'road',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#212a37',
-      },
-    ],
+  button: {
+    backgroundColor: Colors.text,
+    padding: 20,
   },
-  {
-    featureType: 'road',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#9ca5b3',
-      },
-    ],
+  icon: {
+    padding: 15,
+    fontSize: 28,
+    color: Colors.text,
   },
-  {
-    featureType: 'road.highway',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#746855',
-      },
-    ],
+  text: {
+    color: Colors.text,
   },
-  {
-    featureType: 'road.highway',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#1f2835',
-      },
-    ],
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#f3d19c',
-      },
-    ],
-  },
-  {
-    featureType: 'transit',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#2f3948',
-      },
-    ],
-  },
-  {
-    featureType: 'transit.station',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#d59563',
-      },
-    ],
-  },
-  {
-    featureType: 'water',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#17263c',
-      },
-    ],
-  },
-  {
-    featureType: 'water',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#515c6d',
-      },
-    ],
-  },
-  {
-    featureType: 'water',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#17263c',
-      },
-    ],
-  },
-];
+});
