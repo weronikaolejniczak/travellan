@@ -1,3 +1,5 @@
+# Application source
+
 ## Overview
 
 This directory is a source of application.
@@ -5,7 +7,7 @@ This directory is a source of application.
 ## Source folder structure
 
 It has the following construction:
-- **common** (folder) - contains assets, components, constants and data that is used throughout the application and all of its components.
+- **[common](/common)** (folder) - contains assets, components, constants and data that is used throughout the application and all of its components.
     - **assets** - contains assets such as images (application logo etc.).
     - **components** - contains shared components that are used all throughout the application such as button, header, header button and so on.
     - **constants** - contains constants such as colors, metrics and fonts.
