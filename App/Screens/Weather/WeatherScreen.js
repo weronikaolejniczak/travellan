@@ -17,18 +17,22 @@ const WeatherScreen = (props) => {
   const longitude = region.longitude;
 
   const [info,setInfo]= useState({
-    name: "loading",
+    country:"loading",
+    city: "loading",
     temp: "loading",
-    humidity: "loading",
-    desc: "loading",
-    icon: "loading",
+
   })
   
   const getWeather = ()=>{
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&APPID=2cc313a48db97496e06a2253be1b2caf`)
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&APPID=2cc313a48db97496e06a2253be1b2caf&units=metric`)
     .then(data=>data.json())
     .then(results=>{
-      console.log(results)
+      setInfo({
+        country: results.country,
+        city:results.name,
+        temp:results.temp,
+
+      })
     })
   }
   return (
