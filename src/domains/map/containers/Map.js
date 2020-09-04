@@ -49,6 +49,7 @@ const Map = (props) => {
     );
   }, [currentPosition]);
 
+  // refactor
   const addingActivityHandler = () => {
     if (!addingMarkerActive) {
       setDeletingMarkerActive(false);
@@ -121,7 +122,7 @@ const Map = (props) => {
     } else if (routeActive) {
     } else if (mapSearchActive) {
     } else {
-      //setShowPlaceInfo(false);
+      setShowPlaceInfo(false);
     }
   };
 
@@ -140,8 +141,8 @@ const Map = (props) => {
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
         onPoiClick={(event) => {
-          console.log(event.nativeEvent);
-          //setShowPlaceInfo(false);
+          setShowPlaceInfo(true);
+          setActiveMarker(event.nativeEvent);
         }}
         onPress={(event) => mapOnPressHandler(event)}>
         {/* RENDER MARKERS */}
@@ -153,11 +154,13 @@ const Map = (props) => {
                   latitude: marker.latitude,
                   longitude: marker.longitude,
                 }}
-                title={marker.title}
-                description={marker.description}
                 pinColor={Colors.primary}
-                onPress={(event) => markerOnPressHandler(event)}
-              />
+                onPress={(event) => markerOnPressHandler(event)}>
+                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+                  <Text>{marker.title}</Text>
+                  <Text>{marker.description}</Text>
+                </MapView.Callout>
+              </MapView.Marker>
             ),
         )}
       </MapView>
@@ -203,7 +206,7 @@ const Map = (props) => {
           </View>
 
           {/* SEE A ROUTE BETWEEN TWO MARKERS */}
-          <View
+          {/* <View
             style={{
               backgroundColor: routeActive ? Colors.background : Colors.cards,
             }}>
@@ -212,7 +215,7 @@ const Map = (props) => {
               onPress={routeActivityHandler}>
               <Icon name="map-marker-path" style={styles.icon} />
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* SEARCH FOR PLACE */}
           <View
