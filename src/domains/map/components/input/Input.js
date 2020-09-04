@@ -1,27 +1,21 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View, TextInput} from 'react-native';
+import Search from 'map/components/search/Search';
 
 const Input = (props) => {
   switch (props.type) {
     case 'search':
       return (
-        <View style={{alignItems: 'center'}}>
-          <View style={props.styles.inputContainer}>
-            <TextInput
-              placeholder="Address or name of place"
-              placeholderTextColor={'grey'}
-              style={props.styles.input}
-              onChangeText={(text) => props.setPlaceToSearch(text)}
-              value={props.placeToSearch}
-            />
-            <View style={{position: 'absolute', right: 0}}>
-              <TouchableOpacity styles={props.styles.button}>
-                <Icon name="search" style={props.styles.icon} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <Search
+          styles={props.styles}
+          setPlaceToSearch={props.setPlaceToSearch}
+          placeToSearch={props.placeToSearch}
+          autocomplete={props.autocomplete}
+          showAutocomplete={props.showAutocomplete}
+          setShowAutocomplete={props.setShowAutocomplete}
+          focusedPlace={props.focusedPlace}
+          setFocusedPlace={props.setFocusedPlace}
+        />
       );
     case 'title':
       return (

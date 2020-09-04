@@ -9,6 +9,7 @@ import PlaceOverview from 'map/components/placeOverview/PlaceOverview';
 import {googleMapStyle} from './GoogleMapStyle';
 import {mapStyle as styles} from './MapStyle';
 import Colors from 'constants/Colors';
+import {Autocomplete} from 'map/data/DummyAutocomplete';
 
 const Map = (props) => {
   /* variables */
@@ -28,8 +29,12 @@ const Map = (props) => {
   const [mapSearchActive, setMapSearchActive] = useState(false);
   const [showPlaceInfo, setShowPlaceInfo] = useState(false);
   const [placeToSearch, setPlaceToSearch] = useState('');
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
   const [markerTitle, setMarkerTitle] = useState('');
+  const [focusedPlace, setFocusedPlace] = useState();
+
+  const AUTOCOMPLETE = Autocomplete;
 
   /** handlers */
   useEffect(() => {
@@ -172,7 +177,7 @@ const Map = (props) => {
         addingMarkerActive={addingMarkerActive}
         addingActivityHandler={() => activityHandler('adding')}
         markerTitle={markerTitle}
-        setMarkerTitle={setMarkerTitle}
+        setMarkerTitle={() => setMarkerTitle()}
         deletingMarkerActive={deletingMarkerActive}
         deletingActivityHandler={() => activityHandler('deleting')}
         routeActive={routeActive}
@@ -180,12 +185,17 @@ const Map = (props) => {
         mapSearchActive={mapSearchActive}
         searchActivityHandler={() => activityHandler('search')}
         placeToSearch={placeToSearch}
-        setPlaceToSearch={setPlaceToSearch}
+        setPlaceToSearch={() => setPlaceToSearch()}
+        autocomplete={AUTOCOMPLETE}
+        showAutocomplete={showAutocomplete}
+        setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
+        focusedPlace={focusedPlace}
+        setFocusedPlace={() => setFocusedPlace()}
       />
 
       {/* render place details */}
       {showPlaceInfo && (
-        <PlaceOverview styles={props.styles} activeMarker={activeMarker} />
+        <PlaceOverview styles={styles} activeMarker={activeMarker} />
       )}
     </View>
   );

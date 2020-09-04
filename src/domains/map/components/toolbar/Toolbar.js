@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 /* imports from within the module */
-import ToolbarButton from 'map/components/toolbar/Toolbar';
+import ToolbarButton from 'map/components/toolbarButton/ToolbarButton';
 import Input from 'map/components/input/Input';
 
 const Toolbar = (props) => {
@@ -46,24 +46,29 @@ const Toolbar = (props) => {
           mapSearchActive={props.mapSearchActive}
           searchActivityHandler={props.searchActivityHandler}
         />
-        {/* input field */}
-        {props.mapSearchActive && (
-          <Input
-            type={'search'}
-            styles={props.styles}
-            placeToSearch={props.placeToSearch}
-            setPlaceToSearch={props.setPlaceToSearch}
-          />
-        )}
-        {props.addingMarkerActive && (
-          <Input
-            type={'title'}
-            styles={props.styles}
-            markerTitle={props.markerTitle}
-            setMarkerTitle={props.setMarkerTitle}
-          />
-        )}
       </View>
+      {/* input field */}
+      {props.mapSearchActive && (
+        <Input
+          type={'search'}
+          styles={props.styles}
+          placeToSearch={props.placeToSearch}
+          setPlaceToSearch={props.setPlaceToSearch}
+          autocomplete={props.autocomplete}
+          showAutocomplete={props.showAutocomplete}
+          setShowAutocomplete={props.setShowAutocomplete}
+          focusedPlace={props.focusedPlace}
+          setFocusedPlace={props.setFocusedPlace}
+        />
+      )}
+      {props.addingMarkerActive && (
+        <Input
+          type={'title'}
+          styles={props.styles}
+          markerTitle={props.markerTitle}
+          setMarkerTitle={props.setMarkerTitle}
+        />
+      )}
     </View>
   );
 };

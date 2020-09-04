@@ -1,0 +1,55 @@
+export const Autocomplete = [
+  {
+    place_id: '322748944935',
+    osm_id: '4215254918',
+    osm_type: 'node',
+    licence: 'https://locationiq.com/attribution',
+    lat: '52.410998',
+    lon: '16.953507',
+    boundingbox: ['52.410948', '52.411048', '16.953457', '16.953557'],
+    class: 'tourism',
+    type: 'hotel',
+    display_name:
+      'Hotel Śródka, 6, Śródka, Zawady, Śródka, Poznań, Greater Poland Voivodeship, 61-125, Poland',
+    display_place: 'Hotel Śródka',
+    display_address:
+      '6, Śródka, Zawady, Śródka, Poznań, Greater Poland Voivodeship, 61-125, Poland',
+    address: {
+      name: 'Hotel Śródka',
+      house_number: '6',
+      road: 'Śródka',
+      neighbourhood: 'Zawady',
+      suburb: 'Śródka',
+      city: 'Poznań',
+      state: 'Greater Poland Voivodeship',
+      postcode: '61-125',
+      country: 'Poland',
+      country_code: 'pl',
+    },
+  },
+  {
+    place_id: '323988495603',
+    osm_id: '169309041',
+    osm_type: 'node',
+    licence: 'https://locationiq.com/attribution',
+    lat: '52.4112499',
+    lon: '16.9536724',
+    boundingbox: ['52.3912499', '52.4312499', '16.9336724', '16.9736724'],
+    class: 'place',
+    type: 'hamlet',
+    display_name:
+      'Śródka, Ostrów Tumski-Śródka-Zawady-Komandoria, Poznań, Greater Poland Voivodeship, 61-125, Poland',
+    display_place: 'Śródka',
+    display_address:
+      'Ostrów Tumski-Śródka-Zawady-Komandoria, Poznań, Greater Poland Voivodeship, 61-125, Poland',
+    address: {
+      name: 'Śródka',
+      suburb: 'Ostrów Tumski-Śródka-Zawady-Komandoria',
+      city: 'Poznań',
+      state: 'Greater Poland Voivodeship',
+      postcode: '61-125',
+      country: 'Poland',
+      country_code: 'pl',
+    },
+  },
+];
