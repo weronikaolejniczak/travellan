@@ -171,12 +171,16 @@ const Map = (props) => {
         navigation={props.navigation}
         addingMarkerActive={addingMarkerActive}
         addingActivityHandler={() => activityHandler('adding')}
+        markerTitle={markerTitle}
+        setMarkerTitle={setMarkerTitle}
         deletingMarkerActive={deletingMarkerActive}
         deletingActivityHandler={() => activityHandler('deleting')}
         routeActive={routeActive}
         routeActivityHandler={() => activityHandler('route')}
         mapSearchActive={mapSearchActive}
         searchActivityHandler={() => activityHandler('search')}
+        placeToSearch={placeToSearch}
+        setPlaceToSearch={setPlaceToSearch}
       />
 
       {/* render place details */}

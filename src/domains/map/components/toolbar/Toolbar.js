@@ -47,8 +47,22 @@ const Toolbar = (props) => {
           searchActivityHandler={props.searchActivityHandler}
         />
         {/* input field */}
-        {props.mapSearchActive && <Input type={'search'} />}
-        {props.addingMarkerActive && <Input type={'title'} />}
+        {props.mapSearchActive && (
+          <Input
+            type={'search'}
+            styles={props.styles}
+            placeToSearch={props.placeToSearch}
+            setPlaceToSearch={props.setPlaceToSearch}
+          />
+        )}
+        {props.addingMarkerActive && (
+          <Input
+            type={'title'}
+            styles={props.styles}
+            markerTitle={props.markerTitle}
+            setMarkerTitle={props.setMarkerTitle}
+          />
+        )}
       </View>
     </View>
   );
