@@ -31,7 +31,7 @@ const Weather = (props) => {
   },[])
   
   const getWeather = ()=>{
-    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${client_id}&units=metric`)
+    fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${client_id}&units=metric`)
     .then(data=>data.json())
     .then(results=>{ console.log(results)
       /*setInfo({
