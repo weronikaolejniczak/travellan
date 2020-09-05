@@ -20,6 +20,7 @@ const Weather = (props) => {
   const longitude = region.longitude;
 
   const [info,setInfo]= useState({
+    date: "loading",
     maxTemp: "loading", // Celsius
     minTemp: "loading", // Celsius
     tempDay: "loading", // Celsius
@@ -31,8 +32,9 @@ const Weather = (props) => {
     wind_speed: "loading", // m/s
     cloudiness: "loading", //  %
     description: 'loading', // string
-    rain: 'loading', 
-    icon: 'loading',
+    rain: 'loading', // propability
+    icon: 'loading', // icon id
+    visibility: 'loading', // m
 
   })
 
@@ -45,6 +47,7 @@ const Weather = (props) => {
     .then(data=>data.json())
     .then(results=>{ 
       setInfo({
+        date: results.daily[0].dt,
         maxTemp: results.daily[0].temp.max,
         minTemp: results.daily[0].temp.min,
         tempDay: results.daily[0].temp.day,
@@ -67,6 +70,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon+".png"}}
       />
+      <Text>Date: {info.date}</Text>
       <Text>Max Temperature: {info.maxTemp}°C</Text>
       <Text>Min Temperature: {info.minTemp}°C</Text>
       <Text>Day Temperature: {info.tempDay}°C</Text>
