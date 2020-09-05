@@ -80,6 +80,21 @@ const Weather = (props) => {
     description_4: 'loading', // string
     rain_4: 'loading', // propability
     icon_4: 'loading', // icon id
+    //FIFTH DAY
+    date_5: "loading",
+    maxTemp_5: "loading", // Celsius
+    minTemp_5: "loading", // Celsius
+    tempDay_5: "loading", // Celsius
+    tempNight_5: "loading", // Celsius
+    tempFeels_like_day_5: "loading", //Celsius
+    tempFeels_like_night_5: "loading", //Celsius
+    pressure_5: "loading", // hPa
+    humidity_5: "loading", // %
+    wind_speed_5: "loading", // m/s
+    cloudiness_5: "loading", //  %
+    description_5: 'loading', // string
+    rain_5: 'loading', // propability
+    icon_5: 'loading', // icon id
 
   })
 
@@ -153,6 +168,21 @@ const Weather = (props) => {
         description_4: results.daily[3].weather[0].description,
         rain_4: results.daily[3].pop,
         icon_4: results.daily[3].weather[0].icon,
+        //FIFTH DAY
+        date_5: results.daily[4].dt,
+        maxTemp_5: results.daily[4].temp.max,
+        minTemp_5: results.daily[4].temp.min,
+        tempDay_5: results.daily[4].temp.day,
+        tempNight_5: results.daily[4].temp.night,
+        tempFeels_like_day_5: results.daily[4].feels_like.day,
+        tempFeels_like_night_5: results.daily[4].feels_like.night,
+        pressure_5: results.daily[4].pressure,
+        humidity_5: results.daily[4].humidity,
+        wind_speed_5: results.daily[4].wind_speed,
+        cloudiness_5: results.daily[4].clouds,
+        description_5: results.daily[4].weather[0].description,
+        rain_5: results.daily[4].pop,
+        icon_5: results.daily[4].weather[0].icon,
       })
     })
   }
@@ -236,6 +266,25 @@ const Weather = (props) => {
       <Text>Description: {info.description_4}</Text>
       <Text>Propability of rain: {info.rain_4 * 100}%</Text>
       {/*<Text>Icon id: {info.icon_4}</Text>*/}
+      {/*FIFTH DAY*/}
+      <Image 
+        style={{width: 70, height: 70}}
+        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_5+".png"}}
+      />
+      <Text>Date: {info.date_5}</Text>
+      <Text>Max Temperature: {info.maxTemp_5}°C</Text>
+      <Text>Min Temperature: {info.minTemp_5}°C</Text>
+      <Text>Day Temperature: {info.tempDay_5}°C</Text>
+      <Text>Night Temperature: {info.tempNight_5}°C</Text>
+      <Text>Feels like day temperature: {info.tempFeels_like_day_5}°C</Text>
+      <Text>Feels like night temperature: {info.tempFeels_like_night_5}°C</Text>
+      <Text>Pressure: {info.pressure_5}hPa</Text>
+      <Text>Humidity: {info.humidity_5}%</Text>
+      <Text>Wind Speed: {info.wind_speed_5}m/s</Text>
+      <Text>Cloudiness: {info.cloudiness_5}%</Text>
+      <Text>Description: {info.description_5}</Text>
+      <Text>Propability of rain: {info.rain_5 * 100}%</Text>
+      {/*<Text>Icon id: {info.icon_5}</Text>*/}
     </ScrollView>
   );
 };
