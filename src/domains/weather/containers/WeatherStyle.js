@@ -4,7 +4,6 @@ import Colors from 'constants/Colors';
 export const weatherStyle = StyleSheet.create({
   contentContainer: {
     backgroundColor: Colors.background,
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '12%',

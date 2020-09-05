@@ -110,6 +110,21 @@ const Weather = (props) => {
     description_6: 'loading', // string
     rain_6: 'loading', // propability
     icon_6: 'loading', // icon id
+    //SEVENTH DAY
+    date_7: "loading",
+    maxTemp_7: "loading", // Celsius
+    minTemp_7: "loading", // Celsius
+    tempDay_7: "loading", // Celsius
+    tempNight_7: "loading", // Celsius
+    tempFeels_like_day_7: "loading", //Celsius
+    tempFeels_like_night_7: "loading", //Celsius
+    pressure_7: "loading", // hPa
+    humidity_7: "loading", // %
+    wind_speed_7: "loading", // m/s
+    cloudiness_7: "loading", //  %
+    description_7: 'loading', // string
+    rain_7: 'loading', // propability
+    icon_7: 'loading', // icon id
 
   })
 
@@ -213,6 +228,21 @@ const Weather = (props) => {
         description_6: results.daily[5].weather[0].description,
         rain_6: results.daily[5].pop,
         icon_6: results.daily[5].weather[0].icon,
+        //SEVENTH DAY
+        date_7: results.daily[6].dt,
+        maxTemp_7: results.daily[6].temp.max,
+        minTemp_7: results.daily[6].temp.min,
+        tempDay_7: results.daily[6].temp.day,
+        tempNight_7: results.daily[6].temp.night,
+        tempFeels_like_day_7: results.daily[6].feels_like.day,
+        tempFeels_like_night_7: results.daily[6].feels_like.night,
+        pressure_7: results.daily[6].pressure,
+        humidity_7: results.daily[6].humidity,
+        wind_speed_7: results.daily[6].wind_speed,
+        cloudiness_7: results.daily[6].clouds,
+        description_7: results.daily[6].weather[0].description,
+        rain_7: results.daily[6].pop,
+        icon_7: results.daily[6].weather[0].icon,
 
       })
     })
@@ -220,7 +250,7 @@ const Weather = (props) => {
 
 
   return (
-    <ScrollView >
+    <ScrollView contentContainerStyle={styles.contentContainer}>
       <Image 
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
@@ -238,7 +268,7 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_1}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_1}%</Text>
       <Text>Description: {info.description_1}</Text>
-      <Text>Propability of rain: {info.rain_1 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_1 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_1}</Text>*/}
       {/*SECOND DAY*/}
       <Image 
@@ -257,7 +287,7 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_2}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_2}%</Text>
       <Text>Description: {info.description_2}</Text>
-      <Text>Propability of rain: {info.rain_2 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_2 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_1}</Text>*/}
       {/*THIRD DAY*/}
       <Image 
@@ -276,7 +306,7 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_3}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_3}%</Text>
       <Text>Description: {info.description_3}</Text>
-      <Text>Propability of rain: {info.rain_3 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_3 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_3}</Text>*/}
       {/*FOURTH DAY*/}
       <Image 
@@ -295,7 +325,7 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_4}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_4}%</Text>
       <Text>Description: {info.description_4}</Text>
-      <Text>Propability of rain: {info.rain_4 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_4 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_4}</Text>*/}
       {/*FIFTH DAY*/}
       <Image 
@@ -314,7 +344,7 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_5}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_5}%</Text>
       <Text>Description: {info.description_5}</Text>
-      <Text>Propability of rain: {info.rain_5 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_5 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_5}</Text>*/}
       {/*SIXTH DAY*/}
       <Image 
@@ -333,8 +363,27 @@ const Weather = (props) => {
       <Text>Wind Speed: {info.wind_speed_6}m/s</Text>
       <Text>Cloudiness: {info.cloudiness_6}%</Text>
       <Text>Description: {info.description_6}</Text>
-      <Text>Propability of rain: {info.rain_6 * 100}%</Text>
+      <Text>Propability of rain: {(info.rain_6 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_6}</Text>*/}
+      {/*SEVENTH DAY*/}
+      <Image 
+        style={{width: 70, height: 70}}
+        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_7+".png"}}
+      />
+      <Text>Date: {info.date_7}</Text>
+      <Text>Max Temperature: {info.maxTemp_7}°C</Text>
+      <Text>Min Temperature: {info.minTemp_7}°C</Text>
+      <Text>Day Temperature: {info.tempDay_7}°C</Text>
+      <Text>Night Temperature: {info.tempNight_7}°C</Text>
+      <Text>Feels like day temperature: {info.tempFeels_like_day_7}°C</Text>
+      <Text>Feels like night temperature: {info.tempFeels_like_night_7}°C</Text>
+      <Text>Pressure: {info.pressure_7}hPa</Text>
+      <Text>Humidity: {info.humidity_7}%</Text>
+      <Text>Wind Speed: {info.wind_speed_7}m/s</Text>
+      <Text>Cloudiness: {info.cloudiness_7}%</Text>
+      <Text>Description: {info.description_7}</Text>
+      <Text>Propability of rain: {(info.rain_7 * 100).toFixed(0)}%</Text>
+      {/*<Text>Icon id: {info.icon_7}</Text>*/}
     </ScrollView>
   );
 };
