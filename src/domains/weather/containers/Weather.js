@@ -20,26 +20,41 @@ const Weather = (props) => {
   const longitude = region.longitude;
 
   const [info,setInfo]= useState({
-    date: "loading",
-    maxTemp: "loading", // Celsius
-    minTemp: "loading", // Celsius
-    tempDay: "loading", // Celsius
-    tempNight: "loading", // Celsius
-    tempFeels_like_day: "loading", //Celsius
-    tempFeels_like_night: "loading", //Celsius
-    pressure: "loading", // hPa
-    humidity: "loading", // %
-    wind_speed: "loading", // m/s
-    cloudiness: "loading", //  %
-    description: 'loading', // string
-    rain: 'loading', // propability
-    icon: 'loading', // icon id
-    visibility: 'loading', // m
-
+    //FIRST DAY
+    date_1: "loading",
+    maxTemp_1: "loading", // Celsius
+    minTemp_1: "loading", // Celsius
+    tempDay_1: "loading", // Celsius
+    tempNight_1: "loading", // Celsius
+    tempFeels_like_day_1: "loading", //Celsius
+    tempFeels_like_night_1: "loading", //Celsius
+    pressure_1: "loading", // hPa
+    humidity_1: "loading", // %
+    wind_speed_1: "loading", // m/s
+    cloudiness_1: "loading", //  %
+    description_1: 'loading', // string
+    rain_1: 'loading', // propability
+    icon_1: 'loading', // icon id
+    //SECOND DAY
+    date_2: "loading",
+    maxTemp_2: "loading", // Celsius
+    minTemp_2: "loading", // Celsius
+    tempDay_2: "loading", // Celsius
+    tempNight_2: "loading", // Celsius
+    tempFeels_like_day_2: "loading", //Celsius
+    tempFeels_like_night_2: "loading", //Celsius
+    pressure_2: "loading", // hPa
+    humidity_2: "loading", // %
+    wind_speed_2: "loading", // m/s
+    cloudiness_2: "loading", //  %
+    description_2: 'loading', // string
+    rain_2: 'loading', // propability
+    icon_2: 'loading', // icon id
   })
 
   useEffect(()=>{
     getWeather();
+
   },[])
   
   const getWeather = ()=>{
@@ -47,43 +62,82 @@ const Weather = (props) => {
     .then(data=>data.json())
     .then(results=>{ 
       setInfo({
-        date: results.daily[0].dt,
-        maxTemp: results.daily[0].temp.max,
-        minTemp: results.daily[0].temp.min,
-        tempDay: results.daily[0].temp.day,
-        tempNight: results.daily[0].temp.night,
-        tempFeels_like_day: results.daily[0].feels_like.day,
-        tempFeels_like_night: results.daily[0].feels_like.night,
-        pressure: results.daily[0].pressure,
-        humidity: results.daily[0].humidity,
-        wind_speed: results.daily[0].wind_speed,
-        cloudiness: results.daily[0].clouds,
-        description: results.daily[0].weather[0].description,
-        rain: results.daily[0].pop,
-        icon: results.daily[0].weather[0].icon,
+        //FIRST DAY
+        date_1: results.daily[0].dt,
+        maxTemp_1: results.daily[0].temp.max,
+        minTemp_1: results.daily[0].temp.min,
+        tempDay_1: results.daily[0].temp.day,
+        tempNight_1: results.daily[0].temp.night,
+        tempFeels_like_day_1: results.daily[0].feels_like.day,
+        tempFeels_like_night_1: results.daily[0].feels_like.night,
+        pressure_1: results.daily[0].pressure,
+        humidity_1: results.daily[0].humidity,
+        wind_speed_1: results.daily[0].wind_speed,
+        cloudiness_1: results.daily[0].clouds,
+        description_1: results.daily[0].weather[0].description,
+        rain_1: results.daily[0].pop,
+        icon_1: results.daily[0].weather[0].icon,
+        //SECOND DAY
+        date_2: results.daily[1].dt,
+        maxTemp_2: results.daily[1].temp.max,
+        minTemp_2: results.daily[1].temp.min,
+        tempDay_2: results.daily[1].temp.day,
+        tempNight_2: results.daily[1].temp.night,
+        tempFeels_like_day_2: results.daily[1].feels_like.day,
+        tempFeels_like_night_2: results.daily[1].feels_like.night,
+        pressure_2: results.daily[1].pressure,
+        humidity_2: results.daily[1].humidity,
+        wind_speed_2: results.daily[1].wind_speed,
+        cloudiness_2: results.daily[1].clouds,
+        description_2: results.daily[1].weather[0].description,
+        rain_2: results.daily[1].pop,
+        icon_2: results.daily[1].weather[0].icon,
+
       })
     })
   }
+
+
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <Image 
         style={{width: 70, height: 70}}
-        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon+".png"}}
+        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
       />
-      <Text>Date: {info.date}</Text>
-      <Text>Max Temperature: {info.maxTemp}°C</Text>
-      <Text>Min Temperature: {info.minTemp}°C</Text>
-      <Text>Day Temperature: {info.tempDay}°C</Text>
-      <Text>Night Temperature: {info.tempNight}°C</Text>
-      <Text>Feels like day temperature: {info.tempFeels_like_day}°C</Text>
-      <Text>Feels like night temperature: {info.tempFeels_like_night}°C</Text>
-      <Text>Pressure: {info.pressure}hPa</Text>
-      <Text>Humidity: {info.humidity}%</Text>
-      <Text>Wind Speed: {info.wind_speed}m/s</Text>
-      <Text>Cloudiness: {info.cloudiness}%</Text>
-      <Text>Description: {info.description}</Text>
-      <Text>Propability of rain: {info.rain * 100}%</Text>
-      {/*<Text>Icon id: {info.icon}</Text>*/}
+      {/*FIRST DAY*/}
+      <Text>Date: {info.date_1}</Text>
+      <Text>Max Temperature: {info.maxTemp_1}°C</Text>
+      <Text>Min Temperature: {info.minTemp_1}°C</Text>
+      <Text>Day Temperature: {info.tempDay_1}°C</Text>
+      <Text>Night Temperature: {info.tempNight_1}°C</Text>
+      <Text>Feels like day temperature: {info.tempFeels_like_day_1}°C</Text>
+      <Text>Feels like night temperature: {info.tempFeels_like_night_1}°C</Text>
+      <Text>Pressure: {info.pressure_1}hPa</Text>
+      <Text>Humidity: {info.humidity_1}%</Text>
+      <Text>Wind Speed: {info.wind_speed_1}m/s</Text>
+      <Text>Cloudiness: {info.cloudiness_1}%</Text>
+      <Text>Description: {info.description_1}</Text>
+      <Text>Propability of rain: {info.rain_1 * 100}%</Text>
+      {/*<Text>Icon id: {info.icon_1}</Text>*/}
+      {/*SECOND DAY*/}
+      <Image 
+        style={{width: 70, height: 70}}
+        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_2+".png"}}
+      />
+      <Text>Date: {info.date_2}</Text>
+      <Text>Max Temperature: {info.maxTemp_2}°C</Text>
+      <Text>Min Temperature: {info.minTemp_2}°C</Text>
+      <Text>Day Temperature: {info.tempDay_2}°C</Text>
+      <Text>Night Temperature: {info.tempNight_2}°C</Text>
+      <Text>Feels like day temperature: {info.tempFeels_like_day_2}°C</Text>
+      <Text>Feels like night temperature: {info.tempFeels_like_night_2}°C</Text>
+      <Text>Pressure: {info.pressure_2}hPa</Text>
+      <Text>Humidity: {info.humidity_2}%</Text>
+      <Text>Wind Speed: {info.wind_speed_2}m/s</Text>
+      <Text>Cloudiness: {info.cloudiness_2}%</Text>
+      <Text>Description: {info.description_2}</Text>
+      <Text>Propability of rain: {info.rain_2 * 100}%</Text>
+      {/*<Text>Icon id: {info.icon_1}</Text>*/}
     </ScrollView>
   );
 };
