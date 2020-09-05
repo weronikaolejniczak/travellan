@@ -5,6 +5,9 @@ import {useSelector} from 'react-redux';
 import {fetchWeather} from 'weather/services/Weather';
 import {weatherStyle as styles} from './WeatherStyle';
 import Colors from 'constants/Colors';
+import {WEATHER_ID} from 'react-native-dotenv';
+
+const client_id = WEATHER_ID;
 
 /** Weather container */
 const Weather = (props) => {
@@ -22,22 +25,26 @@ const Weather = (props) => {
     temp: "loading",
 
   })
+
+  useEffect(()=>{
+    getWeather();
+  },[])
   
   const getWeather = ()=>{
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&APPID=2cc313a48db97496e06a2253be1b2caf&units=metric`)
+    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${client_id}&units=metric`)
     .then(data=>data.json())
-    .then(results=>{
-      setInfo({
+    .then(results=>{ console.log(results)
+      /*setInfo({
         country: results.country,
         city:results.name,
         temp:results.temp,
 
-      })
+      })*/
     })
   }
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Button title="test" onPress={getWeather()}/>
+      <Text>Weather</Text>
     </ScrollView>
   );
 };

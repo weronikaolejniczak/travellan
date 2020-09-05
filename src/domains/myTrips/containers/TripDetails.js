@@ -157,7 +157,7 @@ const TripDetails = (props) => {
             </TouchableOpacity>
 
             {/* Weather */}
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather', {
@@ -170,7 +170,7 @@ const TripDetails = (props) => {
                 size={42}
                 color="#FFFFFF"
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </View>
