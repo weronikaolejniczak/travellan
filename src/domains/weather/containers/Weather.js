@@ -50,6 +50,21 @@ const Weather = (props) => {
     description_2: 'loading', // string
     rain_2: 'loading', // propability
     icon_2: 'loading', // icon id
+    //THIRD DAY
+    date_3: "loading",
+    maxTemp_3: "loading", // Celsius
+    minTemp_3: "loading", // Celsius
+    tempDay_3: "loading", // Celsius
+    tempNight_3: "loading", // Celsius
+    tempFeels_like_day_3: "loading", //Celsius
+    tempFeels_like_night_3: "loading", //Celsius
+    pressure_3: "loading", // hPa
+    humidity_3: "loading", // %
+    wind_speed_3: "loading", // m/s
+    cloudiness_3: "loading", //  %
+    description_3: 'loading', // string
+    rain_3: 'loading', // propability
+    icon_3: 'loading', // icon id
   })
 
   useEffect(()=>{
@@ -92,14 +107,28 @@ const Weather = (props) => {
         description_2: results.daily[1].weather[0].description,
         rain_2: results.daily[1].pop,
         icon_2: results.daily[1].weather[0].icon,
-
+        //THIRD DAY
+        date_3: results.daily[2].dt,
+        maxTemp_3: results.daily[2].temp.max,
+        minTemp_3: results.daily[2].temp.min,
+        tempDay_3: results.daily[2].temp.day,
+        tempNight_3: results.daily[2].temp.night,
+        tempFeels_like_day_3: results.daily[2].feels_like.day,
+        tempFeels_like_night_3: results.daily[2].feels_like.night,
+        pressure_3: results.daily[2].pressure,
+        humidity_3: results.daily[2].humidity,
+        wind_speed_3: results.daily[2].wind_speed,
+        cloudiness_3: results.daily[2].clouds,
+        description_3: results.daily[2].weather[0].description,
+        rain_3: results.daily[2].pop,
+        icon_3: results.daily[2].weather[0].icon,
       })
     })
   }
 
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={styles.colors}>
       <Image 
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
@@ -138,6 +167,25 @@ const Weather = (props) => {
       <Text>Description: {info.description_2}</Text>
       <Text>Propability of rain: {info.rain_2 * 100}%</Text>
       {/*<Text>Icon id: {info.icon_1}</Text>*/}
+      {/*THIRD DAY*/}
+      <Image 
+        style={{width: 70, height: 70}}
+        source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_3+".png"}}
+      />
+      <Text>Date: {info.date_3}</Text>
+      <Text>Max Temperature: {info.maxTemp_3}°C</Text>
+      <Text>Min Temperature: {info.minTemp_3}°C</Text>
+      <Text>Day Temperature: {info.tempDay_3}°C</Text>
+      <Text>Night Temperature: {info.tempNight_3}°C</Text>
+      <Text>Feels like day temperature: {info.tempFeels_like_day_3}°C</Text>
+      <Text>Feels like night temperature: {info.tempFeels_like_night_3}°C</Text>
+      <Text>Pressure: {info.pressure_3}hPa</Text>
+      <Text>Humidity: {info.humidity_3}%</Text>
+      <Text>Wind Speed: {info.wind_speed_3}m/s</Text>
+      <Text>Cloudiness: {info.cloudiness_3}%</Text>
+      <Text>Description: {info.description_3}</Text>
+      <Text>Propability of rain: {info.rain_3 * 100}%</Text>
+      {/*<Text>Icon id: {info.icon_3}</Text>*/}
     </ScrollView>
   );
 };
