@@ -20,10 +20,8 @@ const Weather = (props) => {
   const longitude = region.longitude;
 
   const [info,setInfo]= useState({
-    country:"loading",
-    city: "loading",
-    temp: "loading",
-
+    tempDay: "loading",
+    tempNight: "loading",
   })
 
   useEffect(()=>{
@@ -33,18 +31,19 @@ const Weather = (props) => {
   const getWeather = ()=>{
     fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${client_id}&units=metric`)
     .then(data=>data.json())
-    .then(results=>{ console.log(results)
-      /*setInfo({
-        country: results.country,
-        city:results.name,
-        temp:results.temp,
-
-      })*/
+    .then(results=>{ 
+      setInfo({
+        tempDay: results.daily[0].temp.day,
+        tempNight: results.daily[0].temp.night,
+      })
     })
   }
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Text>Weather</Text>
+      <Text>Day Temperature: {info.tempDay}</Text>
+      <Text>Night Temperature: {info.tempNight}</Text>
+      <Text>Temperature: {info.temp}</Text>
+      <Text>Temperature: {info.temp}</Text>
     </ScrollView>
   );
 };
