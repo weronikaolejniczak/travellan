@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity} from 'react-native';
+import {View, TextInput, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 /* imports from within the module */
 import SearchResult from 'map/components/searchResult/SearchResult';
@@ -46,9 +46,30 @@ const Search = (props) => {
         </View>
       </View>
       {/* autocomplete results */}
-      {props.showAutocomplete &&
-        !!props.autocomplete &&
-        props.autocomplete.map((result) => (
+      {props.showAutocomplete && !!props.autocomplete && (
+        <FlatList
+          data={props.autocomplete}
+          renderItem={(item) => (
+            <SearchResult
+              styles={props.styles}
+              result={item}
+              placeToSearch={props.placeToSearch}
+              setPlaceToSearch={props.setPlaceToSearch}
+              focusedPlace={props.focusedPlace}
+              setFocusedPlace={props.setFocusedPlace}
+              setShowAutocomplete={props.setShowAutocomplete}
+            />
+          )}
+          keyExtractor={(item) => item.place_id}
+        />
+      )}
+    </View>
+  );
+};
+
+export default Search;
+
+/* props.autocomplete.map((result) => (
           <SearchResult
             styles={props.styles}
             result={result}
@@ -56,10 +77,6 @@ const Search = (props) => {
             setPlaceToSearch={props.setPlaceToSearch}
             focusedPlace={props.focusedPlace}
             setFocusedPlace={props.setFocusedPlace}
+            setShowAutocomplete={props.setShowAutocomplete}
           />
-        ))}
-    </View>
-  );
-};
-
-export default Search;
+        )) */

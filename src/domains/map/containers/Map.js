@@ -151,22 +151,33 @@ const Map = (props) => {
         }}
         onPress={(event) => mapOnPressHandler(event)}>
         {/* render markers */}
-        {markers.map(
-          (marker) =>
-            markers && (
-              <MapView.Marker
-                coordinate={{
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
-                }}
-                pinColor={Colors.primary}
-                onPress={(event) => markerOnPressHandler(event)}>
-                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-                  <Text>{marker.title}</Text>
-                  <Text>{marker.description}</Text>
-                </MapView.Callout>
-              </MapView.Marker>
-            ),
+        {markers &&
+          markers.map((marker) => (
+            <MapView.Marker
+              coordinate={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+              }}
+              pinColor={Colors.primary}
+              onPress={(event) => markerOnPressHandler(event)}>
+              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+                <Text>{marker.title}</Text>
+                <Text>{marker.description}</Text>
+              </MapView.Callout>
+            </MapView.Marker>
+          ))}
+        {focusedPlace && (
+          <MapView.Marker
+            coordinate={{
+              latitude: focusedPlace.lat,
+              longitude: focusedPlace.lon,
+            }}
+            pinColor={Colors.primary}
+            onPress={(event) => markerOnPressHandler(event)}>
+            <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+              <Text>hello</Text>
+            </MapView.Callout>
+          </MapView.Marker>
         )}
       </MapView>
 
@@ -189,6 +200,7 @@ const Map = (props) => {
         autocomplete={AUTOCOMPLETE}
         showAutocomplete={showAutocomplete}
         setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
+        // focusedPlace, setFocusedPlace
         focusedPlace={focusedPlace}
         setFocusedPlace={() => setFocusedPlace()}
       />

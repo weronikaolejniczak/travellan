@@ -4,17 +4,13 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {searchResultStyle as styles} from './SearchResultStyle';
 
 const SearchResult = (props) => {
-  const focusPlace = (place) => {
-    props.setFocusedPlace(place);
-    console.log(props.focusedPlace);
-  };
-
   return (
     <TouchableOpacity
       onPress={() => {
-        focusPlace(props.result);
+        props.setShowAutocomplete(false);
+        //console.log(props.result);
       }}
-      style={{width: '97%'}}
+      style={{width: '100%', height: 50}}
       activeOpacity={0.4}>
       <View style={styles.container}>
         <Text style={props.styles.text} numberOfLines={1}>
