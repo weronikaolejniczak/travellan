@@ -130,7 +130,7 @@ const Weather = (props) => {
 
   useEffect(()=>{
     getWeather();
-
+    readableDate(1599390000);
   },[])
   
   const getWeather = ()=>{
@@ -246,6 +246,20 @@ const Weather = (props) => {
 
       })
     })
+  }
+
+  //DATE CONVERTER, FROM UNIX TO HUMAN READABLE
+  const readableDate = (unixDate) => {
+  var a = new Date(unixDate * 1000);
+  var months = ['January','February','March','April','May','Jun','July','August','September','October','November','December'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
+  return console.log(time);
+
   }
 
 
