@@ -130,12 +130,17 @@ const Weather = (props) => {
   //DATE CONVERTED FROM UNIX TO HUMAN
   const [date,NewDate]=useState({
     readable_date_1: 'loading',
+    readable_date_2: 'loading',
+    readable_date_3: 'loading',
+    readable_date_4: 'loading',
+    readable_date_5: 'loading',
+    readable_date_6: 'loading',
+    readable_date_7: 'loading',
   })
 
   useEffect(()=>{
     getWeather()
-    .then((info) => readableDate(info.date_1))
-    .then((time) => NewDate({readable_date_1: time}))
+    .then((info) => readableDate(info.date_1, info.date_2, info.date_3, info.date_4, info.date_5, info.date_6, info.date_7))
   },[])
   
   const getWeather = ()=>{
@@ -255,16 +260,45 @@ const Weather = (props) => {
   }
 
   //DATE CONVERTER, FROM UNIX TO HUMAN READABLE
-  const readableDate = (unixDate) => {
-  var a = new Date(unixDate * 1000);
+  const readableDate = (unixDate_1,unixDate_2,unixDate_3,unixDate_4,unixDate_5,unixDate_6,unixDate_7) => {
+  var a = new Date(unixDate_1 * 1000);
+  var b = new Date(unixDate_2 * 1000);
+  var c = new Date(unixDate_3 * 1000);
+  var d = new Date(unixDate_4 * 1000);
+  var e = new Date(unixDate_5 * 1000);
+  var f = new Date(unixDate_6 * 1000);
+  var g = new Date(unixDate_7 * 1000);
   var months = ['January','February','March','April','May','Jun','July','August','September','October','November','December'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
-  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
-  return time;
+  //CONVERT DATE OF FIRST DAY
+  var year_1 = a.getFullYear();
+  var month_1 = months[a.getMonth()];
+  var date_1 = a.getDate();
+  var hour_1 = a.getHours();
+  var min_1 = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  var time_1 = date_1 + ' ' + month_1 + ' ' + year_1 + ' ' + hour_1 + ':' + min_1;
+  //CONVERT DATE OF SECOND DAY
+  var year_2 = b.getFullYear();
+  var month_2 = months[b.getMonth()];
+  var date_2 = b.getDate();
+  var hour_2 = b.getHours();
+  var min_2 = b.getMinutes() < 10 ? '0' + b.getMinutes() : b.getMinutes();
+  var time_2 = date_2 + ' ' + month_2 + ' ' + year_2 + ' ' + hour_2 + ':' + min_2;
+  //CONVERT DATE OF THIRD DAY
+  var year_3 = c.getFullYear();
+  var month_3 = months[c.getMonth()];
+  var date_3 = c.getDate();
+  var hour_3 = c.getHours();
+  var min_3 = c.getMinutes() < 10 ? '0' + c.getMinutes() : c.getMinutes();
+  var time_3 = date_3 + ' ' + month_3 + ' ' + year_3 + ' ' + hour_3 + ':' + min_3;
+
+
+  NewDate({
+    readable_date_1: time_1,
+    readable_date_2: time_2,
+    readable_date_3: time_3,
+  });
+
+
 
   }
 
@@ -295,7 +329,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_2+".png"}}
       />
-      <Text>Date: {info.date_2}</Text>
+      <Text>Date: {date.readable_date_2}</Text>
       <Text>Max Temperature: {info.maxTemp_2}°C</Text>
       <Text>Min Temperature: {info.minTemp_2}°C</Text>
       <Text>Day Temperature: {info.tempDay_2}°C</Text>
@@ -314,7 +348,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_3+".png"}}
       />
-      <Text>Date: {info.date_3}</Text>
+      <Text>Date: {date.readable_date_3}</Text>
       <Text>Max Temperature: {info.maxTemp_3}°C</Text>
       <Text>Min Temperature: {info.minTemp_3}°C</Text>
       <Text>Day Temperature: {info.tempDay_3}°C</Text>
