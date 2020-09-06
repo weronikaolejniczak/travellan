@@ -21,7 +21,7 @@ const Weather = (props) => {
 
   const [info,setInfo]= useState({
     //FIRST DAY
-    date_1: "loading",
+    date_1: "loading", //UNIX
     maxTemp_1: "loading", // Celsius
     minTemp_1: "loading", // Celsius
     tempDay_1: "loading", // Celsius
@@ -127,10 +127,15 @@ const Weather = (props) => {
     icon_7: 'loading', // icon id
 
   })
+  //DATE CONVERTED FROM UNIX TO HUMAN
+  const [date,NewDate]=useState({
+    readable_date_1: 'loading',
+  })
 
   useEffect(()=>{
-    getWeather();
-    readableDate(1599390000);
+    getWeather()
+    .then((info) => readableDate(info.date_1))
+    .then((time) => NewDate({readable_date_1: time}))
   },[])
   
   const getWeather = ()=>{
@@ -246,6 +251,7 @@ const Weather = (props) => {
 
       })
     })
+    return Promise.resolve((info));
   }
 
   //DATE CONVERTER, FROM UNIX TO HUMAN READABLE
@@ -258,7 +264,7 @@ const Weather = (props) => {
   var hour = a.getHours();
   var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
   var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
-  return console.log(time);
+  return time;
 
   }
 
@@ -270,7 +276,7 @@ const Weather = (props) => {
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
       />
       {/*FIRST DAY*/}
-      <Text>Date: {info.date_1}</Text>
+      <Text>Date: {date.readable_date_1}</Text>
       <Text>Max Temperature: {info.maxTemp_1}°C</Text>
       <Text>Min Temperature: {info.minTemp_1}°C</Text>
       <Text>Day Temperature: {info.tempDay_1}°C</Text>
