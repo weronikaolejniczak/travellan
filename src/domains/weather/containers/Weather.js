@@ -21,7 +21,7 @@ const Weather = (props) => {
 
   const [info,setInfo]= useState({
     //FIRST DAY
-    date_1: "loading", //UNIX
+    date_1: new Date("loading"),
     maxTemp_1: "loading", // Celsius
     minTemp_1: "loading", // Celsius
     tempDay_1: "loading", // Celsius
@@ -36,7 +36,7 @@ const Weather = (props) => {
     rain_1: 'loading', // propability
     icon_1: 'loading', // icon id
     //SECOND DAY
-    date_2: "loading",
+    date_2: new Date("loading"),
     maxTemp_2: "loading", // Celsius
     minTemp_2: "loading", // Celsius
     tempDay_2: "loading", // Celsius
@@ -51,7 +51,7 @@ const Weather = (props) => {
     rain_2: 'loading', // propability
     icon_2: 'loading', // icon id
     //THIRD DAY
-    date_3: "loading",
+    date_3: new Date("loading"),
     maxTemp_3: "loading", // Celsius
     minTemp_3: "loading", // Celsius
     tempDay_3: "loading", // Celsius
@@ -66,7 +66,7 @@ const Weather = (props) => {
     rain_3: 'loading', // propability
     icon_3: 'loading', // icon id
     //FOURTH DAY
-    date_4: "loading",
+    date_4: new Date("loading"),
     maxTemp_4: "loading", // Celsius
     minTemp_4: "loading", // Celsius
     tempDay_4: "loading", // Celsius
@@ -81,7 +81,7 @@ const Weather = (props) => {
     rain_4: 'loading', // propability
     icon_4: 'loading', // icon id
     //FIFTH DAY
-    date_5: "loading",
+    date_5: new Date("loading"),
     maxTemp_5: "loading", // Celsius
     minTemp_5: "loading", // Celsius
     tempDay_5: "loading", // Celsius
@@ -96,7 +96,7 @@ const Weather = (props) => {
     rain_5: 'loading', // propability
     icon_5: 'loading', // icon id
     //SIXTH DAY
-    date_6: "loading",
+    date_6: new Date("loading"),
     maxTemp_6: "loading", // Celsius
     minTemp_6: "loading", // Celsius
     tempDay_6: "loading", // Celsius
@@ -111,7 +111,7 @@ const Weather = (props) => {
     rain_6: 'loading', // propability
     icon_6: 'loading', // icon id
     //SEVENTH DAY
-    date_7: "loading",
+    date_7: new Date("loading"),
     maxTemp_7: "loading", // Celsius
     minTemp_7: "loading", // Celsius
     tempDay_7: "loading", // Celsius
@@ -127,20 +127,9 @@ const Weather = (props) => {
     icon_7: 'loading', // icon id
 
   })
-  //DATE CONVERTED FROM UNIX TO HUMAN
-  const [date,NewDate]=useState({
-    readable_date_1: 'loading',
-    readable_date_2: 'loading',
-    readable_date_3: 'loading',
-    readable_date_4: 'loading',
-    readable_date_5: 'loading',
-    readable_date_6: 'loading',
-    readable_date_7: 'loading',
-  })
 
   useEffect(()=>{
-    getWeather()
-    .then((info) => readableDate(info.date_1, info.date_2, info.date_3, info.date_4, info.date_5, info.date_6, info.date_7))
+    getWeather();
   },[])
   
   const getWeather = ()=>{
@@ -149,7 +138,7 @@ const Weather = (props) => {
     .then(results=>{ 
       setInfo({
         //FIRST DAY
-        date_1: results.daily[0].dt,
+        date_1: new Date(results.daily[0].dt*1000),
         maxTemp_1: results.daily[0].temp.max,
         minTemp_1: results.daily[0].temp.min,
         tempDay_1: results.daily[0].temp.day,
@@ -164,7 +153,7 @@ const Weather = (props) => {
         rain_1: results.daily[0].pop,
         icon_1: results.daily[0].weather[0].icon,
         //SECOND DAY
-        date_2: results.daily[1].dt,
+        date_2: new Date(results.daily[1].dt*1000),
         maxTemp_2: results.daily[1].temp.max,
         minTemp_2: results.daily[1].temp.min,
         tempDay_2: results.daily[1].temp.day,
@@ -179,7 +168,7 @@ const Weather = (props) => {
         rain_2: results.daily[1].pop,
         icon_2: results.daily[1].weather[0].icon,
         //THIRD DAY
-        date_3: results.daily[2].dt,
+        date_3: new Date(results.daily[2].dt*1000),
         maxTemp_3: results.daily[2].temp.max,
         minTemp_3: results.daily[2].temp.min,
         tempDay_3: results.daily[2].temp.day,
@@ -194,7 +183,7 @@ const Weather = (props) => {
         rain_3: results.daily[2].pop,
         icon_3: results.daily[2].weather[0].icon,
         //FOURTH DAY
-        date_4: results.daily[3].dt,
+        date_4: new Date(results.daily[3].dt*1000),
         maxTemp_4: results.daily[3].temp.max,
         minTemp_4: results.daily[3].temp.min,
         tempDay_4: results.daily[3].temp.day,
@@ -209,7 +198,7 @@ const Weather = (props) => {
         rain_4: results.daily[3].pop,
         icon_4: results.daily[3].weather[0].icon,
         //FIFTH DAY
-        date_5: results.daily[4].dt,
+        date_5: new Date(results.daily[4].dt*1000),
         maxTemp_5: results.daily[4].temp.max,
         minTemp_5: results.daily[4].temp.min,
         tempDay_5: results.daily[4].temp.day,
@@ -224,7 +213,7 @@ const Weather = (props) => {
         rain_5: results.daily[4].pop,
         icon_5: results.daily[4].weather[0].icon,
         //SIXTH DAY
-        date_6: results.daily[5].dt,
+        date_6: new Date(results.daily[5].dt*1000),
         maxTemp_6: results.daily[5].temp.max,
         minTemp_6: results.daily[5].temp.min,
         tempDay_6: results.daily[5].temp.day,
@@ -239,7 +228,7 @@ const Weather = (props) => {
         rain_6: results.daily[5].pop,
         icon_6: results.daily[5].weather[0].icon,
         //SEVENTH DAY
-        date_7: results.daily[6].dt,
+        date_7: new Date(results.daily[6].dt*1000),
         maxTemp_7: results.daily[6].temp.max,
         minTemp_7: results.daily[6].temp.min,
         tempDay_7: results.daily[6].temp.day,
@@ -259,48 +248,6 @@ const Weather = (props) => {
     return Promise.resolve((info));
   }
 
-  //DATE CONVERTER, FROM UNIX TO HUMAN READABLE
-  const readableDate = (unixDate_1,unixDate_2,unixDate_3,unixDate_4,unixDate_5,unixDate_6,unixDate_7) => {
-  var a = new Date(unixDate_1 * 1000);
-  var b = new Date(unixDate_2 * 1000);
-  var c = new Date(unixDate_3 * 1000);
-  var d = new Date(unixDate_4 * 1000);
-  var e = new Date(unixDate_5 * 1000);
-  var f = new Date(unixDate_6 * 1000);
-  var g = new Date(unixDate_7 * 1000);
-  var months = ['January','February','March','April','May','Jun','July','August','September','October','November','December'];
-  //CONVERT DATE OF FIRST DAY
-  var year_1 = a.getFullYear();
-  var month_1 = months[a.getMonth()];
-  var date_1 = a.getDate();
-  var hour_1 = a.getHours();
-  var min_1 = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
-  var time_1 = date_1 + ' ' + month_1 + ' ' + year_1 + ' ' + hour_1 + ':' + min_1;
-  //CONVERT DATE OF SECOND DAY
-  var year_2 = b.getFullYear();
-  var month_2 = months[b.getMonth()];
-  var date_2 = b.getDate();
-  var hour_2 = b.getHours();
-  var min_2 = b.getMinutes() < 10 ? '0' + b.getMinutes() : b.getMinutes();
-  var time_2 = date_2 + ' ' + month_2 + ' ' + year_2 + ' ' + hour_2 + ':' + min_2;
-  //CONVERT DATE OF THIRD DAY
-  var year_3 = c.getFullYear();
-  var month_3 = months[c.getMonth()];
-  var date_3 = c.getDate();
-  var hour_3 = c.getHours();
-  var min_3 = c.getMinutes() < 10 ? '0' + c.getMinutes() : c.getMinutes();
-  var time_3 = date_3 + ' ' + month_3 + ' ' + year_3 + ' ' + hour_3 + ':' + min_3;
-
-
-  NewDate({
-    readable_date_1: time_1,
-    readable_date_2: time_2,
-    readable_date_3: time_3,
-  });
-
-
-
-  }
 
 
   return (
@@ -310,7 +257,7 @@ const Weather = (props) => {
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
       />
       {/*FIRST DAY*/}
-      <Text>Date: {date.readable_date_1}</Text>
+      <Text>Date: {(info.date_1).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_1}°C</Text>
       <Text>Min Temperature: {info.minTemp_1}°C</Text>
       <Text>Day Temperature: {info.tempDay_1}°C</Text>
@@ -329,7 +276,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_2+".png"}}
       />
-      <Text>Date: {date.readable_date_2}</Text>
+      <Text>Date: {(info.date_2).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_2}°C</Text>
       <Text>Min Temperature: {info.minTemp_2}°C</Text>
       <Text>Day Temperature: {info.tempDay_2}°C</Text>
@@ -348,7 +295,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_3+".png"}}
       />
-      <Text>Date: {date.readable_date_3}</Text>
+      <Text>Date: {(info.date_3).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_3}°C</Text>
       <Text>Min Temperature: {info.minTemp_3}°C</Text>
       <Text>Day Temperature: {info.tempDay_3}°C</Text>
@@ -367,7 +314,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_4+".png"}}
       />
-      <Text>Date: {info.date_4}</Text>
+      <Text>Date: {(info.date_4).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_4}°C</Text>
       <Text>Min Temperature: {info.minTemp_4}°C</Text>
       <Text>Day Temperature: {info.tempDay_4}°C</Text>
@@ -386,7 +333,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_5+".png"}}
       />
-      <Text>Date: {info.date_5}</Text>
+      <Text>Date: {(info.date_5).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_5}°C</Text>
       <Text>Min Temperature: {info.minTemp_5}°C</Text>
       <Text>Day Temperature: {info.tempDay_5}°C</Text>
@@ -405,7 +352,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_6+".png"}}
       />
-      <Text>Date: {info.date_6}</Text>
+      <Text>Date: {(info.date_6).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_6}°C</Text>
       <Text>Min Temperature: {info.minTemp_6}°C</Text>
       <Text>Day Temperature: {info.tempDay_6}°C</Text>
@@ -424,7 +371,7 @@ const Weather = (props) => {
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_7+".png"}}
       />
-      <Text>Date: {info.date_7}</Text>
+      <Text>Date: {(info.date_7).toDateString()}</Text>
       <Text>Max Temperature: {info.maxTemp_7}°C</Text>
       <Text>Min Temperature: {info.minTemp_7}°C</Text>
       <Text>Day Temperature: {info.tempDay_7}°C</Text>
