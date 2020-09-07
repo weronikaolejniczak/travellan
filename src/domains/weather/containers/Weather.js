@@ -18,6 +18,7 @@ const Weather = (props) => {
   const region = selectedTrip.region;
   const latitude = region.latitude;
   const longitude = region.longitude;
+  const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
 
   const [info,setInfo]= useState({
     //FIRST DAY
@@ -273,10 +274,12 @@ const Weather = (props) => {
 
       })
     })
+    console.log(startDate);
     return Promise.resolve((info));
   }
 
 
+  
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
