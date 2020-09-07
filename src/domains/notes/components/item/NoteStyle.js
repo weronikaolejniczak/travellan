@@ -46,6 +46,7 @@ export const noteStyle = StyleSheet.create({
   icon: {
     fontSize: 30,
     color: Colors.text,
+    paddingHorizontal: 10,
   },
   columnDirection: {
     flexDirection: 'column',

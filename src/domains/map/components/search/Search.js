@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 /* imports from within the module */
 import SearchResult from 'map/components/searchResult/SearchResult';
 
+
 const Search = (props) => {
   /* handlers */
   // changes the state showAutocomplete

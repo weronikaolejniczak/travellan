@@ -39,6 +39,10 @@ const Note = (props) => {
     );
   }, [dispatch, props.tripId, props.id]);
 
+  const EditHandler = useCallback(() => {
+  
+  }, [dispatch, props.tripId, props.id]);
+
   return (
     <Card style={styles.noteCard}>
       {/* ACTIONS BAR */}
@@ -46,6 +50,14 @@ const Note = (props) => {
         <Text numberOfLines={1} style={styles.subtitle}>
           {props.title}
         </Text>
+
+         {/* EDIT BUTTON */}
+         <TouchableOpacity>
+          <Icon
+            name={Platform.OS === 'android' ? 'md-brush' : 'ios-brush'}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
 
         {/* DELETE BUTTON */}
         <TouchableOpacity onPress={submitHandler}>
