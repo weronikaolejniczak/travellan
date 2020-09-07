@@ -63,4 +63,4 @@ const AddQR = (props) => {
 };
 
 export default AddQR;
-//AppRegistry.registerComponent('default', () => ScanScreen);
+
