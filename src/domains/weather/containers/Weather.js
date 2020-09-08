@@ -286,20 +286,26 @@ const Weather = (props) => {
       })
     })
 
-    console.log(convertedStartDate);
-    console.log(currentDate);
+    //console.log(convertedStartDate);
+    //console.log(currentDate);
     return Promise.resolve((info));
   }
 
+  //FUNCTION CALCULATING WHETHER TO DISPLAY THE WEATHER
   const dateChecker = (startDate, currentDate, differenceGuard) => {
+    if (startDate<currentDate){ // Always show weather if currentDate is bigger then startDate
+      differenceGuard=true;
+    } else { //If startDate is bigger then currentDate then calculate day difference
     const diffTime = Math.abs(startDate - currentDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    if (diffDays < 7) {
-      differenceGuard = true;
-    } else {
-      differenceGuard = false;
+           if (diffDays <= 7){ //If day difference is smaller then 7, show weather
+            differenceGuard=true;
+          } else { //If day difference is bigger then 7, weather is unavailable
+            differenceGuard=false;
+          }
     }
-    return console.log(Boolean(differenceGuard));
+    console.log(differenceGuard)
+    return differenceGuard;
     }
   
   
