@@ -27,6 +27,8 @@ const Weather = (props) => {
   var convertedStartDate = startYear+'-'+startMonth+"-"+startDay;
   convertedStartDate = new Date(convertedStartDate);
   var currentDate = new Date();
+  differenceGuard = new Boolean(false); // guard for checking day difference between currentDate and startDate
+  
 
   const [info,setInfo]= useState({
     //FIRST DAY
@@ -153,7 +155,7 @@ const Weather = (props) => {
 
   useEffect(()=>{
     getWeather();
-    dateChecker(convertedStartDate, currentDate);
+    dateChecker(convertedStartDate, currentDate, differenceGuard);
   },[])
   
   const getWeather = ()=>{
@@ -289,20 +291,24 @@ const Weather = (props) => {
     return Promise.resolve((info));
   }
 
-  const dateChecker = (startDate, currentDate) => {
-    if (startDate > currentDate){
-      console.log("Weather unaviable")
+  const dateChecker = (startDate, currentDate, differenceGuard) => {
+    const diffTime = Math.abs(startDate - currentDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    if (diffDays < 7) {
+      differenceGuard = true;
     } else {
-      console.log("Weather avaible");
+      differenceGuard = false;
     }
-
-
-  }
+    return console.log(Boolean(differenceGuard));
+    }
+  
   
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Image 
+      {differenceGuard==true ? (
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <Image 
         style={{width: 70, height: 70}}
         source={{ uri:"http://openweathermap.org/img/wn/"+info.icon_1+".png"}}
       />
@@ -449,6 +455,15 @@ const Weather = (props) => {
       <Text>Description: {info.description_7}</Text>
       <Text>Propability of rain: {(info.rain_7 * 100).toFixed(0)}%</Text>
       {/*<Text>Icon id: {info.icon_7}</Text>*/}
+       </ScrollView>
+      ) : (
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <Text style={[styles.text, styles.itemlessText]}>
+            Weather is not aviable!
+          </Text>
+        </ScrollView>
+      )}
+      
     </ScrollView>
   );
 };
