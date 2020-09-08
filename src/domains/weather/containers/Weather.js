@@ -18,7 +18,15 @@ const Weather = (props) => {
   const region = selectedTrip.region;
   const latitude = region.latitude;
   const longitude = region.longitude;
-  const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
+
+  //DATE OPERATIONS
+  var startDate = new Date(selectedTrip.startDate);
+  var startDay= startDate.getDate();
+  var startMonth= startDate.getMonth()+1;
+  var startYear= startDate.getFullYear();
+  var convertedStartDate = startYear+'-'+startMonth+"-"+startDay;
+  convertedStartDate = new Date(convertedStartDate);
+  var currentDate = new Date();
 
   const [info,setInfo]= useState({
     //FIRST DAY
@@ -145,6 +153,7 @@ const Weather = (props) => {
 
   useEffect(()=>{
     getWeather();
+    dateChecker(convertedStartDate, currentDate);
   },[])
   
   const getWeather = ()=>{
@@ -274,11 +283,21 @@ const Weather = (props) => {
 
       })
     })
-    console.log(startDate);
+
+    console.log(convertedStartDate);
+    console.log(currentDate);
     return Promise.resolve((info));
   }
 
+  const dateChecker = (startDate, currentDate) => {
+    if (startDate > currentDate){
+      console.log("Weather unaviable")
+    } else {
+      console.log("Weather avaible");
+    }
 
+
+  }
   
 
   return (
