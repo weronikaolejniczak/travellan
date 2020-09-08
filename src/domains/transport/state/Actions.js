@@ -54,12 +54,13 @@ export const deleteTransport = (tripId, ticketId) => {
 };
 
 // Create a ticket based on user input.
-export const createTransport = (tripId, to, from, stages) => {
+export const createTransport = (tripId, to, from, stages, qr) => {
   const newTransport = new Transport(
     new Date().toString(), // DUMMY ID
     to,
     from,
     stages,
+    qr,
   );
 
   return async function (dispatch, getState) {

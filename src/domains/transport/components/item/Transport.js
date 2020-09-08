@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -16,17 +16,36 @@ import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
 import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 
+/** QR-related imports */
+import {useNavigation} from '@react-navigation/native';
+
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
 
+  const navigation = useNavigation(); // navigation hook
+  //const [QR, setQR] = useState('');
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
+  const qr = props.qr;
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
+
+  
+  const movetoQR = useCallback(() => {
+    navigation.navigate('Add QR', {
+      tripId: tripId, 
+      ticketId: ticketId,
+      transportTransfers: transportTransfers,
+      qr: qr,
+    })
+  });
+
+  
+
 
   return (
     <Card style={styles.transportCard}>
@@ -55,7 +74,7 @@ const Transport = (props) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        {/* SHOW QR CODE */}
+        {/* SHOW/ADD QR CODE */}
         <TouchableOpacity
           onPress={() => {
             Alert.alert(
@@ -68,7 +87,8 @@ const Transport = (props) => {
                 },
                 {
                   text: 'OK',
-                  onPress: deleteTicketHandler,
+                  onPress: movetoQR,
+                    
                 },
               ],
               {cancelable: true},

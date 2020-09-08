@@ -32,18 +32,16 @@ const AddQR = (props) => {
   //   state.trips.availableTrips.find((item) => item.id === tripId),
   //);
   const [QR, setQR] = useState('');
-  // eslint-disable-next-line no-undef
-  //const someHandler = () => {
 
-  const what = (e) => {
-    //onRead({qr: e});
+  const qrHandler = (e) => {
     console.log(e);
     setQR(e.data);
+    
   };
 
   return (
     <QRCodeScanner
-      onRead={what}
+      onRead={qrHandler}
       //flashMode={RNCamera.Constants.FlashMode.torch}
       topContent={
         <Text style={styles.centerText}>
