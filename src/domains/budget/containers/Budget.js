@@ -270,7 +270,7 @@ const Budget = (props) => {
             <View style={[styles.justifyRow]}>
               {/* GENERAL BALANCE */}
               <View style={[styles.justifyRow, {marginRight: '12%'}]}>
-                <Text style={[styles.label, styles.text]}>Total:{'   '}</Text>
+                <Text style={[styles.label, styles.text]}>Totalf:{'   '}</Text>
                 <Text
                   style={[
                     styles.label,
