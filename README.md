@@ -1,8 +1,11 @@
 # Travellan Project
+
 ## Overview
+
 Travellan aims to create a semi-automatized solution for trip planning on mobile devices.
 
 ## Collaborators
+
 - [weronikaolejniczak](https://github.com/weronikaolejniczak)
 - [mkowalczyk97](https://github.com/mkowalczyk97)
 - [CalderBriar](https://github.com/CalderBriar)
@@ -30,5 +33,18 @@ Assuming you have all the requirements installed, you can setup and run the proj
 - `yarn start` to start the metro bundler, in a dedicated terminal
 - `yarn ios` to run the iOS application
 
+## Troubleshooting
+
+### Android
+
+- `cd android & ./gradlew clean` for deleting the build folders.
+
+## To-Do
+
+- create a scheme for Pull Requests and commits (subject, description) for constistency,
+- describe each feature (can be linked to **README.md** in feature-specific folder),
+- choose the license for the repository.
+
 ## License
+
 Not chosen yet.
