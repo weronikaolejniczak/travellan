@@ -35,6 +35,9 @@ const AddTransport = (props) => {
   const [to, setToDestination] = useState(true);
   const [from, setFromDestination] = useState(false);
 
+  /** QR CODE DEFAULT */
+  const [qr, setQR] = useState('');
+
   /** INITIAL VALUES */
   const initialMinutes =
     new Date().getMinutes() < 10
@@ -233,7 +236,7 @@ const AddTransport = (props) => {
     setIsLoading(true);
     if (stages.length > 0) {
       await dispatch(
-        transportActions.createTransport(tripId, to, from, stages),
+        transportActions.createTransport(tripId, to, from, stages, qr),
       );
       props.navigation.navigate('Transport', {
         tripId: selectedTrip.id,

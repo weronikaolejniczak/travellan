@@ -58,7 +58,21 @@ const Transport = (props) => {
         {/* SHOW QR CODE */}
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('Show QR code');
+            Alert.alert(
+              'Add QR code',
+              'Are you sure?',
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: deleteTicketHandler,
+                },
+              ],
+              {cancelable: true},
+            );
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
