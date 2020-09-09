@@ -27,15 +27,7 @@ export const weatherStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    color: Colors.text,
-  },
   itemlessText: {
     fontSize: 18,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
   },
 });
