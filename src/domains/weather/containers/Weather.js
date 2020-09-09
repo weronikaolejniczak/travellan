@@ -116,10 +116,10 @@ const Weather = (props) => {
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <View
                         style={{
-                          width: 85,
-                          height: 85,
+                          width: 70,
+                          height: 70,
                           borderRadius: 50,
-                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          backgroundColor: 'rgba(255, 255, 255, 0.2)',
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}>
@@ -133,7 +133,7 @@ const Weather = (props) => {
                           width: 120,
                           height: 120,
                           borderRadius: 60,
-                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          backgroundColor: 'rgba(255, 255, 255, 0.2)',
                           justifyContent: 'center',
                           alignItems: 'center',
                           marginLeft: 10,
@@ -148,10 +148,10 @@ const Weather = (props) => {
                       </View>
                       <View
                         style={{
-                          width: 85,
-                          height: 85,
+                          width: 70,
+                          height: 70,
                           borderRadius: 50,
-                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          backgroundColor: 'rgba(255, 255, 255, 0.2)',
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}>
@@ -165,17 +165,183 @@ const Weather = (props) => {
                   <View
                     style={{
                       position: 'absolute',
-                      bottom: -6,
+                      bottom: -7,
                     }}>
-                    <Grass />
+                    <Grass width={600} height={21} />
                   </View>
                 </View>
                 <View style={styles.dataContainer}>
                   <View style={{flex: 0.5}}>
-                    <Text style={styles.text}>{activeDay.description}</Text>
+                    <View style={{marginBottom: 5}}>
+                      <Text style={styles.text}>{activeDay.description}</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{marginRight: 5}}>
+                        <Text style={styles.subdate}>HUMIDITY</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>{activeDay.humidity}%</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{marginRight: 5}}>
+                        <Text style={styles.subdate}>PRESSURE</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>
+                          {activeDay.pressure} hPa
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{marginRight: 5}}>
+                        <Text style={styles.subdate}>WIND SPEED</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>
+                          {activeDay.windSpeed} m/s
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{marginRight: 5}}>
+                        <Text style={styles.subdate}>RAIN</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>{activeDay.rain}%</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{marginRight: 5}}>
+                        <Text style={styles.subdate}>CLOUDINESS</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>{activeDay.cloudiness}%</Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={{flex: 0.5}}>
-                    <Text style={styles.text}>Second part</Text>
+                  <View
+                    style={{flexDirection: 'row', marginLeft: 10, flex: 0.5}}>
+                    <View>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          paddingHorizontal: 15,
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>During day</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>{activeDay.tempDay}°C</Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>Feels like</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.tempDayFeelsLike}%
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>Sunrise</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.sunrise
+                              .toTimeString()
+                              .split(' ')[0]
+                              .split(':')
+                              .splice(0, 2)
+                              .join(':')}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>During night</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.tempNight}°C
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>Feels like</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.tempNightFeelsLike}%
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={{marginRight: 5}}>
+                          <Text style={styles.subdate}>Sunset</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.sunset
+                              .toTimeString()
+                              .split(' ')[0]
+                              .split(':')
+                              .splice(0, 2)
+                              .join(':')}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </LinearGradient>
@@ -189,7 +355,7 @@ const Weather = (props) => {
                   )}
                   renderItem={(item) => (
                     <TouchableOpacity
-                      activeOpacity={0.9}
+                      activeOpacity={0.7}
                       onPress={() => setActiveDay(item.item)}>
                       <View
                         style={[

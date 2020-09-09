@@ -10,15 +10,15 @@ export const weatherStyle = StyleSheet.create({
     //paddingTop: '12%',
   },
   weatherContainer: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.background,
   },
   graphicsContainer: {
-    flex: 0.7,
+    flex: 0.74,
     justifyContent: 'center',
     alignItems: 'center',
   },
   dataContainer: {
-    flex: 0.3,
+    flex: 0.26,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     paddingTop: 15,
