@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 /** imports from within the module */
 import {fetchWeather} from 'weather/services/Weather.js';
@@ -72,56 +67,30 @@ const Weather = (props) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <View style={styles.contentContainer}>
       {isLoading && <ActivityIndicator />}
       {isLoaded && differenceGuard && (
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          {/*SEVENTH DAY*/}
-          {/* <Image
-            style={{width: 70, height: 70}}
-            source={{
-              uri:
-                'http://openweathermap.org/img/wn/' + forecast[6].icon + '.png',
-            }}
-          />
-          <Text>Date: {forecast[6].date.toDateString()}</Text>
-          <Text>Sunrise: {forecast[6].sunrise.toTimeString()}</Text>
-          <Text>Sunset: {forecast[6].sunset.toTimeString()}</Text>
-          <Text>Max Temperature: {forecast[6].maxTemp}°C</Text>
-          <Text>Min Temperature: {forecast[6].minTemp}°C</Text>
-          <Text>Day Temperature: {forecast[6].tempDay}°C</Text>
-          <Text>Night Temperature: {forecast[6].tempNight}°C</Text>
-          <Text>
-            Feels like day temperature: {forecast[6].tempFeels_like_day}°C
-          </Text>
-          <Text>
-            Feels like night temperature: {forecast[6].tempFeels_like_night}°C
-          </Text>
-          <Text>Pressure: {forecast[6].pressure}hPa</Text>
-          <Text>Humidity: {forecast[6].humidity}%</Text>
-          <Text>Wind Speed: {forecast[6].wind_speed}m/s</Text>
-          <Text>Cloudiness: {forecast[6].cloudiness}%</Text>
-          <Text>Description: {forecast[6].description}</Text>
-          <Text>
-            Propability of rain: {(forecast[6].rain * 100).toFixed(0)}%
-          </Text>
-          {/*<Text>Icon id: {forecast[6].icon}</Text>*/}
-        </ScrollView>
+        <View style={styles.contentContainer}>
+          <Text style={styles.text}>Weather</Text>
+        </View>
       )}
-      {isLoaded && !isLoading && (
-        <ScrollView contentContainerStyle={styles.contentContainer}>
+      {isLoaded && !isLoading && !differenceGuard && (
+        <View style={styles.contentContainer}>
           <Text style={[styles.text, styles.itemlessText]}>
             Weather forecast is not available for your trip!
           </Text>
+          {/* button to */}
           <TouchableOpacity
             onPress={() => {
               setDifferenceGuard(true);
             }}>
-            <Text style={styles.text}>Check the forecast for next 7 days</Text>
+            <Text style={[styles.action, styles.actionContainer]}>
+              Check the forecast for next 7 days
+            </Text>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
