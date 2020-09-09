@@ -34,18 +34,14 @@ const Transport = (props) => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
 
-  
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
       ticketId: ticketId,
       transportTransfers: transportTransfers,
       qr: qr,
-    })
+    });
   };
-
-  
-
 
   return (
     <Card style={styles.transportCard}>
@@ -88,7 +84,6 @@ const Transport = (props) => {
                 {
                   text: 'OK',
                   onPress: movetoQR,
-                    
                 },
               ],
               {cancelable: true},
