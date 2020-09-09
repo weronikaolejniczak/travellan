@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -18,15 +18,17 @@ import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 
 /** QR-related imports */
 import {useNavigation} from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
 
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
+  console.log(props);
   const dispatch = useDispatch();
 
   const navigation = useNavigation(); // navigation hook
   //const [QR, setQR] = useState('');
   const tripId = props.tripId;
-  const ticketId = props.id;
+  const ticketId = props.tripId;
   const transportTransfers = props.stages.length - 1;
   const qr = props.qr;
 
@@ -73,21 +75,26 @@ const Transport = (props) => {
         {/* SHOW/ADD QR CODE */}
         <TouchableOpacity
           onPress={() => {
-            Alert.alert(
-              'Add QR code',
-              'Are you sure?',
-              [
-                {
-                  text: 'Cancel',
-                  style: 'cancel',
-                },
-                {
-                  text: 'OK',
-                  onPress: movetoQR,
-                },
-              ],
-              {cancelable: true},
-            );
+            console.log(qr);
+            if (qr == "") {
+              Alert.alert(
+                'Add QR code',
+                'Are you sure?',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: movetoQR,
+                  },
+                ],
+                {cancelable: true},
+              );
+            } else {
+              <QRCode value={qr} />
+            }
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>

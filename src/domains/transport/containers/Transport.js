@@ -23,6 +23,7 @@ import Colors from 'constants/Colors';
 const Transport = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
+  const qr = props.route.params.qr;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
@@ -111,6 +112,7 @@ const Transport = (props) => {
               to={itemData.item.to}
               from={itemData.item.from}
               stages={itemData.item.stages}
+              qr={itemData.item.qr}
             />
           )}
         />

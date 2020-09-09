@@ -244,7 +244,16 @@ const AddTransport = (props) => {
     } else {
     }
     setIsLoading(false);
-  }, [stages, dispatch, tripId, to, from, props.navigation, selectedTrip.id]);
+  }, [
+    stages,
+    dispatch,
+    qr,
+    tripId,
+    to,
+    from,
+    props.navigation,
+    selectedTrip.id,
+  ]);
 
   return (
     <View style={styles.container}>
