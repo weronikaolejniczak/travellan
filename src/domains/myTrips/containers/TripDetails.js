@@ -65,44 +65,7 @@ const TripDetails = (props) => {
 
         {/* Functionalities */}
         <View>
-          <View // 1st row of functionalities buttons
-            style={styles.justifyRow}>
-            {/* Budget */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Budget', {
-                  tripId: selectedTrip.id,
-                  budget: selectedTrip.budget,
-                });
-              }}>
-              <Text style={styles.buttonText}>Budget</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-wallet' : 'ios-wallet'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-
-            {/* Notes */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Notes', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Notes</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-journal' : 'ios-journal'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View // 2nd row of functionalities buttons
-            style={styles.justifyRow}>
+          <View style={styles.justifyRow}>
             {/* Transport */}
             <TouchableOpacity
               style={styles.button}
@@ -139,9 +102,7 @@ const TripDetails = (props) => {
               />
             </TouchableOpacity>
           </View>
-
-          <View // 3rd row of functionalities buttons
-            style={styles.justifyRow}>
+          <View style={styles.justifyRow}>
             {/* Map */}
             <TouchableOpacity
               style={[styles.button]}
@@ -167,6 +128,40 @@ const TripDetails = (props) => {
               <Text style={styles.buttonText}>Weather</Text>
               <Icon
                 name={Platform.OS === 'android' ? 'md-cloudy' : 'ios-cloudy'}
+                size={42}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.justifyRow}>
+            {/* Budget */}
+            {/* <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Budget', {
+                  tripId: selectedTrip.id,
+                  budget: selectedTrip.budget,
+                });
+              }}>
+              <Text style={styles.buttonText}>Budget</Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-wallet' : 'ios-wallet'}
+                size={42}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity> */}
+
+            {/* Notes */}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.navigation.navigate('Notes', {
+                  tripId: selectedTrip.id,
+                });
+              }}>
+              <Text style={styles.buttonText}>Notes</Text>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-journal' : 'ios-journal'}
                 size={42}
                 color="#FFFFFF"
               />

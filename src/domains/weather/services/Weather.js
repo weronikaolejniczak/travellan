@@ -12,6 +12,11 @@ export async function fetchWeather(latitude, longitude) {
     )
     .then((res) => res.data)
     .then((data) => {
+      // timezone_offset, timezone
+      let timezone = {
+        timezone: data.timezone,
+        offset: data.timezone_offset,
+      };
       let forecast = [];
       // add each day weather forecast to an array
       data.daily.map((day) =>
@@ -38,8 +43,8 @@ export async function fetchWeather(latitude, longitude) {
         ),
       );
       //console.log('FORECAST IN FETCH WEATHER FUNCTION: ');
-      console.log(forecast);
-      return forecast;
+      //console.log(forecast);
+      return [forecast, timezone];
     })
     .catch((error) => console.log(error));
 }
