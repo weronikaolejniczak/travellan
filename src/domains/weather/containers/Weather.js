@@ -76,7 +76,7 @@ const Weather = (props) => {
       )}
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
-          {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
+          {forecast && <Text style={styles.text}>{forecast[0].main}{(forecast[0].sunrise).toLocaleString()}</Text>}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (
