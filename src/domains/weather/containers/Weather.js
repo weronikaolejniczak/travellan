@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 /** imports from within the module */
-import {fetchWeather} from 'weather/services/Weather.js';
+import {fetchWeather} from 'weather/services/Weather';
 import {weatherStyle as styles} from './WeatherStyle';
+import Colors from 'constants/Colors';
 
 /** weather representational component */
 const Weather = (props) => {
@@ -17,11 +18,11 @@ const Weather = (props) => {
 
   // date operations
   var startDate = new Date(selectedTrip.startDate);
-  var startDay = startDate.getDate();
-  var startMonth = startDate.getMonth() + 1;
-  var startYear = startDate.getFullYear();
-  var convertedStartDate = startYear + '-' + startMonth + '-' + startDay;
-  var convertedStartDate = new Date(convertedStartDate);
+  var convertedStartDate = new Date(
+    `${startDate.getFullYear()}'-'${
+      startDate.getMonth() + 1
+    }'-'${startDate.getDate()}`,
+  );
   var currentDate = new Date();
 
   const [differenceGuard, setDifferenceGuard] = useState(false); // guard for checking day difference between currentDate and startDate
@@ -68,7 +69,10 @@ const Weather = (props) => {
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
-        <ActivityIndicator style={[styles.contentContainer, styles.loading]} />
+        <ActivityIndicator
+          color={Colors.primary}
+          style={styles.contentContainer}
+        />
       )}
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
