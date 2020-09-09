@@ -113,8 +113,8 @@ const defaultNavOptions = {
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.7)',
+    textShadowColor: 'rgba(0, 0, 0, 0.45)',
     textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 10,
+    textShadowRadius: 7,
   },
 };
