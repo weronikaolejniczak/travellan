@@ -29,13 +29,17 @@ const Weather = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [forecast, setForecast] = useState();
+  const [timezone, setTimezone] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      let weather = await fetchWeather(latitude, longitude);
+      let result = await fetchWeather(latitude, longitude);
+      let weather = result[0];
+      let tmz = result[1];
       //console.log(weather);
       setForecast(weather);
+      setTimezone(tmz);
     }
     setIsLoading(true);
     checkDates();
@@ -76,7 +80,9 @@ const Weather = (props) => {
       )}
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
-          {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
+          {forecast && (
+            <Text style={styles.text}>{timezone.timezone.toString()}</Text>
+          )}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (
