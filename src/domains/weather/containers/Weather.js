@@ -1,10 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {useSelector} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 /** imports from within the module */
 import {fetchWeather} from 'weather/services/Weather';
 import {weatherStyle as styles} from './WeatherStyle';
 import {WEATHER} from 'weather/data/DummyWeather';
+import Sun from 'assets/images/sun.svg';
+import Grass from 'assets/images/grass.svg';
 import Colors from 'constants/Colors';
 
 /** weather representational component */
@@ -29,8 +39,9 @@ const Weather = (props) => {
   const [differenceGuard, setDifferenceGuard] = useState(false); // guard for checking day difference between currentDate and startDate
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [forecast, setForecast] = useState();
+  const [forecast, setForecast] = useState(WEATHER);
   const [timezone, setTimezone] = useState();
+  const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
@@ -39,8 +50,9 @@ const Weather = (props) => {
       //let weather = result[0];
       //let tmz = result[1];
       //console.log(weather);
-      setForecast(WEATHER); // small caps 'weather'
+      //setForecast(WEATHER); // small caps 'weather'
       //setTimezone(tmz);
+      setActiveDay(WEATHER[0]);
     }
     setIsLoading(true);
     checkDates();
@@ -81,7 +93,150 @@ const Weather = (props) => {
       )}
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
-          {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
+          {forecast && (
+            <View>
+              <LinearGradient
+                colors={['#80E0FF', '#2BABE1']}
+                style={styles.linearGradient}>
+                <View style={styles.graphicsContainer}>
+                  <View
+                    style={{
+                      flex: 0.65,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Sun width={200} />
+                  </View>
+                  <View
+                    style={{
+                      flex: 0.35,
+                      justifyContent: 'center',
+                      marginBottom: 15,
+                    }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <View
+                        style={{
+                          width: 85,
+                          height: 85,
+                          borderRadius: 50,
+                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text style={styles.text}>min</Text>
+                        <Text style={styles.text}>
+                          {Math.floor(activeDay.minTemp)}°C
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          width: 120,
+                          height: 120,
+                          borderRadius: 60,
+                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginLeft: 10,
+                          marginRight: 10,
+                        }}>
+                        <Text style={[styles.text, {fontSize: 38}]}>
+                          {Math.floor(
+                            (activeDay.maxTemp + activeDay.minTemp) / 2,
+                          )}
+                          °C
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          width: 85,
+                          height: 85,
+                          borderRadius: 50,
+                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text style={styles.text}>max</Text>
+                        <Text style={styles.text}>
+                          {Math.floor(activeDay.maxTemp)}°C
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      bottom: -6,
+                    }}>
+                    <Grass />
+                  </View>
+                </View>
+                <View style={styles.dataContainer}>
+                  <View style={{flex: 0.5}}>
+                    <Text style={styles.text}>{activeDay.description}</Text>
+                  </View>
+                  <View style={{flex: 0.5}}>
+                    <Text style={styles.text}>Second part</Text>
+                  </View>
+                </View>
+              </LinearGradient>
+              <View style={styles.bottom}>
+                <FlatList
+                  horizontal
+                  data={WEATHER}
+                  keyExtractor={(item) => item.date.toString()}
+                  ItemSeparatorComponent={() => (
+                    <View style={{width: 1, backgroundColor: '#222222'}} />
+                  )}
+                  renderItem={(item) => (
+                    <TouchableOpacity
+                      activeOpacity={0.9}
+                      onPress={() => setActiveDay(item.item)}>
+                      <View
+                        style={[
+                          styles.dateContainer,
+                          {
+                            backgroundColor:
+                              item.item === activeDay ? '#222' : '#111',
+                          },
+                        ]}>
+                        <Text style={styles.subdate}>
+                          {item.item.date
+                            .toLocaleString()
+                            .split(' ')
+                            .slice(0, 2)
+                            .join(' ')
+                            .replace(',', '')}
+                        </Text>
+                        <Text style={styles.date}>
+                          {item.item.date
+                            .toDateString()
+                            .split(' ')
+                            .slice(0, 1)
+                            .join(' ')
+                            .replace(',', '')}
+                        </Text>
+                        <Image
+                          style={{width: 45, height: 45}}
+                          source={{
+                            uri:
+                              'http://openweathermap.org/img/wn/' +
+                              item.item.icon +
+                              '.png',
+                          }}
+                        />
+                        <Text style={styles.text}>
+                          {Math.floor(
+                            (item.item.maxTemp + item.item.minTemp) / 2,
+                          )}
+                          °C
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            </View>
+          )}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (

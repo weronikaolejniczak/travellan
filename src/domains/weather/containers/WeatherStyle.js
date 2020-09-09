@@ -7,9 +7,26 @@ export const weatherStyle = StyleSheet.create({
     backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '12%',
+    //paddingTop: '12%',
   },
-  weatherContainer: {},
+  weatherContainer: {
+    backgroundColor: Colors.primary,
+  },
+  graphicsContainer: {
+    flex: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dataContainer: {
+    flex: 0.3,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    paddingTop: 15,
+    paddingHorizontal: 50,
+    backgroundColor: '#111111',
+    width: '100%',
+    flexDirection: 'row',
+  },
   actionContainer: {
     marginTop: 10,
   },
@@ -19,10 +36,32 @@ export const weatherStyle = StyleSheet.create({
   text: {
     color: Colors.text,
   },
+  subdate: {
+    fontSize: 11,
+    color: '#ccc',
+  },
+  date: {
+    color: Colors.text,
+  },
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
+  },
+  linearGradient: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  dateContainer: {
+    height: 110,
+    paddingVertical: 7,
+    paddingHorizontal: 13,
+    backgroundColor: '#111111',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
