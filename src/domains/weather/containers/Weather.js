@@ -71,12 +71,12 @@ const Weather = (props) => {
         <ActivityIndicator style={[styles.contentContainer, styles.loading]} />
       )}
       {isLoaded && differenceGuard && (
-        <View style={styles.contentContainer}>
+        <View style={styles.weatherContainer}>
           {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (
-        <View style={styles.contentContainer}>
+        <View style={styles.itemlessContainer}>
           <Text style={[styles.text, styles.itemlessText]}>
             Weather forecast is not available for your trip!
           </Text>

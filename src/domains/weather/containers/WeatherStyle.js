@@ -12,6 +12,7 @@ export const weatherStyle = StyleSheet.create({
   loading: {
     color: Colors.primary,
   },
+  weatherContainer: {},
   actionContainer: {
     marginTop: 10,
   },
