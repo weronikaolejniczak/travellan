@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 /** imports from within the module */
 import {fetchWeather} from 'weather/services/Weather';
 import {weatherStyle as styles} from './WeatherStyle';
+import {WEATHER} from 'weather/data/DummyWeather';
 import Colors from 'constants/Colors';
 
 /** weather representational component */
@@ -34,12 +35,12 @@ const Weather = (props) => {
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      let result = await fetchWeather(latitude, longitude);
-      let weather = result[0];
-      let tmz = result[1];
+      //let result = await fetchWeather(latitude, longitude);
+      //let weather = result[0];
+      //let tmz = result[1];
       //console.log(weather);
-      setForecast(weather);
-      setTimezone(tmz);
+      setForecast(WEATHER); // small caps 'weather'
+      //setTimezone(tmz);
     }
     setIsLoading(true);
     checkDates();
@@ -80,9 +81,7 @@ const Weather = (props) => {
       )}
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
-          {forecast && (
-            <Text style={styles.text}>{timezone.timezone.toString()}</Text>
-          )}
+          {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (
