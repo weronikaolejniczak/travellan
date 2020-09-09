@@ -2,17 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
-  Image,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 /** imports from within the module */
-import {WEATHER_ID} from 'react-native-dotenv';
 import {fetchWeather} from 'weather/services/Weather.js';
 import {weatherStyle as styles} from './WeatherStyle';
-
-const client_id = WEATHER_ID;
 
 /** weather representational component */
 const Weather = (props) => {
