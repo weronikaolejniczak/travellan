@@ -9,7 +9,7 @@ import {
 import {useSelector} from 'react-redux';
 /** imports from within the module */
 import {WEATHER_ID} from 'react-native-dotenv';
-import WeatherModel from 'weather/model/Weather';
+import {fetchWeather} from 'weather/services/Weather.js';
 import {weatherStyle as styles} from './WeatherStyle';
 
 const client_id = WEATHER_ID;
@@ -39,68 +39,39 @@ const Weather = (props) => {
   const [forecast, setForecast] = useState();
 
   useEffect(() => {
+    // fetch weather from OpenWeatherMap API using lat and lon values
+    async function getWeather() {
+      let weather = await fetchWeather(latitude, longitude);
+      //console.log(weather);
+      setForecast(weather);
+    }
     setIsLoading(true);
-    getWeather().then((result) => setForecast(result));
-    dateChecker(convertedStartDate, currentDate, differenceGuard);
+    getWeather().then(() =>
+      console.log('FORECAST IN WEATHER COMPONENT: ' + forecast),
+    );
+    checkDates();
     setIsLoading(false);
     setIsLoaded(true);
   }, []);
 
-  const getWeather = () => {
-    fetch(
-      `http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${client_id}&units=metric`,
-    )
-      .then((data) => data.json())
-      .then((results) => {
-        let days = [];
-        // add each day weather forecast to an array
-        results.daily.map((day) =>
-          days.push(
-            new WeatherModel(
-              new Date(day.dt * 1000),
-              new Date(day.sunrise * 1000),
-              new Date(day.sunset * 1000),
-              day.temp.max, // celsius
-              day.temp.min, // celsius
-              day.temp.day, // celsius
-              day.temp.night, // celsius
-              day.feels_like.day, // celsius
-              day.feels_like.night, // celsius
-              day.pressure, // hPa
-              day.humidity, // %
-              day.wind_speed, // m/s
-              day.clouds, //  %
-              day.weather[0].description, // string
-              day.pop, // propability
-              day.weather[0].icon, // icon id
-              day.weather[0].main,
-            ),
-          ),
-        );
-        //console.log(days);
-        return days;
-      })
-      .catch((error) => console.log(error));
-  };
-
-  //FUNCTION CALCULATING WHETHER TO DISPLAY THE WEATHER
-  const dateChecker = (startDate, currentDate, differenceGuard) => {
+  // decide whether to display weather or not
+  const checkDates = () => {
     if (startDate < currentDate) {
-      // Always show weather if currentDate is bigger then startDate
+      // always show weather if currentDate is bigger then startDate
       setDifferenceGuard(true);
     } else {
-      //If startDate is bigger then currentDate then calculate day difference
+      // if startDate is bigger then currentDate then calculate day difference
       const diffTime = Math.abs(startDate - currentDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (diffDays <= 7) {
-        //If day difference is smaller then 7, show weather
+        // if day difference is smaller then 7, show weather
         setDifferenceGuard(true);
       } else {
-        //If day difference is bigger then 7, weather is unavailable
+        // if day difference is bigger then 7, weather is unavailable
         setDifferenceGuard(false);
       }
     }
-    //console.log(differenceGuard);
+    console.log('DIFFERENCE GUARD VALUE: ' + differenceGuard);
     return differenceGuard;
   };
 
@@ -109,12 +80,6 @@ const Weather = (props) => {
       {isLoading && <ActivityIndicator />}
       {isLoaded && differenceGuard && (
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          {/* <Image
-            style={{width: 70, height: 70}}
-            source={{
-              uri: 'http://openweathermap.org/img/wn/' + forecast[6].icon_1 + '.png',
-            }}
-          /> */}
           {/*SEVENTH DAY*/}
           {/* <Image
             style={{width: 70, height: 70}}

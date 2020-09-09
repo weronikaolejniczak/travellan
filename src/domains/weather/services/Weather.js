@@ -8,38 +8,38 @@ const client_id = WEATHER_ID;
 export async function fetchWeather(latitude, longitude) {
   return await axios
     .get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${client_id}&units=metric`,
+      `http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${client_id}&units=metric`,
     )
-    .then((data) => data.json())
-    .then((results) => {
-      console.log(results);
-      const forecast = [];
-
-      results.map((day) =>
+    .then((res) => res.data)
+    .then((data) => {
+      let forecast = [];
+      // add each day weather forecast to an array
+      data.daily.map((day) =>
         forecast.push(
           new Weather(
-            new Date(day.daily[forecast.length].dt * 1000),
-            new Date(day.daily[forecast.length].sunrise * 1000),
-            new Date(day.daily[forecast.length].sunset * 1000),
-            day.daily[forecast.length].temp.max, // celsius
-            day.daily[forecast.length].temp.min, // celsius
-            day.daily[forecast.length].temp.day, // celsius
-            day.daily[forecast.length].temp.night, // celsius
-            day.daily[forecast.length].feels_like.day, // celsius
-            day.daily[forecast.length].feels_like.night, // celsius
-            day.daily[forecast.length].pressure, // hPa
-            day.daily[forecast.length].humidity, // %
-            day.daily[forecast.length].wind_speed, // m/s
-            day.daily[forecast.length].clouds, //  %
-            day.daily[forecast.length].weather[0].description, // string
-            day.daily[forecast.length].pop, // propability
-            day.daily[forecast.length].weather[0].icon, // icon id
-            day.daily[forecast.length].weather[0].main,
+            new Date(day.dt * 1000),
+            new Date(day.sunrise * 1000),
+            new Date(day.sunset * 1000),
+            day.temp.max, // celsius
+            day.temp.min, // celsius
+            day.temp.day, // celsius
+            day.temp.night, // celsius
+            day.feels_like.day, // celsius
+            day.feels_like.night, // celsius
+            day.pressure, // hPa
+            day.humidity, // %
+            day.wind_speed, // m/s
+            day.clouds, //  %
+            day.weather[0].description, // string
+            day.pop, // propability
+            day.weather[0].icon, // icon id
+            day.weather[0].main,
           ),
         ),
       );
-
+      console.log('FORECAST IN FETCH WEATHER FUNCTION: ');
       console.log(forecast);
       return forecast;
-    });
+    })
+    .catch((error) => console.log(error));
 }
