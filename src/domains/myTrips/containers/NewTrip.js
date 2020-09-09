@@ -122,18 +122,19 @@ const NewTrip = (props) => {
       ]),
     ];
 
-    if (!destinationIsValid || !budgetIsValid) {
+    if (!destinationIsValid /* || !budgetIsValid */) {
       setDestinationSubmitted(true);
-      if (budgetIsEnabled) {
+      /* if (budgetIsEnabled) {
         setBudgetSubmitted(true);
-      }
+      } */
     } else {
       dispatch(
         createTrip(
           destination,
           startDate.toString(),
           endDate.toString(),
-          budgetToSubmit,
+          /* budgetToSubmit, */
+          undefined,
         ),
       );
       props.navigation.goBack();
@@ -142,9 +143,9 @@ const NewTrip = (props) => {
     props.navigation,
     dispatch,
     destinationIsValid,
-    budget,
+    /* budget,
     budgetIsValid,
-    budgetIsEnabled,
+    budgetIsEnabled, */
     currency,
     destination,
     startDate,
@@ -238,10 +239,9 @@ const NewTrip = (props) => {
       </View>
 
       {/* BUDGET */}
-      <View style={styles.bigMarginTop}>
+      {/* <View style={styles.bigMarginTop}>
         <View style={[styles.rowAndCenter]}>
           <Text style={styles.label}>Budget</Text>
-          {/* BUDGET SWITCH */}
           <Switch
             style={styles.switch}
             trackColor={{
@@ -256,7 +256,6 @@ const NewTrip = (props) => {
         </View>
         {budgetIsEnabled && (
           <View>
-            {/* INITIAL AMOUNT */}
             <TextInput
               style={[styles.input]}
               placeholder={'Number'}
@@ -265,7 +264,6 @@ const NewTrip = (props) => {
               onChangeText={budgetChangeHandler}
               keyboardType={'numeric'}
             />
-            {/* CURRENCY setCurrency */}
             <TextInput
               style={[styles.input]}
               placeholder={'Currency'}
@@ -275,13 +273,12 @@ const NewTrip = (props) => {
             />
           </View>
         )}
-        {/* ERROR */}
         {budgetIsEnabled && !budgetIsValid && budgetSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid budget!</Text>
           </View>
         )}
-      </View>
+      </View> */}
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
