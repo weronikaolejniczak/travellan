@@ -35,14 +35,14 @@ const Transport = (props) => {
   }, [dispatch, tripId, ticketId]);
 
   
-  const movetoQR = useCallback(() => {
+  const movetoQR = () => {
     navigation.navigate('Add QR', {
-      tripId: tripId, 
+      tripId: tripId,
       ticketId: ticketId,
       transportTransfers: transportTransfers,
       qr: qr,
     })
-  });
+  };
 
   
 

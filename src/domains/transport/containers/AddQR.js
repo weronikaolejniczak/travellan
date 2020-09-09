@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {
   //AppRegistry,
@@ -16,6 +16,8 @@ import QRCode from 'react-native-qrcode-svg';
 //import {RNCamera} from 'react-native-camera';
 import {AddQRStyle as styles} from './AddQRStyle';
 import {useDispatch, useSelector} from 'react-redux';
+
+import * as transportActions from 'transport/state/Actions';
 /*
 class ScanScreen extends Component {
   onSuccess = e => {
@@ -26,17 +28,36 @@ class ScanScreen extends Component {
 */
 //class AddQR extends Component {
 const AddQR = (props) => {
-  //const dispatch = useDispatch();
-  // const tripId = props.route.params.tripId;
-  //const selectedTrip = useSelector((state) =>
-  //   state.trips.availableTrips.find((item) => item.id === tripId),
-  //);
+  const dispatch = useDispatch();
+  
+  const tripId = props.route.params.tripId;
+  const ticketId = props.route.params.ticketId;
+  //const from = props.route.params.from;
+  //const stages = props.route.params.stages;
+  //const transportTransfers = props.route.params.transportTransfers;
+  
   const [QR, setQR] = useState('');
-
-  const qrHandler = (e) => {
+/** 
+  const updateQRhandler = async () => {
+    const qr = QR;
+    console.log(qr);
+    await dispatch(transportActions.createTransport(tripId, qr));
+    props.navigation.navigate('Transport'),{
+        tripId: tripId,
+    };
+  };
+*/
+  const qrHandler = async (e) => {
     console.log(e);
+    console.log(e.data);
     setQR(e.data);
-    
+    console.log(QR);
+    const qr = e.data;
+    console.log(qr);
+    await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
+    props.navigation.navigate('Transport'),{
+        tripId: tripId,
+    };
   };
 
   return (
