@@ -9,6 +9,9 @@ export const weatherStyle = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '12%',
   },
+  loading: {
+    color: Colors.primary,
+  },
   actionContainer: {
     marginTop: 10,
   },

@@ -37,8 +37,8 @@ export async function fetchWeather(latitude, longitude) {
           ),
         ),
       );
-      console.log('FORECAST IN FETCH WEATHER FUNCTION: ');
-      console.log(forecast);
+      //console.log('FORECAST IN FETCH WEATHER FUNCTION: ');
+      //console.log(forecast);
       return forecast;
     })
     .catch((error) => console.log(error));

@@ -37,12 +37,11 @@ const Weather = (props) => {
       setForecast(weather);
     }
     setIsLoading(true);
-    getWeather().then(() =>
-      console.log('FORECAST IN WEATHER COMPONENT: ' + forecast),
-    );
     checkDates();
-    setIsLoading(false);
-    setIsLoaded(true);
+    getWeather().then(() => {
+      setIsLoading(false);
+      setIsLoaded(true);
+    });
   }, []);
 
   // decide whether to display weather or not
@@ -62,16 +61,18 @@ const Weather = (props) => {
         setDifferenceGuard(false);
       }
     }
-    console.log('DIFFERENCE GUARD VALUE: ' + differenceGuard);
+    //console.log('DIFFERENCE GUARD VALUE: ' + differenceGuard);
     return differenceGuard;
   };
 
   return (
     <View style={styles.contentContainer}>
-      {isLoading && <ActivityIndicator />}
+      {isLoading && (
+        <ActivityIndicator style={[styles.contentContainer, styles.loading]} />
+      )}
       {isLoaded && differenceGuard && (
         <View style={styles.contentContainer}>
-          <Text style={styles.text}>Weather</Text>
+          {forecast && <Text style={styles.text}>{forecast[0].main}</Text>}
         </View>
       )}
       {isLoaded && !isLoading && !differenceGuard && (
