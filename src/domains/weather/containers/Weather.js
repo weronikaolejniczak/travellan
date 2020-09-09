@@ -63,6 +63,8 @@ const Weather = (props) => {
     });
   }, []);
 
+  /* IF DATEGUARD === TRUE, SET ANOTHER VALUE TO TRUE - BASED ON THIS VALUE CHECK
+  WHICH DAYS TO SHOW (FORECAST DAY === TRIP DAY) */
   // decide whether to display weather or not
   const checkDates = () => {
     if (startDate < currentDate) {
