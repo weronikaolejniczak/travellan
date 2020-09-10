@@ -57,6 +57,7 @@ export const newTripStyle = StyleSheet.create({
     marginLeft: '5%',
   },
   buttonContainer: {
+    marginTop: 20,
     alignItems: 'center',
   },
   button: {
