@@ -21,7 +21,7 @@ export const fetchTransport = (tripId) => {
     dispatch({type: SET_TRANSPORT, tripId, transportInfo});
   };
 };
-
+/**Currently for QR purpose, can be reused to access particular tickets */
 export const updateTransport = (tripId, ticketId, qr) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -33,11 +33,9 @@ export const updateTransport = (tripId, ticketId, qr) => {
     const resData = await response.json();
     // Take transportInfo stored in the trip and assign it to local variable for later logic.
     let transportInfo = resData.transportInfo;
-    console.log(transportInfo);
-    // Change transportInfo to exclude the ticket we want to delete with the help of ticketId.
+    // Using transportInfo to identify Index of a ticket to access proper node
     let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
-    console.log(ticketKey);
-    //transportInfo = transportInfo.filter((item) => item.id === ticketId);
+  
     // PATCH updates some of the keys for a defined path without replacing all of the data.
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,

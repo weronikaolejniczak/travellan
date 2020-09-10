@@ -40,7 +40,6 @@ const AddQR = (props) => {
 /** 
   const updateQRhandler = async () => {
     const qr = QR;
-    console.log(qr);
     await dispatch(transportActions.createTransport(tripId, qr));
     props.navigation.navigate('Transport'),{
         tripId: tripId,
@@ -48,12 +47,8 @@ const AddQR = (props) => {
   };
 */
   const qrHandler = async (e) => {
-    //console.log(e);
-    //console.log(e.data);
     setQR(e.data);
-    //console.log(QR);
     const qr = e.data;
-    //console.log(qr);
     await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
     props.navigation.navigate('Transport'),{
         tripId: tripId,
