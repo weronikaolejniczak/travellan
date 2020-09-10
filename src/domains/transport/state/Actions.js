@@ -66,7 +66,6 @@ export const deleteTransport = (tripId, ticketId) => {
     let transportInfo = resData.transportInfo;
     // Change transportInfo to exclude the ticket we want to delete with the help of ticketId.
     transportInfo = transportInfo.filter((item) => !(item.id === ticketId));
-    console.log(ticketId);
     // PATCH updates some of the keys for a defined path without replacing all of the data.
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
