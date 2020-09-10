@@ -158,9 +158,6 @@ const Weather = (props) => {
       {isLoaded && dateGuard && (
         <View style={styles.weatherContainer}>
           {forecast && (
-<<<<<<< HEAD
-            <Text style={styles.text}>{}</Text>
-=======
             <View>
               <Background>
                 <View style={styles.graphicsContainer}>
@@ -433,7 +430,6 @@ const Weather = (props) => {
                 />
               </View>
             </View>
->>>>>>> 14bce91cccdc9959522c027388d0ab7a79c7997e
           )}
         </View>
       )}
