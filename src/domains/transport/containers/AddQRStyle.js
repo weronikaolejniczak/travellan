@@ -3,6 +3,10 @@ import Colors from 'constants/Colors';
 
 
 export const AddQRStyle = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    margin: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
