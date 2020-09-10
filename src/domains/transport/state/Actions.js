@@ -35,7 +35,6 @@ export const updateTransport = (tripId, ticketId, qr) => {
     let transportInfo = resData.transportInfo;
     // Using transportInfo to identify Index of a ticket to access proper node
     let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
-  
     // PATCH updates some of the keys for a defined path without replacing all of the data.
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
@@ -50,7 +49,7 @@ export const updateTransport = (tripId, ticketId, qr) => {
       },
     );
     // Dispatch an action to reducer.
-    dispatch({type: UPDATE_QR, tripId});
+    dispatch({type: UPDATE_QR, tripId, qr});
   };
 };
 // Delete a ticket based on id of the ticket.
@@ -67,6 +66,7 @@ export const deleteTransport = (tripId, ticketId) => {
     let transportInfo = resData.transportInfo;
     // Change transportInfo to exclude the ticket we want to delete with the help of ticketId.
     transportInfo = transportInfo.filter((item) => !(item.id === ticketId));
+    console.log(ticketId);
     // PATCH updates some of the keys for a defined path without replacing all of the data.
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
