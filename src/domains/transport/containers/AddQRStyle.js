@@ -25,5 +25,10 @@ export const AddQRStyle = StyleSheet.create({
   },
   buttonTouchable: {
     padding: 16
-  }
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
 });

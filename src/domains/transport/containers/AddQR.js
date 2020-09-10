@@ -38,23 +38,25 @@ const AddQR = (props) => {
   };
 
   return (
-    
-    <QRCodeScanner
-      onRead={qrHandler}
-      /**TO ADD FLASHLIGHT SWITCH BUTTON */
-      //flashMode={RNCamera.Constants.FlashMode.torch}
-      topContent={
-        <Text style={styles.centerText}>
-          <Text style={styles.textBold}>{QR}</Text>
-          {QR ? <QRCode value={QR} /> : null}
-        </Text>
-      }
-      bottomContent={
-        <TouchableOpacity style={styles.buttonTouchable}>
-          <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-        </TouchableOpacity>
-      }
-    />
+    <View style={styles.container}>
+      <QRCodeScanner
+      style=
+        onRead={qrHandler}
+        /**TO ADD FLASHLIGHT SWITCH BUTTON */
+        //flashMode={RNCamera.Constants.FlashMode.torch}
+        topContent={
+          <Text style={styles.centerText}>
+            <Text style={styles.textBold}>{QR}</Text>
+            {QR ? <QRCode value={QR} /> : null}
+          </Text>
+        }
+        bottomContent={
+          <TouchableOpacity style={styles.buttonTouchable}>
+            <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+          </TouchableOpacity>
+        }
+      />
+    </View>
   );
 };
 
