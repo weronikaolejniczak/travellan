@@ -40,7 +40,7 @@ const AddQR = (props) => {
   return (
     <View style={styles.container}>
       <QRCodeScanner
-      style=
+        style={styles.centered}
         onRead={qrHandler}
         /**TO ADD FLASHLIGHT SWITCH BUTTON */
         //flashMode={RNCamera.Constants.FlashMode.torch}
