@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -22,11 +22,11 @@ import QRCode from 'react-native-qrcode-svg';
 
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
-  console.log(props);
+  //console.log(props);
   const dispatch = useDispatch();
 
   const navigation = useNavigation(); // navigation hook
-  //const [QR, setQR] = useState('');
+  const [showQR, setshowQR] = useState(false);
   const tripId = props.tripId;
   const ticketId = props.tripId;
   const transportTransfers = props.stages.length - 1;
@@ -75,8 +75,8 @@ const Transport = (props) => {
         {/* SHOW/ADD QR CODE */}
         <TouchableOpacity
           onPress={() => {
-            console.log(qr);
-            if (qr == "") {
+            //console.log(qr);
+            if (qr === '') {
               Alert.alert(
                 'Add QR code',
                 'Are you sure?',
@@ -93,7 +93,7 @@ const Transport = (props) => {
                 {cancelable: true},
               );
             } else {
-              <QRCode value={qr} />
+              setshowQR(true);
             }
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
@@ -106,7 +106,7 @@ const Transport = (props) => {
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>
       </View>
-
+      {showQR && <QRCode style={styles.qrstyle} value={qr} />}
       {/* TO/FROM DESTINATION */}
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}
