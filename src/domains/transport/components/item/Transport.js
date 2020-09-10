@@ -27,7 +27,7 @@ const Transport = (props) => {
   const navigation = useNavigation(); // navigation hook
   const [showQR, setshowQR] = useState(false);
   const tripId = props.tripId;
-  const ticketId = props.tripId;
+  const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
   const qr = props.qr;
 

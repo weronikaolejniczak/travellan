@@ -18,6 +18,7 @@ import QRCode from 'react-native-qrcode-svg';
 //import {RNCamera} from 'react-native-camera';
 import {AddQRStyle as styles} from './AddQRStyle';
 import {useDispatch, useSelector} from 'react-redux';
+import Colors from 'constants/Colors';
 
 import * as transportActions from 'transport/state/Actions';
 
