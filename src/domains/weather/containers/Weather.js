@@ -70,6 +70,7 @@ const Weather = (props) => {
     return differenceGuard;
   };
 
+
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
@@ -81,7 +82,7 @@ const Weather = (props) => {
       {isLoaded && differenceGuard && (
         <View style={styles.weatherContainer}>
           {forecast && (
-            <Text style={styles.text}>{timezone.timezone.toString()}</Text>
+            <Text style={styles.text}>{}</Text>
           )}
         </View>
       )}
