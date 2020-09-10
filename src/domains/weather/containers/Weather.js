@@ -1,9 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {useSelector} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 /** imports from within the module */
 import {fetchWeather} from 'weather/services/Weather';
 import {weatherStyle as styles} from './WeatherStyle';
+import {WEATHER} from 'weather/data/DummyWeather';
+import Sun from 'assets/images/sun.svg';
+import SunWithClouds from 'assets/images/sun_with_clouds.svg';
+import Rain from 'assets/images/rain.svg';
+import Clouds from 'assets/images/cloudy.svg';
+import Thunderstorm from 'assets/images/storm.svg';
+import Snow from 'assets/images/snow.svg';
+import Grass from 'assets/images/grass.svg';
+import SnowGround from 'assets/images/snow_ground.svg';
 import Colors from 'constants/Colors';
 
 /** weather representational component */
@@ -18,28 +35,25 @@ const Weather = (props) => {
 
   // date operations
   var startDate = new Date(selectedTrip.startDate);
-  var convertedStartDate = new Date(
-    `${startDate.getFullYear()}'-'${
-      startDate.getMonth() + 1
-    }'-'${startDate.getDate()}`,
-  );
+  var endDate = new Date(selectedTrip.endDate);
   var currentDate = new Date();
 
-  const [differenceGuard, setDifferenceGuard] = useState(false); // guard for checking day difference between currentDate and startDate
+  const [dateGuard, setDateGuard] = useState(false); // guard for checking day difference between currentDate and startDate
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [forecast, setForecast] = useState();
+  const [forecast, setForecast] = useState(WEATHER);
   const [timezone, setTimezone] = useState();
+  const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
       let result = await fetchWeather(latitude, longitude);
       let weather = result[0];
-      let tmz = result[1];
-      //console.log(weather);
+      //let tmz = result[1];
       setForecast(weather);
-      setTimezone(tmz);
+      //setTimezone(tmz);
+      setActiveDay(weather[0]);
     }
     setIsLoading(true);
     checkDates();
@@ -49,25 +63,87 @@ const Weather = (props) => {
     });
   }, []);
 
+  /* IF DATEGUARD === TRUE, SET ANOTHER VALUE TO TRUE - BASED ON THIS VALUE CHECK
+  WHICH DAYS TO SHOW (FORECAST DAY === TRIP DAY) */
   // decide whether to display weather or not
   const checkDates = () => {
     if (startDate < currentDate) {
       // always show weather if currentDate is bigger then startDate
-      setDifferenceGuard(true);
+      setDateGuard(true);
     } else {
       // if startDate is bigger then currentDate then calculate day difference
       const diffTime = Math.abs(startDate - currentDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (diffDays <= 7) {
         // if day difference is smaller then 7, show weather
-        setDifferenceGuard(true);
+        setDateGuard(true);
       } else {
         // if day difference is bigger then 7, weather is unavailable
-        setDifferenceGuard(false);
+        setDateGuard(false);
       }
     }
-    //console.log('DIFFERENCE GUARD VALUE: ' + differenceGuard);
-    return differenceGuard;
+    //console.log('DIFFERENCE GUARD VALUE: ' + dateGuard);
+    return dateGuard;
+  };
+
+  /* refactor */
+  const Graphics = () => {
+    if (activeDay.main === 'Clear') {
+      return <Sun width={200} />;
+    } else if (activeDay.main === 'Rain' && activeDay.icon !== '10d') {
+      return <Rain width={225} />;
+    } else if (activeDay.icon === '10d') {
+      return <SunWithClouds width={200} />;
+    } else if (activeDay.main === 'Clouds') {
+      return <Clouds width={250} />;
+    } else if (activeDay.main === 'Thunderstorm') {
+      return <Thunderstorm width={250} />;
+    } else if (activeDay.main === 'Snow') {
+      return <Snow width={225} />;
+    } else {
+      return <View />;
+    }
+  };
+
+  /* refactor */
+  const Background = ({children}) => {
+    if (
+      (activeDay.main === 'Rain' && activeDay.icon !== '10d') ||
+      activeDay.main === 'Clouds' ||
+      activeDay.main === 'Snow'
+    ) {
+      return (
+        <LinearGradient
+          colors={['#A7C2CB', '#AAC0C7']}
+          style={styles.linearGradient}>
+          {children}
+        </LinearGradient>
+      );
+    } else if (activeDay.main === 'Thunderstorm') {
+      return (
+        <LinearGradient
+          colors={['#8C989A', '#6A7B8A']}
+          style={styles.linearGradient}>
+          {children}
+        </LinearGradient>
+      );
+    } else {
+      return (
+        <LinearGradient
+          colors={['#80E0FF', '#2BABE1']}
+          style={styles.linearGradient}>
+          {children}
+        </LinearGradient>
+      );
+    }
+  };
+
+  const Ground = () => {
+    if (activeDay.main === 'Snow') {
+      return <SnowGround width={330} height={21} />;
+    } else {
+      return <Grass width={600} height={21} />;
+    }
   };
 
 
@@ -79,14 +155,289 @@ const Weather = (props) => {
           style={styles.contentContainer}
         />
       )}
-      {isLoaded && differenceGuard && (
+      {isLoaded && dateGuard && (
         <View style={styles.weatherContainer}>
           {forecast && (
+<<<<<<< HEAD
             <Text style={styles.text}>{}</Text>
+=======
+            <View>
+              <Background>
+                <View style={styles.graphicsContainer}>
+                  <View style={[styles.alignAndJustifyCenter, styles.graphics]}>
+                    <Graphics />
+                  </View>
+                  <View style={[styles.justifyCenter, styles.bubbles]}>
+                    {/* refactor into component */}
+                    <View style={[styles.alignCenter, styles.row]}>
+                      {/* small bubble */}
+                      <View style={[styles.bubble, styles.smallBubble]}>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          min
+                        </Text>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          {Math.floor(activeDay.minTemp)}°C
+                        </Text>
+                      </View>
+                      {/* big bubble */}
+                      <View
+                        style={[
+                          styles.bubble,
+                          styles.bigBubble,
+                          styles.marginLeftAndRight,
+                        ]}>
+                        <Text
+                          style={[
+                            styles.text,
+                            styles.textShadow,
+                            styles.bigText,
+                          ]}>
+                          {Math.floor(
+                            (activeDay.maxTemp + activeDay.minTemp) / 2,
+                          )}
+                          °C
+                        </Text>
+                      </View>
+                      {/* small bubble */}
+                      <View style={[styles.bubble, styles.smallBubble]}>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          max
+                        </Text>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          {Math.floor(activeDay.maxTemp)}°C
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.ground}>
+                    <Ground />
+                  </View>
+                </View>
+                <View style={styles.dataContainer}>
+                  <View style={styles.halfFlex}>
+                    <View style={styles.marginBottom}>
+                      <Text style={styles.text}>{activeDay.description}</Text>
+                    </View>
+                    {/* refactor into component */}
+                    {/* humidity */}
+                    <View style={styles.rowAlignCenter}>
+                      <View style={styles.marginRight}>
+                        <Text style={styles.subdate}>HUMIDITY</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>{activeDay.humidity}%</Text>
+                      </View>
+                    </View>
+                    {/* pressure */}
+                    <View style={styles.rowAlignCenter}>
+                      <View style={styles.marginRight}>
+                        <Text style={styles.subdate}>PRESSURE</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>
+                          {activeDay.pressure} hPa
+                        </Text>
+                      </View>
+                    </View>
+                    {/* wind speed */}
+                    <View style={styles.rowAlignCenter}>
+                      <View style={styles.marginRight}>
+                        <Text style={styles.subdate}>WIND SPEED</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>
+                          {activeDay.windSpeed} m/s
+                        </Text>
+                      </View>
+                    </View>
+                    {/* rain */}
+                    <View style={styles.rowAlignCenter}>
+                      <View style={styles.marginRight}>
+                        <Text style={styles.subdate}>RAIN</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>
+                          {(activeDay.rain * 100).toFixed(0)}%
+                        </Text>
+                      </View>
+                    </View>
+                    {/* cloudiness */}
+                    <View style={styles.rowAlignCenter}>
+                      <View style={styles.marginRight}>
+                        <Text style={styles.subdate}>CLOUDINESS</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.text}>{activeDay.cloudiness}%</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={[styles.row, styles.halfFlex, styles.marginLeft]}>
+                    <View>
+                      {/* during day */}
+                      <View
+                        style={[styles.alignCenter, styles.paddingHorizontal]}>
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>During day</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {Math.floor(activeDay.tempDay)}°C
+                          </Text>
+                        </View>
+                      </View>
+                      {/* feels like */}
+                      <View
+                        style={[
+                          styles.alignAndJustifyCenter,
+                          styles.marginTop,
+                        ]}>
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>Feels like</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {Math.floor(activeDay.tempDayFeelsLike)}°C
+                          </Text>
+                        </View>
+                      </View>
+                      {/* sunrise */}
+                      <View
+                        style={[
+                          styles.alignAndJustifyCenter,
+                          styles.marginTop,
+                        ]}>
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>Sunrise</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.sunrise
+                              .toTimeString()
+                              .split(' ')[0]
+                              .split(':')
+                              .splice(0, 2)
+                              .join(':')}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View>
+                      <View style={styles.alignAndJustifyCenter}>
+                        {/* during night */}
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>During night</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {Math.floor(activeDay.tempNight)}°C
+                          </Text>
+                        </View>
+                      </View>
+                      {/* feels like during night */}
+                      <View
+                        style={[
+                          styles.alignAndJustifyCenter,
+                          styles.marginTop,
+                        ]}>
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>Feels like</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {Math.floor(activeDay.tempNightFeelsLike)}°C
+                          </Text>
+                        </View>
+                      </View>
+                      {/* sunset */}
+                      <View
+                        style={[
+                          styles.alignAndJustifyCenter,
+                          styles.marginTop,
+                        ]}>
+                        <View style={styles.marginRight}>
+                          <Text style={styles.subdate}>Sunset</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.text}>
+                            {activeDay.sunset
+                              .toTimeString()
+                              .split(' ')[0]
+                              .split(':')
+                              .splice(0, 2)
+                              .join(':')}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </Background>
+              <View style={styles.bottom}>
+                <FlatList
+                  horizontal
+                  data={forecast}
+                  keyExtractor={(item) => item.date.toString()}
+                  ItemSeparatorComponent={() => (
+                    <View style={styles.separator} />
+                  )}
+                  renderItem={(item) => (
+                    /* refactor into component */
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      onPress={() => setActiveDay(item.item)}>
+                      <View
+                        style={[
+                          styles.dateContainer,
+                          {
+                            backgroundColor:
+                              item.item === activeDay
+                                ? Colors.background
+                                : Colors.cards,
+                          },
+                        ]}>
+                        <Text style={styles.subdate}>
+                          {item.item.date
+                            .toLocaleString()
+                            .split(' ')
+                            .slice(0, 2)
+                            .join(' ')
+                            .replace(',', '')}
+                        </Text>
+                        <Text style={styles.date}>
+                          {item.item.date
+                            .toDateString()
+                            .split(' ')
+                            .slice(0, 1)
+                            .join(' ')
+                            .replace(',', '')}
+                        </Text>
+                        <Image
+                          style={{width: 45, height: 45}}
+                          source={{
+                            uri:
+                              'http://openweathermap.org/img/wn/' +
+                              item.item.icon +
+                              '.png',
+                          }}
+                        />
+                        <Text style={styles.text}>
+                          {Math.floor(
+                            (item.item.maxTemp + item.item.minTemp) / 2,
+                          )}
+                          °C
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            </View>
+>>>>>>> 14bce91cccdc9959522c027388d0ab7a79c7997e
           )}
         </View>
       )}
-      {isLoaded && !isLoading && !differenceGuard && (
+      {isLoaded && !isLoading && !dateGuard && (
         <View style={styles.itemlessContainer}>
           <Text style={[styles.text, styles.itemlessText]}>
             Weather forecast is not available for your trip!
@@ -94,7 +445,7 @@ const Weather = (props) => {
           {/* button to */}
           <TouchableOpacity
             onPress={() => {
-              setDifferenceGuard(true);
+              setDateGuard(true);
             }}>
             <Text style={[styles.action, styles.actionContainer]}>
               Check the forecast for next 7 days

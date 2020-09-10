@@ -79,6 +79,10 @@ target 'TravellanProject' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  # QR part starts
+  pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
+  # QR part ends
   target 'TravellanProjectTests' do
     inherit! :complete
     # Pods for testing
