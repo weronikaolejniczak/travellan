@@ -85,8 +85,10 @@ export const transportItemStyle = StyleSheet.create({
     marginVertical: 10,
   },
   qrstyle: {
-    height: 110,
-    width: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
     //marginTop: height(35),
     //marginLeft: width(25),
     borderColor: Colors.white,
