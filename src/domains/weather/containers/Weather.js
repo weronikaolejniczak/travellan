@@ -35,6 +35,7 @@ const Weather = (props) => {
 
   // date operations
   var startDate = new Date(selectedTrip.startDate);
+  var endDate = new Date(selectedTrip.endDate);
   var currentDate = new Date();
 
   const [dateGuard, setDateGuard] = useState(false); // guard for checking day difference between currentDate and startDate
@@ -47,13 +48,12 @@ const Weather = (props) => {
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      //let result = await fetchWeather(latitude, longitude);
-      //let weather = result[0];
+      let result = await fetchWeather(latitude, longitude);
+      let weather = result[0];
       //let tmz = result[1];
-      //console.log(weather);
-      //setForecast(WEATHER); // small caps 'weather'
+      setForecast(weather);
       //setTimezone(tmz);
-      setActiveDay(WEATHER[0]);
+      setActiveDay(weather[0]);
     }
     setIsLoading(true);
     checkDates();
@@ -145,6 +145,7 @@ const Weather = (props) => {
       return <Grass width={600} height={21} />;
     }
   };
+
 
   return (
     <View style={styles.contentContainer}>
@@ -372,7 +373,7 @@ const Weather = (props) => {
               <View style={styles.bottom}>
                 <FlatList
                   horizontal
-                  data={WEATHER}
+                  data={forecast}
                   keyExtractor={(item) => item.date.toString()}
                   ItemSeparatorComponent={() => (
                     <View style={styles.separator} />
