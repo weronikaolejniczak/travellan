@@ -69,6 +69,7 @@ export const weatherStyle = StyleSheet.create({
     height: 110,
     paddingVertical: 7,
     paddingHorizontal: 13,
+    width: '100%',
     backgroundColor: '#111111',
     justifyContent: 'center',
     alignItems: 'center',
