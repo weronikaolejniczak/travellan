@@ -1,8 +1,14 @@
 import {StyleSheet} from 'react-native';
-//import Colors from 'constants/Colors';
+import Colors from 'constants/Colors';
 
 
 export const AddQRStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: '12%',
+    paddingHorizontal: '5%',
+  },
   centerText: {
     flex: 1,
     fontSize: 18,

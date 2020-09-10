@@ -3,6 +3,7 @@
 import React, {useCallback, useState} from 'react';
 
 import {
+  View,
   //AppRegistry,
   //StyleSheet,
   Text,
@@ -37,6 +38,7 @@ const AddQR = (props) => {
   };
 
   return (
+    
     <QRCodeScanner
       onRead={qrHandler}
       /**TO ADD FLASHLIGHT SWITCH BUTTON */
@@ -47,13 +49,11 @@ const AddQR = (props) => {
           {QR ? <QRCode value={QR} /> : null}
         </Text>
       }
-      
-        bottomContent={
+      bottomContent={
         <TouchableOpacity style={styles.buttonTouchable}>
           <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
         </TouchableOpacity>
-        }
-      
+      }
     />
   );
 };

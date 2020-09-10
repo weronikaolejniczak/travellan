@@ -21,7 +21,7 @@ export const fetchTransport = (tripId) => {
     dispatch({type: SET_TRANSPORT, tripId, transportInfo});
   };
 };
-/**Currently for QR purpose, can be reused to access particular tickets */
+/**Currently only for QR adding, can be reused to access particular tickets */
 export const updateTransport = (tripId, ticketId, qr) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
