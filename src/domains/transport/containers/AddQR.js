@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   //Linking,
+  ActivityIndicator,
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -26,8 +27,11 @@ const AddQR = (props) => {
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
   const [QR, setQR] = useState('');
+  // Loading check.
+  const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = async (e) => {
+    setIsLoading(true);
     setQR(e.data);
     const qr = e.data;
     await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
@@ -35,6 +39,7 @@ const AddQR = (props) => {
       {
         tripId: tripId,
       };
+    setIsLoading(false);
   };
 
   return (
@@ -51,9 +56,15 @@ const AddQR = (props) => {
           </Text>
         }
         bottomContent={
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         }
       />
     </View>
