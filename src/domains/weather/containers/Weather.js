@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,6 +23,9 @@ import Snow from 'assets/images/snow.svg';
 import Grass from 'assets/images/grass.svg';
 import SnowGround from 'assets/images/snow_ground.svg';
 import Colors from 'constants/Colors';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 /** weather representational component */
 const Weather = (props) => {
@@ -205,7 +209,7 @@ const Weather = (props) => {
                       </View>
                     </View>
                   </View>
-                  <View style={styles.ground}>
+                  <View style={[styles.ground, {bottom: -windowHeight * 0.01}]}>
                     <Ground />
                   </View>
                 </View>
@@ -386,6 +390,7 @@ const Weather = (props) => {
                         style={[
                           styles.dateContainer,
                           {
+                            height: windowHeight * 0.175,
                             backgroundColor:
                               item.item === activeDay
                                 ? Colors.background

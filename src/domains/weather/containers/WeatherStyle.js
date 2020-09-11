@@ -66,7 +66,6 @@ export const weatherStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   dateContainer: {
-    height: 110,
     paddingVertical: 7,
     paddingHorizontal: 13,
     width: '100%',
@@ -145,7 +144,6 @@ export const weatherStyle = StyleSheet.create({
   },
   ground: {
     position: 'absolute',
-    bottom: -7,
   },
   separator: {
     width: 1,
