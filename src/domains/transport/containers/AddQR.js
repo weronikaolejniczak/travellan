@@ -27,23 +27,27 @@ const AddQR = (props) => {
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
+  let temp = '';
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   // Loading check.
   const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = (e) => {
+    //console.log(temp);
     //setIsLoading(true);
     setQR(e.data);
+    //console.log(temp);
     //const qr = e.data;
     setshowQRscanner(false);
-    setIsLoading(false);
+    //setIsLoading(false);
   };
 
-  const acceptHandler = async (e) => {
+  const acceptHandler = async () => {
     setIsLoading(true);
-    console.log(e.data);
-    const qr = e.data;
+    console.log({QR});
+    var qr = {QR};
+    qr = qr.QR;
     await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
     props.navigation.navigate('Transport'),
       {
@@ -52,6 +56,7 @@ const AddQR = (props) => {
     setIsLoading(false);
   };
   const redoHandler = () => {
+    console.log({QR});
     setshowQRscanner(true);
   }
 
