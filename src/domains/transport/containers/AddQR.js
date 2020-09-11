@@ -28,12 +28,21 @@ const AddQR = (props) => {
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
   const [QR, setQR] = useState('');
+  const [showQRscanner, setshowQRscanner] = useState(true);
   // Loading check.
   const [isLoading, setIsLoading] = useState(false);
 
-  const qrHandler = async (e) => {
-    setIsLoading(true);
+  const qrHandler = (e) => {
+    //setIsLoading(true);
     setQR(e.data);
+    //const qr = e.data;
+    setshowQRscanner(false);
+    setIsLoading(false);
+  };
+
+  const acceptHandler = async (e) => {
+    setIsLoading(true);
+    console.log(e.data);
     const qr = e.data;
     await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
     props.navigation.navigate('Transport'),
@@ -42,32 +51,56 @@ const AddQR = (props) => {
       };
     setIsLoading(false);
   };
+  const redoHandler = () => {
+    setshowQRscanner(true);
+  }
 
   return (
     <View style={styles.container}>
-      <QRCodeScanner
-        style={styles.centered}
-        onRead={qrHandler}
-        /**TO ADD FLASHLIGHT SWITCH BUTTON */
-        //flashMode={RNCamera.Constants.FlashMode.torch}
-        topContent={
-          <Text style={styles.centerText}>
-            <Text style={styles.textBold}>{QR}</Text>
-            {QR ? <QRCode value={QR} /> : null}
-          </Text>
-        }
-        bottomContent={
-          <View style={styles.buttonContainer}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.white} />
-            ) : (
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-              </TouchableOpacity>
-            )}
+      {showQRscanner && (
+        <QRCodeScanner
+          style={styles.centered}
+          onRead={qrHandler}
+          /**TO ADD FLASHLIGHT SWITCH BUTTON */
+          //flashMode={RNCamera.Constants.FlashMode.torch}
+          /** 
+          topContent={
+            <Text style={styles.centerText}>
+              <Text style={styles.textBold}>{QR}</Text>
+              {QR ? <QRCode value={QR} /> : null}
+            </Text>
+          }
+          */
+          bottomContent={
+            <View style={styles.buttonContainer}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color={Colors.white} />
+              ) : (
+                <TouchableOpacity style={styles.buttonTouchable}>
+                  <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          }
+        />
+      )}
+      {!showQRscanner && (
+        <View style={styles.container}>
+          <QRCode style={styles.qrstyle} value={QR} size={300} logoSize={300} />
+          <View style={styles.buttonContainerR}>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={acceptHandler}>
+              <Text style={styles.buttonText}>That's my QR code</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={redoHandler}>
+              <Text style={styles.buttonText}>Try again</Text>
+            </TouchableOpacity>
           </View>
-        }
-      />
+        </View>
+      )}
     </View>
   );
 };
