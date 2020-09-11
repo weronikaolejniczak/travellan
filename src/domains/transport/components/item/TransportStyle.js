@@ -84,4 +84,15 @@ export const transportItemStyle = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
+  qrstyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+    //marginTop: height(35),
+    //marginLeft: width(25),
+    borderColor: Colors.white,
+    borderWidth: 2,
+    zIndex: 5,
+  },
 });

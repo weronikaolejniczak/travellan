@@ -16,6 +16,7 @@ import NewTrip, {newTripOptions} from 'myTrips/containers/NewTrip';
 // Transport containers.
 import Transport, {transportOptions} from 'transport/containers/Transport';
 import AddTransport from 'transport/containers/AddTransport';
+import AddQR from 'transport/containers/AddQR';
 // Accommodation containers.
 import Accommodation, {
   accommodationOptions,
@@ -67,6 +68,7 @@ export default function Navigation() {
           options={transportOptions}
         />
         <Stack.Screen name="Add transport" component={AddTransport} />
+        <Stack.Screen name="Add QR" component={AddQR} />
         {/* ACCOMMODATION */}
         <Stack.Screen
           name="Accommodation"

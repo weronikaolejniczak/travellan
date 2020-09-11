@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -16,17 +16,33 @@ import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
 import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 
+/** QR-related imports */
+import {useNavigation} from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
+
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
 
+  const navigation = useNavigation(); // navigation hook
+  const [showQR, setshowQR] = useState(false);
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
+  const qr = props.qr;
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
+
+  const movetoQR = () => {
+    navigation.navigate('Add QR', {
+      tripId: tripId,
+      ticketId: ticketId,
+      transportTransfers: transportTransfers,
+      qr: qr,
+    });
+  };
 
   return (
     <Card style={styles.transportCard}>
@@ -55,10 +71,28 @@ const Transport = (props) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        {/* SHOW QR CODE */}
+        {/* SHOW/ADD QR CODE */}
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('Show QR code');
+            if (qr === '') {
+              Alert.alert(
+                'Add QR code',
+                'Are you sure?',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: movetoQR,
+                  },
+                ],
+                {cancelable: true},
+              );
+            } else {
+              setshowQR(true);
+            }
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
@@ -70,7 +104,6 @@ const Transport = (props) => {
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>
       </View>
-
       {/* TO/FROM DESTINATION */}
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}
@@ -90,6 +123,7 @@ const Transport = (props) => {
 
         {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
+          {showQR && <QRCode style={styles.qrstyle} value={qr} />}
           {props.stages.map((i) => {
             return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
           })}

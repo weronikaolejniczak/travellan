@@ -150,6 +150,7 @@ const Weather = (props) => {
     }
   };
 
+
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
