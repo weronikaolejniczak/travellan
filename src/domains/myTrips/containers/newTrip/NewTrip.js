@@ -4,35 +4,30 @@ import {
   View,
   ScrollView,
   TextInput,
-  Switch,
   TouchableOpacity,
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/Ionicons';
-/** IMPORTS FROM WITHIN THE MODULE */
+/* imports from within the module */
 import Budget from 'budget/models/Budget';
+import BudgetField from 'myTrips/components/budgetField/BudgetField';
+import DatePicker from 'myTrips/components/datePicker/DatePicker';
 import {createTrip} from 'myTrips/state/Actions';
 import {newTripStyle as styles} from './NewTripStyle';
-import Colors from 'constants/Colors';
 
-/** 'CREATE A NEW TRIP' SCREEN - here a user can input basic information to create a new trip */
+/** new trip presentation component */
 const NewTrip = (props) => {
   const dispatch = useDispatch();
 
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   // destination
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
-
   // dates
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
-
   // budget
   const [budget, setBudget] = useState();
   const [budgetIsValid, setBudgetIsValid] = useState(false);
@@ -41,7 +36,7 @@ const NewTrip = (props) => {
   const [currency, setCurrency] = useState('PLN');
 
   /** HANDLERS */
-  // destination validation handler
+  // handle validity of destination
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
@@ -52,51 +47,7 @@ const NewTrip = (props) => {
     setDestination(text);
   };
 
-  // date picker handlers
-  // start date
-  const startDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowStartDate(Platform.OS === 'ios');
-    setStartDate(currentDate);
-    // set endDate to currentDate if it is earlier than the day
-    // selected for startDate
-    currentDate > endDate ? setEndDate(currentDate) : '';
-  };
-
-  const showStartDatepicker = () => {
-    setShowStartDate(true);
-  };
-
-  // end date
-  const endDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowEndDate(Platform.OS === 'ios');
-    setEndDate(currentDate);
-  };
-
-  const showEndDatepicker = () => {
-    setShowEndDate(true);
-  };
-
-  // budget handlers
-  const clearBudget = () => {
-    setBudget('0');
-    setBudgetIsValid(true);
-    setBudgetSubmitted(false);
-  };
-
-  const resetBudget = () => {
-    setBudget();
-    setBudgetIsValid(false);
-  };
-
-  // budget handlers
-  const toggleBudgetSwitch = () => {
-    setBudgetIsEnabled((previousState) => !previousState);
-    !budgetIsEnabled ? resetBudget() : clearBudget();
-  };
-
-  // budget validation
+  // handle validity of budget
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     if (budgetIsEnabled) {
@@ -107,7 +58,45 @@ const NewTrip = (props) => {
     }
   };
 
-  // submit handler
+  /* date picker handlers */
+  // handle start date change
+  const startDateChangeHandler = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShowStartDate(Platform.OS === 'ios');
+    setStartDate(currentDate);
+    // set endDate to currentDate if it is earlier than the day selected for startDate
+    currentDate > endDate ? setEndDate(currentDate) : '';
+  };
+  // handle end date change
+  const endDateChangeHandler = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShowEndDate(Platform.OS === 'ios');
+    setEndDate(currentDate);
+  };
+  // show date picker
+  const showDatePicker = (type) => {
+    type === 'start' ? setShowStartDate(true) : setShowEndDate(true);
+  };
+
+  /* budget handlers */
+  // clear budget
+  const clearBudget = () => {
+    setBudget('0');
+    setBudgetIsValid(true);
+    setBudgetSubmitted(false);
+  };
+  // reset the budget
+  const resetBudget = () => {
+    setBudget();
+    setBudgetIsValid(false);
+  };
+  // toggle switch to enable/disable budget
+  const toggleBudgetSwitch = () => {
+    setBudgetIsEnabled((previousState) => !previousState);
+    !budgetIsEnabled ? resetBudget() : clearBudget();
+  };
+
+  /* submit handler */
   const submitHandler = useCallback(() => {
     let budgetToSubmit = [
       new Budget(0, parseInt(budget, 10), currency, [
@@ -152,10 +141,9 @@ const NewTrip = (props) => {
     endDate,
   ]);
 
-  /** this could be refactored into a component to minimize repetition */
   return (
     <ScrollView style={styles.container}>
-      {/* DESTINATION */}
+      {/* pick destination */}
       <View style={styles.smallMarginTop}>
         <Text style={styles.label}>Trip destination</Text>
         <TextInput
@@ -172,113 +160,43 @@ const NewTrip = (props) => {
         )}
       </View>
 
-      {/* START DATE */}
-      <View style={styles.bigMarginTop}>
-        <Text style={styles.label}>Start date</Text>
-        <View style={styles.pickerContainer}>
-          <TouchableOpacity onPress={showStartDatepicker} style={styles.picker}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Icon
-                name={
-                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
-                }
-                style={styles.icon}
-              />
-              <Text style={styles.pickerText}>
-                {startDate.toString().split(' ').slice(1, 4).join(' ')}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        {showStartDate && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={startDate}
-            minimumDate={Date.now()}
-            mode={'date'}
-            is24Hour={true}
-            display="default"
-            onChange={startDateChangeHandler}
-          />
-        )}
-      </View>
+      {/* pick start date */}
+      <DatePicker
+        label={'Start date'}
+        styles={styles}
+        showDatePicker={() => showDatePicker('start')}
+        date={startDate}
+        showDate={showStartDate}
+        minimumDate={Date.now()}
+        dateChangeHandler={startDateChangeHandler}
+      />
 
-      {/* END DATE */}
-      <View style={styles.bigMarginTop}>
-        <Text style={styles.label}>End date</Text>
-        <View style={styles.pickerContainer}>
-          <TouchableOpacity onPress={showEndDatepicker} style={styles.picker}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Icon
-                name={
-                  Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
-                }
-                style={styles.icon}
-              />
-              <Text style={styles.pickerText}>
-                {endDate.toString().split(' ').slice(1, 4).join(' ')}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        {showEndDate && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={endDate}
-            minimumDate={startDate}
-            mode={'date'}
-            is24Hour={true}
-            display="default"
-            onChange={endDateChangeHandler}
-          />
-        )}
-      </View>
+      {/* pick end date */}
+      <DatePicker
+        label={'End date'}
+        styles={styles}
+        showDatePicker={() => showDatePicker('end')}
+        date={endDate}
+        showDate={showEndDate}
+        minimumDate={startDate}
+        dateChangeHandler={endDateChangeHandler}
+      />
 
       {/* BUDGET */}
-      <View style={styles.bigMarginTop}>
-        <View style={[styles.rowAndCenter]}>
-          <Text style={styles.label}>Budget</Text>
-          <Switch
-            style={styles.switch}
-            trackColor={{
-              false: Colors.switchDisabledTrack,
-              true: Colors.switchEnabledTrack,
-            }}
-            thumbColor={Colors.switchThumb}
-            ios_backgroundColor={Colors.background}
-            onValueChange={toggleBudgetSwitch}
-            value={budgetIsEnabled}
-          />
-        </View>
-        {budgetIsEnabled && (
-          <View>
-            <TextInput
-              style={[styles.input]}
-              placeholder={'Number'}
-              placeholderTextColor="grey"
-              value={budget}
-              onChangeText={budgetChangeHandler}
-              keyboardType={'numeric'}
-            />
-            <TextInput
-              style={[styles.input]}
-              placeholder={'Currency'}
-              placeholderTextColor="grey"
-              value={currency}
-              onChangeText={(text) => setCurrency(text)}
-            />
-          </View>
-        )}
-        {budgetIsEnabled && !budgetIsValid && budgetSubmitted && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>Enter a valid budget!</Text>
-          </View>
-        )}
-      </View>
+      <BudgetField
+        label={'Budget'}
+        styles={styles}
+        showSwitch={true}
+        toggleBudgetSwitch={toggleBudgetSwitch}
+        budgetIsEnabled={budgetIsEnabled}
+        budget={budget}
+        budgetChangeHandler={budgetChangeHandler}
+        currency={currency}
+        currencyChangeHandler={(text) => setCurrency(text)}
+        budgetIsValid={budgetIsValid}
+        budgetSubmitted={budgetSubmitted}
+      />
+
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>
@@ -287,24 +205,6 @@ const NewTrip = (props) => {
       </View>
     </ScrollView>
   );
-};
-
-/** we export newTripOptions to use in our Stack.Navigator */
-export const newTripOptions = (navData) => {
-  return {
-    /* headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create a trip"
-          style={{marginRight: 3}}
-          iconName={
-            Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-          }
-          onPress={submitHandler(destination, startDate, endDate, budget)} // SUBMIT
-        />
-      </HeaderButtons>
-    ), */
-  };
 };
 
 export default NewTrip;

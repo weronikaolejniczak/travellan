@@ -32,23 +32,6 @@ export const newTripStyle = StyleSheet.create({
   error: {
     color: Colors.error,
   },
-  pickerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  picker: {
-    width: '100%',
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    borderRadius: 25,
-    borderColor: Colors.primary,
-    marginTop: 15,
-    padding: 15,
-  },
-  pickerText: {
-    color: Colors.text,
-    fontSize: 18,
-  },
   icon: {
     color: Colors.text,
     fontSize: 30,
