@@ -9,7 +9,7 @@ export const budgetStyle = StyleSheet.create({
   },
   currenciesContainer: {
     alignItems: 'center',
-    height: 50,
+    marginBottom: 10,
   },
   detailsContainer: {
     paddingHorizontal: '5%',
@@ -22,6 +22,12 @@ export const budgetStyle = StyleSheet.create({
     borderColor: Colors.primary,
     borderStyle: 'dashed',
   },
+  currencyHolder: {
+    backgroundColor: '#111111',
+    borderRadius: 50,
+    paddingVertical: 8,
+    paddingHorizontal: 25,
+  },
   currencyActive: {
     color: Colors.primary,
     fontSize: 22,
@@ -32,7 +38,8 @@ export const budgetStyle = StyleSheet.create({
   },
   categoriesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
   },
   iconButton: {
     padding: '1%',

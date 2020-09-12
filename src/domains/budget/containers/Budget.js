@@ -231,46 +231,46 @@ const Budget = (props) => {
 
   return (
     <View style={styles.contentContainer}>
+      {/* HORIZONTAL FLATLIST OF CURRENCIES */}
+      <View style={styles.currenciesContainer}>
+        <FlatList
+          horizontal
+          data={activeCurrencies}
+          ItemSeparatorComponent={() => (
+            <Icon style={[styles.text, styles.icon]} name="power-on" />
+          )}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.currencyHolder}
+              onPress={() => {
+                setSelectedCurrency(item);
+                setDisplayableValue(item.value);
+                setTitle('');
+                setAmount('');
+              }}>
+              <Text
+                style={
+                  selectedCurrency.currency === item.currency
+                    ? styles.currencyActive
+                    : styles.currencyNonactive
+                }>
+                {item.currency}
+              </Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
       {/* CURRENCY OPERATIONS AND HISTORY */}
       {selectedCurrency && (
         <View style={styles.detailsContainer}>
           {/* AMOUNT OF CURRENCY */}
           <Card style={styles.valueCard}>
-            {/* HORIZONTAL FLATLIST OF CURRENCIES */}
-            <View style={styles.currenciesContainer}>
-              <FlatList
-                horizontal
-                data={activeCurrencies}
-                ItemSeparatorComponent={() => (
-                  <Icon style={[styles.text, styles.icon]} name="power-on" />
-                )}
-                renderItem={({item}) => (
-                  <TouchableOpacity
-                    style={styles.currencyHolder}
-                    onPress={() => {
-                      setSelectedCurrency(item);
-                      setDisplayableValue(item.value);
-                      setTitle('');
-                      setAmount('');
-                    }}>
-                    <Text
-                      style={
-                        selectedCurrency.currency === item.currency
-                          ? styles.currencyActive
-                          : styles.currencyNonactive
-                      }>
-                      {item.currency}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id.toString()}
-              />
-            </View>
             {/* ACCOUNTS BALANCE */}
             <View style={[styles.justifyRow]}>
               {/* GENERAL BALANCE */}
               <View style={[styles.justifyRow, {marginRight: '12%'}]}>
-                <Text style={[styles.label, styles.text]}>Totalf:{'   '}</Text>
+                <Text style={[styles.label, styles.text]}>Total:{'   '}</Text>
                 <Text
                   style={[
                     styles.label,
@@ -315,7 +315,9 @@ const Budget = (props) => {
         <ScrollView contentContainerStyle={styles.detailsContainer}>
           {/* OPERATIONS */}
           <View style={styles.extraSmallMarginTop}>
-            <Text style={[styles.text, styles.label, {marginBottom: '4%'}]}>Operations</Text>
+            <Text style={[styles.text, styles.label, {marginBottom: '4%'}]}>
+              Operations
+            </Text>
             <Card style={{padding: '5%'}}>
               {/* CATEGORIES */}
               <View>
@@ -324,11 +326,10 @@ const Budget = (props) => {
                   style={[
                     styles.categoriesContainer,
                     styles.extraSmallMarginTop,
-                    {flexWrap: 'wrap'},
                   ]}>
                   {icons.map((item) => (
                     <TouchableOpacity
-                      style={styles.iconButton}
+                      style={[styles.iconButton]}
                       onPress={() => chooseCategory(item)}>
                       <Icon
                         name={item}
