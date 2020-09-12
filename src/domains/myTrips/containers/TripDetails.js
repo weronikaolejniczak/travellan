@@ -135,7 +135,7 @@ const TripDetails = (props) => {
           </View>
           <View style={styles.justifyRow}>
             {/* Budget */}
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Budget', {
@@ -149,7 +149,7 @@ const TripDetails = (props) => {
                 size={42}
                 color="#FFFFFF"
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             {/* Notes */}
             <TouchableOpacity
