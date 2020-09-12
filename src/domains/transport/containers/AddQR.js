@@ -15,11 +15,12 @@ import {
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 //import code from 'react-native-aztec-qrcode';
-//import {RNCamera} from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 import {AddQRStyle as styles} from './AddQRStyle';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from 'constants/Colors';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as transportActions from 'transport/state/Actions';
 
 const AddQR = (props) => {
@@ -30,6 +31,7 @@ const AddQR = (props) => {
   let temp = '';
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
+  const [torchOn, settorchOn] = useState(false);
   // Loading check.
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,7 +47,6 @@ const AddQR = (props) => {
 
   const acceptHandler = async () => {
     setIsLoading(true);
-    console.log({QR});
     var qr = {QR};
     qr = qr.QR;
     await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
@@ -60,6 +61,10 @@ const AddQR = (props) => {
     setshowQRscanner(true);
   }
 
+  const switchLight = () => {
+    settorchOn(!torchOn);
+  }
+
   return (
     <View style={styles.container}>
       {showQRscanner && (
@@ -67,15 +72,19 @@ const AddQR = (props) => {
           style={styles.centered}
           onRead={qrHandler}
           /**TO ADD FLASHLIGHT SWITCH BUTTON */
-          //flashMode={RNCamera.Constants.FlashMode.torch}
-          /** 
-          topContent={
-            <Text style={styles.centerText}>
-              <Text style={styles.textBold}>{QR}</Text>
-              {QR ? <QRCode value={QR} /> : null}
-            </Text>
+          flashMode={
+            torchOn
+              ? RNCamera.Constants.FlashMode.torch
+              : RNCamera.Constants.FlashMode.off
           }
-          */
+          topContent={
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={switchLight}>
+              <MaterialIcon name={'flashlight'} style={styles.icon} />
+            </TouchableOpacity>
+          }
+          
           bottomContent={
             <View style={styles.buttonContainer}>
               {isLoading ? (
@@ -96,12 +105,12 @@ const AddQR = (props) => {
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={acceptHandler}>
-              <Text style={styles.buttonText}>That's my QR code</Text>
+              <MaterialIcon name={'check'} style={styles.icon} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={redoHandler}>
-              <Text style={styles.buttonText}>Try again</Text>
+              <MaterialIcon name={'close'} style={styles.icon} />
             </TouchableOpacity>
           </View>
         </View>

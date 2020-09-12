@@ -6,6 +6,7 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
+  Modal,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,6 +20,7 @@ import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 /** QR-related imports */
 import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
@@ -29,12 +31,21 @@ const Transport = (props) => {
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
-  const qr = props.qr;
+  var qr = props.qr;
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
 
+  const closeQRhandler = () => {
+    setshowQR(false);
+  };
+
+  const deleteQR = async () => {
+    qr = '';
+    await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
+    setshowQR(false);
+  };
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
@@ -47,6 +58,48 @@ const Transport = (props) => {
   return (
     <Card style={styles.transportCard}>
       <View style={styles.actions}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showQR}
+          onRequestClose={() => {
+            Alert.alert('Closing QR');
+          }}>
+          <View style={styles.container}>
+            <QRCode
+              style={styles.qrstyle}
+              value={qr}
+              size={300}
+              logoSize={300}
+            />
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={closeQRhandler}>
+              <MaterialIcon name={'close'} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={() => {
+                Alert.alert(
+                  'Delete QR',
+                  'Are you sure?',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'OK',
+                      onPress: deleteQR,
+                    },
+                  ],
+                  {cancelable: true},
+                );
+              }}>
+              <MaterialIcon name={'delete'} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </Modal>
         {/* DELETE TICKET */}
         <TouchableOpacity
           onPress={() => {
@@ -123,7 +176,6 @@ const Transport = (props) => {
 
         {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
-          {showQR && <QRCode style={styles.qrstyle} value={qr} />}
           {props.stages.map((i) => {
             return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
           })}
