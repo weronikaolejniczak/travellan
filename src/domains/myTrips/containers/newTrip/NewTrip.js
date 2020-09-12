@@ -138,7 +138,6 @@ const NewTrip = (props) => {
   }, [
     budget,
     currency,
-    props.currency,
     props.navigation,
     destinationIsValid,
     budgetIsValid,
