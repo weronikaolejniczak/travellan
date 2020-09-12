@@ -503,7 +503,7 @@ const Budget = (props) => {
   );
 };
 
-export const budgetScreenOptions = (navData) => {
+export const budgetOptions = (navData) => {
   return {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
