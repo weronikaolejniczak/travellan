@@ -122,18 +122,18 @@ const NewTrip = (props) => {
       ]),
     ];
 
-    if (!destinationIsValid /* || !budgetIsValid */) {
+    if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
-      /* if (budgetIsEnabled) {
+      if (budgetIsEnabled) {
         setBudgetSubmitted(true);
-      } */
+      }
     } else {
       dispatch(
         createTrip(
           destination,
           startDate.toString(),
           endDate.toString(),
-          /* budgetToSubmit, */
+          budgetToSubmit,
           undefined,
         ),
       );
@@ -143,9 +143,9 @@ const NewTrip = (props) => {
     props.navigation,
     dispatch,
     destinationIsValid,
-    /* budget,
+    budget,
     budgetIsValid,
-    budgetIsEnabled, */
+    budgetIsEnabled,
     currency,
     destination,
     startDate,
@@ -239,7 +239,7 @@ const NewTrip = (props) => {
       </View>
 
       {/* BUDGET */}
-      {/* <View style={styles.bigMarginTop}>
+      <View style={styles.bigMarginTop}>
         <View style={[styles.rowAndCenter]}>
           <Text style={styles.label}>Budget</Text>
           <Switch
@@ -278,7 +278,7 @@ const NewTrip = (props) => {
             <Text style={styles.error}>Enter a valid budget!</Text>
           </View>
         )}
-      </View> */}
+      </View>
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={submitHandler}>

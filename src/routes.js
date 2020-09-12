@@ -8,11 +8,13 @@ import Auth, {authOptions} from 'user/containers/Auth';
 // Trip overview container.
 import TripsOverview, {
   tripsOverviewOptions,
-} from 'myTrips/containers/TripsOverview';
+} from 'myTrips/containers/overview/TripsOverview';
 // Trip details container.
-import TripDetails, {tripDetailsOptions} from 'myTrips/containers/TripDetails';
+import TripDetails, {
+  tripDetailsOptions,
+} from 'myTrips/containers/details/TripDetails';
 // Creating a new trip container.
-import NewTrip, {newTripOptions} from 'myTrips/containers/NewTrip';
+import NewTrip, {newTripOptions} from 'myTrips/containers/newTrip/NewTrip';
 // Transport containers.
 import Transport, {transportOptions} from 'transport/containers/Transport';
 import AddTransport from 'transport/containers/AddTransport';
