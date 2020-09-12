@@ -117,4 +117,12 @@ export const budgetStyle = StyleSheet.create({
   bigMarginTop: {
     marginTop: '10%',
   },
+  budgetlessContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  budgetlessText: {
+    fontSize: 18,
+  },
 });

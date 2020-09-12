@@ -99,11 +99,16 @@ const NewTrip = (props) => {
 
   /* submit handler */
   const submitHandler = useCallback(() => {
+    // if budget is enabled we define an array with given currency, else it's undefined
     let budgetToSubmit = [
       new Budget(
         0,
         parseInt(budget, 10),
-        CURRENCIES.filter((item) => item.name === currency)[0].iso.toString(),
+        CURRENCIES.filter((item) => item.name === currency).length > 0
+          ? CURRENCIES.filter(
+              (item) => item.name === currency,
+            )[0].iso.toString()
+          : undefined,
         [
           {
             id: 0,
@@ -117,23 +122,40 @@ const NewTrip = (props) => {
       ),
     ];
 
-    if (CURRENCIES.filter((item) => item.name === currency).length === 1) {
-      if (!destinationIsValid || !budgetIsValid) {
-        setDestinationSubmitted(true);
-        if (budgetIsEnabled) {
-          setBudgetSubmitted(true);
-        }
-      } else if (destinationIsValid && budgetIsValid) {
-        dispatch(
-          createTrip(
-            destination,
-            startDate.toString(),
-            endDate.toString(),
-            budgetToSubmit,
-          ),
-        );
-        props.navigation.goBack();
+    // and if destination and budget are not valid
+    if (!destinationIsValid || !budgetIsValid) {
+      setDestinationSubmitted(true);
+      // and if budget is enabled
+      if (budgetIsEnabled) {
+        setBudgetSubmitted(true);
       }
+      // and if destination and budget are valid, budget is enabled and currency exists
+    } else if (
+      destinationIsValid &&
+      budgetIsEnabled &&
+      budgetIsValid &&
+      CURRENCIES.filter((item) => item.name === currency).length === 1
+    ) {
+      dispatch(
+        createTrip(
+          destination,
+          startDate.toString(),
+          endDate.toString(),
+          budgetToSubmit,
+        ),
+      );
+      props.navigation.goBack();
+      // else if destination is valid but budget is disabled
+    } else if (destinationIsValid && !budgetIsEnabled) {
+      dispatch(
+        createTrip(
+          destination,
+          startDate.toString(),
+          endDate.toString(),
+          undefined,
+        ),
+      );
+      props.navigation.goBack();
     }
   }, [
     budget,
