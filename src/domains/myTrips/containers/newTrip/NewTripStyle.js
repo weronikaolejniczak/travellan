@@ -27,7 +27,6 @@ export const newTripStyle = StyleSheet.create({
   },
   errorContainer: {
     marginVertical: 5,
-    marginHorizontal: 40,
   },
   error: {
     color: Colors.error,
@@ -48,7 +47,8 @@ export const newTripStyle = StyleSheet.create({
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
-    marginVertical: '5%',
+    marginTop: '1%',
+    marginBottom: '17%',
     padding: 15,
   },
   buttonText: {

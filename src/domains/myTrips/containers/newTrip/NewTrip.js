@@ -10,10 +10,11 @@ import {
 import {useDispatch} from 'react-redux';
 /* imports from within the module */
 import Budget from 'budget/models/Budget';
-import BudgetField from 'myTrips/components/budgetField/BudgetField';
+import BudgetField from 'common/components/budgetField/BudgetField';
 import DatePicker from 'myTrips/components/datePicker/DatePicker';
 import {createTrip} from 'myTrips/state/Actions';
 import {newTripStyle as styles} from './NewTripStyle';
+import {CURRENCIES} from 'data/Currencies';
 
 /** new trip presentation component */
 const NewTrip = (props) => {
@@ -33,7 +34,7 @@ const NewTrip = (props) => {
   const [budgetIsValid, setBudgetIsValid] = useState(false);
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
-  const [currency, setCurrency] = useState('PLN');
+  const [currency, setCurrency] = useState('');
 
   /** HANDLERS */
   // handle validity of destination
@@ -99,50 +100,57 @@ const NewTrip = (props) => {
   /* submit handler */
   const submitHandler = useCallback(() => {
     let budgetToSubmit = [
-      new Budget(0, parseInt(budget, 10), currency, [
-        {
-          id: 0,
-          title: 'Initial budget',
-          value: parseInt(budget, 10),
-          category: '',
-          account: 'card',
-          date: new Date(),
-        },
-      ]),
+      new Budget(
+        0,
+        parseInt(budget, 10),
+        CURRENCIES.filter((item) => item.name === currency)[0].iso.toString(),
+        [
+          {
+            id: 0,
+            title: 'Initial budget',
+            value: parseInt(budget, 10),
+            category: '',
+            account: '',
+            date: new Date(),
+          },
+        ],
+      ),
     ];
 
-    if (!destinationIsValid || !budgetIsValid) {
-      setDestinationSubmitted(true);
-      if (budgetIsEnabled) {
-        setBudgetSubmitted(true);
+    if (CURRENCIES.filter((item) => item.name === currency).length === 1) {
+      if (!destinationIsValid || !budgetIsValid) {
+        setDestinationSubmitted(true);
+        if (budgetIsEnabled) {
+          setBudgetSubmitted(true);
+        }
+      } else if (destinationIsValid && budgetIsValid) {
+        dispatch(
+          createTrip(
+            destination,
+            startDate.toString(),
+            endDate.toString(),
+            budgetToSubmit,
+          ),
+        );
+        props.navigation.goBack();
       }
-    } else {
-      dispatch(
-        createTrip(
-          destination,
-          startDate.toString(),
-          endDate.toString(),
-          budgetToSubmit,
-          undefined,
-        ),
-      );
-      props.navigation.goBack();
     }
   }, [
-    props.navigation,
-    dispatch,
-    destinationIsValid,
     budget,
+    currency,
+    props.currency,
+    props.navigation,
+    destinationIsValid,
     budgetIsValid,
     budgetIsEnabled,
-    currency,
+    dispatch,
     destination,
     startDate,
     endDate,
   ]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
       {/* pick destination */}
       <View style={styles.smallMarginTop}>
         <Text style={styles.label}>Trip destination</Text>
@@ -188,13 +196,13 @@ const NewTrip = (props) => {
         styles={styles}
         showSwitch={true}
         toggleBudgetSwitch={toggleBudgetSwitch}
-        budgetIsEnabled={budgetIsEnabled}
         budget={budget}
-        budgetChangeHandler={budgetChangeHandler}
-        currency={currency}
-        currencyChangeHandler={(text) => setCurrency(text)}
+        budgetIsEnabled={budgetIsEnabled}
         budgetIsValid={budgetIsValid}
         budgetSubmitted={budgetSubmitted}
+        budgetChangeHandler={budgetChangeHandler}
+        currency={currency}
+        currencyChangeHandler={setCurrency}
       />
 
       {/* SUBMIT BUTTON */}
