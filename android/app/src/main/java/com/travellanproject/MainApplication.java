@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.androidprogressbar.RNCProgressBarPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -18,6 +19,8 @@ import chat.rocket.SharePackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+
 
 public class MainApplication extends Application implements ReactApplication {
 

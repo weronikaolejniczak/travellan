@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -24,6 +25,7 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 
 /** pdf-related imports */
 import DocumentPicker from 'react-native-document-picker';
+import Pdf from 'react-native-pdf';
 
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
@@ -31,6 +33,8 @@ const Transport = (props) => {
 
   const navigation = useNavigation(); // navigation hook
   const [showQR, setshowQR] = useState(false);
+  const [showPDF, setshowPDF] = useState(false);
+  const [pdfPath, setpdfPath] = useState('');
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
@@ -60,7 +64,8 @@ const Transport = (props) => {
 
   return (
     <Card style={styles.transportCard}>
-      <View style={styles.actions}>
+      {/* SHOW QR */}
+     
         <Modal
           animationType="slide"
           transparent={true}
@@ -103,6 +108,33 @@ const Transport = (props) => {
             </TouchableOpacity>
           </View>
         </Modal>
+        {/* SHOW PDF */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showPDF}
+          onRequestClose={() => {
+            Alert.alert('Closing PDF');
+          }}>
+          <View style={styles.container}>
+                <Pdf
+                    source={pdfPath}
+                    onLoadComplete={(numberOfPages,filePath)=>{
+                        console.log(`number of pages: ${numberOfPages}`);
+                    }}
+                    onPageChanged={(page,numberOfPages)=>{
+                        console.log(`current page: ${page}`);
+                    }}
+                    onError={(error)=>{
+                        console.log(error);
+                    }}
+                    onPressLink={(uri)=>{
+                        console.log(`Link presse: ${uri}`)
+                    }}
+                    style={styles.pdf}/>
+          </View>
+        </Modal>
+        <View style={styles.actions}>
         {/* DELETE TICKET */}
         <TouchableOpacity
           onPress={() => {
@@ -152,7 +184,7 @@ const Transport = (props) => {
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
-        {/* ATTACH TICKET */}
+        {/* ATTACH TICKET-PDF */}
         <TouchableOpacity
           onPress={async () => {
             //Alert.alert('Attach document');
@@ -167,6 +199,8 @@ const Transport = (props) => {
                 res.name,
                 res.size,
               );
+              setpdfPath(res.uri);
+              setshowPDF(true);
             } catch (err) {
               if (DocumentPicker.isCancel(err)) {
                 // User cancelled the picker, exit any dialogs or menus and move on
@@ -174,6 +208,7 @@ const Transport = (props) => {
                 throw err;
               }
             }
+
           }}>
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>

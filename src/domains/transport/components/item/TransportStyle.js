@@ -105,4 +105,9 @@ export const transportItemStyle = StyleSheet.create({
     //alignContent: 'center',
     justifyContent: 'center',
   },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
 });
