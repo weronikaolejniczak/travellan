@@ -27,27 +27,9 @@ export const newTripStyle = StyleSheet.create({
   },
   errorContainer: {
     marginVertical: 5,
-    marginHorizontal: 40,
   },
   error: {
     color: Colors.error,
-  },
-  pickerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  picker: {
-    width: '100%',
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    borderRadius: 25,
-    borderColor: Colors.primary,
-    marginTop: 15,
-    padding: 15,
-  },
-  pickerText: {
-    color: Colors.text,
-    fontSize: 18,
   },
   icon: {
     color: Colors.text,
@@ -65,7 +47,8 @@ export const newTripStyle = StyleSheet.create({
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
-    marginVertical: '5%',
+    marginTop: '1%',
+    marginBottom: '17%',
     padding: 15,
   },
   buttonText: {
