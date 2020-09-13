@@ -79,16 +79,17 @@ const Transport = (props) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
+      /**
       console.log(
         res.uri,
         res.type, // mime type
         res.name,
         res.size,
       );
+      */
       setpdfPath(res.uri);
       var temp = res.uri;
       pdfUri = temp;
-      console.log(pdfUri);
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
       /**
       navigation.navigate('Transport', {
