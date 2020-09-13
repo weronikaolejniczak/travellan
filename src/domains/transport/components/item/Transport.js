@@ -30,12 +30,7 @@ import Pdf from 'react-native-pdf';
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
-  /**
-  const source = {
-    uri:
-      'content://com.mi.android.globalFileexplorer.myprovider/external_files/Download/eic_103260340.pdf',
-  };
-  */
+  
   const navigation = useNavigation(); // navigation hook
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -43,7 +38,6 @@ const Transport = (props) => {
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
-  //const source = props.pdfPath
   var qr = props.qr;
   var pdfUri = props.pdfUri;
   let source = {uri: pdfUri};
@@ -81,8 +75,6 @@ const Transport = (props) => {
   };
 
   const pickPDF = async () => {
-    //Alert.alert('Attach document');
-    // Pick a single file
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
@@ -95,8 +87,6 @@ const Transport = (props) => {
       );
       setpdfPath(res.uri);
       var temp = res.uri;
-      console.log(pdfPath);
-      //pdfUri = {pdfPath}.pdfPath;
       pdfUri = temp;
       console.log(pdfUri);
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
@@ -171,16 +161,16 @@ const Transport = (props) => {
           <Pdf
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
-              console.log(`number of pages: ${numberOfPages}`);
+              //console.log(`number of pages: ${numberOfPages}`);
             }}
             onPageChanged={(page, numberOfPages) => {
-              console.log(`current page: ${page}`);
+              //console.log(`current page: ${page}`);
             }}
             onError={(error) => {
-              console.log(error);
+              //console.log(error);
             }}
             onPressLink={(uri) => {
-              console.log(`Link presse: ${uri}`);
+              //console.log(`Link presse: ${uri}`);
             }}
             style={styles.pdf}
           />
@@ -261,7 +251,6 @@ const Transport = (props) => {
         {/* ATTACH/View TICKET-PDF */}
         <TouchableOpacity
           onPress={() => {
-            //console.log(source);
             if (pdfUri === '' || null || undefined) {
               Alert.alert(
                 'Add ticket pdf?',
