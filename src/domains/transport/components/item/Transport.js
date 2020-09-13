@@ -30,28 +30,26 @@ import Pdf from 'react-native-pdf';
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
-  
   const navigation = useNavigation(); // navigation hook
+
+  /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
-  const [pdfPath, setpdfPath] = useState('');
+
+  /** IMPORTS FROM PROPS */
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
   var qr = props.qr;
   var pdfUri = props.pdfUri;
+
+  /** CONCATENATING FORMAT FOR PDF SOURCE */
   let source = {uri: pdfUri};
 
+  /** DELETION FUNCTIONS/HANDLERS */
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
-
-  const closeQRhandler = () => {
-    setshowQR(false);
-  };
-  const closePDFhandler = () => {
-    setshowPDF(false);
-  };
 
   const deleteQR = async () => {
     qr = '';
@@ -65,6 +63,15 @@ const Transport = (props) => {
     setshowPDF(false);
   };
 
+  /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
+  const closeQRhandler = () => {
+    setshowQR(false);
+  };
+  const closePDFhandler = () => {
+    setshowPDF(false);
+  };
+
+  /** NAVIGATION TO QR ADDING SCREEN HANDLER/FUNCTION */
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
@@ -74,6 +81,7 @@ const Transport = (props) => {
     });
   };
 
+  /** USING FILE PICKER TO ADD PDF-TICKET */
   const pickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
@@ -87,7 +95,6 @@ const Transport = (props) => {
         res.size,
       );
       */
-      setpdfPath(res.uri);
       var temp = res.uri;
       pdfUri = temp;
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
