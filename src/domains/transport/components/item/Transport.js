@@ -55,12 +55,22 @@ const Transport = (props) => {
   const closeQRhandler = () => {
     setshowQR(false);
   };
+  const closePDFhandler = () => {
+    setshowPDF(false);
+  };
 
   const deleteQR = async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
   };
+
+  const deletePDF = async () => {
+    pdfUri = '';
+    await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+    setshowPDF(false);
+  };
+
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
@@ -90,7 +100,7 @@ const Transport = (props) => {
       pdfUri = temp;
       console.log(pdfUri);
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
-      /** 
+      /**
       navigation.navigate('Transport', {
         tripId: tripId,
       });
@@ -153,6 +163,11 @@ const Transport = (props) => {
           Alert.alert('Closing PDF');
         }}>
         <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={closePDFhandler}>
+            <MaterialIcon name={'close'} style={styles.icon} />
+          </TouchableOpacity>
           <Pdf
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
@@ -169,6 +184,27 @@ const Transport = (props) => {
             }}
             style={styles.pdf}
           />
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={() => {
+              Alert.alert(
+                'Delete Ticket-pdf',
+                'Are you sure?',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: deletePDF,
+                  },
+                ],
+                {cancelable: true},
+              );
+            }}>
+            <MaterialIcon name={'delete'} style={styles.icon} />
+          </TouchableOpacity>
         </View>
       </Modal>
       <View style={styles.actions}>
