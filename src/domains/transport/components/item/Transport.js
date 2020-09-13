@@ -22,6 +22,9 @@ import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 
+/** pdf-related imports */
+import DocumentPicker from 'react-native-document-picker';
+
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
@@ -151,8 +154,26 @@ const Transport = (props) => {
         </TouchableOpacity>
         {/* ATTACH TICKET */}
         <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Attach document');
+          onPress={async () => {
+            //Alert.alert('Attach document');
+            // Pick a single file
+            try {
+              const res = await DocumentPicker.pick({
+                type: [DocumentPicker.types.pdf],
+              });
+              console.log(
+                res.uri,
+                res.type, // mime type
+                res.name,
+                res.size,
+              );
+            } catch (err) {
+              if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker, exit any dialogs or menus and move on
+              } else {
+                throw err;
+              }
+            }
           }}>
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>
