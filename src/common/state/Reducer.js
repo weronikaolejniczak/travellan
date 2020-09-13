@@ -10,6 +10,8 @@ import {
   SET_TRANSPORT,
   DELETE_TRANSPORT,
   CREATE_TRANSPORT,
+  UPDATE_PDF,
+  UPDATE_QR,
 } from 'transport/state/Actions';
 
 // Accommodation.
@@ -28,7 +30,6 @@ import {
   SUBTRACT_FROM_BUDGET,
   ADD_TO_BUDGET,
 } from 'budget/state/Actions';
-import { UPDATE_QR } from '../../domains/transport/state/Actions';
 
 /** COMMON REDUCER */
 export const initialState = {
@@ -80,6 +81,7 @@ export default (state = initialState, action) => {
     case DELETE_TRANSPORT:
     case CREATE_TRANSPORT:
     case UPDATE_QR:
+    case UPDATE_PDF:
       updatedAvailableTrips[tripIndex].transportInfo = action.transportInfo;
 
       return {

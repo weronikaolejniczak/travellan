@@ -37,6 +37,7 @@ const AddTransport = (props) => {
 
   /** QR CODE DEFAULT */
   const [qr, setQR] = useState('');
+  const [pdfUri, setpdfUri] = useState('');
 
   /** INITIAL VALUES */
   const initialMinutes =
@@ -236,7 +237,7 @@ const AddTransport = (props) => {
     setIsLoading(true);
     if (stages.length > 0) {
       await dispatch(
-        transportActions.createTransport(tripId, to, from, stages, qr),
+        transportActions.createTransport(tripId, to, from, stages, qr, pdfUri),
       );
       props.navigation.navigate('Transport', {
         tripId: selectedTrip.id,
@@ -248,6 +249,7 @@ const AddTransport = (props) => {
     stages,
     dispatch,
     qr,
+    pdfUri,
     tripId,
     to,
     from,
@@ -572,7 +574,7 @@ const AddTransport = (props) => {
       </View>
 
       {/* STAGES OF TRANSPORT */}
-      {!!stages.length ? (
+      {stages.length ? (
         /** LIST OF STAGES */
         <FlatList
           style={{}}

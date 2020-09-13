@@ -83,6 +83,8 @@ target 'TravellanProject' do
   # QR part starts
   pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
   # QR part ends
+  pod 'react-native-progress-bar-android', :path => '../node_modules/@react-native-community/progress-bar-android'
+
   target 'TravellanProjectTests' do
     inherit! :complete
     # Pods for testing

@@ -12,6 +12,9 @@ export const AddQRStyle = StyleSheet.create({
     backgroundColor: Colors.background,
     paddingTop: '12%',
     paddingHorizontal: '5%',
+    alignItems: 'center',
+    //alignContent: 'center',
+    justifyContent: 'center',
   },
   centerText: {
     flex: 1,
@@ -28,11 +31,37 @@ export const AddQRStyle = StyleSheet.create({
     color: 'rgb(0,122,255)'
   },
   buttonTouchable: {
-    padding: 16
+    padding: 16,
   },
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
+  },
+  qrstyle: {
+    height: '100%',
+    width: '100%',
+    //marginTop: height(35),
+    //marginLeft: width(25),
+    borderColor: Colors.white,
+    borderWidth: 2,
+    zIndex: 5,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  containerR: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    //paddingTop: '12%',
+    //paddingHorizontal: '5%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+  },
+  icon: {
+    fontSize: 40,
+    color: Colors.text,
+    //marginRight: 20,
   },
 });

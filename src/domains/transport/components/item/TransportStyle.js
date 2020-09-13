@@ -85,8 +85,6 @@ export const transportItemStyle = StyleSheet.create({
     marginVertical: 10,
   },
   qrstyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
     height: '100%',
     width: '100%',
     //marginTop: height(35),
@@ -94,5 +92,22 @@ export const transportItemStyle = StyleSheet.create({
     borderColor: Colors.white,
     borderWidth: 2,
     zIndex: 5,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: '12%',
+    paddingHorizontal: '5%',
+    alignItems: 'center',
+    //alignContent: 'center',
+    justifyContent: 'center',
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
