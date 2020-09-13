@@ -49,7 +49,7 @@ const AddQR = (props) => {
     setIsLoading(true);
     var qr = {QR};
     qr = qr.QR;
-    await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
+    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     props.navigation.navigate('Transport'),
       {
         tripId: tripId,

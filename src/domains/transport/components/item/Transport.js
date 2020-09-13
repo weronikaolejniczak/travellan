@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
-  ProgressBarAndroid,
+  //ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,7 +30,12 @@ import Pdf from 'react-native-pdf';
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
-
+  /**
+  const source = {
+    uri:
+      'content://com.mi.android.globalFileexplorer.myprovider/external_files/Download/eic_103260340.pdf',
+  };
+  */
   const navigation = useNavigation(); // navigation hook
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -38,7 +43,10 @@ const Transport = (props) => {
   const tripId = props.tripId;
   const ticketId = props.id;
   const transportTransfers = props.stages.length - 1;
+  //const source = props.pdfPath
   var qr = props.qr;
+  var pdfUri = props.pdfUri;
+  let source = {uri: pdfUri};
 
   const deleteTicketHandler = useCallback(() => {
     dispatch(transportActions.deleteTransport(tripId, ticketId));
@@ -50,7 +58,7 @@ const Transport = (props) => {
 
   const deleteQR = async () => {
     qr = '';
-    await dispatch(transportActions.updateTransport(tripId, ticketId, qr));
+    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
   };
   const movetoQR = () => {
@@ -62,79 +70,108 @@ const Transport = (props) => {
     });
   };
 
+  const pickPDF = async () => {
+    //Alert.alert('Attach document');
+    // Pick a single file
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
+      console.log(
+        res.uri,
+        res.type, // mime type
+        res.name,
+        res.size,
+      );
+      setpdfPath(res.uri);
+      var temp = res.uri;
+      console.log(pdfPath);
+      //pdfUri = {pdfPath}.pdfPath;
+      pdfUri = temp;
+      console.log(pdfUri);
+      await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+      /** 
+      navigation.navigate('Transport', {
+        tripId: tripId,
+      });
+      */
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
   return (
     <Card style={styles.transportCard}>
       {/* SHOW QR */}
-     
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={showQR}
-          onRequestClose={() => {
-            Alert.alert('Closing QR');
-          }}>
-          <View style={styles.container}>
-            <QRCode
-              style={styles.qrstyle}
-              value={qr}
-              size={300}
-              logoSize={300}
-            />
-            <TouchableOpacity
-              style={styles.buttonTouchable}
-              onPress={closeQRhandler}>
-              <MaterialIcon name={'close'} style={styles.icon} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonTouchable}
-              onPress={() => {
-                Alert.alert(
-                  'Delete QR',
-                  'Are you sure?',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'OK',
-                      onPress: deleteQR,
-                    },
-                  ],
-                  {cancelable: true},
-                );
-              }}>
-              <MaterialIcon name={'delete'} style={styles.icon} />
-            </TouchableOpacity>
-          </View>
-        </Modal>
-        {/* SHOW PDF */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={showPDF}
-          onRequestClose={() => {
-            Alert.alert('Closing PDF');
-          }}>
-          <View style={styles.container}>
-                <Pdf
-                    source={pdfPath}
-                    onLoadComplete={(numberOfPages,filePath)=>{
-                        console.log(`number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page,numberOfPages)=>{
-                        console.log(`current page: ${page}`);
-                    }}
-                    onError={(error)=>{
-                        console.log(error);
-                    }}
-                    onPressLink={(uri)=>{
-                        console.log(`Link presse: ${uri}`)
-                    }}
-                    style={styles.pdf}/>
-          </View>
-        </Modal>
-        <View style={styles.actions}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showQR}
+        onRequestClose={() => {
+          Alert.alert('Closing QR');
+        }}>
+        <View style={styles.container}>
+          <QRCode style={styles.qrstyle} value={qr} size={300} logoSize={300} />
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={closeQRhandler}>
+            <MaterialIcon name={'close'} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={() => {
+              Alert.alert(
+                'Delete QR',
+                'Are you sure?',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: deleteQR,
+                  },
+                ],
+                {cancelable: true},
+              );
+            }}>
+            <MaterialIcon name={'delete'} style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      {/* SHOW PDF */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showPDF}
+        onRequestClose={() => {
+          Alert.alert('Closing PDF');
+        }}>
+        <View style={styles.container}>
+          <Pdf
+            source={source}
+            onLoadComplete={(numberOfPages, filePath) => {
+              console.log(`number of pages: ${numberOfPages}`);
+            }}
+            onPageChanged={(page, numberOfPages) => {
+              console.log(`current page: ${page}`);
+            }}
+            onError={(error) => {
+              console.log(error);
+            }}
+            onPressLink={(uri) => {
+              console.log(`Link presse: ${uri}`);
+            }}
+            style={styles.pdf}
+          />
+        </View>
+      </Modal>
+      <View style={styles.actions}>
         {/* DELETE TICKET */}
         <TouchableOpacity
           onPress={() => {
@@ -162,7 +199,7 @@ const Transport = (props) => {
         {/* SHOW/ADD QR CODE */}
         <TouchableOpacity
           onPress={() => {
-            if (qr === '') {
+            if (qr === '' || null || undefined) {
               Alert.alert(
                 'Add QR code',
                 'Are you sure?',
@@ -184,35 +221,35 @@ const Transport = (props) => {
           }}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
-        {/* ATTACH TICKET-PDF */}
-        <TouchableOpacity
-          onPress={async () => {
-            //Alert.alert('Attach document');
-            // Pick a single file
-            try {
-              const res = await DocumentPicker.pick({
-                type: [DocumentPicker.types.pdf],
-              });
-              console.log(
-                res.uri,
-                res.type, // mime type
-                res.name,
-                res.size,
-              );
-              setpdfPath(res.uri);
-              setshowPDF(true);
-            } catch (err) {
-              if (DocumentPicker.isCancel(err)) {
-                // User cancelled the picker, exit any dialogs or menus and move on
-              } else {
-                throw err;
-              }
-            }
 
+        {/* ATTACH/View TICKET-PDF */}
+        <TouchableOpacity
+          onPress={() => {
+            //console.log(source);
+            if (pdfUri === '' || null || undefined) {
+              Alert.alert(
+                'Add ticket pdf?',
+                'whatever',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: pickPDF,
+                  },
+                ],
+                {cancelable: true},
+              );
+            } else {
+              setshowPDF(true);
+            }
           }}>
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
         </TouchableOpacity>
       </View>
+
       {/* TO/FROM DESTINATION */}
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}

@@ -24,6 +24,7 @@ const Transport = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const qr = props.route.params.qr;
+  const pdfUri = props.route.params.pdfUri;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
@@ -113,6 +114,7 @@ const Transport = (props) => {
               from={itemData.item.from}
               stages={itemData.item.stages}
               qr={itemData.item.qr}
+              pdfUri={itemData.item.pdfUri}
             />
           )}
         />
