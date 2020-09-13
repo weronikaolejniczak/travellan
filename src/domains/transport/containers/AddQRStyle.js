@@ -31,7 +31,7 @@ export const AddQRStyle = StyleSheet.create({
     color: 'rgb(0,122,255)'
   },
   buttonTouchable: {
-    padding: 16
+    padding: 16,
   },
   centered: {
     flex: 1,
@@ -53,11 +53,15 @@ export const AddQRStyle = StyleSheet.create({
   containerR: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: '12%',
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    //alignContent: 'center',
-    justifyContent: 'center',
+    //paddingTop: '12%',
+    //paddingHorizontal: '5%',
     flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+  },
+  icon: {
+    fontSize: 40,
+    color: Colors.text,
+    //marginRight: 20,
   },
 });
