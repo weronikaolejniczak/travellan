@@ -4,6 +4,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 /** SCREENS */
 // authorization/login and signup presentational components
+import StartupScreen, {
+  StartupScreenOptions,
+} from 'user/containers/StartupScreen';
 import Auth, {authOptions} from 'user/containers/Auth';
 // general trip handling presentational components
 import TripsOverview, {
@@ -43,6 +46,12 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
+        {/* STARTING SCREEN */}
+        <Stack.Screen
+          name="Startup"
+          component={StartupScreen}
+          options={StartupScreenOptions}
+        />
         {/* AUTH */}
         <Stack.Screen name="Auth" component={Auth} options={authOptions} />
         {/* MY TRIPS */}
