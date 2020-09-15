@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {View, ActivityIndicator, AsyncStorage} from 'react-native';
 
 import {useDispatch} from 'react-redux';
-import {StartupStyle as styles} from './AuthStyle';
+import {StartupScreenStyle as styles} from './StartupScreenStyle';
 import Colors from 'constants/Colors';
 
 import * as authActions from 'user/state/Actions';
