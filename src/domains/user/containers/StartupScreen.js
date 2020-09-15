@@ -27,7 +27,7 @@ const StartupScreen = (props) => {
         return;
       }
 
-      //props.navigation.navigate('Trip')
+      props.navigation.navigate('My trips')
       dispatch(authActions.authenticate(userId, token));
     };
 
