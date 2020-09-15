@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Switch from 'components/switch/Switch';
 import {budgetFieldStyle as styles} from './BudgetFieldStyle';
 import {CURRENCIES} from 'data/Currencies';
@@ -46,6 +47,60 @@ const BudgetField = (props) => {
             onChangeText={props.budgetChangeHandler}
             keyboardType={'numeric'}
           />
+          <View style={[props.styles.rowAndCenter, {marginTop: '4%'}]}>
+            {/* CASH */}
+            <View>
+              <TouchableOpacity
+                style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
+                onPress={() => props.setAccount('cash')}>
+                <Icon
+                  name={'cash'}
+                  style={[
+                    {marginRight: '5%'},
+                    props.styles.icon,
+                    props.account === 'cash'
+                      ? props.styles.activeCategory
+                      : props.styles.nonactiveCategory,
+                  ]}
+                />
+                <Text
+                  style={[
+                    props.styles.label,
+                    props.account === 'cash'
+                      ? props.styles.activeCategory
+                      : props.styles.nonactiveCategory,
+                  ]}>
+                  Cash
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {/* CARD */}
+            <View style={{marginLeft: '5%'}}>
+              <TouchableOpacity
+                style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
+                onPress={() => props.setAccount('card')}>
+                <Icon
+                  name={'credit-card'}
+                  style={[
+                    {marginRight: '5%'},
+                    props.styles.icon,
+                    props.account === 'card'
+                      ? props.styles.activeCategory
+                      : props.styles.nonactiveCategory,
+                  ]}
+                />
+                <Text
+                  style={[
+                    props.styles.label,
+                    props.account === 'card'
+                      ? props.styles.activeCategory
+                      : props.styles.nonactiveCategory,
+                  ]}>
+                  Card
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           {/* autocomplete currency */}
           <View style={styles.autocompleteContainer}>
             <Autocomplete

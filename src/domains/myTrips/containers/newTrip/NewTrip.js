@@ -35,6 +35,7 @@ const NewTrip = (props) => {
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
+  const [account, setAccount] = useState('card');
 
   /** HANDLERS */
   // handle validity of destination
@@ -115,7 +116,7 @@ const NewTrip = (props) => {
             title: 'Initial budget',
             value: parseInt(budget, 10),
             category: '',
-            account: '',
+            account: account.toString(),
             date: new Date(),
           },
         ],
@@ -224,6 +225,8 @@ const NewTrip = (props) => {
         budgetChangeHandler={budgetChangeHandler}
         currency={currency}
         currencyChangeHandler={setCurrency}
+        account={account}
+        setAccount={setAccount}
       />
 
       {/* SUBMIT BUTTON */}

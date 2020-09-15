@@ -61,4 +61,10 @@ export const newTripStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  activeCategory: {
+    color: Colors.primary,
+  },
+  nonactiveCategory: {
+    color: 'grey',
+  },
 });
