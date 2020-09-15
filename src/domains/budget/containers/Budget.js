@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -14,6 +14,7 @@ import {LineChart} from 'react-native-chart-kit';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
+import * as budgetActions from 'budget/state/Actions';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import Card from 'components/card/Card';
 import {budgetStyle as styles} from './BudgetStyle';
@@ -43,6 +44,20 @@ const Budget = (props) => {
     entertainment: 'beer',
     savings: 'wallet',
   };
+  const categoryNames = {
+    general: 'General',
+    communication: 'Communication',
+    eatingOut: 'Eating out',
+    transport: 'Transport',
+    shopping: 'Shopping',
+    health: 'Health',
+    gifts: 'Gifts',
+    home: 'For home',
+    sports: 'Sports',
+    sightSeeing: 'Sight-seeing',
+    entertainment: 'Entertainment',
+    savings: 'Savings',
+  };
   const icons = Object.values(categories);
 
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
@@ -56,6 +71,8 @@ const Budget = (props) => {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('communication');
   const [account, setAccount] = useState('card');
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState();
 
   /** LINE CHARTS VARIABLES AND HANDLERS */
   const prepareLabels = () => {
@@ -156,6 +173,8 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
+        // update budget
+        updateBudget();
       } else if (typeOfOperation === 'minus') {
         // change displayableValue
         setDisplayableValue(displayableValue + -Math.abs(parseInt(amount, 10)));
@@ -170,8 +189,10 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
+        // update budget
+        updateBudget();
       } else {
-        console.log('error regarding addition/subtraction');
+        setError('error regarding addition/subtraction');
       }
       // update selectedCurrency in activeCurrencies
       const index = activeCurrencies.findIndex(
@@ -181,55 +202,30 @@ const Budget = (props) => {
       // clear placeholders
       clear();
     } else {
-      console.log('enter title and amount');
+      setError('enter title and amount');
     }
   };
 
-  /* HANDLERS
-  const loadReservations = useCallback(async () => {
+  /* HANDLERS */
+  const updateBudget = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true);
+    setIsLoading(true);
     try {
-      await dispatch(accommodationActions.fetchReservations(tripId));
+      await dispatch(budgetActions.updateBudget(tripId, activeCurrencies));
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
-  }, [dispatch, setError, tripId]);
+    setIsLoading(false);
+  }, [activeCurrencies, dispatch, tripId]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    loadReservations().then(() => {
-      setIsLoading(false);
-    });
-  }, [dispatch, loadReservations]);
-
-  if (isLoading || isRefreshing) {
+  /* if (isLoading) {
     return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
-        <ActivityIndicator size="large" color={Colors.primary} />
+      <View>
+        <ActivityIndicator color={Colors.primary} />
       </View>
     );
   }
-
-  if (accommodation === undefined) {
-    return (
-      <ScrollView
-        style={styles.scrollview}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={[styles.itemlessContainer, styles.columnAndRowCenter]}>
-          <Text style={[styles.text, styles.itemlessText]}>
-            There are no reservations!
-          </Text>
-          <Text style={[styles.text, styles.itemlessText]}>
-            Add one with the
-          </Text>
-          <Icon name="md-add" size={32} style={[styles.text, styles.icon]} />
-          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
-        </View>
-      </ScrollView>
-    );
-  } */
+  */
 
   if (activeCurrencies !== undefined) {
     return (
@@ -266,9 +262,9 @@ const Budget = (props) => {
         </View>
         {/* CURRENCY OPERATIONS AND HISTORY */}
         {selectedCurrency && (
-          <View style={styles.detailsContainer}>
+          <View style={styles.overviewContainer}>
             {/* AMOUNT OF CURRENCY */}
-            <Card style={styles.valueCard}>
+            <View style={styles.valueCard}>
               {/* ACCOUNTS BALANCE */}
               <View style={[styles.justifyRow]}>
                 {/* GENERAL BALANCE */}
@@ -311,17 +307,17 @@ const Budget = (props) => {
                   </Text>
                 </View>
               </View>
-            </Card>
+            </View>
           </View>
         )}
         {selectedCurrency && (
           <ScrollView contentContainerStyle={styles.detailsContainer}>
             {/* OPERATIONS */}
             <View style={styles.extraSmallMarginTop}>
-              <Text style={[styles.text, styles.label, {marginBottom: '4%'}]}>
-                Operations
-              </Text>
               <Card style={{padding: '5%'}}>
+                <Text style={[styles.text, styles.label]}>Operations</Text>
+              </Card>
+              <View style={{padding: '5%'}}>
                 {/* CATEGORIES */}
                 <View>
                   <Text style={styles.text}>Categories</Text>
@@ -346,9 +342,10 @@ const Budget = (props) => {
                       </TouchableOpacity>
                     ))}
                   </View>
-                  <View style={[styles.justifyRow, styles.center]}>
-                    <Text style={[styles.text]}>chosen: </Text>
-                    <Text style={[styles.activeCategory]}>{category}</Text>
+                  <View style={styles.center}>
+                    <Text style={[styles.activeCategory]}>
+                      {categoryNames[category].toString()}
+                    </Text>
                   </View>
                 </View>
                 {/* ACCOUNTS */}
@@ -447,11 +444,13 @@ const Budget = (props) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-              </Card>
+              </View>
             </View>
             {/* HISTORY */}
             <View style={styles.bigMarginTop}>
-              <Text style={[styles.text, styles.label]}>History</Text>
+              <Card style={{padding: '5%'}}>
+                <Text style={[styles.text, styles.label]}>History</Text>
+              </Card>
               {/* LINECHART */}
               {selectedCurrency.history.length > 1 && (
                 <View style={[styles.smallMarginTop, styles.chartContainer]}>
