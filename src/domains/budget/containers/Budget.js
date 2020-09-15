@@ -478,9 +478,25 @@ const Budget = (props) => {
                   .map((item) => (
                     <Card style={styles.operationCard}>
                       <View style={styles.justifyRow}>
-                        <View style={{marginRight: '10%'}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '5%',
+                          }}>
                           <Icon
                             name={categories[item.category]}
+                            style={[
+                              styles.icon,
+                              styles.text,
+                              {marginRight: '10%'},
+                            ]}
+                          />
+                          <Icon
+                            name={
+                              item.account === 'card' ? 'credit-card' : 'cash'
+                            }
                             style={[styles.icon, styles.text]}
                           />
                         </View>
