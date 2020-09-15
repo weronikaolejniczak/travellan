@@ -5,12 +5,13 @@ export const budgetStyle = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: '12%',
   },
   currenciesContainer: {
+    backgroundColor: Colors.cards,
     alignItems: 'center',
-    marginBottom: 10,
+    paddingTop: '12%',
   },
+  overviewContainer: {},
   detailsContainer: {
     paddingHorizontal: '5%',
     paddingBottom: '5%',
@@ -23,7 +24,7 @@ export const budgetStyle = StyleSheet.create({
     borderStyle: 'dashed',
   },
   currencyHolder: {
-    backgroundColor: '#111111',
+    backgroundColor: Colors.background,
     borderRadius: 50,
     paddingVertical: 8,
     paddingHorizontal: 25,
@@ -38,11 +39,12 @@ export const budgetStyle = StyleSheet.create({
   },
   categoriesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     flexWrap: 'wrap',
+    alignItems: 'flex-start',
   },
   iconButton: {
-    padding: '1%',
+    paddingVertical: '2%',
+    paddingHorizontal: '3%',
   },
   activeCategory: {
     color: Colors.primary,
@@ -51,6 +53,7 @@ export const budgetStyle = StyleSheet.create({
     color: 'grey',
   },
   valueCard: {
+    backgroundColor: Colors.cards,
     alignItems: 'center',
     padding: 15,
   },
