@@ -1,4 +1,5 @@
 import {MAIN_FIREBASE_API} from 'react-native-dotenv';
+import {AsyncStorage} from 'react-native';
 
 export const SIGNUP = 'SIGNUP';
 export const LOGIN = 'LOGIN';
@@ -63,5 +64,16 @@ export const login = (email, password) => {
     }
     const resData = await response.json();
     dispatch({type: LOGIN, token: resData.idToken, userId: resData.localId});
+    saveDataToStorage(resData.idToken, resData.localId);
   };
+};
+
+const saveDataToStorage = (token, userId) => {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token: token,
+      userId: userId,
+    }),
+  );
 };

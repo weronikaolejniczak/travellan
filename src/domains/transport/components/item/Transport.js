@@ -44,7 +44,8 @@ const Transport = (props) => {
   var pdfUri = props.pdfUri;
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
-  let source = {uri: pdfUri};
+  var source = {uri: pdfUri};
+  console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
   const deleteTicketHandler = useCallback(() => {
@@ -167,15 +168,19 @@ const Transport = (props) => {
             <MaterialIcon name={'close'} style={styles.icon} />
           </TouchableOpacity>
           <Pdf
+            ref={(pdf) => {
+              this.pdf = pdf;
+            }}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
               //console.log(`number of pages: ${numberOfPages}`);
+              console.log({source});
             }}
             onPageChanged={(page, numberOfPages) => {
               //console.log(`current page: ${page}`);
             }}
             onError={(error) => {
-              //console.log(error);
+              console.log(error);
             }}
             onPressLink={(uri) => {
               //console.log(`Link presse: ${uri}`);
