@@ -39,7 +39,7 @@ export const signup = (email, password) => {
     const resData = await response.json();
     dispatch({type: SIGNUP, token: resData.idToken, userId: resData.localId});
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiryDate) * 1000,
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId);
   };
@@ -76,13 +76,13 @@ export const login = (email, password) => {
     const resData = await response.json();
     dispatch({type: LOGIN, token: resData.idToken, userId: resData.localId});
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiryDate) * 1000,
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId);
   };
 };
 
-const saveDataToStorage = (token, userId) => {
+const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
