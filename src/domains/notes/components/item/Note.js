@@ -51,13 +51,13 @@ const Note = (props) => {
           {props.title}
         </Text>
 
-         {/* EDIT BUTTON */}
+         {/* EDIT BUTTON 
          <TouchableOpacity>
           <Icon
             name={Platform.OS === 'android' ? 'md-brush' : 'ios-brush'}
             style={styles.icon}
           />
-        </TouchableOpacity>
+         </TouchableOpacity> */}
 
         {/* DELETE BUTTON */}
         <TouchableOpacity onPress={submitHandler}>
