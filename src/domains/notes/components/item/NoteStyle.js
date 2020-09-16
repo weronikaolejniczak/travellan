@@ -47,10 +47,21 @@ export const noteStyle = StyleSheet.create({
     top:10,
     left:10,
   },
+  category: {
+    fontSize: 17,
+    color: Colors.text,
+    fontWeight: 'bold',
+    bottom: 5,
+  },
   text: {
     fontSize: 14,
     color: Colors.text,
     textAlign: 'justify',
+  },
+  container: {
+    flex: 1,
+    paddingTop: 40,
+    alignItems: "center"
   },
   icon: {
     fontSize: 30,

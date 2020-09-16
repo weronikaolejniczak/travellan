@@ -73,7 +73,7 @@ const Note = (props) => {
       {/* NOTE CONTENT */}
       <ScrollView style={styles.bodyMargin}>
       <Text style={styles.create}>{extractedDate}</Text>
-      <Text style={styles.create}>{props.category}</Text>
+      <Text style={styles.category}>{props.category}</Text>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

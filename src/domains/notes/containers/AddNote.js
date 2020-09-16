@@ -75,6 +75,8 @@ const AddNote = (props) => {
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.input}
+          placeholder="Title"
+          placeholderTextColor={'grey'}
           value={title}
           onChangeText={titleChangeHandler}
         />
@@ -89,6 +91,8 @@ const AddNote = (props) => {
         <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.input}
+          placeholder="Description"
+          placeholderTextColor={'grey'}
           value={description}
           onChangeText={descriptionChangeHandler}
           multiline
@@ -101,9 +105,10 @@ const AddNote = (props) => {
       </View>
       {/* DESCRIPTION INPUT */}
       <View style={styles.smallPaddingTop}>
+      <Text style={styles.label}>Set Category</Text>
       <Picker
         selectedValue={category}
-        style={{ height: 50, width: 150 }}
+        style={{ height: 50, width: 150, color: '#FFFFFF' }}
         onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
       >
         <Picker.Item label="To Do" value="To Do" />
