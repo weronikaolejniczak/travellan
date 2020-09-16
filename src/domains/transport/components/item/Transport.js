@@ -28,11 +28,16 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
+//test
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => ++value); // update the state to force render
+}
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation(); // navigation hook
-
+  const forceUpdate = useForceUpdate();
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -51,10 +56,14 @@ const Transport = (props) => {
   console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
-  const deleteTicketHandler = useCallback(() => {
-    dispatch(transportActions.deleteTransport(tripId, ticketId));
+  const deleteTicketHandler = useCallback(async () => {
+    await dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
 
+  const deleteupdateHandler = () => {
+    deleteTicketHandler;
+    useForceUpdate;
+  };
   const deleteQR = async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
@@ -227,7 +236,7 @@ const Transport = (props) => {
                 },
                 {
                   text: 'OK',
-                  onPress: deleteTicketHandler,
+                  onPress: deleteupdateHandler,
                 },
               ],
               {cancelable: true},
@@ -285,8 +294,8 @@ const Transport = (props) => {
               );
             } else {
               setshowPDF(true);
-                /* copy the file from the private app cache to the external storage which is readable*/
-              /** 
+              /* copy the file from the private app cache to the external storage which is readable*/
+              /**
               let path = pdfUri;
               if (Platform.OS !== 'ios') {
                 try {
