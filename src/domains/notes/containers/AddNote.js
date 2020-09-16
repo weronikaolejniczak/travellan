@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Picker,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as noteActions from 'notes/state/Actions';
@@ -27,6 +28,7 @@ const AddNote = (props) => {
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [category, setCategory] = useState('');
 
   /** HANDLERS */
   // Validates title.
@@ -48,7 +50,7 @@ const AddNote = (props) => {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
     } else {
-      await dispatch(noteActions.createNote(tripId, title, description));
+      await dispatch(noteActions.createNote(tripId, category, title, description));
       props.navigation.navigate('Notes', {
         tripId: selectedTrip.id,
       });
@@ -59,6 +61,7 @@ const AddNote = (props) => {
     descriptionIsValid,
     dispatch,
     tripId,
+    category,
     title,
     description,
     props.navigation,
@@ -95,6 +98,18 @@ const AddNote = (props) => {
             <Text style={styles.error}>Enter a description!</Text>
           </View>
         )}
+      </View>
+      {/* DESCRIPTION INPUT */}
+      <View style={styles.smallPaddingTop}>
+      <Picker
+        selectedValue={category}
+        style={{ height: 50, width: 150 }}
+        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+      >
+        <Picker.Item label="To Do" value="To Do" />
+        <Picker.Item label="To Pack" value="To Pack" />
+        <Picker.Item label="Diares" value="Diares" />
+      </Picker>
       </View>
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>

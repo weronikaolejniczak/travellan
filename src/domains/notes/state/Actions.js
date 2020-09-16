@@ -50,9 +50,10 @@ export const deleteNote = (tripId, noteId) => {
 };
 
 // Create a reservation based on user input.
-export const createNote = (tripId, title, description) => {
+export const createNote = (tripId, category, title, description) => {
   const newNote = new Note(
     new Date().toString(), // DUMMY ID
+    category,
     title,
     description,
   );

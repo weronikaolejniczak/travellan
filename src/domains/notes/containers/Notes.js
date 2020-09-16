@@ -60,6 +60,7 @@ const Notes = (props) => {
           renderItem={(itemData) => (
             <NoteItem
               tripId={tripId}
+              category={itemData.item.category}
               id={itemData.item.id}
               title={itemData.item.title}
               description={itemData.item.description}
