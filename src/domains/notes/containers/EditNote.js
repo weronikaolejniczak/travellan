@@ -12,7 +12,12 @@ import * as noteActions from 'notes/state/Actions';
 import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
 
-const EditNote = props => {
+const EditNote = (props) => {
+const dispatch = useDispatch();
+  const tripId = props.route.params.tripId;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
     return (
         <ScrollView>
             <View>
@@ -24,4 +29,4 @@ const EditNote = props => {
 
 }
 
-export default EditProductScreen;
+export default EditNote;
