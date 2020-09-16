@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  PermissionsAndroid,
   //ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -42,6 +43,8 @@ const Transport = (props) => {
   const transportTransfers = props.stages.length - 1;
   var qr = props.qr;
   var pdfUri = props.pdfUri;
+
+  var RNFS = require('react-native-fs');
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
@@ -263,7 +266,7 @@ const Transport = (props) => {
 
         {/* ATTACH/View TICKET-PDF */}
         <TouchableOpacity
-          onPress={() => {
+          onPress={async () => {
             if (pdfUri === '' || null || undefined) {
               Alert.alert(
                 'Add ticket pdf?',
@@ -282,6 +285,78 @@ const Transport = (props) => {
               );
             } else {
               setshowPDF(true);
+                /* copy the file from the private app cache to the external storage which is readable*/
+              /** 
+              let path = pdfUri;
+              if (Platform.OS !== 'ios') {
+                try {
+                  let hasPermission = await PermissionsAndroid.check(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                  );
+                  if (!hasPermission) {
+                    const granted = await PermissionsAndroid.request(
+                      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                      {
+                        title: 'write_storage_permission',
+                        message: 'write_storage_permission_message',
+                        buttonNegative: 'cancel',
+                        buttonPositive: 'ok',
+                      },
+                    );
+                    hasPermission =
+                      granted !== PermissionsAndroid.RESULTS.GRANTED;
+                  }
+                  if (!hasPermission) {
+                    handleError('error_accessing_storage');
+                    return;
+                  }
+                } catch (error) {
+                  console.warn(error);
+                }
+
+                path = `${
+                  RNFS.ExternalStorageDirectoryPath,
+                }/project_overview_${Number(new Date())}.pdf`;
+
+                try {
+                  await RNFS.copyFile(pdfFilePath, path);
+                } catch (error) {
+                  handleError(get(error, 'message', error));
+                  return;
+                }
+              }
+
+              function handleError(error) {
+                if (error === 'not_available') {
+                  error = 'mail_not_available';
+                }
+                Alert.alert('error', error, [{text: 'ok'}], {
+                  cancelable: true,
+                });
+              }
+              Mailer.mail(
+                {
+                  subject: i18n.t(
+                    'FinancingPlanning.loan_request_email_subject',
+                  ),
+                  recipients: [],
+                  body: i18n.t('FinancingPlanning.loan_request_email_body', {
+                    name: get(user, 'profile.name', ''),
+                  }),
+                  isHTML: true,
+                  attachment: {
+                    path, // The absolute path of the file from which to read data.
+                    type: 'pdf', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+                    name: 'project_overview.pdf', // Optional: Custom filename for attachment
+                  },
+                },
+                (error, event) => {
+                  if (error) {
+                    handleError(error);
+                  }
+                },
+              );
+              */
             }
           }}>
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />

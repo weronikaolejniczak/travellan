@@ -203,6 +203,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation project(':rn-extensions-share')
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-fs')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

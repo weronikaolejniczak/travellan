@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.reactnativecommunity.androidprogressbar.RNCProgressBarPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.facebook.react.ReactInstanceManager;
