@@ -51,7 +51,6 @@ export const noteStyle = StyleSheet.create({
     fontSize: 17,
     color: Colors.text,
     fontWeight: 'bold',
-    bottom: 5,
   },
   text: {
     fontSize: 14,

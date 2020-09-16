@@ -28,7 +28,7 @@ const AddNote = (props) => {
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('To Do');
 
   /** HANDLERS */
   // Validates title.
