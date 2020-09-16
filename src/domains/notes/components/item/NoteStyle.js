@@ -78,6 +78,7 @@ export const noteStyle = StyleSheet.create({
   },
   alignText: {
     alignItems: 'flex-start',
+    top:6,
   },
   card: {
     shadowColor: "#000",
