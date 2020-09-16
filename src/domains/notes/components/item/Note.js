@@ -18,6 +18,8 @@ import {noteStyle as styles} from './NoteStyle';
 /** Note item component */
 const Note = (props) => {
   const dispatch = useDispatch();
+  var convertedId = props.id.split(" ");
+  var test = convertedId[2] + " " + convertedId[1];
   /** HANDLERS */
   const submitHandler = useCallback(() => {
     Alert.alert(
@@ -70,7 +72,7 @@ const Note = (props) => {
 
       {/* NOTE CONTENT */}
       <ScrollView style={styles.bodyMargin}>
-      <Text style={styles.create}>{props.id}</Text>
+      <Text style={styles.create}>{test}</Text>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

@@ -36,8 +36,8 @@ export const noteStyle = StyleSheet.create({
     fontSize:11,
     alignSelf:'flex-end',
     color: '#fff',
-    right:-10,
-    top:5
+    right:10,
+    top:5,
 },
   subtitle: {
     flex: 1,
