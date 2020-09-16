@@ -31,6 +31,7 @@ import AddCurrency from 'budget/containers/AddCurrency';
 // notes presentational components
 import Notes, {notesOptions} from 'notes/containers/Notes';
 import AddNote from 'notes/containers/AddNote';
+import EditNote from 'notes/containers/EditNote'
 // map presentational component
 import Map from 'map/containers/Map';
 // weather presentational component
@@ -91,6 +92,7 @@ export default function Navigation() {
         {/* NOTES */}
         <Stack.Screen name="Notes" component={Notes} options={notesOptions} />
         <Stack.Screen name="Add note" component={AddNote} />
+        <Stack.Screen name="Edit Note" component={EditNote} />
         {/* MAP */}
         <Stack.Screen
           name="Map"
