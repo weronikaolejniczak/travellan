@@ -31,7 +31,7 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const activeCurrencies = selectedTrip.budget;
+  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
 
   const categories = {
     general: 'all-inclusive',
@@ -160,16 +160,21 @@ const Budget = (props) => {
     return cashAmount;
   };
 
-  const deleteCurrency = (id) => {
-    setIsRefreshing(true);
-    // update selectedCurrency in activeCurrencies
-    const filteredActiveCurrencies = activeCurrencies.filter(
-      (item) => item.id !== id,
-    );
-    console.log(filteredActiveCurrencies);
-    updateBudget();
-    setIsRefreshing(false);
-  };
+  const deleteCurrency = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      // update selectedCurrency in activeCurrencies
+      const filteredActiveCurrencies = activeCurrencies.filter(
+        (item) => item.id !== id,
+      );
+      setActiveCurrencies(filteredActiveCurrencies);
+      await dispatch(
+        budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+      );
+      setIsRefreshing(false);
+    },
+    [activeCurrencies, dispatch, tripId],
+  );
 
   const modifyAmount = (typeOfOperation) => {
     if (title && amount) {
