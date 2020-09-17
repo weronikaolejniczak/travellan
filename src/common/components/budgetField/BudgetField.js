@@ -47,6 +47,14 @@ const BudgetField = (props) => {
             onChangeText={props.budgetChangeHandler}
             keyboardType={'numeric'}
           />
+          {/* validation error */}
+          {props.budgetIsEnabled &&
+            !props.budgetIsValid &&
+            props.budgetSubmitted && (
+              <View style={props.styles.errorContainer}>
+                <Text style={props.styles.error}>Enter a valid budget!</Text>
+              </View>
+            )}
           <View style={[props.styles.rowAndCenter, {marginTop: '4%'}]}>
             {/* CASH */}
             <View>
@@ -134,12 +142,6 @@ const BudgetField = (props) => {
               </View>
             )}
           </View>
-        </View>
-      )}
-      {/* validation error */}
-      {props.budgetIsEnabled && !props.budgetIsValid && props.budgetSubmitted && (
-        <View style={props.styles.errorContainer}>
-          <Text style={props.styles.error}>Enter a valid budget!</Text>
         </View>
       )}
     </View>

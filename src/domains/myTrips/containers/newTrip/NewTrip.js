@@ -160,15 +160,16 @@ const NewTrip = (props) => {
     }
   }, [
     budget,
-    currency,
-    props.navigation,
+    account,
     destinationIsValid,
     budgetIsValid,
     budgetIsEnabled,
+    currency,
     dispatch,
     destination,
     startDate,
     endDate,
+    props.navigation,
   ]);
 
   return (

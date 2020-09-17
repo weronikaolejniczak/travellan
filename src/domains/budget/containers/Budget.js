@@ -235,9 +235,7 @@ const Budget = (props) => {
           <FlatList
             horizontal
             data={activeCurrencies}
-            ItemSeparatorComponent={() => (
-              <Icon style={[styles.text, styles.icon]} name="power-on" />
-            )}
+            ItemSeparatorComponent={() => <View style={{width: 7}} />}
             renderItem={({item}) => (
               <TouchableOpacity
                 style={styles.currencyHolder}
@@ -556,6 +554,7 @@ export const budgetOptions = (navData) => {
           onPress={() => {
             navData.navigation.navigate('Add currency', {
               tripId: navData.route.params.tripId,
+              currentBudget: navData.route.params.budget,
             });
           }}
         />

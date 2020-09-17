@@ -5,7 +5,8 @@ export const AddCurrencyStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: '12%',
+    paddingTop: '15%',
+    paddingHorizontal: '5%',
   },
   text: {
     color: Colors.text,
@@ -22,12 +23,8 @@ export const AddCurrencyStyles = StyleSheet.create({
   input: {
     color: Colors.text,
     fontSize: 18,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
-    marginVertical: 2,
-    marginHorizontal: 2,
   },
   pickerContainer: {
     alignItems: 'center',
@@ -45,8 +42,12 @@ export const AddCurrencyStyles = StyleSheet.create({
     color: Colors.text,
     fontSize: 20,
   },
+  icon: {
+    color: Colors.text,
+    fontSize: 30,
+  },
   button: {
-    borderRadius: 10,
+    borderRadius: 50,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
@@ -57,5 +58,26 @@ export const AddCurrencyStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.text,
+  },
+  buttonContainer: {
+    marginTop: '5%',
+    alignItems: 'center',
+  },
+  activeCategory: {
+    color: Colors.primary,
+  },
+  nonactiveCategory: {
+    color: 'grey',
+  },
+  rowAndCenter: {
+    //flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  error: {
+    color: Colors.error,
   },
 });

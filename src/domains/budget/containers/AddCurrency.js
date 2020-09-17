@@ -1,50 +1,134 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, TextInput} from 'react-native';
-/** IMPORTS FROM WITHIN THE MODULE */
+import React, {useState, useCallback} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+/** imports from within the module */
+import Budget from 'budget/models/Budget';
+import BudgetField from 'common/components/budgetField/BudgetField';
+import * as budgetActions from 'budget/state/Actions';
 import {AddCurrencyStyles as styles} from './AddCurrencyStyle';
-//import {CURRENCIES} from 'budget/data/Currencies';
+import Colors from 'constants/Colors';
+import {CURRENCIES} from 'data/Currencies';
 
 const AddCurrency = (props) => {
-  //const currencies = CURRENCIES;
-  //const currencyISO = Object.keys(currencies);
-  //const currencyNames = Object.values(currencies);
+  const dispatch = useDispatch();
+  const tripId = props.route.params.tripId;
+  const currentBudget = props.route.params.currentBudget;
 
-  const [amount, setAmount] = useState('');
-  //const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [budget, setBudget] = useState('');
+  const [budgetIsValid, setBudgetIsValid] = useState(false);
+  const [budgetSubmitted, setBudgetSubmitted] = useState(false);
+  const [currency, setCurrency] = useState('');
+  const [account, setAccount] = useState('card');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  /* HANDLERS */
+  // handle validity of budget
+  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const budgetChangeHandler = (text) => {
+    !(!budgetRegex.test(text) || text.trim().length === 0)
+      ? setBudgetIsValid(true)
+      : setBudgetIsValid(false);
+    setBudget(text);
+  };
+
+  /* submit handler */
+  const updateBudget = useCallback(async () => {
+    setError(null);
+    setIsLoading(true);
+    setBudgetSubmitted(true);
+
+    if (
+      budgetIsValid &&
+      CURRENCIES.filter((item) => item.name === currency).length > 0
+    ) {
+      let newCurrency = new Budget(
+        0,
+        parseInt(budget, 10),
+        CURRENCIES.filter((item) => item.name === currency).length > 0
+          ? CURRENCIES.filter(
+              (item) => item.name === currency,
+            )[0].iso.toString()
+          : undefined,
+        [
+          {
+            id: new Date().toString(),
+            title: 'Initial budget',
+            value: parseInt(budget, 10),
+            category: '',
+            account: account.toString(),
+            date: new Date(),
+          },
+        ],
+      );
+
+      let budgetToSubmit = currentBudget
+        ? [...currentBudget, newCurrency]
+        : [newCurrency];
+
+      try {
+        await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
+        props.navigation.navigate('Budget', {
+          tripId: tripId,
+        });
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+
+    setIsLoading(false);
+  }, [
+    account,
+    budget,
+    budgetIsValid,
+    currency,
+    currentBudget,
+    dispatch,
+    props.navigation,
+    tripId,
+  ]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.elementContainer}>
-        {/* INITIAL VALUE */}
-        <Text style={styles.label}>Initial value</Text>
-        <TextInput
-          placeholder="Amount"
-          placeholderTextColor="grey"
-          style={styles.input}
-          keyboardType={'numeric'}
-          value={amount}
-          onChange={(number) => setAmount(number)}
-        />
-      </View>
-      <View style={styles.elementContainer}>
-        <Text style={styles.label}>Currency</Text>
-        {/* PICKER */}
-        {/* <View style={styles.pickerContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.picker}>
-            <View style={{justifyContent: 'space-between'}}>
-              <Text style={styles.pickerText}>{selectedCurrency}</Text>
-            </View>
-          </TouchableOpacity>
-        </View> */}
-      </View>
-      <View style={styles.elementContainer}>
-        <View style={{alignItems: 'center', margin: 20}}>
-          <TouchableOpacity style={styles.button}>
+    <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
+      <BudgetField
+        label={'Enter initial value'}
+        styles={styles}
+        showSwitch={false}
+        toggleBudgetSwitch={() => {}}
+        budget={budget}
+        budgetIsEnabled={true}
+        budgetIsValid={budgetIsValid}
+        budgetSubmitted={budgetSubmitted}
+        budgetChangeHandler={budgetChangeHandler}
+        currency={currency}
+        currencyChangeHandler={setCurrency}
+        account={account}
+        setAccount={setAccount}
+        error={error}
+        setError={setError}
+      />
+
+      {/* SUBMIT BUTTON */}
+      {isLoading ? (
+        <View style={{marginTop: '5%'}}>
+          <ActivityIndicator color={Colors.primary} />
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => updateBudget()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </View>
+      )}
+    </ScrollView>
   );
 };
 
