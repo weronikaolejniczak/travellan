@@ -18,6 +18,8 @@ import {noteStyle as styles} from './NoteStyle';
 /** Note item component */
 const Note = (props) => {
   const dispatch = useDispatch();
+  var convertedId = props.id.split(" ");
+  var extractedDate = convertedId[2] + " " + convertedId[1] + " " + (convertedId[4].split(":"))[0] + ":" + (convertedId[4].split(":"))[1];
   /** HANDLERS */
   const submitHandler = useCallback(() => {
     Alert.alert(
@@ -51,13 +53,13 @@ const Note = (props) => {
           {props.title}
         </Text>
 
-         {/* EDIT BUTTON */}
+         {/* EDIT BUTTON 
          <TouchableOpacity>
           <Icon
             name={Platform.OS === 'android' ? 'md-brush' : 'ios-brush'}
             style={styles.icon}
           />
-        </TouchableOpacity>
+         </TouchableOpacity> */}
 
         {/* DELETE BUTTON */}
         <TouchableOpacity onPress={submitHandler}>
@@ -70,6 +72,8 @@ const Note = (props) => {
 
       {/* NOTE CONTENT */}
       <ScrollView style={styles.bodyMargin}>
+      <Text style={styles.create}>{extractedDate}</Text>
+      <Text style={styles.category}>{props.category}</Text>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

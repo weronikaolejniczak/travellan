@@ -32,16 +32,35 @@ export const noteStyle = StyleSheet.create({
     color: Colors.text,
     fontSize: 24,
   },
+  create:{
+    fontSize:11,
+    alignSelf:'flex-end',
+    color: '#fff',
+    right:10,
+    top:5,
+},
   subtitle: {
     flex: 1,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    top:10,
+    left:10,
+  },
+  category: {
+    fontSize: 17,
     color: Colors.text,
     fontWeight: 'bold',
-    fontSize: 18,
   },
   text: {
     fontSize: 14,
     color: Colors.text,
     textAlign: 'justify',
+  },
+  container: {
+    flex: 1,
+    paddingTop: 40,
+    alignItems: "center"
   },
   icon: {
     fontSize: 30,
@@ -59,5 +78,25 @@ export const noteStyle = StyleSheet.create({
   },
   alignText: {
     alignItems: 'flex-start',
+    top:6,
   },
+  card: {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+    shadowRadius: 5,
+    shadowOpacity: 1.0,
+    borderRadius: 5,
+    margin:20,
+    paddingRight:20,
+    width:138,
+    height:136,
+    color: '#fff',
+},
 });
