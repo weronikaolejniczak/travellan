@@ -39,7 +39,56 @@ const AddCurrency = (props) => {
   };
 
   /* submit handler */
-  const updateBudget = useCallback(async () => {
+  const submitHandler = useCallback(async () => {
+    setIsLoading(true);
+    if (
+      budgetIsValid &&
+      CURRENCIES.filter((item) => item.name === currency).length > 0
+    ) {
+      let newCurrency = new Budget(
+        new Date().toString(),
+        parseInt(budget, 10),
+        CURRENCIES.filter((item) => item.name === currency).length > 0
+          ? CURRENCIES.filter(
+              (item) => item.name === currency,
+            )[0].iso.toString()
+          : undefined,
+        [
+          {
+            id: 0,
+            title: 'Initial budget',
+            value: parseInt(budget, 10),
+            category: '',
+            account: account.toString(),
+            date: new Date(),
+          },
+        ],
+      );
+
+      let budgetToSubmit = currentBudget
+        ? [...currentBudget, newCurrency]
+        : [newCurrency];
+
+      await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
+      props.navigation.navigate('Budget', {
+        tripId: tripId,
+      });
+    } else {
+      setBudgetSubmitted(true);
+    }
+    setIsLoading(false);
+  }, [
+    budgetIsValid,
+    currency,
+    budget,
+    account,
+    currentBudget,
+    dispatch,
+    tripId,
+    props.navigation,
+  ]);
+
+  /* const updateBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     setBudgetSubmitted(true);
@@ -92,7 +141,7 @@ const AddCurrency = (props) => {
     dispatch,
     props.navigation,
     tripId,
-  ]);
+  ]); */
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
@@ -123,7 +172,7 @@ const AddCurrency = (props) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => updateBudget()}>
+            onPress={() => submitHandler()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

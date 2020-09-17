@@ -31,7 +31,7 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
+  const activeCurrencies = selectedTrip.budget;
 
   const categories = {
     general: 'all-inclusive',
@@ -167,7 +167,6 @@ const Budget = (props) => {
       (item) => item.id !== id,
     );
     console.log(filteredActiveCurrencies);
-    setActiveCurrencies(filteredActiveCurrencies);
     updateBudget();
     setIsRefreshing(false);
   };
