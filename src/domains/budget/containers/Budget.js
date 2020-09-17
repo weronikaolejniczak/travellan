@@ -31,7 +31,7 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
+  const activeCurrencies = selectedTrip.budget;
 
   const categories = {
     general: 'all-inclusive',
@@ -73,6 +73,7 @@ const Budget = (props) => {
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+  const [amountIsValid, setAmountIsValid] = useState(false);
   const [category, setCategory] = useState('general');
   const [account, setAccount] = useState('card');
   const [error, setError] = useState();
@@ -167,7 +168,6 @@ const Budget = (props) => {
       const filteredActiveCurrencies = activeCurrencies.filter(
         (item) => item.id !== id,
       );
-      setActiveCurrencies(filteredActiveCurrencies);
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
       );
@@ -176,8 +176,16 @@ const Budget = (props) => {
     [activeCurrencies, dispatch, tripId],
   );
 
+  let amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const amountChangeHandler = (text) => {
+    text.trim().length === 0 || !amountRegex.test(text)
+      ? setAmountIsValid(false)
+      : setAmountIsValid(true);
+    setAmount(text);
+  };
+
   const modifyAmount = (typeOfOperation) => {
-    if (title && amount) {
+    if (title && amount && amountIsValid) {
       const changedCurrency = selectedCurrency;
       // modification control flow
       if (typeOfOperation === 'plus') {
@@ -213,7 +221,7 @@ const Budget = (props) => {
         // update budget
         updateBudget();
       } else {
-        setError('error regarding addition/subtraction');
+        setError('Something went wrong...');
       }
       // update selectedCurrency in activeCurrencies
       const index = activeCurrencies.findIndex(
@@ -223,7 +231,7 @@ const Budget = (props) => {
       // clear placeholders
       clear();
     } else {
-      setError('enter title and amount');
+      setError('Enter correct amount and title.');
     }
   };
 
@@ -468,7 +476,7 @@ const Budget = (props) => {
                     placeholder="Enter amount"
                     placeholderTextColor="grey"
                     value={amount}
-                    onChangeText={(number) => setAmount(number)}
+                    onChangeText={(number) => amountChangeHandler(number)}
                     keyboardType={'numeric'}
                   />
                   <View style={[styles.justifyRow, styles.actions]}>
@@ -499,6 +507,11 @@ const Budget = (props) => {
                     onChangeText={(text) => setTitle(text)}
                   />
                 </View>
+                {!!error && (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.error}>{error}</Text>
+                  </View>
+                )}
               </View>
             </View>
             {/* HISTORY */}
