@@ -15,7 +15,7 @@ export const fetchBudget = (tripId) => {
 
     // take budget stored in the trip and assign it to local variable for later logic
     let budget = resData.budget;
-    console.log(budget);
+    //console.log(budget);
 
     dispatch({type: FETCH_BUDGET, tripId, budget});
   };

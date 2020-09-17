@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   View,
   ScrollView,
@@ -8,6 +8,8 @@ import {
   FlatList,
   Platform,
   Dimensions,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {LineChart} from 'react-native-chart-kit';
@@ -29,7 +31,8 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const activeCurrencies = selectedTrip.budget;
+  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
+
   const categories = {
     general: 'all-inclusive',
     communication: 'phone',
@@ -44,6 +47,7 @@ const Budget = (props) => {
     entertainment: 'beer',
     savings: 'wallet',
   };
+
   const categoryNames = {
     general: 'General',
     communication: 'Communication',
@@ -58,9 +62,9 @@ const Budget = (props) => {
     entertainment: 'Entertainment',
     savings: 'Savings',
   };
+
   const icons = Object.values(categories);
 
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [selectedCurrency, setSelectedCurrency] = useState(
     activeCurrencies ? activeCurrencies[0] : undefined,
   );
@@ -69,10 +73,11 @@ const Budget = (props) => {
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('communication');
+  const [category, setCategory] = useState('general');
   const [account, setAccount] = useState('card');
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   /** LINE CHARTS VARIABLES AND HANDLERS */
   const prepareLabels = () => {
@@ -155,6 +160,18 @@ const Budget = (props) => {
     return cashAmount;
   };
 
+  const deleteCurrency = (id) => {
+    setIsRefreshing(true);
+    // update selectedCurrency in activeCurrencies
+    const filteredActiveCurrencies = activeCurrencies.filter(
+      (item) => item.id !== id,
+    );
+    console.log(filteredActiveCurrencies);
+    setActiveCurrencies(filteredActiveCurrencies);
+    updateBudget();
+    setIsRefreshing(false);
+  };
+
   const modifyAmount = (typeOfOperation) => {
     if (title && amount) {
       const changedCurrency = selectedCurrency;
@@ -218,14 +235,31 @@ const Budget = (props) => {
     setIsLoading(false);
   }, [activeCurrencies, dispatch, tripId]);
 
-  /* if (isLoading) {
+  // fetch budget
+  const loadBudget = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
+      await dispatch(budgetActions.fetchBudget(tripId));
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadBudget().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadBudget]);
+
+  if (isLoading || isRefreshing) {
     return (
-      <View>
-        <ActivityIndicator color={Colors.primary} />
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }
-  */
 
   if (activeCurrencies !== undefined) {
     return (
@@ -235,12 +269,29 @@ const Budget = (props) => {
           <FlatList
             horizontal
             data={activeCurrencies}
-            ItemSeparatorComponent={() => (
-              <Icon style={[styles.text, styles.icon]} name="power-on" />
-            )}
+            ItemSeparatorComponent={() => <View style={{width: 7}} />}
             renderItem={({item}) => (
               <TouchableOpacity
                 style={styles.currencyHolder}
+                onLongPress={() => {
+                  Alert.alert(
+                    'Are you sure?',
+                    `Delete ${item.currency} currency.`,
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Delete',
+                        onPress: () => {
+                          deleteCurrency(item.id);
+                        },
+                      },
+                    ],
+                    {cancelable: true},
+                  );
+                }}
                 onPress={() => {
                   setSelectedCurrency(item);
                   setDisplayableValue(item.value);
@@ -320,7 +371,7 @@ const Budget = (props) => {
               <View style={{padding: '5%'}}>
                 {/* CATEGORIES */}
                 <View>
-                  <Text style={styles.text}>Categories</Text>
+                  <Text style={{color: 'grey'}}>Categories</Text>
                   <View
                     style={[
                       styles.categoriesContainer,
@@ -350,7 +401,7 @@ const Budget = (props) => {
                 </View>
                 {/* ACCOUNTS */}
                 <View style={{marginVertical: '5%'}}>
-                  <Text style={styles.text}>Accounts</Text>
+                  <Text style={{color: 'grey'}}>Accounts</Text>
                   <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
                     {/* CASH */}
                     <View>
@@ -406,19 +457,8 @@ const Budget = (props) => {
                     </View>
                   </View>
                 </View>
-                {/* TITLE INPUT */}
-                <Text style={styles.text}>Operations</Text>
-                <View>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Enter title"
-                    placeholderTextColor="grey"
-                    value={title}
-                    onChangeText={(text) => setTitle(text)}
-                  />
-                </View>
                 {/* AMOUNT INPUT */}
-                <View style={styles.extraSmallMarginTop}>
+                <View>
                   <TextInput
                     style={styles.input}
                     placeholder="Enter amount"
@@ -443,6 +483,17 @@ const Budget = (props) => {
                       />
                     </TouchableOpacity>
                   </View>
+                </View>
+                {/* TITLE INPUT */}
+                {/* <Text style={styles.text}>Operations</Text> */}
+                <View style={styles.extraSmallMarginTop}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter title"
+                    placeholderTextColor="grey"
+                    value={title}
+                    onChangeText={(text) => setTitle(text)}
+                  />
                 </View>
               </View>
             </View>
@@ -556,6 +607,7 @@ export const budgetOptions = (navData) => {
           onPress={() => {
             navData.navigation.navigate('Add currency', {
               tripId: navData.route.params.tripId,
+              currentBudget: navData.route.params.budget,
             });
           }}
         />
