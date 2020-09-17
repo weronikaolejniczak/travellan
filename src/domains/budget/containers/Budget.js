@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {LineChart} from 'react-native-chart-kit';
+import {LineChart, PieChart} from 'react-native-chart-kit';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -115,7 +115,7 @@ const Budget = (props) => {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ['Budget value'], // optional
+    legend: ['Budget value'],
   };
 
   const chartConfig = {
@@ -530,6 +530,11 @@ const Budget = (props) => {
                     fromZero={true}
                     onDataPointClick={(item) =>
                       console.log(selectedCurrency.history[item.index])
+                    }
+                    getDotColor={(item, index) =>
+                      selectedCurrency.history[index].value < 0
+                        ? 'red'
+                        : 'green'
                     }
                   />
                 </View>
