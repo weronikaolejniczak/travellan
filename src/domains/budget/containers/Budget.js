@@ -9,6 +9,7 @@ import {
   Platform,
   Dimensions,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {LineChart} from 'react-native-chart-kit';
@@ -30,7 +31,7 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const activeCurrencies = selectedTrip.budget;
+  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
 
   const categories = {
     general: 'all-inclusive',
@@ -159,6 +160,18 @@ const Budget = (props) => {
     return cashAmount;
   };
 
+  const deleteCurrency = (id) => {
+    setIsRefreshing(true);
+    // update selectedCurrency in activeCurrencies
+    const filteredActiveCurrencies = activeCurrencies.filter(
+      (item) => item.id !== id,
+    );
+    console.log(filteredActiveCurrencies);
+    setActiveCurrencies(filteredActiveCurrencies);
+    updateBudget();
+    setIsRefreshing(false);
+  };
+
   const modifyAmount = (typeOfOperation) => {
     if (title && amount) {
       const changedCurrency = selectedCurrency;
@@ -260,6 +273,25 @@ const Budget = (props) => {
             renderItem={({item}) => (
               <TouchableOpacity
                 style={styles.currencyHolder}
+                onLongPress={() => {
+                  Alert.alert(
+                    'Are you sure?',
+                    `Delete ${item.currency} currency.`,
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Delete',
+                        onPress: () => {
+                          deleteCurrency(item.id);
+                        },
+                      },
+                    ],
+                    {cancelable: true},
+                  );
+                }}
                 onPress={() => {
                   setSelectedCurrency(item);
                   setDisplayableValue(item.value);
