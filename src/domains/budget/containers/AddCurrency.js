@@ -49,7 +49,7 @@ const AddCurrency = (props) => {
       CURRENCIES.filter((item) => item.name === currency).length > 0
     ) {
       let newCurrency = new Budget(
-        0,
+        new Date().toString(),
         parseInt(budget, 10),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
@@ -58,7 +58,7 @@ const AddCurrency = (props) => {
           : undefined,
         [
           {
-            id: new Date().toString(),
+            id: 0,
             title: 'Initial budget',
             value: parseInt(budget, 10),
             category: '',

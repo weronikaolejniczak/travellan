@@ -9,7 +9,7 @@ export const budgetStyle = StyleSheet.create({
   currenciesContainer: {
     backgroundColor: Colors.cards,
     alignItems: 'center',
-    paddingTop: '12%',
+    paddingTop: '14%',
   },
   overviewContainer: {},
   detailsContainer: {
@@ -128,4 +128,9 @@ export const budgetStyle = StyleSheet.create({
   budgetlessText: {
     fontSize: 18,
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
