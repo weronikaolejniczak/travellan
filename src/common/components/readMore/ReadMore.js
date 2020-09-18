@@ -38,7 +38,7 @@ const ReadMore = (props) => {
         <Text style={styles.text}>{props.longText}</Text>
       )}
 
-      {showMore ? (
+      {showMore && (
         <TouchableOpacity
           style={styles.text}
           onPress={() => {
@@ -54,8 +54,6 @@ const ReadMore = (props) => {
             </View>
           )}
         </TouchableOpacity>
-      ) : (
-        <Text>''</Text>
       )}
     </View>
   );
