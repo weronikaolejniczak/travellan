@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import Search from 'map/components/search/Search';
 
 const Input = (props) => {
@@ -29,6 +29,7 @@ const Input = (props) => {
               value={props.markerTitle}
             />
           </View>
+          {!!props.error && <Text>{props.error}</Text>}
         </View>
       );
   }

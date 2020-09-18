@@ -31,13 +31,13 @@ const Toolbar = (props) => {
           deletingActivityHandler={props.deletingActivityHandler}
         />
         {/* route button */}
-        <ToolbarButton
+        {/* <ToolbarButton
           type={'route'}
           styles={props.styles}
           navigation={props.navigation}
           routeActive={props.routeActive}
           routeActivityHandler={props.routeActivityHandler}
-        />
+        /> */}
         {/* search button */}
         <ToolbarButton
           type={'search'}
@@ -59,6 +59,8 @@ const Toolbar = (props) => {
           setShowAutocomplete={props.setShowAutocomplete}
           focusedPlace={props.focusedPlace}
           setFocusedPlace={props.setFocusedPlace}
+          error={props.error}
+          setError={props.setError}
         />
       )}
       {props.addingMarkerActive && (
