@@ -7,6 +7,7 @@ import {
   Platform,
   ActivityIndicator,
   Animated,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -34,6 +35,38 @@ const Accommodation = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   /** HANDLERS */
+  const deleteAction = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      await dispatch(accommodationActions.deleteReservation(tripId, id));
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+
+  const deleteReservationHandler = useCallback(
+    async (reservationId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete accommodation',
+        'Are you sure?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => deleteAction(reservationId),
+          },
+        ],
+        {cancelable: true},
+      );
+      setIsRefreshing(false);
+    },
+    [deleteAction],
+  );
+
   const loadReservations = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
@@ -90,8 +123,8 @@ const Accommodation = (props) => {
       contentContainerStyle={styles.contentContainer}>
       <View>
         <FlatList
-          onRefresh={loadReservations}
-          refreshing={isRefreshing}
+          //onRefresh={loadReservations}
+          //refreshing={isRefreshing}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -119,6 +152,9 @@ const Accommodation = (props) => {
               hotelHours={itemData.item.hotelHours}
               description={itemData.item.description}
               reservationDetails={itemData.item.reservationDetails}
+              deleteReservationHandler={() =>
+                deleteReservationHandler(itemData.item.id)
+              }
             />
           )}
         />
