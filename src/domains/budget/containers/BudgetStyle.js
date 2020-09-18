@@ -9,7 +9,7 @@ export const budgetStyle = StyleSheet.create({
   currenciesContainer: {
     backgroundColor: Colors.cards,
     alignItems: 'center',
-    paddingTop: '14%',
+    paddingTop: '17%',
   },
   overviewContainer: {},
   detailsContainer: {

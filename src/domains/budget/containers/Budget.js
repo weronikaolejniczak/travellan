@@ -534,6 +534,17 @@ const Budget = (props) => {
                     </View>
                   </View>
                 </View>
+                {/* TITLE INPUT */}
+                {/* <Text style={styles.text}>Operations</Text> */}
+                <View style={styles.extraSmallMarginTop}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter title"
+                    placeholderTextColor="grey"
+                    value={title}
+                    onChangeText={(text) => setTitle(text)}
+                  />
+                </View>
                 {/* AMOUNT INPUT */}
                 <View>
                   <TextInput
@@ -560,17 +571,6 @@ const Budget = (props) => {
                       />
                     </TouchableOpacity>
                   </View>
-                </View>
-                {/* TITLE INPUT */}
-                {/* <Text style={styles.text}>Operations</Text> */}
-                <View style={styles.extraSmallMarginTop}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Enter title"
-                    placeholderTextColor="grey"
-                    value={title}
-                    onChangeText={(text) => setTitle(text)}
-                  />
                 </View>
                 {!!error && (
                   <View style={styles.errorContainer}>
@@ -666,19 +666,22 @@ const Budget = (props) => {
 export const budgetOptions = (navData) => {
   return {
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create a currency card"
-          style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-          onPress={() => {
-            navData.navigation.navigate('Add currency', {
-              tripId: navData.route.params.tripId,
-              currentBudget: navData.route.params.budget,
-            });
-          }}
-        />
-      </HeaderButtons>
+      <TouchableOpacity
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 10,
+        }}
+        onPress={() => {
+          navData.navigation.navigate('Add currency', {
+            tripId: navData.route.params.tripId,
+            currentBudget: navData.route.params.budget,
+          });
+        }}>
+        <Text style={[{fontSize: 18, color: Colors.primary}]}>
+          Add currency
+        </Text>
+      </TouchableOpacity>
     ),
   };
 };
