@@ -132,5 +132,11 @@ export const budgetStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  errorContainer: {
+    marginTop: '5%',
+  },
+  error: {
+    color: Colors.error,
+  },
 });

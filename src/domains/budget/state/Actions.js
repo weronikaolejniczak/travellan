@@ -53,6 +53,6 @@ export const updateBudget = (tripId, updatedBudget) => {
       },
     );
 
-    dispatch({type: UPDATE_BUDGET, tripId});
+    dispatch({type: UPDATE_BUDGET, tripId, budget});
   };
 };

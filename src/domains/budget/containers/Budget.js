@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {LineChart} from 'react-native-chart-kit';
+import {LineChart, PieChart} from 'react-native-chart-kit';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -31,7 +31,7 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const [activeCurrencies, setActiveCurrencies] = useState(selectedTrip.budget);
+  const activeCurrencies = selectedTrip.budget;
 
   const categories = {
     general: 'all-inclusive',
@@ -73,6 +73,7 @@ const Budget = (props) => {
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+  const [amountIsValid, setAmountIsValid] = useState(false);
   const [category, setCategory] = useState('general');
   const [account, setAccount] = useState('card');
   const [error, setError] = useState();
@@ -114,7 +115,7 @@ const Budget = (props) => {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ['Budget value'], // optional
+    legend: ['Budget value'],
   };
 
   const chartConfig = {
@@ -160,20 +161,31 @@ const Budget = (props) => {
     return cashAmount;
   };
 
-  const deleteCurrency = (id) => {
-    setIsRefreshing(true);
-    // update selectedCurrency in activeCurrencies
-    const filteredActiveCurrencies = activeCurrencies.filter(
-      (item) => item.id !== id,
-    );
-    console.log(filteredActiveCurrencies);
-    setActiveCurrencies(filteredActiveCurrencies);
-    updateBudget();
-    setIsRefreshing(false);
+  const deleteCurrency = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      // update selectedCurrency in activeCurrencies
+      const filteredActiveCurrencies = activeCurrencies.filter(
+        (item) => item.id !== id,
+      );
+      await dispatch(
+        budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+      );
+      setIsRefreshing(false);
+    },
+    [activeCurrencies, dispatch, tripId],
+  );
+
+  let amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const amountChangeHandler = (text) => {
+    text.trim().length === 0 || !amountRegex.test(text)
+      ? setAmountIsValid(false)
+      : setAmountIsValid(true);
+    setAmount(text);
   };
 
   const modifyAmount = (typeOfOperation) => {
-    if (title && amount) {
+    if (title && amount && amountIsValid) {
       const changedCurrency = selectedCurrency;
       // modification control flow
       if (typeOfOperation === 'plus') {
@@ -209,7 +221,7 @@ const Budget = (props) => {
         // update budget
         updateBudget();
       } else {
-        setError('error regarding addition/subtraction');
+        setError('Something went wrong...');
       }
       // update selectedCurrency in activeCurrencies
       const index = activeCurrencies.findIndex(
@@ -219,7 +231,7 @@ const Budget = (props) => {
       // clear placeholders
       clear();
     } else {
-      setError('enter title and amount');
+      setError('Enter correct amount and title.');
     }
   };
 
@@ -464,7 +476,7 @@ const Budget = (props) => {
                     placeholder="Enter amount"
                     placeholderTextColor="grey"
                     value={amount}
-                    onChangeText={(number) => setAmount(number)}
+                    onChangeText={(number) => amountChangeHandler(number)}
                     keyboardType={'numeric'}
                   />
                   <View style={[styles.justifyRow, styles.actions]}>
@@ -495,6 +507,11 @@ const Budget = (props) => {
                     onChangeText={(text) => setTitle(text)}
                   />
                 </View>
+                {!!error && (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.error}>{error}</Text>
+                  </View>
+                )}
               </View>
             </View>
             {/* HISTORY */}
@@ -513,6 +530,11 @@ const Budget = (props) => {
                     fromZero={true}
                     onDataPointClick={(item) =>
                       console.log(selectedCurrency.history[item.index])
+                    }
+                    getDotColor={(item, index) =>
+                      selectedCurrency.history[index].value < 0
+                        ? 'red'
+                        : 'green'
                     }
                   />
                 </View>

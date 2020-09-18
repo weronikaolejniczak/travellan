@@ -25,11 +25,7 @@ import {
 import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from 'notes/state/Actions';
 
 // Budget.
-import {
-  FETCH_BUDGET,
-  SUBTRACT_FROM_BUDGET,
-  ADD_TO_BUDGET,
-} from 'budget/state/Actions';
+import {FETCH_BUDGET, UPDATE_BUDGET} from 'budget/state/Actions';
 
 /** COMMON REDUCER */
 export const initialState = {
@@ -113,8 +109,7 @@ export default (state = initialState, action) => {
 
     /** BUDGET */
     case FETCH_BUDGET:
-    case SUBTRACT_FROM_BUDGET:
-    case ADD_TO_BUDGET:
+    case UPDATE_BUDGET:
       updatedAvailableTrips[tripIndex].budget = action.budget;
       return {
         ...state,
