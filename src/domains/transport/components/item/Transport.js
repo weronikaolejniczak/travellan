@@ -355,21 +355,7 @@ const Transport = (props) => {
                   cancelable: true,
                 });
               }
-              Mailer.mail(
-                {
-                  subject: i18n.t(
-                    'FinancingPlanning.loan_request_email_subject',
-                  ),
-                  recipients: [],
-                  body: i18n.t('FinancingPlanning.loan_request_email_body', {
-                    name: get(user, 'profile.name', ''),
-                  }),
-                  isHTML: true,
-                  attachment: {
-                    path, // The absolute path of the file from which to read data.
-                    type: 'pdf', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
-                    name: 'project_overview.pdf', // Optional: Custom filename for attachment
-                  },
+              **show PDF*
                 },
                 (error, event) => {
                   if (error) {
