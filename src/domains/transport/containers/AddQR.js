@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   //Linking,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -22,6 +23,8 @@ import Colors from 'constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as transportActions from 'transport/state/Actions';
+//
+import {NavigationEvents} from 'react-navigation';
 
 const AddQR = (props) => {
   const dispatch = useDispatch();
@@ -43,10 +46,12 @@ const AddQR = (props) => {
   };
 
   const acceptHandler = useCallback(async () => {
+    //try {}
     setIsLoading(true);
     var qr = {QR};
     qr = qr.QR;
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
+    //props.navigation.goBack(),
     props.navigation.navigate('Transport'),
       {
         tripId: tripId,
@@ -54,10 +59,9 @@ const AddQR = (props) => {
     setIsLoading(false);
   }, [QR, tripId, ticketId, dispatch, props.navigation]);
   const redoHandler = () => {
-    console.log({QR});
+    //console.log({QR});
     setshowQRscanner(true);
   };
-
   const switchLight = () => {
     settorchOn(!torchOn);
   };

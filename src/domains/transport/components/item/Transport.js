@@ -53,7 +53,7 @@ const Transport = (props) => {
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
-  console.log(source);
+  //console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
   const deleteTicketHandler = useCallback(async () => {
@@ -63,18 +63,19 @@ const Transport = (props) => {
   const deleteupdateHandler = () => {
     deleteTicketHandler();
     useForceUpdate;
+
   };
-  const deleteQR = async () => {
+  const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
-  };
+  }, [dispatch, tripId, ticketId, qr]);
 
-  const deletePDF = async () => {
+  const deletePDF = useCallback(async () => {
     pdfUri = '';
     await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
     setshowPDF(false);
-  };
+  }, [dispatch, tripId, ticketId, pdfUri]);
 
   /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
   const closeQRhandler = () => {
