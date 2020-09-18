@@ -61,7 +61,7 @@ const Transport = (props) => {
   }, [dispatch, tripId, ticketId]);
 
   const deleteupdateHandler = () => {
-    deleteTicketHandler;
+    deleteTicketHandler();
     useForceUpdate;
   };
   const deleteQR = async () => {

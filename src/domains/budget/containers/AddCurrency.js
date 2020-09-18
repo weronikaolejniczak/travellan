@@ -40,6 +40,7 @@ const AddCurrency = (props) => {
 
   /* submit handler */
   const updateBudget = useCallback(async () => {
+  //const updateBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     setBudgetSubmitted(true);
@@ -93,6 +94,7 @@ const AddCurrency = (props) => {
     props.navigation,
     tripId,
   ]);
+  //],;
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
@@ -121,9 +123,7 @@ const AddCurrency = (props) => {
         </View>
       ) : (
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => updateBudget()}>
+          <TouchableOpacity style={styles.button} onPress={() => updateBudget()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
