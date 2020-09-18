@@ -21,7 +21,7 @@ export const tripDetailsStyle = StyleSheet.create({
   dateContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    //alignItems: 'center',
     margin: height * 0.03,
   },
   date: {

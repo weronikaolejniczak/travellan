@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 /* imports from within the module */
@@ -15,6 +16,7 @@ import DatePicker from 'myTrips/components/datePicker/DatePicker';
 import {createTrip} from 'myTrips/state/Actions';
 import {newTripStyle as styles} from './NewTripStyle';
 import {CURRENCIES} from 'data/Currencies';
+import Colors from 'constants/Colors';
 
 /** new trip presentation component */
 const NewTrip = (props) => {
@@ -36,6 +38,8 @@ const NewTrip = (props) => {
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
   const [account, setAccount] = useState('card');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   /** HANDLERS */
   // handle validity of destination
@@ -99,7 +103,7 @@ const NewTrip = (props) => {
   };
 
   /* submit handler */
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     // if budget is enabled we define an array with given currency, else it's undefined
     let budgetToSubmit = [
       new Budget(
@@ -137,7 +141,8 @@ const NewTrip = (props) => {
       budgetIsValid &&
       CURRENCIES.filter((item) => item.name === currency).length === 1
     ) {
-      dispatch(
+      setIsLoading(true);
+      await dispatch(
         createTrip(
           destination,
           startDate.toString(),
@@ -146,9 +151,11 @@ const NewTrip = (props) => {
         ),
       );
       props.navigation.goBack();
+      setIsLoading(false);
       // else if destination is valid but budget is disabled
     } else if (destinationIsValid && !budgetIsEnabled) {
-      dispatch(
+      setIsLoading(true);
+      await dispatch(
         createTrip(
           destination,
           startDate.toString(),
@@ -157,6 +164,7 @@ const NewTrip = (props) => {
         ),
       );
       props.navigation.goBack();
+      setIsLoading(false);
     }
   }, [
     budget,
@@ -231,11 +239,17 @@ const NewTrip = (props) => {
       />
 
       {/* SUBMIT BUTTON */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={submitHandler}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
+      {isLoading ? (
+        <View style={styles.smallMarginTop}>
+          <ActivityIndicator color={Colors.primary} />
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={submitHandler}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ScrollView>
   );
 };

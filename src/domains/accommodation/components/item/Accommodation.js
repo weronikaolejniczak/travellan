@@ -30,32 +30,7 @@ const imageUrl =
  * refactor inline styles
  */
 const AccommodationItem = (props) => {
-  const dispatch = useDispatch();
-  const tripId = props.tripId;
-  const reservationId = props.id;
-
   /** HANDLERS */
-  const deleteReservationHandler = useCallback(() => {
-    Alert.alert(
-      'Delete accommodation',
-      'Are you sure?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () =>
-            dispatch(
-              accommodationActions.deleteReservation(tripId, reservationId),
-            ),
-        },
-      ],
-      {cancelable: true},
-    );
-  }, [dispatch, tripId, reservationId]);
-
   const prepareFacilities = (facilitiesArray) => {
     let result = [];
 
@@ -73,7 +48,7 @@ const AccommodationItem = (props) => {
   return (
     <Card style={styles.accommodation}>
       <View style={styles.actions}>
-        <TouchableOpacity onPress={deleteReservationHandler}>
+        <TouchableOpacity onPress={props.deleteReservationHandler}>
           <Ionicon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}

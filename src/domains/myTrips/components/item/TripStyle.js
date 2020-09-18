@@ -27,7 +27,7 @@ export const tripStyle = StyleSheet.create({
   actions: {
     position: 'absolute',
     left: '80%',
-    top: cardHeight * 0.715,
+    top: cardHeight * 0.7,
   },
   text: {
     color: Colors.text,
@@ -38,7 +38,6 @@ export const tripStyle = StyleSheet.create({
   },
   destination: {
     fontSize: 22,
-    marginVertical: 4,
   },
   date: {
     fontSize: 14,

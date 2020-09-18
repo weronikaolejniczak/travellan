@@ -39,9 +39,11 @@ const TripDetails = (props) => {
             style={[{flex: 1}]}>
             <View style={styles.dateContainer}>
               {/* UNSPLASH ARTIST CREDITS */}
-              <Text style={[styles.text]}>
-                Photo by {author} @Unsplash/{username}
-              </Text>
+              <View style={{justifyContent: 'space-around'}}>
+                <Text style={[styles.text]}>
+                  Photo by {author} @Unsplash/{username}
+                </Text>
+              </View>
               {/* START DATE AND END DATE OF THE TRIP */}
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
@@ -118,7 +120,6 @@ const TripDetails = (props) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-            
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate('Weather', {
