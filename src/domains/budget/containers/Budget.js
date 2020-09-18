@@ -66,10 +66,10 @@ const Budget = (props) => {
   const icons = Object.values(categories);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    activeCurrencies ? activeCurrencies[0] : undefined,
+    !!activeCurrencies ? activeCurrencies[0] : undefined,
   );
   const [displayableValue, setDisplayableValue] = useState(
-    selectedCurrency ? selectedCurrency.value : undefined,
+    selectedCurrency ? selectedCurrency.value : null,
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -79,6 +79,9 @@ const Budget = (props) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedHistoryItem, setSelectedHistoryItem] = useState(
+    !!selectedCurrency ? selectedCurrency.history[0] : null,
+  );
 
   /** LINE CHARTS VARIABLES AND HANDLERS */
   const prepareLabels = () => {
@@ -119,10 +122,10 @@ const Budget = (props) => {
   };
 
   const chartConfig = {
-    backgroundGradientFrom: Colors.background,
+    backgroundGradientFrom: Colors.cards,
     backgroundGradientFromOpacity: 0.0,
-    backgroundGradientTo: Colors.primary,
-    backgroundGradientToOpacity: 0.1,
+    backgroundGradientTo: Colors.cards,
+    backgroundGradientToOpacity: 0.9,
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
@@ -170,6 +173,11 @@ const Budget = (props) => {
       );
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+      );
+      setSelectedCurrency(
+        activeCurrencies !== undefined
+          ? filteredActiveCurrencies[0]
+          : undefined,
       );
       setIsRefreshing(false);
     },
@@ -288,7 +296,7 @@ const Budget = (props) => {
                 onLongPress={() => {
                   Alert.alert(
                     'Are you sure?',
-                    `Delete ${item.currency} currency.`,
+                    'Delete currency.',
                     [
                       {
                         text: 'Cancel',
@@ -324,59 +332,116 @@ const Budget = (props) => {
           />
         </View>
         {/* CURRENCY OPERATIONS AND HISTORY */}
-        {selectedCurrency && (
+        {!!selectedCurrency && (
           <View style={styles.overviewContainer}>
             {/* AMOUNT OF CURRENCY */}
             <View style={styles.valueCard}>
-              {/* ACCOUNTS BALANCE */}
-              <View style={[styles.justifyRow]}>
+              <View style={{alignItems: 'center'}}>
+                <Text style={{color: 'grey'}}>General balance</Text>
                 {/* GENERAL BALANCE */}
-                <View style={[styles.justifyRow, {marginRight: '12%'}]}>
-                  <Text style={[styles.label, styles.text]}>Total:{'   '}</Text>
-                  <Text
-                    style={[
-                      styles.label,
-                      displayableValue < 0 ? styles.negative : styles.positive,
-                    ]}>
-                    {displayableValue}
-                  </Text>
-                </View>
-                {/* CARD */}
-                <View style={styles.justifyRow}>
-                  <Icon
-                    name={'credit-card'}
-                    style={[styles.label, styles.text, {marginRight: '10%'}]}
-                  />
-                  <Text
-                    style={[
-                      styles.label,
-                      calculateCard() < 0 ? styles.negative : styles.positive,
-                    ]}>
-                    {calculateCard()}
-                  </Text>
-                </View>
-                {/* CASH */}
-                <View style={styles.justifyRow}>
-                  <Icon
-                    name={'cash'}
-                    style={[styles.label, styles.text, {marginRight: '10%'}]}
-                  />
-                  <Text
-                    style={[
-                      styles.label,
-                      calculateCash() < 0 ? styles.negative : styles.positive,
-                    ]}>
-                    {calculateCash()}
-                  </Text>
+                <Text
+                  style={[
+                    styles.icon,
+                    displayableValue < 0 ? styles.negative : styles.positive,
+                  ]}>
+                  {displayableValue < 0 ? '-' : '+'}
+                  {displayableValue}
+                </Text>
+              </View>
+              <View style={{alignItems: 'center'}}>
+                <Text style={{color: 'grey'}}>Accounts balance</Text>
+                {/* ACCOUNTS BALANCE */}
+                <View style={[styles.accounts]}>
+                  {/* CARD */}
+                  <View style={[styles.accounts, {marginRight: '5%'}]}>
+                    <Icon
+                      name={'credit-card'}
+                      style={[styles.label, styles.text, {marginRight: '5%'}]}
+                    />
+                    <Text
+                      style={[
+                        styles.label,
+                        calculateCard() < 0 ? styles.negative : styles.positive,
+                      ]}>
+                      {calculateCard()}
+                    </Text>
+                  </View>
+                  {/* CASH */}
+                  <View style={styles.accounts}>
+                    <Icon
+                      name={'cash'}
+                      style={[styles.icon, styles.text, {marginRight: '5%'}]}
+                    />
+                    <Text
+                      style={[
+                        styles.label,
+                        calculateCash() < 0 ? styles.negative : styles.positive,
+                      ]}>
+                      {calculateCash()}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         )}
-        {selectedCurrency && (
+        {!!selectedCurrency && (
           <ScrollView contentContainerStyle={styles.detailsContainer}>
+            {/* LINECHART */}
+            {selectedCurrency.history.length > 1 && (
+              <View>
+                <View style={[styles.smallMarginTop, styles.chartContainer]}>
+                  <LineChart
+                    data={data}
+                    width={screenWidth * 0.9}
+                    height={220}
+                    chartConfig={chartConfig}
+                    fromZero={true}
+                    onDataPointClick={(item) =>
+                      setSelectedHistoryItem(
+                        selectedCurrency.history[item.index],
+                      )
+                    }
+                    getDotColor={(item, index) =>
+                      selectedCurrency.history[index].value < 0
+                        ? '#b20000'
+                        : 'green'
+                    }
+                  />
+                </View>
+                {!!selectedHistoryItem && (
+                  <View
+                    style={[
+                      styles.smallMarginTop,
+                      {
+                        backgroundColor:
+                          selectedHistoryItem.value < 0 ? '#b20000' : 'green',
+                        padding: 15,
+                        borderRadius: 20,
+                      },
+                    ]}>
+                    <Text style={styles.text}>
+                      {new Date(selectedHistoryItem.date).toLocaleDateString()}
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={[styles.text, {fontSize: 22}]}>
+                        {selectedHistoryItem.value}
+                      </Text>
+                      <Text style={[styles.text]}>
+                        {selectedHistoryItem.title}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              </View>
+            )}
             {/* OPERATIONS */}
-            <View style={styles.extraSmallMarginTop}>
+            <View style={styles.smallMarginTop}>
               <Card style={{padding: '5%'}}>
                 <Text style={[styles.text, styles.label]}>Operations</Text>
               </Card>
@@ -515,30 +580,10 @@ const Budget = (props) => {
               </View>
             </View>
             {/* HISTORY */}
-            <View style={styles.bigMarginTop}>
+            <View style={styles.smallMarginTop}>
               <Card style={{padding: '5%'}}>
                 <Text style={[styles.text, styles.label]}>History</Text>
               </Card>
-              {/* LINECHART */}
-              {selectedCurrency.history.length > 1 && (
-                <View style={[styles.smallMarginTop, styles.chartContainer]}>
-                  <LineChart
-                    data={data}
-                    width={screenWidth * 0.9}
-                    height={220}
-                    chartConfig={chartConfig}
-                    fromZero={true}
-                    onDataPointClick={(item) =>
-                      console.log(selectedCurrency.history[item.index])
-                    }
-                    getDotColor={(item, index) =>
-                      selectedCurrency.history[index].value < 0
-                        ? 'red'
-                        : 'green'
-                    }
-                  />
-                </View>
-              )}
               {/* OPERATIONS */}
               {!selectedCurrency.history.length ? (
                 <View style={styles.smallMarginTop}>
