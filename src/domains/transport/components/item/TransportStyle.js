@@ -119,7 +119,7 @@ export const transportItemStyle = StyleSheet.create({
   containerRow: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: '12%',
+    //paddingTop: '5%',
     paddingHorizontal: '5%',
     alignItems: 'center',
     flexDirection: 'row',
@@ -135,5 +135,10 @@ export const transportItemStyle = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
+  },
+  icon2: {
+    fontSize: 30,
+    color: Colors.text,
+    //marginRight: 20,
   },
 });
