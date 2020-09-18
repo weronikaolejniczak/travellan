@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  PermissionsAndroid,
   //ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -27,11 +28,16 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
+//test
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => ++value); // update the state to force render
+}
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation(); // navigation hook
-
+  const forceUpdate = useForceUpdate();
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -43,26 +49,33 @@ const Transport = (props) => {
   var qr = props.qr;
   var pdfUri = props.pdfUri;
 
+  var RNFS = require('react-native-fs');
+
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
-  console.log(source);
+  //console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
-  const deleteTicketHandler = useCallback(() => {
-    dispatch(transportActions.deleteTransport(tripId, ticketId));
+  const deleteTicketHandler = useCallback(async () => {
+    await dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
 
-  const deleteQR = async () => {
+  const deleteupdateHandler = () => {
+    deleteTicketHandler();
+    useForceUpdate;
+
+  };
+  const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
-  };
+  }, [dispatch, tripId, ticketId, qr]);
 
-  const deletePDF = async () => {
+  const deletePDF = useCallback(async () => {
     pdfUri = '';
     await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
     setshowPDF(false);
-  };
+  }, [dispatch, tripId, ticketId, pdfUri]);
 
   /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
   const closeQRhandler = () => {
@@ -121,36 +134,46 @@ const Transport = (props) => {
         transparent={true}
         visible={showQR}
         onRequestClose={() => {
-          Alert.alert('Closing QR');
+          //Alert.alert('Closing QR');
+          setshowQR(false);
         }}>
         <View style={styles.container}>
-          <QRCode style={styles.qrstyle} value={qr} size={300} logoSize={300} />
           <TouchableOpacity
-            style={styles.buttonTouchable}
+            style={styles.buttonTouchableLeft}
             onPress={closeQRhandler}>
-            <MaterialIcon name={'close'} style={styles.icon} />
+            <MaterialIcon name={'close'} style={styles.icon2} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              Alert.alert(
-                'Delete QR',
-                'Are you sure?',
-                [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: deleteQR,
-                  },
-                ],
-                {cancelable: true},
-              );
-            }}>
-            <MaterialIcon name={'delete'} style={styles.icon} />
-          </TouchableOpacity>
+          <View style={styles.containerQR}>
+            <QRCode
+              style={styles.qrstyle}
+              value={qr}
+              size={300}
+              logoSize={300}
+            />
+            <View style={styles.containerRow}>
+              <TouchableOpacity
+                style={styles.buttonTouchable}
+                onPress={() => {
+                  Alert.alert(
+                    'Delete QR',
+                    'Are you sure?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'OK',
+                        onPress: deleteQR,
+                      },
+                    ],
+                    {cancelable: true},
+                  );
+                }}>
+                <MaterialIcon name={'delete'} style={styles.icon2} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </Modal>
       {/* SHOW PDF */}
@@ -159,13 +182,14 @@ const Transport = (props) => {
         transparent={true}
         visible={showPDF}
         onRequestClose={() => {
-          Alert.alert('Closing PDF');
+          //Alert.alert('Closing PDF');
+          setshowPDF(false);
         }}>
         <View style={styles.container}>
           <TouchableOpacity
-            style={styles.buttonTouchable}
+            style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}>
-            <MaterialIcon name={'close'} style={styles.icon} />
+            <MaterialIcon name={'close'} style={styles.icon2} />
           </TouchableOpacity>
           <Pdf
             ref={(pdf) => {
@@ -206,7 +230,7 @@ const Transport = (props) => {
                 {cancelable: true},
               );
             }}>
-            <MaterialIcon name={'delete'} style={styles.icon} />
+            <MaterialIcon name={'delete'} style={styles.icon2} />
           </TouchableOpacity>
         </View>
       </Modal>
@@ -224,7 +248,7 @@ const Transport = (props) => {
                 },
                 {
                   text: 'OK',
-                  onPress: deleteTicketHandler,
+                  onPress: deleteupdateHandler,
                 },
               ],
               {cancelable: true},
@@ -240,8 +264,8 @@ const Transport = (props) => {
           onPress={() => {
             if (qr === '' || null || undefined) {
               Alert.alert(
-                'Add QR code',
-                'Are you sure?',
+                "Add ticket's QR code",
+                'Scan QR code ',
                 [
                   {
                     text: 'Cancel',
@@ -263,11 +287,11 @@ const Transport = (props) => {
 
         {/* ATTACH/View TICKET-PDF */}
         <TouchableOpacity
-          onPress={() => {
+          onPress={async () => {
             if (pdfUri === '' || null || undefined) {
               Alert.alert(
                 'Add ticket pdf?',
-                'whatever',
+                'Attach document',
                 [
                   {
                     text: 'Cancel',
@@ -282,6 +306,78 @@ const Transport = (props) => {
               );
             } else {
               setshowPDF(true);
+              /* copy the file from the private app cache to the external storage which is readable*/
+              /**
+              let path = pdfUri;
+              if (Platform.OS !== 'ios') {
+                try {
+                  let hasPermission = await PermissionsAndroid.check(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                  );
+                  if (!hasPermission) {
+                    const granted = await PermissionsAndroid.request(
+                      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                      {
+                        title: 'write_storage_permission',
+                        message: 'write_storage_permission_message',
+                        buttonNegative: 'cancel',
+                        buttonPositive: 'ok',
+                      },
+                    );
+                    hasPermission =
+                      granted !== PermissionsAndroid.RESULTS.GRANTED;
+                  }
+                  if (!hasPermission) {
+                    handleError('error_accessing_storage');
+                    return;
+                  }
+                } catch (error) {
+                  console.warn(error);
+                }
+
+                path = `${
+                  RNFS.ExternalStorageDirectoryPath,
+                }/project_overview_${Number(new Date())}.pdf`;
+
+                try {
+                  await RNFS.copyFile(pdfFilePath, path);
+                } catch (error) {
+                  handleError(get(error, 'message', error));
+                  return;
+                }
+              }
+
+              function handleError(error) {
+                if (error === 'not_available') {
+                  error = 'mail_not_available';
+                }
+                Alert.alert('error', error, [{text: 'ok'}], {
+                  cancelable: true,
+                });
+              }
+              Mailer.mail(
+                {
+                  subject: i18n.t(
+                    'FinancingPlanning.loan_request_email_subject',
+                  ),
+                  recipients: [],
+                  body: i18n.t('FinancingPlanning.loan_request_email_body', {
+                    name: get(user, 'profile.name', ''),
+                  }),
+                  isHTML: true,
+                  attachment: {
+                    path, // The absolute path of the file from which to read data.
+                    type: 'pdf', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+                    name: 'project_overview.pdf', // Optional: Custom filename for attachment
+                  },
+                },
+                (error, event) => {
+                  if (error) {
+                    handleError(error);
+                  }
+                },
+              );
+              */
             }
           }}>
           <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
