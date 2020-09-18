@@ -6,13 +6,12 @@ import Geolocation from '@react-native-community/geolocation';
 /* imports from within the module */
 import Toolbar from 'map/components/toolbar/Toolbar';
 import PlaceOverview from 'map/components/placeOverview/PlaceOverview';
-import {googleMapStyle} from './GoogleMapStyle';
+import {darkModeMap} from './DarkModeMap';
 import {mapStyle as styles} from './MapStyle';
 import Colors from 'constants/Colors';
 import {Autocomplete} from 'map/data/DummyAutocomplete';
 
 const Map = (props) => {
-  /* variables */
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
@@ -20,7 +19,7 @@ const Map = (props) => {
   const extractRegion = () => {
     return selectedTrip.region;
   };
-  /* with setters */
+
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
   const [markers, setMarkers] = useState([]);
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
@@ -33,6 +32,7 @@ const Map = (props) => {
   const [activeMarker, setActiveMarker] = useState();
   const [markerTitle, setMarkerTitle] = useState('');
   const [focusedPlace, setFocusedPlace] = useState();
+  const [error, setError] = useState(null);
 
   const AUTOCOMPLETE = Autocomplete;
 
@@ -117,11 +117,12 @@ const Map = (props) => {
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
+        console.log(markerTitle);
         // add a marker with given coords to markers array
         setMarkers([...markers, {title, latitude, longitude}]);
         setMarkerTitle('');
       } else {
-        console.log('enter title!'); // refactor error to show in UI
+        setError('Enter the title'); // refactor error to show in UI
       }
       /* } else if (deletingMarkerActive) {
     } else if (routeActive) {
@@ -137,7 +138,7 @@ const Map = (props) => {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.flex}
-        customMapStyle={googleMapStyle}
+        customMapStyle={darkModeMap}
         initialRegion={extractRegion()}
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -145,10 +146,10 @@ const Map = (props) => {
         loadingIndicatorColor={Colors.primary}
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
-        onPoiClick={(event) => {
+        /* onPoiClick={(event) => {
           setShowPlaceInfo(true);
           setActiveMarker(event.nativeEvent);
-        }}
+        }} */
         onPress={(event) => mapOnPressHandler(event)}>
         {/* render markers */}
         {markers &&
@@ -162,7 +163,7 @@ const Map = (props) => {
               onPress={(event) => markerOnPressHandler(event)}>
               <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
                 <Text>{marker.title}</Text>
-                <Text>{marker.description}</Text>
+                {console.log(markers)}
               </MapView.Callout>
             </MapView.Marker>
           ))}
@@ -200,6 +201,8 @@ const Map = (props) => {
         autocomplete={AUTOCOMPLETE}
         showAutocomplete={showAutocomplete}
         setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
+        error={error}
+        setError={() => setError()}
         // focusedPlace, setFocusedPlace
         focusedPlace={focusedPlace}
         setFocusedPlace={() => setFocusedPlace()}

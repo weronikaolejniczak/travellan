@@ -25,14 +25,14 @@ export const mapStyle = StyleSheet.create({
     justifyContent: 'space-around',
   },
   showInfoOverlay: {
-    width: '67%',
-    height: '20%',
+    width: '95%',
+    height: '27%',
     position: 'absolute',
     bottom: 0,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     alignSelf: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.cards,
   },
   inputContainer: {
     width: '100%',
