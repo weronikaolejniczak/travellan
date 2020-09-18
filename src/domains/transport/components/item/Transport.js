@@ -133,36 +133,39 @@ const Transport = (props) => {
         transparent={true}
         visible={showQR}
         onRequestClose={() => {
-          Alert.alert('Closing QR');
+          //Alert.alert('Closing QR');
+          setshowQR(false);
         }}>
-        <View style={styles.container}>
+        <View style={styles.containerQR}>
           <QRCode style={styles.qrstyle} value={qr} size={300} logoSize={300} />
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={closeQRhandler}>
-            <MaterialIcon name={'close'} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              Alert.alert(
-                'Delete QR',
-                'Are you sure?',
-                [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: deleteQR,
-                  },
-                ],
-                {cancelable: true},
-              );
-            }}>
-            <MaterialIcon name={'delete'} style={styles.icon} />
-          </TouchableOpacity>
+          <View style={styles.containerRow}>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={closeQRhandler}>
+              <MaterialIcon name={'close'} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={() => {
+                Alert.alert(
+                  'Delete QR',
+                  'Are you sure?',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'OK',
+                      onPress: deleteQR,
+                    },
+                  ],
+                  {cancelable: true},
+                );
+              }}>
+              <MaterialIcon name={'delete'} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
       {/* SHOW PDF */}
@@ -171,11 +174,12 @@ const Transport = (props) => {
         transparent={true}
         visible={showPDF}
         onRequestClose={() => {
-          Alert.alert('Closing PDF');
+          //Alert.alert('Closing PDF');
+          setshowPDF(false);
         }}>
         <View style={styles.container}>
           <TouchableOpacity
-            style={styles.buttonTouchable}
+            style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}>
             <MaterialIcon name={'close'} style={styles.icon} />
           </TouchableOpacity>
@@ -252,8 +256,8 @@ const Transport = (props) => {
           onPress={() => {
             if (qr === '' || null || undefined) {
               Alert.alert(
-                'Add QR code',
-                'Are you sure?',
+                "Add ticket's QR code",
+                'Scan QR code ',
                 [
                   {
                     text: 'Cancel',
@@ -279,7 +283,7 @@ const Transport = (props) => {
             if (pdfUri === '' || null || undefined) {
               Alert.alert(
                 'Add ticket pdf?',
-                'whatever',
+                'Attach document',
                 [
                   {
                     text: 'Cancel',

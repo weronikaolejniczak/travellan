@@ -28,7 +28,6 @@ const AddQR = (props) => {
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
-  let temp = '';
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   const [torchOn, settorchOn] = useState(false);
@@ -36,16 +35,14 @@ const AddQR = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = (e) => {
-    //console.log(temp);
     //setIsLoading(true);
     setQR(e.data);
-    //console.log(temp);
     //const qr = e.data;
     setshowQRscanner(false);
     //setIsLoading(false);
   };
 
-  const acceptHandler = async () => {
+  const acceptHandler = useCallback(async () => {
     setIsLoading(true);
     var qr = {QR};
     qr = qr.QR;
@@ -55,15 +52,15 @@ const AddQR = (props) => {
         tripId: tripId,
       };
     setIsLoading(false);
-  };
+  }, [QR, tripId, ticketId, dispatch, props.navigation]);
   const redoHandler = () => {
     console.log({QR});
     setshowQRscanner(true);
-  }
+  };
 
   const switchLight = () => {
     settorchOn(!torchOn);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,7 +81,6 @@ const AddQR = (props) => {
               <MaterialIcon name={'flashlight'} style={styles.icon} />
             </TouchableOpacity>
           }
-          
           bottomContent={
             <View style={styles.buttonContainer}>
               {isLoading ? (
