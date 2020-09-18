@@ -50,7 +50,7 @@ export const updateQR = (tripId, ticketId, qr) => {
       },
     );
     // Dispatch an action to reducer.
-    dispatch({type: UPDATE_QR, tripId, qr});
+    dispatch({type: UPDATE_QR, tripId, ticketId, qr});
   };
 };
 //used to update PATH/URI to pdf

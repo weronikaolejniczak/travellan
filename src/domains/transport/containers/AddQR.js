@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   //Linking,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -22,13 +23,14 @@ import Colors from 'constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as transportActions from 'transport/state/Actions';
+//
+import {NavigationEvents} from 'react-navigation';
 
 const AddQR = (props) => {
   const dispatch = useDispatch();
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
-  let temp = '';
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   const [torchOn, settorchOn] = useState(false);
@@ -36,34 +38,33 @@ const AddQR = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = (e) => {
-    //console.log(temp);
     //setIsLoading(true);
     setQR(e.data);
-    //console.log(temp);
     //const qr = e.data;
     setshowQRscanner(false);
     //setIsLoading(false);
   };
 
-  const acceptHandler = async () => {
+  const acceptHandler = useCallback(async () => {
+    //try {}
     setIsLoading(true);
     var qr = {QR};
     qr = qr.QR;
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
+    //props.navigation.goBack(),
     props.navigation.navigate('Transport'),
       {
         tripId: tripId,
       };
     setIsLoading(false);
-  };
+  }, [QR, tripId, ticketId, dispatch, props.navigation]);
   const redoHandler = () => {
-    console.log({QR});
+    //console.log({QR});
     setshowQRscanner(true);
-  }
-
+  };
   const switchLight = () => {
     settorchOn(!torchOn);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,7 +85,6 @@ const AddQR = (props) => {
               <MaterialIcon name={'flashlight'} style={styles.icon} />
             </TouchableOpacity>
           }
-          
           bottomContent={
             <View style={styles.buttonContainer}>
               {isLoading ? (
