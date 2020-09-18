@@ -17,11 +17,19 @@ export const budgetStyle = StyleSheet.create({
     paddingBottom: '5%',
   },
   chartContainer: {
-    borderWidth: 1,
+    //borderWidth: 1,
     borderRadius: 25,
     overflow: 'hidden',
     borderColor: Colors.primary,
-    borderStyle: 'dashed',
+    //borderStyle: 'dashed',
+    shadowColor: "#111",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   currencyHolder: {
     backgroundColor: Colors.background,
@@ -56,6 +64,8 @@ export const budgetStyle = StyleSheet.create({
     backgroundColor: Colors.cards,
     alignItems: 'center',
     padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   operationCard: {
     marginTop: '4%',
@@ -103,6 +113,11 @@ export const budgetStyle = StyleSheet.create({
   justifyRow: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  accounts: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   spaceBetween: {
     justifyContent: 'space-between',
