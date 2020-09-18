@@ -18,10 +18,11 @@ export const AuthStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    borderRadius: 10,
-    padding: 15,
+    borderRadius: 25,
     backgroundColor: Colors.primary,
     alignItems: 'center',
+    width: '40%',
+    padding: 15,
   },
   buttonText: {
     fontWeight: 'bold',
