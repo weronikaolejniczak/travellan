@@ -66,10 +66,10 @@ const Budget = (props) => {
   const icons = Object.values(categories);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    activeCurrencies ? activeCurrencies[0] : undefined,
+    !!activeCurrencies ? activeCurrencies[0] : undefined,
   );
   const [displayableValue, setDisplayableValue] = useState(
-    selectedCurrency ? selectedCurrency.value : undefined,
+    selectedCurrency ? selectedCurrency.value : null,
   );
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -80,7 +80,7 @@ const Budget = (props) => {
   const [isLoading, setIsLoading] = useState();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(
-    selectedCurrency.history[0],
+    !!selectedCurrency ? selectedCurrency.history[0] : null,
   );
 
   /** LINE CHARTS VARIABLES AND HANDLERS */
@@ -173,6 +173,11 @@ const Budget = (props) => {
       );
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+      );
+      setSelectedCurrency(
+        activeCurrencies !== undefined
+          ? filteredActiveCurrencies[0]
+          : undefined,
       );
       setIsRefreshing(false);
     },
@@ -291,7 +296,7 @@ const Budget = (props) => {
                 onLongPress={() => {
                   Alert.alert(
                     'Are you sure?',
-                    `Delete ${item.currency} currency.`,
+                    'Delete currency.',
                     [
                       {
                         text: 'Cancel',
@@ -327,7 +332,7 @@ const Budget = (props) => {
           />
         </View>
         {/* CURRENCY OPERATIONS AND HISTORY */}
-        {selectedCurrency && (
+        {!!selectedCurrency && (
           <View style={styles.overviewContainer}>
             {/* AMOUNT OF CURRENCY */}
             <View style={styles.valueCard}>
@@ -380,7 +385,7 @@ const Budget = (props) => {
             </View>
           </View>
         )}
-        {selectedCurrency && (
+        {!!selectedCurrency && (
           <ScrollView contentContainerStyle={styles.detailsContainer}>
             {/* LINECHART */}
             {selectedCurrency.history.length > 1 && (
