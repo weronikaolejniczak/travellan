@@ -40,7 +40,7 @@ const TripDetails = (props) => {
             <View style={styles.dateContainer}>
               {/* UNSPLASH ARTIST CREDITS */}
               <View style={{justifyContent: 'space-around'}}>
-                <Text style={[styles.text]}>
+                <Text style={[styles.text, {textAlign: 'center'}]}>
                   Photo by {author} @Unsplash/{username}
                 </Text>
               </View>
