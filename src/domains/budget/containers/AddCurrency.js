@@ -38,7 +38,23 @@ const AddCurrency = (props) => {
     setBudget(text);
   };
 
-  /* submit handler */
+  // prepare budget value for saving
+  const prepareValue = (value) => {
+    // replace each whitespace in passed string with empty symbol
+    value = value.replace(/ /g, '');
+    // parse to float and round up to 2 decimal points
+    value = parseFloat(value).toFixed(2);
+    // as toFixed() converts the number to string, parse to float again
+    value = parseFloat(value);
+    // if parsing results in NaN, i.e. the first symbol of value is not a number, return 0 for safety
+    if (isNaN(value)) {
+      return 0;
+    } else {
+      return value;
+    }
+  };
+
+  // handle submition
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
     if (
@@ -47,7 +63,7 @@ const AddCurrency = (props) => {
     ) {
       let newCurrency = new Budget(
         new Date().toString(),
-        parseInt(budget, 10),
+        prepareValue(budget),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
               (item) => item.name === currency,
@@ -57,7 +73,7 @@ const AddCurrency = (props) => {
           {
             id: 0,
             title: 'Initial budget',
-            value: parseInt(budget, 10),
+            value: prepareValue(budget),
             category: '',
             account: account.toString(),
             date: new Date(),
@@ -88,61 +104,6 @@ const AddCurrency = (props) => {
     props.navigation,
   ]);
 
-  /* const updateBudget = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    setBudgetSubmitted(true);
-
-    if (
-      budgetIsValid &&
-      CURRENCIES.filter((item) => item.name === currency).length > 0
-    ) {
-      let newCurrency = new Budget(
-        new Date().toString(),
-        parseInt(budget, 10),
-        CURRENCIES.filter((item) => item.name === currency).length > 0
-          ? CURRENCIES.filter(
-              (item) => item.name === currency,
-            )[0].iso.toString()
-          : undefined,
-        [
-          {
-            id: 0,
-            title: 'Initial budget',
-            value: parseInt(budget, 10),
-            category: '',
-            account: account.toString(),
-            date: new Date(),
-          },
-        ],
-      );
-
-      let budgetToSubmit = currentBudget
-        ? [...currentBudget, newCurrency]
-        : [newCurrency];
-
-      try {
-        await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
-        props.navigation.navigate('Budget', {
-          tripId: tripId,
-        });
-      } catch (err) {
-        setError(err.message);
-      }
-    }
-
-    setIsLoading(false);
-  }, [
-    account,
-    budget,
-    budgetIsValid,
-    currency,
-    currentBudget,
-    dispatch,
-    props.navigation,
-    tripId,
-  ]); */
-
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
       <BudgetField
@@ -165,7 +126,7 @@ const AddCurrency = (props) => {
 
       {/* SUBMIT BUTTON */}
       {isLoading ? (
-        <View style={{marginTop: '5%'}}>
+        <View style={styles.smallMarginTop}>
           <ActivityIndicator color={Colors.primary} />
         </View>
       ) : (

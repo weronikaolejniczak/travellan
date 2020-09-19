@@ -74,6 +74,9 @@ export const AddCurrencyStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  smallMarginTop: {
+    marginTop: '5%',
+  },
   errorContainer: {
     marginVertical: 5,
   },
