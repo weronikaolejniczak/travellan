@@ -6,30 +6,62 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 /** imports from within the module */
+import * as budgetActions from 'budget/state/Actions';
+import * as handlers from 'budget/handlers/PrepareData';
+import {CURRENCIES} from 'data/Currencies';
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
-import * as budgetActions from 'budget/state/Actions';
 import {AddCurrencyStyles as styles} from './AddCurrencyStyle';
 import Colors from 'constants/Colors';
-import {CURRENCIES} from 'data/Currencies';
+
+var incorrectCurrency =
+  'There is no such currency or the currency already exists in your budget.';
 
 const AddCurrency = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  const currentBudget = props.route.params.currentBudget;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+  const currentBudget = selectedTrip.budget;
 
   const [budget, setBudget] = useState('');
   const [budgetIsValid, setBudgetIsValid] = useState(false);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
+  const [currencyIsValid, setCurrencyIsValid] = useState(false);
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  console.log(currentBudget);
+
   /* HANDLERS */
-  // handle validity of budget
+  // handles currency validity
+  const currencyChangeHandler = (text) => {
+    let currencyISO =
+      CURRENCIES.filter((item) => item.name === text)[0] !== undefined
+        ? CURRENCIES.filter((item) => item.name === text)[0].iso
+        : undefined;
+
+    let exists = CURRENCIES.filter((item) => item.name === text).length > 0;
+
+    let isAlreadyDeclared =
+      currentBudget !== undefined
+        ? currentBudget.filter((item) => item.currency === currencyISO).length >
+          0
+        : false;
+
+    let validator = exists && !isAlreadyDeclared;
+
+    validator ? setCurrencyIsValid(true) : setCurrencyIsValid(false);
+    validator ? setError(null) : setError(incorrectCurrency);
+    setCurrency(text);
+  };
+
+  // handle budget validity
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     !(!budgetRegex.test(text) || text.trim().length === 0)
@@ -38,16 +70,14 @@ const AddCurrency = (props) => {
     setBudget(text);
   };
 
-  /* submit handler */
+  // handle submition
   const submitHandler = useCallback(async () => {
-    setIsLoading(true);
-    if (
-      budgetIsValid &&
-      CURRENCIES.filter((item) => item.name === currency).length > 0
-    ) {
+    setBudgetSubmitted(true);
+    if (budgetIsValid && currencyIsValid) {
+      // create a new currency card using budget model
       let newCurrency = new Budget(
         new Date().toString(),
-        parseInt(budget, 10),
+        handlers.prepareValue(budget),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
               (item) => item.name === currency,
@@ -57,7 +87,7 @@ const AddCurrency = (props) => {
           {
             id: 0,
             title: 'Initial budget',
-            value: parseInt(budget, 10),
+            value: handlers.prepareValue(budget),
             category: '',
             account: account.toString(),
             date: new Date(),
@@ -69,79 +99,27 @@ const AddCurrency = (props) => {
         ? [...currentBudget, newCurrency]
         : [newCurrency];
 
+      setIsLoading(true);
       await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
       props.navigation.navigate('Budget', {
         tripId: tripId,
       });
-    } else {
-      setBudgetSubmitted(true);
+      setIsLoading(false);
+    } else if (!error) {
+      setError('Something went wrong...');
     }
-    setIsLoading(false);
   }, [
     budgetIsValid,
-    currency,
+    currencyIsValid,
+    error,
     budget,
     account,
     currentBudget,
     dispatch,
     tripId,
     props.navigation,
+    currency,
   ]);
-
-  /* const updateBudget = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    setBudgetSubmitted(true);
-
-    if (
-      budgetIsValid &&
-      CURRENCIES.filter((item) => item.name === currency).length > 0
-    ) {
-      let newCurrency = new Budget(
-        new Date().toString(),
-        parseInt(budget, 10),
-        CURRENCIES.filter((item) => item.name === currency).length > 0
-          ? CURRENCIES.filter(
-              (item) => item.name === currency,
-            )[0].iso.toString()
-          : undefined,
-        [
-          {
-            id: 0,
-            title: 'Initial budget',
-            value: parseInt(budget, 10),
-            category: '',
-            account: account.toString(),
-            date: new Date(),
-          },
-        ],
-      );
-
-      let budgetToSubmit = currentBudget
-        ? [...currentBudget, newCurrency]
-        : [newCurrency];
-
-      try {
-        await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
-        props.navigation.navigate('Budget', {
-          tripId: tripId,
-        });
-      } catch (err) {
-        setError(err.message);
-      }
-    }
-
-    setIsLoading(false);
-  }, [
-    account,
-    budget,
-    budgetIsValid,
-    currency,
-    currentBudget,
-    dispatch,
-    props.navigation,
-    tripId,
-  ]); */
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
@@ -156,7 +134,7 @@ const AddCurrency = (props) => {
         budgetSubmitted={budgetSubmitted}
         budgetChangeHandler={budgetChangeHandler}
         currency={currency}
-        currencyChangeHandler={setCurrency}
+        currencyChangeHandler={currencyChangeHandler}
         account={account}
         setAccount={setAccount}
         error={error}
@@ -165,7 +143,7 @@ const AddCurrency = (props) => {
 
       {/* SUBMIT BUTTON */}
       {isLoading ? (
-        <View style={{marginTop: '5%'}}>
+        <View style={styles.smallMarginTop}>
           <ActivityIndicator color={Colors.primary} />
         </View>
       ) : (

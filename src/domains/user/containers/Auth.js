@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -108,14 +109,13 @@ const Auth = (props) => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={50}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
       style={styles.screen}>
       <View style={styles.authContainer}>
         <ScrollView>
           <View style={{marginBottom: 20, alignItems: 'center'}}>
             <Image
-              style={{width: 200, height: 200, resizeMode: 'stretch'}}
+              style={{width: 150, height: 150, resizeMode: 'stretch'}}
               source={require('assets/images/logo.png')}
             />
           </View>

@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
+import Colors from 'constants/Colors';
 
 export const budgetFieldStyle = StyleSheet.create({
   autocompleteContainer: {
     flex: 1,
     marginTop: 5,
-    color: '#fff',
+    color: Colors.text,
   },
   result: {
     padding: 10,
@@ -12,19 +13,21 @@ export const budgetFieldStyle = StyleSheet.create({
     borderWidth: 0,
   },
   text: {
-    color: '#fff',
+    color: Colors.text,
   },
   input: {
     borderWidth: 0,
   },
   error: {
-    color: '#fff',
+    color: Colors.text,
+    textAlign: 'center',
   },
   errorContainer: {
     marginTop: 10,
+    padding: 15,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 5,
     borderRadius: 50,
-    backgroundColor: '#111',
+    backgroundColor: Colors.cards,
   },
 });

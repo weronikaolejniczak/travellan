@@ -6,23 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  Platform,
   Dimensions,
   ActivityIndicator,
   Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {LineChart, PieChart} from 'react-native-chart-kit';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {LineChart} from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-/** IMPORTS FROM WITHIN THE MODULE */
+/** imports from within the module */
 import * as budgetActions from 'budget/state/Actions';
-import HeaderButton from 'components/headerButton/HeaderButton';
+import * as handlers from 'budget/handlers/PrepareData';
 import Card from 'components/card/Card';
 import {budgetStyle as styles} from './BudgetStyle';
 import Colors from 'constants/Colors';
+import * as categories from 'budget/models/Categories';
 
-/** DIMENSIONS */
 const screenWidth = Dimensions.get('window').width;
 
 const Budget = (props) => {
@@ -32,45 +30,18 @@ const Budget = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const activeCurrencies = selectedTrip.budget;
-
-  const categories = {
-    general: 'all-inclusive',
-    communication: 'phone',
-    eatingOut: 'silverware-fork-knife',
-    transport: 'airplane',
-    shopping: 'shopping',
-    health: 'heart-pulse',
-    gifts: 'gift',
-    home: 'home',
-    sports: 'dumbbell',
-    sightSeeing: 'camera',
-    entertainment: 'beer',
-    savings: 'wallet',
-  };
-
-  const categoryNames = {
-    general: 'General',
-    communication: 'Communication',
-    eatingOut: 'Eating out',
-    transport: 'Transport',
-    shopping: 'Shopping',
-    health: 'Health',
-    gifts: 'Gifts',
-    home: 'For home',
-    sports: 'Sports',
-    sightSeeing: 'Sight-seeing',
-    entertainment: 'Entertainment',
-    savings: 'Savings',
-  };
-
-  const icons = Object.values(categories);
+  //console.log(activeCurrencies);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    !!activeCurrencies ? activeCurrencies[0] : undefined,
+    activeCurrencies !== undefined ? activeCurrencies[0] : undefined,
   );
+  //console.log(selectedCurrency);
+
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
+  //console.log(displayableValue);
+
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [amountIsValid, setAmountIsValid] = useState(false);
@@ -80,40 +51,19 @@ const Budget = (props) => {
   const [isLoading, setIsLoading] = useState();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(
-    !!selectedCurrency ? selectedCurrency.history[0] : null,
+    selectedCurrency ? selectedCurrency.history[0] : null,
   );
 
-  /** LINE CHARTS VARIABLES AND HANDLERS */
-  const prepareLabels = () => {
-    // extract dates from history attribute of selectedCurrency
-    let labels = selectedCurrency.history.map((item) =>
-      item.date.toString().split(' ').splice(1, 2).join(' '),
-    );
-
-    return labels;
-  };
-
-  const prepareData = () => {
-    // extract values from history attribute of selectedCurrency and parse it into int
-    let dataToPrepare = selectedCurrency.history.map((item) =>
-      parseInt(item.value, 10),
-    );
-    // add initial value to preparedData
-    let preparedData = [dataToPrepare[0]];
-    // 'reduce' to get an array of budget after each operation
-    dataToPrepare.reduce((total, num) => {
-      preparedData.push(total + num);
-      return total + num;
-    });
-
-    return preparedData;
-  };
-
+  /** line chart */
   const data = {
-    labels: selectedCurrency ? prepareLabels() : [],
+    labels: selectedCurrency
+      ? handlers.prepareLabelsForLC(selectedCurrency.history)
+      : [],
     datasets: [
       {
-        data: selectedCurrency ? prepareData() : [],
+        data: selectedCurrency
+          ? handlers.prepareDataForLC(selectedCurrency.history)
+          : [],
         color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
@@ -132,7 +82,7 @@ const Budget = (props) => {
     useShadowColorFromDataset: false, // optional
   };
 
-  /** HANDLERS */
+  /** handlers */
   const clear = () => {
     setTitle('');
     setAmount('');
@@ -140,49 +90,11 @@ const Budget = (props) => {
 
   const chooseCategory = (iconPressed) => {
     setCategory(
-      Object.keys(categories).find((key) => categories[key] === iconPressed),
+      Object.keys(categories.categoryIcons).find(
+        (key) => categories.categoryIcons[key] === iconPressed,
+      ),
     );
   };
-
-  const calculateCard = () => {
-    let cardAmount = 0;
-    let cardHistory = selectedCurrency.history.filter(
-      (item) => item.account === 'card',
-    );
-    cardHistory.map((item) => (cardAmount += parseInt(item.value, 10)));
-
-    return cardAmount;
-  };
-
-  const calculateCash = () => {
-    let cashAmount = 0;
-    let cashHistory = selectedCurrency.history.filter(
-      (item) => item.account === 'cash',
-    );
-    cashHistory.map((item) => (cashAmount += parseInt(item.value, 10)));
-
-    return cashAmount;
-  };
-
-  const deleteCurrency = useCallback(
-    async (id) => {
-      setIsRefreshing(true);
-      // update selectedCurrency in activeCurrencies
-      const filteredActiveCurrencies = activeCurrencies.filter(
-        (item) => item.id !== id,
-      );
-      await dispatch(
-        budgetActions.updateBudget(tripId, filteredActiveCurrencies),
-      );
-      setSelectedCurrency(
-        activeCurrencies !== undefined
-          ? filteredActiveCurrencies[0]
-          : undefined,
-      );
-      setIsRefreshing(false);
-    },
-    [activeCurrencies, dispatch, tripId],
-  );
 
   let amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const amountChangeHandler = (text) => {
@@ -198,36 +110,40 @@ const Budget = (props) => {
       // modification control flow
       if (typeOfOperation === 'plus') {
         // change displayableValue
-        setDisplayableValue(displayableValue + Math.abs(parseInt(amount, 10)));
+        setDisplayableValue(
+          displayableValue + Math.abs(handlers.prepareValue(amount)),
+        );
         // modify selectedCurrency
         changedCurrency.value =
-          changedCurrency.value + Math.abs(parseInt(amount, 10));
+          changedCurrency.value + Math.abs(handlers.prepareValue(amount));
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
-          value: Math.abs(parseInt(amount, 10)),
+          value: Math.abs(handlers.prepareValue(amount)),
           category: category,
           account: account,
           date: new Date(),
         });
-        // update budget
-        updateBudget();
+        // persist changes in the budget
+        persistBudget();
       } else if (typeOfOperation === 'minus') {
         // change displayableValue
-        setDisplayableValue(displayableValue + -Math.abs(parseInt(amount, 10)));
+        setDisplayableValue(
+          displayableValue + -Math.abs(handlers.prepareValue(amount)),
+        );
         // modify selectedCurrency
         changedCurrency.value =
-          changedCurrency.value - Math.abs(parseInt(amount, 10));
+          changedCurrency.value - Math.abs(handlers.prepareValue(amount));
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
-          value: -Math.abs(parseInt(amount, 10)),
+          value: -Math.abs(handlers.prepareValue(amount)),
           category: category,
           account: account,
           date: new Date(),
         });
-        // update budget
-        updateBudget();
+        // persist changes in the budget
+        persistBudget();
       } else {
         setError('Something went wrong...');
       }
@@ -243,8 +159,30 @@ const Budget = (props) => {
     }
   };
 
-  /* HANDLERS */
-  const updateBudget = useCallback(async () => {
+  // delete a currency and persist changes
+  const deleteCurrency = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      // update selectedCurrency in activeCurrencies
+      const filteredActiveCurrencies = activeCurrencies.filter(
+        (item) => item.id !== id,
+      );
+      // update budget
+      await dispatch(
+        budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+      ).then(() => loadBudget());
+      // if there are no active currencies clear selectedCurrency
+      activeCurrencies !== undefined
+        ? setSelectedCurrency(filteredActiveCurrencies[0])
+        : setSelectedCurrency(null);
+      // stop refresh
+      setIsRefreshing(false);
+    },
+    [activeCurrencies, dispatch, loadBudget, tripId],
+  );
+
+  // persist changed budget
+  const persistBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
@@ -255,17 +193,16 @@ const Budget = (props) => {
     setIsLoading(false);
   }, [activeCurrencies, dispatch, tripId]);
 
-  // fetch budget
+  // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
-    setIsRefreshing(true);
     try {
       await dispatch(budgetActions.fetchBudget(tripId));
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
-    setIsRefreshing(false);
   }, [dispatch, tripId]);
 
+  // fetch the budget on render
   useEffect(() => {
     setIsLoading(true);
     loadBudget().then(() => {
@@ -332,60 +269,55 @@ const Budget = (props) => {
           />
         </View>
         {/* CURRENCY OPERATIONS AND HISTORY */}
-        {!!selectedCurrency && (
+        {selectedCurrency !== undefined && (
           <View style={styles.overviewContainer}>
-            {/* AMOUNT OF CURRENCY */}
-            <View style={styles.valueCard}>
-              <View style={{alignItems: 'center'}}>
-                <Text style={{color: 'grey'}}>General balance</Text>
-                {/* GENERAL BALANCE */}
+            <View style={styles.center}>
+              {/* CASH */}
+              <Text style={{color: Colors.grey}}>Cash</Text>
+              <View style={styles.accounts}>
+                <Icon name={'cash'} style={[styles.icon, styles.text]} />
                 <Text
                   style={[
-                    styles.icon,
-                    displayableValue < 0 ? styles.negative : styles.positive,
+                    styles.label,
+                    handlers.calculateCash(selectedCurrency.history) < 0
+                      ? styles.negative
+                      : styles.positive,
                   ]}>
-                  {displayableValue < 0 ? '-' : '+'}
-                  {displayableValue}
+                  {handlers.calculateCash(selectedCurrency.history)}
                 </Text>
               </View>
-              <View style={{alignItems: 'center'}}>
-                <Text style={{color: 'grey'}}>Accounts balance</Text>
-                {/* ACCOUNTS BALANCE */}
-                <View style={[styles.accounts]}>
-                  {/* CARD */}
-                  <View style={[styles.accounts, {marginRight: '5%'}]}>
-                    <Icon
-                      name={'credit-card'}
-                      style={[styles.label, styles.text, {marginRight: '5%'}]}
-                    />
-                    <Text
-                      style={[
-                        styles.label,
-                        calculateCard() < 0 ? styles.negative : styles.positive,
-                      ]}>
-                      {calculateCard()}
-                    </Text>
-                  </View>
-                  {/* CASH */}
-                  <View style={styles.accounts}>
-                    <Icon
-                      name={'cash'}
-                      style={[styles.icon, styles.text, {marginRight: '5%'}]}
-                    />
-                    <Text
-                      style={[
-                        styles.label,
-                        calculateCash() < 0 ? styles.negative : styles.positive,
-                      ]}>
-                      {calculateCash()}
-                    </Text>
-                  </View>
-                </View>
+            </View>
+            {/* GENERAL BALANCE */}
+            <View style={styles.center}>
+              <Text style={{color: Colors.grey}}>General balance</Text>
+              <Text
+                style={[
+                  styles.icon,
+                  displayableValue < 0 ? styles.negative : styles.positive,
+                ]}>
+                {displayableValue < 0 ? '-' : '+'}
+                {displayableValue}
+              </Text>
+            </View>
+            {/* CARD */}
+            <View style={styles.center}>
+              <Text style={{color: Colors.grey}}>Card</Text>
+              <View style={[styles.accounts]}>
+                <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
+                <Text
+                  style={[
+                    styles.label,
+                    handlers.calculateCard(selectedCurrency.history) < 0
+                      ? styles.negative
+                      : styles.positive,
+                  ]}>
+                  {handlers.calculateCard(selectedCurrency.history)}
+                </Text>
               </View>
             </View>
           </View>
         )}
-        {!!selectedCurrency && (
+        {selectedCurrency !== undefined && (
           <ScrollView contentContainerStyle={styles.detailsContainer}>
             {/* LINECHART */}
             {selectedCurrency.history.length > 1 && (
@@ -454,7 +386,7 @@ const Budget = (props) => {
                       styles.categoriesContainer,
                       styles.extraSmallMarginTop,
                     ]}>
-                    {icons.map((item) => (
+                    {categories.icons.map((item) => (
                       <TouchableOpacity
                         style={[styles.iconButton]}
                         onPress={() => chooseCategory(item)}>
@@ -462,7 +394,7 @@ const Budget = (props) => {
                           name={item}
                           style={[
                             styles.icon,
-                            categories[category] === item
+                            categories.categoryIcons[category] === item
                               ? styles.activeCategory
                               : styles.nonactiveCategory,
                           ]}
@@ -472,7 +404,7 @@ const Budget = (props) => {
                   </View>
                   <View style={styles.center}>
                     <Text style={[styles.activeCategory]}>
-                      {categoryNames[category].toString()}
+                      {categories.categoryLabels[category].toString()}
                     </Text>
                   </View>
                 </View>
@@ -604,7 +536,7 @@ const Budget = (props) => {
                             marginRight: '5%',
                           }}>
                           <Icon
-                            name={categories[item.category]}
+                            name={categories.categoryIcons[item.category]}
                             style={[
                               styles.icon,
                               styles.text,
@@ -663,24 +595,18 @@ const Budget = (props) => {
   }
 };
 
+// budget screen options
 export const budgetOptions = (navData) => {
   return {
     headerRight: () => (
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 10,
-        }}
+        style={styles.navigationButton}
         onPress={() => {
           navData.navigation.navigate('Add currency', {
             tripId: navData.route.params.tripId,
-            currentBudget: navData.route.params.budget,
           });
         }}>
-        <Text style={[{fontSize: 18, color: Colors.primary}]}>
-          Add currency
-        </Text>
+        <Text style={styles.navigationText}>Add currency</Text>
       </TouchableOpacity>
     ),
   };
