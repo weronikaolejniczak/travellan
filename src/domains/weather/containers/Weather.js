@@ -31,7 +31,7 @@ const Weather = (props) => {
   const longitude = region.longitude;
   // date operations
   var startDate = new Date(selectedTrip.startDate);
-  //var endDate = new Date(selectedTrip.endDate);
+  var endDate = new Date(selectedTrip.endDate);
   var currentDate = new Date();
   // state
   const [dateGuard, setDateGuard] = useState(false); // guard for checking day difference between currentDate and startDate
@@ -68,12 +68,10 @@ const Weather = (props) => {
   const getDay = (date) =>
     new Date(date).toDateString().split(' ').splice(0, 1).join(' ');
 
-  /* IF DATEGUARD === TRUE, SET ANOTHER VALUE TO TRUE - BASED ON THIS VALUE CHECK
-  WHICH DAYS TO SHOW (FORECAST DAY === TRIP DAY) */
   // decide whether to display weather or not
   const checkDates = useCallback(() => {
-    if (startDate < currentDate) {
-      // always show weather if currentDate is bigger then startDate
+    if (startDate < currentDate && currentDate < endDate) {
+      // always show weather if currentDate is bigger than startDate
       setDateGuard(true);
     } else {
       // if startDate is bigger then currentDate then calculate day difference
@@ -88,7 +86,7 @@ const Weather = (props) => {
       }
     }
     return dateGuard;
-  }, [currentDate, dateGuard, startDate]);
+  }, [currentDate, dateGuard, endDate, startDate]);
 
   return (
     <View style={styles.contentContainer}>
@@ -336,6 +334,13 @@ const Weather = (props) => {
                               item.item === activeDay
                                 ? Colors.background
                                 : Colors.cards,
+                            borderBottomWidth: 2,
+                            borderBottomColor:
+                              item.item.date.getTime() > startDate.getTime() &&
+                              item.item.date.getTime() <=
+                                endDate.getTime() + 60 * 60 * 24 * 1000
+                                ? Colors.primary
+                                : Colors.transparent,
                           },
                         ]}>
                         <Text style={styles.subdate}>
