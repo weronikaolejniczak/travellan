@@ -16,7 +16,7 @@ import Graphics from 'weather/components/graphics/Graphics';
 import Ground from 'weather/components/ground/Ground';
 import {weatherStyle as styles} from './WeatherStyle';
 import Colors from 'constants/Colors';
-import {WEATHER} from 'weather/data/DummyWeather';
+//import {WEATHER} from 'weather/data/DummyWeather';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -37,16 +37,16 @@ const Weather = (props) => {
   const [dateGuard, setDateGuard] = useState(false); // guard for checking day difference between currentDate and startDate
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [forecast, setForecast] = useState(WEATHER);
+  const [forecast, setForecast] = useState();
   //const [timezone, setTimezone] = useState();
   const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      //let result = await fetchWeather(latitude, longitude);
-      //let weather = result[0];
-      let weather = WEATHER; // dummy WEATHER
+      let result = await fetchWeather(latitude, longitude);
+      let weather = result[0];
+      //let weather = WEATHER; // dummy WEATHER
       //let tmz = result[1];
       setForecast(weather);
       //setTimezone(tmz);
@@ -59,6 +59,14 @@ const Weather = (props) => {
       setIsLoaded(true);
     });
   }, [checkDates, latitude, longitude]);
+
+  // convert date to human readable string
+  const prepareDate = (date) =>
+    new Date(date).toDateString().split(' ').splice(1, 4).join(' ');
+
+  // get day of the week
+  const getDay = (date) =>
+    new Date(date).toDateString().split(' ').splice(0, 1).join(' ');
 
   /* IF DATEGUARD === TRUE, SET ANOTHER VALUE TO TRUE - BASED ON THIS VALUE CHECK
   WHICH DAYS TO SHOW (FORECAST DAY === TRIP DAY) */
@@ -331,20 +339,10 @@ const Weather = (props) => {
                           },
                         ]}>
                         <Text style={styles.subdate}>
-                          {item.item.date
-                            .toLocaleString()
-                            .split(' ')
-                            .slice(0, 2)
-                            .join(' ')
-                            .replace(',', '')}
+                          {prepareDate(item.item.date)}
                         </Text>
                         <Text style={styles.date}>
-                          {item.item.date
-                            .toDateString()
-                            .split(' ')
-                            .slice(0, 1)
-                            .join(' ')
-                            .replace(',', '')}
+                          {getDay(item.item.date)}
                         </Text>
                         <Image
                           style={{width: 45, height: 45}}
