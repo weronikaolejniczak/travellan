@@ -595,25 +595,18 @@ const Budget = (props) => {
   }
 };
 
+// budget screen options
 export const budgetOptions = (navData) => {
-  console.log(navData);
-
   return {
     headerRight: () => (
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 10,
-        }}
+        style={styles.navigationButton}
         onPress={() => {
           navData.navigation.navigate('Add currency', {
             tripId: navData.route.params.tripId,
           });
         }}>
-        <Text style={[{fontSize: 18, color: Colors.primary}]}>
-          Add currency
-        </Text>
+        <Text style={styles.navigationText}>Add currency</Text>
       </TouchableOpacity>
     ),
   };

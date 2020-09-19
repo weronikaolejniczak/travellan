@@ -153,4 +153,13 @@ export const budgetStyle = StyleSheet.create({
   error: {
     color: Colors.error,
   },
+  navigationButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  navigationText: {
+    fontSize: 18,
+    color: Colors.primary,
+  },
 });
