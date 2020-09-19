@@ -41,11 +41,15 @@ const AddCurrency = (props) => {
         ? CURRENCIES.filter((item) => item.name === text)[0].iso
         : undefined;
 
-    let validator =
-      CURRENCIES.filter((item) => item.name === text).length > 0 &&
-      !(
-        currentBudget.filter((item) => item.currency === currencyISO).length > 0
-      );
+    let exists = CURRENCIES.filter((item) => item.name === text).length > 0;
+
+    let isAlreadyDeclared =
+      currentBudget !== undefined
+        ? currentBudget.filter((item) => item.currency === currencyISO).length >
+          0
+        : false;
+
+    let validator = exists && !isAlreadyDeclared;
 
     validator ? setCurrencyIsValid(true) : setCurrencyIsValid(false);
     validator ? setError(null) : setError(incorrectCurrency);
