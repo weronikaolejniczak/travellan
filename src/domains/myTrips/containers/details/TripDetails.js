@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import {View, ScrollView, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-/** IMPORTS FROM WITHIN THE MODULE */
+/* imports from within the module */
 import NavigationButton from 'myTrips/components/navigationButton/NavigationButton';
 import {tripDetailsStyle as styles} from './TripDetailsStyle';
 
-/** Trip detail container displays details about each trip */
+/* trip details presentational component - displays details about each trip */
 const TripDetails = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
@@ -30,7 +22,7 @@ const TripDetails = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        {/* IMAGE */}
+        {/* Image background and overlay with photo author credits and date range of the trip */}
         <ImageBackground style={styles.image} source={{uri: imageUrl}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.00)', '#222222']}
@@ -60,12 +52,12 @@ const TripDetails = (props) => {
         </ImageBackground>
       </View>
 
+      {/* Trip details and tools */}
       <View>
         {/* Information about the time left to departure
           if there's no ticket added - counts the days
           if there's a ticket added - counts the days and hours
         */}
-
         {/* Functionalities */}
         <View style={styles.tiles}>
           {/* Transport */}
@@ -129,10 +121,10 @@ const TripDetails = (props) => {
 };
 
 /** we export screenOptions to use in our Stack.Navigator
- * @param {*} navData: lets us use "navigation" prop from within this function */
-export const tripDetailsOptions = (navData) => {
+ * @param {*} navigation: lets us use "navigation" prop from within this function */
+export const tripDetailsOptions = (navigation) => {
   return {
-    headerTitle: navData.route.params.tripDestination,
+    headerTitle: navigation.route.params.tripDestination,
   };
 };
 
