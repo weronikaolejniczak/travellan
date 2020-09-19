@@ -28,11 +28,6 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
-//test
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue((value) => ++value); // update the state to force render
-}
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
@@ -56,15 +51,11 @@ const Transport = (props) => {
   //console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
+  /** 
   const deleteTicketHandler = useCallback(async () => {
     await dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
-
-  const deleteupdateHandler = () => {
-    deleteTicketHandler();
-    useForceUpdate;
-
-  };
+*/
   const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
@@ -248,7 +239,7 @@ const Transport = (props) => {
                 },
                 {
                   text: 'OK',
-                  onPress: deleteupdateHandler,
+                  onPress: props.deleteTicketHandler,
                 },
               ],
               {cancelable: true},
