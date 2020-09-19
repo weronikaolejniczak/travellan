@@ -383,7 +383,7 @@ const Weather = (props) => {
             onPress={() => {
               setDateGuard(true);
             }}>
-            <Text style={[styles.action, styles.actionContainer]}>
+            <Text style={[styles.action, styles.callToAction]}>
               Check the forecast for next 7 days
             </Text>
           </TouchableOpacity>

@@ -28,6 +28,9 @@ export const weatherStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  callToAction: {
+    padding: 15,
+  },
   action: {
     color: Colors.primary,
   },
@@ -81,6 +84,7 @@ export const weatherStyle = StyleSheet.create({
   },
   itemlessText: {
     fontSize: 18,
+    textAlign: 'center',
   },
   paddingHorizontal: {
     paddingHorizontal: 15,
