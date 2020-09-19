@@ -39,13 +39,13 @@ const Toolbar = (props) => {
           routeActivityHandler={props.routeActivityHandler}
         /> */}
         {/* search button */}
-        <ToolbarButton
+        {/* <ToolbarButton
           type={'search'}
           styles={props.styles}
           navigation={props.navigation}
           mapSearchActive={props.mapSearchActive}
           searchActivityHandler={props.searchActivityHandler}
-        />
+        /> */}
       </View>
       {/* input field */}
       {props.mapSearchActive && (

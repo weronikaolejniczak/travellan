@@ -117,7 +117,6 @@ const Map = (props) => {
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
-        console.log(markerTitle);
         // add a marker with given coords to markers array
         setMarkers([...markers, {title, latitude, longitude}]);
         setMarkerTitle('');
@@ -146,10 +145,6 @@ const Map = (props) => {
         loadingIndicatorColor={Colors.primary}
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
-        /* onPoiClick={(event) => {
-          setShowPlaceInfo(true);
-          setActiveMarker(event.nativeEvent);
-        }} */
         onPress={(event) => mapOnPressHandler(event)}>
         {/* render markers */}
         {markers &&
@@ -161,25 +156,11 @@ const Map = (props) => {
               }}
               pinColor={Colors.primary}
               onPress={(event) => markerOnPressHandler(event)}>
-              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+              <MapView.Callout /* onPress={() => setShowPlaceInfo(true)} */>
                 <Text>{marker.title}</Text>
-                {console.log(markers)}
               </MapView.Callout>
             </MapView.Marker>
           ))}
-        {focusedPlace && (
-          <MapView.Marker
-            coordinate={{
-              latitude: focusedPlace.lat,
-              longitude: focusedPlace.lon,
-            }}
-            pinColor={Colors.primary}
-            onPress={(event) => markerOnPressHandler(event)}>
-            <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-              <Text>hello</Text>
-            </MapView.Callout>
-          </MapView.Marker>
-        )}
       </MapView>
 
       {/* render toolbar for map interaction */}
@@ -189,7 +170,7 @@ const Map = (props) => {
         addingMarkerActive={addingMarkerActive}
         addingActivityHandler={() => activityHandler('adding')}
         markerTitle={markerTitle}
-        setMarkerTitle={() => setMarkerTitle()}
+        setMarkerTitle={(text) => setMarkerTitle(text)}
         deletingMarkerActive={deletingMarkerActive}
         deletingActivityHandler={() => activityHandler('deleting')}
         routeActive={routeActive}
