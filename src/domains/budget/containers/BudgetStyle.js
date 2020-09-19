@@ -11,7 +11,6 @@ export const budgetStyle = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '17%',
   },
-  overviewContainer: {},
   detailsContainer: {
     paddingHorizontal: '5%',
     paddingBottom: '5%',
@@ -60,12 +59,12 @@ export const budgetStyle = StyleSheet.create({
   nonactiveCategory: {
     color: 'grey',
   },
-  valueCard: {
+  overviewContainer: {
     backgroundColor: Colors.cards,
-    alignItems: 'center',
-    padding: 15,
+    alignItems: 'baseline',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    paddingVertical: 10,
   },
   operationCard: {
     marginTop: '4%',
@@ -115,7 +114,7 @@ export const budgetStyle = StyleSheet.create({
     alignItems: 'center',
   },
   accounts: {
-    flexDirection: 'row',
+    //flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },

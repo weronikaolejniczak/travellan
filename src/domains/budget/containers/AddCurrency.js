@@ -8,12 +8,16 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 /** imports from within the module */
+import * as budgetActions from 'budget/state/Actions';
+import * as handlers from 'budget/handlers/PrepareData';
+import {CURRENCIES} from 'data/Currencies';
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
-import * as budgetActions from 'budget/state/Actions';
 import {AddCurrencyStyles as styles} from './AddCurrencyStyle';
 import Colors from 'constants/Colors';
-import {CURRENCIES} from 'data/Currencies';
+
+var incorrectCurrency =
+  'There is no such currency or the currency already exists in your budget.';
 
 const AddCurrency = (props) => {
   const dispatch = useDispatch();
@@ -24,12 +28,31 @@ const AddCurrency = (props) => {
   const [budgetIsValid, setBudgetIsValid] = useState(false);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
+  const [currencyIsValid, setCurrencyIsValid] = useState(false);
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   /* HANDLERS */
-  // handle validity of budget
+  // handles currency validity
+  const currencyChangeHandler = (text) => {
+    let currencyISO =
+      CURRENCIES.filter((item) => item.name === text)[0] !== undefined
+        ? CURRENCIES.filter((item) => item.name === text)[0].iso
+        : undefined;
+
+    let validator =
+      CURRENCIES.filter((item) => item.name === text).length > 0 &&
+      !(
+        currentBudget.filter((item) => item.currency === currencyISO).length > 0
+      );
+
+    validator ? setCurrencyIsValid(true) : setCurrencyIsValid(false);
+    validator ? setError(null) : setError(incorrectCurrency);
+    setCurrency(text);
+  };
+
+  // handle budget validity
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     !(!budgetRegex.test(text) || text.trim().length === 0)
@@ -38,32 +61,14 @@ const AddCurrency = (props) => {
     setBudget(text);
   };
 
-  // prepare budget value for saving
-  const prepareValue = (value) => {
-    // replace each whitespace in passed string with empty symbol
-    value = value.replace(/ /g, '');
-    // parse to float and round up to 2 decimal points
-    value = parseFloat(value).toFixed(2);
-    // as toFixed() converts the number to string, parse to float again
-    value = parseFloat(value);
-    // if parsing results in NaN, i.e. the first symbol of value is not a number, return 0 for safety
-    if (isNaN(value)) {
-      return 0;
-    } else {
-      return value;
-    }
-  };
-
   // handle submition
   const submitHandler = useCallback(async () => {
-    setIsLoading(true);
-    if (
-      budgetIsValid &&
-      CURRENCIES.filter((item) => item.name === currency).length > 0
-    ) {
+    setBudgetSubmitted(true);
+    if (budgetIsValid && currencyIsValid) {
+      // create a new currency card using budget model
       let newCurrency = new Budget(
         new Date().toString(),
-        prepareValue(budget),
+        handlers.prepareValue(budget),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
               (item) => item.name === currency,
@@ -73,7 +78,7 @@ const AddCurrency = (props) => {
           {
             id: 0,
             title: 'Initial budget',
-            value: prepareValue(budget),
+            value: handlers.prepareValue(budget),
             category: '',
             account: account.toString(),
             date: new Date(),
@@ -85,23 +90,26 @@ const AddCurrency = (props) => {
         ? [...currentBudget, newCurrency]
         : [newCurrency];
 
+      setIsLoading(true);
       await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
       props.navigation.navigate('Budget', {
         tripId: tripId,
       });
-    } else {
-      setBudgetSubmitted(true);
+      setIsLoading(false);
+    } else if (!error) {
+      setError('Something went wrong...');
     }
-    setIsLoading(false);
   }, [
     budgetIsValid,
-    currency,
+    currencyIsValid,
+    error,
     budget,
     account,
     currentBudget,
     dispatch,
     tripId,
     props.navigation,
+    currency,
   ]);
 
   return (
@@ -117,7 +125,7 @@ const AddCurrency = (props) => {
         budgetSubmitted={budgetSubmitted}
         budgetChangeHandler={budgetChangeHandler}
         currency={currency}
-        currencyChangeHandler={setCurrency}
+        currencyChangeHandler={currencyChangeHandler}
         account={account}
         setAccount={setAccount}
         error={error}
