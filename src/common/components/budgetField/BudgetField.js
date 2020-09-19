@@ -136,12 +136,12 @@ const BudgetField = (props) => {
                 </TouchableOpacity>
               )}
             />
-            {CURRENCIES.filter((item) => item.name === props.currency) > 1 && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>Enter correct currency name.</Text>
-              </View>
-            )}
           </View>
+          {!!props.error && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.error}>{props.error}</Text>
+            </View>
+          )}
         </View>
       )}
     </View>
