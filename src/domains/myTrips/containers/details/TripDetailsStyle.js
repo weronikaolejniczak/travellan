@@ -10,7 +10,7 @@ export const tripDetailsStyle = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: height * 0.44,
+    height: height * 0.45,
   },
   text: {
     color: Colors.text,
@@ -29,14 +29,14 @@ export const tripDetailsStyle = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 20,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '40%',
-    height: height * 0.19,
+    width: '45%',
+    height: height * 0.2,
     padding: 15,
-    margin: height * 0.01,
+    marginVertical: height * 0.01,
   },
   buttonText: {
     fontWeight: 'bold',
@@ -46,5 +46,10 @@ export const tripDetailsStyle = StyleSheet.create({
   justifyRow: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  tiles: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   },
 });

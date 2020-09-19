@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
+import NavigationButton from 'myTrips/components/navigationButton/NavigationButton';
 import {tripDetailsStyle as styles} from './TripDetailsStyle';
 
 /** Trip detail container displays details about each trip */
@@ -66,108 +67,61 @@ const TripDetails = (props) => {
         */}
 
         {/* Functionalities */}
-        <View>
-          <View style={styles.justifyRow}>
-            {/* Transport */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Transport', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Transport</Text>
-              <Icon
-                name={
-                  Platform.OS === 'android'
-                    ? 'md-paper-plane'
-                    : 'ios-paper-plane'
-                }
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-
-            {/* Accommodation */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Accommodation', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Housing</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-bed' : 'ios-bed'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.justifyRow}>
-            {/* Map */}
-            <TouchableOpacity
-              style={[styles.button]}
-              onPress={() => {
-                props.navigation.navigate('Map', {tripId: selectedTrip.id});
-              }}>
-              <Text style={styles.buttonText}>Map</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-map' : 'ios-map'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Weather', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Weather</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-cloudy' : 'ios-cloudy'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.justifyRow}>
-            {/* Budget */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Budget', {
-                  tripId: selectedTrip.id,
-                  budget: selectedTrip.budget,
-                });
-              }}>
-              <Text style={styles.buttonText}>Budget</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-wallet' : 'ios-wallet'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-
-            {/* Notes */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                props.navigation.navigate('Notes', {
-                  tripId: selectedTrip.id,
-                });
-              }}>
-              <Text style={styles.buttonText}>Notes</Text>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-journal' : 'ios-journal'}
-                size={42}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.tiles}>
+          {/* Transport */}
+          <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Transport'}
+            id={selectedTrip.id}
+            androidIcon={'md-paper-plane'}
+            iOSIcon={'ios-paper-plane'}
+          />
+          {/* Accommodation */}
+          {/* <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Accommodation'}
+            id={selectedTrip.id}
+            androidIcon={'md-bed'}
+            iOSIcon={'ios-bed'}
+          /> */}
+          {/* Map */}
+          <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Map'}
+            id={selectedTrip.id}
+            androidIcon={'md-map'}
+            iOSIcon={'ios-map'}
+          />
+          {/* Weather */}
+          <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Weather'}
+            id={selectedTrip.id}
+            androidIcon={'md-cloudy'}
+            iOSIcon={'ios-cloudy'}
+          />
+          {/* Budget */}
+          <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Budget'}
+            id={selectedTrip.id}
+            androidIcon={'md-wallet'}
+            iOSIcon={'ios-wallet'}
+          />
+          {/* Notes */}
+          <NavigationButton
+            styles={styles}
+            navigation={props.navigation}
+            screenToNavigateTo={'Notes'}
+            id={selectedTrip.id}
+            androidIcon={'md-journal'}
+            iOSIcon={'ios-journal'}
+          />
         </View>
       </View>
     </ScrollView>
