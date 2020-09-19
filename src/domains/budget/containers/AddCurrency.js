@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 /** imports from within the module */
 import * as budgetActions from 'budget/state/Actions';
 import * as handlers from 'budget/handlers/PrepareData';
@@ -22,7 +22,10 @@ var incorrectCurrency =
 const AddCurrency = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  const currentBudget = props.route.params.currentBudget;
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+  const currentBudget = selectedTrip.budget;
 
   const [budget, setBudget] = useState('');
   const [budgetIsValid, setBudgetIsValid] = useState(false);
@@ -32,6 +35,8 @@ const AddCurrency = (props) => {
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+
+  console.log(currentBudget);
 
   /* HANDLERS */
   // handles currency validity

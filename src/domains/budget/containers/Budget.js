@@ -30,13 +30,18 @@ const Budget = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const activeCurrencies = selectedTrip.budget;
+  //console.log(activeCurrencies);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    activeCurrencies ? activeCurrencies[0] : undefined,
+    activeCurrencies !== undefined ? activeCurrencies[0] : undefined,
   );
+  //console.log(selectedCurrency);
+
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
+  //console.log(displayableValue);
+
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [amountIsValid, setAmountIsValid] = useState(false);
@@ -119,8 +124,8 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
-        // update budget
-        updateBudget();
+        // persist changes in the budget
+        persistBudget();
       } else if (typeOfOperation === 'minus') {
         // change displayableValue
         setDisplayableValue(
@@ -137,8 +142,8 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
-        // update budget
-        updateBudget();
+        // persist changes in the budget
+        persistBudget();
       } else {
         setError('Something went wrong...');
       }
@@ -162,21 +167,22 @@ const Budget = (props) => {
       const filteredActiveCurrencies = activeCurrencies.filter(
         (item) => item.id !== id,
       );
+      // update budget
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
-      );
-      setSelectedCurrency(
-        activeCurrencies !== undefined
-          ? filteredActiveCurrencies[0]
-          : undefined,
-      );
+      ).then(() => loadBudget());
+      // if there are no active currencies clear selectedCurrency
+      activeCurrencies !== undefined
+        ? setSelectedCurrency(filteredActiveCurrencies[0])
+        : setSelectedCurrency(null);
+      // stop refresh
       setIsRefreshing(false);
     },
-    [activeCurrencies, dispatch, tripId],
+    [activeCurrencies, dispatch, loadBudget, tripId],
   );
 
   // persist changed budget
-  const updateBudget = useCallback(async () => {
+  const persistBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
@@ -189,13 +195,11 @@ const Budget = (props) => {
 
   // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
-    setIsRefreshing(true);
     try {
       await dispatch(budgetActions.fetchBudget(tripId));
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
-    setIsRefreshing(false);
   }, [dispatch, tripId]);
 
   // fetch the budget on render
@@ -573,7 +577,7 @@ const Budget = (props) => {
         )}
       </View>
     );
-  } else if (activeCurrencies === undefined || selectedCurrency === undefined) {
+  } else {
     return (
       <View style={styles.contentContainer}>
         <View style={styles.budgetlessContainer}>
@@ -592,6 +596,8 @@ const Budget = (props) => {
 };
 
 export const budgetOptions = (navData) => {
+  console.log(navData);
+
   return {
     headerRight: () => (
       <TouchableOpacity
@@ -603,7 +609,6 @@ export const budgetOptions = (navData) => {
         onPress={() => {
           navData.navigation.navigate('Add currency', {
             tripId: navData.route.params.tripId,
-            currentBudget: navData.route.params.budget,
           });
         }}>
         <Text style={[{fontSize: 18, color: Colors.primary}]}>
