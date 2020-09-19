@@ -7,31 +7,26 @@ export const weatherStyle = StyleSheet.create({
     backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
-    //paddingTop: '12%',
   },
   weatherContainer: {
     backgroundColor: Colors.background,
   },
   graphicsContainer: {
-    flex: 0.74,
-    justifyContent: 'center',
+    flex: 0.7,
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   graphics: {
-    flex: 0.65,
+    flex: 1,
   },
   dataContainer: {
-    flex: 0.26,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    paddingTop: 15,
-    paddingHorizontal: 50,
-    backgroundColor: '#111111',
+    flex: 0.3,
+    paddingHorizontal: 15,
+    backgroundColor: Colors.background,
     width: '100%',
     flexDirection: 'row',
-  },
-  actionContainer: {
-    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   action: {
     color: Colors.primary,
@@ -44,7 +39,7 @@ export const weatherStyle = StyleSheet.create({
   },
   subdate: {
     fontSize: 11,
-    color: '#ccc',
+    color: Colors.grey,
   },
   date: {
     color: Colors.text,
@@ -69,7 +64,7 @@ export const weatherStyle = StyleSheet.create({
     paddingVertical: 7,
     paddingHorizontal: 13,
     width: '100%',
-    backgroundColor: '#111111',
+    backgroundColor: Colors.cards,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -100,18 +95,11 @@ export const weatherStyle = StyleSheet.create({
   marginRight: {
     marginRight: 5,
   },
-  marginBottom: {
-    marginBottom: 5,
-  },
   marginTop: {
-    marginTop: 10,
+    marginTop: 5,
   },
   halfFlex: {
     flex: 0.5,
-  },
-  bubbles: {
-    flex: 0.35,
-    marginBottom: 15,
   },
   bubble: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -143,7 +131,7 @@ export const weatherStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   ground: {
-    position: 'absolute',
+    alignItems: 'flex-end',
   },
   separator: {
     width: 1,

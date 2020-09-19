@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -9,25 +9,18 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
 /** imports from within the module */
 import {fetchWeather} from 'weather/services/Weather';
+import Background from 'weather/components/background/Background';
+import Graphics from 'weather/components/graphics/Graphics';
+import Ground from 'weather/components/ground/Ground';
 import {weatherStyle as styles} from './WeatherStyle';
-import {WEATHER} from 'weather/data/DummyWeather';
-import Sun from 'assets/images/sun.svg';
-import SunWithClouds from 'assets/images/sun_with_clouds.svg';
-import Rain from 'assets/images/rain.svg';
-import Clouds from 'assets/images/cloudy.svg';
-import Thunderstorm from 'assets/images/storm.svg';
-import Snow from 'assets/images/snow.svg';
-import Grass from 'assets/images/grass.svg';
-import SnowGround from 'assets/images/snow_ground.svg';
 import Colors from 'constants/Colors';
+import {WEATHER} from 'weather/data/DummyWeather';
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-/** weather representational component */
+/* weather representational component */
 const Weather = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
@@ -36,24 +29,24 @@ const Weather = (props) => {
   const region = selectedTrip.region;
   const latitude = region.latitude;
   const longitude = region.longitude;
-
   // date operations
   var startDate = new Date(selectedTrip.startDate);
-  var endDate = new Date(selectedTrip.endDate);
+  //var endDate = new Date(selectedTrip.endDate);
   var currentDate = new Date();
-
+  // state
   const [dateGuard, setDateGuard] = useState(false); // guard for checking day difference between currentDate and startDate
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [forecast, setForecast] = useState(WEATHER);
-  const [timezone, setTimezone] = useState();
+  //const [timezone, setTimezone] = useState();
   const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      let result = await fetchWeather(latitude, longitude);
-      let weather = result[0];
+      //let result = await fetchWeather(latitude, longitude);
+      //let weather = result[0];
+      let weather = WEATHER; // dummy WEATHER
       //let tmz = result[1];
       setForecast(weather);
       //setTimezone(tmz);
@@ -65,12 +58,12 @@ const Weather = (props) => {
       setIsLoading(false);
       setIsLoaded(true);
     });
-  }, []);
+  }, [checkDates, latitude, longitude]);
 
   /* IF DATEGUARD === TRUE, SET ANOTHER VALUE TO TRUE - BASED ON THIS VALUE CHECK
   WHICH DAYS TO SHOW (FORECAST DAY === TRIP DAY) */
   // decide whether to display weather or not
-  const checkDates = () => {
+  const checkDates = useCallback(() => {
     if (startDate < currentDate) {
       // always show weather if currentDate is bigger then startDate
       setDateGuard(true);
@@ -86,70 +79,8 @@ const Weather = (props) => {
         setDateGuard(false);
       }
     }
-    //console.log('DIFFERENCE GUARD VALUE: ' + dateGuard);
     return dateGuard;
-  };
-
-  /* refactor */
-  const Graphics = () => {
-    if (activeDay.main === 'Clear') {
-      return <Sun width={200} />;
-    } else if (activeDay.main === 'Rain' && activeDay.icon !== '10d') {
-      return <Rain width={225} />;
-    } else if (activeDay.icon === '10d') {
-      return <SunWithClouds width={200} />;
-    } else if (activeDay.main === 'Clouds') {
-      return <Clouds width={250} />;
-    } else if (activeDay.main === 'Thunderstorm') {
-      return <Thunderstorm width={250} />;
-    } else if (activeDay.main === 'Snow') {
-      return <Snow width={225} />;
-    } else {
-      return <View />;
-    }
-  };
-
-  /* refactor */
-  const Background = ({children}) => {
-    if (
-      (activeDay.main === 'Rain' && activeDay.icon !== '10d') ||
-      activeDay.main === 'Clouds' ||
-      activeDay.main === 'Snow'
-    ) {
-      return (
-        <LinearGradient
-          colors={['#A7C2CB', '#AAC0C7']}
-          style={styles.linearGradient}>
-          {children}
-        </LinearGradient>
-      );
-    } else if (activeDay.main === 'Thunderstorm') {
-      return (
-        <LinearGradient
-          colors={['#8C989A', '#6A7B8A']}
-          style={styles.linearGradient}>
-          {children}
-        </LinearGradient>
-      );
-    } else {
-      return (
-        <LinearGradient
-          colors={['#80E0FF', '#2BABE1']}
-          style={styles.linearGradient}>
-          {children}
-        </LinearGradient>
-      );
-    }
-  };
-
-  const Ground = () => {
-    if (activeDay.main === 'Snow') {
-      return <SnowGround width={330} height={21} />;
-    } else {
-      return <Grass width={600} height={21} />;
-    }
-  };
-
+  }, [currentDate, dateGuard, startDate]);
 
   return (
     <View style={styles.contentContainer}>
@@ -163,10 +94,10 @@ const Weather = (props) => {
         <View style={styles.weatherContainer}>
           {forecast && (
             <View>
-              <Background>
+              <Background styles={styles} activeDay={activeDay}>
                 <View style={styles.graphicsContainer}>
                   <View style={[styles.alignAndJustifyCenter, styles.graphics]}>
-                    <Graphics />
+                    <Graphics styles={styles} activeDay={activeDay} />
                   </View>
                   <View style={[styles.justifyCenter, styles.bubbles]}>
                     {/* refactor into component */}
@@ -210,8 +141,9 @@ const Weather = (props) => {
                       </View>
                     </View>
                   </View>
-                  <View style={[styles.ground, {bottom: -windowHeight * 0.01}]}>
-                    <Ground />
+                  <View
+                    style={[styles.ground, {bottom: -windowHeight * 0.015}]}>
+                    <Ground styles={styles} activeDay={activeDay} />
                   </View>
                 </View>
                 <View style={styles.dataContainer}>
