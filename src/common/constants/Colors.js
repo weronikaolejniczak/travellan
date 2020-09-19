@@ -7,6 +7,7 @@ export default {
   blackTransparent: 'rgba(0, 0, 0, 0.5)',
   white: '#FFFFFF',
   green: '#06C258',
+  grey: 'grey',
   /** SPECIFIC */
   shadow: '#000000',
   cards: '#111111',
