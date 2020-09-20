@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /* imports from within the module */
 import Colors from 'constants/Colors';
 
-/* refactor icon buttons into smaller component */
+/* ONE TOOLBAR BUTTON, PASS AS PROPS - refactor icon buttons into smaller component */
 const ToolbarButton = (props) => {
   switch (props.type) {
     case 'goBack':

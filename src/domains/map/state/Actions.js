@@ -3,10 +3,11 @@ import Map from 'map/models/Map';
 import PointOfInterest from 'map/models/PointOfInterest';
 /* actions */
 export const FETCH_MAP = 'FETCH_MAP';
+export const UPDATE_REGION = 'UPDATE_REGION';
 export const CREATE_POI = 'CREATE_POI';
 export const DELETE_POI = 'DELETE_POI';
 
-/** fetch map - places and routes */
+/* fetch map - places and routes */
 export const fetchMap = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -19,6 +20,24 @@ export const fetchMap = (tripId) => {
     // take map stored in the trip and assign it to local variable for later logic
     let map = resData.map;
     dispatch({type: FETCH_MAP, tripId, map});
+  };
+};
+
+/* update region in map */
+export const updateRegion = (tripId, newRegion) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(
+      `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
+    // await json body of response
+    const resData = await response.json();
+    // take region stored in the trip and assign it to local variable for later logic
+    let region = resData.region;
+    // update region
+    region = newRegion;
+    dispatch({type: UPDATE_REGION, tripId, region});
   };
 };
 

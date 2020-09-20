@@ -22,6 +22,7 @@ const Map = (props) => {
 
   const extractRegion = () => selectedTrip.region;
 
+  const [currentRegion, setCurrentRegion] = useState(selectedTrip.region);
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
   const [markers, setMarkers] = useState(
     selectedTrip.map ? selectedTrip.map.pointsOfInterest : [],
@@ -40,9 +41,8 @@ const Map = (props) => {
   const [error, setError] = useState(null);
 
   const AUTOCOMPLETE = Autocomplete;
-  console.log(focusedPlace);
 
-  /** handlers */
+  /* handlers */
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
@@ -127,6 +127,9 @@ const Map = (props) => {
       await dispatch(mapActions.deletePoI(tripId, marker.id)).then(async () => {
         // filter markers so that they exclude the marker with the coordinates
         setMarkers(markers.filter((item) => item.id !== marker.id));
+        // change saved region to current one
+        await dispatch(mapActions.updateRegion(tripId, currentRegion));
+        // fetch changed map object
         await dispatch(mapActions.fetchMap(tripId));
       });
       // stop loading
@@ -149,7 +152,9 @@ const Map = (props) => {
         // dispatch an action to create a new point of interest
         await dispatch(
           mapActions.createPoI(tripId, latitude, longitude, title),
-        ).then(() => {
+        ).then(async () => {
+          // change saved region to current one
+          await dispatch(mapActions.updateRegion(tripId, currentRegion));
           // refresh markers
           setMarkers([...selectedTrip.map.pointsOfInterest]);
           // clear marker title
@@ -178,6 +183,7 @@ const Map = (props) => {
           style={styles.flex}
           customMapStyle={darkModeMap}
           initialRegion={extractRegion()}
+          onRegionChangeComplete={(region) => setCurrentRegion(region)}
           showsUserLocation={true}
           showsMyLocationButton={true}
           loadingEnabled={true}

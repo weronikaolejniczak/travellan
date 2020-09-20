@@ -22,7 +22,12 @@ import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from 'notes/state/Actions';
 // budget
 import {FETCH_BUDGET, UPDATE_BUDGET} from 'budget/state/Actions';
 // map
-import {FETCH_MAP, CREATE_POI} from 'map/state/Actions';
+import {
+  FETCH_MAP,
+  UPDATE_REGION,
+  CREATE_POI,
+  DELETE_POI,
+} from 'map/state/Actions';
 
 /* common reducer */
 export const initialState = {
@@ -109,8 +114,15 @@ export default (state = initialState, action) => {
         availableTrips: updatedAvailableTrips,
       };
     /* map */
+    case UPDATE_REGION:
+      updatedAvailableTrips[tripIndex].region = action.region;
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
     case FETCH_MAP:
     case CREATE_POI:
+    case DELETE_POI:
       updatedAvailableTrips[tripIndex].map = action.map;
       return {
         ...state,
