@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -29,8 +29,11 @@ const AddNote = (props) => {
   const [description, setDescription] = useState('');
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState('');
+  const [categoryIsValid, setCategoryIsValid] = useState(false);
+  const [categorySubmitted, setCategorySubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   /** HANDLERS */
   // Validates title.
@@ -45,12 +48,21 @@ const AddNote = (props) => {
       : setDescriptionIsValid(true);
     setDescription(text);
   };
+
+  //Validates category
+  const categoryChangeHandler = (category) => {
+    category.trim().length === 0
+      ? setCategoryIsValid(false)
+      : setCategoryIsValid(true);
+    setCategory(category);
+  };
   // Submits.
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
     if (!titleIsValid || !descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
+      setCategorySubmitted(true)
     } else {
       await dispatch(noteActions.createNote(tripId, category, title, description));
       props.navigation.navigate('Notes', {
@@ -61,6 +73,7 @@ const AddNote = (props) => {
   }, [
     titleIsValid,
     descriptionIsValid,
+    categoryIsValid,
     dispatch,
     tripId,
     category,
@@ -87,16 +100,23 @@ const AddNote = (props) => {
 
   const placeholder = {
     label: 'Select a category...',
-    value: null,
+    value: 'Categoryless',
     color: '#9EA0A4',
   };
+
+  useEffect(() => {
+    setCategory(placeholder.value)
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
         <View style={styles.smallPaddingTop}>
+        <Text style={styles.label}>Set Category</Text>
+        <View style={styles.smallPaddingTop}></View>
         <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
       {/* CATEGORY PICKER */}
       <RNPickerSelect 
+        //onChangeText={categoryChangeHandler}
         items={categoryList}
         placeholder={placeholder}
         onValueChange={(value) => setCategory(value)}
@@ -123,12 +143,19 @@ const AddNote = (props) => {
                 borderLeftColor: 'transparent',
                 width: 0,
                 height: 0,
-                top:10,
+                top: 15,
+                
               }}
             />
           );
         }}
       />
+      {/*
+      {!categoryIsValid && categorySubmitted && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>Pick category!</Text>
+          </View>
+        )} */}
       </View>
     </View>
     
