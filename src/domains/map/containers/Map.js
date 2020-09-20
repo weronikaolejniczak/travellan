@@ -100,27 +100,24 @@ const Map = (props) => {
   const markerOnPressHandler = async (coords) => {
     // save received coordinates to local variables
     const {latitude, longitude} = coords.nativeEvent.coordinate;
+    // find the pressed marker's info
+    let marker = markers.filter(
+      (item) => item.lat === latitude && item.lon === longitude,
+    )[0];
     // do something with saved coordinates
     if (deletingMarkerActive) {
-      let markerToDelete = markers.filter(
-        (marker) => marker.lat === latitude && marker.lon === longitude,
-      )[0];
       // start loading
       setIsLoading(true);
       // dispatch an action to create a new point of interest
-      await dispatch(mapActions.deletePoI(tripId, markerToDelete.id)).then(
-        async () => {
-          // filter markers so that they exclude the marker with the coordinates
-          setMarkers(
-            markers.filter((marker) => marker.id !== markerToDelete.id),
-          );
-          await dispatch(mapActions.fetchMap(tripId));
-        },
-      );
+      await dispatch(mapActions.deletePoI(tripId, marker.id)).then(async () => {
+        // filter markers so that they exclude the marker with the coordinates
+        setMarkers(markers.filter((item) => item.id !== marker.id));
+        await dispatch(mapActions.fetchMap(tripId));
+      });
       // stop loading
       setIsLoading(false);
     } else {
-      setActiveMarker(coords.nativeEvent);
+      setActiveMarker(marker);
     }
   };
 
@@ -183,7 +180,7 @@ const Map = (props) => {
                 }}
                 pinColor={Colors.primary}
                 onPress={(event) => markerOnPressHandler(event)}>
-                <MapView.Callout /* onPress={() => setShowPlaceInfo(true)} */>
+                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
                   <Text>{marker.title}</Text>
                 </MapView.Callout>
               </MapView.Marker>
