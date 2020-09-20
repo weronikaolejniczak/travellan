@@ -21,17 +21,50 @@ const Notes = (props) => {
   /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   /** HANDLERS */
+  const deleteAction = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      await dispatch(noteActions.deleteNote(tripId, id));
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+  const deleteNoteHandler = useCallback(
+    async (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete note',
+        'Are you sure?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => deleteAction(noteId),
+          },
+        ],
+        {cancelable: true},
+      );
+      setIsRefreshing(false);
+    },
+    [deleteAction],
+  );
+
   const loadNotes = useCallback(async () => {
+    setError(null);
     setIsRefreshing(true);
     try {
       await dispatch(noteActions.fetchNotes(tripId));
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
     setIsRefreshing(false);
-  }, [dispatch, tripId]);
+  }, [dispatch, setError, tripId]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -53,8 +86,8 @@ const Notes = (props) => {
     <View style={styles.container}>
       {notes ? (
         <FlatList
-          onRefresh={loadNotes}
-          refreshing={isRefreshing}
+          //onRefresh={loadNotes}
+          //refreshing={isRefreshing}
           data={notes}
           keyExtractor={(item) => item.id.toString()}
           renderItem={(itemData) => (
@@ -64,6 +97,8 @@ const Notes = (props) => {
               id={itemData.item.id}
               title={itemData.item.title}
               description={itemData.item.description}
+              deleteNoteHandler={() =>
+                deleteNoteHandler(itemData.item.id)}
             />
           )}
         />
