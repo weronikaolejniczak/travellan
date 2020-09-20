@@ -18,6 +18,7 @@ export const addNoteStyle = StyleSheet.create({
     fontSize: 18,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
+    
   },
   buttonContainer: {
     marginTop: '10%',

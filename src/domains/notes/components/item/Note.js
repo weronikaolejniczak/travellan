@@ -51,7 +51,7 @@ const Note = (props) => {
       {/* ACTIONS BAR */}
       <View style={styles.actions}>
         <Text numberOfLines={1} style={styles.subtitle}>
-          {props.title}
+          {props.category}
         </Text>
 
          {/* EDIT BUTTON 
@@ -74,7 +74,7 @@ const Note = (props) => {
       {/* NOTE CONTENT */}
       <ScrollView style={styles.bodyMargin}>
       <Text style={styles.create}>{extractedDate}</Text>
-      <Text style={styles.category}>{props.category}</Text>
+      <Text style={styles.category}>{props.title}</Text>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

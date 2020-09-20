@@ -177,7 +177,7 @@ const AddNote = (props) => {
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Content</Text>
         <TextInput
-          
+          numberOfLines={4}
           style={styles.input}
           placeholder="Content"
           placeholderTextColor={'grey'}
