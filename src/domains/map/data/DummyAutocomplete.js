@@ -1,4 +1,4 @@
-export const AutocompleteData = [
+export const Autocomplete = [
   {
     place_id: '322748944935',
     osm_id: '4215254918',

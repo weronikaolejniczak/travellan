@@ -8,15 +8,14 @@ const SearchResult = (props) => {
     <TouchableOpacity
       onPress={() => {
         props.setShowAutocomplete(false);
-        //console.log(props.result);
+        props.setFocusedPlace(props.result.item);
       }}
-      style={{width: '100%', height: 50}}
       activeOpacity={0.4}>
       <View style={styles.container}>
         <Text style={props.styles.text} numberOfLines={1}>
           {props.result.class === 'road'
-            ? props.result.display_address
-            : props.result.display_name}
+            ? props.result.item.display_address
+            : props.result.item.display_name}
         </Text>
       </View>
     </TouchableOpacity>
