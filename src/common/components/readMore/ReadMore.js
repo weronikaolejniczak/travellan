@@ -8,7 +8,7 @@ import Colors from '../../constants/Colors';
  * <ReadMore longText={props.description} />
  */
 const ReadMore = (props) => {
-  const NUM_OF_LINES = 5;
+  const NUM_OF_LINES = 2;
   const [readMore, setReadMore] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
