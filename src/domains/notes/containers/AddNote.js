@@ -175,11 +175,11 @@ const AddNote = (props) => {
       </View>
       {/* DESCRIPTION INPUT */}
       <View style={styles.smallPaddingTop}>
-        <Text style={styles.label}>Description</Text>
+        <Text style={styles.label}>Content</Text>
         <TextInput
           
           style={styles.input}
-          placeholder="Description"
+          placeholder="Content"
           placeholderTextColor={'grey'}
           value={description}
           onChangeText={descriptionChangeHandler}
