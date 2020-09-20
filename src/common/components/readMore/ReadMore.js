@@ -28,7 +28,7 @@ const ReadMore = (props) => {
     <View>
       {readMore === false ? (
         <Text
-          numberOfLines={showMore ? 4 : undefined}
+          numberOfLines={showMore ? 2 : undefined}
           ellipsizeMode="tail"
           onTextLayout={onTextLayout}
           style={styles.text}>

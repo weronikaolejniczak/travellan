@@ -12,6 +12,7 @@ export const noteStyle = StyleSheet.create({
     paddingHorizontal: cardWidth * 0.1,
     paddingVertical: cardHeight * 0.05,
     marginVertical: cardHeight * 0.05,
+    marginHorizontal: cardHeight * 0.05,
   },
   actions: {
     flexDirection: 'row',
@@ -78,7 +79,6 @@ export const noteStyle = StyleSheet.create({
   },
   alignText: {
     alignItems: 'flex-start',
-    top:6,
   },
   card: {
     shadowColor: "#000",
