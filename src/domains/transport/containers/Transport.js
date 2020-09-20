@@ -46,8 +46,9 @@ const Transport = (props) => {
   const deleteReservationHandler = useCallback(
     async (ticketId) => {
       setIsRefreshing(true);
+      console.log('Hey there!');
       Alert.alert(
-        'Delete accommodation',
+        'Delete this ticket?',
         'Are you sure?',
         [
           {

@@ -32,7 +32,6 @@ import Pdf from 'react-native-pdf';
 const Transport = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation(); // navigation hook
-  const forceUpdate = useForceUpdate();
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -45,6 +44,7 @@ const Transport = (props) => {
   var pdfUri = props.pdfUri;
 
   var RNFS = require('react-native-fs');
+  console.log(props);
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
@@ -227,24 +227,7 @@ const Transport = (props) => {
       </Modal>
       <View style={styles.actions}>
         {/* DELETE TICKET */}
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert(
-              'Delete a ticket',
-              'Are you sure?',
-              [
-                {
-                  text: 'Cancel',
-                  style: 'cancel',
-                },
-                {
-                  text: 'OK',
-                  onPress: props.deleteTicketHandler,
-                },
-              ],
-              {cancelable: true},
-            );
-          }}>
+        <TouchableOpacity onPress={props.deleteTicketHandler}>
           <Icon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}

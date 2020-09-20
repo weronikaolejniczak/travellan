@@ -54,7 +54,7 @@ export const deleteTrip = (tripId) => {
         method: 'DELETE',
       },
     );
-    dispatch({type: DELETE_TRIP, pid: tripId});
+    dispatch({type: DELETE_TRIP, tripId});
   };
 };
 
