@@ -8,7 +8,7 @@ import Colors from '../../constants/Colors';
  * <ReadMore longText={props.description} />
  */
 const ReadMore = (props) => {
-  const NUM_OF_LINES = 2;
+  const NUM_OF_LINES = 3;
   const [readMore, setReadMore] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
@@ -28,7 +28,7 @@ const ReadMore = (props) => {
     <View>
       {readMore === false ? (
         <Text
-          numberOfLines={showMore ? 2 : undefined}
+          numberOfLines={showMore ? NUM_OF_LINES - 1 : undefined}
           ellipsizeMode="tail"
           onTextLayout={onTextLayout}
           style={styles.text}>
