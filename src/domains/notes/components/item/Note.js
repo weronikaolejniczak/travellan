@@ -15,6 +15,7 @@ import ReadMore from 'components/readMore/ReadMore';
 import * as noteActions from 'notes/state/Actions';
 import {noteStyle as styles} from './NoteStyle';
 
+
 /** Note item component */
 const Note = (props) => {
   const dispatch = useDispatch();

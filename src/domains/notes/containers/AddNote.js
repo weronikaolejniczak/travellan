@@ -6,12 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Picker,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as noteActions from 'notes/state/Actions';
 import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
+import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+import Icon from 'react-native-ionicons'
+import { Chevron } from 'react-native-shapes';
 
 const AddNote = (props) => {
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const AddNote = (props) => {
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [category, setCategory] = useState('To Do');
+  const [category, setCategory] = useState('');
 
   /** HANDLERS */
   // Validates title.
@@ -68,8 +70,85 @@ const AddNote = (props) => {
     selectedTrip.id,
   ]);
 
+  const categoryList = [
+    {
+      label: 'To Do',
+      value: 'To Do',
+    },
+    {
+      label: 'To Pack',
+      value: 'To Pack',
+    },
+    {
+      label: 'Diaries',
+      value: 'Diaries',
+    },
+  ];
+
+  const placeholder = {
+    label: 'Select a category...',
+    value: null,
+    color: '#9EA0A4',
+  };
+
   return (
     <ScrollView style={styles.container}>
+        <View style={styles.smallPaddingTop}>
+        <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
+      {/* CATEGORY PICKER */}
+      <RNPickerSelect 
+        items={categoryList}
+        placeholder={placeholder}
+        onValueChange={(value) => setCategory(value)}
+        useNativeAndroidPickerStyle={false}
+        style={{
+          inputAndroid: {
+            backgroundColor: 'transparent',
+          },
+          iconContainer: {
+            top: 5,
+            right: 15,
+          },
+        }}
+        Icon={() => {
+          return (
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                borderTopWidth: 10,
+                borderTopColor: 'gray',
+                borderRightWidth: 10,
+                borderRightColor: 'transparent',
+                borderLeftWidth: 10,
+                borderLeftColor: 'transparent',
+                width: 0,
+                height: 0,
+                top:10,
+              }}
+            />
+          );
+        }}
+      />
+      </View>
+    </View>
+    
+      {/*<View style={styles.smallPaddingTop}>
+      <Text style={styles.label}>Set Category</Text>
+      <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
+      <Picker 
+        mode='dialog'
+        itemStyle={{ backgroundColor: "grey", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
+        selectedValue={category}
+        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+      >
+        
+        <Picker.Item label="To Do" value="To Do" />
+        <Picker.Item label="To Pack" value="To Pack" />
+        <Picker.Item label="Diares" value="Diares" />
+      </Picker>
+      </View>
+      </View>
+  */}
       {/* TITLE INPUT */}
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Title</Text>
@@ -102,19 +181,6 @@ const AddNote = (props) => {
             <Text style={styles.error}>Enter a description!</Text>
           </View>
         )}
-      </View>
-      {/* DESCRIPTION INPUT */}
-      <View style={styles.smallPaddingTop}>
-      <Text style={styles.label}>Set Category</Text>
-      <Picker
-        selectedValue={category}
-        style={{ height: 50, width: 150, color: '#FFFFFF' }}
-        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-      >
-        <Picker.Item label="To Do" value="To Do" />
-        <Picker.Item label="To Pack" value="To Pack" />
-        <Picker.Item label="Diares" value="Diares" />
-      </Picker>
       </View>
       {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
