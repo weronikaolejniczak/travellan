@@ -60,4 +60,11 @@ export const mapStyle = StyleSheet.create({
   text: {
     color: Colors.text,
   },
+  loading: {
+    //position: 'absolute',
+    flex: 1,
+    backgroundColor: Colors.background,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 });
