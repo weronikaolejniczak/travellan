@@ -35,10 +35,11 @@ export const noteStyle = StyleSheet.create({
   },
   create:{
     fontSize:11,
-    alignSelf:'flex-end',
+    alignSelf:'flex-start',
     color: '#fff',
-    right:10,
     top:5,
+    color: 'grey',
+    paddingBottom: '5%'
 },
   subtitle: {
     flex: 1,
@@ -47,11 +48,13 @@ export const noteStyle = StyleSheet.create({
     color: '#fff',
     top:2,
     left:5,
+    
   },
   category: {
     fontSize: 17,
     color: Colors.text,
     fontWeight: 'bold',
+    paddingBottom: '2%'
   },
   text: {
     fontSize: 14,
