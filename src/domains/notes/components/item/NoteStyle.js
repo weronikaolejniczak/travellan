@@ -42,11 +42,11 @@ export const noteStyle = StyleSheet.create({
 },
   subtitle: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-    top:10,
-    left:10,
+    top:2,
+    left:5,
   },
   category: {
     fontSize: 17,
