@@ -24,11 +24,16 @@ const TripsOverview = (props) => {
 
   const trips = useSelector((state) => state.trips.availableTrips);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const loadTrips = async () => {
       setIsLoading(true);
-      await dispatch(tripActions.fetchTrips());
+      try {
+        await dispatch(tripActions.fetchTrips());
+      } catch {
+        setError('Something went wrong!');
+      }
       setIsLoading(false);
     };
     loadTrips();
@@ -45,6 +50,14 @@ const TripsOverview = (props) => {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+        <Text style={styles.text}>{error}</Text>
       </View>
     );
   }

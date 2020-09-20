@@ -26,7 +26,7 @@ export const mapStyle = StyleSheet.create({
   },
   showInfoOverlay: {
     width: '95%',
-    height: '27%',
+    //height: '27%',
     position: 'absolute',
     bottom: 0,
     borderTopLeftRadius: 20,
@@ -59,5 +59,12 @@ export const mapStyle = StyleSheet.create({
   },
   text: {
     color: Colors.text,
+  },
+  loading: {
+    //position: 'absolute',
+    flex: 1,
+    backgroundColor: Colors.background,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });

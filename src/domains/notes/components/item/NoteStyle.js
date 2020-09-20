@@ -12,6 +12,7 @@ export const noteStyle = StyleSheet.create({
     paddingHorizontal: cardWidth * 0.1,
     paddingVertical: cardHeight * 0.05,
     marginVertical: cardHeight * 0.05,
+    marginHorizontal: cardHeight * 0.05,
   },
   actions: {
     flexDirection: 'row',
@@ -34,23 +35,26 @@ export const noteStyle = StyleSheet.create({
   },
   create:{
     fontSize:11,
-    alignSelf:'flex-end',
+    alignSelf:'flex-start',
     color: '#fff',
-    right:10,
     top:5,
+    color: 'grey',
+    paddingBottom: '5%'
 },
   subtitle: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-    top:10,
-    left:10,
+    top:2,
+    left:5,
+    
   },
   category: {
     fontSize: 17,
     color: Colors.text,
     fontWeight: 'bold',
+    paddingBottom: '2%'
   },
   text: {
     fontSize: 14,
@@ -78,7 +82,6 @@ export const noteStyle = StyleSheet.create({
   },
   alignText: {
     alignItems: 'flex-start',
-    top:6,
   },
   card: {
     shadowColor: "#000",

@@ -10,7 +10,7 @@ class Trip {
     notes,
     transportInfo,
     accommodationInfo,
-    pointsOfInterest,
+    map,
   ) {
     this.id = id;
     this.destination = destination;
@@ -22,7 +22,7 @@ class Trip {
     this.notes = notes;
     this.transportInfo = transportInfo;
     this.accommodationInfo = accommodationInfo;
-    this.pointsOfInterest = pointsOfInterest;
+    this.map = map;
   }
 }
 

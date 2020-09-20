@@ -1,14 +1,15 @@
-/** MODELS */
+/* models */
 import Trip from 'myTrips/models/Trip';
-/** SERVICES */
+import Map from 'map/models/Map';
+/* services */
 import {fetchImage} from 'common/services/Image';
 import {fetchCoords} from 'common/services/Coordinates';
-/** ACTIONS */
+/* actions */
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
 export const SET_TRIPS = 'SET_TRIPS';
 
-// Fetch already existing/created trips from Firebase.
+// fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -21,7 +22,7 @@ export const fetchTrips = () => {
     //}).catch(); <- listening to errors
     const resData = await response.json();
     const loadedTrips = [];
-    // Adding trips from database one by one using the stored keys.
+    // adding trips from database one by one using the stored keys
     for (const key in resData) {
       loadedTrips.push(
         new Trip(
@@ -35,7 +36,7 @@ export const fetchTrips = () => {
           resData[key].notes,
           resData[key].transportInfo,
           resData[key].accommodationInfo,
-          resData[key].pointsOfInterest,
+          resData[key].map,
         ),
       );
     }
@@ -43,7 +44,7 @@ export const fetchTrips = () => {
   };
 };
 
-// Delete a trip based in tripId.
+// delete a trip based in tripId
 export const deleteTrip = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -58,7 +59,7 @@ export const deleteTrip = (tripId) => {
   };
 };
 
-// Create a trip based on user input.
+// create a trip based on user input
 export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -74,8 +75,8 @@ export const createTrip = (destination, startDate, endDate, budget) => {
     let notes = [];
     let transportInfo = [];
     let accommodationInfo = [];
-    let pointsOfInterest = [];
-    // POST request to the database.
+    let map = new Map([], []);
+    // POST request to the database
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
       {
@@ -93,7 +94,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
           notes,
           transportInfo,
           accommodationInfo,
-          pointsOfInterest,
+          map,
         }),
       },
     ); //.then(response => {    <- declares what happens after getting a response
@@ -113,7 +114,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
         notes,
         transportInfo,
         accommodationInfo,
-        pointsOfInterest,
+        map,
       },
     });
   };

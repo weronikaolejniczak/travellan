@@ -1,11 +1,9 @@
-/** MODELS */
+/* models */
 import Trip from 'myTrips/models/Trip';
-
-/** ACTIONS */
-// Trips.
+/* actions */
+// trips
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'myTrips/state/Actions';
-
-// Transport.
+// transport
 import {
   SET_TRANSPORT,
   DELETE_TRANSPORT,
@@ -13,21 +11,20 @@ import {
   UPDATE_PDF,
   UPDATE_QR,
 } from 'transport/state/Actions';
-
-// Accommodation.
+// accommodation
 import {
   SET_RESERVATIONS,
   DELETE_RESERVATION,
   CREATE_RESERVATION,
 } from 'accommodation/state/Actions';
-
-// Notes.
+// notes
 import {CREATE_NOTE, DELETE_NOTE, SET_NOTES} from 'notes/state/Actions';
-
-// Budget.
+// budget
 import {FETCH_BUDGET, UPDATE_BUDGET} from 'budget/state/Actions';
+// map
+import {FETCH_MAP, CREATE_POI} from 'map/state/Actions';
 
-/** COMMON REDUCER */
+/* common reducer */
 export const initialState = {
   availableTrips: [],
 };
@@ -37,11 +34,11 @@ export default (state = initialState, action) => {
   const tripIndex = state.availableTrips.findIndex(
     (trip) => trip.id === tripId,
   );
-  // Copy the current trips and paste into updatedAvailableTrips array.
+  // copy the current trips and paste into updatedAvailableTrips array
   const updatedAvailableTrips = [...state.availableTrips];
 
   switch (action.type) {
-    /** TRIPS */
+    /* trips */
     case SET_TRIPS:
       return {
         availableTrips: action.trips,
@@ -71,8 +68,7 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: state.availableTrips.concat(newTrip),
       };
-
-    /** TRANSPORT */
+    /* transport */
     case SET_TRANSPORT:
     case DELETE_TRANSPORT:
     case CREATE_TRANSPORT:
@@ -84,8 +80,7 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-
-    /** RESERVATIONS */
+    /* reservations */
     case SET_RESERVATIONS:
     case DELETE_RESERVATION:
     case CREATE_RESERVATION:
@@ -96,8 +91,7 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-
-    /** NOTES */
+    /* notes */
     case SET_NOTES:
     case DELETE_NOTE:
     case CREATE_NOTE:
@@ -106,11 +100,18 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-
-    /** BUDGET */
+    /* budget */
     case FETCH_BUDGET:
     case UPDATE_BUDGET:
       updatedAvailableTrips[tripIndex].budget = action.budget;
+      return {
+        ...state,
+        availableTrips: updatedAvailableTrips,
+      };
+    /* map */
+    case FETCH_MAP:
+    case CREATE_POI:
+      updatedAvailableTrips[tripIndex].map = action.map;
       return {
         ...state,
         availableTrips: updatedAvailableTrips,
