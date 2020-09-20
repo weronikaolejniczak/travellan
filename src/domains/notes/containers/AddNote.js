@@ -12,8 +12,6 @@ import * as noteActions from 'notes/state/Actions';
 import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
-import Icon from 'react-native-ionicons'
-import { Chevron } from 'react-native-shapes';
 
 const AddNote = (props) => {
   const dispatch = useDispatch();
@@ -31,7 +29,7 @@ const AddNote = (props) => {
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
   const [category, setCategory] = useState('');
   const [categoryIsValid, setCategoryIsValid] = useState(false);
-  const [categorySubmitted, setCategorySubmitted] = useState(false);
+  //const [categorySubmitted, setCategorySubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -62,7 +60,7 @@ const AddNote = (props) => {
     if (!titleIsValid || !descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
-      setCategorySubmitted(true)
+      //setCategorySubmitted(true)
     } else {
       await dispatch(noteActions.createNote(tripId, category, title, description));
       props.navigation.navigate('Notes', {
@@ -159,23 +157,6 @@ const AddNote = (props) => {
       </View>
     </View>
     
-      {/*<View style={styles.smallPaddingTop}>
-      <Text style={styles.label}>Set Category</Text>
-      <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
-      <Picker 
-        mode='dialog'
-        itemStyle={{ backgroundColor: "grey", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
-        selectedValue={category}
-        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-      >
-        
-        <Picker.Item label="To Do" value="To Do" />
-        <Picker.Item label="To Pack" value="To Pack" />
-        <Picker.Item label="Diares" value="Diares" />
-      </Picker>
-      </View>
-      </View>
-  */}
       {/* TITLE INPUT */}
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Title</Text>
@@ -196,6 +177,7 @@ const AddNote = (props) => {
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Description</Text>
         <TextInput
+          
           style={styles.input}
           placeholder="Description"
           placeholderTextColor={'grey'}
