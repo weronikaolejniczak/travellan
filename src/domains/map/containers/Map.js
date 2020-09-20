@@ -19,13 +19,13 @@ const Map = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const map = selectedTrip.map;
-  //console.log(selectedTrip.map.pointsOfInterest);
 
   const extractRegion = () => selectedTrip.region;
 
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
-  const [markers, setMarkers] = useState(selectedTrip.map.pointsOfInterest);
+  const [markers, setMarkers] = useState(
+    selectedTrip.map ? selectedTrip.map.pointsOfInterest : [],
+  );
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
   const [routeActive, setRouteActive] = useState(false);
@@ -97,18 +97,29 @@ const Map = (props) => {
   };
 
   // handles marker onPress action
-  const markerOnPressHandler = (coords) => {
+  const markerOnPressHandler = async (coords) => {
+    // save received coordinates to local variables
     const {latitude, longitude} = coords.nativeEvent.coordinate;
-    if (addingMarkerActive) {
-    } else if (deletingMarkerActive) {
-      // filter markers so that they exclude the marker with the coordinates
-      setMarkers(
-        markers.filter(
-          (marker) => !(marker.lat === latitude && marker.lon === longitude),
-        ),
+    // do something with saved coordinates
+    if (deletingMarkerActive) {
+      let markerToDelete = markers.filter(
+        (marker) => marker.lat === latitude && marker.lon === longitude,
+      )[0];
+      // start loading
+      setIsLoading(true);
+      // dispatch an action to create a new point of interest
+      await dispatch(mapActions.deletePoI(tripId, markerToDelete.id)).then(
+        async () => {
+          // filter markers so that they exclude the marker with the coordinates
+          setMarkers(
+            markers.filter((marker) => marker.id !== markerToDelete.id),
+          );
+          await dispatch(mapActions.fetchMap(tripId));
+        },
       );
+      // stop loading
+      setIsLoading(false);
     } else {
-      //setShowPlaceInfo(true);
       setActiveMarker(coords.nativeEvent);
     }
   };
@@ -124,28 +135,21 @@ const Map = (props) => {
         // start loading
         setIsLoading(true);
         // dispatch an action to create a new point of interest
-        console.log('Dispatching an action now!');
         await dispatch(
           mapActions.createPoI(tripId, latitude, longitude, title),
         ).then(() => {
-          console.log(selectedTrip.map.pointsOfInterest);
           // refresh markers
           setMarkers([...selectedTrip.map.pointsOfInterest]);
           // clear marker title
           setMarkerTitle('');
-          //console.log(markers);
-          console.log('Done!');
         });
         // stop loading
         setIsLoading(false);
       } else {
         setError('Enter the title'); // refactor error to show in UI
       }
-      /* } else if (deletingMarkerActive) {
-    } else if (routeActive) {
-    } else if (mapSearchActive) { */
     } else {
-      //setShowPlaceInfo(false);
+      setShowPlaceInfo(false);
     }
   };
 
