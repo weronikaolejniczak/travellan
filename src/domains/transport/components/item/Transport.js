@@ -15,7 +15,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from 'components/card/Card';
-import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
 import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 import Colors from 'constants/Colors';
