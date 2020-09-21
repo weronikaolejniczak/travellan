@@ -124,6 +124,7 @@ const NewTrip = (props) => {
             date: new Date(),
           },
         ],
+        account.toString(), // default account
       ),
     ];
 

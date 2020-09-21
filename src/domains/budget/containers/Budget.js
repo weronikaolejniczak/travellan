@@ -29,24 +29,25 @@ const Budget = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const activeCurrencies = selectedTrip.budget;
-  //console.log(activeCurrencies);
+  const budget = selectedTrip.budget;
+  console.log(selectedTrip.budget);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    activeCurrencies !== undefined ? activeCurrencies[0] : undefined,
+    selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
   );
-  //console.log(selectedCurrency);
+  console.log(selectedCurrency);
 
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
-  //console.log(displayableValue);
 
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [amountIsValid, setAmountIsValid] = useState(false);
   const [category, setCategory] = useState('general');
-  const [account, setAccount] = useState('card');
+  const [account, setAccount] = useState(
+    selectedCurrency ? selectedCurrency.defaultAccount : 'card',
+  );
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -147,11 +148,9 @@ const Budget = (props) => {
       } else {
         setError('Something went wrong...');
       }
-      // update selectedCurrency in activeCurrencies
-      const index = activeCurrencies.findIndex(
-        (item) => item.id === selectedCurrency.id,
-      );
-      activeCurrencies[index] = changedCurrency;
+      // update selectedCurrency in budget
+      const index = budget.findIndex((item) => item.id === selectedCurrency.id);
+      budget[index] = changedCurrency;
       // clear placeholders
       clear();
     } else {
@@ -163,22 +162,20 @@ const Budget = (props) => {
   const deleteCurrency = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      // update selectedCurrency in activeCurrencies
-      const filteredActiveCurrencies = activeCurrencies.filter(
-        (item) => item.id !== id,
-      );
+      // update selectedCurrency in budget
+      const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
       // update budget
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
       ).then(() => loadBudget());
       // if there are no active currencies clear selectedCurrency
-      activeCurrencies !== undefined
+      budget !== undefined
         ? setSelectedCurrency(filteredActiveCurrencies[0])
         : setSelectedCurrency(null);
       // stop refresh
       setIsRefreshing(false);
     },
-    [activeCurrencies, dispatch, loadBudget, tripId],
+    [budget, dispatch, loadBudget, tripId],
   );
 
   // persist changed budget
@@ -186,21 +183,23 @@ const Budget = (props) => {
     setError(null);
     setIsLoading(true);
     try {
-      await dispatch(budgetActions.updateBudget(tripId, activeCurrencies));
+      await dispatch(budgetActions.updateBudget(tripId, budget));
     } catch (err) {
       setError(err.message);
     }
     setIsLoading(false);
-  }, [activeCurrencies, dispatch, tripId]);
+  }, [budget, dispatch, tripId]);
 
   // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
+    setIsRefreshing(true);
     try {
       await dispatch(budgetActions.fetchBudget(tripId));
     } catch (err) {
       setError(err.message);
     }
-  }, [dispatch, tripId]);
+    setIsRefreshing(false);
+  }, [dispatch, setIsRefreshing, tripId]);
 
   // fetch the budget on render
   useEffect(() => {
@@ -218,14 +217,29 @@ const Budget = (props) => {
     );
   }
 
-  if (activeCurrencies !== undefined) {
+  if (budget === [] || budget === undefined) {
+    return (
+      <View style={styles.contentContainer}>
+        <View style={styles.budgetlessContainer}>
+          <Text style={[styles.text, styles.budgetlessText]}>
+            There is no budget to show!
+          </Text>
+          <Text style={[styles.text, styles.budgetlessText]}>
+            Create a currency card with the
+          </Text>
+          <Icon name={'plus'} size={32} style={[styles.text, {margin: 10}]} />
+          <Text style={[styles.text, styles.budgetlessText]}>sign above!</Text>
+        </View>
+      </View>
+    );
+  } else {
     return (
       <View style={styles.contentContainer}>
         {/* HORIZONTAL FLATLIST OF CURRENCIES */}
         <View style={styles.currenciesContainer}>
           <FlatList
             horizontal
-            data={activeCurrencies}
+            data={budget}
             ItemSeparatorComponent={() => <View style={{width: 7}} />}
             renderItem={({item}) => (
               <TouchableOpacity
@@ -254,15 +268,16 @@ const Budget = (props) => {
                   setDisplayableValue(item.value);
                   setTitle('');
                   setAmount('');
+                  setAccount(item.defaultAccount);
                 }}>
-                <Text
+                {!!selectedCurrency && <Text
                   style={
                     selectedCurrency.currency === item.currency
                       ? styles.currencyActive
                       : styles.currencyNonactive
                   }>
                   {item.currency}
-                </Text>
+                </Text>}
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item.id.toString()}
@@ -491,7 +506,11 @@ const Budget = (props) => {
                     {/* PLUS OPERATION */}
                     <TouchableOpacity onPress={() => modifyAmount('plus')}>
                       <Icon
-                        style={[styles.icon, styles.positive]}
+                        style={[
+                          styles.icon,
+                          styles.positive,
+                          {marginRight: '3%'},
+                        ]}
                         name="plus"
                       />
                     </TouchableOpacity>
@@ -575,21 +594,6 @@ const Budget = (props) => {
             </View>
           </ScrollView>
         )}
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.contentContainer}>
-        <View style={styles.budgetlessContainer}>
-          <Text style={[styles.text, styles.budgetlessText]}>
-            There is no budget to show!
-          </Text>
-          <Text style={[styles.text, styles.budgetlessText]}>
-            Create a currency card with the
-          </Text>
-          <Icon name={'plus'} size={32} style={[styles.text, {margin: 10}]} />
-          <Text style={[styles.text, styles.budgetlessText]}>sign above!</Text>
-        </View>
       </View>
     );
   }

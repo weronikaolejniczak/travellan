@@ -15,7 +15,6 @@ export const fetchBudget = (tripId) => {
 
     // take budget stored in the trip and assign it to local variable for later logic
     let budget = resData.budget;
-    //console.log(budget);
 
     dispatch({type: FETCH_BUDGET, tripId, budget});
   };
@@ -37,7 +36,7 @@ export const updateBudget = (tripId, updatedBudget) => {
     let budget = resData.budget;
 
     // update budget
-    budget = updatedBudget;
+    budget = updatedBudget === [] ? undefined : updatedBudget;
 
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(

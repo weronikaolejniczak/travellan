@@ -4,7 +4,8 @@ buildscript {
     ext {
         minSdkVersion = 16
         compileSdkVersion = 28
-        targetSdkVersion = 28
+        buildToolsVersion = "28.0.3"
+        targetSdkVersion = 21
     }
     repositories {
         google()
@@ -33,5 +34,14 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+    }
+    afterEvaluate {project ->
+    // force libs to use recent buildtools
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion = 28  // change to match your desired version
+                buildToolsVersion = "28.0.3" // ...
+            }
+        }
     }
 }

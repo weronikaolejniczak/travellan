@@ -36,8 +36,6 @@ const AddCurrency = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  console.log(currentBudget);
-
   /* HANDLERS */
   // handles currency validity
   const currencyChangeHandler = (text) => {
@@ -93,6 +91,7 @@ const AddCurrency = (props) => {
             date: new Date(),
           },
         ],
+        account.toString(),
       );
 
       let budgetToSubmit = currentBudget
@@ -100,11 +99,18 @@ const AddCurrency = (props) => {
         : [newCurrency];
 
       setIsLoading(true);
-      await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit));
-      props.navigation.navigate('Budget', {
-        tripId: tripId,
-      });
-      setIsLoading(false);
+      try {
+        await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit)).then(
+          () => {
+            setIsLoading(false);
+            props.navigation.navigate('Budget', {
+              tripId: tripId,
+            });
+          },
+        );
+      } catch {
+        setError('Something went wrong...');
+      }
     } else if (!error) {
       setError('Something went wrong...');
     }

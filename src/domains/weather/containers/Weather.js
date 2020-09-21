@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-/** imports from within the module */
+/* imports from within the module */
 import {fetchWeather} from 'weather/services/Weather';
 import Background from 'weather/components/background/Background';
 import Graphics from 'weather/components/graphics/Graphics';
@@ -124,6 +124,9 @@ const Weather = (props) => {
                           styles.bigBubble,
                           styles.marginLeftAndRight,
                         ]}>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          average
+                        </Text>
                         <Text
                           style={[
                             styles.text,
