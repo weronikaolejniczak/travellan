@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, TextInput, FlatList, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View, TextInput, FlatList} from 'react-native';
 /* imports from within the module */
 import SearchResult from 'map/components/searchResult/SearchResult';
 
@@ -18,11 +17,8 @@ const Search = (props) => {
   // handles behavior when text changes
   const onChangeTextHandler = (text) => {
     if (text.length > 3) {
-      console.log(`${text.length} > 3`);
       changeState(true, props.showAutocomplete);
     } else if (text.length < 1) {
-      console.log(`${text.length} =< 1`);
-      console.log(props.autocomplete);
       changeState(false, props.showAutocomplete);
     }
     props.setPlaceToSearch(text);
@@ -39,12 +35,6 @@ const Search = (props) => {
           onChangeText={(text) => onChangeTextHandler(text)}
           value={props.placeToSearch}
         />
-        {/* search icon */}
-        <View style={{position: 'absolute', right: 0}}>
-          <TouchableOpacity styles={props.styles.button}>
-            <Icon name="search" style={props.styles.icon} />
-          </TouchableOpacity>
-        </View>
       </View>
       {/* autocomplete results */}
       {props.showAutocomplete && !!props.autocomplete && (
@@ -57,8 +47,8 @@ const Search = (props) => {
               result={item}
               placeToSearch={props.placeToSearch}
               setPlaceToSearch={props.setPlaceToSearch}
-              focusedPlace={props.focusedPlace}
-              setFocusedPlace={props.setFocusedPlace}
+              searchedPlace={props.searchedPlace}
+              setSearchedPlace={props.setSearchedPlace}
               setShowAutocomplete={props.setShowAutocomplete}
             />
           )}
