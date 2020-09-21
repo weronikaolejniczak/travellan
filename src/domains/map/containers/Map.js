@@ -22,8 +22,17 @@ const Map = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   // current position on the map
-  const extractRegion = () =>
-    selectedTrip.map ? selectedTrip.map.region : selectedTrip.region;
+  const extractRegion = () => {
+    if (selectedTrip.map) {
+      if (selectedTrip.map.region) {
+        return selectedTrip.map.region;
+      } else {
+        return selectedTrip.region;
+      }
+    } else {
+      return selectedTrip.region;
+    }
+  };
   // user's position on the map
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
   // data to polyfill the map
