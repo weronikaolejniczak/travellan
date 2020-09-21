@@ -41,13 +41,13 @@ const Toolbar = (props) => {
           onPress={props.routeActivityHandler}
         /> */}
         {/* search button */}
-        <ToolbarButton
+        {/* <ToolbarButton
           iconName={'map-search'}
           isLoading={props.isLoading}
           loader={false}
           handler={props.mapSearchActive}
           onPress={props.searchActivityHandler}
-        />
+        /> */}
       </View>
       {/* input field */}
       {/* search for address, place, autocomplete */}

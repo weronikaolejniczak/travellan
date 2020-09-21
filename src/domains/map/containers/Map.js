@@ -88,10 +88,12 @@ const Map = (props) => {
           setRouteActive(false);
           setSearchedPlace();
           setPlaceToSearch('');
+          setShowPlaceInfo(false);
         } else {
           setMarkerTitle('');
         }
         setAddingMarkerActive(!addingMarkerActive);
+        setShowPlaceInfo(false);
         break;
       case 'deleting':
         if (!deletingMarkerActive) {
@@ -101,8 +103,10 @@ const Map = (props) => {
           setSearchedPlace();
           setPlaceToSearch('');
           setMarkerTitle('');
+          setShowPlaceInfo(false);
         }
         setDeletingMarkerActive(!deletingMarkerActive);
+        setShowPlaceInfo(false);
         break;
       case 'route':
         if (!routeActive) {
@@ -112,8 +116,10 @@ const Map = (props) => {
           setSearchedPlace();
           setPlaceToSearch('');
           setMarkerTitle('');
+          setShowPlaceInfo(false);
         }
         setRouteActive(!routeActive);
+        setShowPlaceInfo(false);
         break;
       case 'search':
         if (!mapSearchActive) {
@@ -121,9 +127,11 @@ const Map = (props) => {
           setDeletingMarkerActive(false);
           setRouteActive(false);
           setMarkerTitle('');
+          setShowPlaceInfo(false);
         } else {
           setSearchedPlace();
           setPlaceToSearch('');
+          setShowPlaceInfo(false);
         }
         setMapSearchActive(!mapSearchActive);
         break;
@@ -230,11 +238,9 @@ const Map = (props) => {
               }}
               pinColor={Colors.primary}
               onPress={(event) => markerOnPressHandler(event)}>
-              {!deletingMarkerActive && (
-                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-                  <Text>{marker.title}</Text>
-                </MapView.Callout>
-              )}
+              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+                <Text>{marker.title}</Text>
+              </MapView.Callout>
             </MapView.Marker>
           ))}
         {/* render searchedPlace */}
