@@ -1,50 +1,25 @@
-import React, {useCallback} from 'react';
-import {useDispatch} from 'react-redux';
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  Alert,
-} from 'react-native';
+import React from 'react';
+import {ScrollView, View, Text, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-/* IMPORTS FROM WITHIN THE MODULE */
+/* imports from within the module */
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
-import * as noteActions from 'notes/state/Actions';
 import {noteStyle as styles} from './NoteStyle';
 
-
-/** Note item component */
+/* note item component */
 const Note = (props) => {
-  const dispatch = useDispatch();
-  var convertedId = props.id.split(" ");
-  var extractedDate = convertedId[2] + " " + convertedId[1] + " " + (convertedId[4].split(":"))[0] + ":" + (convertedId[4].split(":"))[1];
-  /** HANDLERS */
-  const submitHandler = useCallback(() => {
-    Alert.alert(
-      'Delete a note',
-      'Are you sure?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            dispatch(noteActions.deleteNote(props.tripId, props.id));
-          },
-        },
-      ],
-      {cancelable: true},
-    );
-  }, [dispatch, props.tripId, props.id]);
+  var convertedId = props.id.split(' ');
+  var extractedDate =
+    convertedId[2] +
+    ' ' +
+    convertedId[1] +
+    ' ' +
+    convertedId[4].split(':')[0] +
+    ':' +
+    convertedId[4].split(':')[1];
 
-  const EditHandler = useCallback(() => {
-  
-  }, [dispatch, props.tripId, props.id]);
+  /* handlers */
+  /* const EditHandler = useCallback(() => { }, [dispatch, props.tripId, props.id]); */
 
   return (
     <Card style={styles.noteCard}>
@@ -54,7 +29,7 @@ const Note = (props) => {
           {props.category}
         </Text>
 
-         {/* EDIT BUTTON 
+        {/* EDIT BUTTON
          <TouchableOpacity>
           <Icon
             name={Platform.OS === 'android' ? 'md-brush' : 'ios-brush'}
@@ -63,7 +38,7 @@ const Note = (props) => {
          </TouchableOpacity> */}
 
         {/* DELETE BUTTON */}
-        <TouchableOpacity onPress={submitHandler}>
+        <TouchableOpacity onPress={props.deleteNoteHandler}>
           <Icon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}
@@ -73,8 +48,8 @@ const Note = (props) => {
 
       {/* NOTE CONTENT */}
       <ScrollView style={styles.bodyMargin}>
-      <Text style={styles.create}>{extractedDate}</Text>
-      <Text style={styles.category}>{props.title}</Text>
+        <Text style={styles.create}>{extractedDate}</Text>
+        <Text style={styles.category}>{props.title}</Text>
         <View style={[styles.alignText]}>
           <ReadMore longText={props.description} />
         </View>

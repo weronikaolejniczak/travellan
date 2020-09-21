@@ -1,6 +1,13 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, FlatList, Platform, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Platform,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 /** IMPORTS FROM WITHIN THE MODULE */
@@ -32,6 +39,7 @@ const Notes = (props) => {
     },
     [dispatch, tripId],
   );
+
   const deleteNoteHandler = useCallback(
     async (noteId) => {
       setIsRefreshing(true);
@@ -97,8 +105,7 @@ const Notes = (props) => {
               id={itemData.item.id}
               title={itemData.item.title}
               description={itemData.item.description}
-              deleteNoteHandler={() =>
-                deleteNoteHandler(itemData.item.id)}
+              deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
             />
           )}
         />
