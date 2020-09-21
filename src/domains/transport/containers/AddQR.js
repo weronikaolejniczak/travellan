@@ -23,7 +23,6 @@ import Colors from 'constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as transportActions from 'transport/state/Actions';
-//
 import {NavigationEvents} from 'react-navigation';
 
 const AddQR = (props, state) => {
@@ -43,14 +42,8 @@ const AddQR = (props, state) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = (e) => {
-    //setIsLoading(true);
     setQR(e.data);
-    //const qr = e.data;
     setshowQRscanner(false);
-    //setIsLoading(false);
-    //var qr = {QR};
-    //qr = qr.QR;
-    //await dispatch(transportActions.updateQR(tripId, ticketId, qr));
   };
 
   const acceptHandler = useCallback(async () => {
@@ -69,7 +62,6 @@ const AddQR = (props, state) => {
   }, [dispatch, qr, props.navigation, QR, tripId, ticketId]);
 
   const redoHandler = () => {
-    //console.log({QR});
     setshowQRscanner(true);
   };
   const switchLight = () => {
