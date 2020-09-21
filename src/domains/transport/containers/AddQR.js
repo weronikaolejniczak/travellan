@@ -31,6 +31,7 @@ const AddQR = (props, state) => {
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
+  
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
