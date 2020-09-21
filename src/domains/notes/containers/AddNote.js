@@ -31,7 +31,6 @@ const AddNote = (props) => {
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   //const [categorySubmitted, setCategorySubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  var ToPackList = [];
 
 
   /** HANDLERS */
@@ -85,21 +84,24 @@ const AddNote = (props) => {
   const submitHandlerToPack = useCallback(async () => {
     setIsLoading(true);
     if (!descriptionIsValid) {
+      setTitleSubmitted(true);
       setDescriptionSubmitted(true);
       //setCategorySubmitted(true)
     } else {
-      await dispatch(noteActions.createNote(tripId, category, '', description));
+      await dispatch(noteActions.createNote(tripId, category, title, description));
       props.navigation.navigate('Notes', {
         tripId: selectedTrip.id,
       });
     }
     setIsLoading(false);
   }, [
+    titleIsValid,
     descriptionIsValid,
+    categoryIsValid,
     dispatch,
     tripId,
     category,
-    '',
+    title,
     description,
     props.navigation,
     selectedTrip.id,
@@ -190,7 +192,6 @@ const AddNote = (props) => {
         <ScrollView>
           <View style={styles.smallPaddingTop}>
             <Text style={styles.label}>Content</Text>
-            {/* DESCRIPTION INPUT */}
             <TextInput
               numberOfLines={4}
               style={styles.input}
@@ -207,7 +208,6 @@ const AddNote = (props) => {
 
             )}
           </View>
-          {/* SUBMIT BUTTON */}
           <View style={styles.buttonContainer}>
             {isLoading ? (
               <ActivityIndicator size="small" color={Colors.white} />
@@ -217,11 +217,11 @@ const AddNote = (props) => {
                 </TouchableOpacity>
               )}
           </View>
-        </ScrollView>) : (
+        </ScrollView>
+      ) : (
           <ScrollView>
             <View style={styles.smallPaddingTop}>
               <Text style={styles.label}>Title</Text>
-              {/* TITLE INPUT */}
               <TextInput
                 style={styles.input}
                 placeholder="Title"
@@ -238,7 +238,6 @@ const AddNote = (props) => {
 
             <View style={styles.smallPaddingTop}>
               <Text style={styles.label}>Content</Text>
-              {/* DESCRIPTION INPUT */}
               <TextInput
                 numberOfLines={4}
                 style={styles.input}
@@ -265,9 +264,7 @@ const AddNote = (props) => {
                 )}
             </View>
           </ScrollView>
-        )
-      }
-
+        )}
     </ScrollView>
   );
 };
