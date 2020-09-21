@@ -8,7 +8,7 @@ const SearchResult = (props) => {
     <TouchableOpacity
       onPress={() => {
         props.setShowAutocomplete(false);
-        props.setFocusedPlace(props.result.item);
+        props.setSearchedPlace(props.result.item);
       }}
       activeOpacity={0.4}>
       <View style={styles.container}>

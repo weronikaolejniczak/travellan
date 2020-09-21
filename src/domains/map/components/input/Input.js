@@ -13,8 +13,8 @@ const Input = (props) => {
           autocomplete={props.autocomplete}
           showAutocomplete={props.showAutocomplete}
           setShowAutocomplete={props.setShowAutocomplete}
-          focusedPlace={props.focusedPlace}
-          setFocusedPlace={props.setFocusedPlace}
+          searchedPlace={props.searchedPlace}
+          setSearchedPlace={props.setSearchedPlace}
         />
       );
     case 'title':

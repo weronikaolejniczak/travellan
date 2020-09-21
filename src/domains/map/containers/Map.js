@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 /* imports from within the module */
 import * as mapActions from 'map/state/Actions';
+import PointOfInterest from 'map/models/PointOfInterest';
 import Toolbar from 'map/components/toolbar/Toolbar';
 import PlaceOverview from 'map/components/placeOverview/PlaceOverview';
 import {darkModeMap} from './DarkModeMap';
@@ -14,35 +15,53 @@ import {Autocomplete} from 'map/data/DummyAutocomplete';
 
 const Map = (props) => {
   const dispatch = useDispatch();
-
+  // selected trip's id
   const tripId = props.route.params.tripId;
+  // trip selector
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
-  const extractRegion = () => selectedTrip.region;
-
+  // current position on the map
+  const extractRegion = () => {
+    if (selectedTrip.map) {
+      if (selectedTrip.map.region) {
+        return selectedTrip.map.region;
+      } else {
+        return selectedTrip.region;
+      }
+    } else {
+      return selectedTrip.region;
+    }
+  };
+  // user's position on the map
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
+  // data to polyfill the map
+  const [currentRegion, setCurrentRegion] = useState(selectedTrip.region);
   const [markers, setMarkers] = useState(
-    selectedTrip.map ? selectedTrip.map.pointsOfInterest : [],
+    selectedTrip.map ? selectedTrip.map.nodes : [],
   );
+  const [routes, setRoutes] = useState([]);
+  // toolbar handlers
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
   const [routeActive, setRouteActive] = useState(false);
   const [mapSearchActive, setMapSearchActive] = useState(false);
+  // place details handler
   const [showPlaceInfo, setShowPlaceInfo] = useState(false);
+  // input handlers
+  const [markerTitle, setMarkerTitle] = useState('');
   const [placeToSearch, setPlaceToSearch] = useState('');
   const [showAutocomplete, setShowAutocomplete] = useState(false);
+  // marker handlers
   const [activeMarker, setActiveMarker] = useState();
-  const [markerTitle, setMarkerTitle] = useState('');
-  const [focusedPlace, setFocusedPlace] = useState();
+  const [searchedPlace, setSearchedPlace] = useState();
+  // other handlers
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  // dummy autocomplete data
   const AUTOCOMPLETE = Autocomplete;
-  console.log(focusedPlace);
 
-  /** handlers */
+  /* handlers */
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
@@ -67,7 +86,7 @@ const Map = (props) => {
           setDeletingMarkerActive(false);
           setMapSearchActive(false);
           setRouteActive(false);
-          setFocusedPlace();
+          setSearchedPlace();
           setPlaceToSearch('');
         } else {
           setMarkerTitle('');
@@ -79,7 +98,7 @@ const Map = (props) => {
           setAddingMarkerActive(false);
           setMapSearchActive(false);
           setRouteActive(false);
-          setFocusedPlace();
+          setSearchedPlace();
           setPlaceToSearch('');
           setMarkerTitle('');
         }
@@ -90,7 +109,7 @@ const Map = (props) => {
           setAddingMarkerActive(false);
           setDeletingMarkerActive(false);
           setMapSearchActive(false);
-          setFocusedPlace();
+          setSearchedPlace();
           setPlaceToSearch('');
           setMarkerTitle('');
         }
@@ -103,11 +122,28 @@ const Map = (props) => {
           setRouteActive(false);
           setMarkerTitle('');
         } else {
-          setFocusedPlace();
+          setSearchedPlace();
           setPlaceToSearch('');
         }
         setMapSearchActive(!mapSearchActive);
         break;
+    }
+  };
+
+  // handles persistence - saves the updated map object when exiting map
+  const onExitHandler = async () => {
+    // start loading
+    setIsLoading(true);
+    // update entities on the map such as markers and routes
+    try {
+      await dispatch(
+        mapActions.updateMap(tripId, markers, routes, currentRegion),
+      ).then(() => {
+        setIsLoading(false);
+        props.navigation.goBack();
+      });
+    } catch {
+      setError('Something went wrong. Check your internet connection!');
     }
   };
 
@@ -121,16 +157,8 @@ const Map = (props) => {
     )[0];
     // do something with saved coordinates
     if (deletingMarkerActive) {
-      // start loading
-      setIsLoading(true);
-      // dispatch an action to create a new point of interest
-      await dispatch(mapActions.deletePoI(tripId, marker.id)).then(async () => {
-        // filter markers so that they exclude the marker with the coordinates
-        setMarkers(markers.filter((item) => item.id !== marker.id));
-        await dispatch(mapActions.fetchMap(tripId));
-      });
-      // stop loading
-      setIsLoading(false);
+      // filter markers so that they exclude the marker with the coordinates
+      setMarkers(markers.filter((item) => item.id !== marker.id));
     } else {
       setActiveMarker(marker);
     }
@@ -144,19 +172,29 @@ const Map = (props) => {
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
-        // start loading
-        setIsLoading(true);
-        // dispatch an action to create a new point of interest
-        await dispatch(
-          mapActions.createPoI(tripId, latitude, longitude, title),
-        ).then(() => {
-          // refresh markers
-          setMarkers([...selectedTrip.map.pointsOfInterest]);
-          // clear marker title
-          setMarkerTitle('');
-        });
-        // stop loading
-        setIsLoading(false);
+        // refresh markers
+        setMarkers(
+          markers
+            ? [
+                ...markers,
+                new PointOfInterest(
+                  new Date().toString(),
+                  latitude,
+                  longitude,
+                  title,
+                ),
+              ]
+            : [
+                new PointOfInterest(
+                  new Date().toString(),
+                  latitude,
+                  longitude,
+                  title,
+                ),
+              ],
+        );
+        // clear marker title
+        setMarkerTitle('');
       } else {
         setError('Enter the title'); // refactor error to show in UI
       }
@@ -168,54 +206,52 @@ const Map = (props) => {
   return (
     <View style={styles.flex}>
       {/* render dynamic MapView */}
-      {isLoading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator size={'large'} color={Colors.primary} />
-        </View>
-      ) : (
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.flex}
-          customMapStyle={darkModeMap}
-          initialRegion={extractRegion()}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          loadingEnabled={true}
-          loadingIndicatorColor={Colors.primary}
-          loadingBackgroundColor={Colors.background}
-          tintColor={Colors.primary}
-          onPress={(event) => mapOnPressHandler(event)}>
-          {/* render markers */}
-          {!focusedPlace &&
-            !!markers &&
-            markers.map((marker) => (
-              <MapView.Marker
-                coordinate={{
-                  latitude: marker.lat,
-                  longitude: marker.lon,
-                }}
-                pinColor={Colors.primary}
-                onPress={(event) => markerOnPressHandler(event)}>
-                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-                  <Text>{marker.title}</Text>
-                </MapView.Callout>
-              </MapView.Marker>
-            ))}
-          {!!focusedPlace && (
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.flex}
+        customMapStyle={darkModeMap}
+        initialRegion={extractRegion()}
+        onRegionChangeComplete={(region) => setCurrentRegion(region)}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        loadingEnabled={true}
+        loadingIndicatorColor={Colors.primary}
+        loadingBackgroundColor={Colors.background}
+        tintColor={Colors.primary}
+        onPress={(event) => mapOnPressHandler(event)}>
+        {/* render markers */}
+        {!searchedPlace &&
+          !!markers &&
+          markers.map((marker) => (
             <MapView.Marker
               coordinate={{
-                latitude: parseFloat(focusedPlace.lat),
-                longitude: parseFloat(focusedPlace.lon),
+                latitude: marker.lat,
+                longitude: marker.lon,
               }}
               pinColor={Colors.primary}
               onPress={(event) => markerOnPressHandler(event)}>
-              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-                <Text>{focusedPlace.title}</Text>
-              </MapView.Callout>
+              {!deletingMarkerActive && (
+                <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+                  <Text>{marker.title}</Text>
+                </MapView.Callout>
+              )}
             </MapView.Marker>
-          )}
-        </MapView>
-      )}
+          ))}
+        {/* render searchedPlace */}
+        {!!searchedPlace && (
+          <MapView.Marker
+            coordinate={{
+              latitude: parseFloat(searchedPlace.lat),
+              longitude: parseFloat(searchedPlace.lon),
+            }}
+            pinColor={Colors.primary}
+            onPress={(event) => markerOnPressHandler(event)}>
+            <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+              <Text>{searchedPlace.title}</Text>
+            </MapView.Callout>
+          </MapView.Marker>
+        )}
+      </MapView>
 
       {/* render toolbar for map interaction */}
       <Toolbar
@@ -238,9 +274,11 @@ const Map = (props) => {
         setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
         error={error}
         setError={() => setError()}
-        // focusedPlace, setFocusedPlace
-        focusedPlace={focusedPlace}
-        setFocusedPlace={(place) => setFocusedPlace(place)}
+        // searchedPlace, setSearchedPlace
+        searchedPlace={searchedPlace}
+        setSearchedPlace={(place) => setSearchedPlace(place)}
+        isLoading={isLoading}
+        onExitHandler={async () => await onExitHandler()}
       />
 
       {/* render place details */}
@@ -249,7 +287,7 @@ const Map = (props) => {
       )}
 
       {/* render bottom actions */}
-      {!!focusedPlace && (
+      {!!searchedPlace && (
         <View
           style={{
             position: 'absolute',
