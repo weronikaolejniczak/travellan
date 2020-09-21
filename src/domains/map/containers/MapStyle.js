@@ -64,7 +64,7 @@ export const mapStyle = StyleSheet.create({
     //position: 'absolute',
     flex: 1,
     backgroundColor: Colors.background,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

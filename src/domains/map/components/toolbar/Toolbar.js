@@ -10,44 +10,47 @@ const Toolbar = (props) => {
       <View style={props.styles.actionBar}>
         {/* go back button */}
         <ToolbarButton
-          type={'goBack'}
-          styles={props.styles}
-          navigation={props.navigation}
+          iconName={'close'}
+          isLoading={props.isLoading}
+          loader={true}
+          handler={false}
+          onPress={props.onExitHandler}
         />
         {/* add marker button */}
         <ToolbarButton
-          type={'addMarker'}
-          styles={props.styles}
-          navigation={props.navigation}
-          addingMarkerActive={props.addingMarkerActive}
-          addingActivityHandler={props.addingActivityHandler}
+          iconName={'map-marker-plus'}
+          isLoading={props.isLoading}
+          loader={false}
+          handler={props.addingMarkerActive}
+          onPress={props.addingActivityHandler}
         />
         {/* delete marker button */}
         <ToolbarButton
-          type={'deleteMarker'}
-          styles={props.styles}
-          navigation={props.navigation}
-          deletingMarkerActive={props.deletingMarkerActive}
-          deletingActivityHandler={props.deletingActivityHandler}
+          iconName={'map-marker-minus'}
+          isLoading={props.isLoading}
+          loader={false}
+          handler={props.deletingMarkerActive}
+          onPress={props.deletingActivityHandler}
         />
         {/* route button */}
         {/* <ToolbarButton
-          type={'route'}
-          styles={props.styles}
-          navigation={props.navigation}
-          routeActive={props.routeActive}
-          routeActivityHandler={props.routeActivityHandler}
+          iconName={'map-marker-path'}
+          isLoading={props.isLoading}
+          loader={true}
+          handler={props.routeActive}
+          onPress={props.routeActivityHandler}
         /> */}
         {/* search button */}
         <ToolbarButton
-          type={'search'}
-          styles={props.styles}
-          navigation={props.navigation}
-          mapSearchActive={props.mapSearchActive}
-          searchActivityHandler={props.searchActivityHandler}
+          iconName={'map-search'}
+          isLoading={props.isLoading}
+          loader={false}
+          handler={props.mapSearchActive}
+          onPress={props.searchActivityHandler}
         />
       </View>
       {/* input field */}
+      {/* search for address, place, autocomplete */}
       {props.mapSearchActive && (
         <Input
           type={'search'}
@@ -57,12 +60,13 @@ const Toolbar = (props) => {
           autocomplete={props.autocomplete}
           showAutocomplete={props.showAutocomplete}
           setShowAutocomplete={props.setShowAutocomplete}
-          focusedPlace={props.focusedPlace}
-          setFocusedPlace={props.setFocusedPlace}
+          searchedPlace={props.searchedPlace}
+          setSearchedPlace={props.setSearchedPlace}
           error={props.error}
           setError={props.setError}
         />
       )}
+      {/* declare title for custom marker */}
       {props.addingMarkerActive && (
         <Input
           type={'title'}

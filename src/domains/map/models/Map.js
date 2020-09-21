@@ -1,7 +1,8 @@
 class Map {
-  constructor(pointsOfInterest, routes) {
-    this.pointsOfInterest = pointsOfInterest;
+  constructor(nodes, routes, region) {
+    this.nodes = nodes;
     this.routes = routes;
+    this.region = region;
   }
 }
 

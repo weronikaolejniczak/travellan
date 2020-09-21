@@ -11,9 +11,9 @@ export const fetchNotes = (tripId) => {
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-    // Await json body of response.
+    // await json body of response
     const resData = await response.json();
-    // Take notes stored in the trip and assign it to local variable for later logic.
+    // take notes stored in the trip and assign it to local variable for later logic
     let notes = resData.notes;
     dispatch({type: SET_NOTES, tripId, notes});
   };
@@ -26,12 +26,14 @@ export const deleteNote = (tripId, noteId) => {
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-    // Await json body of response.
+    // await json body of response
     const resData = await response.json();
-    // Take notes stored in the trip and assign it to local variable for later logic.
-    // Change notes to exclude the reservation we want to delete with the help of noteId.
-    let notes = resData.notes.filter((note) => note.id !== noteId);
-    // PATCH updates some of the keys for a defined path without replacing all of the data.
+    // take notes stored in the trip and assign it to local variable for later logic
+    // change notes to exclude the reservation we want to delete with the help of noteId
+    let notes = resData.notes.filter(
+      (note) => note.id.toString() !== noteId.toString(),
+    );
+    // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {
@@ -49,7 +51,7 @@ export const deleteNote = (tripId, noteId) => {
   };
 };
 
-// Create a reservation based on user input.
+// create a reservation based on user input
 export const createNote = (tripId, category, title, description) => {
   const newNote = new Note(
     new Date().toString(), // DUMMY ID
@@ -64,12 +66,12 @@ export const createNote = (tripId, category, title, description) => {
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-    // Await json body of response.
+    // await json body of response
     const resData = await response.json();
-    // Take notes stored in the trip and assign it to local variable for later logic.
+    // take notes stored in the trip and assign it to local variable for later logic
     let notes = resData.notes;
     notes === undefined ? (notes = [newNote]) : (notes = notes.concat(newNote));
-    // PATCH updates some of the keys for a defined path without replacing all of the data.
+    // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
       {

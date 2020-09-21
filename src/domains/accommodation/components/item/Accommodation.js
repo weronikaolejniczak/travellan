@@ -1,14 +1,12 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {
   View,
   ScrollView,
   Text,
-  Alert,
   TouchableOpacity,
   ImageBackground,
   Platform,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +14,6 @@ import LinearGradient from 'react-native-linear-gradient';
 /** IMPORTS FROM WITHIN THE MODULE */
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
-import * as accommodationActions from 'accommodation/state/Actions';
 import {accommodationItemStyle as styles} from './AccommodationStyle';
 import Colors from 'constants/Colors';
 

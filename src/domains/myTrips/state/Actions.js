@@ -75,7 +75,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
     let notes = [];
     let transportInfo = [];
     let accommodationInfo = [];
-    let map = new Map([], []);
+    let map = new Map([], [], null);
     // POST request to the database
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
