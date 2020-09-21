@@ -339,9 +339,8 @@ const Weather = (props) => {
                                 : Colors.cards,
                             borderBottomWidth: 2,
                             borderBottomColor:
-                              item.item.date.getTime() > startDate.getTime() &&
-                              item.item.date.getTime() <=
-                                endDate.getTime() + 60 * 60 * 24 * 1000
+                              item.item.date.getTime() > startDate.getTime() - 60 * 60 * 24 * 1000 &&
+                              item.item.date.getTime() <= endDate.getTime()
                                 ? Colors.primary
                                 : Colors.transparent,
                           },
