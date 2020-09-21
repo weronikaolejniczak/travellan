@@ -105,6 +105,7 @@ const AddNote = (props) => {
   const placeholder = {
     label: 'Select a category...',
     value: 'Categoryless',
+    color: 'grey'
   };
 
   useEffect(() => {
