@@ -30,9 +30,7 @@ export const deleteNote = (tripId, noteId) => {
     const resData = await response.json();
     // take notes stored in the trip and assign it to local variable for later logic
     // change notes to exclude the reservation we want to delete with the help of noteId
-    let notes = resData.notes.filter(
-      (note) => note.id.toString() !== noteId.toString(),
-    );
+    let notes = resData.notes.filter((note) => note.id !== noteId);
     // PATCH updates some of the keys for a defined path without replacing all of the data
     await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
