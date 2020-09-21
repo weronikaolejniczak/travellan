@@ -31,6 +31,7 @@ const AddNote = (props) => {
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   //const [categorySubmitted, setCategorySubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  var ToPackList = [];
 
 
   /** HANDLERS */
@@ -162,7 +163,10 @@ const AddNote = (props) => {
         )} */}
       </View>
     </View>
-    
+    { category === 'To Pack' ? (
+      console.log("working")):
+      console.log("not working")
+  }
       {/* TITLE INPUT */}
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Title</Text>
