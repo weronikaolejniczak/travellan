@@ -31,6 +31,7 @@ const AddNote = (props) => {
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   //const [categorySubmitted, setCategorySubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  var ToPackList = [];
 
 
   /** HANDLERS */
@@ -82,6 +83,8 @@ const AddNote = (props) => {
   ]);
 
   const submitHandlerToPack = useCallback(async () => {
+    ToPackList=description.split(" ");
+    console.log(ToPackList)
     setIsLoading(true);
     if (!descriptionIsValid) {
       setTitleSubmitted(true);
