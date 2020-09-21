@@ -8,7 +8,6 @@ import { noteStyle as styles } from './NoteStyle';
 
 /* note item component */
 const Note = (props) => {
-
   var ToDoList = [];
   ToDoList = props.description.split(" ").join('\n')
   category = props.category;
@@ -56,7 +55,7 @@ const Note = (props) => {
          {/* ACTIONS BAR */}
          <View style={styles.actions}>
            <Text numberOfLines={1} style={styles.subtitle}>
-             {props.category}{console.log(ToDoList)}
+             {props.category}
            </Text>
            <TouchableOpacity onPress={props.deleteNoteHandler}>
             <Icon
