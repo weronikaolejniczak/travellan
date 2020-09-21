@@ -85,19 +85,19 @@ const AddNote = (props) => {
     {
       label: 'To Do',
       value: 'To Do',
-      color: 'red',
+      color: '#FF4500',
       fontWeight: 'bold',
     },
     {
       label: 'To Pack',
       value: 'To Pack',
-      color: 'green',
+      color: '#FF4500',
       fontWeight: 'bold',
     },
     {
       label: 'Diaries',
       value: 'Diaries',
-      color: 'pink',
+      color: '#FF4500',
       fontWeight: 'bold',
     },
   ];
