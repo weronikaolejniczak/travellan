@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
@@ -40,6 +40,7 @@ const Map = (props) => {
   const [error, setError] = useState(null);
 
   const AUTOCOMPLETE = Autocomplete;
+  console.log(focusedPlace);
 
   /** handlers */
   useEffect(() => {
@@ -66,6 +67,10 @@ const Map = (props) => {
           setDeletingMarkerActive(false);
           setMapSearchActive(false);
           setRouteActive(false);
+          setFocusedPlace();
+          setPlaceToSearch('');
+        } else {
+          setMarkerTitle('');
         }
         setAddingMarkerActive(!addingMarkerActive);
         break;
@@ -74,6 +79,9 @@ const Map = (props) => {
           setAddingMarkerActive(false);
           setMapSearchActive(false);
           setRouteActive(false);
+          setFocusedPlace();
+          setPlaceToSearch('');
+          setMarkerTitle('');
         }
         setDeletingMarkerActive(!deletingMarkerActive);
         break;
@@ -82,6 +90,9 @@ const Map = (props) => {
           setAddingMarkerActive(false);
           setDeletingMarkerActive(false);
           setMapSearchActive(false);
+          setFocusedPlace();
+          setPlaceToSearch('');
+          setMarkerTitle('');
         }
         setRouteActive(!routeActive);
         break;
@@ -90,6 +101,10 @@ const Map = (props) => {
           setAddingMarkerActive(false);
           setDeletingMarkerActive(false);
           setRouteActive(false);
+          setMarkerTitle('');
+        } else {
+          setFocusedPlace();
+          setPlaceToSearch('');
         }
         setMapSearchActive(!mapSearchActive);
         break;
@@ -171,7 +186,8 @@ const Map = (props) => {
           tintColor={Colors.primary}
           onPress={(event) => mapOnPressHandler(event)}>
           {/* render markers */}
-          {markers &&
+          {!focusedPlace &&
+            !!markers &&
             markers.map((marker) => (
               <MapView.Marker
                 coordinate={{
@@ -185,6 +201,19 @@ const Map = (props) => {
                 </MapView.Callout>
               </MapView.Marker>
             ))}
+          {!!focusedPlace && (
+            <MapView.Marker
+              coordinate={{
+                latitude: parseFloat(focusedPlace.lat),
+                longitude: parseFloat(focusedPlace.lon),
+              }}
+              pinColor={Colors.primary}
+              onPress={(event) => markerOnPressHandler(event)}>
+              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
+                <Text>{focusedPlace.title}</Text>
+              </MapView.Callout>
+            </MapView.Marker>
+          )}
         </MapView>
       )}
 
@@ -203,7 +232,7 @@ const Map = (props) => {
         mapSearchActive={mapSearchActive}
         searchActivityHandler={() => activityHandler('search')}
         placeToSearch={placeToSearch}
-        setPlaceToSearch={() => setPlaceToSearch()}
+        setPlaceToSearch={(text) => setPlaceToSearch(text)}
         autocomplete={AUTOCOMPLETE}
         showAutocomplete={showAutocomplete}
         setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
@@ -211,12 +240,46 @@ const Map = (props) => {
         setError={() => setError()}
         // focusedPlace, setFocusedPlace
         focusedPlace={focusedPlace}
-        setFocusedPlace={() => setFocusedPlace()}
+        setFocusedPlace={(place) => setFocusedPlace(place)}
       />
 
       {/* render place details */}
       {showPlaceInfo && (
         <PlaceOverview styles={styles} activeMarker={activeMarker} />
+      )}
+
+      {/* render bottom actions */}
+      {!!focusedPlace && (
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: Colors.cards,
+              paddingHorizontal: 25,
+              paddingVertical: 12,
+              margin: 5,
+              borderRadius: 50,
+            }}>
+            <Text style={styles.text}>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: Colors.cards,
+              paddingHorizontal: 25,
+              paddingVertical: 12,
+              margin: 5,
+              borderRadius: 50,
+            }}>
+            <Text style={styles.text}>Discard</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );

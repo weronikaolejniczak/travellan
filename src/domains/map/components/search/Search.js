@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 /* imports from within the module */
 import SearchResult from 'map/components/searchResult/SearchResult';
 
-
 const Search = (props) => {
   /* handlers */
   // changes the state showAutocomplete
@@ -23,6 +22,7 @@ const Search = (props) => {
       changeState(true, props.showAutocomplete);
     } else if (text.length < 1) {
       console.log(`${text.length} =< 1`);
+      console.log(props.autocomplete);
       changeState(false, props.showAutocomplete);
     }
     props.setPlaceToSearch(text);
@@ -50,6 +50,7 @@ const Search = (props) => {
       {props.showAutocomplete && !!props.autocomplete && (
         <FlatList
           data={props.autocomplete}
+          keyExtractor={(item) => item.place_id}
           renderItem={(item) => (
             <SearchResult
               styles={props.styles}
@@ -61,7 +62,6 @@ const Search = (props) => {
               setShowAutocomplete={props.setShowAutocomplete}
             />
           )}
-          keyExtractor={(item) => item.place_id}
         />
       )}
     </View>
@@ -69,15 +69,3 @@ const Search = (props) => {
 };
 
 export default Search;
-
-/* props.autocomplete.map((result) => (
-          <SearchResult
-            styles={props.styles}
-            result={result}
-            placeToSearch={props.placeToSearch}
-            setPlaceToSearch={props.setPlaceToSearch}
-            focusedPlace={props.focusedPlace}
-            setFocusedPlace={props.setFocusedPlace}
-            setShowAutocomplete={props.setShowAutocomplete}
-          />
-        )) */
