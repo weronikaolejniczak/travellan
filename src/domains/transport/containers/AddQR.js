@@ -63,7 +63,7 @@ const AddQR = (props, state) => {
     //props.navigation.goBack(),
     props.navigation.navigate('Transport'),
       {
-        qr: qr,
+        tripId: selectedTrip.id,
       };
     setIsLoading(false);
   }, [dispatch, qr, props.navigation, QR, tripId, ticketId]);

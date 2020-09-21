@@ -41,6 +41,7 @@ const Transport = (props) => {
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
+  const [isQR, setisQR] = useState(true);
 
   /** IMPORTS FROM PROPS */
   const tripId = props.tripId;
@@ -54,21 +55,20 @@ const Transport = (props) => {
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
   //console.log(source);
+  const checkHandler = () => {
+    if (qr === '' || null || undefined) {
+      props.addQRHandler();
+    } else {
+      setshowQR(true);
+    }
+  };
 
   /** DELETION FUNCTIONS/HANDLERS */
-  const deleteTicketHandler = useCallback(async () => {
-    await dispatch(transportActions.deleteTransport(tripId, ticketId));
-  }, [dispatch, tripId, ticketId]);
-
-  const deleteupdateHandler = () => {
-    deleteTicketHandler();
-    useForceUpdate;
-
-  };
   const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
+    setisQR(false);
   }, [dispatch, tripId, ticketId, qr]);
 
   const deletePDF = useCallback(async () => {
@@ -78,14 +78,17 @@ const Transport = (props) => {
   }, [dispatch, tripId, ticketId, pdfUri]);
 
   /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
+
   const closeQRhandler = () => {
     setshowQR(false);
   };
+
   const closePDFhandler = () => {
     setshowPDF(false);
   };
 
   /** NAVIGATION TO QR ADDING SCREEN HANDLER/FUNCTION */
+  /**
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
@@ -94,6 +97,7 @@ const Transport = (props) => {
       qr: qr,
     });
   };
+  */
 
   /** USING FILE PICKER TO ADD PDF-TICKET */
   const pickPDF = async () => {
@@ -170,7 +174,7 @@ const Transport = (props) => {
                     {cancelable: true},
                   );
                 }}>
-                <MaterialIcon name={'delete'} style={styles.icon2} />
+                <MaterialIcon name={'delete'} style={styles.icon3} />
               </TouchableOpacity>
             </View>
           </View>
@@ -243,28 +247,7 @@ const Transport = (props) => {
           />
         </TouchableOpacity>
         {/* SHOW/ADD QR CODE */}
-        <TouchableOpacity
-          onPress={() => {
-            if (qr === '' || null || undefined) {
-              Alert.alert(
-                "Add ticket's QR code",
-                'Scan QR code ',
-                [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: movetoQR,
-                  },
-                ],
-                {cancelable: true},
-              );
-            } else {
-              setshowQR(true);
-            }
-          }}>
+        <TouchableOpacity onPress={checkHandler}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
 
