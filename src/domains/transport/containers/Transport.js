@@ -7,6 +7,7 @@ import {
   Platform,
   ActivityIndicator,
   Animated,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -32,6 +33,50 @@ const Transport = (props) => {
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const deleteAction = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      // delete notes
+      try {
+        await dispatch(transportActions.deleteTransport(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      // fetch transport
+      try {
+        await dispatch(transportActions.fetchTransport(tripId));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+
+  const deleteTransportHandler = useCallback(
+    async (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete ticket',
+        'Are you sure?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => deleteAction(noteId),
+          },
+        ],
+        {cancelable: true},
+      );
+      setIsRefreshing(false);
+    },
+    [deleteAction],
+  );
 
   const loadTransport = useCallback(async () => {
     setIsRefreshing(true);
@@ -115,6 +160,7 @@ const Transport = (props) => {
               stages={itemData.item.stages}
               qr={itemData.item.qr}
               pdfUri={itemData.item.pdfUri}
+              deleteTransportHandler={() => deleteTransportHandler(itemData.item.id)}
             />
           )}
         />

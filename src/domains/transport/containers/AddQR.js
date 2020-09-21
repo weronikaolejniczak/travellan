@@ -26,11 +26,16 @@ import * as transportActions from 'transport/state/Actions';
 //
 import {NavigationEvents} from 'react-navigation';
 
-const AddQR = (props) => {
+const AddQR = (props, state) => {
   const dispatch = useDispatch();
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
+  
+  const selectedTrip = useSelector((state) =>
+    state.trips.availableTrips.find((item) => item.id === tripId),
+  );
+  var qr = props.qr;
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   const [torchOn, settorchOn] = useState(false);
@@ -43,21 +48,26 @@ const AddQR = (props) => {
     //const qr = e.data;
     setshowQRscanner(false);
     //setIsLoading(false);
+    //var qr = {QR};
+    //qr = qr.QR;
+    //await dispatch(transportActions.updateQR(tripId, ticketId, qr));
   };
 
   const acceptHandler = useCallback(async () => {
-    //try {}
     setIsLoading(true);
-    var qr = {QR};
+    qr = {QR};
     qr = qr.QR;
+    console.log(props.navigation);
+    console.log(state);
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     //props.navigation.goBack(),
     props.navigation.navigate('Transport'),
       {
-        tripId: tripId,
+        qr: qr,
       };
     setIsLoading(false);
-  }, [QR, tripId, ticketId, dispatch, props.navigation]);
+  }, [dispatch, qr, props.navigation, QR, tripId, ticketId]);
+
   const redoHandler = () => {
     //console.log({QR});
     setshowQRscanner(true);
@@ -87,13 +97,9 @@ const AddQR = (props) => {
           }
           bottomContent={
             <View style={styles.buttonContainer}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color={Colors.white} />
-              ) : (
-                <TouchableOpacity style={styles.buttonTouchable}>
-                  <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-                </TouchableOpacity>
-              )}
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+              </TouchableOpacity>
             </View>
           }
         />
@@ -102,11 +108,15 @@ const AddQR = (props) => {
         <View style={styles.container}>
           <QRCode style={styles.qrstyle} value={QR} size={300} logoSize={300} />
           <View style={styles.buttonContainerR}>
-            <TouchableOpacity
-              style={styles.buttonTouchable}
-              onPress={acceptHandler}>
-              <MaterialIcon name={'check'} style={styles.icon} />
-            </TouchableOpacity>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+              <TouchableOpacity
+                style={styles.buttonTouchable}
+                onPress={acceptHandler}>
+                <MaterialIcon name={'check'} style={styles.icon} />
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={redoHandler}>

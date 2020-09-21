@@ -236,24 +236,7 @@ const Transport = (props) => {
       </Modal>
       <View style={styles.actions}>
         {/* DELETE TICKET */}
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert(
-              'Delete a ticket',
-              'Are you sure?',
-              [
-                {
-                  text: 'Cancel',
-                  style: 'cancel',
-                },
-                {
-                  text: 'OK',
-                  onPress: deleteupdateHandler,
-                },
-              ],
-              {cancelable: true},
-            );
-          }}>
+        <TouchableOpacity onPress={props.deleteTransportHandler}>
           <Icon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}
@@ -334,11 +317,9 @@ const Transport = (props) => {
                 } catch (error) {
                   console.warn(error);
                 }
-
                 path = `${
                   RNFS.ExternalStorageDirectoryPath,
                 }/project_overview_${Number(new Date())}.pdf`;
-
                 try {
                   await RNFS.copyFile(pdfFilePath, path);
                 } catch (error) {
@@ -346,7 +327,6 @@ const Transport = (props) => {
                   return;
                 }
               }
-
               function handleError(error) {
                 if (error === 'not_available') {
                   error = 'mail_not_available';
