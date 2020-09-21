@@ -28,10 +28,16 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
+//test
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => ++value); // update the state to force render
+}
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation(); // navigation hook
+  const forceUpdate = useForceUpdate();
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -44,18 +50,21 @@ const Transport = (props) => {
   var pdfUri = props.pdfUri;
 
   var RNFS = require('react-native-fs');
-  console.log(props);
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
   //console.log(source);
 
   /** DELETION FUNCTIONS/HANDLERS */
-  /** 
   const deleteTicketHandler = useCallback(async () => {
     await dispatch(transportActions.deleteTransport(tripId, ticketId));
   }, [dispatch, tripId, ticketId]);
-*/
+
+  const deleteupdateHandler = () => {
+    deleteTicketHandler();
+    useForceUpdate;
+
+  };
   const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
@@ -227,7 +236,24 @@ const Transport = (props) => {
       </Modal>
       <View style={styles.actions}>
         {/* DELETE TICKET */}
-        <TouchableOpacity onPress={props.deleteTicketHandler}>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(
+              'Delete a ticket',
+              'Are you sure?',
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: deleteupdateHandler,
+                },
+              ],
+              {cancelable: true},
+            );
+          }}>
           <Icon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}
@@ -308,11 +334,9 @@ const Transport = (props) => {
                 } catch (error) {
                   console.warn(error);
                 }
-
                 path = `${
                   RNFS.ExternalStorageDirectoryPath,
                 }/project_overview_${Number(new Date())}.pdf`;
-
                 try {
                   await RNFS.copyFile(pdfFilePath, path);
                 } catch (error) {
@@ -320,7 +344,6 @@ const Transport = (props) => {
                   return;
                 }
               }
-
               function handleError(error) {
                 if (error === 'not_available') {
                   error = 'mail_not_available';
@@ -329,7 +352,21 @@ const Transport = (props) => {
                   cancelable: true,
                 });
               }
-              **show PDF*
+              Mailer.mail(
+                {
+                  subject: i18n.t(
+                    'FinancingPlanning.loan_request_email_subject',
+                  ),
+                  recipients: [],
+                  body: i18n.t('FinancingPlanning.loan_request_email_body', {
+                    name: get(user, 'profile.name', ''),
+                  }),
+                  isHTML: true,
+                  attachment: {
+                    path, // The absolute path of the file from which to read data.
+                    type: 'pdf', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+                    name: 'project_overview.pdf', // Optional: Custom filename for attachment
+                  },
                 },
                 (error, event) => {
                   if (error) {

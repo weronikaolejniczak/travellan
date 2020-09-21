@@ -26,7 +26,7 @@ import * as transportActions from 'transport/state/Actions';
 //
 import {NavigationEvents} from 'react-navigation';
 
-const AddQR = (props) => {
+const AddQR = (props, state) => {
   const dispatch = useDispatch();
 
   const tripId = props.route.params.tripId;
@@ -34,6 +34,7 @@ const AddQR = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
+  var qr = props.qr;
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   const [torchOn, settorchOn] = useState(false);
@@ -52,18 +53,19 @@ const AddQR = (props) => {
   };
 
   const acceptHandler = useCallback(async () => {
-    //try {}
     setIsLoading(true);
-    var qr = {QR};
+    qr = {QR};
     qr = qr.QR;
-    await dispatch(transportActions.updateQR(tripId, ticketId, qr).then());
+    console.log(props.navigation);
+    console.log(state);
+    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     //props.navigation.goBack(),
     props.navigation.navigate('Transport'),
       {
-        tripId: selectedTrip.id,
+        qr: qr,
       };
     setIsLoading(false);
-  }, [props.navigation, QR, tripId, ticketId, dispatch, selectedTrip.id]);
+  }, [dispatch, qr, props.navigation, QR, tripId, ticketId]);
 
   const redoHandler = () => {
     //console.log({QR});

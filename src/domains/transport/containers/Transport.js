@@ -7,7 +7,6 @@ import {
   Platform,
   ActivityIndicator,
   Animated,
-  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -34,38 +33,6 @@ const Transport = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const deleteAction = useCallback(
-    async (id) => {
-      setIsRefreshing(true);
-      await dispatch(transportActions.deleteTransport(tripId, id));
-      setIsRefreshing(false);
-    },
-    [dispatch, tripId],
-  );
-
-  const deleteReservationHandler = useCallback(
-    async (ticketId) => {
-      setIsRefreshing(true);
-      console.log('Hey there!');
-      Alert.alert(
-        'Delete this ticket?',
-        'Are you sure?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => deleteAction(ticketId),
-          },
-        ],
-        {cancelable: true},
-      );
-      setIsRefreshing(false);
-    },
-    [deleteAction],
-  );
   const loadTransport = useCallback(async () => {
     setIsRefreshing(true);
     try {
@@ -148,9 +115,6 @@ const Transport = (props) => {
               stages={itemData.item.stages}
               qr={itemData.item.qr}
               pdfUri={itemData.item.pdfUri}
-              deleteTransportHandler={() =>
-                deleteReservationHandler(itemData.item.id)
-              }
             />
           )}
         />
