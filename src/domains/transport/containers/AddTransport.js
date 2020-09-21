@@ -111,26 +111,22 @@ const AddTransport = (props) => {
   // submit transport
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
-    if (placeOfDepartureIsValid) {
-      await dispatch(
-        transportActions.createTransport(
-          tripId,
-          to,
-          from,
-          prepareDate(dateOfDeparture, hourOfDeparture),
-          placeOfDeparture,
-          qr,
-          pdfUri,
-        ),
-      );
-      props.navigation.navigate('Transport', {
-        tripId: selectedTrip.id,
-      });
-    } else {
-    }
+    await dispatch(
+      transportActions.createTransport(
+        tripId,
+        to,
+        from,
+        prepareDate(dateOfDeparture, hourOfDeparture),
+        placeOfDeparture,
+        qr,
+        pdfUri,
+      ),
+    );
     setIsLoading(false);
+    props.navigation.navigate('Transport', {
+      tripId: selectedTrip.id,
+    });
   }, [
-    placeOfDepartureIsValid,
     dispatch,
     tripId,
     to,

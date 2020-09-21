@@ -193,6 +193,8 @@ const Transport = (props) => {
       contentContainerStyle={styles.contentContainer}>
       <View>
         <FlatList
+          onRefresh={loadTransport}
+          refreshing={isRefreshing}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}

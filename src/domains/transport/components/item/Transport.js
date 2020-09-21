@@ -358,13 +358,17 @@ const Transport = (props) => {
             marginBottom: '5%',
           }}>
           <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>Date of departure:</Text>
+            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
+              Date of departure:
+            </Text>
             <Text style={styles.text}>
               {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
             </Text>
           </View>
           <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>Place of departure:</Text>
+            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
+              Place of departure:
+            </Text>
             <Text style={styles.text}>{props.placeOfDeparture}</Text>
           </View>
         </View>
