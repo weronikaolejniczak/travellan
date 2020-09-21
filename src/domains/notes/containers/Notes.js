@@ -25,17 +25,28 @@ const Notes = (props) => {
   );
   const notes = selectedTrip.notes;
 
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  /** HANDLERS */
+  /* handlers */
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      await dispatch(noteActions.deleteNote(tripId, id));
-      setIsRefreshing(false);
+      console.log('id in deleteAction: ' + id);
+      try {
+        await dispatch(noteActions.deleteNote(tripId, id)).then(async () => {
+          try {
+            await dispatch(noteActions.fetchNotes(tripId));
+          } catch {
+            setError('Something went wrong!');
+          }
+          setIsRefreshing(false);
+        });
+      } catch {
+        setError('Something went wrong!');
+        setIsRefreshing(false);
+      }
     },
     [dispatch, tripId],
   );
@@ -43,6 +54,7 @@ const Notes = (props) => {
   const deleteNoteHandler = useCallback(
     async (noteId) => {
       setIsRefreshing(true);
+      console.log('noteId in deleteNoteHandler: ' + noteId);
       Alert.alert(
         'Delete note',
         'Are you sure?',
@@ -81,7 +93,7 @@ const Notes = (props) => {
     });
   }, [dispatch, loadNotes]);
 
-  /** ACTIVITY INDICATOR */
+  /* activity indicator */
   if (isLoading || isRefreshing) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
