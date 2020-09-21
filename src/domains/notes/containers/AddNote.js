@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   ScrollView,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as noteActions from 'notes/state/Actions';
-import {addNoteStyle as styles} from './AddNoteStyle';
+import { addNoteStyle as styles } from './AddNoteStyle';
 import Colors from 'constants/Colors';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
@@ -31,6 +31,7 @@ const AddNote = (props) => {
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   //const [categorySubmitted, setCategorySubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  var ToPackList = [];
 
 
   /** HANDLERS */
@@ -81,6 +82,29 @@ const AddNote = (props) => {
     selectedTrip.id,
   ]);
 
+  const submitHandlerToPack = useCallback(async () => {
+    setIsLoading(true);
+    if (!descriptionIsValid) {
+      setDescriptionSubmitted(true);
+      //setCategorySubmitted(true)
+    } else {
+      await dispatch(noteActions.createNote(tripId, category, '', description));
+      props.navigation.navigate('Notes', {
+        tripId: selectedTrip.id,
+      });
+    }
+    setIsLoading(false);
+  }, [
+    descriptionIsValid,
+    dispatch,
+    tripId,
+    category,
+    '',
+    description,
+    props.navigation,
+    selectedTrip.id,
+  ]);
+
   const categoryList = [
     {
       label: 'To Do',
@@ -114,99 +138,136 @@ const AddNote = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-        <View style={styles.smallPaddingTop}>
+      <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Set Category</Text>
         <View style={styles.smallPaddingTop}></View>
         <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
-      {/* CATEGORY PICKER */}
-      <RNPickerSelect 
-        //onChangeText={categoryChangeHandler}
-        items={categoryList}
-        placeholder={placeholder}
-        onValueChange={(value) => setCategory(value)}
-        style={{
-          inputAndroid: {
-            backgroundColor: 'transparent',
-          },
-          iconContainer: {
-            top: 5,
-            right: 15,
-          },
-          color: categoryList.color
-        }}
-        Icon={() => {
-          return (
-            <View
-              style={{
+          {/* CATEGORY PICKER */}
+          <RNPickerSelect
+            //onChangeText={categoryChangeHandler}
+            items={categoryList}
+            placeholder={placeholder}
+            onValueChange={(value) => setCategory(value)}
+            style={{
+              inputAndroid: {
                 backgroundColor: 'transparent',
-                borderTopWidth: 10,
-                borderTopColor: 'gray',
-                borderRightWidth: 10,
-                borderRightColor: 'transparent',
-                borderLeftWidth: 10,
-                borderLeftColor: 'transparent',
-                width: 0,
-                height: 0,
-                top: 15,
-                
-              }}
-            />
-          );
-        }}
-      />
-      {/*
+              },
+              iconContainer: {
+                top: 5,
+                right: 15,
+              },
+              color: categoryList.color
+            }}
+            Icon={() => {
+              return (
+                <View
+                  style={{
+                    backgroundColor: 'transparent',
+                    borderTopWidth: 10,
+                    borderTopColor: 'gray',
+                    borderRightWidth: 10,
+                    borderRightColor: 'transparent',
+                    borderLeftWidth: 10,
+                    borderLeftColor: 'transparent',
+                    width: 0,
+                    height: 0,
+                    top: 15,
+
+                  }}
+                />
+              );
+            }}
+          />
+          {/*
       {!categoryIsValid && categorySubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Pick category!</Text>
           </View>
         )} */}
+        </View>
       </View>
-    </View>
-    
-      {/* TITLE INPUT */}
-      <View style={styles.smallPaddingTop}>
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Title"
-          placeholderTextColor={'grey'}
-          value={title}
-          onChangeText={titleChangeHandler}
-        />
-        {!titleIsValid && titleSubmitted && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>Enter a title!</Text>
+      { category === 'To Pack' ? (
+        <ScrollView>
+          <View style={styles.smallPaddingTop}>
+            <Text style={styles.label}>Content</Text>
+            {/* DESCRIPTION INPUT */}
+            <TextInput
+              numberOfLines={4}
+              style={styles.input}
+              placeholder="Content"
+              placeholderTextColor={'grey'}
+              value={description}
+              onChangeText={descriptionChangeHandler}
+              multiline
+            />
+            {!descriptionIsValid && descriptionSubmitted && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>Enter a description!</Text>
+              </View>
+
+            )}
           </View>
-        )}
-      </View>
-      {/* DESCRIPTION INPUT */}
-      <View style={styles.smallPaddingTop}>
-        <Text style={styles.label}>Content</Text>
-        <TextInput
-          numberOfLines={4}
-          style={styles.input}
-          placeholder="Content"
-          placeholderTextColor={'grey'}
-          value={description}
-          onChangeText={descriptionChangeHandler}
-          multiline
-        />
-        {!descriptionIsValid && descriptionSubmitted && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>Enter a description!</Text>
+          {/* SUBMIT BUTTON */}
+          <View style={styles.buttonContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+                <TouchableOpacity style={styles.button} onPress={submitHandlerToPack}>
+                  <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+              )}
           </View>
-        )}
-      </View>
-      {/* SUBMIT BUTTON */}
-      <View style={styles.buttonContainer}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color={Colors.white} />
-        ) : (
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+        </ScrollView>) : (
+          <ScrollView>
+            <View style={styles.smallPaddingTop}>
+              <Text style={styles.label}>Title</Text>
+              {/* TITLE INPUT */}
+              <TextInput
+                style={styles.input}
+                placeholder="Title"
+                placeholderTextColor={'grey'}
+                value={title}
+                onChangeText={titleChangeHandler}
+              />
+              {!titleIsValid && titleSubmitted && (
+                <View style={styles.errorContainer}>
+                  <Text style={styles.error}>Enter a title!</Text>
+                </View>
+              )}
+            </View>
+
+            <View style={styles.smallPaddingTop}>
+              <Text style={styles.label}>Content</Text>
+              {/* DESCRIPTION INPUT */}
+              <TextInput
+                numberOfLines={4}
+                style={styles.input}
+                placeholder="Content"
+                placeholderTextColor={'grey'}
+                value={description}
+                onChangeText={descriptionChangeHandler}
+                multiline
+              />
+              {!descriptionIsValid && descriptionSubmitted && (
+                <View style={styles.errorContainer}>
+                  <Text style={styles.error}>Enter a description!</Text>
+                </View>
+              )}
+            </View>
+            {/* SUBMIT BUTTON */}
+            <View style={styles.buttonContainer}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color={Colors.white} />
+              ) : (
+                  <TouchableOpacity style={styles.button} onPress={submitHandler}>
+                    <Text style={styles.buttonText}>Submit</Text>
+                  </TouchableOpacity>
+                )}
+            </View>
+          </ScrollView>
+        )
+      }
+
     </ScrollView>
   );
 };
