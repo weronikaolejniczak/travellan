@@ -33,7 +33,6 @@ const Notes = (props) => {
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      console.log('id in deleteAction: ' + id);
       try {
         await dispatch(noteActions.deleteNote(tripId, id)).then(async () => {
           try {
@@ -41,12 +40,12 @@ const Notes = (props) => {
           } catch {
             setError('Something went wrong!');
           }
-          setIsRefreshing(false);
         });
       } catch {
         setError('Something went wrong!');
-        setIsRefreshing(false);
+        console.log('Something went wrong... :(');
       }
+      setIsRefreshing(false);
     },
     [dispatch, tripId],
   );
@@ -54,7 +53,6 @@ const Notes = (props) => {
   const deleteNoteHandler = useCallback(
     async (noteId) => {
       setIsRefreshing(true);
-      console.log('noteId in deleteNoteHandler: ' + noteId);
       Alert.alert(
         'Delete note',
         'Are you sure?',
