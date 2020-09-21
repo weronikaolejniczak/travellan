@@ -112,8 +112,12 @@ const TripsOverview = (props) => {
                         },
                         {
                           text: 'OK',
-                          onPress: () =>
-                            dispatch(tripActions.deleteTrip(itemData.item.id)),
+                          onPress: () => {
+                            setIsLoading(true);
+                            dispatch(tripActions.deleteTrip(itemData.item.id));
+                            dispatch(tripActions.fetchTrips());
+                            setIsLoading(false);
+                          },
                         },
                       ],
                       {cancelable: true},
