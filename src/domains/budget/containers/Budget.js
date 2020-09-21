@@ -30,17 +30,16 @@ const Budget = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const budget = selectedTrip.budget;
-  //console.log(budget);
+  console.log(selectedTrip.budget);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
-    budget !== undefined ? budget[0] : undefined,
+    selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
   );
-  //console.log(selectedCurrency);
+  console.log(selectedCurrency);
 
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
-  //console.log(displayableValue);
 
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -193,12 +192,14 @@ const Budget = (props) => {
 
   // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
+    setIsRefreshing(true);
     try {
       await dispatch(budgetActions.fetchBudget(tripId));
     } catch (err) {
       setError(err.message);
     }
-  }, [dispatch, tripId]);
+    setIsRefreshing(false);
+  }, [dispatch, setIsRefreshing, tripId]);
 
   // fetch the budget on render
   useEffect(() => {
@@ -269,14 +270,14 @@ const Budget = (props) => {
                   setAmount('');
                   setAccount(item.defaultAccount);
                 }}>
-                <Text
+                {!!selectedCurrency && <Text
                   style={
                     selectedCurrency.currency === item.currency
                       ? styles.currencyActive
                       : styles.currencyNonactive
                   }>
                   {item.currency}
-                </Text>
+                </Text>}
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item.id.toString()}

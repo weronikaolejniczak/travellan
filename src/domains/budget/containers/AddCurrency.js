@@ -36,8 +36,6 @@ const AddCurrency = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  console.log(currentBudget);
-
   /* HANDLERS */
   // handles currency validity
   const currencyChangeHandler = (text) => {
