@@ -1,9 +1,10 @@
 class Transport {
-  constructor(id, to, from, stages, qr, pdfUri) {
+  constructor(id, to, from, dateOfDeparture, placeOfDeparture, qr, pdfUri) {
     this.id = id;
-    this.to = to;
-    this.from = from;
-    this.stages = stages;
+    this.to = to; // is this a ticket to destination?
+    this.from = from; // is this a ticket from destination?
+    this.dateOfDeparture = dateOfDeparture;
+    this.placeOfDeparture = placeOfDeparture;
     this.qr = qr;
     this.pdfUri = pdfUri;
   }

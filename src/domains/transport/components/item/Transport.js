@@ -18,6 +18,7 @@ import Card from 'components/card/Card';
 import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
 import {transportItemStyle as styles, cardHeight} from './TransportStyle';
+import Colors from 'constants/Colors';
 
 /** QR-related imports */
 import {useNavigation} from '@react-navigation/native';
@@ -38,6 +39,9 @@ const Transport = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation(); // navigation hook
   const forceUpdate = useForceUpdate();
+
+  console.log(props);
+
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -45,7 +49,7 @@ const Transport = (props) => {
   /** IMPORTS FROM PROPS */
   const tripId = props.tripId;
   const ticketId = props.id;
-  const transportTransfers = props.stages.length - 1;
+
   var qr = props.qr;
   var pdfUri = props.pdfUri;
 
@@ -90,7 +94,7 @@ const Transport = (props) => {
     navigation.navigate('Add QR', {
       tripId: tripId,
       ticketId: ticketId,
-      transportTransfers: transportTransfers,
+      transportTransfers: 1,
       qr: qr,
     });
   };
@@ -374,18 +378,41 @@ const Transport = (props) => {
           ) : (
             <Text style={[styles.header]}>from {props.destination}</Text>
           )}
-          <Text style={[styles.text]}>
-            {transportTransfers === 1
-              ? `${transportTransfers} transport transfer`
-              : `${transportTransfers} transport transfers`}
-          </Text>
         </View>
 
-        {/* RENDER TRANSPORT STAGE COMPONENT FOR EACH STAGE */}
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 22,
+            flexDirection: 'row',
+            alignItems: 'baseline',
+            marginBottom: '5%',
+          }}>
+          <View style={{flex: 0.5}}>
+            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>Date of departure:</Text>
+            <Text style={styles.text}>
+              {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
+            </Text>
+          </View>
+          <View style={{flex: 0.5}}>
+            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>Place of departure:</Text>
+            <Text style={styles.text}>{props.placeOfDeparture}</Text>
+          </View>
+        </View>
+
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
-          {props.stages.map((i) => {
-            return <TransportStage stage={i} index={props.stages.indexOf(i)} />;
-          })}
+          {!!qr ? (
+            <QRCode
+              style={styles.qrstyle}
+              value={qr}
+              size={250}
+              logoSize={250}
+            />
+          ) : (
+            <View
+              style={{width: 250, height: 250, backgroundColor: Colors.grey}}
+            />
+          )}
         </View>
       </ScrollView>
     </Card>

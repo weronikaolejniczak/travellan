@@ -132,8 +132,6 @@ const Transport = (props) => {
       contentContainerStyle={styles.contentContainer}>
       <View>
         <FlatList
-          onRefresh={loadTransport}
-          refreshing={isRefreshing}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -157,10 +155,13 @@ const Transport = (props) => {
               id={itemData.item.id}
               to={itemData.item.to}
               from={itemData.item.from}
-              stages={itemData.item.stages}
+              dateOfDeparture={itemData.item.dateOfDeparture}
+              placeOfDeparture={itemData.item.placeOfDeparture}
               qr={itemData.item.qr}
               pdfUri={itemData.item.pdfUri}
-              deleteTransportHandler={() => deleteTransportHandler(itemData.item.id)}
+              deleteTransportHandler={() =>
+                deleteTransportHandler(itemData.item.id)
+              }
             />
           )}
         />

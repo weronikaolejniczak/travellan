@@ -53,6 +53,7 @@ export const updateQR = (tripId, ticketId, qr) => {
     await dispatch({type: UPDATE_QR, tripId, ticketId, qr});
   };
 };
+
 //used to update PATH/URI to pdf
 export const updatePDF = (tripId, ticketId, pdfUri) => {
   return async function (dispatch, getState) {
@@ -84,6 +85,7 @@ export const updatePDF = (tripId, ticketId, pdfUri) => {
     dispatch({type: UPDATE_PDF, tripId, pdfUri});
   };
 };
+
 // Delete a ticket based on id of the ticket.
 export const deleteTransport = (tripId, ticketId) => {
   return async function (dispatch, getState) {
@@ -117,12 +119,21 @@ export const deleteTransport = (tripId, ticketId) => {
 };
 
 // Create a ticket based on user input.
-export const createTransport = (tripId, to, from, stages, qr, pdfUri) => {
+export const createTransport = (
+  tripId,
+  to,
+  from,
+  dateOfDeparture,
+  placeOfDeparture,
+  qr,
+  pdfUri,
+) => {
   const newTransport = new Transport(
     new Date().toString(), // DUMMY ID
     to,
     from,
-    stages,
+    dateOfDeparture,
+    placeOfDeparture,
     qr,
     pdfUri,
   );
