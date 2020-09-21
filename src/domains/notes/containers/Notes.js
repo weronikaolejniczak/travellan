@@ -28,17 +28,17 @@ const Notes = (props) => {
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
+      // delete notes
       try {
-        await dispatch(noteActions.deleteNote(tripId, id)).then(async () => {
-          try {
-            await dispatch(noteActions.fetchNotes(tripId));
-          } catch {
-            setError('Something went wrong!');
-          }
-        });
+        await dispatch(noteActions.deleteNote(tripId, id));
       } catch {
         setError('Something went wrong!');
-        console.log('Something went wrong... :(');
+      }
+      // fetch notes
+      try {
+        await dispatch(noteActions.fetchNotes(tripId));
+      } catch {
+        setError('Something went wrong!');
       }
       setIsRefreshing(false);
     },
