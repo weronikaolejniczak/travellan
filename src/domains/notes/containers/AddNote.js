@@ -85,21 +85,26 @@ const AddNote = (props) => {
     {
       label: 'To Do',
       value: 'To Do',
+      color: 'red',
+      fontWeight: 'bold',
     },
     {
       label: 'To Pack',
       value: 'To Pack',
+      color: 'green',
+      fontWeight: 'bold',
     },
     {
       label: 'Diaries',
       value: 'Diaries',
+      color: 'pink',
+      fontWeight: 'bold',
     },
   ];
 
   const placeholder = {
     label: 'Select a category...',
     value: 'Categoryless',
-    color: '#9EA0A4',
   };
 
   useEffect(() => {
@@ -118,7 +123,6 @@ const AddNote = (props) => {
         items={categoryList}
         placeholder={placeholder}
         onValueChange={(value) => setCategory(value)}
-        useNativeAndroidPickerStyle={false}
         style={{
           inputAndroid: {
             backgroundColor: 'transparent',
@@ -127,6 +131,7 @@ const AddNote = (props) => {
             top: 5,
             right: 15,
           },
+          color: categoryList.color
         }}
         Icon={() => {
           return (
