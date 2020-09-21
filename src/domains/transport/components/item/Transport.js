@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
-  PermissionsAndroid,
+  //PermissionsAndroid,
   //ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -21,7 +21,6 @@ import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 import Colors from 'constants/Colors';
 
 /** QR-related imports */
-import {useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 
@@ -29,19 +28,9 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
-//test
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue((value) => ++value); // update the state to force render
-}
 /** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation(); // navigation hook
-  const forceUpdate = useForceUpdate();
-
-  console.log(props);
-
   /** STATES FOR MODALS */
   const [showQR, setshowQR] = useState(false);
   const [showPDF, setshowPDF] = useState(false);
@@ -53,22 +42,19 @@ const Transport = (props) => {
   var qr = props.qr;
   var pdfUri = props.pdfUri;
 
-  var RNFS = require('react-native-fs');
+  //var RNFS = require('react-native-fs');
 
   /** CONCATENATING FORMAT FOR PDF SOURCE */
   var source = {uri: pdfUri};
-  //console.log(source);
+  const checkHandler = () => {
+    if (qr === '' || null || undefined) {
+      props.addQRHandler();
+    } else {
+      setshowQR(true);
+    }
+  };
 
   /** DELETION FUNCTIONS/HANDLERS */
-  const deleteTicketHandler = useCallback(async () => {
-    await dispatch(transportActions.deleteTransport(tripId, ticketId));
-  }, [dispatch, tripId, ticketId]);
-
-  const deleteupdateHandler = () => {
-    deleteTicketHandler();
-    useForceUpdate;
-
-  };
   const deleteQR = useCallback(async () => {
     qr = '';
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
@@ -82,14 +68,17 @@ const Transport = (props) => {
   }, [dispatch, tripId, ticketId, pdfUri]);
 
   /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
+
   const closeQRhandler = () => {
     setshowQR(false);
   };
+
   const closePDFhandler = () => {
     setshowPDF(false);
   };
 
   /** NAVIGATION TO QR ADDING SCREEN HANDLER/FUNCTION */
+  /**
   const movetoQR = () => {
     navigation.navigate('Add QR', {
       tripId: tripId,
@@ -98,6 +87,7 @@ const Transport = (props) => {
       qr: qr,
     });
   };
+  */
 
   /** USING FILE PICKER TO ADD PDF-TICKET */
   const pickPDF = async () => {
@@ -174,7 +164,7 @@ const Transport = (props) => {
                     {cancelable: true},
                   );
                 }}>
-                <MaterialIcon name={'delete'} style={styles.icon2} />
+                <MaterialIcon name={'delete'} style={styles.icon3} />
               </TouchableOpacity>
             </View>
           </View>
@@ -247,28 +237,7 @@ const Transport = (props) => {
           />
         </TouchableOpacity>
         {/* SHOW/ADD QR CODE */}
-        <TouchableOpacity
-          onPress={() => {
-            if (qr === '' || null || undefined) {
-              Alert.alert(
-                "Add ticket's QR code",
-                'Scan QR code ',
-                [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: movetoQR,
-                  },
-                ],
-                {cancelable: true},
-              );
-            } else {
-              setshowQR(true);
-            }
-          }}>
+        <TouchableOpacity onPress={checkHandler}>
           <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
         </TouchableOpacity>
 

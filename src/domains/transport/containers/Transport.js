@@ -35,6 +35,67 @@ const Transport = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  /** STATES FOR MODALS */
+  const [showQR, setshowQR] = useState(false);
+  //const [showPDF, setshowPDF] = useState(false)
+
+
+  //ADDING QR 
+  const addQRAction = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      // move to "Add QR screen"
+      try {
+        props.navigation.navigate('Add QR', {
+          tripId: tripId,
+          ticketId: id,
+          qr: qr,
+        });
+      } catch {
+        setError('Something went wrong!');
+      }
+      // fetch transport
+      /** 
+      try {
+        await dispatch(transportActions.fetchTransport(tripId));
+      } catch {
+        setError('Something went wrong!');
+      }
+      */
+      setIsRefreshing(false);
+    },
+    [props.navigation, qr, tripId],
+  );
+
+  const addQRHandler = useCallback(
+    async (ticketId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        "Add ticket's QR code",
+        'Scan QR code',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => addQRAction(ticketId),
+          },
+        ],
+        {cancelable: true},
+      );
+      setIsRefreshing(false);
+    },
+    [addQRAction],
+  );
+  // HANDLING QR
+  /**
+  const closeQRhandler = () => {
+    setshowQR(false);
+  };
+  */
+  //Ticket deletion module
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
@@ -56,7 +117,7 @@ const Transport = (props) => {
   );
 
   const deleteTransportHandler = useCallback(
-    async (noteId) => {
+    async (ticketId) => {
       setIsRefreshing(true);
       Alert.alert(
         'Delete ticket',
@@ -68,7 +129,7 @@ const Transport = (props) => {
           },
           {
             text: 'OK',
-            onPress: () => deleteAction(noteId),
+            onPress: () => deleteAction(ticketId),
           },
         ],
         {cancelable: true},
@@ -159,9 +220,8 @@ const Transport = (props) => {
               placeOfDeparture={itemData.item.placeOfDeparture}
               qr={itemData.item.qr}
               pdfUri={itemData.item.pdfUri}
-              deleteTransportHandler={() =>
-                deleteTransportHandler(itemData.item.id)
-              }
+              deleteTransportHandler={() => deleteTransportHandler(itemData.item.id)}
+              addQRHandler={() => addQRHandler(itemData.item.id)}
             />
           )}
         />

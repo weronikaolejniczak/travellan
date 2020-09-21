@@ -141,4 +141,9 @@ export const transportItemStyle = StyleSheet.create({
     color: Colors.text,
     //marginRight: 20,
   },
+  icon3: {
+    fontSize: 30,
+    color: Colors.text,
+    marginTop: 40,
+  },
 });
