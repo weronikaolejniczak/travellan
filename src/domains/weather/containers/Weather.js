@@ -124,6 +124,9 @@ const Weather = (props) => {
                           styles.bigBubble,
                           styles.marginLeftAndRight,
                         ]}>
+                        <Text style={[styles.text, styles.textShadow]}>
+                          average
+                        </Text>
                         <Text
                           style={[
                             styles.text,
