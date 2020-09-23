@@ -2,13 +2,15 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-/** SCREENS */
-// authorization/login and signup presentational components
+/**
+screens
+*/
+// authorization/login and signup
 import StartupScreen, {
   StartupScreenOptions,
 } from 'user/containers/StartupScreen';
 import Auth, {authOptions} from 'user/containers/Auth';
-// general trip handling presentational components
+// general trip handling
 import TripsOverview, {
   tripsOverviewOptions,
 } from 'myTrips/containers/overview/TripsOverview';
@@ -16,19 +18,21 @@ import TripDetails, {
   tripDetailsOptions,
 } from 'myTrips/containers/details/TripDetails';
 import NewTrip from 'myTrips/containers/newTrip/NewTrip';
-// transport presentational components
-import Transport, {transportOptions} from 'transport/containers/Transport';
-import AddTransport from 'transport/containers/AddTransport';
-import AddQR from 'transport/containers/AddQR';
-// accommodation presentational components
+// transport
+import Transport, {
+  transportOptions,
+} from 'transport/containers/transport/Transport';
+import AddTransport from 'transport/containers/addTransport/AddTransport';
+import AddQR from 'transport/containers/addQR/AddQR';
+// accommodation
 import Accommodation, {
   accommodationOptions,
 } from 'accommodation/containers/Accommodation';
 import AddAccommodation from 'accommodation/containers/AddAccommodation';
-// budget presentational components
+// budget
 import Budget, {budgetOptions} from 'budget/containers/Budget';
 import AddCurrency from 'budget/containers/AddCurrency';
-// notes presentational components
+// notes
 import Notes, {notesOptions} from 'notes/containers/Notes';
 import AddNote from 'notes/containers/AddNote';
 import EditNote from 'notes/containers/EditNote'
@@ -37,10 +41,14 @@ import Map from 'map/containers/Map';
 // weather presentational component
 import Weather from 'weather/containers/Weather';
 
-/** CONSTANTS */
+/**
+constants
+*/
 import Colors from 'constants/Colors';
 
-/** STACK NAVIGATOR */
+/** 
+stack navigator
+*/
 const Stack = createStackNavigator();
 
 export default function Navigation() {
@@ -106,11 +114,13 @@ export default function Navigation() {
   );
 }
 
-/** DEFAULT NAVIGATION OPTIONS */
+/** 
+default navigation options - transparent navigation bar
+*/
 const defaultNavOptions = {
   headerTransparent: {
     position: 'absolute',
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.transparent,
     zIndex: 100,
     top: 0,
     left: 0,
@@ -122,7 +132,7 @@ const defaultNavOptions = {
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowColor: Colors.transparentBlack,
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 7,
   },
