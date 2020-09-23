@@ -1,21 +1,29 @@
-/**
+/*
  * This file contains colors that are global to the application
  */
-export default {
-  /** STANDARD */
+
+const baseColors = {
+  green: '#06C258',
+  orange: '#FF8C00',
+  red: 'red',
+  // white to black scale
+  white: 'white',
+  lightGrey: 'grey',
+  grey: '#222222',
+  darkGrey: '#111111',
+  black: 'black',
+  // with transparency
   transparent: 'rgba(0,0,0,0)',
   blackTransparent: 'rgba(0, 0, 0, 0.5)',
-  white: '#FFFFFF',
-  green: '#06C258',
-  grey: 'grey',
-  /** SPECIFIC */
-  shadow: '#000000',
-  cards: '#111111',
-  background: '#222222',
-  primary: '#FF8C00', // dark orange
-  text: '#FFFFFF',
-  error: 'red',
-  switchEnabledTrack: '#FF8C00',
-  switchDisabledTrack: '#767577',
-  switchThumb: '#FFFFFF',
+};
+
+export default {
+  /* light theme */
+  /* dark theme */
+  shadow: baseColors.black,
+  cards: baseColors.darkGrey,
+  background: baseColors.grey,
+  primary: baseColors.orange,
+  text: baseColors.white,
+  error: baseColors.red,
 };

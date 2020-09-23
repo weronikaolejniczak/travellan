@@ -8,10 +8,10 @@ const CustomSwitch = (props) => {
     <Switch
       style={props.style}
       trackColor={{
-        false: Colors.switchDisabledTrack,
-        true: Colors.switchEnabledTrack,
+        false: Colors.lightGrey,
+        true: Colors.primary,
       }}
-      thumbColor={Colors.switchThumb}
+      thumbColor={Colors.darkGrey}
       ios_backgroundColor={Colors.background}
       onValueChange={props.onValueChange}
       value={props.value}
