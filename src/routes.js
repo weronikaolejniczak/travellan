@@ -21,24 +21,23 @@ import NewTrip from 'myTrips/containers/newTrip/NewTrip';
 // transport
 import Transport, {
   transportOptions,
-} from 'transport/containers/transport/Transport';
+} from 'transport/containers/overview/Transport';
 import AddTransport from 'transport/containers/addTransport/AddTransport';
 import AddQR from 'transport/containers/addQR/AddQR';
 // accommodation
 import Accommodation, {
   accommodationOptions,
-} from 'accommodation/containers/Accommodation';
-import AddAccommodation from 'accommodation/containers/AddAccommodation';
+} from 'accommodation/containers/overview/Accommodation';
+import AddAccommodation from 'accommodation/containers/addAccommodation/AddAccommodation';
 // budget
 import Budget, {budgetOptions} from 'budget/containers/Budget';
 import AddCurrency from 'budget/containers/AddCurrency';
 // notes
-import Notes, {notesOptions} from 'notes/containers/Notes';
-import AddNote from 'notes/containers/AddNote';
-import EditNote from 'notes/containers/EditNote'
-// map presentational component
+import Notes, {notesOptions} from 'notes/containers/overview/Notes';
+import AddNote from 'notes/containers/addNote/AddNote';
+// map
 import Map from 'map/containers/Map';
-// weather presentational component
+// weather
 import Weather from 'weather/containers/Weather';
 
 /**
@@ -100,7 +99,6 @@ export default function Navigation() {
         {/* NOTES */}
         <Stack.Screen name="Notes" component={Notes} options={notesOptions} />
         <Stack.Screen name="Add note" component={AddNote} />
-        <Stack.Screen name="Edit Note" component={EditNote} />
         {/* MAP */}
         <Stack.Screen
           name="Map"

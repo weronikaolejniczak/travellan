@@ -1,6 +1,6 @@
 import Colors from './Colors';
-import Fonts from './Fonts';
+import Typography from './Typography';
 import Metrics from './Metrics';
-import LayoutHandlers from './LayoutHandlers';
+import Layout from './Layout';
 
-export {Colors, Fonts, Metrics, LayoutHandlers};
+export {Colors, Typography, Metrics, Layout};

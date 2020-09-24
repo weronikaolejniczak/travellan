@@ -22,11 +22,7 @@ export const tripsOverviewStyle = StyleSheet.create({
     fontSize: 18,
   },
   deleteButton: {
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    borderRadius: 50,
-    padding: 10,
-    paddingHorizontal: 15,
+    padding: 15,
   },
   deleteIcon: {
     fontSize: 30,

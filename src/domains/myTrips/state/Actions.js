@@ -5,42 +5,49 @@ import Map from 'map/models/Map';
 import {fetchImage} from 'common/services/Image';
 import {fetchCoords} from 'common/services/Coordinates';
 /* actions */
+export const FETCH_TRIPS = 'FETCH_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
-export const SET_TRIPS = 'SET_TRIPS';
 
 // fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    // GET request to the database (default mode of fetch).
-    const response = await fetch(
-      `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
-    ); //.then(response => { <- declares what happens after getting a response
-    //...
-    //}).catch(); <- listening to errors
-    const resData = await response.json();
-    const loadedTrips = [];
-    // adding trips from database one by one using the stored keys
-    for (const key in resData) {
-      loadedTrips.push(
-        new Trip(
-          key,
-          resData[key].destination,
-          resData[key].region,
-          resData[key].image,
-          resData[key].startDate,
-          resData[key].endDate,
-          resData[key].budget,
-          resData[key].notes,
-          resData[key].transportInfo,
-          resData[key].accommodationInfo,
-          resData[key].map,
-        ),
+    try {
+      const response = await fetch(
+        `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
       );
+
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const data = await response.json();
+      const loadedTrips = [];
+
+      // adding trips from database one by one using the stored keys
+      for (const key in data) {
+        loadedTrips.push(
+          new Trip(
+            key,
+            data[key].destination,
+            data[key].region,
+            data[key].image,
+            data[key].startDate,
+            data[key].endDate,
+            data[key].budget,
+            data[key].notes,
+            data[key].transportInfo,
+            data[key].accommodationInfo,
+            data[key].map,
+          ),
+        );
+      }
+      dispatch({type: FETCH_TRIPS, trips: loadedTrips});
+    } catch (error) {
+      throw error;
     }
-    dispatch({type: SET_TRIPS, trips: loadedTrips});
   };
 };
 
@@ -100,11 +107,11 @@ export const createTrip = (destination, startDate, endDate, budget) => {
     ); //.then(response => {    <- declares what happens after getting a response
     //...
     //}).catch(); <- listening to errors
-    const resData = await response.json();
+    const data = await response.json();
     dispatch({
       type: CREATE_TRIP,
       tripData: {
-        id: resData.name,
+        id: data.name,
         destination,
         region,
         image,

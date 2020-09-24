@@ -1,18 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  View,
-  Text,
-  FlatList,
-  Platform,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
-/** IMPORTS FROM WITHIN THE MODULE */
-import HeaderButton from 'components/headerButton/HeaderButton';
+/* imports from within the module */
+import Itemless from 'components/frames/itemless/Itemless';
+import Loading from 'components/frames/loading/Loading';
 import NoteItem from 'notes/components/item/Note';
+import HeaderButton from 'components/headerButton/HeaderButton';
 import * as noteActions from 'notes/state/Actions';
 import {NotesStyles as styles} from './NotesStyle';
 import Colors from 'constants/Colors';
@@ -75,68 +69,66 @@ const Notes = (props) => {
 
   const loadNotes = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true);
+    setIsLoading(true);
     try {
       await dispatch(noteActions.fetchNotes(tripId));
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
-  }, [dispatch, setError, tripId]);
+    setIsLoading(false);
+  }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    setIsLoading(true);
-    loadNotes().then(() => {
-      setIsLoading(false);
-    });
+    loadNotes();
   }, [dispatch, loadNotes]);
 
-  /* activity indicator */
+  // listen to navigation event to fetch trips no matter if the screen is already in stack
+  useEffect(() => {
+    const willFocusSubscription = props.navigation.addListener(
+      'willFocus',
+      loadNotes,
+    );
+    // clean up listener
+    return () => {
+      willFocusSubscription.remove();
+    };
+  }, [loadNotes]); // do not add props.navigation as a dependency, it may cause a loop
+
   if (isLoading || isRefreshing) {
+    return <Loading />;
+  } else if (error) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
-        <ActivityIndicator size="large" color={Colors.primary} />
+        <Text style={styles.text}>{error}</Text>
+        <Button title="Try again" onPress={loadNotes} color={Colors.primary} />
       </View>
     );
-  }
-
-  return (
-    <View style={styles.container}>
-      {notes ? (
-        <FlatList
-          //onRefresh={loadNotes}
-          //refreshing={isRefreshing}
-          data={notes}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={(itemData) => (
-            <NoteItem
-              tripId={tripId}
-              category={itemData.item.category}
-              id={itemData.item.id}
-              title={itemData.item.title}
-              description={itemData.item.description}
-              deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
-            />
-          )}
-        />
-      ) : (
-        <View style={styles.itemlessContainer}>
-          <Text style={[styles.text, styles.itemlessText]}>
-            There are no notes!
-          </Text>
-          <Text style={[styles.text, styles.itemlessText]}>
-            Add one with the
-          </Text>
-          <Icon
-            name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-            size={32}
-            style={[styles.text, {margin: 10}]}
+  } else {
+    if (notes === undefined) {
+      return <Itemless message={'You have no notes saved!'} />;
+    } else {
+      return (
+        <View style={styles.container}>
+          <FlatList
+            //onRefresh={loadNotes}
+            //refreshing={isRefreshing}
+            data={notes}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={(itemData) => (
+              <NoteItem
+                tripId={tripId}
+                category={itemData.item.category}
+                id={itemData.item.id}
+                title={itemData.item.title}
+                description={itemData.item.description}
+                deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
+              />
+            )}
           />
-          <Text style={[styles.text, styles.itemlessText]}>sign above!</Text>
         </View>
-      )}
-    </View>
-  );
+      );
+    }
+  }
 };
 
 export const notesOptions = (navData) => {

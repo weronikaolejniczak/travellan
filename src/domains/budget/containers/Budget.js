@@ -30,12 +30,12 @@ const Budget = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const budget = selectedTrip.budget;
-  console.log(selectedTrip.budget);
+  //console.log(selectedTrip.budget);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
     selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
   );
-  console.log(selectedCurrency);
+  //console.log(selectedCurrency);
 
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,

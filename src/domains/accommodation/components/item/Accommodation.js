@@ -45,7 +45,7 @@ const AccommodationItem = (props) => {
   return (
     <Card style={styles.accommodation}>
       <View style={styles.actions}>
-        <TouchableOpacity onPress={props.deleteReservationHandler}>
+        <TouchableOpacity onPress={props.deleteAccommodationHandler}>
           <Ionicon
             name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
             style={styles.icon}

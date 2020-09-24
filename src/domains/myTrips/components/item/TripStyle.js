@@ -6,7 +6,7 @@ const cardHeight = 0.4 * height;
 
 export const tripStyle = StyleSheet.create({
   tripCard: {
-    height: cardHeight,
+    //height: cardHeight,
     marginHorizontal: width * 0.04,
     marginVertical: height * 0.02,
   },
@@ -27,7 +27,7 @@ export const tripStyle = StyleSheet.create({
   actions: {
     position: 'absolute',
     left: '80%',
-    top: cardHeight * 0.7,
+    top: cardHeight * 0.68,
   },
   text: {
     color: Colors.text,

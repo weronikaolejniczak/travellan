@@ -26,4 +26,7 @@ export default {
   primary: baseColors.orange,
   text: baseColors.white,
   error: baseColors.red,
+  thumbColor: baseColors.white,
+  trackColorOnFalse: baseColors.lightGrey,
+  trackColorOnTrue: baseColors.orange,
 };

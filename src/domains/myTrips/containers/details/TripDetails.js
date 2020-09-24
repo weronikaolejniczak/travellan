@@ -69,17 +69,15 @@ const TripDetails = (props) => {
             androidIcon={'md-paper-plane'}
             iOSIcon={'ios-paper-plane'}
           />
-          {/* Accommodation 
-           {<NavigationButton
+          {/* Accommodation */}
+          <NavigationButton
             styles={styles}
             navigation={props.navigation}
             screenToNavigateTo={'Accommodation'}
             id={selectedTrip.id}
             androidIcon={'md-bed'}
             iOSIcon={'ios-bed'}
-          />}
-          */}
-          
+          />
           {/* Map */}
           <NavigationButton
             styles={styles}

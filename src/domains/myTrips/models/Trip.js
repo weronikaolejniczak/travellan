@@ -6,10 +6,10 @@ class Trip {
     image,
     startDate,
     endDate,
+    transport,
+    accommodation,
     budget,
     notes,
-    transportInfo,
-    accommodationInfo,
     map,
   ) {
     this.id = id;
@@ -18,10 +18,10 @@ class Trip {
     this.image = image;
     this.startDate = startDate;
     this.endDate = endDate;
+    this.transport = transport;
+    this.accommodation = accommodation;
     this.budget = budget;
     this.notes = notes;
-    this.transportInfo = transportInfo;
-    this.accommodationInfo = accommodationInfo;
     this.map = map;
   }
 }

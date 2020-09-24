@@ -108,12 +108,11 @@ const Transport = (props) => {
     return <Loading />;
   } else {
     if (transport === undefined) {
-      <Itemless message={'You have no saved transport tickets!'} />;
+      return <Itemless message={'You have no saved transport tickets!'} />;
     } else {
       let scrollX = new Animated.Value(0);
       // position will be a value between 0 and data length - 1 assuming you don't scroll pass the ends of the ScrollView
       let position = Animated.divide(scrollX, cardWidth);
-
       return (
         <ScrollView
           style={styles.scrollview}

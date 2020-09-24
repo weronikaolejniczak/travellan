@@ -16,7 +16,7 @@ const Trip = (props) => {
   return (
     <Card style={styles.tripCard}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onSelect}>
+        <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={styles.imageContainer}>
               <Image

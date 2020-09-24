@@ -11,7 +11,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
-/** IMPORTS FROM WITHIN THE MODULE */
+/* imports from within the module */
 import Card from 'components/card/Card';
 import * as accommodationActions from 'accommodation/state/Actions';
 import {addAccommodationStyle as styles} from './AddAccommodationStyle';
@@ -23,7 +23,7 @@ const AddAccommodation = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  const amenities = [
+  const availableAmmenities = [
     'parking',
     'swimming pool',
     'pets allowed',
@@ -32,14 +32,13 @@ const AddAccommodation = (props) => {
     'bar',
   ];
 
-  /** STATE VARIABLES AND STATE SETTER FUNCTIONS */
-  const [housingName, setHousingName] = useState('');
-  const [housingNameIsValid, setHousingNameIsValid] = useState(false);
-  const [housingNameSubmitted, setHousingNameSubmitted] = useState(false);
-  const [housingAddress, setHousingAddress] = useState('');
-  const [housingAddressIsValid, setHousingAddressIsValid] = useState(false);
-  const [housingAddressSubmitted, setHousingAddressSubmitted] = useState(false);
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [name, setName] = useState('');
+  const [nameIsValid, setNameIsValid] = useState(false);
+  const [nameSubmitted, setNameSubmitted] = useState(false);
+  const [address, setAddress] = useState('');
+  const [addressIsValid, setAddressIsValid] = useState(false);
+  const [addressSubmitted, setAddressSubmitted] = useState(false);
+  const [amenities, setAmmenities] = useState([]);
   const [multiPickerVisible, setMultiPickerVisible] = useState(false);
   const [hotelHours, setHotelHours] = useState('');
   const [hotelHoursIsValid, setHotelHoursIsValid] = useState(false);
@@ -47,61 +46,63 @@ const AddAccommodation = (props) => {
   const [description, setDescription] = useState('');
   const [descriptionIsValid, setDescriptionIsValid] = useState(false);
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
-  const [reservationDetails, setReservationDetails] = useState('');
+  const [details, setDetails] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  /** HANDLERS - REFACTOR*/
-  // Validates housing name.
-  const housingNameChangeHandler = (text) => {
-    text.trim().length === 0
-      ? setHousingNameIsValid(false)
-      : setHousingNameIsValid(true);
-    setHousingName(text);
+  /* handlers */
+  // validates housing name
+  const nameChangeHandler = (text) => {
+    text.trim().length === 0 ? setNameIsValid(false) : setNameIsValid(true);
+    setName(text);
   };
-  // Validates housing address.
-  const housingAddressChangeHandler = (text) => {
+
+  // validates housing address
+  const addressChangeHandler = (text) => {
     text.trim().length === 0
-      ? setHousingAddressIsValid(false)
-      : setHousingAddressIsValid(true);
-    setHousingAddress(text);
+      ? setAddressIsValid(false)
+      : setAddressIsValid(true);
+    setAddress(text);
   };
-  // Validates housing description.
+
+  // validates housing description
   const descriptionChangeHandler = (text) => {
     text.trim().length === 0
       ? setDescriptionIsValid(false)
       : setDescriptionIsValid(true);
     setDescription(text);
   };
-  // Validates hotel hours.
+
+  // validates hotel hours
   const hotelHoursChangeHandler = (text) => {
     text.trim().length === 0
       ? setHotelHoursIsValid(false)
       : setHotelHoursIsValid(true);
     setHotelHours(text);
   };
-  // Submits.
+
+  // submits
   const submitHandler = useCallback(async () => {
     if (
-      !housingNameIsValid ||
-      !housingAddressIsValid ||
+      !nameIsValid ||
+      !addressIsValid ||
       !descriptionIsValid ||
       !hotelHoursIsValid
     ) {
-      setHousingNameSubmitted(true);
-      setHousingAddressSubmitted(true);
+      setNameSubmitted(true);
+      setAddressSubmitted(true);
       setDescriptionSubmitted(true);
       setHotelHoursSubmitted(true);
     } else {
       setIsLoading(true);
       await dispatch(
-        accommodationActions.createReservation(
+        accommodationActions.createAccommodation(
           tripId,
-          housingName,
-          housingAddress,
-          selectedAmenities,
+          name,
+          address,
+          amenities,
           hotelHours,
           description,
-          reservationDetails,
+          details,
         ),
       );
       props.navigation.navigate('Accommodation', {
@@ -110,18 +111,18 @@ const AddAccommodation = (props) => {
       setIsLoading(false);
     }
   }, [
-    housingNameIsValid,
-    housingAddressIsValid,
+    nameIsValid,
+    addressIsValid,
     descriptionIsValid,
     hotelHoursIsValid,
     dispatch,
     tripId,
-    housingName,
-    housingAddress,
-    selectedAmenities,
+    name,
+    address,
+    amenities,
     hotelHours,
     description,
-    reservationDetails,
+    details,
     props.navigation,
     selectedTrip.id,
   ]);
@@ -132,10 +133,10 @@ const AddAccommodation = (props) => {
         <Text style={styles.label}>Name</Text>
         <TextInput
           style={styles.input}
-          value={housingName}
-          onChangeText={housingNameChangeHandler}
+          value={name}
+          onChangeText={nameChangeHandler}
         />
-        {!housingNameIsValid && housingNameSubmitted && (
+        {!nameIsValid && nameSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a housing name!</Text>
           </View>
@@ -146,10 +147,10 @@ const AddAccommodation = (props) => {
         <Text style={styles.label}>Address</Text>
         <TextInput
           style={styles.input}
-          value={housingAddress}
-          onChangeText={housingAddressChangeHandler}
+          value={address}
+          onChangeText={addressChangeHandler}
         />
-        {!housingAddressIsValid && housingAddressSubmitted && (
+        {!addressIsValid && addressSubmitted && (
           <View style={styles.errorContainer}>
             <Text style={styles.error}>Enter a valid address!</Text>
           </View>
@@ -171,21 +172,21 @@ const AddAccommodation = (props) => {
           </TouchableOpacity>
         </View>
         <MultiPickerMaterialDialog
-          title={'Pick accommodation amenities'}
+          title={'Pick accommodation availableAmmenities'}
           colorAccent={Colors.primary}
-          items={amenities.map((row, index) => {
+          items={availableAmmenities.map((row, index) => {
             return {value: index, label: row};
           })}
           visible={multiPickerVisible}
-          selectedItems={selectedAmenities}
+          selectedItems={amenities}
           onCancel={() => setMultiPickerVisible(false)}
           onOk={(result) => {
             setMultiPickerVisible(false);
-            setSelectedAmenities(result.selectedItems);
+            setAmmenities(result.selectedItems);
           }}
         />
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {selectedAmenities.map((item) => (
+          {amenities.map((item) => (
             <Card style={styles.amenityCard}>
               <Text style={styles.text}>{item.label}</Text>
             </Card>
@@ -224,12 +225,12 @@ const AddAccommodation = (props) => {
       </View>
 
       <View style={styles.metrics}>
-        <Text style={styles.label}>Reservation details</Text>
+        <Text style={styles.label}> details</Text>
         <TextInput
           multiline
           style={styles.input}
-          value={reservationDetails}
-          onChangeText={setReservationDetails}
+          value={details}
+          onChangeText={setDetails}
         />
       </View>
 

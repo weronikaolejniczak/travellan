@@ -1,48 +1,69 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import ShareExtension from 'rn-extensions-share';
-/** IMPORTS FROM WITHIN THE MODULE */
+/** imports from within the module */
 import {store} from 'src/store';
+import Accommodation from 'share/components/accommodation/Accommodation';
+import Toolbar from 'share/components/toolbar/Toolbar';
 import {homeStyle as styles} from './HomeStyle';
+import {HOTEL} from 'share/data/DummyHotel';
 
 const Home = (props) => {
-  /* STATE VARIABLES AND STATE SETTING FUNCTIONS */
+  /* sharing intent */
   const [type, setType] = useState(undefined);
   const [value, setValue] = useState(undefined);
+  const [loading, setLoading] = useState(false);
+  /* user credentials */
   const [token, setToken] = useState(undefined);
   const [userId, setUserId] = useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(false);
+  /* error */
   const [error, setError] = useState(null);
+  /* trips placeholder */
   const [trips, setTrips] = useState(undefined);
-
-  /* REGEX */
-  const bookingRegex = new RegExp('www.booking.com/hotel');
-  const PDFRegex = new RegExp('^file:.*.pdf$');
+  /* actions */
+  const [accepted, setAccepted] = useState(false);
+  const [tripsToUpdate, setTripsToUpdate] = useState(undefined);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  /* booking.com hotel URL regex */
+  const bookingRegex = new RegExp('booking.com/hotel');
 
   /* HANDLERS */
-  // Execute on render.
+  // execute on render
   useEffect(() => {
-    // Get the state from store, set token variable to 'auth' reducer's token value.
+    setLoading(true);
+    // get the state from store, set token and userId variables to 'auth' reducer's token and userId values, respectively
     setToken(store.getState().auth.token);
-    // Get the state from store, set userId variable to 'auth' reducer's userId value.
     setUserId(store.getState().auth.userId);
-    // If user isn't logged in...
-    if (token === null && userId === null) {
-      // set an error to 'Not logged in'.
+    // if user isn't logged in...
+    if (
+      token === null ||
+      token === undefined ||
+      userId === null ||
+      userId === undefined
+    ) {
+      // set an error to 'Not logged in'
       setError('You are not logged in.');
-    } else if (token !== null && userId !== null) {
-      // Else, get the state from store, set trips variable to 'trips' reducer's availableTrips value.
+      setLoading(false);
+    } else {
+      setLoggedIn(true);
+      // else, get the state from store, set trips variable to 'trips' reducer's availableTrips value
       setTrips(store.getState().trips.availableTrips);
+      // if type isn't undefined, launch getData() function to receive ShareExtenstion intent
+      if (type !== undefined) {
+        getData();
+        setLoading(false);
+      }
     }
-    // If type is undefined, launch getData() function to receive ShareExtenstion intent.
-    type ? null : getData();
   }, [token, trips, type, userId]);
 
-  // Receive intent from ShareExtension, catch errors and set type and value.
+  // receive intent from ShareExtension, catch errors and set type and value
   const getData = async () => {
-    // Receive intent; if Promise fails, set an error.
+    // receive intent; if Promise fails, set an error
     await ShareExtension.data()
       .then((res) => {
-        // If response is truthy, set type and value.
+        // if response is truthy, set type and value
         res
           ? (setType(res[0].type), setValue(res[0].value))
           : setError('Something went wrong. Try again!');
@@ -54,7 +75,54 @@ const Home = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text>Hello</Text>
+      {!loggedIn ? (
+        /* status component: not logged in error */
+        <Text>Hello</Text>
+      ) : value.match(bookingRegex) ? (
+        <View>
+          {/* activity indicator when fetching data from scraper API */}
+          {loading && <ActivityIndicator />}
+
+          {/* toolbar component */}
+          <Toolbar
+            styles={styles}
+            onPressClose={() => ShareExtension.close()}
+            onPressCheck={() => setAccepted(true)}
+            sending={sending}
+            accepted={accepted}
+          />
+
+          {/* accommodation component
+          show only if accommodation is not yet accepted */}
+          {!accepted && <Accommodation styles={styles} HOTEL={HOTEL} />}
+
+          {/* trip selection component
+          show only if accommodation was accepted but we haven't sent it to our trips yet */}
+          {!sending && accepted && (
+            <View style={{flex: 1}}>
+              {/* if there are trips - variable trips is not undefined */}
+              {!!trips && (
+                <View>
+                  {/* trip selection component */}
+                  {/* send button component */}
+                </View>
+              )}
+
+              {/* status component: no trips found error */}
+              {!trips && <Text>Hello</Text>}
+            </View>
+          )}
+
+          {/* activity indicator when sending accommodation to trip/trips */}
+          {sending && <ActivityIndicator />}
+
+          {/* status component: success or failure */}
+          {sent && <Text>Hello</Text>}
+        </View>
+      ) : (
+        /* status component: shared content not supported */
+        <Text>Hello</Text>
+      )}
     </View>
   );
 };
