@@ -29,6 +29,7 @@
     "electron": "^7.2.4",
     "eslint-import-resolver-babel-module": "^5.1.2",
     "eslint-plugin-import": "^2.22.0",
+    "fs": "^0.0.1-security",
     "logkitty": "^0.7.1",
     "node-fetch": "^2.6.1",
     "react": "16.11.0",
