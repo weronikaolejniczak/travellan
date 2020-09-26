@@ -85,20 +85,10 @@ export default (state = initialState, action) => {
     case FETCH_ACCOMMODATION:
     case DELETE_ACCOMMODATION:
     case CREATE_ACCOMMODATION:
-      /* updatedAvailableTrips[tripIndex].accommodation = action.accommodation;
+      updatedAvailableTrips[tripIndex].accommodation = action.accommodation;
       return {
         ...state,
         availableTrips: updatedAvailableTrips,
-      }; */
-      return {
-        ...state,
-        availableTrips: {
-          ...state.availableTrips,
-          [tripIndex]: {
-            ...state.availableTrips[tripIndex],
-            accommodation: action.accommodation,
-          },
-        },
       };
     /* notes */
     case FETCH_NOTES:
@@ -109,16 +99,6 @@ export default (state = initialState, action) => {
         ...state,
         availableTrips: updatedAvailableTrips,
       };
-      /* return {
-        ...state,
-        availableTrips: {
-          ...state.availableTrips,
-          [tripIndex]: {
-            ...state.availableTrips[tripIndex],
-            notes: action.notes,
-          },
-        },
-      }; */
     /* budget */
     case FETCH_BUDGET:
     case UPDATE_BUDGET:
