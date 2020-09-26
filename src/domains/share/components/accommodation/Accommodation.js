@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-/* IMPORTS FROM WITHIN THE MODULE */
+/* imports from within the module */
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
+import {accommodationStyle as styles} from './AccommodationStyle';
 import Colors from 'constants/Colors';
 
 const Accommodation = (props) => {
@@ -21,7 +22,7 @@ const Accommodation = (props) => {
         {/* IMAGE BACKGROUND WITH GRADIENT, NAME
             refactor uri to be the picture of the accommodation */}
         <ImageBackground
-          style={props.styles.image}
+          style={styles.image}
           source={{
             uri: props.HOTEL.imageUrl,
           }}>
@@ -31,49 +32,49 @@ const Accommodation = (props) => {
             end={{x: 0.0, y: 1.0}}
             locations={[0.4, 1]}
             style={[{flex: 1}]}>
-            <View style={props.styles.accommodationType}>
-              <Text style={[props.styles.text]}>{props.HOTEL.type}</Text>
+            <View style={styles.accommodationType}>
+              <Text style={styles.text}>{props.HOTEL.type}</Text>
             </View>
-            <View style={props.styles.bookingRating}>
-              <Text style={[props.styles.text, props.styles.header]}>
+            <View style={styles.bookingRating}>
+              <Text style={[styles.text, styles.header]}>
                 {props.HOTEL.bookingRating}
               </Text>
             </View>
-            <View style={props.styles.headerOverImg}>
-              <Text style={[props.styles.text, props.styles.header]}>
+            <View style={styles.headerOverImg}>
+              <Text style={[styles.text, styles.header]}>
                 {props.HOTEL.name}
               </Text>
-              <Text style={[props.styles.text, props.styles.subheader]}>
+              <Text style={[styles.text, styles.subheader]}>
                 {props.HOTEL.address}
               </Text>
             </View>
           </LinearGradient>
         </ImageBackground>
 
-        <View style={props.styles.parentView}>
-          <View style={props.styles.checkInAndOut}>
-            <View style={props.styles.checkIcon}>
-              <Icon name="clock" size={24} style={props.styles.text} />
+        <View style={styles.parentView}>
+          <View style={styles.checkInAndOut}>
+            <View style={styles.checkIcon}>
+              <Icon name="clock" size={24} style={styles.text} />
             </View>
-            <View style={props.styles.checkInfo}>
-              <View style={props.styles.checkheader}>
+            <View style={styles.checkInfo}>
+              <View style={styles.checkheader}>
                 <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
                   Check-in
                 </Text>
-                <Text style={[props.styles.text, {marginLeft: 10}]}>
+                <Text style={[styles.text, {marginLeft: 10}]}>
                   {props.HOTEL.checkIn}
                 </Text>
               </View>
-              <View style={props.styles.checkheader}>
+              <View style={styles.checkheader}>
                 <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
                   Check-out
                 </Text>
-                <Text style={[props.styles.text, {marginLeft: 10}]}>
+                <Text style={[styles.text, {marginLeft: 10}]}>
                   {props.HOTEL.checkOut}
                 </Text>
               </View>
             </View>
-            <View style={props.styles.additionalInfo}>
+            <View style={styles.additionalInfo}>
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert('Check-in information', props.HOTEL.checkInExtra)
@@ -95,11 +96,11 @@ const Accommodation = (props) => {
           </View>
         </View>
 
-        <View style={props.styles.parentView}>
+        <View style={styles.parentView}>
           <Text
             style={[
-              props.styles.text,
-              props.styles.header,
+              styles.text,
+              styles.header,
               {marginBottom: 10},
             ]}>
             Popular facilities & ammenities
@@ -117,11 +118,11 @@ const Accommodation = (props) => {
           </View>
         </View>
 
-        <View style={props.styles.parentView}>
+        <View style={styles.parentView}>
           <Text
             style={[
-              props.styles.text,
-              props.styles.header,
+              styles.text,
+              styles.header,
               {marginBottom: 10},
             ]}>
             Description
@@ -129,18 +130,18 @@ const Accommodation = (props) => {
           <ReadMore longText={props.HOTEL.description} />
         </View>
 
-        <View style={props.styles.parentView}>
+        <View style={styles.parentView}>
           <Text
             style={[
-              props.styles.text,
-              props.styles.header,
+              styles.text,
+              styles.header,
               {marginBottom: 10},
             ]}>
             Breakfast & restaurant
           </Text>
-          <View style={props.styles.twoColumn}>
-            <View style={props.styles.col}>
-              <Text style={[props.styles.text, props.styles.smallerHeader]}>
+          <View style={styles.twoColumn}>
+            <View style={styles.col}>
+              <Text style={[styles.text, styles.smallerHeader]}>
                 Breakfast options
               </Text>
               {props.HOTEL.breakfastInfo.map((option) => (
@@ -148,12 +149,12 @@ const Accommodation = (props) => {
                   <Text style={{color: Colors.primary, marginRight: 10}}>
                     •
                   </Text>
-                  <Text style={props.styles.text}>{option}</Text>
+                  <Text style={styles.text}>{option}</Text>
                 </View>
               ))}
             </View>
-            <View style={props.styles.col}>
-              <Text style={[props.styles.text, props.styles.smallerHeader]}>
+            <View style={styles.col}>
+              <Text style={[styles.text, styles.smallerHeader]}>
                 Restaurant
               </Text>
               <Text style={{color: Colors.primary}}>
@@ -163,11 +164,11 @@ const Accommodation = (props) => {
           </View>
         </View>
 
-        <View style={props.styles.parentView}>
+        <View style={styles.parentView}>
           <Text
             style={[
-              props.styles.text,
-              props.styles.header,
+              styles.text,
+              styles.header,
               {marginBottom: 10},
             ]}>
             Additional information
@@ -175,8 +176,8 @@ const Accommodation = (props) => {
           <View>
             <Text
               style={[
-                props.styles.text,
-                props.styles.smallerHeader,
+                styles.text,
+                styles.smallerHeader,
                 {marginBottom: 10},
               ]}>
               Children, cribs and extra beds
@@ -200,7 +201,7 @@ const Accommodation = (props) => {
           </View>
           {/* PETS */}
           <View>
-            <Text style={[props.styles.text, props.styles.smallerHeader]}>
+            <Text style={[styles.text, styles.smallerHeader]}>
               Pets
             </Text>
             <View style={{marginTop: 10, flexDirection: 'row'}}>
