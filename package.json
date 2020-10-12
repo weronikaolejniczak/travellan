@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "@react-native-community/cli": "^4.12.0",
@@ -78,7 +79,7 @@
     "eslint": "^6.8.0",
     "jest": "^25.5.3",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-devtools": "^4.6.0",
+    "react-devtools": "^4.8.2",
     "react-test-renderer": "16.11.0"
   },
   "jest": {
