@@ -16,7 +16,7 @@ import AccommodationItem from 'accommodation/components/item/Accommodation';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as accommodationActions from 'accommodation/state/Actions';
 import {cardWidth} from 'accommodation/components/item/AccommodationStyle';
-import {accommodationStyle as styles} from './AccommodationStyle';
+import {accommodationStyle as styles} from './AccommodationOverviewStyle';
 
 /* accommodation presentational component - displays saved accommodation */
 const Accommodation = (props) => {
