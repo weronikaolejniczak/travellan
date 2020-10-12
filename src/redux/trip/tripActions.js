@@ -1,13 +1,10 @@
-/* models */
 import Trip from 'myTrips/models/Trip';
 import Map from 'map/models/Map';
-/* services */
+
 import {fetchImage} from 'common/services/Image';
 import {fetchCoords} from 'common/services/Coordinates';
-/* actions */
-export const FETCH_TRIPS = 'FETCH_TRIPS';
-export const DELETE_TRIP = 'DELETE_TRIP';
-export const CREATE_TRIP = 'CREATE_TRIP';
+
+import {FETCH_TRIPS, DELETE_TRIP, CREATE_TRIP} from './tripTypes';
 
 // fetch already existing/created trips from Firebase
 export const fetchTrips = () => {

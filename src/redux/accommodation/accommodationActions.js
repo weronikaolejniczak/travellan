@@ -1,8 +1,10 @@
 import Accommodation from 'accommodation/models/Accommodation';
 
-export const FETCH_ACCOMMODATION = 'FETCH_ACCOMMODATION';
-export const DELETE_ACCOMMODATION = 'DELETE_ACCOMMODATION';
-export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
+import {
+  FETCH_ACCOMMODATION,
+  DELETE_ACCOMMODATION,
+  CREATE_ACCOMMODATION,
+} from './accommodationTypes';
 
 export const fetchAccommodation = (tripId) => {
   return async function (dispatch, getState) {

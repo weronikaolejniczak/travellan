@@ -1,8 +1,6 @@
 import Note from 'notes/models/Note';
 
-export const FETCH_NOTES = 'FETCH_NOTES';
-export const DELETE_NOTE = 'DELETE_NOTE';
-export const CREATE_NOTE = 'CREATE_NOTE';
+import {FETCH_NOTES, DELETE_NOTE, CREATE_NOTE} from './noteReducer';
 
 export const fetchNotes = (tripId) => {
   return async function (dispatch, getState) {

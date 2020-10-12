@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import commonReducer from './common/state/Reducer';
-import authReducer from './domains/user/state/Reducer';
+import tripReducer from './trip/tripReducer';
+import userReducer from './user/userReducer';
 
 const rootReducer = combineReducers({
-  trips: commonReducer,
-  auth: authReducer,
+  trips: tripReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

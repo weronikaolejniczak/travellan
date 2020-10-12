@@ -1,8 +1,6 @@
-/* models */
 import Map from 'map/models/Map';
-/* actions */
-export const FETCH_MAP = 'FETCH_MAP';
-export const UPDATE_MAP = 'UPDATE_MAP';
+
+import {FETCH_MAP, UPDATE_MAP} from './mapTypes';
 
 /* fetch map - places and routes */
 export const fetchMap = (tripId) => {

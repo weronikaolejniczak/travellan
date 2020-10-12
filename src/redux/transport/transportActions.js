@@ -1,10 +1,12 @@
 import Transport from 'transport/models/Transport';
 
-export const SET_TRANSPORT = 'SET_TRANSPORT';
-export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
-export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
-export const UPDATE_QR = 'UPDATE_QR';
-export const UPDATE_PDF = 'UPDATE_PDF';
+import {
+  SET_TRANSPORT,
+  DELETE_TRANSPORT,
+  CREATE_TRANSPORT,
+  UPDATE_QR,
+  UPDATE_PDF,
+} from './transportTypes';
 
 // Fetch transport based on id of trip.
 export const fetchTransport = (tripId) => {

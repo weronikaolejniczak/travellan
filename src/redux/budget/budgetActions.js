@@ -1,5 +1,4 @@
-export const FETCH_BUDGET = 'FETCH_BUDGET';
-export const UPDATE_BUDGET = 'UPDATE_BUDGET';
+import {FETCH_BUDGET, UPDATE_BUDGET} from './budgetTypes';
 
 /** fetch budget */
 export const fetchBudget = (tripId) => {
