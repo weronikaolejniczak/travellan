@@ -13,10 +13,10 @@ It has the following construction:
     - **[services](/src/common/services)** - contains global services (such as communication with external APIs) that can be used in many domains.
     - **[state](/src/common/state)** - contains the global reducer.
     - **[styles](/src/common/styles)** - contains themes (light theme/dark theme).
-- **[domains](/src/domains)** (folder) - contains feature-specific folders, each of them can have the following subfolders:
-    - **components** - contains folders, each of which relates to a specific "role" they play as a component.
+- **[domains](/src/domains)** (folder) - contains feature-specific folders, each of them can have the following sub-folders:
+    - **components** - contains presentational components; for each there is a folder.
     - **data** - contains files for feature-specific testing (so called "dummy data") or data necessary for the execution of certain part of the program.
-    - **containers** - contains presentational components. We call them "containers".
+    - **containers** - contains containers (screens).
     - **models** - contains feature-specific models constructed as a class.
     - **services** - contains feature-specific services such as communication with external APIs.
     - **state** - contains actions related to the domain which we can use to update domain's part of the tree in the reducer and on the backend.
@@ -24,8 +24,3 @@ It has the following construction:
 - **[routes.js](/src/routes.js)** (file) - navigation. Here we can create routes, add additional screens and configure them.
 - **[store.js](/src/store.js)** (file) - store created based on a combined reducer. Here we can add a reducer. Export the store from this file.
 and this **README.md** file!
-
-## To-Do
-
-- create a README.md file in each distinct folder: common, domains and subfolders of common, domains for better understanding of the project structure,
-- refactor presentational components such that buttons, headers, descriptions etc. are consistent (refactor into discrete components).
