@@ -7,79 +7,113 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  //PermissionsAndroid,
+  //ProgressBarAndroid,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-/* QR-related imports */
-import QRCode from 'react-native-qrcode-svg';
-//import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-/* PDF-related imports */
-import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
-/* imports from within the module */
+/** IMPORTS FROM WITHIN THE MODULE */
 import Card from 'components/card/Card';
+import TransportStage from 'transport/components/stage/Transport';
 import * as transportActions from 'transport/state/Actions';
 import {transportItemStyle as styles, cardHeight} from './TransportStyle';
 import Colors from 'constants/Colors';
 
-/* transport item component used in Transport container for tickets listing */
+/** QR-related imports */
+import QRCode from 'react-native-qrcode-svg';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+
+/** pdf-related imports */
+import DocumentPicker from 'react-native-document-picker';
+import Pdf from 'react-native-pdf';
+
+/** Transport item component used in Transport container for tickets listing */
 const Transport = (props) => {
   const dispatch = useDispatch();
+  /** STATES FOR MODALS */
+  const [showQR, setshowQR] = useState(false);
+  const [showPDF, setshowPDF] = useState(false);
+
+  /** IMPORTS FROM PROPS */
   const tripId = props.tripId;
   const ticketId = props.id;
 
-  const [QR, setQR] = useState(props.QR);
-  const [showQR, setshowQR] = useState(false);
-  const [PDF, setPDF] = useState(props.PDF);
-  const [showPDF, setshowPDF] = useState(false);
+  var qr = props.qr;
+  var pdfUri = props.pdfUri;
 
-  /* concatenating format for PDF source */
-  var source = {uri: PDF};
+  //var RNFS = require('react-native-fs');
 
-  /* handlers */
+  /** CONCATENATING FORMAT FOR PDF SOURCE */
+  var source = {uri: pdfUri};
   const checkHandler = () => {
-    if (QR === '' || null || undefined) {
+    if (qr === '' || null || undefined) {
       props.addQRHandler();
     } else {
       setshowQR(true);
     }
   };
 
-  // delete QR code
+  /** DELETION FUNCTIONS/HANDLERS */
   const deleteQR = useCallback(async () => {
-    await dispatch(transportActions.updateQR(tripId, ticketId, ''));
+    qr = '';
+    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
     setshowQR(false);
-  }, [dispatch, tripId, ticketId]);
+  }, [dispatch, tripId, ticketId, qr]);
 
-  // delete PDF
   const deletePDF = useCallback(async () => {
-    await dispatch(transportActions.updatePDF(tripId, ticketId, ''));
+    pdfUri = '';
+    await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
     setshowPDF(false);
-  }, [dispatch, tripId, ticketId]);
+  }, [dispatch, tripId, ticketId, pdfUri]);
 
-  // close QR modal
+  /** HIDING/CLOSING MODALS WITH QR/PDF CONTAINERS */
+
   const closeQRhandler = () => {
     setshowQR(false);
   };
 
-  // close PDF modal
   const closePDFhandler = () => {
     setshowPDF(false);
   };
 
-  // use file picker to add PDF ticket as a URI
+  /** NAVIGATION TO QR ADDING SCREEN HANDLER/FUNCTION */
+  /**
+  const movetoQR = () => {
+    navigation.navigate('Add QR', {
+      tripId: tripId,
+      ticketId: ticketId,
+      transportTransfers: 1,
+      qr: qr,
+    });
+  };
+  */
+
+  /** USING FILE PICKER TO ADD PDF-TICKET */
   const pickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
-      let temp = res.uri;
-      setPDF(temp);
-      await dispatch(transportActions.updatePDF(tripId, ticketId, PDF));
+      /**
+      console.log(
+        res.uri,
+        res.type, // mime type
+        res.name,
+        res.size,
+      );
+      */
+      var temp = res.uri;
+      pdfUri = temp;
+      await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+      /**
+      navigation.navigate('Transport', {
+        tripId: tripId,
+      });
+      */
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
-        // user cancelled the picker, exit any dialogs or menus and move on
+        // User cancelled the picker, exit any dialogs or menus and move on
       } else {
         throw err;
       }
@@ -106,7 +140,7 @@ const Transport = (props) => {
           <View style={styles.containerQR}>
             <QRCode
               style={styles.qrstyle}
-              value={QR}
+              value={qr}
               size={300}
               logoSize={300}
             />
@@ -156,19 +190,19 @@ const Transport = (props) => {
               this.pdf = pdf;
             }}
             source={source}
-            /* onLoadComplete={(numberOfPages, filePath) => {
-              console.log(`number of pages: ${numberOfPages}`);
+            onLoadComplete={(numberOfPages, filePath) => {
+              //console.log(`number of pages: ${numberOfPages}`);
               console.log({source});
-            }} */
-            /* onPageChanged={(page, numberOfPages) => {
-              console.log(`current page: ${page}`);
-            }} */
+            }}
+            onPageChanged={(page, numberOfPages) => {
+              //console.log(`current page: ${page}`);
+            }}
             onError={(error) => {
               console.log(error);
             }}
-            /* onPressLink={(uri) => {
-              console.log(`Link pressed: ${uri}`);
-            }} */
+            onPressLink={(uri) => {
+              //console.log(`Link presse: ${uri}`);
+            }}
             style={styles.pdf}
           />
           <TouchableOpacity
@@ -202,11 +236,15 @@ const Transport = (props) => {
             style={styles.icon}
           />
         </TouchableOpacity>
+        {/* SHOW/ADD QR CODE */}
+        <TouchableOpacity onPress={checkHandler}>
+          <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
+        </TouchableOpacity>
 
         {/* ATTACH/View TICKET-PDF */}
         <TouchableOpacity
           onPress={async () => {
-            if (PDF === '' || null || undefined) {
+            if (pdfUri === '' || null || undefined) {
               Alert.alert(
                 'Add ticket pdf?',
                 'Attach document',
@@ -226,7 +264,7 @@ const Transport = (props) => {
               setshowPDF(true);
               /* copy the file from the private app cache to the external storage which is readable*/
               /**
-              let path = PDF;
+              let path = pdfUri;
               if (Platform.OS !== 'ios') {
                 try {
                   let hasPermission = await PermissionsAndroid.check(
@@ -335,22 +373,20 @@ const Transport = (props) => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={checkHandler}>
-          <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
-            {!!QR ? (
-              <QRCode
-                style={styles.qrstyle}
-                value={QR}
-                size={250}
-                logoSize={250}
-              />
-            ) : (
-              <View
-                style={{width: 250, height: 250, backgroundColor: Colors.grey}}
-              />
-            )}
-          </View>
-        </TouchableOpacity>
+        <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
+          {!!qr ? (
+            <QRCode
+              style={styles.qrstyle}
+              value={qr}
+              size={250}
+              logoSize={250}
+            />
+          ) : (
+            <View
+              style={{width: 250, height: 250, backgroundColor: Colors.grey}}
+            />
+          )}
+        </View>
       </ScrollView>
     </Card>
   );

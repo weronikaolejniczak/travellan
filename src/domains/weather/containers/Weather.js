@@ -40,25 +40,17 @@ const Weather = (props) => {
   const [forecast, setForecast] = useState();
   //const [timezone, setTimezone] = useState();
   const [activeDay, setActiveDay] = useState();
-  const [error, setError] = useState();
 
   useEffect(() => {
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
-      try {
-        let result = await fetchWeather(latitude, longitude);
-        let weather = result[0];
-        setForecast(weather);
-        setActiveDay(weather[0]);
-      } catch {
-        setForecast();
-        setError('Something went wrong when fetching weather!');
-      }
+      let result = await fetchWeather(latitude, longitude);
+      let weather = result[0];
       //let weather = WEATHER; // dummy WEATHER
       //let tmz = result[1];
-      //setForecast(weather);
+      setForecast(weather);
       //setTimezone(tmz);
-      //setActiveDay(weather[0]);
+      setActiveDay(weather[0]);
     }
     setIsLoading(true);
     checkDates();
@@ -106,7 +98,7 @@ const Weather = (props) => {
       )}
       {isLoaded && dateGuard && (
         <View style={styles.weatherContainer}>
-          {forecast ? (
+          {forecast && (
             <View>
               <Background styles={styles} activeDay={activeDay}>
                 <View style={styles.graphicsContainer}>
@@ -347,8 +339,9 @@ const Weather = (props) => {
                                 : Colors.cards,
                             borderBottomWidth: 2,
                             borderBottomColor:
-                              item.item.date.getTime() > startDate.getTime() - 60 * 60 * 24 * 1000 &&
-                              item.item.date.getTime() <= endDate.getTime()
+                              item.item.date.getTime() > startDate.getTime() &&
+                              item.item.date.getTime() <=
+                                endDate.getTime() + 60 * 60 * 24 * 1000
                                 ? Colors.primary
                                 : Colors.transparent,
                           },
@@ -379,10 +372,6 @@ const Weather = (props) => {
                   )}
                 />
               </View>
-            </View>
-          ) : (
-            <View style={styles.text}>
-              <Text>{error}</Text>
             </View>
           )}
         </View>

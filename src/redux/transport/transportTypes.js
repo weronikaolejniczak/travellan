@@ -1,5 +1,0 @@
-export const SET_TRANSPORT = 'SET_TRANSPORT';
-export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
-export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
-export const UPDATE_QR = 'UPDATE_QR';
-export const UPDATE_PDF = 'UPDATE_PDF';
