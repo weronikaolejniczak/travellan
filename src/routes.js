@@ -8,11 +8,11 @@ import StartupScreen, {
 import Auth, {authOptions} from 'user/containers/Auth';
 import TripsOverview, {
   tripsOverviewOptions,
-} from 'myTrips/containers/overview/TripsOverview';
+} from 'trips/containers/overview/TripsOverview';
 import TripDetails, {
   tripDetailsOptions,
-} from 'myTrips/containers/details/TripDetails';
-import NewTrip from 'myTrips/containers/newTrip/NewTrip';
+} from 'trips/containers/details/TripDetails';
+import NewTrip from 'trips/containers/newTrip/NewTrip';
 import Transport, {transportOptions} from 'transport/containers/Transport';
 import AddTransport from 'transport/containers/AddTransport';
 import AddQR from 'transport/containers/AddQR';
