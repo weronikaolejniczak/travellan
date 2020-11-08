@@ -13,16 +13,17 @@ export const AuthStyle = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: 30,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonContainer: {
+    margin: 10,
+    padding: 12,
     borderRadius: 25,
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
-    padding: 15,
   },
   buttonText: {
     fontWeight: 'bold',

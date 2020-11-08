@@ -155,12 +155,11 @@ const Auth = (props) => {
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              style={styles.buttonContainer}
               onPress={() => {
                 setIsSignup((prevState) => !prevState);
               }}>
               <Text style={styles.buttonText}>
-                {isSignup ? 'Login' : 'Sign up'}
+                Switch to {isSignup ? 'Login' : 'Sign up'}
               </Text>
             </TouchableOpacity>
           </View>
