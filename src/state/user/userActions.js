@@ -31,7 +31,7 @@ export const signup = (email, password) => {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
       let message = 'Something went wrong!';
-      if (errorId == 'EMAIL_EXISTS') {
+      if (errorId === 'EMAIL_EXISTS') {
         message = 'This email exists already!';
       }
       throw new Error(message);
@@ -39,12 +39,11 @@ export const signup = (email, password) => {
     const resData = await response.json();
     dispatch(authenticate(resData.localId, resData.idToken));
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
+      new Date().getTime() + parseInt(resData.expiresIn, 10) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
 };
-
 
 export const login = (email, password) => {
   return async (dispatch) => {
@@ -66,9 +65,9 @@ export const login = (email, password) => {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
       let message = 'Something went wrong!';
-      if (errorId == 'EMAIL_NOT_FOUND') {
+      if (errorId === 'EMAIL_NOT_FOUND') {
         message = 'This email could not be found!';
-      } else if (errorId == 'INVALID_PASSWORD') {
+      } else if (errorId === 'INVALID_PASSWORD') {
         message = 'This password is not valid!';
       }
       throw new Error(message);
@@ -77,7 +76,7 @@ export const login = (email, password) => {
     dispatch(authenticate(resData.localId, resData.idToken));
     //{type: LOGIN, token: resData.idToken, userId: resData.localId}
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      new Date().getTime() + parseInt(resData.expiresIn, 10) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
@@ -89,7 +88,7 @@ const saveDataToStorage = (token, userId, expirationDate) => {
     JSON.stringify({
       token: token,
       userId: userId,
-      expiryDate: expirationDate.toISOString()
+      expiryDate: expirationDate.toISOString(),
     }),
   );
 };
