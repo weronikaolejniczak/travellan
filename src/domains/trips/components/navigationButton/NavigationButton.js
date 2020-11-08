@@ -1,24 +1,40 @@
 import React from 'react';
-import {TouchableOpacity, Text, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-/* imports from within the module */
+import {TouchableOpacity, Text, Dimensions} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Colors from 'constants/Colors';
 
+const {height} = Dimensions.get('window');
+
 const NavigationButton = (props) => {
+  const {navigation, to, tripId, icon} = props;
+
+  const styles = {
+    button: {
+      borderRadius: 20,
+      backgroundColor: Colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '45%',
+      height: height * 0.2,
+      padding: 15,
+      marginVertical: height * 0.01,
+    },
+    buttonText: {
+      fontWeight: 'bold',
+      fontSize: 16,
+      color: Colors.text,
+    },
+  };
+
   return (
     <TouchableOpacity
-      style={props.styles.button}
+      style={styles.button}
       onPress={() => {
-        props.navigation.navigate(props.screenToNavigateTo, {
-          tripId: props.id,
-        });
+        navigation.navigate(to, {tripId});
       }}>
-      <Text style={props.styles.buttonText}>{props.screenToNavigateTo}</Text>
-      <Icon
-        name={Platform.OS === 'android' ? props.androidIcon : props.iOSIcon}
-        size={42}
-        color={Colors.text}
-      />
+      <Text style={styles.buttonText}>{to}</Text>
+      <Icon name={icon} size={42} color={Colors.text} />
     </TouchableOpacity>
   );
 };

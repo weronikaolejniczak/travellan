@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
@@ -119,10 +119,7 @@ const TripsOverview = (props) => {
             <TouchableHighlight
               style={styles.deleteButton}
               onPress={() => deleteItemHandler(itemData.item)}>
-              <Icon
-                name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-                style={styles.deleteIcon}
-              />
+              <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>
         )}

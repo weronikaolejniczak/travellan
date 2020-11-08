@@ -5,12 +5,11 @@ import {
   Text,
   Alert,
   TouchableOpacity,
-  Platform,
   Modal,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import QRCode from 'react-native-qrcode-svg';
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
@@ -90,7 +89,7 @@ const Transport = (props) => {
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
             onPress={closeQRhandler}>
-            <MaterialIcon name={'close'} style={styles.icon2} />
+            <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <View style={styles.containerQR}>
             <QRCode
@@ -119,7 +118,7 @@ const Transport = (props) => {
                     {cancelable: true},
                   );
                 }}>
-                <MaterialIcon name={'delete'} style={styles.icon3} />
+                <Icon name="delete" style={styles.icon3} />
               </TouchableOpacity>
             </View>
           </View>
@@ -137,7 +136,7 @@ const Transport = (props) => {
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}>
-            <MaterialIcon name={'close'} style={styles.icon2} />
+            <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <Pdf
             ref={(pdf) => {
@@ -178,20 +177,17 @@ const Transport = (props) => {
                 {cancelable: true},
               );
             }}>
-            <MaterialIcon name={'delete'} style={styles.icon2} />
+            <Icon name="delete" style={styles.icon2} />
           </TouchableOpacity>
         </View>
       </Modal>
       <View style={styles.actions}>
         <TouchableOpacity onPress={props.deleteTransportHandler}>
-          <Icon
-            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-            style={styles.icon}
-          />
+          <Icon name="delete" style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={checkHandler}>
-          <MaterialIcon name={'qrcode-scan'} style={styles.icon} />
+          <CommunityIcon name="qrcode-scan" style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -216,13 +212,13 @@ const Transport = (props) => {
               setshowPDF(true);
             }
           }}>
-          <MaterialIcon name={'file-pdf-box'} style={styles.icon} />
+          <CommunityIcon name="file-pdf-box" style={styles.icon} />
         </TouchableOpacity>
       </View>
 
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}
-        indicatorStyle={'white'}>
+        indicatorStyle="white">
         <View style={[styles.rowCenter, {paddingVertical: 15}]}>
           {props.to === true ? (
             <Text style={[styles.header]}>to {props.destination}</Text>
@@ -256,16 +252,12 @@ const Transport = (props) => {
         </View>
 
         <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
-          {!!qr ? (
+          {!!qr && (
             <QRCode
               style={styles.qrstyle}
               value={qr}
               size={250}
               logoSize={250}
-            />
-          ) : (
-            <View
-              style={{width: 250, height: 250, backgroundColor: Colors.grey}}
             />
           )}
         </View>

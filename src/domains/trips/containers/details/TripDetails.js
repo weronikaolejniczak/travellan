@@ -51,52 +51,40 @@ const TripDetails = (props) => {
       <View>
         <View style={styles.tiles}>
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Transport'}
-            id={selectedTrip.id}
-            androidIcon={'md-paper-plane'}
-            iOSIcon={'ios-paper-plane'}
+            to="Transport"
+            tripId={selectedTrip.id}
+            icon="flight"
           />
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Accommodation'}
-            id={selectedTrip.id}
-            androidIcon={'md-bed'}
-            iOSIcon={'ios-bed'}
+            to="Accommodation"
+            tripId={selectedTrip.id}
+            icon="hotel"
           />
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Map'}
-            id={selectedTrip.id}
-            androidIcon={'md-map'}
-            iOSIcon={'ios-map'}
+            to="Map"
+            tripId={selectedTrip.id}
+            icon="map"
           />
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Weather'}
-            id={selectedTrip.id}
-            androidIcon={'md-cloudy'}
-            iOSIcon={'ios-cloudy'}
+            to="Weather"
+            tripId={selectedTrip.id}
+            icon="cloud"
           />
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Budget'}
-            id={selectedTrip.id}
-            androidIcon={'md-wallet'}
-            iOSIcon={'ios-wallet'}
+            to="Budget"
+            tripId={selectedTrip.id}
+            icon="account-balance-wallet"
           />
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Notes'}
-            id={selectedTrip.id}
-            androidIcon={'md-journal'}
-            iOSIcon={'ios-journal'}
+            to="Notes"
+            tripId={selectedTrip.id}
+            icon="note"
           />
         </View>
       </View>
