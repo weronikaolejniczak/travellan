@@ -10,10 +10,10 @@ const defaultImage = {
   username: 'anniespratt',
 };
 
-export async function fetchImage(keyword) {
+async function fetchImage(keyword) {
   return await axios
     .get(
-      `https://api.unsplash.com/search/photos?page=1&query=${keyword}&API_KEY=${API_KEY}`,
+      `https://api.unsplash.com/search/photos?page=1&query=${keyword}&client_id=${API_KEY}`,
     )
     .then((json) => {
       const imageUrl = json.data.results[0].urls.regular.toString();
@@ -24,5 +24,9 @@ export async function fetchImage(keyword) {
 
       return image;
     })
-    .catch(() => defaultImage);
+    .catch((error) => {
+      return defaultImage;
+    });
 }
+
+export default fetchImage;
