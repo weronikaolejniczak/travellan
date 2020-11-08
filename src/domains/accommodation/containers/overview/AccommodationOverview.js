@@ -79,10 +79,8 @@ const AccommodationOverview = (props) => {
     return <Loading />;
   } else {
     if (accommodation === undefined) {
-      console.log('itemless');
       return <Itemless message={'You have no saved accommodation!'} />;
     } else {
-      console.log('itemful');
       let scrollX = new Animated.Value(0);
       let position = Animated.divide(scrollX, cardWidth);
       return (

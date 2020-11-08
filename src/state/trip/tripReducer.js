@@ -79,8 +79,7 @@ export default (state = initialState, action) => {
     case SET_RESERVATIONS:
     case DELETE_RESERVATION:
     case CREATE_RESERVATION:
-      updatedAvailableTrips[tripIndex].accommodationInfo =
-        action.accommodationInfo;
+      updatedAvailableTrips[tripIndex].accommodation = action.accommodation;
 
       return {
         ...state,

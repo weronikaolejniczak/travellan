@@ -17,9 +17,9 @@ export const fetchAccommodation = (tripId) => {
     );
 
     const resData = await response.json();
-    let accommodationInfo = resData.accommodationInfo;
+    let accommodation = resData.accommodation;
 
-    dispatch({type: SET_RESERVATIONS, tripId, accommodationInfo});
+    dispatch({type: SET_RESERVATIONS, tripId, accommodation});
   };
 };
 
@@ -32,8 +32,8 @@ export const deleteAccommodation = (tripId, reservationId) => {
     );
 
     const resData = await response.json();
-    let accommodationInfo = resData.accommodationInfo;
-    accommodationInfo = accommodationInfo.filter(
+    let accommodation = resData.accommodation;
+    accommodation = accommodation.filter(
       (item) => !(item.id === reservationId),
     );
 
@@ -43,7 +43,7 @@ export const deleteAccommodation = (tripId, reservationId) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        accommodationInfo,
+        accommodation,
       }),
     });
 
@@ -80,10 +80,10 @@ export const createAccommodation = (
     );
 
     const resData = await response.json();
-    let accommodationInfo = resData.accommodationInfo;
-    accommodationInfo === undefined
-      ? (accommodationInfo = [newReservation])
-      : (accommodationInfo = accommodationInfo.concat(newReservation));
+    let accommodation = resData.accommodation;
+    accommodation === undefined
+      ? (accommodation = [newReservation])
+      : (accommodation = accommodation.concat(newReservation));
 
     await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
       method: 'PATCH',
@@ -91,14 +91,14 @@ export const createAccommodation = (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        accommodationInfo,
+        accommodation,
       }),
     });
 
     dispatch({
       type: CREATE_RESERVATION,
       tripId,
-      accommodationInfo,
+      accommodation,
     });
   };
 };
