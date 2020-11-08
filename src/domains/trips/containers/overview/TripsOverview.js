@@ -87,47 +87,48 @@ const TripsOverview = (props) => {
 
   if (isLoading) {
     return <Loading />;
-  } else if (error) {
+  }
+
+  if (error) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <Text style={styles.text}>{error}</Text>
         <Button title="Try again" onPress={loadTrips} color={Colors.primary} />
       </View>
     );
-  } else if (trips.length === 0 || trips === undefined) {
-    return <Itemless message={'You have no trips saved!'} />;
-  } else if (trips) {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={trips}
-          keyExtractor={(item) => item.id}
-          renderItem={(itemData) => (
-            <TripItem
-              image={itemData.item.image}
-              destination={itemData.item.destination}
-              startDate={itemData.item.startDate
-                .split(' ')
-                .slice(1, 4)
-                .join(' ')}
-              endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
-              onSelect={() => {
-                selectItemHandler(itemData.item.id, itemData.item.destination);
-              }}>
-              <TouchableHighlight
-                style={styles.deleteButton}
-                onPress={() => deleteItemHandler(itemData.item)}>
-                <Icon
-                  name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-                  style={styles.deleteIcon}
-                />
-              </TouchableHighlight>
-            </TripItem>
-          )}
-        />
-      </View>
-    );
   }
+
+  if (trips.length === 0 || trips === undefined) {
+    return <Itemless message={'You have no trips saved!'} />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={trips}
+        keyExtractor={(item) => item.id}
+        renderItem={(itemData) => (
+          <TripItem
+            image={itemData.item.image}
+            destination={itemData.item.destination}
+            startDate={itemData.item.startDate.split(' ').slice(1, 4).join(' ')}
+            endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
+            onSelect={() => {
+              selectItemHandler(itemData.item.id, itemData.item.destination);
+            }}>
+            <TouchableHighlight
+              style={styles.deleteButton}
+              onPress={() => deleteItemHandler(itemData.item)}>
+              <Icon
+                name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                style={styles.deleteIcon}
+              />
+            </TouchableHighlight>
+          </TripItem>
+        )}
+      />
+    </View>
+  );
 };
 
 /** we export screenOptions to use in our Stack.Navigator
