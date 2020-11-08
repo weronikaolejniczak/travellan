@@ -16,10 +16,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as budgetActions from 'state/budget/budgetActions';
 import * as handlers from 'budget/handlers/PrepareData';
+import * as categories from 'budget/models/Categories';
 import Card from 'components/card/Card';
 import {budgetStyle as styles} from './BudgetStyle';
 import Colors from 'constants/Colors';
-import * as categories from 'budget/models/Categories';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -30,12 +30,10 @@ const Budget = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const budget = selectedTrip.budget;
-  console.log(selectedTrip.budget);
 
   const [selectedCurrency, setSelectedCurrency] = useState(
     selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
   );
-  console.log(selectedCurrency);
 
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
@@ -230,356 +228,351 @@ const Budget = (props) => {
         </View>
       </View>
     );
-  } else {
-    return (
-      <View style={styles.contentContainer}>
-        <View style={styles.currenciesContainer}>
-          <FlatList
-            horizontal
-            data={budget}
-            ItemSeparatorComponent={() => <View style={{width: 7}} />}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={styles.currencyHolder}
-                onLongPress={() => {
-                  Alert.alert(
-                    'Are you sure?',
-                    'Delete currency.',
-                    [
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
+  }
+
+  return (
+    <View style={styles.contentContainer}>
+      <View style={styles.currenciesContainer}>
+        <FlatList
+          horizontal
+          data={budget}
+          ItemSeparatorComponent={() => <View style={{width: 7}} />}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.currencyHolder}
+              onLongPress={() => {
+                Alert.alert(
+                  'Are you sure?',
+                  'Delete currency.',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Delete',
+                      onPress: () => {
+                        deleteCurrency(item.id);
                       },
-                      {
-                        text: 'Delete',
-                        onPress: () => {
-                          deleteCurrency(item.id);
-                        },
-                      },
-                    ],
-                    {cancelable: true},
-                  );
-                }}
-                onPress={() => {
-                  setSelectedCurrency(item);
-                  setDisplayableValue(item.value);
-                  setTitle('');
-                  setAmount('');
-                  setAccount(item.defaultAccount);
-                }}>
-                {!!selectedCurrency && <Text
+                    },
+                  ],
+                  {cancelable: true},
+                );
+              }}
+              onPress={() => {
+                setSelectedCurrency(item);
+                setDisplayableValue(item.value);
+                setTitle('');
+                setAmount('');
+                setAccount(item.defaultAccount);
+              }}>
+              {!!selectedCurrency && (
+                <Text
                   style={
                     selectedCurrency.currency === item.currency
                       ? styles.currencyActive
                       : styles.currencyNonactive
                   }>
                   {item.currency}
-                </Text>}
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </View>
-
-        {selectedCurrency !== undefined && (
-          <View style={styles.overviewContainer}>
-            <View style={styles.center}>
-              <Text style={{color: Colors.grey}}>Cash</Text>
-              <View style={styles.accounts}>
-                <Icon name={'cash'} style={[styles.icon, styles.text]} />
-                <Text
-                  style={[
-                    styles.label,
-                    handlers.calculateCash(selectedCurrency.history) < 0
-                      ? styles.negative
-                      : styles.positive,
-                  ]}>
-                  {handlers.calculateCash(selectedCurrency.history)}
                 </Text>
-              </View>
-            </View>
+              )}
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
 
-            <View style={styles.center}>
-              <Text style={{color: Colors.grey}}>General balance</Text>
+      {selectedCurrency !== undefined && (
+        <View style={styles.overviewContainer}>
+          <View style={styles.center}>
+            <Text style={{color: Colors.grey}}>Cash</Text>
+            <View style={styles.accounts}>
+              <Icon name={'cash'} style={[styles.icon, styles.text]} />
               <Text
                 style={[
-                  styles.icon,
-                  displayableValue < 0 ? styles.negative : styles.positive,
+                  styles.label,
+                  handlers.calculateCash(selectedCurrency.history) < 0
+                    ? styles.negative
+                    : styles.positive,
                 ]}>
-                {displayableValue < 0 ? '-' : '+'}
-                {displayableValue}
+                {handlers.calculateCash(selectedCurrency.history)}
               </Text>
             </View>
+          </View>
 
-            <View style={styles.center}>
-              <Text style={{color: Colors.grey}}>Card</Text>
-              <View style={[styles.accounts]}>
-                <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
-                <Text
-                  style={[
-                    styles.label,
-                    handlers.calculateCard(selectedCurrency.history) < 0
-                      ? styles.negative
-                      : styles.positive,
-                  ]}>
-                  {handlers.calculateCard(selectedCurrency.history)}
-                </Text>
-              </View>
+          <View style={styles.center}>
+            <Text style={{color: Colors.grey}}>General balance</Text>
+            <Text
+              style={[
+                styles.icon,
+                displayableValue < 0 ? styles.negative : styles.positive,
+              ]}>
+              {displayableValue < 0 ? '-' : '+'}
+              {displayableValue}
+            </Text>
+          </View>
+
+          <View style={styles.center}>
+            <Text style={{color: Colors.grey}}>Card</Text>
+            <View style={[styles.accounts]}>
+              <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
+              <Text
+                style={[
+                  styles.label,
+                  handlers.calculateCard(selectedCurrency.history) < 0
+                    ? styles.negative
+                    : styles.positive,
+                ]}>
+                {handlers.calculateCard(selectedCurrency.history)}
+              </Text>
             </View>
           </View>
-        )}
-        {selectedCurrency !== undefined && (
-          <ScrollView contentContainerStyle={styles.detailsContainer}>
-            {selectedCurrency.history.length > 1 && (
-              <View>
-                <View style={[styles.smallMarginTop, styles.chartContainer]}>
-                  <LineChart
-                    data={data}
-                    width={screenWidth * 0.9}
-                    height={220}
-                    chartConfig={chartConfig}
-                    fromZero={true}
-                    onDataPointClick={(item) =>
-                      setSelectedHistoryItem(
-                        selectedCurrency.history[item.index],
-                      )
-                    }
-                    getDotColor={(item, index) =>
-                      selectedCurrency.history[index].value < 0
-                        ? '#b20000'
-                        : 'green'
-                    }
-                  />
-                </View>
-                {!!selectedHistoryItem && (
-                  <View
-                    style={[
-                      styles.smallMarginTop,
-                      {
-                        backgroundColor:
-                          selectedHistoryItem.value < 0 ? '#b20000' : 'green',
-                        padding: 15,
-                        borderRadius: 20,
-                      },
-                    ]}>
-                    <Text style={styles.text}>
-                      {new Date(selectedHistoryItem.date).toLocaleDateString()}
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text style={[styles.text, {fontSize: 22}]}>
-                        {selectedHistoryItem.value}
-                      </Text>
-                      <Text style={[styles.text]}>
-                        {selectedHistoryItem.title}
-                      </Text>
-                    </View>
-                  </View>
-                )}
+        </View>
+      )}
+      {selectedCurrency !== undefined && (
+        <ScrollView contentContainerStyle={styles.detailsContainer}>
+          {selectedCurrency.history.length > 1 && (
+            <View>
+              <View style={[styles.smallMarginTop, styles.chartContainer]}>
+                <LineChart
+                  data={data}
+                  width={screenWidth * 0.9}
+                  height={220}
+                  chartConfig={chartConfig}
+                  fromZero={true}
+                  onDataPointClick={(item) =>
+                    setSelectedHistoryItem(selectedCurrency.history[item.index])
+                  }
+                  getDotColor={(item, index) =>
+                    selectedCurrency.history[index].value < 0
+                      ? '#b20000'
+                      : 'green'
+                  }
+                />
               </View>
-            )}
-            <View style={styles.smallMarginTop}>
-              <Card style={{padding: '5%'}}>
-                <Text style={[styles.text, styles.label]}>Operations</Text>
-              </Card>
-              <View style={{padding: '5%'}}>
-                <View>
-                  <Text style={{color: 'grey'}}>Categories</Text>
+              {!!selectedHistoryItem && (
+                <View
+                  style={[
+                    styles.smallMarginTop,
+                    {
+                      backgroundColor:
+                        selectedHistoryItem.value < 0 ? '#b20000' : 'green',
+                      padding: 15,
+                      borderRadius: 20,
+                    },
+                  ]}>
+                  <Text style={styles.text}>
+                    {new Date(selectedHistoryItem.date).toLocaleDateString()}
+                  </Text>
                   <View
-                    style={[
-                      styles.categoriesContainer,
-                      styles.extraSmallMarginTop,
-                    ]}>
-                    {categories.icons.map((item) => (
-                      <TouchableOpacity
-                        style={[styles.iconButton]}
-                        onPress={() => chooseCategory(item)}>
-                        <Icon
-                          name={item}
-                          style={[
-                            styles.icon,
-                            categories.categoryIcons[category] === item
-                              ? styles.activeCategory
-                              : styles.nonactiveCategory,
-                          ]}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                  <View style={styles.center}>
-                    <Text style={[styles.activeCategory]}>
-                      {categories.categoryLabels[category].toString()}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text style={[styles.text, {fontSize: 22}]}>
+                      {selectedHistoryItem.value}
+                    </Text>
+                    <Text style={[styles.text]}>
+                      {selectedHistoryItem.title}
                     </Text>
                   </View>
                 </View>
-                <View style={{marginVertical: '5%'}}>
-                  <Text style={{color: 'grey'}}>Accounts</Text>
-                  <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
-                    <View>
-                      <TouchableOpacity
-                        style={[styles.justifyRow, {alignItems: 'center'}]}
-                        onPress={() => setAccount('cash')}>
-                        <Icon
-                          name={'cash'}
-                          style={[
-                            {marginRight: '5%'},
-                            styles.icon,
-                            account === 'cash'
-                              ? styles.activeCategory
-                              : styles.nonactiveCategory,
-                          ]}
-                        />
-                        <Text
-                          style={[
-                            styles.label,
-                            account === 'cash'
-                              ? styles.activeCategory
-                              : styles.nonactiveCategory,
-                          ]}>
-                          Cash
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{marginLeft: '5%'}}>
-                      <TouchableOpacity
-                        style={[styles.justifyRow, {alignItems: 'center'}]}
-                        onPress={() => setAccount('card')}>
-                        <Icon
-                          name={'credit-card'}
-                          style={[
-                            {marginRight: '5%'},
-                            styles.icon,
-                            account === 'card'
-                              ? styles.activeCategory
-                              : styles.nonactiveCategory,
-                          ]}
-                        />
-                        <Text
-                          style={[
-                            styles.label,
-                            account === 'card'
-                              ? styles.activeCategory
-                              : styles.nonactiveCategory,
-                          ]}>
-                          Card
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.extraSmallMarginTop}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Enter title"
-                    placeholderTextColor="grey"
-                    value={title}
-                    onChangeText={(text) => setTitle(text)}
-                  />
-                </View>
-                <View>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Enter amount"
-                    placeholderTextColor="grey"
-                    value={amount}
-                    onChangeText={(number) => amountChangeHandler(number)}
-                    keyboardType={'numeric'}
-                  />
-                  <View style={[styles.justifyRow, styles.actions]}>
-                    <TouchableOpacity onPress={() => modifyAmount('plus')}>
-                      <Icon
-                        style={[
-                          styles.icon,
-                          styles.positive,
-                          {marginRight: '3%'},
-                        ]}
-                        name="plus"
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => modifyAmount('minus')}>
-                      <Icon
-                        style={[styles.icon, styles.negative]}
-                        name="minus"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                {!!error && (
-                  <View style={styles.errorContainer}>
-                    <Text style={styles.error}>{error}</Text>
-                  </View>
-                )}
-              </View>
-            </View>
-            <View style={styles.smallMarginTop}>
-              <Card style={{padding: '5%'}}>
-                <Text style={[styles.text, styles.label]}>History</Text>
-              </Card>
-              {!selectedCurrency.history.length ? (
-                <View style={styles.smallMarginTop}>
-                  <Text style={styles.text}>No operations to show</Text>
-                </View>
-              ) : (
-                selectedCurrency.history
-                  .slice(0)
-                  .reverse()
-                  .map((item) => (
-                    <Card style={styles.operationCard}>
-                      <View style={styles.justifyRow}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginRight: '5%',
-                          }}>
-                          <Icon
-                            name={categories.categoryIcons[item.category]}
-                            style={[
-                              styles.icon,
-                              styles.text,
-                              {marginRight: '10%'},
-                            ]}
-                          />
-                          <Icon
-                            name={
-                              item.account === 'card' ? 'credit-card' : 'cash'
-                            }
-                            style={[styles.icon, styles.text]}
-                          />
-                        </View>
-                        <View>
-                          <Text style={styles.date}>
-                            {new Date(item.date).toLocaleDateString()} at{' '}
-                            {new Date(item.date).toLocaleTimeString()}
-                          </Text>
-                          <View style={[styles.justifyRow]}>
-                            <Text
-                              style={
-                                item.value < 0
-                                  ? styles.negative
-                                  : styles.positive
-                              }>
-                              {item.value}
-                              {'   '}
-                            </Text>
-                            <Text style={styles.text}>{item.title}</Text>
-                          </View>
-                        </View>
-                      </View>
-                    </Card>
-                  ))
               )}
             </View>
-          </ScrollView>
-        )}
-      </View>
-    );
-  }
+          )}
+          <View style={styles.smallMarginTop}>
+            <Card style={{padding: '5%'}}>
+              <Text style={[styles.text, styles.label]}>Operations</Text>
+            </Card>
+            <View style={{padding: '5%'}}>
+              <View>
+                <Text style={{color: 'grey'}}>Categories</Text>
+                <View
+                  style={[
+                    styles.categoriesContainer,
+                    styles.extraSmallMarginTop,
+                  ]}>
+                  {categories.icons.map((item) => (
+                    <TouchableOpacity
+                      style={[styles.iconButton]}
+                      onPress={() => chooseCategory(item)}>
+                      <Icon
+                        name={item}
+                        style={[
+                          styles.icon,
+                          categories.categoryIcons[category] === item
+                            ? styles.activeCategory
+                            : styles.nonactiveCategory,
+                        ]}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <View style={styles.center}>
+                  <Text style={[styles.activeCategory]}>
+                    {categories.categoryLabels[category].toString()}
+                  </Text>
+                </View>
+              </View>
+              <View style={{marginVertical: '5%'}}>
+                <Text style={{color: 'grey'}}>Accounts</Text>
+                <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
+                  <View>
+                    <TouchableOpacity
+                      style={[styles.justifyRow, {alignItems: 'center'}]}
+                      onPress={() => setAccount('cash')}>
+                      <Icon
+                        name={'cash'}
+                        style={[
+                          {marginRight: '5%'},
+                          styles.icon,
+                          account === 'cash'
+                            ? styles.activeCategory
+                            : styles.nonactiveCategory,
+                        ]}
+                      />
+                      <Text
+                        style={[
+                          styles.label,
+                          account === 'cash'
+                            ? styles.activeCategory
+                            : styles.nonactiveCategory,
+                        ]}>
+                        Cash
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{marginLeft: '5%'}}>
+                    <TouchableOpacity
+                      style={[styles.justifyRow, {alignItems: 'center'}]}
+                      onPress={() => setAccount('card')}>
+                      <Icon
+                        name={'credit-card'}
+                        style={[
+                          {marginRight: '5%'},
+                          styles.icon,
+                          account === 'card'
+                            ? styles.activeCategory
+                            : styles.nonactiveCategory,
+                        ]}
+                      />
+                      <Text
+                        style={[
+                          styles.label,
+                          account === 'card'
+                            ? styles.activeCategory
+                            : styles.nonactiveCategory,
+                        ]}>
+                        Card
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.extraSmallMarginTop}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter title"
+                  placeholderTextColor="grey"
+                  value={title}
+                  onChangeText={(text) => setTitle(text)}
+                />
+              </View>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter amount"
+                  placeholderTextColor="grey"
+                  value={amount}
+                  onChangeText={(number) => amountChangeHandler(number)}
+                  keyboardType={'numeric'}
+                />
+                <View style={[styles.justifyRow, styles.actions]}>
+                  <TouchableOpacity onPress={() => modifyAmount('plus')}>
+                    <Icon
+                      style={[
+                        styles.icon,
+                        styles.positive,
+                        {marginRight: '3%'},
+                      ]}
+                      name="plus"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => modifyAmount('minus')}>
+                    <Icon style={[styles.icon, styles.negative]} name="minus" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {!!error && (
+                <View style={styles.errorContainer}>
+                  <Text style={styles.error}>{error}</Text>
+                </View>
+              )}
+            </View>
+          </View>
+          <View style={styles.smallMarginTop}>
+            <Card style={{padding: '5%'}}>
+              <Text style={[styles.text, styles.label]}>History</Text>
+            </Card>
+            {!selectedCurrency.history.length ? (
+              <View style={styles.smallMarginTop}>
+                <Text style={styles.text}>No operations to show</Text>
+              </View>
+            ) : (
+              selectedCurrency.history
+                .slice(0)
+                .reverse()
+                .map((item) => (
+                  <Card style={styles.operationCard}>
+                    <View style={styles.justifyRow}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginRight: '5%',
+                        }}>
+                        <Icon
+                          name={categories.categoryIcons[item.category]}
+                          style={[
+                            styles.icon,
+                            styles.text,
+                            {marginRight: '10%'},
+                          ]}
+                        />
+                        <Icon
+                          name={
+                            item.account === 'card' ? 'credit-card' : 'cash'
+                          }
+                          style={[styles.icon, styles.text]}
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.date}>
+                          {new Date(item.date).toLocaleDateString()} at{' '}
+                          {new Date(item.date).toLocaleTimeString()}
+                        </Text>
+                        <View style={[styles.justifyRow]}>
+                          <Text
+                            style={
+                              item.value < 0 ? styles.negative : styles.positive
+                            }>
+                            {item.value}
+                            {'   '}
+                          </Text>
+                          <Text style={styles.text}>{item.title}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </Card>
+                ))
+            )}
+          </View>
+        </ScrollView>
+      )}
+    </View>
+  );
 };
 
 export const budgetOptions = (navData) => {

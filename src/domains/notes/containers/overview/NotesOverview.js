@@ -81,51 +81,41 @@ const NotesOverview = (props) => {
     loadNotes();
   }, [dispatch, loadNotes]);
 
-  // listen to navigation event to fetch trips no matter if the screen is already in stack
-  useEffect(() => {
-    const willFocusSubscription = props.navigation.addListener(
-      'willFocus',
-      loadNotes,
-    );
-    // clean up listener
-    return () => {
-      willFocusSubscription.remove();
-    };
-  }, []); // do not add props.navigation as a dependency, it may cause a loop
-
   if (isLoading || isRefreshing) {
     return <Loading />;
-  } else if (error) {
+  }
+
+  if (error) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <Text style={styles.text}>{error}</Text>
         <Button title="Try again" onPress={loadNotes} color={Colors.primary} />
       </View>
     );
-  } else {
-    if (notes === undefined) {
-      return <Itemless message={'You have no notes saved!'} />;
-    } else {
-      return (
-        <View style={styles.container}>
-          <FlatList
-            data={notes}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={(itemData) => (
-              <NoteItem
-                tripId={tripId}
-                category={itemData.item.category}
-                id={itemData.item.id}
-                title={itemData.item.title}
-                description={itemData.item.description}
-                deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
-              />
-            )}
-          />
-        </View>
-      );
-    }
   }
+
+  if (notes === undefined) {
+    return <Itemless message={'You have no notes saved!'} />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={notes}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={(itemData) => (
+          <NoteItem
+            tripId={tripId}
+            category={itemData.item.category}
+            id={itemData.item.id}
+            title={itemData.item.title}
+            description={itemData.item.description}
+            deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
+          />
+        )}
+      />
+    </View>
+  );
 };
 
 export const notesOptions = (navData) => {

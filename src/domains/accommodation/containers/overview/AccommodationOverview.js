@@ -77,67 +77,66 @@ const AccommodationOverview = (props) => {
 
   if (isLoading || isRefreshing) {
     return <Loading />;
-  } else {
-    if (accommodation === undefined) {
-      return <Itemless message={'You have no saved accommodation!'} />;
-    } else {
-      let scrollX = new Animated.Value(0);
-      let position = Animated.divide(scrollX, cardWidth);
-      return (
-        <ScrollView
-          style={styles.scrollview}
-          contentContainerStyle={styles.contentContainer}>
-          <View>
-            <FlatList
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onScroll={Animated.event(
-                [{nativeEvent: {contentOffset: {x: scrollX}}}],
-                {useNativeDriver: false},
-              )}
-              scrollEventThrottle={16}
-              decelerationRate={0}
-              snapToInterval={cardWidth + 20}
-              snapToAlignment="center"
-              contentInset={styles.contentInsetIOS}
-              data={accommodation}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={(itemData) => (
-                <AccommodationItem
-                  id={itemData.item.id}
-                  tripId={tripId}
-                  image={itemData.item.imageUrl}
-                  name={itemData.item.name}
-                  address={itemData.item.address}
-                  facilities={itemData.item.facilities}
-                  hotelHours={itemData.item.hotelHours}
-                  description={itemData.item.description}
-                  reservationDetails={itemData.item.reservationDetails}
-                  deleteAccommodationHandler={() =>
-                    deleteAccommodationHandler(itemData.item.id)
-                  }
-                />
-              )}
-            />
-            <View style={styles.rowDirection}>
-              {accommodation.map((_, i) => {
-                let opacity = position.interpolate({
-                  inputRange: [i - 1, i, i + 1],
-                  outputRange: [0.3, 1, 0.3],
-                  extrapolate: 'clamp',
-                });
-
-                return (
-                  <Animated.View key={i} style={{opacity, ...styles.dot}} />
-                );
-              })}
-            </View>
-          </View>
-        </ScrollView>
-      );
-    }
   }
+
+  if (accommodation === undefined) {
+    return <Itemless message={'You have no saved accommodation!'} />;
+  }
+
+  let scrollX = new Animated.Value(0);
+  let position = Animated.divide(scrollX, cardWidth);
+
+  return (
+    <ScrollView
+      style={styles.scrollview}
+      contentContainerStyle={styles.contentContainer}>
+      <View>
+        <FlatList
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {x: scrollX}}}],
+            {useNativeDriver: false},
+          )}
+          scrollEventThrottle={16}
+          decelerationRate={0}
+          snapToInterval={cardWidth + 20}
+          snapToAlignment="center"
+          contentInset={styles.contentInsetIOS}
+          data={accommodation}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={(itemData) => (
+            <AccommodationItem
+              id={itemData.item.id}
+              tripId={tripId}
+              image={itemData.item.imageUrl}
+              name={itemData.item.name}
+              address={itemData.item.address}
+              facilities={itemData.item.facilities}
+              hotelHours={itemData.item.hotelHours}
+              description={itemData.item.description}
+              reservationDetails={itemData.item.reservationDetails}
+              deleteAccommodationHandler={() =>
+                deleteAccommodationHandler(itemData.item.id)
+              }
+            />
+          )}
+        />
+        <View style={styles.rowDirection}>
+          {accommodation.map((_, i) => {
+            let opacity = position.interpolate({
+              inputRange: [i - 1, i, i + 1],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: 'clamp',
+            });
+
+            return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
+          })}
+        </View>
+      </View>
+    </ScrollView>
+  );
 };
 
 export const accommodationOptions = (navData) => {
