@@ -1,7 +1,9 @@
 import React from 'react';
-/** IMPORTS FROM WITHIN THE MODULE */
-import {Home} from 'share/containers/Home';
 
-export default function Share() {
+import Home from './containers/Home';
+
+function Share() {
   return <Home />;
 }
+
+export default Share;
