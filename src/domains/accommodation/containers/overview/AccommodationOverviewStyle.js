@@ -7,7 +7,7 @@ import Colors from 'constants/Colors';
  * refactor Fonts
  * refactor Metrics
  */
-export const accommodationStyle = StyleSheet.create({
+export const accommodationOverviewStyle = StyleSheet.create({
   scrollview: {
     flex: 1,
     backgroundColor: Colors.background,

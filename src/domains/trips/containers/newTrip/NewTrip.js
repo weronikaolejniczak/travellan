@@ -9,29 +9,25 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-/* imports from within the module */
+
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
-import DatePicker from 'myTrips/components/datePicker/DatePicker';
-import {createTrip} from 'myTrips/state/Actions';
+import DatePicker from 'trips/components/datePicker/DatePicker';
+import {createTrip} from 'state/trip/tripActions';
 import {newTripStyle as styles} from './NewTripStyle';
 import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
 
-/** new trip presentation component */
 const NewTrip = (props) => {
   const dispatch = useDispatch();
 
-  // destination
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
-  // dates
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
-  // budget
   const [budget, setBudget] = useState();
   const [budgetIsValid, setBudgetIsValid] = useState(false);
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
@@ -41,8 +37,6 @@ const NewTrip = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  /** HANDLERS */
-  // handle validity of destination
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
@@ -53,7 +47,6 @@ const NewTrip = (props) => {
     setDestination(text);
   };
 
-  // handle validity of budget
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     if (budgetIsEnabled) {
@@ -64,47 +57,40 @@ const NewTrip = (props) => {
     }
   };
 
-  /* date picker handlers */
-  // handle start date change
   const startDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
     setShowStartDate(Platform.OS === 'ios');
     setStartDate(currentDate);
-    // set endDate to currentDate if it is earlier than the day selected for startDate
     currentDate > endDate ? setEndDate(currentDate) : '';
   };
-  // handle end date change
+
   const endDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
     setShowEndDate(Platform.OS === 'ios');
     setEndDate(currentDate);
   };
-  // show date picker
+
   const showDatePicker = (type) => {
     type === 'start' ? setShowStartDate(true) : setShowEndDate(true);
   };
 
-  /* budget handlers */
-  // clear budget
   const clearBudget = () => {
     setBudget('0');
     setBudgetIsValid(true);
     setBudgetSubmitted(false);
   };
-  // reset the budget
+
   const resetBudget = () => {
     setBudget();
     setBudgetIsValid(false);
   };
-  // toggle switch to enable/disable budget
+
   const toggleBudgetSwitch = () => {
     setBudgetIsEnabled((previousState) => !previousState);
     !budgetIsEnabled ? resetBudget() : clearBudget();
   };
 
-  /* submit handler */
   const submitHandler = useCallback(async () => {
-    // if budget is enabled we define an array with given currency, else it's undefined
     let budgetToSubmit = [
       new Budget(
         0,
@@ -128,14 +114,11 @@ const NewTrip = (props) => {
       ),
     ];
 
-    // and if destination and budget are not valid
     if (!destinationIsValid || !budgetIsValid) {
       setDestinationSubmitted(true);
-      // and if budget is enabled
       if (budgetIsEnabled) {
         setBudgetSubmitted(true);
       }
-      // and if destination and budget are valid, budget is enabled and currency exists
     } else if (
       destinationIsValid &&
       budgetIsEnabled &&
@@ -153,7 +136,6 @@ const NewTrip = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
-      // else if destination is valid but budget is disabled
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
       await dispatch(
@@ -183,7 +165,6 @@ const NewTrip = (props) => {
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
-      {/* pick destination */}
       <View style={styles.smallMarginTop}>
         <Text style={styles.label}>Trip destination</Text>
         <TextInput
@@ -200,7 +181,6 @@ const NewTrip = (props) => {
         )}
       </View>
 
-      {/* pick start date */}
       <DatePicker
         label={'Start date'}
         styles={styles}
@@ -211,7 +191,6 @@ const NewTrip = (props) => {
         dateChangeHandler={startDateChangeHandler}
       />
 
-      {/* pick end date */}
       <DatePicker
         label={'End date'}
         styles={styles}
@@ -222,7 +201,6 @@ const NewTrip = (props) => {
         dateChangeHandler={endDateChangeHandler}
       />
 
-      {/* BUDGET */}
       <BudgetField
         label={'Budget'}
         styles={styles}
@@ -239,7 +217,6 @@ const NewTrip = (props) => {
         setAccount={setAccount}
       />
 
-      {/* SUBMIT BUTTON */}
       {isLoading ? (
         <View style={styles.smallMarginTop}>
           <ActivityIndicator color={Colors.primary} />

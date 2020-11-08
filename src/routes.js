@@ -13,18 +13,20 @@ import TripDetails, {
   tripDetailsOptions,
 } from 'trips/containers/details/TripDetails';
 import NewTrip from 'trips/containers/newTrip/NewTrip';
-import Transport, {transportOptions} from 'transport/containers/Transport';
-import AddTransport from 'transport/containers/AddTransport';
-import AddQR from 'transport/containers/AddQR';
-import Accommodation, {
+import Transport, {
+  transportOptions,
+} from 'transport/containers/overview/Transport';
+import AddTransport from 'transport/containers/addTransport/AddTransport';
+import AddQR from 'transport/containers/addQR/AddQR';
+import AccommodationOverview, {
   accommodationOptions,
-} from 'accommodation/containers/Accommodation';
-import AddAccommodation from 'accommodation/containers/AddAccommodation';
-import Budget, {budgetOptions} from 'budget/containers/Budget';
-import AddCurrency from 'budget/containers/AddCurrency';
-import Notes, {notesOptions} from 'notes/containers/Notes';
-import AddNote from 'notes/containers/AddNote';
-import EditNote from 'notes/containers/EditNote';
+} from 'accommodation/containers/overview/AccommodationOverview';
+import AddAccommodation from 'accommodation/containers/addAccommodation/AddAccommodation';
+import Budget, {budgetOptions} from 'budget/containers/overview/Budget';
+import AddCurrency from 'budget/containers/addCurrency/AddCurrency';
+import NotesOverview, {notesOptions} from 'notes/containers/overview/NotesOverview';
+import AddNote from 'notes/containers/addNote/AddNote';
+import EditNote from 'notes/containers/editNote/EditNote';
 import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
 
@@ -66,7 +68,7 @@ export default function Navigation() {
 
         <Stack.Screen
           name="Accommodation"
-          component={Accommodation}
+          component={AccommodationOverview}
           options={accommodationOptions}
         />
         <Stack.Screen name="Add accommodation" component={AddAccommodation} />
@@ -78,7 +80,11 @@ export default function Navigation() {
         />
         <Stack.Screen name="Add currency" component={AddCurrency} />
 
-        <Stack.Screen name="Notes" component={Notes} options={notesOptions} />
+        <Stack.Screen
+          name="Notes"
+          component={NotesOverview}
+          options={notesOptions}
+        />
         <Stack.Screen name="Add note" component={AddNote} />
         <Stack.Screen name="Edit Note" component={EditNote} />
 

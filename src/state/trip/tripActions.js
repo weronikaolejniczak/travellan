@@ -1,28 +1,25 @@
-/* models */
-import Trip from 'myTrips/models/Trip';
+import Trip from 'trips/models/Trip';
 import Map from 'map/models/Map';
-/* services */
-import {fetchImage} from 'common/services/Image';
-import {fetchCoords} from 'common/services/Coordinates';
-/* actions */
+
+import {fetchImage} from 'common/services/fetchImage';
+import {fetchCoords} from 'common/services/fetchCoordinates';
+
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
 export const SET_TRIPS = 'SET_TRIPS';
 
-// fetch already existing/created trips from Firebase
 export const fetchTrips = () => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    // GET request to the database (default mode of fetch).
+
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
-    ); //.then(response => { <- declares what happens after getting a response
-    //...
-    //}).catch(); <- listening to errors
+    );
+
     const resData = await response.json();
     const loadedTrips = [];
-    // adding trips from database one by one using the stored keys
+
     for (const key in resData) {
       loadedTrips.push(
         new Trip(
@@ -44,7 +41,6 @@ export const fetchTrips = () => {
   };
 };
 
-// delete a trip based in tripId
 export const deleteTrip = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -59,7 +55,6 @@ export const deleteTrip = (tripId) => {
   };
 };
 
-// create a trip based on user input
 export const createTrip = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -76,7 +71,7 @@ export const createTrip = (destination, startDate, endDate, budget) => {
     let transportInfo = [];
     let accommodationInfo = [];
     let map = new Map([], [], null);
-    // POST request to the database
+
     const response = await fetch(
       `https://travellan-project.firebaseio.com/Trips/${userId}.json?auth=${token}`,
       {
@@ -97,9 +92,8 @@ export const createTrip = (destination, startDate, endDate, budget) => {
           map,
         }),
       },
-    ); //.then(response => {    <- declares what happens after getting a response
-    //...
-    //}).catch(); <- listening to errors
+    );
+
     const resData = await response.json();
     dispatch({
       type: CREATE_TRIP,

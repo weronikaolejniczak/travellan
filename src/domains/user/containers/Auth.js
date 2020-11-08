@@ -11,10 +11,10 @@ import {
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-/** IMPORTS FROM WITHIN THE MODULE */
+
 import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
-import * as authActions from 'user/state/Actions';
+import * as authActions from 'state/user/userActions';
 import {AuthStyle as styles} from './AuthStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';

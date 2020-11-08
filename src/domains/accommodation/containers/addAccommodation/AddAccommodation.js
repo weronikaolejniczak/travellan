@@ -11,9 +11,9 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
-/* imports from within the module */
+
 import Card from 'components/card/Card';
-import * as accommodationActions from 'accommodation/state/Actions';
+import * as accommodationActions from 'state/accommodation/accommodationActions';
 import {addAccommodationStyle as styles} from './AddAccommodationStyle';
 import Colors from 'constants/Colors';
 
@@ -49,14 +49,11 @@ const AddAccommodation = (props) => {
   const [details, setDetails] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  /* handlers */
-  // validates housing name
   const nameChangeHandler = (text) => {
     text.trim().length === 0 ? setNameIsValid(false) : setNameIsValid(true);
     setName(text);
   };
 
-  // validates housing address
   const addressChangeHandler = (text) => {
     text.trim().length === 0
       ? setAddressIsValid(false)
@@ -64,7 +61,6 @@ const AddAccommodation = (props) => {
     setAddress(text);
   };
 
-  // validates housing description
   const descriptionChangeHandler = (text) => {
     text.trim().length === 0
       ? setDescriptionIsValid(false)
@@ -72,7 +68,6 @@ const AddAccommodation = (props) => {
     setDescription(text);
   };
 
-  // validates hotel hours
   const hotelHoursChangeHandler = (text) => {
     text.trim().length === 0
       ? setHotelHoursIsValid(false)
@@ -80,7 +75,6 @@ const AddAccommodation = (props) => {
     setHotelHours(text);
   };
 
-  // submits
   const submitHandler = useCallback(async () => {
     if (
       !nameIsValid ||

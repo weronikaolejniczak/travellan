@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {StartupScreenStyle as styles} from './StartupScreenStyle';
 import Colors from 'constants/Colors';
 
-import * as authActions from 'user/state/Actions';
+import * as authActions from 'state/user/userActions';
 
 const StartupScreen = (props) => {
   const dispatch = useDispatch();

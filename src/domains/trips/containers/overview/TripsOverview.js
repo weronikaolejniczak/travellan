@@ -11,16 +11,15 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
-/* imports from within the module */
+
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
-import TripItem from 'myTrips/components/item/Trip';
+import TripItem from 'trips/components/item/Trip';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import * as tripActions from 'myTrips/state/Actions';
+import * as tripActions from 'state/trip/tripActions';
 import {tripsOverviewStyle as styles} from './TripsOverviewStyle';
 import Colors from 'constants/Colors';
 
-/* trips overview presentational component - displays stored trips in the form of cards */
 const TripsOverview = (props) => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => state.trips.availableTrips);
@@ -28,7 +27,6 @@ const TripsOverview = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  /* handlers */
   const loadTrips = useCallback(async () => {
     setError(null);
     setIsLoading(true);
@@ -44,7 +42,6 @@ const TripsOverview = (props) => {
     loadTrips();
   }, [dispatch, loadTrips]);
 
-  // listen to navigation event to fetch trips no matter if the screen is already in stack
   useEffect(() => {
     const willFocusSubscription = props.navigation.addListener(
       'willFocus',
@@ -54,9 +51,8 @@ const TripsOverview = (props) => {
     return () => {
       willFocusSubscription.remove();
     };
-  }, [loadTrips]); // do not add props.navigation as a dependency, it may cause a loop
+  }, []); // do not add props.navigation as a dependency, it may cause a loop
 
-  // select a trip
   const selectItemHandler = (id, destination) => {
     props.navigation.navigate('Details', {
       tripId: id,
@@ -67,7 +63,6 @@ const TripsOverview = (props) => {
   /* KNOWN ISSUE: user can click on the card and immediately after on the trip,
   which navigates him to trip details and still shows an alert to delete the trip;
   afterwards application crashes */
-  // delete a trip
   const deleteItemHandler = (item) => {
     Alert.alert(
       `Delete a trip to ${item.destination}`,

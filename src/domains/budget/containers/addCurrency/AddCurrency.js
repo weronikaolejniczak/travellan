@@ -7,8 +7,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-/** imports from within the module */
-import * as budgetActions from 'budget/state/Actions';
+
+import * as budgetActions from 'state/budget/budgetActions';
 import * as handlers from 'budget/handlers/PrepareData';
 import {CURRENCIES} from 'data/Currencies';
 import Budget from 'budget/models/Budget';

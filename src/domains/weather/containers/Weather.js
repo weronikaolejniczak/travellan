@@ -9,18 +9,16 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-/* imports from within the module */
-import {fetchWeather} from 'weather/services/Weather';
+
+import {fetchWeather} from 'weather/services/fetchWeather';
 import Background from 'weather/components/background/Background';
 import Graphics from 'weather/components/graphics/Graphics';
 import Ground from 'weather/components/ground/Ground';
 import {weatherStyle as styles} from './WeatherStyle';
 import Colors from 'constants/Colors';
-//import {WEATHER} from 'weather/data/DummyWeather';
 
 const windowHeight = Dimensions.get('window').height;
 
-/* weather representational component */
 const Weather = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>

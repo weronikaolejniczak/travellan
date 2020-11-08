@@ -2,16 +2,16 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-/* imports from within the module */
+
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import NoteItem from 'notes/components/item/Note';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import * as noteActions from 'notes/state/Actions';
-import {NotesStyles as styles} from './NotesStyle';
+import * as noteActions from 'state/note/noteActions';
+import {NotesStyles as styles} from './NotesOverviewStyle';
 import Colors from 'constants/Colors';
 
-const Notes = (props) => {
+const NotesOverview = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
@@ -23,7 +23,6 @@ const Notes = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  /* handlers */
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
@@ -76,7 +75,7 @@ const Notes = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
-  }, [dispatch, setIsLoading, setError]);
+  }, []);
 
   useEffect(() => {
     loadNotes();
@@ -92,7 +91,7 @@ const Notes = (props) => {
     return () => {
       willFocusSubscription.remove();
     };
-  }, [loadNotes]); // do not add props.navigation as a dependency, it may cause a loop
+  }, []); // do not add props.navigation as a dependency, it may cause a loop
 
   if (isLoading || isRefreshing) {
     return <Loading />;
@@ -110,8 +109,6 @@ const Notes = (props) => {
       return (
         <View style={styles.container}>
           <FlatList
-            //onRefresh={loadNotes}
-            //refreshing={isRefreshing}
             data={notes}
             keyExtractor={(item) => item.id.toString()}
             renderItem={(itemData) => (
@@ -150,4 +147,4 @@ export const notesOptions = (navData) => {
   };
 };
 
-export default Notes;
+export default NotesOverview;

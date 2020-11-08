@@ -13,8 +13,8 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {LineChart} from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-/** imports from within the module */
-import * as budgetActions from 'budget/state/Actions';
+
+import * as budgetActions from 'state/budget/budgetActions';
 import * as handlers from 'budget/handlers/PrepareData';
 import Card from 'components/card/Card';
 import {budgetStyle as styles} from './BudgetStyle';
@@ -55,7 +55,6 @@ const Budget = (props) => {
     selectedCurrency ? selectedCurrency.history[0] : null,
   );
 
-  /** line chart */
   const data = {
     labels: selectedCurrency
       ? handlers.prepareLabelsForLC(selectedCurrency.history)
@@ -83,7 +82,6 @@ const Budget = (props) => {
     useShadowColorFromDataset: false, // optional
   };
 
-  /** handlers */
   const clear = () => {
     setTitle('');
     setAmount('');
@@ -235,7 +233,6 @@ const Budget = (props) => {
   } else {
     return (
       <View style={styles.contentContainer}>
-        {/* HORIZONTAL FLATLIST OF CURRENCIES */}
         <View style={styles.currenciesContainer}>
           <FlatList
             horizontal
@@ -283,11 +280,10 @@ const Budget = (props) => {
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
-        {/* CURRENCY OPERATIONS AND HISTORY */}
+
         {selectedCurrency !== undefined && (
           <View style={styles.overviewContainer}>
             <View style={styles.center}>
-              {/* CASH */}
               <Text style={{color: Colors.grey}}>Cash</Text>
               <View style={styles.accounts}>
                 <Icon name={'cash'} style={[styles.icon, styles.text]} />
@@ -302,7 +298,7 @@ const Budget = (props) => {
                 </Text>
               </View>
             </View>
-            {/* GENERAL BALANCE */}
+
             <View style={styles.center}>
               <Text style={{color: Colors.grey}}>General balance</Text>
               <Text
@@ -314,7 +310,7 @@ const Budget = (props) => {
                 {displayableValue}
               </Text>
             </View>
-            {/* CARD */}
+
             <View style={styles.center}>
               <Text style={{color: Colors.grey}}>Card</Text>
               <View style={[styles.accounts]}>
@@ -334,7 +330,6 @@ const Budget = (props) => {
         )}
         {selectedCurrency !== undefined && (
           <ScrollView contentContainerStyle={styles.detailsContainer}>
-            {/* LINECHART */}
             {selectedCurrency.history.length > 1 && (
               <View>
                 <View style={[styles.smallMarginTop, styles.chartContainer]}>
@@ -387,13 +382,11 @@ const Budget = (props) => {
                 )}
               </View>
             )}
-            {/* OPERATIONS */}
             <View style={styles.smallMarginTop}>
               <Card style={{padding: '5%'}}>
                 <Text style={[styles.text, styles.label]}>Operations</Text>
               </Card>
               <View style={{padding: '5%'}}>
-                {/* CATEGORIES */}
                 <View>
                   <Text style={{color: 'grey'}}>Categories</Text>
                   <View
@@ -423,11 +416,9 @@ const Budget = (props) => {
                     </Text>
                   </View>
                 </View>
-                {/* ACCOUNTS */}
                 <View style={{marginVertical: '5%'}}>
                   <Text style={{color: 'grey'}}>Accounts</Text>
                   <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
-                    {/* CASH */}
                     <View>
                       <TouchableOpacity
                         style={[styles.justifyRow, {alignItems: 'center'}]}
@@ -453,7 +444,6 @@ const Budget = (props) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                    {/* CARD */}
                     <View style={{marginLeft: '5%'}}>
                       <TouchableOpacity
                         style={[styles.justifyRow, {alignItems: 'center'}]}
@@ -481,8 +471,6 @@ const Budget = (props) => {
                     </View>
                   </View>
                 </View>
-                {/* TITLE INPUT */}
-                {/* <Text style={styles.text}>Operations</Text> */}
                 <View style={styles.extraSmallMarginTop}>
                   <TextInput
                     style={styles.input}
@@ -492,7 +480,6 @@ const Budget = (props) => {
                     onChangeText={(text) => setTitle(text)}
                   />
                 </View>
-                {/* AMOUNT INPUT */}
                 <View>
                   <TextInput
                     style={styles.input}
@@ -503,7 +490,6 @@ const Budget = (props) => {
                     keyboardType={'numeric'}
                   />
                   <View style={[styles.justifyRow, styles.actions]}>
-                    {/* PLUS OPERATION */}
                     <TouchableOpacity onPress={() => modifyAmount('plus')}>
                       <Icon
                         style={[
@@ -514,7 +500,6 @@ const Budget = (props) => {
                         name="plus"
                       />
                     </TouchableOpacity>
-                    {/* MINUS OPERATION */}
                     <TouchableOpacity onPress={() => modifyAmount('minus')}>
                       <Icon
                         style={[styles.icon, styles.negative]}
@@ -530,12 +515,10 @@ const Budget = (props) => {
                 )}
               </View>
             </View>
-            {/* HISTORY */}
             <View style={styles.smallMarginTop}>
               <Card style={{padding: '5%'}}>
                 <Text style={[styles.text, styles.label]}>History</Text>
               </Card>
-              {/* OPERATIONS */}
               {!selectedCurrency.history.length ? (
                 <View style={styles.smallMarginTop}>
                   <Text style={styles.text}>No operations to show</Text>
@@ -599,7 +582,6 @@ const Budget = (props) => {
   }
 };
 
-// budget screen options
 export const budgetOptions = (navData) => {
   return {
     headerRight: () => (
