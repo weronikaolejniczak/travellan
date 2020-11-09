@@ -1,84 +1,16 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {
-  View,
-  ScrollView,
-  FlatList,
-  Platform,
-  Animated,
-  Alert,
-} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import Itemless from 'components/frames/itemless/Itemless';
-import Loading from 'components/frames/loading/Loading';
 import AccommodationItem from 'accommodation/components/item/Accommodation';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import * as accommodationActions from 'state/accommodation/accommodationActions';
 import {cardWidth} from 'accommodation/components/item/AccommodationStyle';
 import {accommodationOverviewStyle as styles} from './AccommodationOverviewStyle';
 
+import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
+
 const AccommodationOverview = (props) => {
-  const dispatch = useDispatch();
-  const tripId = props.route.params.tripId;
-  const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
-  );
-  const accommodation = selectedTrip.accommodation;
-
-  const [error, setError] = useState();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const deleteAction = useCallback(
-    async (id) => {
-      setIsRefreshing(true);
-      await dispatch(accommodationActions.deleteAccommodation(tripId, id));
-      setIsRefreshing(false);
-    },
-    [dispatch, tripId],
-  );
-
-  const deleteAccommodationHandler = useCallback(
-    async (id) => {
-      setIsRefreshing(true);
-      Alert.alert(
-        'Delete accommodation',
-        'Are you sure?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: async () => await deleteAction(id),
-          },
-        ],
-        {cancelable: true},
-      );
-      setIsRefreshing(false);
-    },
-    [deleteAction],
-  );
-
-  useEffect(() => {
-    const loadTrips = async () => {
-      setIsLoading(true);
-      try {
-        await dispatch(accommodationActions.fetchAccommodation(tripId));
-      } catch {
-        setError('Something went wrong!');
-      }
-      setIsLoading(false);
-    };
-    loadTrips();
-  }, [dispatch, tripId]);
-
-  if (isLoading || isRefreshing) {
-    return <Loading />;
-  }
-
   if (accommodation === undefined) {
     return <Itemless message={'You have no saved accommodation!'} />;
   }
@@ -109,7 +41,6 @@ const AccommodationOverview = (props) => {
           renderItem={(itemData) => (
             <AccommodationItem
               id={itemData.item.id}
-              tripId={tripId}
               image={itemData.item.imageUrl}
               name={itemData.item.name}
               address={itemData.item.address}
@@ -117,9 +48,6 @@ const AccommodationOverview = (props) => {
               hotelHours={itemData.item.hotelHours}
               description={itemData.item.description}
               reservationDetails={itemData.item.reservationDetails}
-              deleteAccommodationHandler={() =>
-                deleteAccommodationHandler(itemData.item.id)
-              }
             />
           )}
         />
