@@ -2,20 +2,13 @@ import {StyleSheet, Platform} from 'react-native';
 import {spacingForCardInset} from 'accommodation/components/item/AccommodationStyle';
 import Colors from 'constants/Colors';
 
-/**
- * TODO:
- * refactor Fonts
- * refactor Metrics
- */
 export const accommodationOverviewStyle = StyleSheet.create({
-  scrollview: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: '12%',
-  },
   contentContainer: {
+    paddingTop: '12%',
+    flex: 1,
     flexGrow: 1,
     justifyContent: 'center',
+    backgroundColor: Colors.background,
     paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
   },
   contentInsetIOS: {
@@ -39,9 +32,6 @@ export const accommodationOverviewStyle = StyleSheet.create({
   },
   text: {
     color: Colors.text,
-  },
-  itemlessText: {
-    fontSize: 18,
   },
   button: {
     borderRadius: 10,
