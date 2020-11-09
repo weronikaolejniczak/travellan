@@ -10,7 +10,7 @@ import {accommodationOverviewStyle as styles} from './AccommodationOverviewStyle
 
 import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
 
-const AccommodationOverview = (props) => {
+const AccommodationOverview = () => {
   if (accommodation === undefined) {
     return <Itemless message={'You have no saved accommodation!'} />;
   }
