@@ -1,44 +1,31 @@
 'use strict';
-
 import React, {useCallback, useState} from 'react';
-
-import {
-  View,
-  //AppRegistry,
-  //StyleSheet,
-  Text,
-  TouchableOpacity,
-  //Linking,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
-
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
-//import code from 'react-native-aztec-qrcode';
 import {RNCamera} from 'react-native-camera';
-import {AddQRStyle as styles} from './AddQRStyle';
 import {useDispatch, useSelector} from 'react-redux';
-import Colors from 'constants/Colors';
-import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as transportActions from 'transport/state/Actions';
-import {NavigationEvents} from 'react-navigation';
+
+import Colors from 'constants/Colors';
+import {AddQRStyle as styles} from './AddQRStyle';
+import * as transportActions from 'state/transport/transportActions';
 
 const AddQR = (props, state) => {
   const dispatch = useDispatch();
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
-  
+
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
+
   var qr = props.qr;
+
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
   const [torchOn, settorchOn] = useState(false);
-  // Loading check.
   const [isLoading, setIsLoading] = useState(false);
 
   const qrHandler = (e) => {
@@ -50,14 +37,10 @@ const AddQR = (props, state) => {
     setIsLoading(true);
     qr = {QR};
     qr = qr.QR;
-    //console.log(props.navigation);
-    //console.log(state);
     await dispatch(transportActions.updateQR(tripId, ticketId, qr));
-    //props.navigation.goBack(),
-    props.navigation.navigate('Transport'),
-      {
-        tripId: selectedTrip.id,
-      };
+    props.navigation.navigate('Transport', {
+      tripId: selectedTrip.id,
+    });
     setIsLoading(false);
   }, [dispatch, qr, props.navigation, QR, tripId, ticketId]);
 
@@ -74,7 +57,6 @@ const AddQR = (props, state) => {
         <QRCodeScanner
           style={styles.centered}
           onRead={qrHandler}
-          /**TO ADD FLASHLIGHT SWITCH BUTTON */
           flashMode={
             torchOn
               ? RNCamera.Constants.FlashMode.torch

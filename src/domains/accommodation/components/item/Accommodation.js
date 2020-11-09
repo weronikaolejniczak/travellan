@@ -11,29 +11,17 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-/** IMPORTS FROM WITHIN THE MODULE */
+
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
 import {accommodationItemStyle as styles} from './AccommodationStyle';
 import Colors from 'constants/Colors';
 
-const imageUrl =
-  'https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80';
-
-/** Accommodation item component used in AccommodationScreen for reservations listing
- * TODO:
- * refactor icons for better touchable response and clickability
- * refactor action bar
- * refactor inline styles
- */
 const AccommodationItem = (props) => {
-  /** HANDLERS */
   const prepareFacilities = (facilitiesArray) => {
     let result = [];
 
-    if (facilitiesArray === undefined) {
-      console.log('error');
-    } else {
+    if (facilitiesArray !== undefined) {
       result = facilitiesArray.map((element) => Object.values(element)[0]);
     }
 
@@ -41,6 +29,8 @@ const AccommodationItem = (props) => {
   };
 
   let facilities = prepareFacilities(props.facilities);
+  const imageUrl =
+    'https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80';
 
   return (
     <Card style={styles.accommodation}>
@@ -51,28 +41,10 @@ const AccommodationItem = (props) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-
-        {/* EDIT RESERVATION INFO
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Edit reservation');
-          }}>
-          <Icon name="md-brush" style={styles.icon} />
-        </TouchableOpacity>
-
-        SHOW ON MAP
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Show on map');
-          }}>
-          <Icon name="md-map" style={styles.icon} />
-        </TouchableOpacity> */}
       </View>
 
       <ScrollView style={{marginTop: 10}} indicatorStyle={'white'}>
         <View>
-          {/* IMAGE BACKGROUND WITH GRADIENT, NAME
-          refactor uri to be the picture of the accommodation */}
           <ImageBackground
             style={styles.image}
             source={{
@@ -91,18 +63,16 @@ const AccommodationItem = (props) => {
           </ImageBackground>
 
           <View style={styles.container}>
-            {/* ADDRESS */}
             <View>
               <Text style={[styles.text, styles.subtitle]}>
                 {props.address}
               </Text>
             </View>
 
-            {/* BENEFITS */}
             <View style={{marginTop: '7%'}}>
               <Text style={[styles.text, styles.h2]}>Amenities</Text>
               <View style={styles.benefitsContainer}>
-                {/* PARKING */}
+
                 <MaterialCommunityIcon
                   style={[
                     styles.benefitIcon,
@@ -114,7 +84,7 @@ const AccommodationItem = (props) => {
                   ]}
                   name={'parking'}
                 />
-                {/* SWIMMING POOLS */}
+
                 <MaterialCommunityIcon
                   style={[
                     styles.benefitIcon,
@@ -126,7 +96,7 @@ const AccommodationItem = (props) => {
                   ]}
                   name={'swim'}
                 />
-                {/* PETS */}
+
                 <MaterialIcon
                   style={[
                     styles.benefitIcon,
@@ -138,7 +108,7 @@ const AccommodationItem = (props) => {
                   ]}
                   name={'pets'}
                 />
-                {/* SPA */}
+
                 <MaterialIcon
                   style={[
                     styles.benefitIcon,
@@ -150,7 +120,7 @@ const AccommodationItem = (props) => {
                   ]}
                   name={'spa'}
                 />
-                {/* WIFI */}
+
                 <MaterialIcon
                   style={[
                     styles.benefitIcon,
@@ -162,7 +132,7 @@ const AccommodationItem = (props) => {
                   ]}
                   name={'wifi'}
                 />
-                {/* BAR */}
+
                 <MaterialIcon
                   style={[
                     styles.benefitIcon,
@@ -177,28 +147,16 @@ const AccommodationItem = (props) => {
               </View>
             </View>
 
-            {/* HOTEL HOURS */}
             <View style={{marginTop: '7%'}}>
               <Text style={[styles.text, styles.h2]}>Hotel hours</Text>
               <Text style={[styles.text]}>{props.hotelHours}</Text>
             </View>
 
-            {/* DESCRIPTION */}
             <View style={{marginTop: '7%'}}>
               <Text style={[styles.text, styles.h2]}>Description</Text>
               <View style={[styles.textAlign]}>
                 <ReadMore longText={props.description} />
               </View>
-            </View>
-
-            {/* RESERVATION INFO */}
-            <View style={{marginTop: '1%'}}>
-              <Text style={[styles.text, styles.h2]}>Reservation info</Text>
-              <Text style={[styles.text]}>
-                {props.reservationDetails.length === 0
-                  ? 'No details'
-                  : props.reservationDetails}
-              </Text>
             </View>
           </View>
         </View>

@@ -11,10 +11,10 @@ import {
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-/** IMPORTS FROM WITHIN THE MODULE */
+
 import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
-import * as authActions from 'user/state/Actions';
+import * as authActions from 'state/user/userActions';
 import {AuthStyle as styles} from './AuthStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -45,7 +45,6 @@ const formReducer = (state, action) => {
 const Auth = (props) => {
   const dispatch = useDispatch();
 
-  /** STATE VARIABLES AND STATE SETTING FUNCTIONS */
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [isSignup, setIsSignup] = useState(false);
@@ -61,7 +60,6 @@ const Auth = (props) => {
     formIsValid: false,
   });
 
-  /** HANDLERS */
   useEffect(() => {
     if (error) {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
@@ -156,16 +154,14 @@ const Auth = (props) => {
                 </Text>
               </TouchableOpacity>
             )}
-            {/* <TouchableOpacity
-              style={styles.buttonContainer}
+            <TouchableOpacity
               onPress={() => {
                 setIsSignup((prevState) => !prevState);
-                // props.navigation.navigate("My trips");
               }}>
               <Text style={styles.buttonText}>
-                {isSignup ? 'Login' : 'Sign up'}
+                Switch to {isSignup ? 'Login' : 'Sign up'}
               </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
@@ -175,24 +171,6 @@ const Auth = (props) => {
 
 export const authOptions = {
   headerShown: false,
-  //headerTitle: 'Authenticate',
 };
 
-/** export const authScreenOptions = (navData) => {
-  return {
-    headerRight: (props) => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create a trip"
-          style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-          onPress={() => {
-            navData.navigation.navigate('Create a trip');
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
-*/
 export default Auth;

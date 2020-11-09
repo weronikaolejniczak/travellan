@@ -2,11 +2,10 @@ import React from 'react';
 import {View, ScrollView, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-/* imports from within the module */
-import NavigationButton from 'myTrips/components/navigationButton/NavigationButton';
+
+import NavigationButton from 'trips/components/navigationButton/NavigationButton';
 import {tripDetailsStyle as styles} from './TripDetailsStyle';
 
-/* trip details presentational component - displays details about each trip */
 const TripDetails = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
@@ -22,7 +21,6 @@ const TripDetails = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        {/* Image background and overlay with photo author credits and date range of the trip */}
         <ImageBackground style={styles.image} source={{uri: imageUrl}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.00)', '#222222']}
@@ -31,13 +29,11 @@ const TripDetails = (props) => {
             locations={[0.6, 1]}
             style={[{flex: 1}]}>
             <View style={styles.dateContainer}>
-              {/* UNSPLASH ARTIST CREDITS */}
               <View style={{justifyContent: 'space-around'}}>
                 <Text style={[styles.text, {textAlign: 'center'}]}>
                   Photo by {author} @Unsplash/{username}
                 </Text>
               </View>
-              {/* START DATE AND END DATE OF THE TRIP */}
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
                   <Text style={[styles.text, styles.date]}>{startDate}</Text>
@@ -52,67 +48,43 @@ const TripDetails = (props) => {
         </ImageBackground>
       </View>
 
-      {/* Trip details and tools */}
       <View>
-        {/* Information about the time left to departure
-          if there's no ticket added - counts the days
-          if there's a ticket added - counts the days and hours
-        */}
-        {/* Functionalities */}
         <View style={styles.tiles}>
-          {/* Transport */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Transport'}
-            id={selectedTrip.id}
-            androidIcon={'md-paper-plane'}
-            iOSIcon={'ios-paper-plane'}
+            to="Transport"
+            tripId={selectedTrip.id}
+            icon="flight"
           />
-          {/* Accommodation */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Accommodation'}
-            id={selectedTrip.id}
-            androidIcon={'md-bed'}
-            iOSIcon={'ios-bed'}
+            to="Accommodation"
+            tripId={selectedTrip.id}
+            icon="hotel"
           />
-          {/* Map */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Map'}
-            id={selectedTrip.id}
-            androidIcon={'md-map'}
-            iOSIcon={'ios-map'}
+            to="Map"
+            tripId={selectedTrip.id}
+            icon="map"
           />
-          {/* Weather */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Weather'}
-            id={selectedTrip.id}
-            androidIcon={'md-cloudy'}
-            iOSIcon={'ios-cloudy'}
+            to="Weather"
+            tripId={selectedTrip.id}
+            icon="cloud"
           />
-          {/* Budget */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Budget'}
-            id={selectedTrip.id}
-            androidIcon={'md-wallet'}
-            iOSIcon={'ios-wallet'}
+            to="Budget"
+            tripId={selectedTrip.id}
+            icon="account-balance-wallet"
           />
-          {/* Notes */}
           <NavigationButton
-            styles={styles}
             navigation={props.navigation}
-            screenToNavigateTo={'Notes'}
-            id={selectedTrip.id}
-            androidIcon={'md-journal'}
-            iOSIcon={'ios-journal'}
+            to="Notes"
+            tripId={selectedTrip.id}
+            icon="note"
           />
         </View>
       </View>

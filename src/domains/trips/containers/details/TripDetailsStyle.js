@@ -28,21 +28,6 @@ export const tripDetailsStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  button: {
-    borderRadius: 20,
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '45%',
-    height: height * 0.2,
-    padding: 15,
-    marginVertical: height * 0.01,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors.text,
-  },
   justifyRow: {
     flexDirection: 'row',
     justifyContent: 'center',

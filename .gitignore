@@ -1,3 +1,5 @@
+# Environmental variables
+#
 .env
 
 # OSX
@@ -29,6 +31,7 @@ build/
 .idea
 .gradle
 local.properties
+android/secure.properties
 *.iml
 
 # node.js
@@ -59,3 +62,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# VS Code environment
+.vscode

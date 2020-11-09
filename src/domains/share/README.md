@@ -1,1 +1,0 @@
-Share component for receiving intent.

@@ -1,6 +1,3 @@
-/**
- * This file defines the dark mode application style
- */
 import {Colors, Layout} from 'constants';
 
 export default {

@@ -3,8 +3,8 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-/* imports from within the module */
-import * as mapActions from 'map/state/Actions';
+
+import * as mapActions from 'state/map/mapActions';
 import PointOfInterest from 'map/models/PointOfInterest';
 import Toolbar from 'map/components/toolbar/Toolbar';
 import PlaceOverview from 'map/components/placeOverview/PlaceOverview';
@@ -61,11 +61,9 @@ const Map = (props) => {
   // dummy autocomplete data
   const AUTOCOMPLETE = Autocomplete;
 
-  /* handlers */
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
-        //console.log(JSON.stringify(position))
         const {longitude, latitude} = position.coords;
         setCurrentPosition({
           ...currentPosition,
@@ -213,7 +211,7 @@ const Map = (props) => {
 
   return (
     <View style={styles.flex}>
-      {/* render dynamic MapView */}
+
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.flex}
@@ -227,7 +225,7 @@ const Map = (props) => {
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
         onPress={(event) => mapOnPressHandler(event)}>
-        {/* render markers */}
+
         {!searchedPlace &&
           !!markers &&
           markers.map((marker) => (
@@ -243,7 +241,7 @@ const Map = (props) => {
               </MapView.Callout>
             </MapView.Marker>
           ))}
-        {/* render searchedPlace */}
+
         {!!searchedPlace && (
           <MapView.Marker
             coordinate={{
@@ -259,7 +257,6 @@ const Map = (props) => {
         )}
       </MapView>
 
-      {/* render toolbar for map interaction */}
       <Toolbar
         styles={styles}
         navigation={props.navigation}
@@ -280,19 +277,16 @@ const Map = (props) => {
         setShowAutocomplete={() => setShowAutocomplete(!showAutocomplete)}
         error={error}
         setError={() => setError()}
-        // searchedPlace, setSearchedPlace
         searchedPlace={searchedPlace}
         setSearchedPlace={(place) => setSearchedPlace(place)}
         isLoading={isLoading}
         onExitHandler={async () => await onExitHandler()}
       />
 
-      {/* render place details */}
       {showPlaceInfo && (
         <PlaceOverview styles={styles} activeMarker={activeMarker} />
       )}
 
-      {/* render bottom actions */}
       {!!searchedPlace && (
         <View
           style={{

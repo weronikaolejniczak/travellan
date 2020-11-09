@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+
 import {Layout, Typography} from 'constants';
 import AppStyles from 'styles/AppStyles';
 

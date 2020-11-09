@@ -1,1 +1,0 @@
-This directory contains services common for the entire application.

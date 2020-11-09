@@ -11,50 +11,44 @@ import {useDispatch, useSelector} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-/* imports from within the module */
-import * as transportActions from 'transport/state/Actions';
+
+import * as transportActions from 'state/transport/transportActions';
 import {addTransportStyle as styles} from './AddTransportStyle';
 import Colors from 'constants/Colors';
 
-/* add transport presentational component */
 const AddTransport = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-  // type of ticket
+
   const [to, setToDestination] = useState(true);
   const [from, setFromDestination] = useState(false);
-  // QR code and PDF URI
   const [qr, setQR] = useState('');
   const [pdfUri, setpdfUri] = useState('');
-  // initial values
+
   const initialMinutes =
     new Date().getMinutes() < 10
       ? '0' + new Date().getMinutes()
       : new Date().getMinutes();
   const initialHour = new Date().getHours() + ':' + initialMinutes;
-  // form
+
   const [dateOfDeparture, setDateOfDeparture] = useState(new Date());
   const [showDateOfDeparture, setShowDateOfDeparture] = useState(false);
   const [hourOfDeparture, setHourOfDeparture] = useState(initialHour);
   const [showHourOfDeparture, setShowHourOfDeparture] = useState(false);
   const [placeOfDeparture, setPlaceOfDeparture] = useState('');
-  // handles
   const [placeOfDepartureIsValid, setFromPlaceIsValid] = useState(false);
   const [fromPlaceSubmitted, setFromPlaceSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  /* handlers */
-  // cut date into displayable form
   const cutDate = (date) => date.toString().split(' ').slice(1, 4).join(' ');
   const cutHour = (hour) =>
     hour.toTimeString().split(' ')[0].split(':').slice(0, 2).join(':');
 
   /* GODZINA SIĘ NIE ZGADZA - O DWIE GODZINY ZA DUŻO */
-  // prepare date and hour for submittion
   const prepareDate = (date, hour) => {
     let hours = hour.split(':')[0];
     let minutes = hour.split(':')[1];
@@ -65,20 +59,17 @@ const AddTransport = (props) => {
     ).toString();
   };
 
-  // toggle switch for 'to' attribute of the ticket
   const toggleToDestinationSwitch = () => {
     setToDestination((previousState) => !previousState);
     setFromDestination((previousState) => !previousState);
   };
-  // toggle switch for 'from' attribute of the ticket
+
   const toggleFromDestinationSwitch = () => {
     setFromDestination((previousState) => !previousState);
     setToDestination((previousState) => !previousState);
   };
 
-  // address validation
   let addressRegex = new RegExp('');
-  // placeOfDeparture change handler
   const placeChangeHandler = (text) => {
     text.trim().length === 0 || !addressRegex.test(text)
       ? setFromPlaceIsValid(false)
@@ -86,7 +77,6 @@ const AddTransport = (props) => {
     setPlaceOfDeparture(text);
   };
 
-  // date of departure
   const dateOfDepartureChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || dateOfDeparture;
     setShowDateOfDeparture(Platform.OS === 'ios');
@@ -97,7 +87,6 @@ const AddTransport = (props) => {
     setShowDateOfDeparture(true);
   };
 
-  // hour of departure
   const hourOfDepartureChangeHandler = (event, selectedHour) => {
     const currentHour = selectedHour || hourOfDeparture;
     setShowHourOfDeparture(Platform.OS === 'ios');
@@ -108,7 +97,6 @@ const AddTransport = (props) => {
     setShowHourOfDeparture(true);
   };
 
-  // submit transport
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
     await dispatch(
@@ -142,10 +130,8 @@ const AddTransport = (props) => {
 
   return (
     <View style={styles.container}>
-      {/* 'TO' OR 'FROM' */}
       <View style={styles.metrics}>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          {/* TO */}
           <View style={{alignItems: 'center'}}>
             <Text
               style={[
@@ -163,7 +149,6 @@ const AddTransport = (props) => {
               />
             </TouchableOpacity>
           </View>
-          {/* FROM */}
           <View style={{marginLeft: '5%', alignItems: 'center'}}>
             <Text
               style={[
@@ -181,7 +166,6 @@ const AddTransport = (props) => {
               />
             </TouchableOpacity>
           </View>
-          {/* DESTINATION NAME */}
           <View
             style={{marginLeft: '7%', marginTop: '5%', alignItems: 'center'}}>
             <Text style={[styles.label, styles.text]}>
@@ -191,9 +175,7 @@ const AddTransport = (props) => {
         </View>
       </View>
 
-      {/* DEPARTURE */}
       <View style={{marginTop: '5%'}}>
-        {/* DATEPICKER FOR DEPARTURE */}
         <View style={styles.metrics}>
           <Text style={styles.label}>Date of departure</Text>
           <View style={styles.pickerContainer}>
@@ -227,7 +209,6 @@ const AddTransport = (props) => {
           )}
         </View>
 
-        {/* HOURPICKER FOR DEPARTURE */}
         <View style={styles.metrics}>
           <Text style={styles.label}>Hour of departure</Text>
           <View style={styles.pickerContainer}>
@@ -248,7 +229,6 @@ const AddTransport = (props) => {
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={parseFloat(hourOfDeparture.replace(':', '.'))}
-              //minimumDate={Date.now()}
               mode={'time'}
               is24Hour={true}
               display="default"
@@ -257,7 +237,6 @@ const AddTransport = (props) => {
           )}
         </View>
 
-        {/* PLACE OF DEPARTURE */}
         <View style={styles.metrics}>
           <Text style={styles.label}>From place</Text>
           <TextInput
@@ -275,7 +254,6 @@ const AddTransport = (props) => {
         </View>
       </View>
 
-      {/* SUBMIT BUTTON */}
       <View style={styles.buttonContainer}>
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.white} />

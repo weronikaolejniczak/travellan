@@ -5,26 +5,26 @@
         {
         "alias": {
           "src": "./src",
+          "state": "./src/state",
           "common": "./src/common",
           "assets": "./src/common/assets",
           "components": "./src/common/components",
           "constants": "./src/common/constants",
           "data": "./src/common/data",
           "services": "./src/common/services",
-          "state": "./src/common/state",
           "styles": "./src/common/styles",
           "domains": "./src/domains",
           "accommodation": "./src/domains/accommodation",
           "budget": "./src/domains/budget",
           "map": "./src/domains/map",
-          "myTrips": "./src/domains/myTrips",
+          "trips": "./src/domains/trips",
           "notes": "./src/domains/notes",
           "share": "./src/domains/share",
           "transport": "./src/domains/transport",
           "user": "./src/domains/user",
           "weather": "./src/domains/weather"
          }
-        } 
-      ] 
+        }
+      ]
     ]
 }

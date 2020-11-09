@@ -1,1 +1,0 @@
-This directory contains dummy data for testing.
