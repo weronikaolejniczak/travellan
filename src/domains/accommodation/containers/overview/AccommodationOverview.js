@@ -35,18 +35,7 @@ const AccommodationOverview = () => {
         contentInset={styles.contentInsetIOS}
         data={accommodation}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={(itemData) => (
-          <AccommodationItem
-            id={itemData.item.id}
-            image={itemData.item.imageUrl}
-            name={itemData.item.name}
-            address={itemData.item.address}
-            facilities={itemData.item.facilities}
-            hotelHours={itemData.item.hotelHours}
-            description={itemData.item.description}
-            reservationDetails={itemData.item.reservationDetails}
-          />
-        )}
+        renderItem={(data) => <AccommodationItem data={data.item} />}
       />
       <View style={styles.rowDirection}>
         {accommodation.map((_, i) => {

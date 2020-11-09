@@ -5,12 +5,10 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  Platform,
+  Alert,
 } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
@@ -18,144 +16,170 @@ import {accommodationItemStyle as styles} from './AccommodationItemStyle';
 import Colors from 'constants/Colors';
 
 const AccommodationItem = (props) => {
-  const prepareFacilities = (facilitiesArray) => {
-    let result = [];
-
-    if (facilitiesArray !== undefined) {
-      result = facilitiesArray.map((element) => Object.values(element)[0]);
-    }
-
-    return result;
-  };
-
-  let facilities = prepareFacilities(props.facilities);
-  const imageUrl =
-    'https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80';
+  const {data} = props;
 
   return (
     <Card style={styles.accommodation}>
-      <View style={styles.actions}>
-        <TouchableOpacity onPress={props.deleteReservationHandler}>
-          <Ionicon
-            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView style={{marginTop: 10}} indicatorStyle={'white'}>
-        <View>
-          <ImageBackground
-            style={styles.image}
-            source={{
-              uri: imageUrl,
-            }}>
-            <LinearGradient
-              colors={['rgba(0,0,0,0.00)', Colors.cards]}
-              start={{x: 0.0, y: 0.0}}
-              end={{x: 0.0, y: 1.0}}
-              locations={[0.4, 1]}
-              style={[{flex: 1}]}>
-              <View style={styles.headerOverImg}>
-                <Text style={[styles.text, styles.header]}>{props.name}</Text>
-              </View>
-            </LinearGradient>
-          </ImageBackground>
-
-          <View style={styles.container}>
-            <View>
-              <Text style={[styles.text, styles.subtitle]}>
-                {props.address}
+      <ScrollView>
+        <ImageBackground
+          style={styles.image}
+          source={{
+            uri: data.image,
+          }}>
+          <LinearGradient
+            colors={['rgba(0,0,0,0.00)', Colors.cards]}
+            start={{x: 0.0, y: 0.0}}
+            end={{x: 0.0, y: 1.0}}
+            locations={[0.4, 1]}
+            style={[{flex: 1}]}>
+            <View style={styles.accommodationType}>
+              <Text style={styles.text}>{data.type}</Text>
+            </View>
+            <View style={styles.bookingRating}>
+              <Text style={[styles.text, styles.header]}>{data.rating}</Text>
+            </View>
+            <View style={styles.headerOverImg}>
+              <Text style={[styles.text, styles.header]}>{data.name}</Text>
+              <Text style={[styles.text, styles.subheader]}>
+                {data.address}
               </Text>
             </View>
+          </LinearGradient>
+        </ImageBackground>
 
-            <View style={{marginTop: '7%'}}>
-              <Text style={[styles.text, styles.h2]}>Amenities</Text>
-              <View style={styles.benefitsContainer}>
-
-                <MaterialCommunityIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('parking')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'parking'}
-                />
-
-                <MaterialCommunityIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('swimming pool')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'swim'}
-                />
-
-                <MaterialIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('pets allowed')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'pets'}
-                />
-
-                <MaterialIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('spa')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'spa'}
-                />
-
-                <MaterialIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('wifi in rooms')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'wifi'}
-                />
-
-                <MaterialIcon
-                  style={[
-                    styles.benefitIcon,
-                    {
-                      color: facilities.includes('bar')
-                        ? Colors.primary
-                        : '#636363',
-                    },
-                  ]}
-                  name={'local-bar'}
-                />
+        <View style={styles.parentView}>
+          <View style={styles.checkInAndOut}>
+            <View style={styles.checkIcon}>
+              <Icon name="access-time" size={24} style={styles.text} />
+            </View>
+            <View style={styles.checkInfo}>
+              <View style={styles.checkheader}>
+                <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
+                  Check-in
+                </Text>
+                <Text style={[styles.text, {marginLeft: 10}]}>
+                  {data.checkIn}
+                </Text>
+              </View>
+              <View style={styles.checkheader}>
+                <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
+                  Check-out
+                </Text>
+                <Text style={[styles.text, {marginLeft: 10}]}>
+                  {data.checkOut}
+                </Text>
               </View>
             </View>
-
-            <View style={{marginTop: '7%'}}>
-              <Text style={[styles.text, styles.h2]}>Hotel hours</Text>
-              <Text style={[styles.text]}>{props.hotelHours}</Text>
+            <View style={styles.additionalInfo}>
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert('Check-in information', data.checkInExtra)
+                }>
+                <Icon name="info" size={24} style={{color: Colors.primary}} />
+              </TouchableOpacity>
             </View>
+          </View>
+          <View>
+            <Text style={{marginTop: 20, color: Colors.primary}}>
+              {data.frontDesk24H
+                ? '24-hour front desk'
+                : 'self-service front desk'}
+            </Text>
+          </View>
+        </View>
 
-            <View style={{marginTop: '7%'}}>
-              <Text style={[styles.text, styles.h2]}>Description</Text>
-              <View style={[styles.textAlign]}>
-                <ReadMore longText={props.description} />
+        <View style={styles.parentView}>
+          <Text style={[styles.text, styles.header, {marginBottom: 10}]}>
+            Popular facilities & ammenities
+          </Text>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            {data.amenities.map((ammenity) => (
+              <TouchableOpacity>
+                <Icon
+                  name="pets"
+                  size={24}
+                  style={{color: Colors.primary, padding: 10}}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.parentView}>
+          <Text style={[styles.text, styles.header, {marginBottom: 10}]}>
+            Description
+          </Text>
+          <ReadMore longText={data.description} />
+        </View>
+
+        <View style={styles.parentView}>
+          <Text style={[styles.text, styles.header, {marginBottom: 10}]}>
+            Breakfast & restaurant
+          </Text>
+          <View style={styles.twoColumn}>
+            <View style={styles.col}>
+              <Text style={[styles.text, styles.smallerHeader]}>
+                Breakfast options
+              </Text>
+              {data.breakfast.map((option) => (
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{color: Colors.primary, marginRight: 10}}>
+                    •
+                  </Text>
+                  <Text style={styles.text}>{option}</Text>
+                </View>
+              ))}
+            </View>
+            <View style={styles.col}>
+              <Text style={[styles.text, styles.smallerHeader]}>
+                Restaurant
+              </Text>
+              <Text style={{color: Colors.primary}}>
+                There is a restaurant available at your accommodation.
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.parentView}>
+          <Text style={[styles.text, styles.header, {marginBottom: 10}]}>
+            Additional information
+          </Text>
+          <View>
+            <Text
+              style={[styles.text, styles.smallerHeader, {marginBottom: 10}]}>
+              Children, cribs and extra beds
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{width: '15%', alignItems: 'center'}}>
+                <Icon
+                  name="child-friendly"
+                  size={28}
+                  style={{color: Colors.primary}}
+                />
+              </View>
+              <View style={{width: '85%'}}>
+                <ReadMore longText={data.childPolicies} />
+              </View>
+            </View>
+            <View style={{marginTop: 10, flexDirection: 'row'}}>
+              <View style={{width: '15%', alignItems: 'center'}}>
+                <Icon name="hotel" size={28} style={{color: Colors.primary}} />
+              </View>
+              <View style={{width: '85%'}}>
+                <ReadMore longText={data.extraBedPolicies} />
+              </View>
+            </View>
+          </View>
+
+          <View>
+            <Text style={[styles.text, styles.smallerHeader]}>Pets</Text>
+            <View style={{marginTop: 10, flexDirection: 'row'}}>
+              <View style={{width: '15%', alignItems: 'center'}}>
+                <Icon name="pets" size={28} style={{color: Colors.primary}} />
+              </View>
+              <View style={{width: '85%'}}>
+                <ReadMore longText={data.pets} />
               </View>
             </View>
           </View>
