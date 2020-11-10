@@ -3,9 +3,9 @@ import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import Itemless from 'components/frames/itemless/Itemless';
-import AccommodationItem from 'accommodation/components/item/AccommodationItem';
+import AccommodationItem from 'accommodation/components/accItem/AccItem';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import {cardWidth} from 'accommodation/components/item/AccommodationItemStyle';
+import {cardWidth} from 'accommodation/components/accItem/AccItemStyle';
 import {accommodationOverviewStyle as styles} from './AccommodationOverviewStyle';
 
 import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';

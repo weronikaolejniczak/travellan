@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Alert,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View, ScrollView, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
-import {accommodationItemStyle as styles} from './AccommodationItemStyle';
-import Colors from 'constants/Colors';
+import {AccItemHeader} from 'accommodation/components';
+import {accommodationItemStyle as styles} from './AccItemStyle';
+import {Colors} from 'constants/';
 
 const AccommodationItem = (props) => {
   const {data} = props;
@@ -21,31 +14,13 @@ const AccommodationItem = (props) => {
   return (
     <Card style={styles.accommodation}>
       <ScrollView>
-        <ImageBackground
-          style={styles.image}
-          source={{
-            uri: data.image,
-          }}>
-          <LinearGradient
-            colors={['rgba(0,0,0,0.00)', Colors.cards]}
-            start={{x: 0.0, y: 0.0}}
-            end={{x: 0.0, y: 1.0}}
-            locations={[0.4, 1]}
-            style={[{flex: 1}]}>
-            <View style={styles.accommodationType}>
-              <Text style={styles.text}>{data.type}</Text>
-            </View>
-            <View style={styles.bookingRating}>
-              <Text style={[styles.text, styles.header]}>{data.rating}</Text>
-            </View>
-            <View style={styles.headerOverImg}>
-              <Text style={[styles.text, styles.header]}>{data.name}</Text>
-              <Text style={[styles.text, styles.subheader]}>
-                {data.address}
-              </Text>
-            </View>
-          </LinearGradient>
-        </ImageBackground>
+        <AccItemHeader
+          image={data.image}
+          type={data.type}
+          rating={data.rating}
+          name={data.name}
+          address={data.address}
+        />
 
         <View style={styles.parentView}>
           <View style={styles.checkInAndOut}>
@@ -53,7 +28,7 @@ const AccommodationItem = (props) => {
               <Icon name="access-time" size={24} style={styles.text} />
             </View>
             <View style={styles.checkInfo}>
-              <View style={styles.checkheader}>
+              <View style={styles.checkHeader}>
                 <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
                   Check-in
                 </Text>
@@ -61,7 +36,7 @@ const AccommodationItem = (props) => {
                   {data.checkIn}
                 </Text>
               </View>
-              <View style={styles.checkheader}>
+              <View style={styles.checkHeader}>
                 <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
                   Check-out
                 </Text>
@@ -69,7 +44,15 @@ const AccommodationItem = (props) => {
                   {data.checkOut}
                 </Text>
               </View>
+              <View>
+                <Text style={{color: Colors.primary}}>
+                  {data.frontDesk24H
+                    ? '24-hour front desk'
+                    : 'self-service front desk'}
+                </Text>
+              </View>
             </View>
+
             <View style={styles.additionalInfo}>
               <TouchableOpacity
                 onPress={() =>
@@ -79,21 +62,14 @@ const AccommodationItem = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View>
-            <Text style={{marginTop: 20, color: Colors.primary}}>
-              {data.frontDesk24H
-                ? '24-hour front desk'
-                : 'self-service front desk'}
-            </Text>
-          </View>
         </View>
 
         <View style={styles.parentView}>
           <Text style={[styles.text, styles.header, {marginBottom: 10}]}>
-            Popular facilities & ammenities
+            Popular facilities & amenities
           </Text>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            {data.amenities.map((ammenity) => (
+            {data.amenities.map((amenity) => (
               <TouchableOpacity>
                 <Icon
                   name="pets"

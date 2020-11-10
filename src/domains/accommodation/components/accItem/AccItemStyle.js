@@ -14,19 +14,6 @@ export const accommodationItemStyle = StyleSheet.create({
     marginHorizontal: width * 0.01,
     overflow: 'hidden',
   },
-  headerOverImg: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: height * 0.27,
-  },
-  header: {
-    color: Colors.text,
-    fontSize: 24,
-  },
   h2: {
     color: Colors.text,
     fontSize: 18,
@@ -95,23 +82,6 @@ export const accommodationItemStyle = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-  accommodationType: {
-    position: 'absolute',
-    top: 5,
-    left: 10,
-    padding: 8,
-    paddingHorizontal: 28,
-    backgroundColor: 'rgba(2, 2, 2, 0.8)',
-    borderRadius: 50,
-  },
-  bookingRating: {
-    position: 'absolute',
-    top: 5,
-    right: 10,
-    padding: 10,
-    backgroundColor: Colors.primary,
-    borderRadius: 50,
-  },
   checkInAndOut: {
     marginTop: 20,
     flexDirection: 'row',
@@ -123,7 +93,7 @@ export const accommodationItemStyle = StyleSheet.create({
   additionalInfo: {
     justifyContent: 'center',
   },
-  checkheader: {
+  checkHeader: {
     flexDirection: 'row',
   },
   parentView: {
@@ -131,11 +101,12 @@ export const accommodationItemStyle = StyleSheet.create({
     marginTop: 12,
     marginBottom: 15,
   },
+  header: {
+    color: Colors.text,
+    fontSize: 18,
+  },
   smallerHeader: {
     fontSize: 16,
-  },
-  subheader: {
-    color: 'rgba(255, 255, 255, 0.5)',
   },
   label: {
     fontSize: 16,
