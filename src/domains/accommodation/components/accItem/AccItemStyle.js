@@ -6,36 +6,13 @@ export const cardHeight = height * 0.83;
 export const cardWidth = width * 0.923;
 export const spacingForCardInset = width * 0.03;
 
-/**
- * TODO:
- * refactor Fonts
- * refactor Metrics
- */
 export const accommodationItemStyle = StyleSheet.create({
   accommodation: {
     width: cardWidth,
     height: cardHeight,
     borderRadius: 15,
     marginHorizontal: width * 0.01,
-    paddingTop: height * 0.06,
-    paddingBottom: height * 0.02,
-  },
-  container: {
-    paddingTop: height * 0.02,
-    paddingHorizontal: width * 0.03,
-  },
-  headerOverImg: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: height * 0.27,
-  },
-  header: {
-    color: Colors.text,
-    fontSize: 24,
+    overflow: 'hidden',
   },
   h2: {
     color: Colors.text,
@@ -76,5 +53,68 @@ export const accommodationItemStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: '2%',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    margin: '2%',
+    padding: '4%',
+    borderRadius: 25,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: Colors.primary,
+  },
+  twoColumn: {
+    flexDirection: 'row',
+  },
+  col: {
+    width: '50%',
+  },
+  toolbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  checkInAndOut: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  checkIcon: {
+    justifyContent: 'center',
+  },
+  additionalInfo: {
+    justifyContent: 'center',
+  },
+  checkHeader: {
+    flexDirection: 'row',
+  },
+  parentView: {
+    paddingHorizontal: 10,
+    marginTop: 12,
+    marginBottom: 15,
+  },
+  header: {
+    color: Colors.text,
+    fontSize: 18,
+  },
+  smallerHeader: {
+    fontSize: 16,
+  },
+  label: {
+    fontSize: 16,
+  },
+  smallMarginTop: {
+    marginTop: '2%',
+  },
+  bigMarginTop: {
+    marginTop: '5%',
   },
 });
