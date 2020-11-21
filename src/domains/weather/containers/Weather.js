@@ -43,6 +43,7 @@ const Weather = (props) => {
   useEffect(() => {
     let localNotify  = notificationManager;
     localNotify.configure()
+    localNotify.showNotification('channel-id',1, "App Notification", "Local Notification", {}, {})
 
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
@@ -62,8 +63,12 @@ const Weather = (props) => {
     });
   }, [checkDates, latitude, longitude]);
 
+ 
+
+  
+
   // convert date to human readable string
-  const prepareDate = (date) =>
+  const prepareDate = (date) => 
     new Date(date).toDateString().split(' ').splice(1, 4).join(' ');
 
   // get day of the week

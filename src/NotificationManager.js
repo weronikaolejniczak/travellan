@@ -3,6 +3,18 @@ import {Platform} from 'react-native'
 
 class NotificationManager {
     configure = () => {
+
+        PushNotification.createChannel(
+            {
+              channelId: "channel-id", // (required)
+              channelName: "My channel", // (required)
+              channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+              soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+              importance: 4, // (optional) default: 4. Int value of the Android notification importance
+              vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+            },
+            (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+          );
         
         PushNotification.configure({
             onRegister: function (token) {
@@ -11,13 +23,17 @@ class NotificationManager {
               onNotification: function (notification) {
                 console.log("[NotificationManager]onNotification:", notification);
             
-                // process the notification
             
+                // process the notification
+                
                 // (required) Called when a remote is received or opened, or local notification is opened
                 notification.finish(PushNotificationIOS.FetchResult.NoData);
               },
+              popInitialNotification: true,
+              requestPermissions: true,
         })
     }
+    /*
     _buildAndroidNotifcation = (id, title, message, data ={}, options= {}) => {
         return {
             id: id,
@@ -32,11 +48,10 @@ class NotificationManager {
             importance: options.importance || 'high',
             data: data
         }
-    }
+    }*/
 
-    showNotification = (id, title, message, data = {}, options ={}) => {
-        PushNotification.localNotification({
-            ...this._buildAndroidNotifcation(id, title, message,data,options),
+    showNotification = (channelId, id, title, message, data = {}, options ={}) => {
+        PushNotification.localNotification({channelId, id, title, message, data, options
         })
     }
 
