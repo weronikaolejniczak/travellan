@@ -3,6 +3,7 @@ import {Platform} from 'react-native'
 
 class NotificationManager {
     configure = () => {
+        
         PushNotification.configure({
             onRegister: function (token) {
                 console.log("[NotificationManager]onRegister token:", token);
