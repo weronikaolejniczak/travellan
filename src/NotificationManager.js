@@ -1,14 +1,14 @@
 import PushNotification from 'react-native-push-notification'
 import {Platform} from 'react-native'
 
-class NotificationManger {
+class NotificationManager {
     configure = () => {
         PushNotification.configure({
             onRegister: function (token) {
-                console.log("[NotificationManger]onRegister token:", token);
+                console.log("[NotificationManager]onRegister token:", token);
               },
               onNotification: function (notification) {
-                console.log("[NotificationManger]onNotification:", notification);
+                console.log("[NotificationManager]onNotification:", notification);
             
                 // process the notification
             
@@ -47,3 +47,5 @@ class NotificationManger {
         PushNotification.unregister();
     }
 }
+
+export const notificationManager = new NotificationManager()

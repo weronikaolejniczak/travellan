@@ -16,6 +16,7 @@ import Graphics from 'weather/components/graphics/Graphics';
 import Ground from 'weather/components/ground/Ground';
 import {weatherStyle as styles} from './WeatherStyle';
 import Colors from 'constants/Colors';
+import {notificationManager} from './../../../NotificationManager';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -40,6 +41,9 @@ const Weather = (props) => {
   const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
+    let localNotify  = notificationManager;
+    localNotify.configure()
+
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
       let result = await fetchWeather(latitude, longitude);
