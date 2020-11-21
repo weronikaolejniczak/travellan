@@ -39,5 +39,7 @@ class NotificationManger {
         })
     }
 
-    
+    cancelAllLocalNotification = () => {
+        PushNotification.cancelAllLocalNotifications()
+    }
 }
