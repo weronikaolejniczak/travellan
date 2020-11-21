@@ -42,4 +42,8 @@ class NotificationManger {
     cancelAllLocalNotification = () => {
         PushNotification.cancelAllLocalNotifications()
     }
+
+    unregister = () => {
+        PushNotification.unregister();
+    }
 }
