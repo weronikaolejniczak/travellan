@@ -32,4 +32,12 @@ class NotificationManger {
             data: data
         }
     }
+
+    showNotification = (id, title, message, data = {}, options ={}) => {
+        PushNotification.localNotification({
+            ...this._buildAndroidNotifcation(id, title, message,data,options),
+        })
+    }
+
+    
 }
