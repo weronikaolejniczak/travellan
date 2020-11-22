@@ -26,6 +26,7 @@ const Weather = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const region = selectedTrip.region;
+  console.log(region)
   const latitude = region.latitude;
   const longitude = region.longitude;
   // date operations
@@ -42,11 +43,6 @@ const Weather = (props) => {
 
   useEffect(() => {
     
-
-    let localNotify  = notificationManager;
-    localNotify.configure()
-    localNotify.showNotification('channel-id',1, "App Notification", "Local Notification", {}, {})
-    localNotify.scheduleNotification('channel-id',1, "App Scheduled Notification", "Local Scheduled Notification", {}, {}, new Date(Date.now() + 10 * 1000))
 
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
@@ -98,6 +94,11 @@ const Weather = (props) => {
     return dateGuard;
   }, [currentDate, dateGuard, endDate, startDate]);
 
+  //let localNotify  = notificationManager;
+  //localNotify.configure()
+  //localNotify.showNotification('Weather',1, "App Notification", "Local Notification", {}, {})
+  //localNotify.scheduleNotification('Weather',1, "App Scheduled Notification", "Local Scheduled Notification", {}, {}, new Date(Date.now() + 10 * 1000))
+
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
@@ -108,7 +109,7 @@ const Weather = (props) => {
       )}
       {isLoaded && dateGuard && (
         <View style={styles.weatherContainer}>
-          {forecast && (
+          {forecast &&  (
             <View>
               <Background styles={styles} activeDay={activeDay}>
                 <View style={styles.graphicsContainer}>

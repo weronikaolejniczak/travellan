@@ -3,17 +3,27 @@ import {Platform} from 'react-native'
 
 class NotificationManager {
     configure = () => {
-
+        /* *************************CHANNELS FOR NOTIFICATIONS******************************** */
         PushNotification.createChannel(
             {
-              channelId: "channel-id", // (required)
-              channelName: "My channel", // (required)
-              channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+              channelId: "Weather", // (required)
+              channelName: "Weather", // (required)
               soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
               importance: 4, // (optional) default: 4. Int value of the Android notification importance
               vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
             },
           );
+
+          PushNotification.createChannel(
+            {
+              channelId: "Notes", // (required)
+              channelName: "Notes", // (required)
+              soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+              importance: 4, // (optional) default: 4. Int value of the Android notification importance
+              vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+            },
+          );
+        /* ********************************************************************************************* */
         
         PushNotification.configure({
             onRegister: function (token) {
