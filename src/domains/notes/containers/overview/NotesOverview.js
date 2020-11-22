@@ -20,7 +20,8 @@ const NotesOverview = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const notes = selectedTrip.notes;
-
+  const startDate = selectedTrip.startDate;
+  
   
 
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -30,8 +31,8 @@ const NotesOverview = (props) => {
 
   const callNotification = (category, description) => {
     localNotify.configure()
-    return (
-    localNotify.scheduleNotification('Notes',2, category, description, {}, {}, new Date(Date.now() + 10 * 1000)))
+    return (  
+    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, new Date(Date.now() + 10 * 1000)))
   }
 
   const deleteAction = useCallback(
@@ -124,7 +125,7 @@ const NotesOverview = (props) => {
             title={itemData.item.title}
             description={itemData.item.description}
             deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
-            callNotification= {itemData.item.category=== 'To Pack' ? (callNotification(itemData.item.category, itemData.item.description)) : (setGuard(true))}
+            callScheduledNotification= {itemData.item.category=== 'To Pack' ? (callNotification(itemData.item.category, itemData.item.description)) : (setGuard(true))}
           />
         )}
       />
