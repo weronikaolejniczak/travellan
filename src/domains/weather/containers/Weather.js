@@ -41,9 +41,12 @@ const Weather = (props) => {
   const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
+    
+
     let localNotify  = notificationManager;
     localNotify.configure()
     localNotify.showNotification('channel-id',1, "App Notification", "Local Notification", {}, {})
+    localNotify.scheduleNotification('channel-id',1, "App Scheduled Notification", "Local Scheduled Notification", {}, {}, new Date(Date.now() + 10 * 1000))
 
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {

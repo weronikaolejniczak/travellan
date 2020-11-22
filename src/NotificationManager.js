@@ -13,7 +13,6 @@ class NotificationManager {
               importance: 4, // (optional) default: 4. Int value of the Android notification importance
               vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
             },
-            (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
           );
         
         PushNotification.configure({
@@ -33,7 +32,7 @@ class NotificationManager {
               requestPermissions: true,
         })
     }
-    /*
+    
     _buildAndroidNotifcation = (id, title, message, data ={}, options= {}) => {
         return {
             id: id,
@@ -48,10 +47,15 @@ class NotificationManager {
             importance: options.importance || 'high',
             data: data
         }
-    }*/
+    }
 
     showNotification = (channelId, id, title, message, data = {}, options ={}) => {
         PushNotification.localNotification({channelId, id, title, message, data, options
+        })
+    }
+
+    scheduleNotification = (channelId, id, title, message, data = {}, options ={}, date) => {
+        PushNotification.localNotificationSchedule({channelId, id, title, message, data, options, date
         })
     }
 
