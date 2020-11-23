@@ -20,9 +20,8 @@ const NotesOverview = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const notes = selectedTrip.notes;
-  const startDate = selectedTrip.startDate;
-  
-  
+  var startDate = selectedTrip.startDate;
+
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

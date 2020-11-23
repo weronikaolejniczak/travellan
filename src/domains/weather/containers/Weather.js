@@ -38,6 +38,7 @@ const Weather = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [forecast, setForecast] = useState();
+  const [notifyGuard, setNotifyGuard] = useState(true);
   //const [timezone, setTimezone] = useState();
   const [activeDay, setActiveDay] = useState();
 
@@ -94,21 +95,26 @@ const Weather = (props) => {
     return dateGuard;
   }, [currentDate, dateGuard, endDate, startDate]);
 
-  //let localNotify  = notificationManager;
-  //localNotify.configure()
+  let localNotify  = notificationManager;
+  localNotify.configure()
   //localNotify.showNotification('Weather',1, "App Notification", "Local Notification", {}, {})
   //localNotify.scheduleNotification('Weather',1, "App Scheduled Notification", "Local Scheduled Notification", {}, {}, new Date(Date.now() + 10 * 1000))
 
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
-        <ActivityIndicator
+        <ActivityIndicator                     
           color={Colors.primary}
           style={styles.contentContainer}
         />
       )}
       {isLoaded && dateGuard && (
+        
         <View style={styles.weatherContainer}>
+          {notifyGuard? (
+            localNotify.scheduleNotification('Weather',1, "Weather alert!", "Today's weather predicts " + activeDay.description + ", the temperature the day will be around " + Math.floor(activeDay.tempDay) + "°C", {}, {}, new Date(Date.now() + 10 * 1000))
+            & setNotifyGuard(false)
+            ) : (console.log("err"))}
           {forecast &&  (
             <View>
               <Background styles={styles} activeDay={activeDay}>
@@ -384,6 +390,7 @@ const Weather = (props) => {
                 />
               </View>
             </View>
+            
           )}
         </View>
       )}
