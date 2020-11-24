@@ -35,9 +35,42 @@ const StartupScreen = (props) => {
   }, [dispatch]);
 
   return (
-    <View style={styles.screen}>
-      <ActivityIndicator size="large" color={Colors.white} />
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={styles.screen}>
+      <View style={styles.authContainer}>
+        <ScrollView>
+          <View style={{marginBottom: 20, alignItems: 'center'}}>
+            <Image
+              style={{width: 150, height: 150, resizeMode: 'stretch'}}
+              source={require('assets/images/logo.png')}
+            />
+          </View>
+          <View style={styles.actionsContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+              <TouchableOpacity
+                style={[styles.buttonContainer, {marginRight: 10}]}
+                onPress={
+                  //props.navigation.navigate('Register');
+                }>
+                <Text style={styles.buttonText}>Sign Up</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Auth');
+              }
+              }>
+              <Text style={styles.buttonText}>
+                Have an account? Sign In
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -73,10 +73,15 @@ const Auth = (props) => {
         formState.inputValues.email,
         formState.inputValues.password,
       );
+    } else {
+      action = authActions.login(
+        formState.inputValues.email,
+        formState.inputValues.password,
+      );
     }
     setError(null);
     setIsLoading(true);
-/** 
+
     try {
       await dispatch(action);
       if (!isSignup) {
@@ -85,7 +90,6 @@ const Auth = (props) => {
     } catch (err) {
       setError(err.message);
     }
-    */
     setIsLoading(false);
   };
 
@@ -145,15 +149,17 @@ const Auth = (props) => {
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
                 onPress={authHandler}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>
+                  {isSignup ? 'Sign Up' : 'Login'}
+                </Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              onPress={
-                //move to Login
-              }>
+              onPress={() => {
+                setIsSignup((prevState) => !prevState);
+              }}>
               <Text style={styles.buttonText}>
-                Sign Up
+                Switch to {isSignup ? 'Login' : 'Sign up'}
               </Text>
             </TouchableOpacity>
           </View>
