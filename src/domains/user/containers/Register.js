@@ -42,7 +42,7 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const Auth = (props) => {
+const Register = (props) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +76,7 @@ const Auth = (props) => {
     }
     setError(null);
     setIsLoading(true);
-/** 
+    /**
     try {
       await dispatch(action);
       if (!isSignup) {
@@ -149,12 +149,10 @@ const Auth = (props) => {
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              onPress={
+              onPress={() => {
                 //move to Login
-              }>
-              <Text style={styles.buttonText}>
-                Sign Up
-              </Text>
+              }}>
+              <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -167,4 +165,4 @@ export const authOptions = {
   headerShown: false,
 };
 
-export default Auth;
+export default Register;

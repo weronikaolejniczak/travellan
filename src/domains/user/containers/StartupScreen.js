@@ -1,6 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {View, ActivityIndicator, AsyncStorage} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  AsyncStorage,
+  ScrollView,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 
 import {useDispatch} from 'react-redux';
 import {StartupScreenStyle as styles} from './StartupScreenStyle';
@@ -10,6 +20,7 @@ import * as authActions from 'state/user/userActions';
 
 const StartupScreen = (props) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -52,9 +63,9 @@ const StartupScreen = (props) => {
             ) : (
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
-                onPress={
+                onPress={() => {
                   //props.navigation.navigate('Register');
-                }>
+                }}>
                 <Text style={styles.buttonText}>Sign Up</Text>
               </TouchableOpacity>
             )}
@@ -63,9 +74,7 @@ const StartupScreen = (props) => {
                 props.navigation.navigate('Auth');
               }
               }>
-              <Text style={styles.buttonText}>
-                Have an account? Sign In
-              </Text>
+              <Text style={styles.buttonText}>Have an account? Sign In</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
