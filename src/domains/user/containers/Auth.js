@@ -156,7 +156,8 @@ const Auth = (props) => {
             )}
             <TouchableOpacity
               onPress={() => {
-                setIsSignup((prevState) => !prevState);
+                //setIsSignup((prevState) => !prevState);
+                props.navigation.navigate('Register');
               }}>
               <Text style={styles.buttonText}>
                 Switch to {isSignup ? 'Login' : 'Sign up'}

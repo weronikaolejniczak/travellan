@@ -6,7 +6,7 @@ import StartupScreen, {
   StartupScreenOptions,
 } from 'user/containers/StartupScreen';
 import Auth, {authOptions} from 'user/containers/Auth';
-import Register, {regOptions} from 'user/containers/Register';
+import Register from 'user/containers/Register';
 import TripsOverview, {
   tripsOverviewOptions,
 } from 'trips/containers/overview/TripsOverview';
@@ -44,7 +44,11 @@ export default function Navigation() {
           component={StartupScreen}
           options={StartupScreenOptions}
         />
-        <Stack.Screen name="Register" component={Auth} options={authOptions} />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={authOptions}
+        />
         <Stack.Screen name="Auth" component={Auth} options={authOptions} />
 
         <Stack.Screen

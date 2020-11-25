@@ -15,7 +15,7 @@ import {useDispatch} from 'react-redux';
 import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
 import * as authActions from 'state/user/userActions';
-import {AuthStyle as styles} from './AuthStyle';
+import {RegisterStyle as styles} from './RegisterStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -76,16 +76,12 @@ const Register = (props) => {
     }
     setError(null);
     setIsLoading(true);
-    /**
+    
     try {
       await dispatch(action);
-      if (!isSignup) {
-        props.navigation.navigate('My trips');
-      }
     } catch (err) {
       setError(err.message);
     }
-    */
     setIsLoading(false);
   };
 
@@ -145,14 +141,14 @@ const Register = (props) => {
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
                 onPress={authHandler}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>Join Travellan</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               onPress={() => {
-                //move to Login
+                props.navigation.navigate('Auth');
               }}>
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={styles.buttonText}>Or sign in instead</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

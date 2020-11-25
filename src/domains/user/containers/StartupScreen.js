@@ -64,9 +64,9 @@ const StartupScreen = (props) => {
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
                 onPress={() => {
-                  //props.navigation.navigate('Register');
+                  props.navigation.navigate('Register');
                 }}>
-                <Text style={styles.buttonText}>Sign Up</Text>
+                <Text style={styles.buttonText}>Get Started</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
@@ -74,7 +74,9 @@ const StartupScreen = (props) => {
                 props.navigation.navigate('Auth');
               }
               }>
-              <Text style={styles.buttonText}>Have an account? Sign In</Text>
+              <Text style={styles.buttonText}>
+                Have an account? Login instead
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
