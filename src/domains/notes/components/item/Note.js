@@ -11,6 +11,7 @@ const Note = (props) => {
   var ToDoList = [];
   ToDoList = props.description.split(" ").join('\n')
   category = props.category;
+  description= props.description;
   var convertedId = props.id.split(' ');
   var extractedDate =
     convertedId[2] +
@@ -26,7 +27,7 @@ const Note = (props) => {
 
   return (
     <ScrollView>
-      { category === 'To Pack' ? (
+      { category === 'To Pack' ? ( 
          <Card style={styles.noteCard}>
          {/* ACTIONS BAR */}
          <View style={styles.actions}>

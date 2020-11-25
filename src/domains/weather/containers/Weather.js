@@ -16,6 +16,7 @@ import Graphics from 'weather/components/graphics/Graphics';
 import Ground from 'weather/components/ground/Ground';
 import {weatherStyle as styles} from './WeatherStyle';
 import Colors from 'constants/Colors';
+import {notificationManager} from './../../../NotificationManager';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -25,6 +26,7 @@ const Weather = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const region = selectedTrip.region;
+  console.log(region)
   const latitude = region.latitude;
   const longitude = region.longitude;
   // date operations
@@ -36,10 +38,13 @@ const Weather = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [forecast, setForecast] = useState();
+  const [notifyGuard, setNotifyGuard] = useState(true);
   //const [timezone, setTimezone] = useState();
   const [activeDay, setActiveDay] = useState();
 
   useEffect(() => {
+    
+
     // fetch weather from OpenWeatherMap API using lat and lon values
     async function getWeather() {
       let result = await fetchWeather(latitude, longitude);
@@ -58,8 +63,12 @@ const Weather = (props) => {
     });
   }, [checkDates, latitude, longitude]);
 
+ 
+
+  
+
   // convert date to human readable string
-  const prepareDate = (date) =>
+  const prepareDate = (date) => 
     new Date(date).toDateString().split(' ').splice(1, 4).join(' ');
 
   // get day of the week
@@ -86,17 +95,27 @@ const Weather = (props) => {
     return dateGuard;
   }, [currentDate, dateGuard, endDate, startDate]);
 
+  let localNotify  = notificationManager;
+  localNotify.configure()
+  //localNotify.showNotification('Weather',1, "App Notification", "Local Notification", {}, {})
+  //localNotify.scheduleNotification('Weather',1, "App Scheduled Notification", "Local Scheduled Notification", {}, {}, new Date(Date.now() + 10 * 1000))
+
   return (
     <View style={styles.contentContainer}>
       {isLoading && (
-        <ActivityIndicator
+        <ActivityIndicator                     
           color={Colors.primary}
           style={styles.contentContainer}
         />
       )}
       {isLoaded && dateGuard && (
+        
         <View style={styles.weatherContainer}>
-          {forecast && (
+          {notifyGuard? (
+            localNotify.scheduleNotification('Weather',1, "Weather alert!", "Today's weather predicts " + activeDay.description + ", the temperature the day will be around " + Math.floor(activeDay.tempDay) + "°C", {}, {}, new Date(Date.now() + 10 * 1000))
+            & setNotifyGuard(false)
+            ) : (console.log("err"))}
+          {forecast &&  (
             <View>
               <Background styles={styles} activeDay={activeDay}>
                 <View style={styles.graphicsContainer}>
@@ -371,6 +390,7 @@ const Weather = (props) => {
                 />
               </View>
             </View>
+            
           )}
         </View>
       )}

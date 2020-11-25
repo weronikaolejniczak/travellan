@@ -10,18 +10,29 @@ import HeaderButton from 'components/headerButton/HeaderButton';
 import * as noteActions from 'state/note/noteActions';
 import {NotesStyles as styles} from './NotesOverviewStyle';
 import Colors from 'constants/Colors';
+import {notificationManager} from '../../../../NotificationManager'
 
 const NotesOverview = (props) => {
   const dispatch = useDispatch();
+  let localNotify  = notificationManager;
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
   const notes = selectedTrip.notes;
+  var startDate = selectedTrip.startDate;
+
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [Guard, setGuard] = useState(false);
+
+  const callNotification = (category, description) => {
+    localNotify.configure()
+    return (  
+    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, new Date(Date.now() + 10 * 1000)))
+  }
 
   const deleteAction = useCallback(
     async (id) => {
@@ -97,6 +108,8 @@ const NotesOverview = (props) => {
   if (notes === undefined) {
     return <Itemless message={'You have no notes saved!'} />;
   }
+  
+ 
 
   return (
     <View style={styles.container}>
@@ -111,6 +124,7 @@ const NotesOverview = (props) => {
             title={itemData.item.title}
             description={itemData.item.description}
             deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
+            callScheduledNotification= {itemData.item.category=== 'To Pack' ? (callNotification(itemData.item.category, itemData.item.description)) : (setGuard(true))}
           />
         )}
       />

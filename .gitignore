@@ -32,6 +32,7 @@ build/
 .gradle
 local.properties
 android/secure.properties
+android/app/google-services.json
 *.iml
 
 # node.js
