@@ -21,12 +21,7 @@ class AddEventToCalendar {
           startDate: utcDateToString(startDateUTC),
           endDate: 
           utcDateToString(moment.utc(startDateUTC).add(1, 'hours')),
-          notes: 'tasty!',
-          navigationBarIOS: {
-            tintColor: 'orange',
-            backgroundColor: 'green',
-            titleColor: 'blue',
-          },
+          description: 'tasty!',
         };
     
         AddCalendarEvent.presentEventCreatingDialog(eventConfig)
