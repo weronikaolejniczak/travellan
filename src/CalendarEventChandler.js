@@ -18,22 +18,22 @@ utcDateToString = (momentInUTC) => {
 class AddEventToCalendar {
 
 
-    addToCalendar = (title, startDateUTC) => {
+    addToCalendar = (title, startDateUTC, endDateUTC, location, notes) => {
         const eventConfig = {
           title,
           startDate: utcDateToString(startDateUTC),
-          endDate: 
-          utcDateToString(moment.utc(startDateUTC).add(1, 'hours')),
-          description: 'tasty!',
+          endDate: utcDateToString(endDateUTC),
+          location: location,
+          notes: notes,
         };
     
         AddCalendarEvent.presentEventCreatingDialog(eventConfig)
         .then((eventInfo) => {
-          alert('eventInfo -> ' + JSON.stringify(eventInfo));
+          console.log('eventInfo -> ' + JSON.stringify(eventInfo));
         })
         .catch((error) => {
           // handle error such as when user rejected permissions
-          alert('Error -> ' + error);
+          console.log('Error -> ' + error);
         });
     };
 
@@ -41,25 +41,25 @@ class AddEventToCalendar {
     
     editCalendarEventWithId = (eventId) => {
     if (!eventId) {
-      alert('Please Insert Event Id');
+        console.log('Please Insert Event Id');
       return;
     }
     const eventConfig = {
       eventId,
     };
-  
+    
     AddCalendarEvent.presentEventEditingDialog(eventConfig)
       .then((eventInfo) => {
-        alert('eventInfo -> ' + JSON.stringify(eventInfo));
+        console.log('eventInfo -> ' + JSON.stringify(eventInfo));
       })
       .catch((error) => {
-        alert('Error -> ' + error);
+        console.log('Error -> ' + error);
       });
   };
 
   showCalendarEventWithId = (eventId) => {
     if (!eventId) {
-      alert('Please Insert Event Id');
+        console.log('Please Insert Event Id');
       return;
     }
     const eventConfig = {
@@ -74,10 +74,10 @@ class AddEventToCalendar {
   
     AddCalendarEvent.presentEventViewingDialog(eventConfig)
       .then((eventInfo) => {
-        alert('eventInfo -> ' + JSON.stringify(eventInfo));
+        console.log('eventInfo -> ' + JSON.stringify(eventInfo));
       })
       .catch((error) => {
-        alert('Error -> ' + error);
+        console.log('Error -> ' + error);
       });
   };
 

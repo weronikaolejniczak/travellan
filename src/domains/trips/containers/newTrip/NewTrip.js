@@ -161,8 +161,7 @@ const NewTrip = (props) => {
     }
 
     let CalendarEventChandler = addEventToCalendar;
-
-    CalendarEventChandler.addToCalendar("Trip to " + destination, time_now)
+    CalendarEventChandler.addToCalendar("Trip to " + destination, startDate, endDate, destination, "Remember to pack everything and check weather forecast!")
   }, [
     budget,
     account,
