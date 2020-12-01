@@ -19,6 +19,7 @@ import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
 import {addEventToCalendar} from '../../../../CalendarEventChandler'
 import moment from 'moment';
+import Snackbar from 'react-native-snackbar';
 
 
 const time_now = moment.utc()
@@ -41,7 +42,7 @@ const NewTrip = (props) => {
   const [account, setAccount] = useState('card');
 
   const [isLoading, setIsLoading] = useState(false);
-
+  let CalendarEventChandler = addEventToCalendar;
   
 
   let destinationRegex = new RegExp(
@@ -160,8 +161,16 @@ const NewTrip = (props) => {
       setIsLoading(false);
     }
 
-    let CalendarEventChandler = addEventToCalendar;
-    CalendarEventChandler.addToCalendar("Trip to " + destination, startDate, endDate, destination, "Remember to pack everything and check weather forecast!")
+    Snackbar.show({
+      text: 'Add Trip to Google Calender ',
+      duration: Snackbar.LENGTH_LONG,
+      action: {
+        text: 'Add',
+        textColor: 'orange',
+        onPress: () => { CalendarEventChandler.addToCalendar("Trip to " + destination, startDate, endDate, destination, "Remember to pack everything and check weather forecast!") },
+      },
+    });
+
   }, [
     budget,
     account,
