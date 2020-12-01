@@ -162,7 +162,7 @@ const NewTrip = (props) => {
     }
 
     Snackbar.show({
-      text: 'Add Trip to Google Calender ',
+      text: 'Add Trip to Google Calendar',
       duration: Snackbar.LENGTH_LONG,
       action: {
         text: 'Add',
