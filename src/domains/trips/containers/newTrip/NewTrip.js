@@ -17,8 +17,11 @@ import {createTrip} from 'state/trip/tripActions';
 import {newTripStyle as styles} from './NewTripStyle';
 import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
+import {addEventToCalendar} from '../../../../CalendarEventChandler'
 import moment from 'moment';
-import EventToCalendar from '../../../../CalendarEventChandler'
+
+
+const time_now = moment.utc()
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -38,6 +41,8 @@ const NewTrip = (props) => {
   const [account, setAccount] = useState('card');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  
 
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
@@ -93,6 +98,7 @@ const NewTrip = (props) => {
     setBudgetIsEnabled((previousState) => !previousState);
     !budgetIsEnabled ? resetBudget() : clearBudget();
   };
+
 
   const submitHandler = useCallback(async () => {
     let budgetToSubmit = [
@@ -153,6 +159,10 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
+
+    let CalendarEventChandler = addEventToCalendar;
+
+    CalendarEventChandler.addToCalendar("Trip to " + destination, time_now)
   }, [
     budget,
     account,
