@@ -17,6 +17,8 @@ import {createTrip} from 'state/trip/tripActions';
 import {newTripStyle as styles} from './NewTripStyle';
 import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
+import moment from 'moment';
+import EventToCalendar from '../../../../CalendarEventChandler'
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -46,6 +48,8 @@ const NewTrip = (props) => {
       : setDestinationIsValid(true);
     setDestination(text);
   };
+
+ 
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {

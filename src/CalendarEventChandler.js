@@ -9,6 +9,12 @@ import moment from 'moment';
 
 class AddEventToCalendar {
 
+    utcDateToString = (momentInUTC) => {
+        let s = moment.utc(momentInUTC)
+                  .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        return s;
+      };
+
     addToCalendar = (title, startDateUTC) => {
         const eventConfig = {
           title,
@@ -81,7 +87,7 @@ class AddEventToCalendar {
 
 }
 
-export const AddEventToCalendar = new AddEventToCalendar()
+export const EventToCalendar = new AddEventToCalendar()
 
 
 
