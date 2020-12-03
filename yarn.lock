@@ -6545,6 +6545,11 @@ mkdirp@^0.5.1, mkdirp@^0.5.4, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -7454,6 +7459,11 @@ react-native-actionsheet@^2.4.2:
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.4.2.tgz#6a00dd51a75ef2c8974312130e405af73191500f"
   integrity sha512-DBoWIvVwuWXuptF4t46pBqkFxaUxS+rsIdHiA05t0n4BdTIDV2R4s9bLEUVOGzb94D7VxIamsXZPA/3mmw+SXg==
 
+react-native-add-calendar-event@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-add-calendar-event/-/react-native-add-calendar-event-4.0.0.tgz#83959cc1953f255ae38ece84214f232fa6552c9c"
+  integrity sha512-gkqidtFquTKR46QWdV12iu86OQJGNTnsT1C58EBPFy1MyCFJZar6y6wRBLaWNfvnhgeGzJeA0ODb8KmD+HU8GQ==
+
 react-native-android-dialog-picker@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-android-dialog-picker/-/react-native-android-dialog-picker-0.1.0.tgz#6aadc29dc581720b58b8128fc713203fb3200a82"
@@ -7619,6 +7629,11 @@ react-native-shapes@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-shapes/-/react-native-shapes-0.1.0.tgz#53a9a01ba15ff33d35d0062c25ede48382033b30"
   integrity sha512-5EHcc/Burlvp2UdfzT+EkQqGn7WO6SQGxZ9w0/4BWYMB/bShA8/lnhuWgxQz+IxZwxnzPkYiR4zCS2NlQQJGig==
+
+react-native-snackbar@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-2.2.4.tgz#5d5161276c12f3b05defa78e78de784d9845f720"
+  integrity sha512-0Jm9Mn+79SdnEuuY1IV5y00yyvTNcW9hZXlEMEq3cMNr2s4q4xDqQToj5/y4UGIemomfK1+P1k6XIawR1UfwFw==
 
 react-native-svg-transformer@^0.14.3:
   version "0.14.3"

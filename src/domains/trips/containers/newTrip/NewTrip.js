@@ -17,6 +17,12 @@ import {createTrip} from 'state/trip/tripActions';
 import {newTripStyle as styles} from './NewTripStyle';
 import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
+import {addEventToCalendar} from '../../../../CalendarEventChandler'
+import moment from 'moment';
+import Snackbar from 'react-native-snackbar';
+
+
+const time_now = moment.utc()
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -36,6 +42,8 @@ const NewTrip = (props) => {
   const [account, setAccount] = useState('card');
 
   const [isLoading, setIsLoading] = useState(false);
+  let CalendarEventChandler = addEventToCalendar;
+  
 
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
@@ -46,6 +54,8 @@ const NewTrip = (props) => {
       : setDestinationIsValid(true);
     setDestination(text);
   };
+
+ 
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
@@ -89,6 +99,7 @@ const NewTrip = (props) => {
     setBudgetIsEnabled((previousState) => !previousState);
     !budgetIsEnabled ? resetBudget() : clearBudget();
   };
+
 
   const submitHandler = useCallback(async () => {
     let budgetToSubmit = [
@@ -149,6 +160,17 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
+
+    Snackbar.show({
+      text: 'Add Trip to Google Calendar',
+      duration: Snackbar.LENGTH_LONG,
+      action: {
+        text: 'Add',
+        textColor: 'orange',
+        onPress: () => { CalendarEventChandler.addToCalendar("Trip to " + destination, startDate, endDate, destination, "Remember to pack everything and check weather forecast!") },
+      },
+    });
+
   }, [
     budget,
     account,
