@@ -16,6 +16,7 @@ import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
 import * as authActions from 'state/user/userActions';
 import {AuthStyle as styles} from './AuthStyle';
+import SplashScreen from 'react-native-splash-screen'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -64,6 +65,7 @@ const Auth = (props) => {
     if (error) {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
+    SplashScreen.hide()
   }, [error]);
 
   const authHandler = async () => {

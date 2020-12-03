@@ -21,6 +21,8 @@ import chat.rocket.SharePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -36,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          new SplashScreenReactPackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           //packages.add(new SharePackage());
           return packages;
@@ -58,25 +61,6 @@ public class MainApplication extends Application implements ReactApplication {
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
-  @Override
-        public boolean getUseDeveloperSupport() {
-            return BuildConfig.DEBUG;
-        }
-
-        @Override
-        protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                    new MainReactPackage(),
-            new SplashScreenReactPackage()  //here
-            );
-        }
-    };
-
-    @Override
-    public ReactNativeHost getReactNativeHost() {
-        return mReactNativeHost;
-    }
-  
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
