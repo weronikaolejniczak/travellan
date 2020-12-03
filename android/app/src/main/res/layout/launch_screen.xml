@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/launch_screen" android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="#00FFFFFF"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/launch_screen"
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        tools:src="@drawable/launch_screen" />
+
+
 </RelativeLayout>

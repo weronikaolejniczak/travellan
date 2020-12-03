@@ -62,10 +62,10 @@ const Auth = (props) => {
   });
 
   useEffect(() => {
+    SplashScreen.hide()
     if (error) {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
-    SplashScreen.hide()
   }, [error]);
 
   const authHandler = async () => {
