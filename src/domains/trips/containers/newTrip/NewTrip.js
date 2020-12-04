@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Text,
   View,
@@ -8,16 +8,16 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
 import DatePicker from 'trips/components/datePicker/DatePicker';
-import {createTrip} from 'state/trip/tripActions';
-import {newTripStyle as styles} from './NewTripStyle';
-import {CURRENCIES} from 'data/Currencies';
+import { createTrip } from 'state/trip/tripActions';
+import { newTripStyle as styles } from './NewTripStyle';
+import { CURRENCIES } from 'data/Currencies';
 import Colors from 'constants/Colors';
-import {addEventToCalendar} from '../../../../CalendarEventChandler'
+import { addEventToCalendar } from '../../../../CalendarEventChandler'
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
 
@@ -43,7 +43,7 @@ const NewTrip = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   let CalendarEventChandler = addEventToCalendar;
-  
+
 
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
@@ -55,7 +55,7 @@ const NewTrip = (props) => {
     setDestination(text);
   };
 
- 
+
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
@@ -108,8 +108,8 @@ const NewTrip = (props) => {
         parseInt(budget, 10),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
-              (item) => item.name === currency,
-            )[0].iso.toString()
+            (item) => item.name === currency,
+          )[0].iso.toString()
           : undefined,
         [
           {
@@ -244,12 +244,12 @@ const NewTrip = (props) => {
           <ActivityIndicator color={Colors.primary} />
         </View>
       ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={submitHandler}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        )}
     </ScrollView>
   );
 };
