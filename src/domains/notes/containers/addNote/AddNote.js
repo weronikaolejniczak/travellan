@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
-
+import {notificationManager} from '../../../../NotificationManager'
 import * as noteActions from 'state/note/noteActions';
 import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
@@ -21,6 +21,8 @@ const AddNote = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
+  let startDateTrip = selectedTrip.startDate
+
   const [title, setTitle] = useState('');
   const [titleIsValid, setTitleIsValid] = useState(false);
   const [titleSubmitted, setTitleSubmitted] = useState(false);
@@ -31,11 +33,18 @@ const AddNote = (props) => {
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   var ToPackList = [];
+  let localNotify  = notificationManager;
 
   const titleChangeHandler = (text) => {
     text.trim().length === 0 ? setTitleIsValid(false) : setTitleIsValid(true);
     setTitle(text);
   };
+
+  const callNotification = (category, description) => {
+    localNotify.configure()
+    return (  
+    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, new Date(Date.now() + 10 * 1000)))
+  }
 
   const descriptionChangeHandler = (text) => {
     text.trim().length === 0
@@ -125,6 +134,7 @@ const AddNote = (props) => {
 
   useEffect(() => {
     setCategory(placeholder.value);
+    console.log(startDateTrip)
   }, []);
 
   return (
@@ -135,7 +145,7 @@ const AddNote = (props) => {
         <View style={{borderWidth: 1, borderColor: 'white', borderRadius: 4}}>
           {/* CATEGORY PICKER */}
           <RNPickerSelect
-            //onChangeText={categoryChangeHandler}
+            onChangeText={categoryChangeHandler}
             items={categoryList}
             placeholder={placeholder}
             onValueChange={(value) => setCategory(value)}
@@ -184,6 +194,7 @@ const AddNote = (props) => {
               value={description}
               onChangeText={descriptionChangeHandler}
               multiline
+              callScheduledNotification={callNotification(category, description)}
             />
             {!descriptionIsValid && descriptionSubmitted && (
               <View style={styles.errorContainer}>
@@ -200,6 +211,7 @@ const AddNote = (props) => {
                 onPress={submitHandlerToPack}>
                 <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
+              
             )}
           </View>
         </ScrollView>
