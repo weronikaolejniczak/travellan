@@ -57,10 +57,14 @@ const NewTrip = (props) => {
   };
   
   let localNotify  = notificationManager;
-  const callNotification = (destination ) => {
+  const callNotification = (destination,startDate) => {
     localNotify.configure()
+    var notificationDateTrigger = new Date();
+    notificationDateTrigger.setDate(startDate.getDate() - 1)
+    console.log(notificationDateTrigger)
+
     return (  
-    localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, new Date(Date.now() + 10 * 1000)))
+    localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
   }
 
 
@@ -167,7 +171,7 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
-    callNotification(destination)
+    callNotification(destination, startDate)
     Snackbar.show({
       text: 'Add Trip to Google Calendar',
       duration: Snackbar.LENGTH_LONG,
