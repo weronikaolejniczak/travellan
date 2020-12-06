@@ -38,10 +38,10 @@ class NotificationManager {
         
         PushNotification.configure({
             onRegister: function (token) {
-                console.log("[NotificationManager]onRegister token:", token);
+                //console.log("[NotificationManager]onRegister token:", token);
               },
               onNotification: function (notification) {
-                console.log("[NotificationManager]onNotification:", notification);
+                //console.log("[NotificationManager]onNotification:", notification);
             
             
                 // process the notification

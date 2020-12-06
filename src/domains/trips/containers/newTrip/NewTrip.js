@@ -61,8 +61,6 @@ const NewTrip = (props) => {
     localNotify.configure()
     var notificationDateTrigger = new Date();
     notificationDateTrigger.setDate(startDate.getDate() - 1)
-    console.log(notificationDateTrigger)
-
     return (  
     localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
   }
