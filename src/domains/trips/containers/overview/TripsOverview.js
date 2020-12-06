@@ -11,7 +11,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import SplashScreen from 'react-native-splash-screen'
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import TripItem from 'trips/components/item/Trip';
@@ -40,6 +40,7 @@ const TripsOverview = (props) => {
 
   useEffect(() => {
     loadTrips();
+    SplashScreen.hide()
   }, [dispatch, loadTrips]);
 
   useEffect(() => {
