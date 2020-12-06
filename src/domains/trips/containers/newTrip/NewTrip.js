@@ -23,11 +23,10 @@ import Snackbar from 'react-native-snackbar';
 import {notificationManager} from '../../../../NotificationManager'
 
 
-const time_now = moment.utc()
+const time_now = moment.utc();
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
-  let localNotify  = notificationManager;
 
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
@@ -56,7 +55,13 @@ const NewTrip = (props) => {
       : setDestinationIsValid(true);
     setDestination(text);
   };
-
+  
+  let localNotify  = notificationManager;
+  const callNotification = (destination ) => {
+    localNotify.configure()
+    return (  
+    localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, new Date(Date.now() + 10 * 1000)))
+  }
 
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
@@ -162,7 +167,7 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
-
+    callNotification(destination)
     Snackbar.show({
       text: 'Add Trip to Google Calendar',
       duration: Snackbar.LENGTH_LONG,
