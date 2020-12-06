@@ -59,8 +59,9 @@ const NewTrip = (props) => {
   const callNotification = (destination,startDate) => {
     localNotify.configure()
     var notificationDateTrigger = new Date();
+    var currentDate = new Date(Date.now())
     notificationDateTrigger.setDate(startDate.getDate() - 1)
-    if ( startDate.getDate() > notificationDateTrigger.getDate() ) {
+    if ( startDate.getDate() <= currentDate.getDate() ) {
       return localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts today!", "We wish you a great trip!", {}, {}, notificationDateTrigger)
     } else {
       return (  
