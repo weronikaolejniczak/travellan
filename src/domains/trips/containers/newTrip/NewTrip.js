@@ -45,7 +45,6 @@ const NewTrip = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   let CalendarEventChandler = addEventToCalendar;
 
-
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
@@ -61,9 +60,13 @@ const NewTrip = (props) => {
     localNotify.configure()
     var notificationDateTrigger = new Date();
     notificationDateTrigger.setDate(startDate.getDate() - 1)
-    return (  
-    localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
-  }
+    if ( startDate.getDate() > notificationDateTrigger.getDate() ) {
+      return localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts today!", "We wish you a great trip!", {}, {}, notificationDateTrigger)
+    } else {
+      return (  
+        localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
+      }
+    }
 
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');

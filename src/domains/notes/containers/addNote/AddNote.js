@@ -21,7 +21,10 @@ const AddNote = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
-  let startDateTrip = selectedTrip.startDate
+  // startDate = Date from where Trip begin - 12hours (for notification 'To Pack' purpose)
+  var startDate = new Date(selectedTrip.startDate);
+  startDate.setHours(startDate.getHours()-12)
+
 
   const [title, setTitle] = useState('');
   const [titleIsValid, setTitleIsValid] = useState(false);
@@ -43,7 +46,7 @@ const AddNote = (props) => {
   const callNotification = (category, description) => {
     localNotify.configure()
     return (  
-    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, new Date(Date.now() + 10 * 1000)))
+    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, startDate))
   }
 
   const descriptionChangeHandler = (text) => {
@@ -78,7 +81,7 @@ const AddNote = (props) => {
 
   const submitHandlerToPack = useCallback(async () => {
     ToPackList = description.split(" ");
-    console.log(ToPackList)
+    //console.log(ToPackList)
     setIsLoading(true);
     if (!descriptionIsValid) {
       setTitleSubmitted(true);
@@ -134,7 +137,6 @@ const AddNote = (props) => {
 
   useEffect(() => {
     setCategory(placeholder.value);
-    console.log(startDateTrip)
   }, []);
 
   return (
