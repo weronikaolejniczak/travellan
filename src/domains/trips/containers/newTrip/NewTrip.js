@@ -20,12 +20,14 @@ import Colors from 'constants/Colors';
 import { addEventToCalendar } from '../../../../CalendarEventChandler'
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
+import {notificationManager} from '../../../../NotificationManager'
 
 
 const time_now = moment.utc()
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
+  let localNotify  = notificationManager;
 
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);

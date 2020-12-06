@@ -24,6 +24,16 @@ class NotificationManager {
               vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
             },
           );
+
+          PushNotification.createChannel(
+            {
+              channelId: "DepartureAlert", // (required)
+              channelName: "DepartureAlert", // (required)
+              soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+              importance: 4, // (optional) default: 4. Int value of the Android notification importance
+              vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+            },
+          );
         /* ********************************************************************************************* */
         
         PushNotification.configure({
