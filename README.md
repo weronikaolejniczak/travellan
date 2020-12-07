@@ -33,7 +33,3 @@ Assuming you have all the requirements installed, you can setup and run the proj
 ### Android
 
 - `cd android & ./gradlew clean` for deleting the build folders.
-
-## License
-
-General Public License (GNU GPL v3.0).

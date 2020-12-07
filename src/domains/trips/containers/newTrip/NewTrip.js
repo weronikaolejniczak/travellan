@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Text,
   View,
@@ -8,15 +8,21 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
 import DatePicker from 'trips/components/datePicker/DatePicker';
-import {createTrip} from 'state/trip/tripActions';
-import {newTripStyle as styles} from './NewTripStyle';
-import {CURRENCIES} from 'data/Currencies';
+import { createTrip } from 'state/trip/tripActions';
+import { newTripStyle as styles } from './NewTripStyle';
+import { CURRENCIES } from 'data/Currencies';
 import Colors from 'constants/Colors';
+import { addEventToCalendar } from '../../../../CalendarEventChandler'
+import moment from 'moment';
+import Snackbar from 'react-native-snackbar';
+
+
+const time_now = moment.utc()
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -36,6 +42,8 @@ const NewTrip = (props) => {
   const [account, setAccount] = useState('card');
 
   const [isLoading, setIsLoading] = useState(false);
+  let CalendarEventChandler = addEventToCalendar;
+
 
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
@@ -46,6 +54,8 @@ const NewTrip = (props) => {
       : setDestinationIsValid(true);
     setDestination(text);
   };
+
+
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
@@ -90,6 +100,7 @@ const NewTrip = (props) => {
     !budgetIsEnabled ? resetBudget() : clearBudget();
   };
 
+
   const submitHandler = useCallback(async () => {
     let budgetToSubmit = [
       new Budget(
@@ -97,8 +108,8 @@ const NewTrip = (props) => {
         parseInt(budget, 10),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
-              (item) => item.name === currency,
-            )[0].iso.toString()
+            (item) => item.name === currency,
+          )[0].iso.toString()
           : undefined,
         [
           {
@@ -149,6 +160,17 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
+
+    Snackbar.show({
+      text: 'Add Trip to Google Calendar',
+      duration: Snackbar.LENGTH_LONG,
+      action: {
+        text: 'Add',
+        textColor: 'orange',
+        onPress: () => { CalendarEventChandler.addToCalendar("Trip to " + destination, startDate, endDate, destination, "Remember to pack everything and check weather forecast!") },
+      },
+    });
+
   }, [
     budget,
     account,
@@ -222,12 +244,12 @@ const NewTrip = (props) => {
           <ActivityIndicator color={Colors.primary} />
         </View>
       ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={submitHandler}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        )}
     </ScrollView>
   );
 };

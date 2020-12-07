@@ -16,6 +16,7 @@ import Input from 'user/components/input/Input';
 import Colors from 'constants/Colors';
 import * as authActions from 'state/user/userActions';
 import {AuthStyle as styles} from './AuthStyle';
+import SplashScreen from 'react-native-splash-screen'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -47,7 +48,6 @@ const Auth = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [isSignup, setIsSignup] = useState(false);
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       email: '',
@@ -61,6 +61,7 @@ const Auth = (props) => {
   });
 
   useEffect(() => {
+    SplashScreen.hide()
     if (error) {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
@@ -68,25 +69,16 @@ const Auth = (props) => {
 
   const authHandler = async () => {
     let action;
-    if (isSignup) {
-      action = authActions.signup(
-        formState.inputValues.email,
-        formState.inputValues.password,
+    action = authActions.login(
+      formState.inputValues.email,
+      formState.inputValues.password,
       );
-    } else {
-      action = authActions.login(
-        formState.inputValues.email,
-        formState.inputValues.password,
-      );
-    }
     setError(null);
     setIsLoading(true);
 
     try {
       await dispatch(action);
-      if (!isSignup) {
         props.navigation.navigate('My trips');
-      }
     } catch (err) {
       setError(err.message);
     }
@@ -150,17 +142,16 @@ const Auth = (props) => {
                 style={[styles.buttonContainer, {marginRight: 10}]}
                 onPress={authHandler}>
                 <Text style={styles.buttonText}>
-                  {isSignup ? 'Sign Up' : 'Login'}
+                  Login
                 </Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               onPress={() => {
-                //setIsSignup((prevState) => !prevState);
                 props.navigation.navigate('Register');
               }}>
               <Text style={styles.buttonText}>
-                Switch to {isSignup ? 'Login' : 'Sign up'}
+                Switch to Sign up
               </Text>
             </TouchableOpacity>
           </View>

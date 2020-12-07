@@ -14,12 +14,14 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.horcrux.svg.SvgPackage;
 import chat.rocket.SharePackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 
 
@@ -36,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          new SplashScreenReactPackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           //packages.add(new SharePackage());
           return packages;
