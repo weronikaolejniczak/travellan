@@ -30,17 +30,29 @@ import AddNote from 'notes/containers/addNote/AddNote';
 import EditNote from 'notes/containers/editNote/EditNote';
 import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
-
 import Colors from 'constants/Colors';
-//import DrawerNavigator from './DrawerNavigator';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import { 
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem, } from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList{...props} />
+      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
+    </DrawerContentScrollView>
+  )
+}
+
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator initialRouteName="My trips">
+  <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerType="front" backBehavior="none" >
       <Drawer.Screen name="My trips" component={TripsOverview}/>
     </Drawer.Navigator>
   )
