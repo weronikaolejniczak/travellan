@@ -47,15 +47,16 @@ const Register = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [isSignup, setIsSignup] = useState(false);
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },
     inputValidities: {
       email: false,
       password: false,
+      confirmPassword: false,
     },
     formIsValid: false,
   });
@@ -65,15 +66,20 @@ const Register = (props) => {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
   }, [error]);
-
+  const handleSubmit = () => {
+    if (formState.inputValues.password != formState.inputValues.confirmPassword) {
+      alert("Passwords don't match")
+    }
+    else  {
+      authHandler();
+    }
+  }
   const authHandler = async () => {
     let action;
-    if (isSignup) {
-      action = authActions.signup(
-        formState.inputValues.email,
-        formState.inputValues.password,
-      );
-    }
+    action = authActions.signup(
+      formState.inputValues.email,
+      formState.inputValues.password,
+    );
     setError(null);
     setIsLoading(true);
     
@@ -83,6 +89,7 @@ const Register = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
+    props.navigation.navigate('Auth');
   };
 
   const inputChangeHandler = useCallback(
@@ -103,12 +110,6 @@ const Register = (props) => {
       style={styles.screen}>
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{marginBottom: 20, alignItems: 'center'}}>
-            <Image
-              style={{width: 150, height: 150, resizeMode: 'stretch'}}
-              source={require('assets/images/logo.png')}
-            />
-          </View>
           <Input
             style={[styles.input]}
             id="email"
@@ -134,13 +135,26 @@ const Register = (props) => {
             onInputChange={inputChangeHandler}
             initialValue=""
           />
+          <Input
+            styles={styles.input}
+            id="confirmPassword"
+            label="Confirm Password"
+            keyboardType="default"
+            secureTextEntry
+            required
+            minLength={5}
+            autoCapitalize="none"
+            errorText="Please enter a valid password (at least 5 characters)"
+            onInputChange={inputChangeHandler}
+            initialValue=""
+          />
           <View style={styles.actionsContainer}>
             {isLoading ? (
               <ActivityIndicator size="small" color={Colors.white} />
             ) : (
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
-                onPress={authHandler}>
+                onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Join Travellan</Text>
               </TouchableOpacity>
             )}
