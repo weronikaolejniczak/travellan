@@ -128,13 +128,7 @@ export default function Navigation() {
     </NavigationContainer>
   );
 }
-/** 
-function TripsOverview() {
-  return (
-    <DrawerNavigator
-  )
-}
-*/
+
 const defaultNavOptions = {
   headerTransparent: {
     position: 'absolute',

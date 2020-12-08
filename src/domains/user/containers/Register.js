@@ -86,7 +86,7 @@ const Register = (props) => {
     
     try {
       await dispatch(action);
-        props.navigation.navigate('Auth');
+      props.navigation.navigate('Auth');
     } catch (err) {
       setError(err.message);
     }

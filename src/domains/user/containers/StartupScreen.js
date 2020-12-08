@@ -88,7 +88,6 @@ const StartupScreen = (props) => {
 
 export const StartupScreenOptions = {
   headerShown: false,
-  //headerTitle: 'Authenticate',
 };
 
 export default StartupScreen;
