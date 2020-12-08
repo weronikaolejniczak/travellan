@@ -32,9 +32,19 @@ import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
 
 import Colors from 'constants/Colors';
+//import DrawerNavigator from './DrawerNavigator';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator initialRouteName="My trips">
+      <Drawer.Screen name="My trips" component={TripsOverview}/>
+    </Drawer.Navigator>
+  )
+}
 export default function Navigation() {
   return (
     <NavigationContainer>
@@ -53,7 +63,7 @@ export default function Navigation() {
 
         <Stack.Screen
           name="My trips"
-          component={TripsOverview}
+          component={DrawerNavigator}
           options={tripsOverviewOptions}
         />
         <Stack.Screen name="New trip" component={NewTrip} />
@@ -104,7 +114,13 @@ export default function Navigation() {
     </NavigationContainer>
   );
 }
-
+/** 
+function TripsOverview() {
+  return (
+    <DrawerNavigator
+  )
+}
+*/
 const defaultNavOptions = {
   headerTransparent: {
     position: 'absolute',
