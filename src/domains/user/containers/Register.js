@@ -66,6 +66,7 @@ const Register = (props) => {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
   }, [error]);
+  
   const handleSubmit = () => {
     if (formState.inputValues.password != formState.inputValues.confirmPassword) {
       alert("Passwords don't match")
@@ -85,11 +86,11 @@ const Register = (props) => {
     
     try {
       await dispatch(action);
+        props.navigation.navigate('Auth');
     } catch (err) {
       setError(err.message);
     }
     setIsLoading(false);
-    props.navigation.navigate('Auth');
   };
 
   const inputChangeHandler = useCallback(
@@ -110,6 +111,7 @@ const Register = (props) => {
       style={styles.screen}>
       <View style={styles.authContainer}>
         <ScrollView>
+          <View style={{marginBottom: 150}}></View>
           <Input
             style={[styles.input]}
             id="email"
@@ -144,7 +146,7 @@ const Register = (props) => {
             required
             minLength={5}
             autoCapitalize="none"
-            errorText="Please enter a valid password (at least 5 characters)"
+            errorText="The passwords must match"
             onInputChange={inputChangeHandler}
             initialValue=""
           />

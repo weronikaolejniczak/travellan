@@ -32,6 +32,7 @@ import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
 import Colors from 'constants/Colors';
 
+
 import { 
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -46,6 +47,7 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList{...props} />
       <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
+      <DrawerItem label = "Logout" onPress = {() => alert('Placeholder')} />
     </DrawerContentScrollView>
   )
 }

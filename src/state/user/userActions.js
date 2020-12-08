@@ -1,6 +1,6 @@
 import {MAIN_FIREBASE_API} from 'react-native-dotenv';
 import {AsyncStorage} from 'react-native';
-
+//import auth from '@react-native-firebase/auth'
 //export const SIGNUP = 'SIGNUP';
 //export const LOGIN = 'LOGIN';
 export const AUTHENTICATE = 'AUTHENTICATE';
@@ -10,7 +10,11 @@ const API_KEY = MAIN_FIREBASE_API;
 export const authenticate = (userId, token) => {
   return {type: AUTHENTICATE, userId: userId, token: token};
 };
-
+/**
+export const logout = () => {
+  auth().signOut();
+}
+*/
 export const signup = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(

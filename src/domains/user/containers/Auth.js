@@ -66,6 +66,12 @@ const Auth = (props) => {
       Alert.alert('An error occured!', error, [{text: 'Okay'}]);
     }
   }, [error]);
+/**
+  const logoutHandler = () => {
+    authActions.logout;
+    props.navigation.navigate('Startup');
+  }
+  */
 
   const authHandler = async () => {
     let action;
