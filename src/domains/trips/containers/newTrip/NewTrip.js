@@ -20,9 +20,10 @@ import Colors from 'constants/Colors';
 import { addEventToCalendar } from '../../../../CalendarEventChandler'
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
+import {notificationManager} from '../../../../NotificationManager'
 
 
-const time_now = moment.utc()
+const time_now = moment.utc();
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -44,7 +45,6 @@ const NewTrip = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   let CalendarEventChandler = addEventToCalendar;
 
-
   let destinationRegex = new RegExp(
     "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
   );
@@ -54,7 +54,20 @@ const NewTrip = (props) => {
       : setDestinationIsValid(true);
     setDestination(text);
   };
-
+  
+  let localNotify  = notificationManager;
+  const callNotification = (destination,startDate) => {
+    localNotify.configure()
+    var notificationDateTrigger = new Date();
+    var currentDate = new Date(Date.now())
+    notificationDateTrigger.setDate(startDate.getDate() - 1)
+    if ( startDate.getDate() <= currentDate.getDate() ) {
+      return localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts today!", "We wish you a great trip!", {}, {}, notificationDateTrigger)
+    } else {
+      return (  
+        localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
+      }
+    }
 
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
@@ -160,7 +173,7 @@ const NewTrip = (props) => {
       props.navigation.goBack();
       setIsLoading(false);
     }
-
+    callNotification(destination, startDate)
     Snackbar.show({
       text: 'Add Trip to Google Calendar',
       duration: Snackbar.LENGTH_LONG,
