@@ -61,7 +61,9 @@ const TripsOverview = (props) => {
     });
   };
 
-  
+  const mover = () => {
+    props.navigation.navigate('Startup');
+  }
 
   /* KNOWN ISSUE: user can click on the card and immediately after on the trip,
   which navigates him to trip details and still shows an alert to delete the trip;

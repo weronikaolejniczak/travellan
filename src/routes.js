@@ -38,7 +38,7 @@ import {
   DrawerItemList,
   DrawerItem, } from '@react-navigation/drawer';
 
-import * as f from 'src/state/user/userActions.js'
+import * as auth_func from 'src/state/user/userActions.js'
 
 
 const Stack = createStackNavigator();
@@ -50,7 +50,8 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList{...props} />
       <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label = "Logout" onPress = {() => {f.logout();}} />
+      <DrawerItem label = "Logout" onPress = {() => {auth_func.logout();}
+      } />
     </DrawerContentScrollView>
   )
 }
@@ -59,6 +60,7 @@ function DrawerNavigator() {
   return (
   <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerType="front" backBehavior="none" >
       <Drawer.Screen name="My trips" component={TripsOverview}/>
+      <Drawer.Screen name="Startup" component={StartupScreen}/>
     </Drawer.Navigator>
   )
 }
