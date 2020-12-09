@@ -1,8 +1,6 @@
 import {MAIN_FIREBASE_API} from 'react-native-dotenv';
 import {AsyncStorage} from 'react-native';
 
-//export const SIGNUP = 'SIGNUP';
-//export const LOGIN = 'LOGIN';
 export const AUTHENTICATE = 'AUTHENTICATE';
 
 const API_KEY = MAIN_FIREBASE_API;
@@ -66,15 +64,14 @@ export const login = (email, password) => {
       const errorId = errorResData.error.message;
       let message = 'Something went wrong!';
       if (errorId === 'EMAIL_NOT_FOUND') {
-        message = 'This email could not be found!';
+        message = 'Something went wrong. Try Again';
       } else if (errorId === 'INVALID_PASSWORD') {
-        message = 'This password is not valid!';
+        message = 'Something went wrong. Try Again';
       }
       throw new Error(message);
     }
     const resData = await response.json();
     dispatch(authenticate(resData.localId, resData.idToken));
-    //{type: LOGIN, token: resData.idToken, userId: resData.localId}
     const expirationDate = new Date(
       new Date().getTime() + parseInt(resData.expiresIn, 10) * 1000,
     );

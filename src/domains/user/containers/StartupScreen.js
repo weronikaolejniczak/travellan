@@ -1,6 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {View, ActivityIndicator, AsyncStorage} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  AsyncStorage,
+  ScrollView,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 
 import {useDispatch} from 'react-redux';
 import {StartupScreenStyle as styles} from './StartupScreenStyle';
@@ -8,8 +18,10 @@ import Colors from 'constants/Colors';
 
 import * as authActions from 'state/user/userActions';
 
+
 const StartupScreen = (props) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -35,15 +47,47 @@ const StartupScreen = (props) => {
   }, [dispatch]);
 
   return (
-    <View style={styles.screen}>
-      <ActivityIndicator size="large" color={Colors.white} />
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={styles.screen}>
+      <View style={styles.authContainer}>
+        <ScrollView>
+          <View style={{marginBottom: 20, alignItems: 'center'}}>
+            <Image
+              style={{width: 150, height: 150, resizeMode: 'stretch'}}
+              source={require('assets/images/logo.png')}
+            />
+          </View>
+          <View style={styles.actionsContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+              <TouchableOpacity
+                style={[styles.buttonContainer, {marginRight: 10}]}
+                onPress={() => {
+                  props.navigation.navigate('Register');
+                }}>
+                <Text style={styles.buttonText}>Get Started</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Auth');
+              }
+              }>
+              <Text style={styles.buttonText}>
+                Have an account? Login instead
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 export const StartupScreenOptions = {
   headerShown: false,
-  //headerTitle: 'Authenticate',
 };
 
 export default StartupScreen;

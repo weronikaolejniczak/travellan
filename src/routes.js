@@ -6,6 +6,7 @@ import StartupScreen, {
   StartupScreenOptions,
 } from 'user/containers/StartupScreen';
 import Auth, {authOptions} from 'user/containers/Auth';
+import Register from 'user/containers/Register';
 import TripsOverview, {
   tripsOverviewOptions,
 } from 'trips/containers/overview/TripsOverview';
@@ -29,11 +30,35 @@ import AddNote from 'notes/containers/addNote/AddNote';
 import EditNote from 'notes/containers/editNote/EditNote';
 import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
-
 import Colors from 'constants/Colors';
 
-const Stack = createStackNavigator();
 
+import { 
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem, } from '@react-navigation/drawer';
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList{...props} />
+      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
+      <DrawerItem label = "Logout" onPress = {() => alert('Placeholder')} />
+    </DrawerContentScrollView>
+  )
+}
+
+function DrawerNavigator() {
+  return (
+  <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerType="front" backBehavior="none" >
+      <Drawer.Screen name="My trips" component={TripsOverview}/>
+    </Drawer.Navigator>
+  )
+}
 export default function Navigation() {
   return (
     <NavigationContainer>
@@ -43,12 +68,16 @@ export default function Navigation() {
           component={StartupScreen}
           options={StartupScreenOptions}
         />
-
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={authOptions}
+        />
         <Stack.Screen name="Auth" component={Auth} options={authOptions} />
 
         <Stack.Screen
           name="My trips"
-          component={TripsOverview}
+          component={DrawerNavigator}
           options={tripsOverviewOptions}
         />
         <Stack.Screen name="New trip" component={NewTrip} />
