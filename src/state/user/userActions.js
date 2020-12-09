@@ -64,9 +64,9 @@ export const login = (email, password) => {
       const errorId = errorResData.error.message;
       let message = 'Something went wrong!';
       if (errorId === 'EMAIL_NOT_FOUND') {
-        message = 'This email could not be found!';
+        message = 'Something went wrong. Try Again';
       } else if (errorId === 'INVALID_PASSWORD') {
-        message = 'This password is not valid!';
+        message = 'Something went wrong. Try Again';
       }
       throw new Error(message);
     }
