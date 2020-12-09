@@ -79,6 +79,18 @@ export const login = (email, password) => {
   };
 };
 
+export const logout = () => {
+  console.log("tak, dzialam");
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token: '',
+      userId: '',
+      expiryDate: '',
+    }),
+  );
+};
+
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',

@@ -32,22 +32,25 @@ import Map from 'map/containers/Map';
 import Weather from 'weather/containers/Weather';
 import Colors from 'constants/Colors';
 
-
 import { 
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem, } from '@react-navigation/drawer';
 
+import * as f from 'src/state/user/userActions.js'
+
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+/** IN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList{...props} />
       <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label = "Logout" onPress = {() => alert('Placeholder')} />
+      <DrawerItem label = "Logout" onPress = {() => {f.logout();}} />
     </DrawerContentScrollView>
   )
 }
