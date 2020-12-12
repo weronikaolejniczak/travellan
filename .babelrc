@@ -1,30 +1,28 @@
 {
-    "plugins": [
-      [
-        "module-resolver",
-        {
+  "plugins": [
+    [
+      "module-resolver",
+      {
         "alias": {
-          "src": "./src",
-          "state": "./src/state",
-          "common": "./src/common",
+          "accommodation": "./src/domains/accommodation",
+          "actions": "./src/actions",
           "assets": "./src/common/assets",
+          "common": "./src/common",
           "components": "./src/common/components",
           "constants": "./src/common/constants",
           "data": "./src/common/data",
-          "services": "./src/common/services",
-          "styles": "./src/common/styles",
           "domains": "./src/domains",
-          "accommodation": "./src/domains/accommodation",
-          "budget": "./src/domains/budget",
-          "map": "./src/domains/map",
-          "trips": "./src/domains/trips",
-          "notes": "./src/domains/notes",
+          "reducers": "./src/reducers",
+          "services": "./src/services",
           "share": "./src/domains/share",
+          "src": "./src",
+          "styles": "./src/common/styles",
           "transport": "./src/domains/transport",
+          "trips": "./src/domains/trips",
           "user": "./src/domains/user",
           "weather": "./src/domains/weather"
-         }
         }
-      ]
+      }
     ]
+  ]
 }
