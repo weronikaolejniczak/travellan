@@ -58,8 +58,8 @@ export const patchDeleteTransport = (tripId, ticketId) => {
     );
 
     const resData = await response.json();
-    let transportInfo = resData.transportInfo;
-    transportInfo = transportInfo.filter((item) => !(item.id === ticketId));
+    let transport = resData.transport;
+    transport = transport.filter((item) => !(item.id === ticketId));
 
     await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
       method: 'PATCH',
@@ -67,7 +67,7 @@ export const patchDeleteTransport = (tripId, ticketId) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        transportInfo,
+        transport,
       }),
     });
 
@@ -102,12 +102,12 @@ export const patchCreateTransport = (
     );
     const resData = await response.json();
 
-    let transportInfo = resData.transportInfo;
+    let transport = resData.transport;
 
-    if (transportInfo) {
-      transportInfo = transportInfo.concat(newTransport);
+    if (transport) {
+      transport = transport.concat(newTransport);
     } else {
-      transportInfo = [newTransport];
+      transport = [newTransport];
     }
 
     await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
@@ -116,7 +116,7 @@ export const patchCreateTransport = (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        transportInfo,
+        transport,
       }),
     });
 
@@ -132,11 +132,11 @@ export const updateQR = (tripId, ticketId, QR) => {
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
     const resData = await response.json();
-    let transportInfo = resData.transportInfo;
-    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
+    let transport = resData.transport;
+    let ticketKey = transport.findIndex((item) => item.id === ticketId);
 
     await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
+      `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {
@@ -161,10 +161,10 @@ export const updatePDF = (tripId, ticketId, PDF) => {
     );
 
     const resData = await response.json();
-    let transportInfo = resData.transportInfo;
-    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
+    let transport = resData.transport;
+    let ticketKey = transport.findIndex((item) => item.id === ticketId);
     await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
+      `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
       {
         method: 'PATCH',
         headers: {

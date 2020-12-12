@@ -5,13 +5,34 @@ import Trip from 'domains/trips/models/Trip';
 import fetchImage from 'services/fetchImage';
 import fetchCoordinates from 'services/fetchCoordinates';
 
+export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
-export const SET_TRIPS = 'SET_TRIPS';
 
 const API_URL = FIREBASE_URL;
 
-export const fetchTrips = () => {
+export const setTrips = (loadedTrips) => {
+  return {
+    type: SET_TRIPS,
+    trips: loadedTrips,
+  };
+};
+
+export const deleteTrip = (tripId) => {
+  return {
+    type: DELETE_TRIP,
+    tripId,
+  };
+};
+
+export const createTrip = (newTrip) => {
+  return {
+    type: CREATE_TRIP,
+    newTrip,
+  };
+};
+
+export const fetchTripsRequest = () => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -34,32 +55,35 @@ export const fetchTrips = () => {
           resData[key].endDate,
           resData[key].budget,
           resData[key].notes,
-          resData[key].transportInfo,
-          resData[key].accommodationInfo,
+          resData[key].transport,
+          resData[key].accommodation,
           resData[key].map,
         ),
       );
     }
 
-    dispatch({type: SET_TRIPS, trips: loadedTrips});
+    dispatch(setTrips(loadedTrips));
   };
 };
 
-export const deleteTrip = (tripId) => {
+export const deleteTripRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
+
     await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
       method: 'DELETE',
     });
-    dispatch({type: DELETE_TRIP, tripId});
+
+    dispatch(deleteTrip(tripId));
   };
 };
 
-export const createTrip = (destination, startDate, endDate, budget) => {
+export const postTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
+
     let image = await fetchImage(destination);
     let location = await fetchCoordinates(destination);
     let region = {
@@ -69,8 +93,8 @@ export const createTrip = (destination, startDate, endDate, budget) => {
       longitudeDelta: 0.0421,
     };
     let notes = [];
-    let transportInfo = [];
-    let accommodationInfo = [];
+    let transport = [];
+    let accommodation = [];
     let map = new Map([], [], null);
 
     const response = await fetch(
@@ -88,29 +112,29 @@ export const createTrip = (destination, startDate, endDate, budget) => {
           endDate,
           budget,
           notes,
-          transportInfo,
-          accommodationInfo,
+          transport,
+          accommodation,
           map,
         }),
       },
     );
 
-    const resData = await response.json();
-    dispatch({
-      type: CREATE_TRIP,
-      tripData: {
-        id: resData.name,
-        destination,
-        region,
-        image,
-        startDate,
-        endDate,
-        budget,
-        notes,
-        transportInfo,
-        accommodationInfo,
-        map,
-      },
-    });
+    const data = await response.json();
+    const tripId = data.id;
+    const newTrip = new Trip(
+      tripId,
+      destination,
+      region,
+      image,
+      startDate,
+      endDate,
+      budget,
+      notes,
+      transport,
+      accommodation,
+      map,
+    );
+
+    dispatch(createTrip(newTrip));
   };
 };

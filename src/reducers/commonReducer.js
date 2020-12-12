@@ -1,5 +1,3 @@
-import Trip from 'trips/models/Trip';
-
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
 import * as transportTypes from 'actions/transportTypes';
 import {
@@ -35,22 +33,9 @@ export default (state = initialState, action) => {
         ),
       };
     case CREATE_TRIP:
-      const newTrip = new Trip(
-        action.tripData.id,
-        action.tripData.destination,
-        action.tripData.region,
-        action.tripData.image,
-        action.tripData.startDate,
-        action.tripData.endDate,
-        action.tripData.budget,
-        [],
-        [],
-        [],
-        [],
-      );
       return {
         ...state,
-        availableTrips: state.availableTrips.concat(newTrip),
+        availableTrips: state.availableTrips.concat(action.newTrip),
       };
 
     case transportTypes.SET_TRANSPORT:
@@ -58,7 +43,7 @@ export default (state = initialState, action) => {
     case transportTypes.CREATE_TRANSPORT:
     case transportTypes.UPDATE_QR:
     case transportTypes.UPDATE_PDF:
-      updatedAvailableTrips[tripIndex].transportInfo = action.transportInfo;
+      updatedAvailableTrips[tripIndex].transport = action.transport;
 
       return {
         ...state,
