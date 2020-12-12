@@ -1,18 +1,18 @@
 import React from 'react';
-import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { View, ScrollView, FlatList, Platform, Animated } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import Itemless from 'components/frames/itemless/Itemless';
 import AccommodationItem from 'accommodation/components/accItem/AccItem';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import {cardWidth} from 'accommodation/components/accItem/AccItemStyle';
-import {accommodationOverviewStyle as styles} from './AccommodationOverviewStyle';
+import { cardWidth } from 'accommodation/components/accItem/AccItemStyle';
+import { accommodationOverviewStyle as styles } from './AccommodationOverviewStyle';
 
-import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
+import { DUMMY_HOTELS as accommodation } from 'accommodation/data/DummyHotels';
 
 const AccommodationOverview = () => {
   if (accommodation === undefined) {
-    return <Itemless message={'You have no saved accommodation!'} />;
+    return <Itemless message="You have no saved accommodation!" />;
   }
 
   let scrollX = new Animated.Value(0);
@@ -58,7 +58,7 @@ export const accommodationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add accommodation', {
               tripId: navData.route.params.tripId,

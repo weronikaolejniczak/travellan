@@ -1,14 +1,14 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, FlatList, Platform, Alert, Button } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import NoteItem from 'notes/components/item/Note';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as noteActions from 'state/note/noteActions';
-import {NotesStyles as styles} from './NotesOverviewStyle';
+import { NotesStyles as styles } from './NotesOverviewStyle';
 import Colors from 'constants/Colors';
 
 const NotesOverview = (props) => {
@@ -28,18 +28,19 @@ const NotesOverview = (props) => {
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      // delete notes
+
       try {
         await dispatch(noteActions.deleteNote(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
-      // fetch notes
+
       try {
         await dispatch(noteActions.fetchNotes(tripId));
       } catch {
         setError('Something went wrong!');
       }
+
       setIsRefreshing(false);
     },
     [dispatch, tripId],
@@ -97,10 +98,8 @@ const NotesOverview = (props) => {
   }
 
   if (notes === undefined) {
-    return <Itemless message={'You have no notes saved!'} />;
+    return <Itemless message="You have no notes saved!" />;
   }
-  
- 
 
   return (
     <View style={styles.container}>
@@ -129,7 +128,7 @@ export const notesOptions = (navData) => {
         <Item
           title="Create a note"
           style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add note', {
               tripId: navData.route.params.tripId,

@@ -8,11 +8,10 @@ import {
   Modal,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import QRCode from 'react-native-qrcode-svg';
 import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
+import PDF from 'react-native-pdf';
 
 import Card from 'components/card/Card';
 import * as transportActions from 'state/transport/transportActions';
@@ -28,9 +27,9 @@ const Transport = (props) => {
   const ticketId = props.id;
 
   var qr = props.qr;
-  var pdfUri = props.pdfUri;
+  var PDFUri = props.PDFUri;
 
-  var source = {uri: pdfUri};
+  var source = {uri: PDFUri};
   const checkHandler = () => {
     if (qr === '' || null || undefined) {
       props.addQRHandler();
@@ -46,10 +45,10 @@ const Transport = (props) => {
   }, [dispatch, tripId, ticketId, qr]);
 
   const deletePDF = useCallback(async () => {
-    pdfUri = '';
-    await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+    PDFUri = '';
+    await dispatch(transportActions.updatePDF(tripId, ticketId, PDFUri));
     setshowPDF(false);
-  }, [dispatch, tripId, ticketId, pdfUri]);
+  }, [dispatch, tripId, ticketId, PDFUri]);
 
   const closeQRhandler = () => {
     setshowQR(false);
@@ -62,12 +61,12 @@ const Transport = (props) => {
   const pickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf],
+        type: [DocumentPicker.types.PDF],
       });
 
       var temp = res.uri;
-      pdfUri = temp;
-      await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+      PDFUri = temp;
+      await dispatch(transportActions.updatePDF(tripId, ticketId, PDFUri));
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
       } else {
@@ -103,7 +102,7 @@ const Transport = (props) => {
                 style={styles.buttonTouchable}
                 onPress={() => {
                   Alert.alert(
-                    'Delete QR',
+                    'Delete QR code.',
                     'Are you sure?',
                     [
                       {
@@ -138,31 +137,16 @@ const Transport = (props) => {
             onPress={closePDFhandler}>
             <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
-          <Pdf
-            ref={(pdf) => {
-              this.pdf = pdf;
-            }}
+          <PDF
+            ref={(pdf) => this.pdf = pdf}
             source={source}
-            onLoadComplete={(numberOfPages, filePath) => {
-              //console.log(`number of pages: ${numberOfPages}`);
-              console.log({source});
-            }}
-            onPageChanged={(page, numberOfPages) => {
-              //console.log(`current page: ${page}`);
-            }}
-            onError={(error) => {
-              //console.log(error);
-            }}
-            onPressLink={(uri) => {
-              //console.log(`Link presse: ${uri}`);
-            }}
             style={styles.pdf}
           />
           <TouchableOpacity
             style={styles.buttonTouchable}
             onPress={() => {
               Alert.alert(
-                'Delete Ticket-pdf',
+                'Delete a PDF ticket.',
                 'Are you sure?',
                 [
                   {
@@ -187,14 +171,14 @@ const Transport = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={checkHandler}>
-          <CommunityIcon name="qrcode-scan" style={styles.icon} />
+          <Icon name="qrcode-scan" style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={async () => {
-            if (pdfUri === '' || null || undefined) {
+            if (PDFUri === '' || null || undefined) {
               Alert.alert(
-                'Add ticket pdf?',
+                'Add a PDF ticket?',
                 'Attach document',
                 [
                   {
@@ -212,7 +196,7 @@ const Transport = (props) => {
               setshowPDF(true);
             }
           }}>
-          <CommunityIcon name="file-pdf-box" style={styles.icon} />
+          <Icon name="file-pdf-box" style={styles.icon} />
         </TouchableOpacity>
       </View>
 
@@ -220,11 +204,7 @@ const Transport = (props) => {
         style={[{marginTop: cardHeight * 0.0465}]}
         indicatorStyle="white">
         <View style={[styles.rowCenter, {paddingVertical: 15}]}>
-          {props.to === true ? (
-            <Text style={[styles.header]}>to {props.destination}</Text>
-          ) : (
-            <Text style={[styles.header]}>from {props.destination}</Text>
-          )}
+          <Text style={[styles.header]}>{props.to === true ? 'to' : 'from'} {props.destination}</Text>
         </View>
 
         <View

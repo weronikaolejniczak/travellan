@@ -1,23 +1,23 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Text,
   View,
   Alert,
   TouchableHighlight,
   FlatList,
-  Platform,
   Button,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch} from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen'
+
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import TripItem from 'trips/components/item/Trip';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripActions from 'state/trip/tripActions';
-import {tripsOverviewStyle as styles} from './TripsOverviewStyle';
+import { tripsOverviewStyle as styles } from './TripsOverviewStyle';
 import Colors from 'constants/Colors';
 
 const TripsOverview = (props) => {
@@ -42,17 +42,6 @@ const TripsOverview = (props) => {
     loadTrips();
     SplashScreen.hide()
   }, [dispatch, loadTrips]);
-
-  useEffect(() => {
-    const willFocusSubscription = props.navigation.addListener(
-      'willFocus',
-      loadTrips,
-    );
-    // clean up listener
-    return () => {
-      willFocusSubscription.remove();
-    };
-  }, []); // do not add props.navigation as a dependency, it may cause a loop
 
   const selectItemHandler = (id, destination) => {
     props.navigation.navigate('Details', {
@@ -100,7 +89,7 @@ const TripsOverview = (props) => {
   }
 
   if (trips.length === 0 || trips === undefined) {
-    return <Itemless message={'You have no trips saved!'} />;
+    return <Itemless message="You have no trips saved!" />;
   }
 
   return (
@@ -129,8 +118,6 @@ const TripsOverview = (props) => {
   );
 };
 
-/** we export screenOptions to use in our Stack.Navigator
- * @param {*} navData: lets us use "navigation" prop from within this function */
 export const tripsOverviewOptions = (navData) => {
   return {
     headerLeft: null,
@@ -139,10 +126,8 @@ export const tripsOverviewOptions = (navData) => {
         <Item
           title="New trip"
           style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-          onPress={() => {
-            navData.navigation.navigate('New trip');
-          }}
+          iconName="plus"
+          onPress={() => navData.navigation.navigate('New trip')}
         />
       </HeaderButtons>
     ),

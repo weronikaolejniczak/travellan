@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   ScrollView,
@@ -10,15 +10,16 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {LineChart} from 'react-native-chart-kit';
+import { useSelector, useDispatch } from 'react-redux';
+import { LineChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Card from 'components/card/Card';
+import HeaderButton from 'components/headerButton/HeaderButton';
 import * as budgetActions from 'state/budget/budgetActions';
 import * as handlers from 'budget/handlers/PrepareData';
 import * as categories from 'budget/models/Categories';
-import Card from 'components/card/Card';
-import {budgetStyle as styles} from './BudgetStyle';
+import { budgetStyle as styles } from './BudgetStyle';
 import Colors from 'constants/Colors';
 
 const screenWidth = Dimensions.get('window').width;
@@ -62,8 +63,8 @@ const Budget = (props) => {
         data: selectedCurrency
           ? handlers.prepareDataForLC(selectedCurrency.history)
           : [],
-        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // optional
-        strokeWidth: 2, // optional
+        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`,
+        strokeWidth: 2,
       },
     ],
     legend: ['Budget value'],
@@ -75,9 +76,9 @@ const Budget = (props) => {
     backgroundGradientTo: Colors.cards,
     backgroundGradientToOpacity: 0.9,
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
+    useShadowColorFromDataset: false,
   };
 
   const clear = () => {
@@ -104,15 +105,15 @@ const Budget = (props) => {
   const modifyAmount = (typeOfOperation) => {
     if (title && amount && amountIsValid) {
       const changedCurrency = selectedCurrency;
-      // modification control flow
+
       if (typeOfOperation === 'plus') {
-        // change displayableValue
         setDisplayableValue(
           displayableValue + Math.abs(handlers.prepareValue(amount)),
         );
-        // modify selectedCurrency
+
         changedCurrency.value =
           changedCurrency.value + Math.abs(handlers.prepareValue(amount));
+
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
@@ -121,16 +122,16 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
-        // persist changes in the budget
+
         persistBudget();
       } else if (typeOfOperation === 'minus') {
-        // change displayableValue
         setDisplayableValue(
           displayableValue + -Math.abs(handlers.prepareValue(amount)),
         );
-        // modify selectedCurrency
+
         changedCurrency.value =
           changedCurrency.value - Math.abs(handlers.prepareValue(amount));
+
         changedCurrency.history.push({
           id: changedCurrency.history.length + 1,
           title: title,
@@ -139,42 +140,40 @@ const Budget = (props) => {
           account: account,
           date: new Date(),
         });
-        // persist changes in the budget
+
         persistBudget();
       } else {
         setError('Something went wrong...');
       }
-      // update selectedCurrency in budget
+
       const index = budget.findIndex((item) => item.id === selectedCurrency.id);
       budget[index] = changedCurrency;
-      // clear placeholders
+
       clear();
     } else {
       setError('Enter correct amount and title.');
     }
   };
 
-  // delete a currency and persist changes
   const deleteCurrency = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      // update selectedCurrency in budget
+
       const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
-      // update budget
+
       await dispatch(
         budgetActions.updateBudget(tripId, filteredActiveCurrencies),
       ).then(() => loadBudget());
-      // if there are no active currencies clear selectedCurrency
+
       budget !== undefined
         ? setSelectedCurrency(filteredActiveCurrencies[0])
         : setSelectedCurrency(null);
-      // stop refresh
+
       setIsRefreshing(false);
     },
     [budget, dispatch, loadBudget, tripId],
   );
 
-  // persist changed budget
   const persistBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
@@ -186,7 +185,6 @@ const Budget = (props) => {
     setIsLoading(false);
   }, [budget, dispatch, tripId]);
 
-  // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
     setIsRefreshing(true);
     try {
@@ -197,7 +195,6 @@ const Budget = (props) => {
     setIsRefreshing(false);
   }, [dispatch, setIsRefreshing, tripId]);
 
-  // fetch the budget on render
   useEffect(() => {
     setIsLoading(true);
     loadBudget().then(() => {
@@ -223,7 +220,7 @@ const Budget = (props) => {
           <Text style={[styles.text, styles.budgetlessText]}>
             Create a currency card with the
           </Text>
-          <Icon name={'plus'} size={32} style={[styles.text, {margin: 10}]} />
+          <Icon name="wallet-plus" size={32} style={[styles.text, {margin: 10}]} />
           <Text style={[styles.text, styles.budgetlessText]}>sign above!</Text>
         </View>
       </View>
@@ -287,7 +284,7 @@ const Budget = (props) => {
           <View style={styles.center}>
             <Text style={{color: Colors.grey}}>Cash</Text>
             <View style={styles.accounts}>
-              <Icon name={'cash'} style={[styles.icon, styles.text]} />
+              <Icon name="cash" style={[styles.icon, styles.text]} />
               <Text
                 style={[
                   styles.label,
@@ -315,7 +312,7 @@ const Budget = (props) => {
           <View style={styles.center}>
             <Text style={{color: Colors.grey}}>Card</Text>
             <View style={[styles.accounts]}>
-              <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
+              <Icon name="credit-card" style={[styles.icon, styles.text]} />
               <Text
                 style={[
                   styles.label,
@@ -423,7 +420,7 @@ const Budget = (props) => {
                       style={[styles.justifyRow, {alignItems: 'center'}]}
                       onPress={() => setAccount('cash')}>
                       <Icon
-                        name={'cash'}
+                        name="cash"
                         style={[
                           {marginRight: '5%'},
                           styles.icon,
@@ -448,7 +445,7 @@ const Budget = (props) => {
                       style={[styles.justifyRow, {alignItems: 'center'}]}
                       onPress={() => setAccount('card')}>
                       <Icon
-                        name={'credit-card'}
+                        name="credit-card"
                         style={[
                           {marginRight: '5%'},
                           styles.icon,
@@ -486,7 +483,7 @@ const Budget = (props) => {
                   placeholderTextColor="grey"
                   value={amount}
                   onChangeText={(number) => amountChangeHandler(number)}
-                  keyboardType={'numeric'}
+                  keyboardType="numeric"
                 />
                 <View style={[styles.justifyRow, styles.actions]}>
                   <TouchableOpacity onPress={() => modifyAmount('plus')}>
@@ -578,15 +575,17 @@ const Budget = (props) => {
 export const budgetOptions = (navData) => {
   return {
     headerRight: () => (
-      <TouchableOpacity
-        style={styles.navigationButton}
-        onPress={() => {
-          navData.navigation.navigate('Add currency', {
-            tripId: navData.route.params.tripId,
-          });
-        }}>
-        <Text style={styles.navigationText}>Add currency</Text>
-      </TouchableOpacity>
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Create a trip"
+          iconName="wallet-plus"
+          onPress={() => {
+            navData.navigation.navigate('Add currency', {
+              tripId: navData.route.params.tripId,
+            });
+          }}
+        />
+      </HeaderButtons>
     ),
   };
 };

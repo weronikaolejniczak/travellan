@@ -8,22 +8,18 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import { useDispatch } from 'react-redux';
 
 import Budget from 'budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
 import DatePicker from 'trips/components/datePicker/DatePicker';
 import { createTrip } from 'state/trip/tripActions';
-import { newTripStyle as styles } from './NewTripStyle';
 import { CURRENCIES } from 'data/Currencies';
+import { addEventToCalendar } from 'src/CalendarEventChandler'
+import { notificationManager } from 'src/NotificationManager'
+import { newTripStyle as styles } from './NewTripStyle';
 import Colors from 'constants/Colors';
-import { addEventToCalendar } from '../../../../CalendarEventChandler'
-import moment from 'moment';
-import Snackbar from 'react-native-snackbar';
-import {notificationManager} from '../../../../NotificationManager'
-
-
-const time_now = moment.utc();
 
 const NewTrip = (props) => {
   const dispatch = useDispatch();
@@ -41,8 +37,8 @@ const NewTrip = (props) => {
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
   const [account, setAccount] = useState('card');
-
   const [isLoading, setIsLoading] = useState(false);
+
   let CalendarEventChandler = addEventToCalendar;
 
   let destinationRegex = new RegExp(
@@ -68,7 +64,6 @@ const NewTrip = (props) => {
         localNotify.scheduleNotification('DepartureAlert',5, 'Journey to ' + destination +" starts tomorrow!", "We wish you a great trip!", {}, {}, notificationDateTrigger))
       }
     }
-
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
@@ -134,7 +129,7 @@ const NewTrip = (props) => {
             date: new Date(),
           },
         ],
-        account.toString(), // default account
+        account.toString(),
       ),
     ];
 
@@ -191,11 +186,9 @@ const NewTrip = (props) => {
     budgetIsValid,
     budgetIsEnabled,
     currency,
-    dispatch,
     destination,
     startDate,
-    endDate,
-    props.navigation,
+    endDate
   ]);
 
   return (
@@ -217,7 +210,7 @@ const NewTrip = (props) => {
       </View>
 
       <DatePicker
-        label={'Start date'}
+        label="Start date"
         styles={styles}
         showDatePicker={() => showDatePicker('start')}
         date={startDate}
@@ -227,7 +220,7 @@ const NewTrip = (props) => {
       />
 
       <DatePicker
-        label={'End date'}
+        label="End date"
         styles={styles}
         showDatePicker={() => showDatePicker('end')}
         date={endDate}
@@ -237,7 +230,7 @@ const NewTrip = (props) => {
       />
 
       <BudgetField
-        label={'Budget'}
+        label="Budget"
         styles={styles}
         showSwitch={true}
         toggleBudgetSwitch={toggleBudgetSwitch}

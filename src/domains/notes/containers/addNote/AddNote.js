@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   ScrollView,
   Text,
@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
-import {notificationManager} from '../../../../NotificationManager'
+
 import * as noteActions from 'state/note/noteActions';
+import { notificationManager } from 'src/NotificationManager'
 import {addNoteStyle as styles} from './AddNoteStyle';
 import Colors from 'constants/Colors';
 
@@ -21,11 +22,10 @@ const AddNote = (props) => {
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
 
-  // startDate = Date from where Trip begin - 12hours (for notification 'To Pack' purpose)
-  var startDate = new Date(selectedTrip.startDate);
-  startDate.setHours(startDate.getHours()-12)
+  const startDate = new Date(selectedTrip.startDate);
+  startDate.setHours(startDate.getHours() - 12)
 
-
+  const [toPackList, setToPackList] = useState([]);
   const [title, setTitle] = useState('');
   const [titleIsValid, setTitleIsValid] = useState(false);
   const [titleSubmitted, setTitleSubmitted] = useState(false);
@@ -35,7 +35,7 @@ const AddNote = (props) => {
   const [category, setCategory] = useState('');
   const [categoryIsValid, setCategoryIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  var ToPackList = [];
+
   let localNotify  = notificationManager;
 
   const titleChangeHandler = (text) => {
@@ -44,10 +44,12 @@ const AddNote = (props) => {
   };
 
   const callNotification = (category, description) => {
-    localNotify.configure()
+    localNotify.configure();
+
     return (  
-    localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, startDate))
-  }
+      localNotify.scheduleNotification('Notes',2, category, description.split(" ").join(", "), {}, {}, startDate)
+    );
+  };
 
   const descriptionChangeHandler = (text) => {
     text.trim().length === 0
@@ -80,9 +82,9 @@ const AddNote = (props) => {
   }, []);
 
   const submitHandlerToPack = useCallback(async () => {
-    ToPackList = description.split(" ");
-    //console.log(ToPackList)
+    setToPackList(description.split(" "));
     setIsLoading(true);
+
     if (!descriptionIsValid) {
       setTitleSubmitted(true);
       setDescriptionSubmitted(true);
@@ -94,18 +96,16 @@ const AddNote = (props) => {
         tripId: selectedTrip.id,
       });
     }
+  
     setIsLoading(false);
   }, [
     titleIsValid,
     descriptionIsValid,
     categoryIsValid,
-    dispatch,
     tripId,
     category,
     title,
-    description,
-    props.navigation,
-    selectedTrip.id,
+    description
   ]);
 
   const categoryList = [
@@ -122,8 +122,8 @@ const AddNote = (props) => {
       fontWeight: 'bold',
     },
     {
-      label: 'Diaries',
-      value: 'Diaries',
+      label: 'Diary',
+      value: 'Diary',
       color: '#FF4500',
       fontWeight: 'bold',
     },
@@ -131,7 +131,7 @@ const AddNote = (props) => {
 
   const placeholder = {
     label: 'Select a category...',
-    value: 'Categoryless',
+    value: 'No category',
     color: 'grey'
   };
 
@@ -142,10 +142,9 @@ const AddNote = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.smallPaddingTop}>
-        <Text style={styles.label}>Set Category</Text>
+        <Text style={styles.label}>Set category</Text>
         <View style={styles.smallPaddingTop}></View>
         <View style={{borderWidth: 1, borderColor: 'white', borderRadius: 4}}>
-          {/* CATEGORY PICKER */}
           <RNPickerSelect
             onChangeText={categoryChangeHandler}
             items={categoryList}

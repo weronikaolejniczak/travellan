@@ -1,11 +1,10 @@
-'use strict';
 import React, {useCallback, useState} from 'react';
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 import {RNCamera} from 'react-native-camera';
 import {useDispatch, useSelector} from 'react-redux';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Colors from 'constants/Colors';
 import {AddQRStyle as styles} from './AddQRStyle';
@@ -16,12 +15,11 @@ const AddQR = (props, state) => {
 
   const tripId = props.route.params.tripId;
   const ticketId = props.route.params.ticketId;
+  const qr = props.qr;
 
   const selectedTrip = useSelector((state) =>
     state.trips.availableTrips.find((item) => item.id === tripId),
   );
-
-  var qr = props.qr;
 
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
@@ -66,13 +64,13 @@ const AddQR = (props, state) => {
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={switchLight}>
-              <MaterialIcon name={'flashlight'} style={styles.icon} />
+              <Icon name="flashlight" style={styles.icon} />
             </TouchableOpacity>
           }
           bottomContent={
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+                <Text style={styles.buttonText}>Track ticket's QR-code</Text>
               </TouchableOpacity>
             </View>
           }
@@ -88,13 +86,13 @@ const AddQR = (props, state) => {
               <TouchableOpacity
                 style={styles.buttonTouchable}
                 onPress={acceptHandler}>
-                <MaterialIcon name={'check'} style={styles.icon} />
+                <Icon name="check" style={styles.icon} />
               </TouchableOpacity>
             )}
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={redoHandler}>
-              <MaterialIcon name={'close'} style={styles.icon} />
+              <Icon name="close" style={styles.icon} />
             </TouchableOpacity>
           </View>
         </View>

@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as transportActions from 'state/transport/transportActions';
 import {addTransportStyle as styles} from './AddTransportStyle';
@@ -25,8 +24,8 @@ const AddTransport = (props) => {
 
   const [to, setToDestination] = useState(true);
   const [from, setFromDestination] = useState(false);
-  const [qr, setQR] = useState('');
-  const [pdfUri, setpdfUri] = useState('');
+  const [QR, setQR] = useState('');
+  const [PDFUri, setPDFUri] = useState('');
 
   const initialMinutes =
     new Date().getMinutes() < 10
@@ -106,8 +105,8 @@ const AddTransport = (props) => {
         from,
         prepareDate(dateOfDeparture, hourOfDeparture),
         placeOfDeparture,
-        qr,
-        pdfUri,
+        QR,
+        PDFUri,
       ),
     );
     setIsLoading(false);
@@ -115,17 +114,14 @@ const AddTransport = (props) => {
       tripId: selectedTrip.id,
     });
   }, [
-    dispatch,
     tripId,
     to,
     from,
     dateOfDeparture,
     hourOfDeparture,
     placeOfDeparture,
-    qr,
-    pdfUri,
-    props.navigation,
-    selectedTrip.id,
+    QR,
+    PDFUri
   ]);
 
   return (
@@ -141,8 +137,8 @@ const AddTransport = (props) => {
               to
             </Text>
             <TouchableOpacity onPress={toggleToDestinationSwitch}>
-              <MaterialIcon
-                name={to ? 'radio-button-checked' : 'radio-button-unchecked'}
+              <Icon
+                name={to ? 'radiobox-marked' : 'radiobox-blank'}
                 style={[
                   to ? styles.activeRadioIcon : styles.nonactiveRadioIcon,
                 ]}
@@ -158,8 +154,8 @@ const AddTransport = (props) => {
               from
             </Text>
             <TouchableOpacity onPress={toggleFromDestinationSwitch}>
-              <MaterialIcon
-                name={from ? 'radio-button-checked' : 'radio-button-unchecked'}
+              <Icon
+                name={from ? 'radiobox-marked' : 'radiobox-blank'}
                 style={[
                   from ? styles.activeRadioIcon : styles.nonactiveRadioIcon,
                 ]}
@@ -184,9 +180,7 @@ const AddTransport = (props) => {
               style={styles.picker}>
               <View style={styles.rowAndAlign}>
                 <Icon
-                  name={
-                    Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'
-                  }
+                  name="calendar"
                   style={[styles.icon, {marginRight: '10%'}]}
                 />
                 <Text style={styles.pickerText}>
@@ -201,7 +195,7 @@ const AddTransport = (props) => {
               timeZoneOffsetInMinutes={0}
               value={dateOfDeparture}
               minimumDate={Date.now()}
-              mode={'date'}
+              mode="date"
               is24Hour={true}
               display="default"
               onChange={dateOfDepartureChangeHandler}
@@ -217,7 +211,7 @@ const AddTransport = (props) => {
               style={styles.picker}>
               <View style={styles.rowAndAlign}>
                 <Icon
-                  name={Platform.OS === 'android' ? 'md-clock' : 'ios-clock'}
+                  name="clock"
                   style={[styles.icon, {marginRight: '10%'}]}
                 />
                 <Text style={styles.pickerText}>{hourOfDeparture}</Text>
@@ -229,7 +223,7 @@ const AddTransport = (props) => {
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={parseFloat(hourOfDeparture.replace(':', '.'))}
-              mode={'time'}
+              mode="time"
               is24Hour={true}
               display="default"
               onChange={hourOfDepartureChangeHandler}

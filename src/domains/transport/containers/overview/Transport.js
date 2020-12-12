@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -7,16 +7,16 @@ import {
   Animated,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from 'components/headerButton/HeaderButton';
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import TransportItem from 'transport/components/item/Transport';
 import * as transportActions from 'state/transport/transportActions';
-import {cardWidth} from 'transport/components/item/TransportStyle';
-import {transportStyle as styles} from './TransportStyle';
+import { cardWidth } from 'transport/components/item/TransportStyle';
+import { transportStyle as styles } from './TransportStyle';
 
 const Transport = (props) => {
   const dispatch = useDispatch();
@@ -103,7 +103,7 @@ const Transport = (props) => {
     return <Loading />;
   } else {
     if (transport === undefined) {
-      return <Itemless message={'You have no saved transport tickets!'} />;
+      return <Itemless message="You have no saved transport tickets!" />;
     } else {
       let scrollX = new Animated.Value(0);
       let position = Animated.divide(scrollX, cardWidth);
@@ -175,7 +175,7 @@ export const transportOptions = (navData) => {
         <Item
           title="Create a trip"
           style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add transport', {
               tripId: navData.route.params.tripId,
