@@ -76,12 +76,12 @@ export default function Navigation() {
           options={startupOptions}
         />
         <Stack.Screen
-          name="RegisterContainer"
+          name="Register"
           component={RegisterContainer}
           options={authOptions}
         />
         <Stack.Screen
-          name="AuthenticationContainer"
+          name="Auth"
           component={AuthenticationContainer}
           options={authOptions}
         />
@@ -90,7 +90,7 @@ export default function Navigation() {
           component={DrawerNavigator}
           options={tripsOptions}
         />
-        <Stack.Screen name="New trip" component={AddTripContainer} />
+        <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen
           name="Details"
           component={TripDetailsContainer}
@@ -113,7 +113,7 @@ export default function Navigation() {
           component={AddAccommodationContainer}
         />
         <Stack.Screen
-          name="BudgetContainer"
+          name="Budget"
           component={BudgetContainer}
           options={budgetOptions}
         />
@@ -129,7 +129,7 @@ export default function Navigation() {
           component={MapContainer}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="WeatherContainer" component={WeatherContainer} />
+        <Stack.Screen name="Weather" component={WeatherContainer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

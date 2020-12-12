@@ -111,11 +111,11 @@ export const tripsOptions = (navData) => {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="New trip"
+          title="Add trip"
           style={{marginRight: 3}}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            navData.navigation.navigate('New trip');
+            navData.navigation.navigate('Add trip');
           }}
         />
       </HeaderButtons>
