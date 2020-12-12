@@ -1,7 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, FlatList, Platform, Alert, Button } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import {ItemlessFrame, LoadingFrame} from 'components/frames';
 import NoteItem from 'domains/notes/components/item/Note';
@@ -25,18 +25,19 @@ const NotesContainer = (props) => {
   const deleteAction = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      // delete notes
+
       try {
         await dispatch(notesActions.deleteNoteRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
-      // fetch notes
+
       try {
         await dispatch(notesActions.fetchNotesRequest(tripId));
       } catch {
         setError('Something went wrong!');
       }
+
       setIsRefreshing(false);
     },
     [dispatch, tripId],
@@ -94,7 +95,11 @@ const NotesContainer = (props) => {
   }
 
   if (notes === undefined) {
+<<<<<<< HEAD:src/domains/notes/containers/NotesContainer.js
     return <ItemlessFrame message={'You have no notes saved!'} />;
+=======
+    return <Itemless message="You have no notes saved!" />;
+>>>>>>> 8084622 ((344) Change icons to MaterialCommunityIcons):src/domains/notes/containers/overview/NotesOverview.js
   }
 
   return (
@@ -124,7 +129,7 @@ export const notesOptions = (navData) => {
         <Item
           title="Create a note"
           style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add note', {
               tripId: navData.route.params.tripId,

@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { View, ScrollView, FlatList, Platform, Animated } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import {ItemlessFrame} from 'components/frames';
 import {AccommodationItem} from 'domains/accommodation/components';
@@ -8,7 +8,7 @@ import HeaderButton from 'components/headerButton/HeaderButton';
 import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import {styles} from './AccommodationContainerStyle';
 
-import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
+import { DUMMY_HOTELS as accommodation } from 'accommodation/data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {
@@ -58,7 +58,7 @@ export const accommodationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add accommodation', {
               tripId: navData.route.params.tripId,
