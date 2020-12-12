@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   FlatList,
   Platform,
-  Button,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -27,32 +26,9 @@ const TripsOverview = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const loadTrips = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      await dispatch(tripActions.fetchTrips());
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  }, [dispatch, setIsLoading, setError]);
-
   useEffect(() => {
-    loadTrips();
-    SplashScreen.hide()
-  }, [dispatch, loadTrips]);
-
-  useEffect(() => {
-    const willFocusSubscription = props.navigation.addListener(
-      'willFocus',
-      loadTrips,
-    );
-    // clean up listener
-    return () => {
-      willFocusSubscription.remove();
-    };
-  }, []); // do not add props.navigation as a dependency, it may cause a loop
+    SplashScreen.hide();
+  }, []);
 
   const selectItemHandler = (id, destination) => {
     props.navigation.navigate('Details', {
@@ -78,7 +54,6 @@ const TripsOverview = (props) => {
           onPress: () => {
             setIsLoading(true);
             dispatch(tripActions.deleteTrip(item.id));
-            dispatch(tripActions.fetchTrips()).then(() => setIsLoading(false));
           },
         },
       ],
@@ -94,7 +69,6 @@ const TripsOverview = (props) => {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
         <Text style={styles.text}>{error}</Text>
-        <Button title="Try again" onPress={loadTrips} color={Colors.primary} />
       </View>
     );
   }
