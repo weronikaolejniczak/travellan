@@ -3,7 +3,7 @@ import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import Card from 'components/card/Card';
-import {styles} from './TripStyle';
+import {styles} from './TripItemStyle';
 
 const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
