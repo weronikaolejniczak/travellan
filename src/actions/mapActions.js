@@ -1,24 +1,32 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Map from 'domains/map/models/Map';
 
-export const FETCH_MAP = 'FETCH_MAP';
-export const UPDATE_MAP = 'UPDATE_MAP';
+export const SET_MAP = 'SET_MAP';
 
 const API_URL = FIREBASE_URL;
 
-export const fetchMap = (tripId) => {
+export const setMap = (tripId, map) => {
+  return {
+    type: SET_MAP,
+    tripId,
+    map,
+  };
+};
+
+export const fetchMapRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let map = resData.map;
+    let map = data.map;
 
-    dispatch({type: FETCH_MAP, tripId, map});
+    dispatch(setMap(tripId, map));
   };
 };
 
@@ -26,15 +34,15 @@ export const updateMap = (tripId, markers, routes, region) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let map = resData.map;
+    let map = data.map;
     let newMap = new Map(markers, routes, region);
     map = newMap;
 
-    dispatch({type: UPDATE_MAP, tripId, map});
+    dispatch(setMap(tripId, map));
   };
 };

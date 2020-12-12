@@ -2,7 +2,10 @@ import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Transport from 'domains/transport/models/Transport';
-import {SET_TRANSPORT, SET_QR, SET_PDF} from './transportTypes';
+
+export const SET_TRANSPORT = 'SET_TRANSPORT';
+export const SET_QR = 'SET_QR';
+export const SET_PDF = 'SET_PDF';
 
 const API_URL = FIREBASE_URL;
 
