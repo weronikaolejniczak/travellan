@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Map from 'domains/map/models/Map';
@@ -37,7 +38,7 @@ export const fetchTripsRequest = () => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}.json?auth=${token}`,
     );
 
@@ -71,9 +72,9 @@ export const deleteTripRequest = (tripId) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'DELETE',
-    });
+    await axios.delete(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
 
     dispatch(deleteTrip(tripId));
   };
@@ -97,25 +98,19 @@ export const postTripRequest = (destination, startDate, endDate, budget) => {
     let accommodation = [];
     let map = new Map([], [], null);
 
-    const response = await fetch(
+    const response = await axios.post(
       `${API_URL}/Trips/${userId}.json?auth=${token}`,
       {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          destination,
-          region,
-          image,
-          startDate,
-          endDate,
-          budget,
-          notes,
-          transport,
-          accommodation,
-          map,
-        }),
+        destination,
+        region,
+        image,
+        startDate,
+        endDate,
+        budget,
+        notes,
+        transport,
+        accommodation,
+        map,
       },
     );
 
