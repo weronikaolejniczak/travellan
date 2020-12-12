@@ -1,6 +1,6 @@
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
 import {SET_TRANSPORT, SET_QR, SET_PDF} from 'actions/transportActions';
-import {SET_RESERVATIONS} from 'actions/accommodationActions';
+import {SET_ACCOMMODATION} from 'actions/accommodationActions';
 import {SET_NOTES} from 'actions/notesActions';
 import {SET_BUDGET} from 'actions/budgetActions';
 import {SET_MAP} from 'actions/mapActions';
@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
         availableTrips: updatedAvailableTrips,
       };
 
-    case SET_RESERVATIONS:
+    case SET_ACCOMMODATION:
       updatedAvailableTrips[tripIndex].accommodation = action.accommodation;
 
       return {

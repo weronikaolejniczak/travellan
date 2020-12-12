@@ -1,57 +1,59 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Accommodation from 'domains/accommodation/models/Accommodation';
 
-export const SET_RESERVATIONS = 'SET_RESERVATIONS';
-export const DELETE_RESERVATION = 'DELETE_RESERVATION';
-export const CREATE_RESERVATION = 'CREATE_RESERVATION';
+export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 
 const API_URL = FIREBASE_URL;
 
-export const fetchAccommodation = (tripId) => {
-  return async function (dispatch, getState) {
-    const token = getState().auth.token;
-    const userId = getState().auth.userId;
-    const response = await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-
-    const resData = await response.json();
-    let accommodation = resData.accommodation;
-
-    dispatch({type: SET_RESERVATIONS, tripId, accommodation});
+export const setAccommodation = (tripId, accommodation) => {
+  return {
+    type: SET_ACCOMMODATION,
+    tripId,
+    accommodation,
   };
 };
 
-export const deleteAccommodation = (tripId, reservationId) => {
+export const fetchAccommodationRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let accommodation = resData.accommodation;
+    let accommodation = data.accommodation;
+
+    dispatch(setAccommodation(tripId, accommodation));
+  };
+};
+
+export const deleteAccommodationRequest = (tripId, reservationId) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await axios.get(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
+    const data = await response.json();
+
+    let accommodation = data.accommodation;
     accommodation = accommodation.filter(
       (item) => !(item.id === reservationId),
     );
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        accommodation,
-      }),
-    });
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {accommodation},
+    );
 
-    dispatch({type: DELETE_RESERVATION, tripId});
+    dispatch(setAccommodation(tripId, accommodation));
   };
 };
 
-export const createAccommodation = (
+export const createAccommodationRequest = (
   tripId,
   name,
   address,
@@ -61,7 +63,7 @@ export const createAccommodation = (
   reservationDetails,
 ) => {
   const newReservation = new Accommodation(
-    new Date().toString(), // DUMMY ID
+    new Date().toString(),
     name,
     address,
     facilities,
@@ -75,30 +77,21 @@ export const createAccommodation = (
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let accommodation = resData.accommodation;
+    let accommodation = data.accommodation;
     accommodation === undefined
       ? (accommodation = [newReservation])
       : (accommodation = accommodation.concat(newReservation));
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        accommodation,
-      }),
-    });
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {accommodation},
+    );
 
-    dispatch({
-      type: CREATE_RESERVATION,
-      tripId,
-      accommodation,
-    });
+    dispatch(setAccommodation(tripId, accommodation));
   };
 };
