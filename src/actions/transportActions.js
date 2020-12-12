@@ -2,14 +2,7 @@ import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Transport from 'domains/transport/models/Transport';
-
-import {
-  SET_TRANSPORT,
-  DELETE_TRANSPORT,
-  CREATE_TRANSPORT,
-  UPDATE_QR,
-  UPDATE_PDF,
-} from './transportTypes';
+import {SET_TRANSPORT, SET_QR, SET_PDF} from './transportTypes';
 
 const API_URL = FIREBASE_URL;
 
@@ -21,61 +14,57 @@ export const setTransport = (tripId, transport) => {
   };
 };
 
-export const deleteTransport = (tripId, transport) => {
+export const setQR = (tripId, ticketId, QR) => {
   return {
-    type: DELETE_TRANSPORT,
+    type: SET_QR,
     tripId,
-    transport,
+    ticketId,
+    QR,
   };
 };
 
-export const createTransport = (tripId, transport) => {
+export const setPDF = (tripId, PDF) => {
   return {
-    type: CREATE_TRANSPORT,
+    type: SET_PDF,
     tripId,
-    transport,
+    PDF,
   };
 };
 
-export const fetchTransport = (tripId) => {
+export const fetchTransportRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    axios
+    await axios
       .get(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`)
       .then((res) => res.json())
       .then((data) => dispatch(setTransport(tripId, data.transport)));
   };
 };
 
-export const patchDeleteTransport = (tripId, ticketId) => {
+export const deleteTransportRequest = (tripId, ticketId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let transport = resData.transport;
+    let transport = data.transport;
     transport = transport.filter((item) => !(item.id === ticketId));
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        transport,
-      }),
-    });
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {transport},
+    );
 
-    dispatch(deleteTransport());
+    dispatch(setTransport(tripId, transport));
   };
 };
 
-export const patchCreateTransport = (
+export const createTransportRequest = (
   tripId,
   to,
   from,
@@ -97,12 +86,12 @@ export const patchCreateTransport = (
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-    const resData = await response.json();
+    const data = await response.json();
 
-    let transport = resData.transport;
+    let transport = data.transport;
 
     if (transport) {
       transport = transport.concat(newTransport);
@@ -110,72 +99,53 @@ export const patchCreateTransport = (
       transport = [newTransport];
     }
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        transport,
-      }),
-    });
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {transport},
+    );
 
-    dispatch(createTransport());
+    dispatch(setTransport(tripId, transport));
   };
 };
 
-export const updateQR = (tripId, ticketId, QR) => {
+export const patchQRRequest = (tripId, ticketId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-    const resData = await response.json();
-    let transport = resData.transport;
+    const data = await response.json();
+
+    let transport = data.transport;
     let ticketKey = transport.findIndex((item) => item.id === ticketId);
 
-    await fetch(
+    await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          QR,
-        }),
-      },
+      {QR},
     );
 
-    await dispatch({type: UPDATE_QR, tripId, ticketId, QR});
+    await dispatch(setQR(tripId, ticketId, QR));
   };
 };
 
-export const updatePDF = (tripId, ticketId, PDF) => {
+export const patchPDFRequest = (tripId, ticketId, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let transport = resData.transport;
+    let transport = data.transport;
     let ticketKey = transport.findIndex((item) => item.id === ticketId);
-    await fetch(
+
+    await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          PDF,
-        }),
-      },
+      {PDF},
     );
 
-    dispatch({type: UPDATE_PDF, tripId, PDF});
+    dispatch(setPDF(tripId, PDF));
   };
 };
