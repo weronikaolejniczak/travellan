@@ -1,6 +1,6 @@
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Note from 'notes/models/Note';
+import Note from 'domains/notes/models/Note';
 
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const CREATE_NOTE = 'CREATE_NOTE';
