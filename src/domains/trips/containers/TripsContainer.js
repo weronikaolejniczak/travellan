@@ -11,9 +11,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
-import Itemless from 'components/frames/itemless/Itemless';
-import Loading from 'components/frames/loading/Loading';
-import TripItem from 'trips/components/item/Trip';
+
+import ItemlessFrame from 'components/frames/itemless/ItemlessFrame';
+import LoadingFrame from 'components/frames/LoadingFrame/LoadingFrame';
+import TripItem from 'domains/trips/components/item/Trip';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripsActions from 'actions/tripsActions';
 import {styles} from './TripsContainerStyle';
@@ -62,7 +63,7 @@ const TripsContainer = (props) => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingFrame />;
   }
 
   if (error) {
@@ -74,7 +75,7 @@ const TripsContainer = (props) => {
   }
 
   if (trips.length === 0 || trips === undefined) {
-    return <Itemless message={'You have no trips saved!'} />;
+    return <ItemlessFrame message={'You have no trips saved!'} />;
   }
 
   return (

@@ -11,8 +11,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from 'components/headerButton/HeaderButton';
-import Itemless from 'components/frames/itemless/Itemless';
-import Loading from 'components/frames/loading/Loading';
+import ItemlessFrame from 'components/frames/itemless/ItemlessFrame';
+import LoadingFrame from 'components/frames/LoadingFrame/LoadingFrame';
 import {TransportItem} from 'domains/transport/components';
 import * as transportActions from 'actions/transportActions';
 import {cardWidth} from 'transport/components/TransportItem/TransportItemStyle';
@@ -100,10 +100,10 @@ const TransportContainer = (props) => {
   }, [dispatch, loadTransport]);
 
   if (isLoading || isRefreshing) {
-    return <Loading />;
+    return <LoadingFrame />;
   } else {
     if (transport === undefined) {
-      return <Itemless message={'You have no saved transport tickets!'} />;
+      return <ItemlessFrame message={'You have no saved transport tickets!'} />;
     } else {
       let scrollX = new Animated.Value(0);
       let position = Animated.divide(scrollX, cardWidth);

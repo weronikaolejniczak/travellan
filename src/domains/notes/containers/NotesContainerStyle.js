@@ -8,16 +8,8 @@ export const NotesStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '12%',
   },
-  itemlessContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   text: {
     color: Colors.text,
-  },
-  itemlessText: {
-    fontSize: 18,
   },
   centered: {
     flex: 1,

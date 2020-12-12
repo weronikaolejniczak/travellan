@@ -44,9 +44,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.text,
   },
-  itemlessText: {
-    fontSize: 18,
-  },
   icon: {
     margin: 10,
   },

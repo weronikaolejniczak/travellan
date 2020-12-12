@@ -2,7 +2,7 @@ import React from 'react';
 import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import Itemless from 'components/frames/itemless/Itemless';
+import ItemlessFrame from 'components/frames/ItemlessFrame/ItemlessFrame';
 import {AccommodationItem} from 'domains/accommodation/components';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
@@ -12,7 +12,7 @@ import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {
-    return <Itemless message={'You have no saved accommodation!'} />;
+    return <ItemlessFrame message="You have no saved accommodation!" />;
   }
 
   let scrollX = new Animated.Value(0);

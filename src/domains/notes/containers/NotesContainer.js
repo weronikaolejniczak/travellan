@@ -3,8 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import Itemless from 'components/frames/itemless/Itemless';
-import Loading from 'components/frames/loading/Loading';
+import ItemlessFrame from 'components/frames/ItemlessFrame/ItemlessFrame';
+import LoadingFrame from 'components/frames/LoadingFrame/LoadingFrame';
 import NoteItem from 'domains/notes/components/item/Note';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as notesActions from 'actions/notesActions';
@@ -82,7 +82,7 @@ const NotesContainer = (props) => {
   }, [dispatch, loadNotes]);
 
   if (isLoading || isRefreshing) {
-    return <Loading />;
+    return <LoadingFrame />;
   }
 
   if (error) {
@@ -95,7 +95,7 @@ const NotesContainer = (props) => {
   }
 
   if (notes === undefined) {
-    return <Itemless message={'You have no notes saved!'} />;
+    return <ItemlessFrame message={'You have no notes saved!'} />;
   }
 
   return (
