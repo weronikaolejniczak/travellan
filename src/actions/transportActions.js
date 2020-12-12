@@ -1,86 +1,55 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Transport from 'domains/transport/models/Transport';
 
-export const SET_TRANSPORT = 'SET_TRANSPORT';
-export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
-export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
-export const UPDATE_QR = 'UPDATE_QR';
-export const UPDATE_PDF = 'UPDATE_PDF';
+import {
+  SET_TRANSPORT,
+  DELETE_TRANSPORT,
+  CREATE_TRANSPORT,
+  UPDATE_QR,
+  UPDATE_PDF,
+} from './transportTypes';
 
 const API_URL = FIREBASE_URL;
+
+export const setTransport = (tripId, transport) => {
+  return {
+    type: SET_TRANSPORT,
+    tripId,
+    transport,
+  };
+};
+
+export const deleteTransport = (tripId, transport) => {
+  return {
+    type: DELETE_TRANSPORT,
+    tripId,
+    transport,
+  };
+};
+
+export const createTransport = (tripId, transport) => {
+  return {
+    type: CREATE_TRANSPORT,
+    tripId,
+    transport,
+  };
+};
 
 export const fetchTransport = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const resData = await response.json();
-    let transportInfo = resData.transportInfo;
 
-    dispatch({type: SET_TRANSPORT, tripId, transportInfo});
+    axios
+      .get(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`)
+      .then((res) => res.json())
+      .then((data) => dispatch(setTransport(tripId, data.transport)));
   };
 };
 
-export const updateQR = (tripId, ticketId, qr) => {
-  return async function (dispatch, getState) {
-    const token = getState().auth.token;
-    const userId = getState().auth.userId;
-    const response = await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const resData = await response.json();
-    let transportInfo = resData.transportInfo;
-    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
-
-    await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          qr,
-        }),
-      },
-    );
-
-    await dispatch({type: UPDATE_QR, tripId, ticketId, qr});
-  };
-};
-
-export const updatePDF = (tripId, ticketId, pdfUri) => {
-  return async function (dispatch, getState) {
-    const token = getState().auth.token;
-    const userId = getState().auth.userId;
-    const response = await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-
-    const resData = await response.json();
-    let transportInfo = resData.transportInfo;
-    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
-    await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pdfUri,
-        }),
-      },
-    );
-
-    dispatch({type: UPDATE_PDF, tripId, pdfUri});
-  };
-};
-
-export const deleteTransport = (tripId, ticketId) => {
+export const patchDeleteTransport = (tripId, ticketId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -102,27 +71,27 @@ export const deleteTransport = (tripId, ticketId) => {
       }),
     });
 
-    dispatch({type: DELETE_TRANSPORT, tripId});
+    dispatch(deleteTransport());
   };
 };
 
-export const createTransport = (
+export const patchCreateTransport = (
   tripId,
   to,
   from,
-  dateOfDeparture,
-  placeOfDeparture,
-  qr,
-  pdfUri,
+  date,
+  place,
+  QR,
+  PDF,
 ) => {
   const newTransport = new Transport(
-    new Date().toString(), // DUMMY ID
+    new Date().toString(),
     to,
     from,
-    dateOfDeparture,
-    placeOfDeparture,
-    qr,
-    pdfUri,
+    date,
+    place,
+    QR,
+    PDF,
   );
 
   return async function (dispatch, getState) {
@@ -131,12 +100,15 @@ export const createTransport = (
     const response = await fetch(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
-
     const resData = await response.json();
+
     let transportInfo = resData.transportInfo;
-    transportInfo === undefined
-      ? (transportInfo = [newTransport])
-      : (transportInfo = transportInfo.concat(newTransport));
+
+    if (transportInfo) {
+      transportInfo = transportInfo.concat(newTransport);
+    } else {
+      transportInfo = [newTransport];
+    }
 
     await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
       method: 'PATCH',
@@ -148,10 +120,62 @@ export const createTransport = (
       }),
     });
 
-    dispatch({
-      type: CREATE_TRANSPORT,
-      tripId,
-      transportInfo,
-    });
+    dispatch(createTransport());
+  };
+};
+
+export const updateQR = (tripId, ticketId, QR) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
+    const resData = await response.json();
+    let transportInfo = resData.transportInfo;
+    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
+
+    await fetch(
+      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          QR,
+        }),
+      },
+    );
+
+    await dispatch({type: UPDATE_QR, tripId, ticketId, QR});
+  };
+};
+
+export const updatePDF = (tripId, ticketId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
+
+    const resData = await response.json();
+    let transportInfo = resData.transportInfo;
+    let ticketKey = transportInfo.findIndex((item) => item.id === ticketId);
+    await fetch(
+      `${API_URL}/Trips/${userId}/${tripId}/transportInfo/${ticketKey}.json?auth=${token}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          PDF,
+        }),
+      },
+    );
+
+    dispatch({type: UPDATE_PDF, tripId, PDF});
   };
 };

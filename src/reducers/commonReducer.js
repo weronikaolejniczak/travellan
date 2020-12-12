@@ -1,13 +1,7 @@
 import Trip from 'trips/models/Trip';
 
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
-import {
-  SET_TRANSPORT,
-  DELETE_TRANSPORT,
-  CREATE_TRANSPORT,
-  UPDATE_PDF,
-  UPDATE_QR,
-} from 'actions/transportActions';
+import * as transportTypes from 'actions/transportTypes';
 import {
   SET_RESERVATIONS,
   DELETE_RESERVATION,
@@ -59,11 +53,11 @@ export default (state = initialState, action) => {
         availableTrips: state.availableTrips.concat(newTrip),
       };
 
-    case SET_TRANSPORT:
-    case DELETE_TRANSPORT:
-    case CREATE_TRANSPORT:
-    case UPDATE_QR:
-    case UPDATE_PDF:
+    case transportTypes.SET_TRANSPORT:
+    case transportTypes.DELETE_TRANSPORT:
+    case transportTypes.CREATE_TRANSPORT:
+    case transportTypes.UPDATE_QR:
+    case transportTypes.UPDATE_PDF:
       updatedAvailableTrips[tripIndex].transportInfo = action.transportInfo;
 
       return {
