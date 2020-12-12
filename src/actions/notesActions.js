@@ -1,86 +1,74 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
 import Note from 'domains/notes/models/Note';
 
-export const DELETE_NOTE = 'DELETE_NOTE';
-export const CREATE_NOTE = 'CREATE_NOTE';
 export const SET_NOTES = 'SET_NOTES';
 
 const API_URL = FIREBASE_URL;
 
-export const fetchNotes = (tripId) => {
-  return async function (dispatch, getState) {
-    const token = getState().auth.token;
-    const userId = getState().auth.userId;
-    const response = await fetch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-
-    const resData = await response.json();
-    let notes = resData.notes;
-
-    dispatch({type: SET_NOTES, tripId, notes});
+export const setNotes = (tripId, notes) => {
+  return {
+    type: SET_NOTES,
+    tripId,
+    notes,
   };
 };
 
-export const deleteNote = (tripId, noteId) => {
+export const fetchNotesRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let notes = resData.notes.filter((note) => note.id !== noteId);
+    let notes = data.notes;
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        notes,
-      }),
-    });
-
-    dispatch({type: DELETE_NOTE, tripId});
+    dispatch(setNotes(tripId, notes));
   };
 };
 
-export const createNote = (tripId, category, title, description) => {
-  const newNote = new Note(
-    new Date().toString(), // DUMMY ID
-    category,
-    title,
-    description,
-  );
+export const deleteNoteRequest = (tripId, noteId) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await axios.get(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    );
+    const data = await response.json();
+
+    let notes = data.notes.filter((note) => note.id !== noteId);
+
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {notes},
+    );
+
+    dispatch(setNotes(tripId, notes));
+  };
+};
+
+export const createNoteRequest = (tripId, category, title, description) => {
+  const newNote = new Note(new Date().toString(), category, title, description);
 
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let notes = resData.notes;
+    let notes = data.notes;
     notes === undefined ? (notes = [newNote]) : (notes = notes.concat(newNote));
 
-    await fetch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        notes,
-      }),
-    });
+    await axios.patch(
+      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+      {notes},
+    );
 
-    dispatch({
-      type: CREATE_NOTE,
-      tripId,
-      notes,
-    });
+    dispatch(setNotes(tripId, notes));
   };
 };
