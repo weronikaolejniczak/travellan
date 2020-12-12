@@ -1,6 +1,6 @@
 import React from 'react';
 import {Switch} from 'react-native';
-/* imports from within the module */
+
 import Colors from 'constants/Colors';
 
 const CustomSwitch = (props) => {

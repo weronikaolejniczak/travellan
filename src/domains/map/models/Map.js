@@ -1,7 +1,6 @@
 class Map {
-  constructor(nodes, routes, region) {
+  constructor(nodes, region) {
     this.nodes = nodes;
-    this.routes = routes;
     this.region = region;
   }
 }

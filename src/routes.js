@@ -1,43 +1,47 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import StartupScreen, {
-  StartupScreenOptions,
-} from 'user/containers/StartupScreen';
-import Auth, {authOptions} from 'user/containers/Auth';
-import Register from 'user/containers/Register';
-import TripsOverview, {
-  tripsOverviewOptions,
-} from 'trips/containers/overview/TripsOverview';
-import TripDetails, {
-  tripDetailsOptions,
-} from 'trips/containers/details/TripDetails';
-import NewTrip from 'trips/containers/newTrip/NewTrip';
-import Transport, {
-  transportOptions,
-} from 'transport/containers/overview/Transport';
-import AddTransport from 'transport/containers/addTransport/AddTransport';
-import AddQR from 'transport/containers/addQR/AddQR';
-import AccommodationOverview, {
-  accommodationOptions,
-} from 'accommodation/containers/overview/AccommodationOverview';
-import AddAccommodation from 'accommodation/containers/addAccommodation/AddAccommodation';
-import Budget, {budgetOptions} from 'budget/containers/overview/Budget';
-import AddCurrency from 'budget/containers/addCurrency/AddCurrency';
-import NotesOverview, {notesOptions} from 'notes/containers/overview/NotesOverview';
-import AddNote from 'notes/containers/addNote/AddNote';
-import EditNote from 'notes/containers/editNote/EditNote';
-import Map from 'map/containers/Map';
-import Weather from 'weather/containers/Weather';
-import Colors from 'constants/Colors';
-
-
-import { 
+import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem, } from '@react-navigation/drawer';
+  DrawerItem,
+} from '@react-navigation/drawer';
+
+import StartupContainer, {
+  startupOptions,
+} from 'domains/user/containers/StartupContainer';
+import AuthenticationContainer, {
+  authOptions,
+} from 'domains/user/containers/AuthenticationContainer';
+import RegisterContainer from 'domains/user/containers/RegisterContainer';
+import TripsContainer, {
+  tripsOptions,
+} from 'domains/trips/containers/TripsContainer';
+import TripDetailsContainer, {
+  tripDetailsOptions,
+} from 'domains/trips/containers/TripDetailsContainer';
+import AddTripContainer from 'domains/trips/containers/AddTripContainer';
+import TransportContainer, {
+  transportOptions,
+} from 'domains/transport/containers/TransportContainer';
+import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
+import AddQRContainer from 'domains/transport/containers/AddQRContainer';
+import AccommodationContainer, {
+  accommodationOptions,
+} from 'domains/accommodation/containers/AccommodationContainer';
+import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
+import BudgetContainer, {
+  budgetOptions,
+} from 'domains/budget/containers/BudgetContainer';
+import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
+import NotesContainer, {
+  notesOptions,
+} from 'domains/notes/containers/NotesContainer';
+import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
+import MapContainer from 'domains/map/containers/MapContainer';
+import WeatherContainer from 'domains/weather/containers/WeatherContainer';
+import Colors from 'constants/Colors';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -45,19 +49,22 @@ const Drawer = createDrawerNavigator();
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <DrawerItemList{...props} />
-      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label = "Logout" onPress = {() => alert('Placeholder')} />
+      <DrawerItemList {...props} />
+      <DrawerItem label="Example" onPress={() => alert('This is an example')} />
+      <DrawerItem label="Logout" onPress={() => alert('Placeholder')} />
     </DrawerContentScrollView>
-  )
+  );
 }
 
 function DrawerNavigator() {
   return (
-  <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerType="front" backBehavior="none" >
-      <Drawer.Screen name="My trips" component={TripsOverview}/>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerType="front"
+      backBehavior="none">
+      <Drawer.Screen name="My trips" component={TripsContainer} />
     </Drawer.Navigator>
-  )
+  );
 }
 export default function Navigation() {
   return (
@@ -65,65 +72,64 @@ export default function Navigation() {
       <Stack.Navigator screenOptions={defaultNavOptions}>
         <Stack.Screen
           name="Startup"
-          component={StartupScreen}
-          options={StartupScreenOptions}
+          component={StartupContainer}
+          options={startupOptions}
         />
         <Stack.Screen
-          name="Register"
-          component={Register}
+          name="RegisterContainer"
+          component={RegisterContainer}
           options={authOptions}
         />
-        <Stack.Screen name="Auth" component={Auth} options={authOptions} />
-
+        <Stack.Screen
+          name="AuthenticationContainer"
+          component={AuthenticationContainer}
+          options={authOptions}
+        />
         <Stack.Screen
           name="My trips"
           component={DrawerNavigator}
-          options={tripsOverviewOptions}
+          options={tripsOptions}
         />
-        <Stack.Screen name="New trip" component={NewTrip} />
+        <Stack.Screen name="New trip" component={AddTripContainer} />
         <Stack.Screen
           name="Details"
-          component={TripDetails}
+          component={TripDetailsContainer}
           options={tripDetailsOptions}
         />
-
         <Stack.Screen
           name="Transport"
-          component={Transport}
+          component={TransportContainer}
           options={transportOptions}
         />
-        <Stack.Screen name="Add transport" component={AddTransport} />
-        <Stack.Screen name="Add QR" component={AddQR} />
-
+        <Stack.Screen name="Add transport" component={AddTransportContainer} />
+        <Stack.Screen name="Add QR" component={AddQRContainer} />
         <Stack.Screen
           name="Accommodation"
-          component={AccommodationOverview}
+          component={AccommodationContainer}
           options={accommodationOptions}
         />
-        <Stack.Screen name="Add accommodation" component={AddAccommodation} />
-
         <Stack.Screen
-          name="Budget"
-          component={Budget}
+          name="Add accommodation"
+          component={AddAccommodationContainer}
+        />
+        <Stack.Screen
+          name="BudgetContainer"
+          component={BudgetContainer}
           options={budgetOptions}
         />
-        <Stack.Screen name="Add currency" component={AddCurrency} />
-
+        <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
         <Stack.Screen
           name="Notes"
-          component={NotesOverview}
+          component={NotesContainer}
           options={notesOptions}
         />
-        <Stack.Screen name="Add note" component={AddNote} />
-        <Stack.Screen name="Edit Note" component={EditNote} />
-
+        <Stack.Screen name="Add note" component={AddNoteContainer} />
         <Stack.Screen
           name="Map"
-          component={Map}
+          component={MapContainer}
           options={{headerShown: false}}
         />
-
-        <Stack.Screen name="Weather" component={Weather} />
+        <Stack.Screen name="WeatherContainer" component={WeatherContainer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
