@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
-/** IMPORTS FROM WITHIN THE MODULE */
-import Card from 'components/card/Card';
-import {tripStyle as styles} from './TripStyle';
 
-/** Trip item component used in TripsOverview for trips listing */
-const Trip = (props) => {
+import Card from 'components/card/Card';
+import {styles} from './TripStyle';
+
+const TripItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version > 21) {
@@ -48,4 +47,4 @@ const Trip = (props) => {
   );
 };
 
-export default Trip;
+export default TripItem;

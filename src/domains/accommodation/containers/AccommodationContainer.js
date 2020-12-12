@@ -2,7 +2,7 @@ import React from 'react';
 import {View, ScrollView, FlatList, Platform, Animated} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import ItemlessFrame from 'components/frames/ItemlessFrame/ItemlessFrame';
+import {ItemlessFrame} from 'components/frames';
 import {AccommodationItem} from 'domains/accommodation/components';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';

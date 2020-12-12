@@ -1,5 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
-import {spacingForCardInset} from 'domains/transport/components/item/TransportStyle';
+import {spacingForCardInset} from 'domains/transport/components/TransportItem/TransportItemStyle';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({

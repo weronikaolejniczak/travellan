@@ -3,8 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import ItemlessFrame from 'components/frames/ItemlessFrame/ItemlessFrame';
-import LoadingFrame from 'components/frames/LoadingFrame/LoadingFrame';
+import {ItemlessFrame, LoadingFrame} from 'components/frames';
 import NoteItem from 'domains/notes/components/item/Note';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as notesActions from 'actions/notesActions';

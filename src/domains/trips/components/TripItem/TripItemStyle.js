@@ -4,10 +4,9 @@ import Colors from 'constants/Colors';
 const {height, width} = Dimensions.get('window');
 const cardHeight = 0.4 * height;
 
-export const tripStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
   tripCard: {
     position: 'relative',
-    //height: cardHeight,
     marginHorizontal: width * 0.04,
     marginVertical: height * 0.02,
   },

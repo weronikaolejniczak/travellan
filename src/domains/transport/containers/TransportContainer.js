@@ -11,8 +11,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from 'components/headerButton/HeaderButton';
-import ItemlessFrame from 'components/frames/itemless/ItemlessFrame';
-import LoadingFrame from 'components/frames/LoadingFrame/LoadingFrame';
+import {ItemlessFrame, LoadingFrame} from 'components/frames';
 import {TransportItem} from 'domains/transport/components';
 import * as transportActions from 'actions/transportActions';
 import {cardWidth} from 'transport/components/TransportItem/TransportItemStyle';
