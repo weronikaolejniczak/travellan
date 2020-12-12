@@ -1,11 +1,11 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
-import tripReducer from './trip/tripReducer';
 import authReducer from './user/userReducer';
+import tripReducer from './trip/tripReducer';
 
 const rootReducer = combineReducers({
-  trips: tripReducer,
   auth: authReducer,
+  trips: tripReducer,
 });
 
 export default rootReducer;
