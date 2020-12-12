@@ -1,5 +1,5 @@
-import {MAIN_FIREBASE_API} from 'react-native-dotenv';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import { MAIN_FIREBASE_API } from 'react-native-dotenv';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
