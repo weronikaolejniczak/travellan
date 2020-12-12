@@ -1,13 +1,10 @@
-import {FIREBASE_URL} from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Trip from 'trips/models/Trip';
 import Map from 'map/models/Map';
 import fetchImage from 'common/services/fetchImage';
 import fetchCoordinates from 'common/services/fetchCoordinates';
-
-export const DELETE_TRIP = 'DELETE_TRIP';
-export const CREATE_TRIP = 'CREATE_TRIP';
-export const SET_TRIPS = 'SET_TRIPS';
+import { DELETE_TRIP, CREATE_TRIP, SET_TRIPS } from './tripTypes';
 
 const API_URL = FIREBASE_URL;
 
