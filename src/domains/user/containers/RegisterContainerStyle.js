@@ -18,11 +18,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
+    display: 'flex',
     margin: 10,
     padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 25,
     backgroundColor: Colors.primary,
-    alignItems: 'center',
     width: '40%',
   },
   buttonText: {

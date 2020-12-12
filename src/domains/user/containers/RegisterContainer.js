@@ -2,6 +2,7 @@ import React, {useState, useEffect, useReducer, useCallback} from 'react';
 import {
   View,
   ScrollView,
+  Image,
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -11,8 +12,8 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 
-import Input from 'user/components/input/Input';
-import * as authActions from 'actions/userActions';
+import Input from 'domains/user/components/input/Input';
+import * as userActions from 'actions/userActions';
 import {styles} from './RegisterContainerStyle';
 import Colors from 'constants/Colors';
 
@@ -43,7 +44,6 @@ const formReducer = (state, action) => {
 
 const RegisterContainer = (props) => {
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -75,9 +75,10 @@ const RegisterContainer = (props) => {
       authHandler();
     }
   };
+
   const authHandler = async () => {
     let action;
-    action = authActions.signup(
+    action = userActions.signUpRequest(
       formState.inputValues.email,
       formState.inputValues.password,
     );
@@ -111,7 +112,12 @@ const RegisterContainer = (props) => {
       style={styles.screen}>
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{marginBottom: 150}} />
+          <View style={{marginBottom: 20, alignItems: 'center'}}>
+            <Image
+              style={{width: 150, height: 150, resizeMode: 'stretch'}}
+              source={require('assets/images/logo.png')}
+            />
+          </View>
           <Input
             style={[styles.input]}
             id="email"
@@ -157,7 +163,7 @@ const RegisterContainer = (props) => {
               <TouchableOpacity
                 style={[styles.buttonContainer, {marginRight: 10}]}
                 onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Join Travellan</Text>
+                <Text style={styles.buttonText}>Join</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity

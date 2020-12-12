@@ -14,7 +14,7 @@ import {useDispatch} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
 import Input from 'user/components/input/Input';
-import * as authActions from 'actions/userActions';
+import * as userActions from 'actions/userActions';
 import {styles} from './AuthenticationContainerStyle';
 import Colors from 'constants/Colors';
 
@@ -69,7 +69,7 @@ const AuthenticationContainer = (props) => {
 
   const authHandler = async () => {
     let action;
-    action = authActions.login(
+    action = userActions.loginRequest(
       formState.inputValues.email,
       formState.inputValues.password,
     );

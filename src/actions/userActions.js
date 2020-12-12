@@ -12,16 +12,16 @@ export const authenticate = (userId, token) => {
 
 export const signUpRequest = (email, password) => {
   return async function (dispatch) {
-    await axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        },
-      )
-      .then((res) => res.json())
+    await axios({
+      method: 'POST',
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
+      data: {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      },
+    })
+      .then((res) => res.data)
       .then((data) => {
         const expirationDate = new Date(
           new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
@@ -38,16 +38,16 @@ export const signUpRequest = (email, password) => {
 
 export const loginRequest = (email, password) => {
   return async function (dispatch) {
-    await axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        },
-      )
-      .then((res) => res.json())
+    await axios({
+      method: 'POST',
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
+      data: {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      },
+    })
+      .then((res) => res.data)
       .then((data) => {
         const expirationDate = new Date(
           new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
@@ -55,8 +55,9 @@ export const loginRequest = (email, password) => {
         dispatch(authenticate(data.localId, data.idToken));
         saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
-      .catch(() => {
+      .catch((err) => {
         const message = 'Email or password are incorrect. Please try again.';
+        console.log(err);
         throw new Error(message);
       });
   };

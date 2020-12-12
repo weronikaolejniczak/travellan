@@ -12,13 +12,12 @@ import {
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import * as authActions from 'actions/userActions';
+import * as userActions from 'actions/userActions';
 import {styles} from './StartupContainerStyle';
 import Colors from 'constants/Colors';
 
 const StartupContainer = (props) => {
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const StartupContainer = (props) => {
       }
 
       props.navigation.navigate('My trips');
-      dispatch(authActions.authenticate(userId, token));
+      dispatch(userActions.authenticate(userId, token));
     };
 
     tryLogin();
