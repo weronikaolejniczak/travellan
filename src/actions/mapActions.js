@@ -30,7 +30,7 @@ export const fetchMapRequest = (tripId) => {
   };
 };
 
-export const updateMap = (tripId, markers, routes, region) => {
+export const updateMapRequest = (tripId, markers, routes, region) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

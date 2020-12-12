@@ -13,7 +13,7 @@ export const setBudget = (tripId, budget) => {
   };
 };
 
-export const fetchBudget = (tripId) => {
+export const fetchBudgetRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -28,7 +28,7 @@ export const fetchBudget = (tripId) => {
   };
 };
 
-export const updateBudget = (tripId, updatedBudget) => {
+export const updateBudgetRequest = (tripId, updatedBudget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
