@@ -1,22 +1,30 @@
+import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-export const FETCH_BUDGET = 'FETCH_BUDGET';
-export const UPDATE_BUDGET = 'UPDATE_BUDGET';
+export const SET_BUDGET = 'SET_BUDGET';
 
 const API_URL = FIREBASE_URL;
+
+export const setBudget = (tripId, budget) => {
+  return {
+    type: SET_BUDGET,
+    tripId,
+    budget,
+  };
+};
 
 export const fetchBudget = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let budget = resData.budget;
+    let budget = data.budget;
 
-    dispatch({type: FETCH_BUDGET, tripId, budget});
+    dispatch(setBudget(tripId, budget));
   };
 };
 
@@ -24,28 +32,19 @@ export const updateBudget = (tripId, updatedBudget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await fetch(
+    const response = await axios.get(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
     );
+    const data = await response.json();
 
-    const resData = await response.json();
-    let budget = resData.budget;
-
+    let budget = data.budget;
     budget = updatedBudget === [] ? undefined : updatedBudget;
 
-    await fetch(
+    await axios.patch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          budget,
-        }),
-      },
+      {budget},
     );
 
-    dispatch({type: UPDATE_BUDGET, tripId, budget});
+    dispatch(setBudget(tripId, budget));
   };
 };
