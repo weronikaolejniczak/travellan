@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Transport from 'domains/transport/models/Transport';
+import Transport from 'models/Transport';
 
 export const SET_TRANSPORT = 'SET_TRANSPORT';
 export const SET_QR = 'SET_QR';

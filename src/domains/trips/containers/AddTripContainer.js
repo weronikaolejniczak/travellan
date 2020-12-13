@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 
-import Budget from 'domains/budget/models/Budget';
-import BudgetField from 'common/components/budgetField/BudgetField';
+import Budget from 'models/Budget';
+import BudgetField from 'components/budgetField/BudgetField';
 import DatePicker from 'domains/trips/components/datePicker/DatePicker';
 import {createTripRequest} from 'actions/tripsActions';
 import {styles} from './AddTripContainerStyle';

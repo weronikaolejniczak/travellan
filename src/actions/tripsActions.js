@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Map from 'domains/map/models/Map';
-import Trip from 'domains/trips/models/Trip';
+import Map from 'models/Map';
+import Trip from 'models/Trip';
 import fetchImage from 'services/fetchImage';
 import fetchCoordinates from 'services/fetchCoordinates';
 

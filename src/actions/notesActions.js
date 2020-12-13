@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Note from 'domains/notes/models/Note';
+import Note from 'models/Note';
 
 export const SET_NOTES = 'SET_NOTES';
 
