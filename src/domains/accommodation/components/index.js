@@ -1,2 +1,2 @@
-export {default as AccItem} from './accItem/AccItem';
-export {default as AccItemHeader} from './accItemHeader/AccItemHeader';
+export {default as AccommodationItem} from './AccommodationItem/AccommodationItem';
+export {default as AccommodationItemHeader} from './AccommodationItemHeader/AccommodationItemHeader';

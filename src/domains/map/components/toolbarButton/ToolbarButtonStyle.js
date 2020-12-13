@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
-/* imports from within the module */
+
 import Colors from 'constants/Colors';
 
-export const toolbarButtonStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
   button: {
     padding: 20,
   },

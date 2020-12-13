@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-/* IMPORTS FROM WITHIN THE MODULE */
+
 import Colors from 'constants/Colors';
 
 export const homeStyle = StyleSheet.create({

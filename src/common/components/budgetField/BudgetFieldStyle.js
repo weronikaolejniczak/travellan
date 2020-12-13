@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import Colors from 'constants/Colors';
 
-export const budgetFieldStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
   autocompleteContainer: {
     flex: 1,
     marginTop: 5,
