@@ -8,8 +8,8 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-<<<<<<< HEAD:src/domains/trips/containers/AddTripContainer.js
 import {useDispatch} from 'react-redux';
+import Snackbar from 'react-native-snackbar';
 
 import Budget from 'models/Budget';
 import BudgetField from 'components/budgetField/BudgetField';
@@ -20,24 +20,9 @@ import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
 import {addEventToCalendar} from 'services/handleCalendarEvent';
 import moment from 'moment';
-import Snackbar from 'react-native-snackbar';
 import {notificationManager} from 'services/manageNotifications';
 
 const time_now = moment.utc();
-=======
-import Snackbar from 'react-native-snackbar';
-import { useDispatch } from 'react-redux';
-
-import Budget from 'budget/models/Budget';
-import BudgetField from 'common/components/budgetField/BudgetField';
-import DatePicker from 'trips/components/datePicker/DatePicker';
-import { createTrip } from 'state/trip/tripActions';
-import { CURRENCIES } from 'data/Currencies';
-import { addEventToCalendar } from 'src/CalendarEventChandler'
-import { notificationManager } from 'src/NotificationManager'
-import { newTripStyle as styles } from './NewTripStyle';
-import Colors from 'constants/Colors';
->>>>>>> 8084622 ((344) Change icons to MaterialCommunityIcons):src/domains/trips/containers/newTrip/NewTrip.js
 
 const AddTripContainer = (props) => {
   const dispatch = useDispatch();
@@ -96,10 +81,7 @@ const AddTripContainer = (props) => {
         notificationDateTrigger,
       );
     }
-<<<<<<< HEAD:src/domains/trips/containers/AddTripContainer.js
   };
-=======
->>>>>>> 8084622 ((344) Change icons to MaterialCommunityIcons):src/domains/trips/containers/newTrip/NewTrip.js
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
@@ -230,7 +212,7 @@ const AddTripContainer = (props) => {
     currency,
     destination,
     startDate,
-    endDate
+    endDate,
   ]);
 
   return (
