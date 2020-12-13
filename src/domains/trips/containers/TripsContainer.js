@@ -15,37 +15,29 @@ import Colors from 'constants/Colors';
 const TripsContainer = (props) => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => state.trips.trips);
-
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   const loadTrips = useCallback(() => {
-    tripsActions.fetchTripsRequest();
+    try {
+      tripsActions.fetchTripsRequest();
+    } catch {
+      setError('Something went wrong!');
+    }
     setIsLoading(false);
   }, []);
 
-  useEffect(() => {
-    loadTrips();
-    SplashScreen.hide();
-  }, [loadTrips]);
-
-  const handleSelectItem = (id, destination) => {
-    props.navigation.navigate('Details', {
-      tripId: id,
-      tripDestination: destination,
-    });
-  };
-
-  const deleteItem = (id) => {
+  const deleteTrip = (id) => {
     setIsLoading(true);
-    dispatch(tripsActions.deleteTripRequest(id));
+    try {
+      dispatch(tripsActions.deleteTripRequest(id));
+    } catch {
+      setError('Something went wrong!');
+    }
     setIsLoading(false);
   };
 
-  /* KNOWN ISSUE: user can click on the card and immediately after on the trip,
-  which navigates him to trip details and still shows an alert to delete the trip;
-  afterwards application crashes */
-  const handleDeleteItem = (item) => {
+  const handleDeleteTrip = (item) => {
     Alert.alert(
       `Delete a trip to ${item.destination}`,
       'Are you sure?',
@@ -56,12 +48,24 @@ const TripsContainer = (props) => {
         },
         {
           text: 'OK',
-          onPress: () => deleteItem(item.id),
+          onPress: () => deleteTrip(item.id),
         },
       ],
       {cancelable: true},
     );
   };
+
+  const handleSelectItem = (id, destination) => {
+    props.navigation.navigate('Details', {
+      tripId: id,
+      tripDestination: destination,
+    });
+  };
+
+  useEffect(() => {
+    loadTrips();
+    SplashScreen.hide();
+  }, [loadTrips]);
 
   if (isLoading) {
     return <LoadingFrame />;
@@ -76,7 +80,7 @@ const TripsContainer = (props) => {
   }
 
   if (Array.isArray(trips) && trips.length < 1) {
-    return <ItemlessFrame message={'You have no trips saved!'} />;
+    return <ItemlessFrame message="You have no trips saved!" />;
   }
 
   return (
@@ -95,7 +99,7 @@ const TripsContainer = (props) => {
             }}>
             <TouchableHighlight
               style={styles.deleteButton}
-              onPress={() => handleDeleteItem(data.item)}>
+              onPress={() => handleDeleteTrip(data.item)}>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>
@@ -112,7 +116,6 @@ export const tripsOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Add trip"
-          style={{marginRight: 3}}
           iconName="plus"
           onPress={() => navData.navigation.navigate('Add trip')}
         />
