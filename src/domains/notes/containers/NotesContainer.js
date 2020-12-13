@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, FlatList, Platform, Alert, Button } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import React, {useState, useCallback, useEffect} from 'react';
+import {View, Text, FlatList, Platform, Alert, Button} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {ItemlessFrame, LoadingFrame} from 'components/frames';
 import NoteItem from 'domains/notes/components/item/Note';
@@ -95,11 +95,7 @@ const NotesContainer = (props) => {
   }
 
   if (notes === undefined) {
-<<<<<<< HEAD:src/domains/notes/containers/NotesContainer.js
     return <ItemlessFrame message={'You have no notes saved!'} />;
-=======
-    return <Itemless message="You have no notes saved!" />;
->>>>>>> 8084622 ((344) Change icons to MaterialCommunityIcons):src/domains/notes/containers/overview/NotesOverview.js
   }
 
   return (
