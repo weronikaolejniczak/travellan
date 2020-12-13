@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
-import {fetchWeather} from 'domains/weather/services/fetchWeather';
+import fetchWeather from 'services/fetchWeather';
 import Background from 'domains/weather/components/background/Background';
 import Graphics from 'domains/weather/components/graphics/Graphics';
 import Ground from 'domains/weather/components/ground/Ground';

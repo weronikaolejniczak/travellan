@@ -4,7 +4,7 @@ import {WEATHER_API} from 'react-native-dotenv';
 
 const API_KEY = WEATHER_API;
 
-export async function fetchWeather(latitude, longitude) {
+async function fetchWeather(latitude, longitude) {
   return await axios
     .get(
       `http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${API_KEY}&units=metric`,
@@ -44,3 +44,5 @@ export async function fetchWeather(latitude, longitude) {
     })
     .catch((error) => error);
 }
+
+export default fetchWeather;
