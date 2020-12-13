@@ -73,12 +73,16 @@ export const deleteTripRequest = (tripId) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await axios({
+    axios({
       method: 'DELETE',
       url: `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    });
-
-    dispatch(deleteTrip(tripId));
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        dispatch(deleteTrip(tripId));
+      })
+      .catch((error) => console.log(error));
   };
 };
 
