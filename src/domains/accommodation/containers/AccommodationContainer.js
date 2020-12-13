@@ -8,7 +8,7 @@ import HeaderButton from 'components/headerButton/HeaderButton';
 import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import {styles} from './AccommodationContainerStyle';
 
-import {DUMMY_HOTELS as accommodation} from 'accommodation/data/DummyHotels';
+import {DUMMY_HOTELS as accommodation} from '../data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {
