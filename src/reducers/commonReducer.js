@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produceImmer from 'utilities/produceImmer';
 
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
 import {SET_TRANSPORT, SET_QR, SET_PDF} from 'actions/transportActions';
@@ -12,7 +12,7 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
-  return produce(state, (draft) => {
+  return produceImmer(state, (draft) => {
     const tripId = action.tripId;
     const tripIndex = draft.trips.findIndex((trip) => trip.id === tripId);
 
