@@ -12,6 +12,7 @@
           "constants": "./src/common/constants",
           "data": "./src/common/data",
           "domains": "./src/domains",
+          "models": "./src/models",
           "reducers": "./src/reducers",
           "services": "./src/services",
           "share": "./src/domains/share",
