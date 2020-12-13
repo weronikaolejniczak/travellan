@@ -95,11 +95,7 @@ const NotesContainer = (props) => {
   }
 
   if (notes === undefined) {
-<<<<<<< HEAD:src/domains/notes/containers/NotesContainer.js
     return <ItemlessFrame message={'You have no notes saved!'} />;
-=======
-    return <Itemless message="You have no notes saved!" />;
->>>>>>> 8084622 ((344) Change icons to MaterialCommunityIcons):src/domains/notes/containers/overview/NotesOverview.js
   }
 
   return (
