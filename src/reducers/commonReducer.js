@@ -15,64 +15,45 @@ export default (state = initialState, action) => {
   return produce(state, (draft) => {
     const tripId = action.tripId;
     const tripIndex = draft.trips.findIndex((trip) => trip.id === tripId);
-    const updatedTrips = [...draft.trips];
 
     switch (action.type) {
       case SET_TRIPS:
-        return {
-          trips: action.trips,
-        };
+        draft.trips = action.trips;
+        break;
+
       case DELETE_TRIP:
-        return {
-          ...draft,
-          trips: draft.trips.filter((item) => item.id !== tripId),
-        };
+        const filteredTrips = draft.trips.filter((item) => item.id !== tripId);
+        draft.trips = filteredTrips;
+        break;
+
       case CREATE_TRIP:
-        return {
-          ...draft,
-          trips: draft.trips.concat(action.newTrip),
-        };
+        draft.trips = draft.trips.concat(action.newTrip);
+        break;
 
       case SET_TRANSPORT:
       case SET_QR:
       case SET_PDF:
-        updatedTrips[tripIndex].transport = action.transport;
-
-        return {
-          ...draft,
-          trips: updatedTrips,
-        };
+        draft.trips[tripIndex].transport = action.transport;
+        break;
 
       case SET_ACCOMMODATION:
-        updatedTrips[tripIndex].accommodation = action.accommodation;
-
-        return {
-          ...draft,
-          trips: updatedTrips,
-        };
+        draft.trips[tripIndex].accommodation = action.accommodation;
+        break;
 
       case SET_NOTES:
-        updatedTrips[tripIndex].notes = action.notes;
-        return {
-          ...draft,
-          trips: updatedTrips,
-        };
+        draft.trips[tripIndex].notes = action.notes;
+        break;
 
       case SET_BUDGET:
-        updatedTrips[tripIndex].budget = action.budget;
-        return {
-          ...draft,
-          trips: updatedTrips,
-        };
+        draft.trips[tripIndex].budget = action.budget;
+        break;
 
       case SET_MAP:
-        updatedTrips[tripIndex].map = action.map;
-        return {
-          ...draft,
-          trips: updatedTrips,
-        };
-    }
+        draft.trip[tripIndex].map = action.map;
+        break;
 
-    return draft;
+      default:
+        break;
+    }
   });
 };
