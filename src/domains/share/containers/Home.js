@@ -23,7 +23,7 @@ const Home = (props) => {
     if (token === null && userId === null) {
       setError('You are not logged in.');
     } else if (token !== null && userId !== null) {
-      setTrips(store.getState().trips.availableTrips);
+      setTrips(store.getState().trips.trips);
     }
 
     type ? null : getData();

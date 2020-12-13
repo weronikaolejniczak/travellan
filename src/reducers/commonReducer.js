@@ -6,71 +6,67 @@ import {SET_BUDGET} from 'actions/budgetActions';
 import {SET_MAP} from 'actions/mapActions';
 
 export const initialState = {
-  availableTrips: [],
+  trips: [],
 };
 
 export default (state = initialState, action) => {
   const tripId = action.tripId;
-  const tripIndex = state.availableTrips.findIndex(
-    (trip) => trip.id === tripId,
-  );
-  const updatedAvailableTrips = [...state.availableTrips];
+  const tripIndex = state.trips.findIndex((trip) => trip.id === tripId);
+  const updatedTrips = [...state.trips];
 
   switch (action.type) {
     case SET_TRIPS:
       return {
-        availableTrips: action.trips,
+        trips: action.trips,
       };
     case DELETE_TRIP:
       return {
         ...state,
-        availableTrips: state.availableTrips.filter(
-          (item) => item.id !== action.pid,
-        ),
+        trips: state.trips.filter((item) => item.id !== tripId),
       };
     case CREATE_TRIP:
       return {
         ...state,
-        availableTrips: state.availableTrips.concat(action.newTrip),
+        trips: state.trips.concat(action.newTrip),
       };
 
     case SET_TRANSPORT:
     case SET_QR:
     case SET_PDF:
-      updatedAvailableTrips[tripIndex].transport = action.transport;
+      updatedTrips[tripIndex].transport = action.transport;
 
       return {
         ...state,
-        availableTrips: updatedAvailableTrips,
+        trips: updatedTrips,
       };
 
     case SET_ACCOMMODATION:
-      updatedAvailableTrips[tripIndex].accommodation = action.accommodation;
+      updatedTrips[tripIndex].accommodation = action.accommodation;
 
       return {
         ...state,
-        availableTrips: updatedAvailableTrips,
+        trips: updatedTrips,
       };
 
     case SET_NOTES:
-      updatedAvailableTrips[tripIndex].notes = action.notes;
+      updatedTrips[tripIndex].notes = action.notes;
       return {
         ...state,
-        availableTrips: updatedAvailableTrips,
+        trips: updatedTrips,
       };
 
     case SET_BUDGET:
-      updatedAvailableTrips[tripIndex].budget = action.budget;
+      updatedTrips[tripIndex].budget = action.budget;
       return {
         ...state,
-        availableTrips: updatedAvailableTrips,
+        trips: updatedTrips,
       };
 
     case SET_MAP:
-      updatedAvailableTrips[tripIndex].map = action.map;
+      updatedTrips[tripIndex].map = action.map;
       return {
         ...state,
-        availableTrips: updatedAvailableTrips,
+        trips: updatedTrips,
       };
   }
   return state;

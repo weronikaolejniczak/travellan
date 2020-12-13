@@ -90,8 +90,10 @@ export const createTransportRequest = (
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await axios
-      .get(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`)
+    await axios({
+      method: 'GET',
+      url: `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    })
       .then((res) => res.data)
       .then((data) => {
         let transport = data.transport;
