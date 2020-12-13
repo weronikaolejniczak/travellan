@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import Budget from 'domains/budget/models/Budget';
-import BudgetField from 'common/components/budgetField/BudgetField';
+import Budget from 'models/Budget';
+import BudgetField from 'components/budgetField/BudgetField';
 import * as budgetActions from 'actions/budgetActions';
-import {prepareValue} from 'domains/budget/utils';
+import {prepareValue} from '../utils';
 import {CURRENCIES} from 'data/Currencies';
 import {styles} from './AddCurrencyContainerStyle';
 import Colors from 'constants/Colors';

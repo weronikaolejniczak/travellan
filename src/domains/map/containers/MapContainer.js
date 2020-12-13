@@ -5,9 +5,9 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import * as mapActions from 'actions/mapActions';
-import PointOfInterest from 'domains/map/models/PointOfInterest';
-import Toolbar from 'domains/map/components/toolbar/Toolbar';
-import PlaceOverview from 'domains/map/components/placeOverview/PlaceOverview';
+import PointOfInterest from 'models/PointOfInterest';
+import Toolbar from '../components/toolbar/Toolbar';
+import PlaceOverview from '../components/placeOverview/PlaceOverview';
 import {darkModeMap} from './DarkModeMap';
 import {styles} from './MapContainerStyle';
 import Colors from 'constants/Colors';
