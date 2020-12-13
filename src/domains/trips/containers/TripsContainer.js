@@ -21,7 +21,7 @@ import Colors from 'constants/Colors';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();
-  const trips = useSelector((state) => state.trips.availableTrips);
+  const trips = useSelector((state) => state.trips.trips);
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -82,7 +82,7 @@ const TripsContainer = (props) => {
     );
   }
 
-  if (trips.length === 0 || trips === undefined) {
+  if (Array.isArray(trips) && trips.length < 1) {
     return <ItemlessFrame message={'You have no trips saved!'} />;
   }
 
@@ -91,18 +91,18 @@ const TripsContainer = (props) => {
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
-        renderItem={(itemData) => (
+        renderItem={(data) => (
           <TripItem
-            image={itemData.item.image}
-            destination={itemData.item.destination}
-            startDate={itemData.item.startDate.split(' ').slice(1, 4).join(' ')}
-            endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
+            image={data.item.image}
+            destination={data.item.destination}
+            startDate={data.item.startDate.split(' ').slice(1, 4).join(' ')}
+            endDate={data.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
-              handleSelectItem(itemData.item.id, itemData.item.destination);
+              handleSelectItem(data.item.id, data.item.destination);
             }}>
             <TouchableHighlight
               style={styles.deleteButton}
-              onPress={() => handleDeleteItem(itemData.item)}>
+              onPress={() => handleDeleteItem(data.item)}>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>

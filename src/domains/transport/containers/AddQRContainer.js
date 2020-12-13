@@ -17,7 +17,7 @@ const AddQRContainer = (props) => {
   const ticketId = props.route.params.ticketId;
 
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
+    state.trips.trips.find((item) => item.id === tripId),
   );
 
   var qr = props.qr;

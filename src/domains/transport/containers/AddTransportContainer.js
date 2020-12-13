@@ -20,7 +20,7 @@ const AddTransportContainer = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
+    state.trips.trips.find((item) => item.id === tripId),
   );
 
   const [to, setToDestination] = useState(true);

@@ -9,7 +9,7 @@ import {styles} from './TripDetailsContainerStyle.js';
 const TripDetailsContainer = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
+    state.trips.trips.find((item) => item.id === tripId),
   );
 
   const author = selectedTrip.image.authorName;

@@ -19,7 +19,7 @@ const AddNoteContainer = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
+    state.trips.trips.find((item) => item.id === tripId),
   );
 
   // startDate = Date from where Trip begin - 12hours (for notification 'To Pack' purpose)

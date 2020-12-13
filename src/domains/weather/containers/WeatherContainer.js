@@ -23,7 +23,7 @@ const windowHeight = Dimensions.get('window').height;
 const WeatherContainer = (props) => {
   const tripId = props.route.params.tripId;
   const selectedTrip = useSelector((state) =>
-    state.trips.availableTrips.find((item) => item.id === tripId),
+    state.trips.trips.find((item) => item.id === tripId),
   );
   const region = selectedTrip.region;
   const latitude = region.latitude;
