@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, ScrollView, FlatList, Platform, Animated } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {View, ScrollView, FlatList, Animated} from 'react-native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {ItemlessFrame} from 'components/frames';
 import {AccommodationItem} from 'domains/accommodation/components';
