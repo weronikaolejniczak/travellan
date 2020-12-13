@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Map from 'domains/map/models/Map';
+import Map from 'models/Map';
 
 export const SET_MAP = 'SET_MAP';
 

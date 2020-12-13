@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {FIREBASE_URL} from 'react-native-dotenv';
 
-import Accommodation from 'domains/accommodation/models/Accommodation';
+import Accommodation from 'models/Accommodation';
 
 export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 
