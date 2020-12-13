@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
 
 import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TripItem} from 'domains/trips/components';
+import {TripItem} from '../components';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripsActions from 'actions/tripsActions';
 import {styles} from './TripsContainerStyle';

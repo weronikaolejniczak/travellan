@@ -13,7 +13,7 @@ import Snackbar from 'react-native-snackbar';
 
 import Budget from 'models/Budget';
 import BudgetField from 'components/budgetField/BudgetField';
-import DatePicker from 'domains/trips/components/datePicker/DatePicker';
+import DatePicker from '../components/datePicker/DatePicker';
 import {createTripRequest} from 'actions/tripsActions';
 import {styles} from './AddTripContainerStyle';
 import {CURRENCIES} from 'data/Currencies';

@@ -13,7 +13,7 @@ import {
 import {useDispatch} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
-import Input from 'user/components/input/Input';
+import Input from '../components/input/Input';
 import * as userActions from 'actions/userActions';
 import {styles} from './AuthenticationContainerStyle';
 import Colors from 'constants/Colors';

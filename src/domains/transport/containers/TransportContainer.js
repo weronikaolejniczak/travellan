@@ -12,9 +12,9 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from 'components/headerButton/HeaderButton';
 import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TransportItem} from 'domains/transport/components';
+import {TransportItem} from '../components';
 import * as transportActions from 'actions/transportActions';
-import {cardWidth} from 'transport/components/TransportItem/TransportItemStyle';
+import {cardWidth} from '../components/TransportItem/TransportItemStyle';
 import {styles} from './TransportContainerStyle';
 
 const TransportContainer = (props) => {
