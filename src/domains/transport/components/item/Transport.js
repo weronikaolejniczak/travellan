@@ -61,7 +61,7 @@ const Transport = (props) => {
   const pickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.PDF],
+        type: [DocumentPicker.types.pdf],
       });
 
       var temp = res.uri;
