@@ -95,6 +95,7 @@ const AddNote = (props) => {
       });
     }
     setIsLoading(false);
+    callNotification(category, description)
   }, [
     titleIsValid,
     descriptionIsValid,
@@ -196,7 +197,7 @@ const AddNote = (props) => {
               value={description}
               onChangeText={descriptionChangeHandler}
               multiline
-              callScheduledNotification={callNotification(category, description)}
+              
             />
             {!descriptionIsValid && descriptionSubmitted && (
               <View style={styles.errorContainer}>
