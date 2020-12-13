@@ -20,14 +20,14 @@ const TripsContainer = (props) => {
 
   const loadTrips = useCallback(() => {
     try {
-      tripsActions.fetchTripsRequest();
+      dispatch(tripsActions.fetchTripsRequest());
     } catch {
       setError('Something went wrong!');
     }
     setIsLoading(false);
   }, []);
 
-  const deleteTrip = (id) => {
+  const deleteTrip = useCallback((id) => {
     setIsLoading(true);
     try {
       dispatch(tripsActions.deleteTripRequest(id));
@@ -35,7 +35,7 @@ const TripsContainer = (props) => {
       setError('Something went wrong!');
     }
     setIsLoading(false);
-  };
+  }, []);
 
   const handleDeleteTrip = (item) => {
     Alert.alert(
