@@ -13,7 +13,7 @@ import {useDispatch} from 'react-redux';
 import Budget from 'domains/budget/models/Budget';
 import BudgetField from 'common/components/budgetField/BudgetField';
 import DatePicker from 'domains/trips/components/datePicker/DatePicker';
-import {createTrip} from 'actions/tripsActions';
+import {createTripRequest} from 'actions/tripsActions';
 import {styles} from './AddTripContainerStyle';
 import {CURRENCIES} from 'data/Currencies';
 import Colors from 'constants/Colors';
@@ -163,7 +163,7 @@ const AddTripContainer = (props) => {
     ) {
       setIsLoading(true);
       await dispatch(
-        createTrip(
+        createTripRequest(
           destination,
           startDate.toString(),
           endDate.toString(),
@@ -175,7 +175,7 @@ const AddTripContainer = (props) => {
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
       await dispatch(
-        createTrip(
+        createTripRequest(
           destination,
           startDate.toString(),
           endDate.toString(),

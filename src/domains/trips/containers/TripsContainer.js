@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   Text,
   View,
@@ -23,24 +23,36 @@ const TripsContainer = (props) => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => state.trips.availableTrips);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
-  useEffect(() => {
-    SplashScreen.hide();
+  const loadTrips = useCallback(() => {
+    tripsActions.fetchTripsRequest();
+    setIsLoading(false);
   }, []);
 
-  const selectItemHandler = (id, destination) => {
+  useEffect(() => {
+    loadTrips();
+    SplashScreen.hide();
+  }, [loadTrips]);
+
+  const handleSelectItem = (id, destination) => {
     props.navigation.navigate('Details', {
       tripId: id,
       tripDestination: destination,
     });
   };
 
+  const deleteItem = (id) => {
+    setIsLoading(true);
+    dispatch(tripsActions.deleteTripRequest(id));
+    setIsLoading(false);
+  };
+
   /* KNOWN ISSUE: user can click on the card and immediately after on the trip,
   which navigates him to trip details and still shows an alert to delete the trip;
   afterwards application crashes */
-  const deleteItemHandler = (item) => {
+  const handleDeleteItem = (item) => {
     Alert.alert(
       `Delete a trip to ${item.destination}`,
       'Are you sure?',
@@ -51,10 +63,7 @@ const TripsContainer = (props) => {
         },
         {
           text: 'OK',
-          onPress: () => {
-            setIsLoading(true);
-            dispatch(tripsActions.deleteTrip(item.id));
-          },
+          onPress: () => deleteItem(item.id),
         },
       ],
       {cancelable: true},
@@ -89,11 +98,11 @@ const TripsContainer = (props) => {
             startDate={itemData.item.startDate.split(' ').slice(1, 4).join(' ')}
             endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
-              selectItemHandler(itemData.item.id, itemData.item.destination);
+              handleSelectItem(itemData.item.id, itemData.item.destination);
             }}>
             <TouchableHighlight
               style={styles.deleteButton}
-              onPress={() => deleteItemHandler(itemData.item)}>
+              onPress={() => handleDeleteItem(itemData.item)}>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>

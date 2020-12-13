@@ -77,7 +77,7 @@ const AddNoteContainer = (props) => {
       setDescriptionSubmitted(true);
     } else {
       await dispatch(
-        notesActions.createNote(tripId, category, title, description),
+        notesActions.createNoteRequest(tripId, category, title, description),
       );
       props.navigation.navigate('Notes', {
         tripId: selectedTrip.id,
@@ -95,7 +95,7 @@ const AddNoteContainer = (props) => {
       setDescriptionSubmitted(true);
     } else {
       await dispatch(
-        notesActions.createNote(tripId, category, title, description),
+        notesActions.createNoteRequest(tripId, category, title, description),
       );
       props.navigation.navigate('Notes', {
         tripId: selectedTrip.id,

@@ -27,13 +27,13 @@ const NotesContainer = (props) => {
       setIsRefreshing(true);
       // delete notes
       try {
-        await dispatch(notesActions.deleteNote(tripId, id));
+        await dispatch(notesActions.deleteNoteRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
       // fetch notes
       try {
-        await dispatch(notesActions.fetchNotes(tripId));
+        await dispatch(notesActions.fetchNotesRequest(tripId));
       } catch {
         setError('Something went wrong!');
       }
@@ -69,7 +69,7 @@ const NotesContainer = (props) => {
     setError(null);
     setIsLoading(true);
     try {
-      await dispatch(notesActions.fetchNotes(tripId));
+      await dispatch(notesActions.fetchNotesRequest(tripId));
     } catch (err) {
       setError(err.message);
     }

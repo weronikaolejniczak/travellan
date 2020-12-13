@@ -86,12 +86,12 @@ const MapContainer = (props) => {
   const onExitHandler = async () => {
     setIsLoading(true);
     try {
-      await dispatch(mapActions.updateMap(tripId, markers, currentRegion)).then(
-        () => {
-          setIsLoading(false);
-          props.navigation.goBack();
-        },
-      );
+      await dispatch(
+        mapActions.updateMapRequest(tripId, markers, currentRegion),
+      ).then(() => {
+        setIsLoading(false);
+        props.navigation.goBack();
+      });
     } catch {
       setError('Something went wrong. Check your internet connection!');
     }

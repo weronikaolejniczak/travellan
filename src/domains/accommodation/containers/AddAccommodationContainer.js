@@ -89,7 +89,7 @@ const AddAccommodationContainer = (props) => {
     } else {
       setIsLoading(true);
       await dispatch(
-        accommodationActions.createAccommodation(
+        accommodationActions.createAccommodationRequest(
           tripId,
           name,
           address,

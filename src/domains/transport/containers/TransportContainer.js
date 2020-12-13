@@ -49,7 +49,7 @@ const TransportContainer = (props) => {
     async (id) => {
       setIsRefreshing(true);
       try {
-        await dispatch(transportActions.deleteTransport(tripId, id));
+        await dispatch(transportActions.deleteTransportRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
@@ -84,7 +84,7 @@ const TransportContainer = (props) => {
   const loadTransport = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      await dispatch(transportActions.fetchTransport(tripId));
+      await dispatch(transportActions.fetchTransportRequest(tripId));
     } catch (err) {
       setError(err.message);
     }

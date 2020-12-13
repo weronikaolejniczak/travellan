@@ -95,7 +95,8 @@ const AddCurrencyContainer = (props) => {
 
       setIsLoading(true);
       try {
-        await dispatch(budgetActions.updateBudget(tripId, budgetToSubmit)).then(
+        await dispatch(
+          budgetActions.patchBudgetRequest(tripId, budgetToSubmit),
           () => {
             setIsLoading(false);
             props.navigation.navigate('Budget', {

@@ -36,7 +36,7 @@ const AddQRContainer = (props) => {
     setIsLoading(true);
     qr = {QR};
     qr = qr.QR;
-    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
+    await dispatch(transportActions.patchQRRequest(tripId, ticketId, qr));
     props.navigation.navigate('Transport', {
       tripId: selectedTrip.id,
     });

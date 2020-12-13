@@ -164,7 +164,7 @@ const BudgetContainer = (props) => {
       const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
       // update budget
       await dispatch(
-        budgetActions.updateBudget(tripId, filteredActiveCurrencies),
+        budgetActions.patchBudgetRequest(tripId, filteredActiveCurrencies),
       ).then(() => loadBudget());
       // if there are no active currencies clear selectedCurrency
       budget !== undefined
@@ -181,7 +181,7 @@ const BudgetContainer = (props) => {
     setError(null);
     setIsLoading(true);
     try {
-      await dispatch(budgetActions.updateBudget(tripId, budget));
+      await dispatch(budgetActions.patchBudgetRequest(tripId, budget));
     } catch (err) {
       setError(err.message);
     }
@@ -192,7 +192,7 @@ const BudgetContainer = (props) => {
   const loadBudget = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      await dispatch(budgetActions.fetchBudget(tripId));
+      await dispatch(budgetActions.fetchBudgetRequest(tripId));
     } catch (err) {
       setError(err.message);
     }

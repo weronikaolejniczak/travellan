@@ -89,25 +89,26 @@ export const createTransportRequest = (
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let transport = data.transport;
+    await axios
+      .get(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`)
+      .then((res) => res.data)
+      .then((data) => {
+        let transport = data.transport;
+        console.log(data);
 
-    if (transport) {
-      transport = transport.concat(newTransport);
-    } else {
-      transport = [newTransport];
-    }
+        if (transport) {
+          transport = transport.concat(newTransport);
+        } else {
+          transport = [newTransport];
+        }
 
-    await axios.patch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {transport},
-    );
-
-    dispatch(setTransport(tripId, transport));
+        axios
+          .patch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
+            transport,
+          })
+          .then(() => dispatch(setTransport(tripId, transport)));
+      });
   };
 };
 

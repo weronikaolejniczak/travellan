@@ -28,7 +28,7 @@ export const fetchBudgetRequest = (tripId) => {
   };
 };
 
-export const updateBudgetRequest = (tripId, updatedBudget) => {
+export const patchBudgetRequest = (tripId, updatedBudget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

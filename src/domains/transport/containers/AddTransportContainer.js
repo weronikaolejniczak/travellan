@@ -100,7 +100,7 @@ const AddTransportContainer = (props) => {
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
     await dispatch(
-      transportActions.createTransport(
+      transportActions.createTransportRequest(
         tripId,
         to,
         from,

@@ -38,32 +38,33 @@ export const fetchTripsRequest = () => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}.json?auth=${token}`,
-    );
+    await axios({
+      method: 'GET',
+      url: `${API_URL}/Trips/${userId}.json?auth=${token}`,
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        const loadedTrips = [];
+        for (const key in data) {
+          loadedTrips.push(
+            new Trip(
+              key,
+              data[key].destination,
+              data[key].region,
+              data[key].image,
+              data[key].startDate,
+              data[key].endDate,
+              data[key].budget,
+              data[key].notes,
+              data[key].transport,
+              data[key].accommodation,
+              data[key].map,
+            ),
+          );
+        }
 
-    const resData = await response.json();
-    const loadedTrips = [];
-
-    for (const key in resData) {
-      loadedTrips.push(
-        new Trip(
-          key,
-          resData[key].destination,
-          resData[key].region,
-          resData[key].image,
-          resData[key].startDate,
-          resData[key].endDate,
-          resData[key].budget,
-          resData[key].notes,
-          resData[key].transport,
-          resData[key].accommodation,
-          resData[key].map,
-        ),
-      );
-    }
-
-    dispatch(setTrips(loadedTrips));
+        dispatch(setTrips(loadedTrips));
+      });
   };
 };
 
@@ -72,15 +73,16 @@ export const deleteTripRequest = (tripId) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await axios.delete(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
+    await axios({
+      method: 'DELETE',
+      url: `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
+    });
 
     dispatch(deleteTrip(tripId));
   };
 };
 
-export const postTripRequest = (destination, startDate, endDate, budget) => {
+export const createTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -98,9 +100,8 @@ export const postTripRequest = (destination, startDate, endDate, budget) => {
     let accommodation = [];
     let map = new Map([], [], null);
 
-    const response = await axios.post(
-      `${API_URL}/Trips/${userId}.json?auth=${token}`,
-      {
+    await axios
+      .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
         destination,
         region,
         image,
@@ -111,25 +112,25 @@ export const postTripRequest = (destination, startDate, endDate, budget) => {
         transport,
         accommodation,
         map,
-      },
-    );
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        const tripId = data.id;
+        const newTrip = new Trip(
+          tripId,
+          destination,
+          region,
+          image,
+          startDate,
+          endDate,
+          budget,
+          notes,
+          transport,
+          accommodation,
+          map,
+        );
 
-    const data = await response.json();
-    const tripId = data.id;
-    const newTrip = new Trip(
-      tripId,
-      destination,
-      region,
-      image,
-      startDate,
-      endDate,
-      budget,
-      notes,
-      transport,
-      accommodation,
-      map,
-    );
-
-    dispatch(createTrip(newTrip));
+        dispatch(createTrip(newTrip));
+      });
   };
 };
