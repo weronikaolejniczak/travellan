@@ -172,6 +172,23 @@ const AddTripContainer = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
+      Snackbar.show({
+        text: 'Add Trip to Google Calendar',
+        duration: Snackbar.LENGTH_LONG,
+        action: {
+          text: 'Add',
+          textColor: 'orange',
+          onPress: () => {
+            CalendarEventChandler.addToCalendar(
+              'Trip to ' + destination,
+              startDate,
+              endDate,
+              destination,
+              'Remember to pack everything and check weather forecast!',
+            );
+          },
+        },
+      })
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
       await dispatch(
@@ -184,25 +201,25 @@ const AddTripContainer = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
-    }
-    callNotification(destination, startDate);
-    Snackbar.show({
-      text: 'Add Trip to Google Calendar',
-      duration: Snackbar.LENGTH_LONG,
-      action: {
-        text: 'Add',
-        textColor: 'orange',
-        onPress: () => {
-          CalendarEventChandler.addToCalendar(
-            'Trip to ' + destination,
-            startDate,
-            endDate,
-            destination,
-            'Remember to pack everything and check weather forecast!',
-          );
+      Snackbar.show({
+        text: 'Add Trip to Google Calendar',
+        duration: Snackbar.LENGTH_LONG,
+        action: {
+          text: 'Add',
+          textColor: 'orange',
+          onPress: () => {
+            CalendarEventChandler.addToCalendar(
+              'Trip to ' + destination,
+              startDate,
+              endDate,
+              destination,
+              'Remember to pack everything and check weather forecast!',
+            );
+          },
         },
-      },
-    });
+      })
+      
+    }
   }, [
     budget,
     account,
