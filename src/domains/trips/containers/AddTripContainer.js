@@ -172,6 +172,7 @@ const AddTripContainer = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
+      callNotification(destination, startDate)
       Snackbar.show({
         text: 'Add Trip to Google Calendar',
         duration: Snackbar.LENGTH_LONG,
@@ -201,6 +202,7 @@ const AddTripContainer = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
+      callNotification(destination, startDate);
       Snackbar.show({
         text: 'Add Trip to Google Calendar',
         duration: Snackbar.LENGTH_LONG,
@@ -217,8 +219,7 @@ const AddTripContainer = (props) => {
             );
           },
         },
-      })
-      
+      }) 
     }
   }, [
     budget,
