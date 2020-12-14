@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, Text, ImageBackground} from 'react-native';
+import {View, ScrollView, Text, ImageBackground, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -86,6 +86,15 @@ const TripDetailsContainer = (props) => {
             tripId={selectedTrip.id}
             icon="note"
           />
+          <TouchableOpacity
+            onPress={() => {
+              
+            }}>
+            <Text style={[styles.action, styles.callToAction]}>
+              Add your trip to your Google Calendar!
+            </Text>
+          </TouchableOpacity>
+          
         </View>
       </View>
     </ScrollView>
