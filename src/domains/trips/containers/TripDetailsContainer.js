@@ -15,6 +15,7 @@ const TripDetailsContainer = (props) => {
   const author = selectedTrip.image.authorName;
   const username = selectedTrip.image.username;
   const imageUrl = selectedTrip.image.imageUrl;
+  const destination = selectedTrip.destination;
   let startDateOrigin= selectedTrip.startDate;
   let endDateOrigin= selectedTrip.endDate;
   const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
@@ -92,8 +93,8 @@ const TripDetailsContainer = (props) => {
             onPress={() => {
               CalendarEventChandler.addToCalendar(
                 'Trip to ' + destination,
-                startDate,
-                endDate,
+                Date.parse(startDateOrigin),
+                Date.parse(endDateOrigin),
                 destination,
                 'Remember to pack everything and check weather forecast!',
               );
