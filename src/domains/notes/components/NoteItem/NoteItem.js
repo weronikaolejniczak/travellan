@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Card from 'components/card/Card';
 import ReadMore from 'components/readMore/ReadMore';
-import {styles} from './NoteStyle';
+import {styles} from './NoteItemStyle';
 
 const NoteItem = (props) => {
   const {category, deleteNoteHandler, description, id, title} = props;
