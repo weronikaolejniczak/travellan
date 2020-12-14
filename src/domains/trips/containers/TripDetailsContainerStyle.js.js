@@ -4,6 +4,14 @@ import Colors from 'constants/Colors';
 const {height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
+  action: {
+    color: Colors.primary,
+    fontSize: 20,
+    justifyContent: 'center',
+  },
+  callToAction: {
+    padding: 15,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
