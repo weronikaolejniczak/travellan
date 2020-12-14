@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, ScrollView, FlatList, Platform, Animated } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {View, ScrollView, FlatList, Animated} from 'react-native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {ItemlessFrame} from 'components/frames';
 import {AccommodationItem} from 'domains/accommodation/components';
@@ -8,7 +8,7 @@ import HeaderButton from 'components/headerButton/HeaderButton';
 import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import {styles} from './AccommodationContainerStyle';
 
-import { DUMMY_HOTELS as accommodation } from 'accommodation/data/DummyHotels';
+import {DUMMY_HOTELS as accommodation} from '../data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {

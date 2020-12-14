@@ -3,7 +3,7 @@ import {View, ScrollView, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
-import NavigationButton from 'trips/components/navigationButton/NavigationButton';
+import NavigationButton from '../components/navigationButton/NavigationButton';
 import {styles} from './TripDetailsContainerStyle.js';
 
 const TripDetailsContainer = (props) => {

@@ -14,7 +14,8 @@
           "reducers": "./src/reducers",
           "services": "./src/services",
           "src": "./src",
-          "styles": "./src/common/styles"
+          "styles": "./src/common/styles",
+          "utilities": "./src/utilities"
         }
       }
     ]
