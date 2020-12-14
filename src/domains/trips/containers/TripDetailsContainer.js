@@ -2,7 +2,7 @@ import React from 'react';
 import {View, ScrollView, Text, ImageBackground, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {addEventToCalendar} from 'services/handleCalendarEvent';
 import NavigationButton from '../components/navigationButton/NavigationButton';
 import {styles} from './TripDetailsContainerStyle.js';
 
@@ -11,10 +11,12 @@ const TripDetailsContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-
+  let CalendarEventChandler = addEventToCalendar;
   const author = selectedTrip.image.authorName;
   const username = selectedTrip.image.username;
   const imageUrl = selectedTrip.image.imageUrl;
+  let startDateOrigin= selectedTrip.startDate;
+  let endDateOrigin= selectedTrip.endDate;
   const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
   const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
 
@@ -88,7 +90,13 @@ const TripDetailsContainer = (props) => {
           />
           <TouchableOpacity
             onPress={() => {
-              
+              CalendarEventChandler.addToCalendar(
+                'Trip to ' + destination,
+                startDate,
+                endDate,
+                destination,
+                'Remember to pack everything and check weather forecast!',
+              );
             }}>
             <Text style={[styles.action, styles.callToAction]}>
               Add your trip to your Google Calendar!
