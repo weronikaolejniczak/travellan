@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {datePickerStyle as styles} from './DatePickerStyle';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { datePickerStyle as styles } from './DatePickerStyle';
 
 const DatePicker = (props) => {
   return (
@@ -12,7 +13,7 @@ const DatePicker = (props) => {
         <TouchableOpacity onPress={props.showDatePicker} style={styles.picker}>
           <View style={styles.textContainer}>
             <Icon
-              name={Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'}
+              name="calendar"
               style={props.styles.icon}
             />
             <Text style={styles.pickerText}>
@@ -27,7 +28,7 @@ const DatePicker = (props) => {
           timeZoneOffsetInMinutes={0}
           value={props.date}
           minimumDate={props.minimumDate}
-          mode={'date'}
+          mode="date"
           is24Hour={true}
           display="default"
           onChange={props.dateChangeHandler}

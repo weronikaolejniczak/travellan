@@ -2,8 +2,9 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import Switch from 'components/switch/Switch';
-import {budgetFieldStyle as styles} from './BudgetFieldStyle';
+import {styles} from './BudgetFieldStyle';
 import {CURRENCIES} from 'data/Currencies';
 
 const BudgetField = (props) => {
@@ -41,13 +42,13 @@ const BudgetField = (props) => {
         <View>
           <TextInput
             style={props.styles.input}
-            placeholder={'Number'}
+            placeholder="Number"
             placeholderTextColor="grey"
             value={props.budget}
             onChangeText={props.budgetChangeHandler}
-            keyboardType={'numeric'}
+            keyboardType="numeric"
           />
-          {/* validation error */}
+
           {props.budgetIsEnabled &&
             !props.budgetIsValid &&
             props.budgetSubmitted && (
@@ -56,13 +57,12 @@ const BudgetField = (props) => {
               </View>
             )}
           <View style={[props.styles.rowAndCenter, {marginTop: '4%'}]}>
-            {/* CASH */}
             <View>
               <TouchableOpacity
                 style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
                 onPress={() => props.setAccount('cash')}>
                 <Icon
-                  name={'cash'}
+                  name="cash"
                   style={[
                     {marginRight: '5%'},
                     props.styles.icon,
@@ -82,13 +82,13 @@ const BudgetField = (props) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* CARD */}
+
             <View style={{marginLeft: '5%'}}>
               <TouchableOpacity
                 style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
                 onPress={() => props.setAccount('card')}>
                 <Icon
-                  name={'credit-card'}
+                  name="credit-card"
                   style={[
                     {marginRight: '5%'},
                     props.styles.icon,
@@ -109,7 +109,7 @@ const BudgetField = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* autocomplete currency */}
+
           <View style={styles.autocompleteContainer}>
             <Autocomplete
               data={
@@ -137,6 +137,7 @@ const BudgetField = (props) => {
               )}
             />
           </View>
+
           {!!props.error && (
             <View style={styles.errorContainer}>
               <Text style={styles.error}>{props.error}</Text>

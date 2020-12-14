@@ -1,4 +1,4 @@
-import Currency from 'budget/models/Currency';
+import Currency from 'domains/budget/models/Currency';
 
 export const CURRENCIES = [
   new Currency('AED', 'UAE Dirham'),

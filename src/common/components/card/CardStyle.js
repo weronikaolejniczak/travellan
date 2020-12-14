@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
-/** IMPORTS FROM WITHIN THE MODULE */
-import Colors from '../../constants/Colors';
 
-export const cardStyle = StyleSheet.create({
+import Colors from 'constants/Colors';
+
+export const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.cards,
     borderRadius: 10,
