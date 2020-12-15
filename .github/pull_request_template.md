@@ -7,6 +7,12 @@
 
 (prefer animated gif)
 
+## Test path (if necessary)
+
+1. Go to this screen.
+2. Click on this.
+...
+
 ## Checklist
 
 - [ ] rebased feature branch with develop branch
