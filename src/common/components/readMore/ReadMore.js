@@ -1,12 +1,8 @@
 import React, {useState, useCallback} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-/** IMPORTS FROM WITHIN THE MODULE */
-import Colors from '../../constants/Colors';
 
-/** Custom component for 'read more/show less' functionality.
- * When used, a longText should be passed as such:
- * <ReadMore longText={props.description} />
- */
+import Colors from 'constants/Colors';
+
 const ReadMore = (props) => {
   const NUM_OF_LINES = 3;
   const [readMore, setReadMore] = useState(false);
@@ -16,13 +12,6 @@ const ReadMore = (props) => {
     (e) => setShowMore(e.nativeEvent.lines.length >= NUM_OF_LINES),
     [],
   );
-  /* const truncate = (text) => {
-      return text
-        .replace(/([.?!])\s*(?=[A-Z])/g, '$1|')
-        .split('|')
-        .slice(0, 2)
-        .join(' ');
-    }; */
 
   return (
     <View>

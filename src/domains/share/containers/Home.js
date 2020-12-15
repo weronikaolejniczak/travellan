@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import ShareExtension from 'rn-extensions-share';
 
-import {store} from 'state/store';
+import {store} from 'src/store';
 import {homeStyle as styles} from './HomeStyle';
 
 const Home = (props) => {
@@ -23,7 +23,7 @@ const Home = (props) => {
     if (token === null && userId === null) {
       setError('You are not logged in.');
     } else if (token !== null && userId !== null) {
-      setTrips(store.getState().trips.availableTrips);
+      setTrips(store.getState().trips.trips);
     }
 
     type ? null : getData();

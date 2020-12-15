@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-/* imports from within the module */
+
 import Colors from 'constants/Colors';
 
 const PlaceOverview = (props) => {
