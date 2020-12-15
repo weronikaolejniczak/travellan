@@ -5,6 +5,7 @@ import Note from 'models/Note';
 
 export const SET_NOTES = 'SET_NOTES';
 export const CREATE_NOTE = 'CREATE_NOTE';
+export const DELETE_NOTE = 'DELETE_NOTE';
 
 const API_URL = FIREBASE_URL;
 
@@ -21,6 +22,14 @@ export const createNote = (tripId, newNote) => {
     type: CREATE_NOTE,
     tripId,
     newNote,
+  };
+};
+
+export const deleteNote = (tripId, noteId) => {
+  return {
+    type: DELETE_NOTE,
+    tripId,
+    noteId,
   };
 };
 
@@ -60,18 +69,11 @@ export const deleteNoteRequest = (tripId, noteId) => {
     const userId = getState().auth.userId;
 
     axios
-      .get(`${API_URL}/Trips/${userId}/${tripId}/notes.json?auth=${token}`)
-      .then((res) => res.data)
-      .then((notes) => {
-        console.log('deleteNoteRequest: ', notes);
-        const updatedNotes = notes.filter((item) => item.id !== noteId);
-        const noteIndex = notes.findIndex((item) => item.id === noteId);
-        axios
-          .delete(
-            `${API_URL}/Trips/${userId}/${tripId}/notes/${noteIndex}.json?auth=${token}`,
-          )
-          .catch((err) => console.log(JSON.stringify(err)));
-        dispatch(setNotes(tripId, updatedNotes));
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,
+      )
+      .then(() => {
+        dispatch(deleteNote(tripId, noteId));
       })
       .catch(() => {
         throw new Error("Couldn't delete the note. Are you sure it exists?");
