@@ -106,6 +106,10 @@ const AddNoteContainer = (props) => {
       });
     }
     setIsLoading(false);
+    callNotification(
+      category,
+      description,
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     titleIsValid,
@@ -203,10 +207,6 @@ const AddNoteContainer = (props) => {
               value={description}
               onChangeText={descriptionChangeHandler}
               multiline
-              callScheduledNotification={callNotification(
-                category,
-                description,
-              )}
             />
             {!descriptionIsValid && descriptionSubmitted && (
               <View style={styles.errorContainer}>
