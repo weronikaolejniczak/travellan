@@ -79,10 +79,11 @@ export const deleteTripRequest = (tripId) => {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         dispatch(deleteTrip(tripId));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw new Error('');
+      });
   };
 };
 
@@ -91,18 +92,18 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    let image = await fetchImage(destination);
-    let location = await fetchCoordinates(destination);
-    let region = {
+    const image = await fetchImage(destination);
+    const location = await fetchCoordinates(destination);
+    const region = {
       latitude: location.lat,
       longitude: location.lon,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
-    let notes = [];
-    let transport = [];
-    let accommodation = [];
-    let map = new Map([], [], null);
+    const notes = [];
+    const transport = [];
+    const accommodation = [];
+    const map = new Map([], [], null);
 
     await axios
       .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {

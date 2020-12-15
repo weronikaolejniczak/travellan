@@ -83,7 +83,13 @@ const AddNoteContainer = (props) => {
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [titleIsValid,
+    descriptionIsValid,
+    categoryIsValid,
+    tripId,
+    category,
+    title,
+    description]);
 
   const submitHandlerToPack = useCallback(async () => {
     setToPackList(description.split(' '));
@@ -100,6 +106,10 @@ const AddNoteContainer = (props) => {
       });
     }
     setIsLoading(false);
+    callNotification(
+      category,
+      description,
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     titleIsValid,
@@ -134,7 +144,7 @@ const AddNoteContainer = (props) => {
 
   const placeholder = {
     label: 'Select a category...',
-    value: 'Categoryless',
+    value: 'Without category',
     color: 'grey',
   };
 
@@ -197,10 +207,6 @@ const AddNoteContainer = (props) => {
               value={description}
               onChangeText={descriptionChangeHandler}
               multiline
-              callScheduledNotification={callNotification(
-                category,
-                description,
-              )}
             />
             {!descriptionIsValid && descriptionSubmitted && (
               <View style={styles.errorContainer}>
