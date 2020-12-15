@@ -7,11 +7,9 @@ import ReadMore from 'components/readMore/ReadMore';
 import {styles} from './NoteItemStyle';
 
 const NoteItem = (props) => {
-  const {category, deleteNoteHandler, description, id, title} = props;
+  const {category, date, description, handleDelete, id, title} = props;
+  const dateOfCreation = new Date(date).toLocaleString();
   const toDoList = description.split(' ').join('\n');
-  const convertedId = id.split(' ');
-  const extractedDate = `${convertedId[2]} ${convertedId[1]} 
-  ${convertedId[4].split(':')[0]}:${convertedId[4].split(':')[0]}`;
 
   return (
     <ScrollView>
@@ -21,13 +19,13 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
-            <TouchableOpacity onPress={deleteNoteHandler}>
+            <TouchableOpacity onPress={() => handleDelete(id)}>
               <Icon name="delete" style={styles.icon} />
             </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.bodyMargin}>
-            <Text style={styles.create}>{extractedDate}</Text>
+            <Text style={styles.create}>{dateOfCreation}</Text>
             <View style={[styles.alignText]}>
               <ReadMore longText={toDoList} />
             </View>
@@ -39,15 +37,15 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
-            <TouchableOpacity onPress={deleteNoteHandler}>
+            <TouchableOpacity onPress={handleDelete}>
               <Icon name="delete" style={styles.icon} />
             </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.bodyMargin}>
-            <Text style={styles.create}>{extractedDate}</Text>
+            <Text style={styles.create}>{dateOfCreation}</Text>
             <Text style={styles.category}>{title}</Text>
-            <View style={[styles.alignText]}>
+            <View style={styles.alignText}>
               <ReadMore longText={description} />
             </View>
           </ScrollView>

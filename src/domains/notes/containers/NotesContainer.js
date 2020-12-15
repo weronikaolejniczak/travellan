@@ -21,7 +21,7 @@ const NotesContainer = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
-  const deleteAction = useCallback(
+  const persistDelete = useCallback(
     (id) => {
       setIsRefreshing(true);
       try {
@@ -35,26 +35,25 @@ const NotesContainer = (props) => {
     [tripId],
   );
 
-  const deleteNoteHandler = useCallback(
-    async (noteId) => {
-      Alert.alert(
-        'Delete note',
-        'Are you sure?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => deleteAction(noteId),
-          },
-        ],
-        {cancelable: true},
-      );
-    },
-    [deleteAction],
-  );
+  const handleDelete = useCallback((noteId) => {
+    setIsRefreshing(true);
+    Alert.alert(
+      'Delete note',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => persistDelete(noteId),
+        },
+      ],
+      {cancelable: true},
+    );
+    setIsRefreshing(false);
+  }, []);
 
   const loadNotes = useCallback(() => {
     setError(null);
@@ -84,7 +83,7 @@ const NotesContainer = (props) => {
     );
   }
 
-  if (notes === []) {
+  if (!notes) {
     return <ItemlessFrame message="You have no notes saved!" />;
   }
 
@@ -92,16 +91,9 @@ const NotesContainer = (props) => {
     <View style={styles.container}>
       <FlatList
         data={notes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={(itemData) => (
-          <NoteItem
-            tripId={tripId}
-            category={itemData.item.category}
-            id={itemData.item.id}
-            title={itemData.item.title}
-            description={itemData.item.description}
-            deleteNoteHandler={() => deleteNoteHandler(itemData.item.id)}
-          />
+        keyExtractor={(item) => item.id}
+        renderItem={(data) => (
+          <NoteItem handleDelete={handleDelete} {...data.item} />
         )}
       />
     </View>
