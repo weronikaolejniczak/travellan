@@ -134,7 +134,7 @@ const AddNoteContainer = (props) => {
 
   const placeholder = {
     label: 'Select a category...',
-    value: 'Categoryless',
+    value: 'Without category',
     color: 'grey',
   };
 
