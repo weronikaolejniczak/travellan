@@ -83,7 +83,13 @@ const AddNoteContainer = (props) => {
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [titleIsValid,
+    descriptionIsValid,
+    categoryIsValid,
+    tripId,
+    category,
+    title,
+    description]);
 
   const submitHandlerToPack = useCallback(async () => {
     setToPackList(description.split(' '));
@@ -134,7 +140,7 @@ const AddNoteContainer = (props) => {
 
   const placeholder = {
     label: 'Select a category...',
-    value: 'Categoryless',
+    value: 'Without category',
     color: 'grey',
   };
 
