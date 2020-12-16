@@ -17,7 +17,6 @@ import Pdf from 'react-native-pdf';
 import Card from 'components/card/Card';
 import * as transportActions from 'actions/transportActions';
 import {styles, cardHeight} from './TransportItemStyle';
-import Colors from 'constants/Colors';
 
 const TransportItem = (props) => {
   const dispatch = useDispatch();
@@ -27,12 +26,12 @@ const TransportItem = (props) => {
   const tripId = props.tripId;
   const ticketId = props.id;
 
-  var qr = props.qr;
-  var pdfUri = props.pdfUri;
+  let qr = props.qr;
+  let pdfUri = props.pdfUri;
 
-  var source = {uri: pdfUri};
+  let source = {uri: pdfUri};
   const checkHandler = () => {
-    if (qr === '' || null || undefined) {
+    if (qr === '' || qr === null || qr === undefined) {
       props.addQRHandler();
     } else {
       setshowQR(true);
@@ -65,7 +64,7 @@ const TransportItem = (props) => {
         type: [DocumentPicker.types.pdf],
       });
 
-      var temp = res.uri;
+      let temp = res.uri;
       pdfUri = temp;
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
     } catch (err) {
@@ -144,17 +143,16 @@ const TransportItem = (props) => {
             }}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
-              //console.log(`number of pages: ${numberOfPages}`);
-              console.log({source});
+              /**INSTRUCTIONS WHEN PDF IS LOADED */
             }}
             onPageChanged={(page, numberOfPages) => {
-              //console.log(`current page: ${page}`);
+              /**INSTRUCTIONS IF USER CHANGES PAGE */
             }}
             onError={(error) => {
-              //console.log(error);
+              /**INSTRUCTIONS IF ERROR */
             }}
             onPressLink={(uri) => {
-              //console.log(`Link presse: ${uri}`);
+              /**INSTRUCTIONS IF USER PRESSES LINK */
             }}
             style={styles.pdf}
           />
@@ -191,8 +189,8 @@ const TransportItem = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={async () => {
-            if (pdfUri === '' || null || undefined) {
+          onPress={() => {
+            if (pdfUri === '' || pdfUri === null || pdfUri === undefined) {
               Alert.alert(
                 'Add ticket pdf?',
                 'Attach document',
@@ -227,31 +225,20 @@ const TransportItem = (props) => {
           )}
         </View>
 
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: 22,
-            flexDirection: 'row',
-            alignItems: 'baseline',
-            marginBottom: '5%',
-          }}>
-          <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
-              Date of departure:
-            </Text>
+        <View style={styles.infoView}>
+          <View style={styles.infoInnerView}>
+            <Text style={styles.infoText}>Date of departure:</Text>
             <Text style={styles.text}>
               {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
             </Text>
           </View>
-          <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
-              Place of departure:
-            </Text>
+          <View style={styles.infoInnerView}>
+            <Text style={styles.infoText}>Place of departure:</Text>
             <Text style={styles.text}>{props.placeOfDeparture}</Text>
           </View>
         </View>
 
-        <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
+        <View style={styles.QRView}>
           {!!qr && (
             <QRCode
               style={styles.qrstyle}
