@@ -190,7 +190,7 @@ const TransportItem = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={async () => {
+          onPress={() => {
             if (pdfUri === '' || pdfUri === null || pdfUri === undefined) {
               Alert.alert(
                 'Add ticket pdf?',
