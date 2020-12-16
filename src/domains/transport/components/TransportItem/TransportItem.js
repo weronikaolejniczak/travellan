@@ -192,7 +192,7 @@ const TransportItem = (props) => {
 
         <TouchableOpacity
           onPress={async () => {
-            if (pdfUri === '' || pdfUri ===  null || pdfUri === undefined) {
+            if (pdfUri === '' || pdfUri === null || pdfUri === undefined) {
               Alert.alert(
                 'Add ticket pdf?',
                 'Attach document',
@@ -227,31 +227,20 @@ const TransportItem = (props) => {
           )}
         </View>
 
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: 22,
-            flexDirection: 'row',
-            alignItems: 'baseline',
-            marginBottom: '5%',
-          }}>
+        <View style={styles.infoView}>
           <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
-              Date of departure:
-            </Text>
+            <Text style={styles.infoText}>Date of departure:</Text>
             <Text style={styles.text}>
               {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
             </Text>
           </View>
           <View style={{flex: 0.5}}>
-            <Text style={{color: Colors.primary, fontWeight: 'bold'}}>
-              Place of departure:
-            </Text>
+            <Text style={styles.infoText}>Place of departure:</Text>
             <Text style={styles.text}>{props.placeOfDeparture}</Text>
           </View>
         </View>
 
-        <View style={{flex: 1, alignItems: 'center', marginBottom: '5%'}}>
+        <View style={styles.QRView}>
           {!!qr && (
             <QRCode
               style={styles.qrstyle}

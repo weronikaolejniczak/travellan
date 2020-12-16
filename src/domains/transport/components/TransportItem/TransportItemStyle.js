@@ -100,7 +100,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   pdf: {
     flex: 1,
@@ -139,5 +138,21 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     color: Colors.text,
     marginTop: 40,
+  },
+  infoView: {
+    flex: 1,
+    paddingHorizontal: 22,
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: '5%',
+  },
+  infoText: {
+    color: Colors.primary,
+    fontWeight: 'bold',
+  },
+  QRView: {
+    flex: 1,
+    alignItems: 'center',
+    marginBottom: '5%',
   },
 });
