@@ -31,7 +31,7 @@ const TransportItem = (props) => {
 
   var source = {uri: pdfUri};
   const checkHandler = () => {
-    if (props.qr === '' || pdfUri === null || pdfUri === undefined) {
+    if (qr === '' || qr === null || qr === undefined) {
       props.addQRHandler();
     } else {
       setshowQR(true);
