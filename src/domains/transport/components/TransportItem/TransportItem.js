@@ -26,10 +26,10 @@ const TransportItem = (props) => {
   const tripId = props.tripId;
   const ticketId = props.id;
 
-  var qr = props.qr;
-  var pdfUri = props.pdfUri;
+  let qr = props.qr;
+  let pdfUri = props.pdfUri;
 
-  var source = {uri: pdfUri};
+  let source = {uri: pdfUri};
   const checkHandler = () => {
     if (qr === '' || qr === null || qr === undefined) {
       props.addQRHandler();
@@ -64,7 +64,7 @@ const TransportItem = (props) => {
         type: [DocumentPicker.types.pdf],
       });
 
-      var temp = res.uri;
+      let temp = res.uri;
       pdfUri = temp;
       await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
     } catch (err) {
