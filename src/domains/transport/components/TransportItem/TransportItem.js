@@ -143,17 +143,16 @@ const TransportItem = (props) => {
             }}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
-              //console.log(`number of pages: ${numberOfPages}`);
-              //console.log({source});
+              /**INSTRUCTIONS WHEN PDF IS LOADED */
             }}
             onPageChanged={(page, numberOfPages) => {
-              //console.log(`current page: ${page}`);
+              /**INSTRUCTIONS IF USER CHANGES PAGE */
             }}
             onError={(error) => {
-              //console.log(error);
+              /**INSTRUCTIONS IF ERROR */
             }}
             onPressLink={(uri) => {
-              //console.log(`Link presse: ${uri}`);
+              /**INSTRUCTIONS IF USER PRESSES LINK */
             }}
             style={styles.pdf}
           />
