@@ -32,10 +32,11 @@ const TransportItem = (props) => {
 
   var source = {uri: pdfUri};
   const checkHandler = () => {
-    if (qr === '' || null || undefined) {
+    if (props.qr === '' || pdfUri === null || pdfUri === undefined) {
       props.addQRHandler();
     } else {
       setshowQR(true);
+      console.log(qr)
     }
   };
 
@@ -192,7 +193,7 @@ const TransportItem = (props) => {
 
         <TouchableOpacity
           onPress={async () => {
-            if (pdfUri === '' || null || undefined) {
+            if (pdfUri === '' || pdfUri ===  null || pdfUri === undefined) {
               Alert.alert(
                 'Add ticket pdf?',
                 'Attach document',
