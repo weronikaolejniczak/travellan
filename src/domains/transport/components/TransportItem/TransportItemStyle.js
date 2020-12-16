@@ -87,8 +87,6 @@ export const styles = StyleSheet.create({
   qrstyle: {
     height: '100%',
     width: '100%',
-    //marginTop: height(35),
-    //marginLeft: width(25),
     borderColor: Colors.white,
     borderWidth: 2,
     zIndex: 5,
@@ -104,7 +102,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     //alignContent: 'center',
     justifyContent: 'center',
-    //alignContent: 'space-between',
+
   },
   pdf: {
     flex: 1,
