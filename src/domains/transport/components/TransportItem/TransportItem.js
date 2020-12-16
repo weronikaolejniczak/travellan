@@ -145,7 +145,7 @@ const TransportItem = (props) => {
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
               //console.log(`number of pages: ${numberOfPages}`);
-              console.log({source});
+              //console.log({source});
             }}
             onPageChanged={(page, numberOfPages) => {
               //console.log(`current page: ${page}`);
