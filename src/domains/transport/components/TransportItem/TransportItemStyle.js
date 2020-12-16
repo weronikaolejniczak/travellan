@@ -155,4 +155,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: '5%',
   },
+  infoScrollView: {
+    marginTop: cardHeight * 0.0465,
+  },
+  infoInnerView: {flex: 0.5}
 });

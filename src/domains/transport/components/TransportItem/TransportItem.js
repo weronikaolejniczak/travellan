@@ -226,13 +226,13 @@ const TransportItem = (props) => {
         </View>
 
         <View style={styles.infoView}>
-          <View style={{flex: 0.5}}>
+          <View style={styles.infoInnerView}>
             <Text style={styles.infoText}>Date of departure:</Text>
             <Text style={styles.text}>
               {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
             </Text>
           </View>
-          <View style={{flex: 0.5}}>
+          <View style={styles.infoInnerView}>
             <Text style={styles.infoText}>Place of departure:</Text>
             <Text style={styles.text}>{props.placeOfDeparture}</Text>
           </View>
