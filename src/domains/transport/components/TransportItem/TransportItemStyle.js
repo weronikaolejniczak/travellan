@@ -97,10 +97,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    //paddingTop: '12%',
     paddingHorizontal: '5%',
     alignItems: 'center',
-    //alignContent: 'center',
     justifyContent: 'center',
 
   },
@@ -117,7 +115,6 @@ export const styles = StyleSheet.create({
   containerRow: {
     flex: 1,
     backgroundColor: Colors.background,
-    //paddingTop: '5%',
     paddingHorizontal: '5%',
     alignItems: 'center',
     flexDirection: 'row',
@@ -137,7 +134,6 @@ export const styles = StyleSheet.create({
   icon2: {
     fontSize: 30,
     color: Colors.text,
-    //marginRight: 20,
   },
   icon3: {
     fontSize: 30,
