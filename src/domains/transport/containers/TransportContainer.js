@@ -23,7 +23,7 @@ const TransportContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  const transport = selectedTrip.transportInfo;
+  const transport = selectedTrip.transport;
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
