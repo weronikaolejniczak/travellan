@@ -17,7 +17,6 @@ import Pdf from 'react-native-pdf';
 import Card from 'components/card/Card';
 import * as transportActions from 'actions/transportActions';
 import {styles, cardHeight} from './TransportItemStyle';
-import Colors from 'constants/Colors';
 
 const TransportItem = (props) => {
   const dispatch = useDispatch();
