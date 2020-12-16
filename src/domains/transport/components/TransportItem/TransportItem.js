@@ -36,7 +36,6 @@ const TransportItem = (props) => {
       props.addQRHandler();
     } else {
       setshowQR(true);
-      console.log(qr)
     }
   };
 
