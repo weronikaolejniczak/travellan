@@ -1,12 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  View,
-  ScrollView,
-  FlatList,
-  Platform,
-  Animated,
-  Alert,
-} from 'react-native';
+import {View, ScrollView, FlatList, Animated, Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
@@ -173,8 +166,7 @@ export const transportOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Create a trip"
-          style={{marginRight: 3}}
-          iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+          iconName="plus"
           onPress={() => {
             navData.navigation.navigate('Add transport', {
               tripId: navData.route.params.tripId,
