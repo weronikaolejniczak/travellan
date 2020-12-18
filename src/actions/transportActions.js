@@ -4,6 +4,9 @@ import {FIREBASE_URL} from 'react-native-dotenv';
 import Transport from 'models/Transport';
 
 export const SET_TRANSPORT = 'SET_TRANSPORT';
+export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
+export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
+
 export const SET_QR = 'SET_QR';
 export const SET_PDF = 'SET_PDF';
 
