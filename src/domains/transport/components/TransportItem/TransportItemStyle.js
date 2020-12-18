@@ -87,8 +87,6 @@ export const styles = StyleSheet.create({
   qrstyle: {
     height: '100%',
     width: '100%',
-    //marginTop: height(35),
-    //marginLeft: width(25),
     borderColor: Colors.white,
     borderWidth: 2,
     zIndex: 5,
@@ -99,12 +97,9 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    //paddingTop: '12%',
     paddingHorizontal: '5%',
     alignItems: 'center',
-    //alignContent: 'center',
     justifyContent: 'center',
-    //alignContent: 'space-between',
   },
   pdf: {
     flex: 1,
@@ -119,7 +114,6 @@ export const styles = StyleSheet.create({
   containerRow: {
     flex: 1,
     backgroundColor: Colors.background,
-    //paddingTop: '5%',
     paddingHorizontal: '5%',
     alignItems: 'center',
     flexDirection: 'row',
@@ -139,11 +133,30 @@ export const styles = StyleSheet.create({
   icon2: {
     fontSize: 30,
     color: Colors.text,
-    //marginRight: 20,
   },
   icon3: {
     fontSize: 30,
     color: Colors.text,
     marginTop: 40,
   },
+  infoView: {
+    flex: 1,
+    paddingHorizontal: 22,
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: '5%',
+  },
+  infoText: {
+    color: Colors.primary,
+    fontWeight: 'bold',
+  },
+  QRView: {
+    flex: 1,
+    alignItems: 'center',
+    marginBottom: '5%',
+  },
+  infoScrollView: {
+    marginTop: cardHeight * 0.0465,
+  },
+  infoInnerView: {flex: 0.5}
 });
