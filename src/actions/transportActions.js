@@ -20,6 +20,22 @@ export const setTransport = (tripId, transport) => {
   };
 };
 
+export const createTransport = (tripId, newTransport) => {
+  return {
+    type: CREATE_TRANSPORT,
+    tripId,
+    newTransport,
+  };
+};
+
+export const deleteTransport = (tripId, transportId) => {
+  return {
+    type: DELETE_TRANSPORT,
+    tripId,
+    transportId,
+  };
+};
+
 export const setQR = (tripId, ticketId, QR) => {
   return {
     type: SET_QR,
@@ -42,77 +58,95 @@ export const fetchTransportRequest = (tripId) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await axios
-      .get(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`)
-      .then((res) => res.json())
-      .then((data) => dispatch(setTransport(tripId, data.transport)));
+    axios
+      .get(`${API_URL}/Trips/${userId}/${tripId}/transport.json?auth=${token}`)
+      .then((res) => res.data)
+      .then((transport) => {
+        const loadedTransport = [];
+        for (const key in transport) {
+          loadedTransport.push(
+            new Transport(
+              key,
+              transport[key].isTicketTo,
+              transport[key].isTicketFrom,
+              transport[key].dateOfDeparture,
+              transport[key].placeOfDeparture,
+              transport[key].QR,
+              transport[key].PDF,
+            ),
+          );
+        }
+
+        dispatch(setTransport(tripId, loadedTransport));
+      })
+      .catch(() => {
+        throw new Error('Something went wrong while getting your transport!');
+      });
   };
 };
 
-export const deleteTransportRequest = (tripId, ticketId) => {
+export const deleteTransportRequest = (tripId, transportId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let transport = data.transport;
-    transport = transport.filter((item) => !(item.id === ticketId));
-
-    await axios.patch(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {transport},
-    );
-
-    dispatch(setTransport(tripId, transport));
+    axios
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
+      )
+      .then(() => {
+        dispatch(deleteTransport(tripId, transportId));
+      })
+      .catch(() => {
+        throw new Error(
+          "Couldn't delete the transport. Are you sure it exists?",
+        );
+      });
   };
 };
 
 export const createTransportRequest = (
   tripId,
-  to,
-  from,
-  date,
-  place,
+  isTicketTo,
+  isTicketFrom,
+  dateOfDeparture,
+  placeOfDeparture,
   QR,
   PDF,
 ) => {
-  const newTransport = new Transport(
-    new Date().toString(),
-    to,
-    from,
-    date,
-    place,
-    QR,
-    PDF,
-  );
-
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    await axios({
-      method: 'GET',
-      url: `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    })
-      .then((res) => res.data)
+    axios
+      .post(
+        `${API_URL}/Trips/${userId}/${tripId}/transport.json?auth=${token}`,
+        {
+          isTicketTo,
+          isTicketFrom,
+          dateOfDeparture,
+          placeOfDeparture,
+          QR,
+          PDF,
+        },
+      )
+      .then((res) => [res.data, unescape(res.config.data)])
       .then((data) => {
-        let transport = data.transport;
-        console.log(data);
-
-        if (transport) {
-          transport = transport.concat(newTransport);
-        } else {
-          transport = [newTransport];
-        }
-
-        axios
-          .patch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
-            transport,
-          })
-          .then(() => dispatch(setTransport(tripId, transport)));
+        const transportId = data[0].name;
+        const requestConfig = JSON.parse(data[1]);
+        const newTransport = new Transport(
+          transportId,
+          requestConfig.isTicketTo,
+          requestConfig.isTicketFrom,
+          requestConfig.dateOfDeparture,
+          requestConfig.placeOfDeparture,
+          requestConfig.QR,
+          requestConfig.PDF,
+        );
+        dispatch(createTransport(tripId, newTransport));
+      })
+      .catch(() => {
+        throw new Error('Cannot create transport!');
       });
   };
 };
