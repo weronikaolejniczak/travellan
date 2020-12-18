@@ -42,16 +42,6 @@ const AddTripContainer = (props) => {
   let handleCalendarEvent = addEventToCalendar;
   let localNotify = notificationManager;
 
-  let destinationRegex = new RegExp(
-    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
-  );
-  const destinationChangeHandler = (text) => {
-    text.trim().length === 0 || !destinationRegex.test(text)
-      ? setDestinationIsValid(false)
-      : setDestinationIsValid(true);
-    setDestination(text);
-  };
-
   const callNotification = (dest, date) => {
     localNotify.configure();
     const notificationDateTrigger = new Date();
@@ -79,6 +69,16 @@ const AddTripContainer = (props) => {
         notificationDateTrigger,
       );
     }
+  };
+
+  let destinationRegex = new RegExp(
+    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
+  );
+  const destinationChangeHandler = (text) => {
+    text.trim().length === 0 || !destinationRegex.test(text)
+      ? setDestinationIsValid(false)
+      : setDestinationIsValid(true);
+    setDestination(text);
   };
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
