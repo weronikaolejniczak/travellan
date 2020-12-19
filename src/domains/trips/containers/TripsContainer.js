@@ -37,6 +37,7 @@ const TripsContainer = (props) => {
         setError('Something went wrong!');
       }
       setIsLoading(false);
+      setIsDeleting(false);
     },
     [dispatch],
   );
@@ -55,7 +56,6 @@ const TripsContainer = (props) => {
         {
           text: 'OK',
           onPress: () => {
-            setIsDeleting(false);
             deleteTrip(item.id);
           },
         },
