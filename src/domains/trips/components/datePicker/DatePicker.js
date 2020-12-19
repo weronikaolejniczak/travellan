@@ -12,10 +12,7 @@ const DatePicker = (props) => {
       <View style={styles.pickerContainer}>
         <TouchableOpacity onPress={props.showDatePicker} style={styles.picker}>
           <View style={styles.textContainer}>
-            <Icon
-              name="calendar"
-              style={props.styles.icon}
-            />
+            <Icon name="calendar" style={props.styles.icon} />
             <Text style={styles.pickerText}>
               {props.date.toString().split(' ').slice(1, 4).join(' ')}
             </Text>

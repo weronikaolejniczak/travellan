@@ -63,6 +63,17 @@ export const loginRequest = (email, password) => {
   };
 };
 
+export const logout = () => {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token: undefined,
+      userId: undefined,
+      expiryDate: undefined,
+    }),
+  );
+}
+
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',

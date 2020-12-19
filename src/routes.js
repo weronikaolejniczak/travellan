@@ -43,18 +43,8 @@ import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
 
-<<<<<<< HEAD
-import { 
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem, } from '@react-navigation/drawer';
+import * as auth_func from 'src/actions/userActions.js';
 
-import * as auth_func from 'src/state/user/userActions.js'
-
-
-=======
->>>>>>> 0cf588c839d097e18e7cba0554e054f2768d25fb
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -62,33 +52,25 @@ const Drawer = createDrawerNavigator();
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-<<<<<<< HEAD
-      <DrawerItemList{...props} />
-      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label = "Logout" onPress = {() => {auth_func.logout();}
-      } />
-=======
       <DrawerItemList {...props} />
-      <DrawerItem label="Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label="Logout" onPress={() => alert('Placeholder')} />
->>>>>>> 0cf588c839d097e18e7cba0554e054f2768d25fb
+      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
+      <DrawerItem
+        label="Logout"
+        onPress={() => {
+          auth_func.logout();
+        }}
+      />
     </DrawerContentScrollView>
   );
 }
 
 function DrawerNavigator() {
   return (
-<<<<<<< HEAD
-  <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerType="front" backBehavior="none" >
-      <Drawer.Screen name="My trips" component={TripsOverview}/>
-      <Drawer.Screen name="Startup" component={StartupScreen}/>
-=======
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       drawerType="front"
       backBehavior="none">
       <Drawer.Screen name="My trips" component={TripsContainer} />
->>>>>>> 0cf588c839d097e18e7cba0554e054f2768d25fb
     </Drawer.Navigator>
   );
 }
