@@ -1,14 +1,15 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, FlatList, Alert} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import HeaderButton from 'components/headerButton/HeaderButton';
-import {NoteItem} from '../components';
 import * as notesActions from 'actions/notesActions';
-import {styles} from './NotesContainerStyle';
+
+import { Alert, FlatList, Text, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { ItemlessFrame, LoadingFrame } from 'components/frames';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Colors from 'constants/Colors';
+import HeaderButton from 'components/headerButton/HeaderButton';
+import { NoteItem } from '../components';
+import { styles } from './NotesContainerStyle';
 
 const NotesContainer = (props) => {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ const NotesContainer = (props) => {
     (state) => state.trips.trips.find((item) => item.id === tripId).notes,
   );
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const persistDelete = useCallback(
     (id) => {
@@ -31,29 +32,31 @@ const NotesContainer = (props) => {
       }
       setIsRefreshing(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tripId],
+    [dispatch, tripId],
   );
 
-  const handleDelete = useCallback((noteId) => {
-    setIsRefreshing(true);
-    Alert.alert(
-      'Delete note',
-      'Are you sure?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => persistDelete(noteId),
-        },
-      ],
-      {cancelable: true},
-    );
-    setIsRefreshing(false);
-  }, []);
+  const handleDelete = useCallback(
+    (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete note',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDelete(noteId),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDelete],
+  );
 
   const loadNotes = useCallback(() => {
     setError(null);
@@ -64,8 +67,7 @@ const NotesContainer = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripId]);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
     loadNotes();
@@ -77,7 +79,7 @@ const NotesContainer = (props) => {
 
   if (error) {
     return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
         <Text style={styles.text}>{error}</Text>
       </View>
     );
