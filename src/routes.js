@@ -1,4 +1,5 @@
 import React from 'react';
+import {View, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -51,16 +52,21 @@ const Drawer = createDrawerNavigator();
 /** IN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
 function CustomDrawerContent(props) {
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label= "Example" onPress={() => alert('This is an example')} />
-      <DrawerItem
-        label="Logout"
-        onPress={() => {
-          auth_func.logout();
-        }}
-      />
-    </DrawerContentScrollView>
+    <SafeAreaView
+      style={{flex: 1}}
+      forceInset={{top: 'always', horizontal: 'never'}}>
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View>
+        <DrawerItem
+          label="Logout"
+          onPress={() => {
+            auth_func.logout();
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
