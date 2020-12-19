@@ -16,7 +16,9 @@ const TransportContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
+  console.log(selectedTrip);
   const transport = selectedTrip.transport;
+  console.log(transport);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,8 +75,7 @@ const TransportContainer = (props) => {
       );
       setIsRefreshing(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [deleteTransport],
   );
 
   const loadTransport = useCallback(async () => {
@@ -98,6 +99,7 @@ const TransportContainer = (props) => {
     return (
       <View>
         <Text>Something went wrong!</Text>
+        <Text>Error: {error}</Text>
       </View>
     );
   }
@@ -106,7 +108,7 @@ const TransportContainer = (props) => {
     return <LoadingFrame />;
   }
 
-  if (transport === undefined) {
+  if (Array.isArray(transport) && transport.length < 1) {
     return <ItemlessFrame message="You have no saved transport tickets!" />;
   }
 
