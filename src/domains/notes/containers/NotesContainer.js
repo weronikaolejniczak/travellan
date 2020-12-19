@@ -71,7 +71,7 @@ const NotesContainer = (props) => {
     loadNotes();
   }, [loadNotes]);
 
-  if (isLoading || isRefreshing) {
+  if (!Array.isArray(notes) || isLoading || isRefreshing) {
     return <LoadingFrame />;
   }
 
