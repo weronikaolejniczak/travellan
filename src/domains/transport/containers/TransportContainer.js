@@ -85,7 +85,7 @@ const TransportContainer = (props) => {
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripId]);
+  }, [transport, tripId]);
 
   useEffect(() => {
     loadTransport();
@@ -104,7 +104,10 @@ const TransportContainer = (props) => {
     return <LoadingFrame />;
   }
 
-  if (Array.isArray(transport) && transport.length < 1) {
+  if (
+    !Array.isArray(transport) ||
+    (Array.isArray(transport) && transport.length < 1)
+  ) {
     return <ItemlessFrame message="You have no saved transport tickets!" />;
   }
 
