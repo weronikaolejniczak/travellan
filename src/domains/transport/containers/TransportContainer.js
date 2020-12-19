@@ -16,7 +16,9 @@ const TransportContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  const transport = selectedTrip.transport;
+  const transport = useSelector(
+    (state) => state.trips.trips.find((item) => item.id === tripId).transport,
+  );
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,11 +41,11 @@ const TransportContainer = (props) => {
     [tripId],
   );
 
-  const deleteTransport = useCallback(
-    async (id) => {
+  const persistDelete = useCallback(
+    (id) => {
       setIsRefreshing(true);
       try {
-        await dispatch(transportActions.deleteTransportRequest(tripId, id));
+        dispatch(transportActions.deleteTransportRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
@@ -53,43 +55,45 @@ const TransportContainer = (props) => {
     [tripId],
   );
 
-  const handleDeleteTransport = useCallback(
-    (ticketId) => {
-      setIsRefreshing(true);
-      Alert.alert(
-        'Delete ticket',
-        'Are you sure?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => deleteTransport(ticketId),
-          },
-        ],
-        {cancelable: true},
-      );
-      setIsRefreshing(false);
-    },
-    [deleteTransport],
-  );
+  const handleDelete = useCallback((noteId) => {
+    setIsRefreshing(true);
+    Alert.alert(
+      'Delete note',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => persistDelete(noteId),
+        },
+      ],
+      {cancelable: true},
+    );
+    setIsRefreshing(false);
+  }, []);
 
-  const loadTransport = useCallback(async () => {
+  const loadTransport = useCallback(() => {
+    setError(null);
     setIsLoading(true);
     try {
-      await dispatch(transportActions.fetchTransportRequest(tripId));
+      dispatch(transportActions.fetchTransportRequest(tripId));
     } catch (err) {
       setError(err.message);
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transport, tripId]);
+  }, [tripId]);
 
   useEffect(() => {
     loadTransport();
   }, [loadTransport]);
+
+  if (!Array.isArray(transport) || isLoading || isRefreshing) {
+    return <LoadingFrame />;
+  }
 
   if (error) {
     return (
@@ -100,15 +104,8 @@ const TransportContainer = (props) => {
     );
   }
 
-  if (isLoading || isRefreshing) {
-    return <LoadingFrame />;
-  }
-
-  if (
-    !Array.isArray(transport) ||
-    (Array.isArray(transport) && transport.length < 1)
-  ) {
-    return <ItemlessFrame message="You have no saved transport tickets!" />;
+  if (Array.isArray(transport) && transport.length < 1) {
+    return <ItemlessFrame message="You have no transport saved!" />;
   }
 
   let scrollX = new Animated.Value(0);
@@ -147,7 +144,7 @@ const TransportContainer = (props) => {
               placeOfDeparture={data.item.placeOfDeparture}
               QR={data.item.QR}
               PDF={data.item.PDF}
-              handleDeleteTransport={() => handleDeleteTransport(data.item.id)}
+              handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
             />
           )}
