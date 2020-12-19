@@ -15,7 +15,7 @@
 
 ## Checklist
 
-- [ ] rebased feature branch with develop branch
+- [ ] merged develop branch into feature branch
 - [ ] tested locally
   - [ ] in emulator
   - [ ] on a real device
