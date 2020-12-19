@@ -100,9 +100,9 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
-    const notes = [];
     const transport = [];
     const accommodation = [];
+    const notes = [];
     const map = new Map([], [], null);
 
     await axios
@@ -112,10 +112,10 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         image,
         startDate,
         endDate,
-        budget,
-        notes,
         transport,
         accommodation,
+        budget,
+        notes,
         map,
       })
       .then((res) => res.data)
@@ -128,10 +128,10 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
           image,
           startDate,
           endDate,
-          budget,
-          notes,
           transport,
           accommodation,
+          budget,
+          notes,
           map,
         );
 

@@ -16,9 +16,7 @@ const TransportContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  console.log(selectedTrip);
   const transport = selectedTrip.transport;
-  console.log(transport);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,20 +77,18 @@ const TransportContainer = (props) => {
   );
 
   const loadTransport = useCallback(async () => {
-    setIsRefreshing(true);
+    setIsLoading(true);
     try {
       await dispatch(transportActions.fetchTransportRequest(tripId));
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
+    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tripId]);
 
   useEffect(() => {
-    loadTransport().then(() => {
-      setIsLoading(false);
-    });
+    loadTransport();
   }, [loadTransport]);
 
   if (error) {
