@@ -78,12 +78,13 @@ const NotesContainer = (props) => {
   if (error) {
     return (
       <View style={[styles.centered, {backgroundColor: Colors.background}]}>
-        <Text style={styles.text}>{error}</Text>
+        <Text style={styles.text}>Something went wrong!</Text>
+        <Text style={styles.text}>Error: {error}</Text>
       </View>
     );
   }
 
-  if (!notes) {
+  if (Array.isArray(notes) && notes.length < 1) {
     return <ItemlessFrame message="You have no notes saved!" />;
   }
 
