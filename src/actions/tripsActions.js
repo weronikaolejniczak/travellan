@@ -54,10 +54,10 @@ export const fetchTripsRequest = () => {
               data[key].image,
               data[key].startDate,
               data[key].endDate,
-              data[key].budget,
-              data[key].notes,
               data[key].transport,
               data[key].accommodation,
+              data[key].budget,
+              data[key].notes,
               data[key].map,
             ),
           );
