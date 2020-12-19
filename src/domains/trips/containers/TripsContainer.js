@@ -58,7 +58,7 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination) => {
     props.navigation.navigate('Details', {
       tripId: id,
-      tripDestination: destination,
+      destination,
     });
   };
 
