@@ -120,9 +120,8 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       })
       .then((res) => res.data)
       .then((data) => {
-        const tripId = data.id;
         const newTrip = new Trip(
-          tripId,
+          data.name,
           destination,
           region,
           image,
