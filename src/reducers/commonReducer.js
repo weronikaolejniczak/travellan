@@ -9,7 +9,7 @@ import {
   SET_PDF,
 } from 'actions/transportActions';
 import {SET_ACCOMMODATION} from 'actions/accommodationActions';
-import {SET_NOTES, CREATE_NOTE, DELETE_NOTE} from 'actions/notesActions';
+import {SET_NOTES, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE} from 'actions/notesActions';
 import {SET_BUDGET} from 'actions/budgetActions';
 import {SET_MAP} from 'actions/mapActions';
 
@@ -75,6 +75,13 @@ export default (state = initialState, action) => {
         );
         break;
 
+      case EDIT_NOTE:
+        draft.trips[tripIndex].notes = [
+          ...draft.trips[tripIndex].notes
+        ];
+        draft.trips[tripIndex].notes[noteId] = action.newNote
+          break;
+      
       case SET_BUDGET:
         draft.trips[tripIndex].budget = action.budget;
         break;

@@ -16,9 +16,13 @@ import {
   import Colors from 'constants/Colors';
 
   const EditNoteContainer = (props) => {
-
+    
+    const tripId = props.route.params.tripId;
+    const selectedTrip = useSelector((state) =>
+    state.trips.trips.find((item) => item.id === tripId),
+  );
+    const dispatch = useDispatch();
     noteId = props.route.params.noteId;
-
     const [titleIsValid, setTitleIsValid] = useState(false);
     const [titleSubmitted, setTitleSubmitted] = useState(false);
     const [descriptionIsValid, setDescriptionIsValid] = useState(false);
@@ -26,6 +30,37 @@ import {
     const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState(props.route.params.title);
     const [description, setDescription] = useState(props.route.params.description);
+    const [category, setCategory] = useState(props.route.params.category);
+    const [categoryIsValid, setCategoryIsValid] = useState(false);
+
+    const categoryList = [
+        {
+          label: 'To Do',
+          value: 'To Do',
+          color: '#FF4500',
+          fontWeight: 'bold',
+        },
+        {
+          label: 'To Pack',
+          value: 'To Pack',
+          color: '#FF4500',
+          fontWeight: 'bold',
+        },
+        {
+          label: 'Diaries',
+          value: 'Diaries',
+          color: '#FF4500',
+          fontWeight: 'bold',
+        },
+      ];
+    
+      const categoryChangeHandler = (cat) => {
+        cat.trim().length === 0
+          ? setCategoryIsValid(false)
+          : setCategoryIsValid(true);
+        setCategory(cat);
+      };
+
     const titleChangeHandler = (text) => {
         text.trim().length === 0 ? setTitleIsValid(false) : setTitleIsValid(true);
         setTitle(text);
@@ -37,9 +72,28 @@ import {
         setDescription(text);
       };
 
-    const submitHandler = () => { 
-        console.log("working")
-    }
+      const submitHandler = useCallback(async () => {
+        setIsLoading(true);
+        if (!titleIsValid || !descriptionIsValid) {
+          setTitleSubmitted(true);
+          setDescriptionSubmitted(true);
+        } else {
+          await dispatch(
+            notesActions.editNoteRequest(tripId, noteId, title, 'To Do', description),
+          );
+          props.navigation.navigate('Notes', {
+            tripId: selectedTrip.id,
+          });
+        }
+        setIsLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [titleIsValid,
+        descriptionIsValid,
+        tripId,
+        noteId,
+        title,
+        'To Do',
+        description]);
     
     return (
         <ScrollView style={styles.container}>

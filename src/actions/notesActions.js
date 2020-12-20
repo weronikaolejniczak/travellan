@@ -6,6 +6,7 @@ import Note from 'models/Note';
 export const SET_NOTES = 'SET_NOTES';
 export const CREATE_NOTE = 'CREATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
+export const EDIT_NOTE = 'EDIT_NOTE';
 
 const API_URL = FIREBASE_URL;
 
@@ -30,6 +31,15 @@ export const deleteNote = (tripId, noteId) => {
     type: DELETE_NOTE,
     tripId,
     noteId,
+  };
+};
+
+export const editNote = (tripId, newNote, noteId) => {
+  return {
+    type: EDIT_NOTE,
+    tripId,
+    newNote,
+    noteId
   };
 };
 
@@ -109,6 +119,37 @@ export const createNoteRequest = (tripId, category, title, description) => {
       })
       .catch(() => {
         throw new Error('Cannot create a note!');
+      });
+  };
+};
+
+export const editNoteRequest = (tripId, noteId, title, category, description) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const date = new Date();
+    axios
+      .put(`${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`, {
+        date,
+        category,
+        title,
+        description,
+      })
+      .then((res) => [res.data, unescape(res.config.data)])
+      .then((data) => {
+        const noteId = noteId;
+        const requestConfig = JSON.parse(data[1]);
+        const newNote = new Note(
+          noteId,
+          requestConfig.date,
+          'To Pack',
+          requestConfig.title,
+          requestConfig.description,
+        );
+        dispatch(editNote(tripId, newNote, noteId));
+      })
+      .catch(() => {
+        throw new Error('Cannot edit a note!');
       });
   };
 };

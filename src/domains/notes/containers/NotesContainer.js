@@ -26,7 +26,8 @@ const NotesContainer = (props) => {
       props.navigation.navigate('Edit note', {
         noteId,
         title,
-        description
+        description,
+        tripId: props.route.params.tripId,
       });
   };
 
@@ -105,7 +106,7 @@ const NotesContainer = (props) => {
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <NoteItem handleDelete={handleDelete} {...data.item}
-            handleEdit={handleEdit} {...data.item}/>
+            handleEdit={handleEdit} {...data.item} />
         )}
       />
     </View>
