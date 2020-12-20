@@ -1,4 +1,7 @@
-import React, {useState, useEffect, useReducer, useCallback} from 'react';
+import * as userActions from 'actions/userActions';
+
+import SplashScreen from 'react-native-splash-screen';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -10,13 +13,11 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
+import { useDispatch } from 'react-redux';
 
-import Input from '../components/input/Input';
-import * as userActions from 'actions/userActions';
-import {styles} from './AuthenticationContainerStyle';
 import Colors from 'constants/Colors';
+import { Input } from '../components';
+import { styles } from './AuthenticationContainerStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 

@@ -7,7 +7,7 @@ import { HeaderButton, ItemlessFrame } from 'utils';
 import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import { styles } from './AccommodationContainerStyle';
 
-import { DUMMY_HOTELS as accommodation } from '../data/DummyHotels';
+import { DUMMY_HOTELS as accommodation } from 'data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {

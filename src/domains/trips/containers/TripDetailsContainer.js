@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import NavigationButton from '../components';
+import { NavigationButton } from '../components';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { styles } from './TripDetailsContainerStyle.js';
 

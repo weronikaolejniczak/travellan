@@ -14,7 +14,7 @@ import Budget from 'models/Budget';
 import BudgetField from 'components';
 import Colors from 'constants/Colors';
 import { CURRENCIES } from 'data/Currencies';
-import { prepareValue } from '../helpers';
+import { prepareValue } from 'helpers';
 import { styles } from './AddCurrencyContainerStyle';
 
 var incorrectCurrency =

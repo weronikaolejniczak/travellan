@@ -1,4 +1,6 @@
-import React, {useState, useEffect, useReducer, useCallback} from 'react';
+import * as userActions from 'actions/userActions';
+
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -10,12 +12,11 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import Input from 'domains/user/components/input/Input';
-import * as userActions from 'actions/userActions';
-import {styles} from './RegisterContainerStyle';
 import Colors from 'constants/Colors';
+import { Input } from '../components';
+import { styles } from './RegisterContainerStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
