@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, Text } from 'react-native';
 
+import { Input } from 'utils';
 import { styles } from './AddAccommodationContainerStyle';
 
 const AddAccommodationContainer = (props) => {
@@ -9,6 +10,7 @@ const AddAccommodationContainer = (props) => {
   return (
     <ScrollView indicatorStyle="white" style={styles.container}>
       <Text>Hello!</Text>
+      <Input />
     </ScrollView>
   );
 };
