@@ -18,14 +18,14 @@ import {
   const EditNoteContainer = (props) => {
 
     noteId = props.route.params.noteId;
-    title = props.route.params.title;
-    description= props.route.params.description;
+
     const [titleIsValid, setTitleIsValid] = useState(false);
     const [titleSubmitted, setTitleSubmitted] = useState(false);
     const [descriptionIsValid, setDescriptionIsValid] = useState(false);
     const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [title, setTitle] = useState(props.route.params.title);
+    const [description, setDescription] = useState(props.route.params.description);
     const titleChangeHandler = (text) => {
         text.trim().length === 0 ? setTitleIsValid(false) : setTitleIsValid(true);
         setTitle(text);
