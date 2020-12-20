@@ -19,7 +19,7 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
-            <TouchableOpacity onPress={() => console.log("test")}>
+            <TouchableOpacity onPress={() => handleEdit(id)}>
               <Icon name="edit" style={styles.icon} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleDelete(id)}>
@@ -40,7 +40,7 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
-            <TouchableOpacity onPress={() => console.log("test")}>
+            <TouchableOpacity onPress={() => handleEdit(id)}>
               <Icon name="edit" style={styles.icon} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleDelete(id)}>

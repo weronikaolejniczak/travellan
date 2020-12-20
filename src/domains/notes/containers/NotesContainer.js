@@ -22,6 +22,12 @@ const NotesContainer = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const handleEdit = (noteId) => {
+      props.navigation.navigate('Edit note', {
+        noteId: noteId,
+      });
+  };
+
   const persistDelete = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -96,7 +102,8 @@ const NotesContainer = (props) => {
         data={notes}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
-          <NoteItem handleDelete={handleDelete} {...data.item} />
+          <NoteItem handleDelete={handleDelete} {...data.item}
+            handleEdit={handleEdit} {...data.item}/>
         )}
       />
     </View>

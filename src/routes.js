@@ -39,6 +39,7 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
+import EditNoteContainer from 'domains/notes/containers/EditNoteContainer'
 import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
@@ -124,6 +125,7 @@ export default function Navigation() {
           options={notesOptions}
         />
         <Stack.Screen name="Add note" component={AddNoteContainer} />
+        <Stack.Screen name="Edit note" component={EditNoteContainer} />
         <Stack.Screen
           name="Map"
           component={MapContainer}
