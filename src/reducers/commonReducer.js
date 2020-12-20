@@ -1,4 +1,4 @@
-import produceImmer from 'utilities/produceImmer';
+import produceImmer from 'helpers/produceImmer';
 
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
 import {SET_TRANSPORT, SET_QR, SET_PDF} from 'actions/transportActions';
