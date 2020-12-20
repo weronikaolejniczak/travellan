@@ -1,10 +1,10 @@
 /**
  * This file contains metric values that are global to the application
  */
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 // screen's dimensions
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 // responsive metrics
 export const tiny = 5;
