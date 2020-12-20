@@ -1,6 +1,6 @@
-import {StyleSheet, Platform} from 'react-native';
-import {spacingForCardInset} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import Colors from 'constants/Colors';
+import { StyleSheet, Platform } from 'react-native';
+import { spacingForCardInset } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 
 export const styles = StyleSheet.create({
   contentContainer: {

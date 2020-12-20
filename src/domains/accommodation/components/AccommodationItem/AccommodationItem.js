@@ -1,16 +1,13 @@
 import React from 'react';
-import {View, ScrollView, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 
-import Card from 'components/card/Card';
-import ReadMore from 'components/readMore/ReadMore';
-import {AccommodationItemHeader} from 'domains/accommodation/components';
-import {styles} from './AccommodationItemStyle';
-import {Colors} from 'constants';
+import { AccommodationItemHeader } from 'domains/accommodation/components';
+import { Card, ReadMore } from 'utils';
+import { Colors } from 'constants';
+import { styles } from './AccommodationItemStyle';
 
-const AccommodationItem = (props) => {
-  const {data} = props;
-
+const AccommodationItem = ({ data }) => {
   return (
     <Card style={styles.accommodation}>
       <ScrollView>

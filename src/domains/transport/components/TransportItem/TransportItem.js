@@ -1,4 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import * as transportActions from 'actions/transportActions';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import QRCode from 'react-native-qrcode-svg';
+import DocumentPicker from 'react-native-document-picker';
+import Pdf from 'react-native-pdf';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -7,16 +14,10 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import QRCode from 'react-native-qrcode-svg';
-import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
+import { useDispatch } from 'react-redux';
 
-import Card from 'components/card/Card';
-import * as transportActions from 'actions/transportActions';
-import {styles, cardHeight} from './TransportItemStyle';
+import { Card } from 'utils';
+import { styles, cardHeight } from './TransportItemStyle';
 
 const TransportItem = (props) => {
   const dispatch = useDispatch();

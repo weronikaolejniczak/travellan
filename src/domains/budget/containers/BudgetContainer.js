@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   ScrollView,
@@ -10,11 +10,11 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {LineChart} from 'react-native-chart-kit';
+import { useSelector, useDispatch } from 'react-redux';
+import { LineChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Card from 'components/card/Card';
+import { Card } from 'utils';
 import * as categories from 'domains/budget/data/Categories';
 import * as budgetActions from 'actions/budgetActions';
 import {
@@ -23,8 +23,8 @@ import {
   prepareLabelsForLinechart,
   prepareDataForLinechart,
   prepareValue,
-} from 'domains/budget/utils';
-import {styles} from './BudgetContainerStyle';
+} from 'domains/budget/helpers';
+import { styles } from './BudgetContainerStyle';
 import Colors from 'constants/Colors';
 
 const screenWidth = Dimensions.get('window').width;

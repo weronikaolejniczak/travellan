@@ -1,21 +1,22 @@
 import React from 'react';
-import {View, Text, ImageBackground} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { View, Text, ImageBackground } from 'react-native';
 
-import {styles} from './AccommodationItemHeaderStyle';
-import {Colors, Layout} from 'constants';
+import { Colors, Layout } from 'constants';
+import { styles } from './AccommodationItemHeaderStyle';
 
-const AccItemHeader = (props) => {
-  const {image, type, rating, name, address} = props;
+const AccommodationItemHeader = (props) => {
+  const { image, type, rating, name, address } = props;
 
   return (
-    <ImageBackground style={styles.image} source={{uri: image}}>
+    <ImageBackground style={styles.image} source={{ uri: image }}>
       <LinearGradient
         colors={['transparent', Colors.cards]}
-        start={{x: 0.0, y: 0.0}}
-        end={{x: 0.0, y: 1.0}}
+        start={{ x: 0.0, y: 0.0 }}
+        end={{ x: 0.0, y: 1.0 }}
         locations={[0.4, 1]}
-        style={Layout.fill}>
+        style={Layout.fill}
+      >
         <View style={styles.type}>
           <Text style={styles.text}>{type}</Text>
         </View>
@@ -31,4 +32,4 @@ const AccItemHeader = (props) => {
   );
 };
 
-export default AccItemHeader;
+export default AccommodationItemHeader;

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Switch} from 'react-native';
+import { Switch } from 'react-native';
 
-import Colors from './Card/node_modules/constants/Colors';
+import Colors from 'constants/Colors';
 
 const CustomSwitch = (props) => {
   return (

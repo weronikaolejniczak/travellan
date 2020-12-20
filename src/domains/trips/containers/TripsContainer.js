@@ -10,7 +10,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
-import Colors from '../../../utils/Card/node_modules/constants/Colors';
+import Colors from 'constants/Colors';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();

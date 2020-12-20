@@ -1,4 +1,5 @@
-import React, {useState, useCallback} from 'react';
+import Snackbar from 'react-native-snackbar';
+import React, { useState, useCallback } from 'react';
 import {
   Text,
   View,
@@ -8,21 +9,17 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import Snackbar from 'react-native-snackbar';
+import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
-import BudgetField from 'components/budgetField/BudgetField';
-import DatePicker from '../components/datePicker/DatePicker';
-import {createTripRequest} from 'actions/tripsActions';
-import {styles} from './AddTripContainerStyle';
-import {CURRENCIES} from 'data/Currencies';
+import BudgetField from 'components';
 import Colors from 'constants/Colors';
-import {addEventToCalendar} from 'services/handleCalendarEvent';
-import moment from 'moment';
-import {notificationManager} from 'services/manageNotifications';
-
-const time_now = moment.utc();
+import { CURRENCIES } from 'data/Currencies';
+import { DatePicker } from 'utils';
+import { addEventToCalendar } from 'services/handleCalendarEvent';
+import { createTripRequest } from 'actions/tripsActions';
+import { notificationManager } from 'services/manageNotifications';
+import { styles } from './AddTripContainerStyle';
 
 const AddTripContainer = (props) => {
   const dispatch = useDispatch();

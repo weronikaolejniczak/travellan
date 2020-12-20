@@ -1,4 +1,6 @@
-import React, {useState, useCallback} from 'react';
+import * as budgetActions from 'actions/budgetActions';
+
+import React, { useState, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -6,15 +8,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
-import BudgetField from 'components/budgetField/BudgetField';
-import * as budgetActions from 'actions/budgetActions';
-import {prepareValue} from '../utils';
-import {CURRENCIES} from 'data/Currencies';
-import {styles} from './AddCurrencyContainerStyle';
+import BudgetField from 'components';
 import Colors from 'constants/Colors';
+import { CURRENCIES } from 'data/Currencies';
+import { prepareValue } from '../helpers';
+import { styles } from './AddCurrencyContainerStyle';
 
 var incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';

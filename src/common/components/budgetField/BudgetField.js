@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-import Switch from 'components/switch/Switch';
-import {styles} from './BudgetFieldStyle';
-import {CURRENCIES} from 'data/Currencies';
+import { Switch } from 'utils';
+import { styles } from './BudgetFieldStyle';
+import { CURRENCIES } from 'data/Currencies';
 
 const BudgetField = (props) => {
   const query = props.currency;

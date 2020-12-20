@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Colors from 'constants/Colors';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 export const cardHeight = height * 0.83;
 export const cardWidth = width * 0.923;
 export const spacingForCardInset = width * 0.03;

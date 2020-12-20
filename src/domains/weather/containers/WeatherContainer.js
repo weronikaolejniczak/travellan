@@ -14,7 +14,7 @@ import fetchWeather from 'services/fetchWeather';
 import Background from 'domains/weather/components/background/Background';
 import Graphics from 'domains/weather/components/graphics/Graphics';
 import Ground from 'domains/weather/components/ground/Ground';
-import {styles} from './WeatherContainerStyle';
+import { styles } from './WeatherContainerStyle';
 import Colors from 'constants/Colors';
 import {notificationManager} from 'services/manageNotifications';
 

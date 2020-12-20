@@ -1,4 +1,6 @@
-import React, {useState, useCallback} from 'react';
+import * as accommodationActions from 'actions/accommodationActions';
+
+import React, { useState, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -8,14 +10,13 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { MultiPickerMaterialDialog } from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Card from 'components/card/Card';
-import * as accommodationActions from 'actions/accommodationActions';
-import {styles} from './AddAccommodationContainerStyle';
 import Colors from 'constants/Colors';
+import { Card } from 'utils';
+import { styles } from './AddAccommodationContainerStyle';
 
 const AddAccommodationContainer = (props) => {
   const dispatch = useDispatch();

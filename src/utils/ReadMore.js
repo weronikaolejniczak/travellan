@@ -1,7 +1,7 @@
-import React, {useState, useCallback} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
-import Colors from './Card/node_modules/constants/Colors';
+import Colors from 'constants/Colors';
 
 const ReadMore = (props) => {
   const NUM_OF_LINES = 3;
