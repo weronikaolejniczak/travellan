@@ -7,7 +7,7 @@ import ReadMore from 'components/readMore/ReadMore';
 import {styles} from './NoteItemStyle';
 
 const NoteItem = (props) => {
-  const {category, date, description, handleDelete, id, title} = props;
+  const {category, date, description, handleDelete, handleEdit, id, title} = props;
   const dateOfCreation = new Date(date).toLocaleString();
   const toDoList = description.split(' ').join('\n');
 
@@ -19,6 +19,9 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
+            <TouchableOpacity onPress={() => console.log("test")}>
+              <Icon name="edit" style={styles.icon} />
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => handleDelete(id)}>
               <Icon name="delete" style={styles.icon} />
             </TouchableOpacity>
