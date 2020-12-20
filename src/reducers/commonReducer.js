@@ -1,7 +1,13 @@
 import produceImmer from 'utilities/produceImmer';
 
 import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
-import {SET_TRANSPORT, SET_QR, SET_PDF} from 'actions/transportActions';
+import {
+  SET_TRANSPORT,
+  CREATE_TRANSPORT,
+  DELETE_TRANSPORT,
+  SET_QR,
+  SET_PDF,
+} from 'actions/transportActions';
 import {SET_ACCOMMODATION} from 'actions/accommodationActions';
 import {SET_NOTES, CREATE_NOTE, DELETE_NOTE} from 'actions/notesActions';
 import {SET_BUDGET} from 'actions/budgetActions';
@@ -31,6 +37,20 @@ export default (state = initialState, action) => {
         break;
 
       case SET_TRANSPORT:
+        draft.trips[tripIndex].transport = action.transport;
+        break;
+      case CREATE_TRANSPORT:
+        draft.trips[tripIndex].transport = [
+          ...draft.trips[tripIndex].transport,
+          action.newTransport,
+        ];
+        break;
+      case DELETE_TRANSPORT:
+        draft.trips[tripIndex].transport = draft.trips[
+          tripIndex
+        ].transport.filter((item) => item.id !== action.transportId);
+        break;
+
       case SET_QR:
       case SET_PDF:
         draft.trips[tripIndex].transport = action.transport;

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, Alert, TouchableHighlight, FlatList } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
@@ -49,15 +49,13 @@ const TripsContainer = (props) => {
       'Are you sure?',
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
           onPress: () => setIsDeleting(false),
+          style: 'cancel',
+          text: 'Cancel',
         },
         {
+          onPress: () => deleteTrip(item.id),
           text: 'OK',
-          onPress: () => {
-            deleteTrip(item.id);
-          },
         },
       ],
       { cancelable: true, onDismiss: () => setIsDeleting(false) },
@@ -67,8 +65,8 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
+        destination,
         tripId: id,
-        tripDestination: destination,
       });
   };
 
