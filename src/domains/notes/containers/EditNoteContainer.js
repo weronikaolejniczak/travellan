@@ -12,7 +12,7 @@ import {
   
   import {notificationManager} from 'services/manageNotifications';
   import * as notesActions from 'actions/notesActions';
-  import {styles} from './AddNoteContainerStyle';
+  import {styles} from './EditNoteContainerStyle';
   import Colors from 'constants/Colors';
 
   const EditNoteContainer = (props) => {
