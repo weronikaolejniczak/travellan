@@ -1,14 +1,14 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, FlatList, Alert} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import HeaderButton from 'components/headerButton/HeaderButton';
-import {NoteItem} from '../components';
 import * as notesActions from 'actions/notesActions';
-import {styles} from './NotesContainerStyle';
+
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, FlatList, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
 import Colors from 'constants/Colors';
+import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import { NoteItem } from '../components';
+import { styles } from './NotesContainerStyle';
 
 const NotesContainer = (props) => {
   const dispatch = useDispatch();

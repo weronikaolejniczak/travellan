@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {Text, View, Alert, TouchableHighlight, FlatList} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import * as tripsActions from 'actions/tripsActions';
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, Alert, TouchableHighlight, FlatList } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
 
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TripItem} from '../components';
-import HeaderButton from 'components/headerButton/HeaderButton';
-import * as tripsActions from 'actions/tripsActions';
-import {styles} from './TripsContainerStyle';
+import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import { TripItem } from '../components';
+import { styles } from './TripsContainerStyle';
 import Colors from '../../../utils/Card/node_modules/constants/Colors';
 
 const TripsContainer = (props) => {

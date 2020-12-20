@@ -1,4 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import * as transportActions from 'actions/transportActions';
+
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -7,15 +9,13 @@ import {
   Animated,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import HeaderButton from 'components/headerButton/HeaderButton';
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TransportItem} from '../components';
-import * as transportActions from 'actions/transportActions';
-import {cardWidth} from '../components/TransportItem/TransportItemStyle';
-import {styles} from './TransportContainerStyle';
+import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import { TransportItem } from '../components';
+import { cardWidth } from '../components/TransportItem/TransportItemStyle';
+import { styles } from './TransportContainerStyle';
 
 const TransportContainer = (props) => {
   const dispatch = useDispatch();
