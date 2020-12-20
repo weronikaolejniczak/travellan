@@ -17,11 +17,12 @@ import {
 
   const EditNoteContainer = (props) => {
 
-
+    const { noteId } = props;
+    console.log(noteId)
     return (
         <ScrollView style={styles.container}>
         <View style={styles.smallPaddingTop}>
-          <Text style={styles.label}>Set Category</Text>
+          <Text style={styles.label}></Text>
           </View>
         </ScrollView>
       );
