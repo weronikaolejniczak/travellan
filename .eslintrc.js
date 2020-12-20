@@ -21,6 +21,14 @@ module.exports = {
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'prettier/prettier': 'error',
+    'sort-imports-es6-autofix/sort-imports-es6': [
+      2,
+      {
+        ignoreCase: false,
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+      },
+    ],
   },
-  plugins: ['prettier'],
+  plugins: ['sort-imports-es6-autofix', 'prettier'],
 };
