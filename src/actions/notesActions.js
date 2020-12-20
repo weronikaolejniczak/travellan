@@ -129,27 +129,24 @@ export const editNoteRequest = (tripId, noteId, title, category, description) =>
     const userId = getState().auth.userId;
     const date = new Date();
     axios
-      .put(`${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`, {
+      .put(`${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,{
+      date,
+      category,
+      title,
+      description,
+    }).then(() => {
+      const newNote = new Note(
+        noteId,
         date,
-        category,
         title,
+        'To Pack',
         description,
-      })
-      .then((res) => [res.data, unescape(res.config.data)])
-      .then((data) => {
-        const noteId = noteId;
-        const requestConfig = JSON.parse(data[1]);
-        const newNote = new Note(
-          noteId,
-          requestConfig.date,
-          'To Pack',
-          requestConfig.title,
-          requestConfig.description,
-        );
-        dispatch(editNote(tripId, newNote, noteId));
-      })
-      .catch(() => {
-        throw new Error('Cannot edit a note!');
-      });
-  };
-};
+      );
+      dispatch(editNote(tripId, newNote, noteId))
+    })
+    
+    .catch(() => {
+      throw new Error("Couldn't edit note");
+    });
+      
+  }};

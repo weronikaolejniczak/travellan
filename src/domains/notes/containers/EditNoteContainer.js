@@ -93,7 +93,8 @@ import {
         noteId,
         title,
         'To Do',
-        description]);
+        description,
+      ]);
     
     return (
         <ScrollView style={styles.container}>
