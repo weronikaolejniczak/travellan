@@ -10,7 +10,7 @@ import {TripItem} from '../components';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripsActions from 'actions/tripsActions';
 import {styles} from './TripsContainerStyle';
-import Colors from 'constants/Colors';
+import Colors from '../../../utils/Card/node_modules/constants/Colors';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();
