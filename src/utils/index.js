@@ -1,4 +1,5 @@
 export { default as Card } from './Card/Card';
+export { default as Checkbox } from './Checkbox/Checkbox';
 export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as HeaderButton } from './HeaderButton';
 export { default as Input } from './Input';
