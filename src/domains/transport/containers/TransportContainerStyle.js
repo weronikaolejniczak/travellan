@@ -3,7 +3,7 @@ import {spacingForCardInset} from '../components/TransportItem/TransportItemStyl
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
-  scrollview: {
+  scrollView: {
     flex: 1,
     backgroundColor: Colors.background,
     paddingTop: '12%',
@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
+  },
+  justifyRow: {
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   contentInsetIOS: {
     top: 0,

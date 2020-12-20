@@ -1,9 +1,15 @@
 import React from 'react';
-import {View, ScrollView, Text, ImageBackground, TouchableOpacity} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {addEventToCalendar} from 'services/handleCalendarEvent';
-import NavigationButton from '../components/navigationButton/NavigationButton';
+import {NavigationButton} from '../components';
 import {styles} from './TripDetailsContainerStyle.js';
 
 const TripDetailsContainer = (props) => {
@@ -11,15 +17,17 @@ const TripDetailsContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  let CalendarEventChandler = addEventToCalendar;
-  const author = selectedTrip.image.authorName;
-  const username = selectedTrip.image.username;
-  const imageUrl = selectedTrip.image.imageUrl;
-  const destination = selectedTrip.destination;
-  let startDateOrigin= selectedTrip.startDate;
-  let endDateOrigin= selectedTrip.endDate;
-  const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
-  const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
+  const {destination, startDate, endDate, image} = selectedTrip;
+  const {author, username, imageUrl} = image;
+  const startDateFormatted = selectedTrip.startDate
+    .split(' ')
+    .slice(1, 4)
+    .join(' ');
+  const endDateFormatted = selectedTrip.endDate
+    .split(' ')
+    .slice(1, 4)
+    .join(' ');
+  const CalendarEventChandler = addEventToCalendar;
 
   return (
     <ScrollView style={styles.container}>
@@ -39,10 +47,12 @@ const TripDetailsContainer = (props) => {
               </View>
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
-                  <Text style={[styles.text, styles.date]}>{startDate}</Text>
+                  <Text style={[styles.text, styles.date]}>
+                    {startDateFormatted}
+                  </Text>
                 ) : (
                   <Text style={[styles.text, styles.date]}>
-                    {startDate} - {endDate}
+                    {startDateFormatted} - {endDateFormatted}
                   </Text>
                 )}
               </Text>
@@ -93,8 +103,8 @@ const TripDetailsContainer = (props) => {
             onPress={() => {
               CalendarEventChandler.addToCalendar(
                 'Trip to ' + destination,
-                Date.parse(startDateOrigin),
-                Date.parse(endDateOrigin),
+                Date.parse(startDate),
+                Date.parse(endDate),
                 destination,
                 'Remember to pack everything and check weather forecast!',
               );
@@ -103,7 +113,6 @@ const TripDetailsContainer = (props) => {
               Add your trip to your Google Calendar!
             </Text>
           </TouchableOpacity>
-          
         </View>
       </View>
     </ScrollView>
@@ -112,7 +121,7 @@ const TripDetailsContainer = (props) => {
 
 export const tripDetailsOptions = (navigation) => {
   return {
-    headerTitle: navigation.route.params.tripDestination,
+    headerTitle: navigation.route.params.destination,
   };
 };
 
