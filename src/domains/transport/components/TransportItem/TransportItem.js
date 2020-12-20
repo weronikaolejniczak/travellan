@@ -21,53 +21,60 @@ import { styles, cardHeight } from './TransportItemStyle';
 
 const TransportItem = (props) => {
   const dispatch = useDispatch();
-  const [showQR, setshowQR] = useState(false);
-  const [showPDF, setshowPDF] = useState(false);
+  const {
+    tripId,
+    destination,
+    isTicketTo,
+    dateOfDeparture,
+    placeOfDeparture,
+    id,
+    QR,
+    PDF,
+    handleAddQR,
+    handleDeleteTransport,
+  } = props;
+  const source = {uri: PDF};
 
-  const tripId = props.tripId;
-  const ticketId = props.id;
+  const [QRCodeString, setQRCodeString] = useState(QR);
+  const [PDFUri, setPDFUri] = useState(PDF);
+  const [showQR, setShowQR] = useState(false);
+  const [showPDF, setShowPDF] = useState(false);
 
-  let qr = props.qr;
-  let pdfUri = props.pdfUri;
-
-  let source = {uri: pdfUri};
   const checkHandler = () => {
-    if (qr === '' || qr === null || qr === undefined) {
-      props.addQRHandler();
+    if (QR === '' || QR === null || QR === undefined) {
+      handleAddQR();
     } else {
-      setshowQR(true);
+      setShowQR(true);
     }
   };
 
   const deleteQR = useCallback(async () => {
-    qr = '';
-    await dispatch(transportActions.updateQR(tripId, ticketId, qr));
-    setshowQR(false);
-  }, [dispatch, tripId, ticketId, qr]);
+    setQRCodeString('');
+    await dispatch(transportActions.updateQR(tripId, id, QRCodeString));
+    setShowQR(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tripId, id, QRCodeString]);
 
   const deletePDF = useCallback(async () => {
-    pdfUri = '';
-    await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
-    setshowPDF(false);
-  }, [dispatch, tripId, ticketId, pdfUri]);
+    setPDFUri('');
+    await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
+    setShowPDF(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tripId, id, PDFUri]);
 
-  const closeQRhandler = () => {
-    setshowQR(false);
-  };
+  const closeQRhandler = () => setShowQR(false);
 
-  const closePDFhandler = () => {
-    setshowPDF(false);
-  };
+  const closePDFhandler = () => setShowPDF(false);
 
   const pickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
+      const temp = res.uri;
+      setPDFUri(temp);
 
-      let temp = res.uri;
-      pdfUri = temp;
-      await dispatch(transportActions.updatePDF(tripId, ticketId, pdfUri));
+      await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
       } else {
@@ -83,7 +90,7 @@ const TransportItem = (props) => {
         transparent={true}
         visible={showQR}
         onRequestClose={() => {
-          setshowQR(false);
+          setShowQR(false);
         }}>
         <View style={styles.container}>
           <TouchableOpacity
@@ -92,12 +99,7 @@ const TransportItem = (props) => {
             <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <View style={styles.containerQR}>
-            <QRCode
-              style={styles.qrstyle}
-              value={qr}
-              size={300}
-              logoSize={300}
-            />
+            <QRCode style={styles.QR} value={QR} size={300} logoSize={300} />
             <View style={styles.containerRow}>
               <TouchableOpacity
                 style={styles.buttonTouchable}
@@ -130,7 +132,7 @@ const TransportItem = (props) => {
         transparent={true}
         visible={showPDF}
         onRequestClose={() => {
-          setshowPDF(false);
+          setShowPDF(false);
         }}>
         <View style={styles.container}>
           <TouchableOpacity
@@ -155,13 +157,13 @@ const TransportItem = (props) => {
             onPressLink={(uri) => {
               /**INSTRUCTIONS IF USER PRESSES LINK */
             }}
-            style={styles.pdf}
+            style={styles.PDF}
           />
           <TouchableOpacity
             style={styles.buttonTouchable}
             onPress={() => {
               Alert.alert(
-                'Delete Ticket-pdf',
+                'Delete PDF ticket.',
                 'Are you sure?',
                 [
                   {
@@ -181,7 +183,7 @@ const TransportItem = (props) => {
         </View>
       </Modal>
       <View style={styles.actions}>
-        <TouchableOpacity onPress={props.deleteTransportHandler}>
+        <TouchableOpacity onPress={handleDeleteTransport}>
           <Icon name="delete" style={styles.icon} />
         </TouchableOpacity>
 
@@ -191,10 +193,10 @@ const TransportItem = (props) => {
 
         <TouchableOpacity
           onPress={() => {
-            if (pdfUri === '' || pdfUri === null || pdfUri === undefined) {
+            if (PDFUri === '' || PDFUri === null || PDFUri === undefined) {
               Alert.alert(
-                'Add ticket pdf?',
-                'Attach document',
+                'Add a ticket PDF?',
+                'Attach document to the ticket.',
                 [
                   {
                     text: 'Cancel',
@@ -208,7 +210,7 @@ const TransportItem = (props) => {
                 {cancelable: true},
               );
             } else {
-              setshowPDF(true);
+              setShowPDF(true);
             }
           }}>
           <CommunityIcon name="file-pdf-box" style={styles.icon} />
@@ -218,11 +220,11 @@ const TransportItem = (props) => {
       <ScrollView
         style={[{marginTop: cardHeight * 0.0465}]}
         indicatorStyle="white">
-        <View style={[styles.rowCenter, {paddingVertical: 15}]}>
-          {props.to === true ? (
-            <Text style={[styles.header]}>to {props.destination}</Text>
+        <View style={styles.rowCenter}>
+          {isTicketTo === true ? (
+            <Text style={styles.header}>to {destination}</Text>
           ) : (
-            <Text style={[styles.header]}>from {props.destination}</Text>
+            <Text style={styles.header}>from {destination}</Text>
           )}
         </View>
 
@@ -230,20 +232,20 @@ const TransportItem = (props) => {
           <View style={styles.infoInnerView}>
             <Text style={styles.infoText}>Date of departure:</Text>
             <Text style={styles.text}>
-              {props.dateOfDeparture.split(' ').splice(0, 5).join(' ')}
+              {dateOfDeparture.split(' ').splice(0, 5).join(' ')}
             </Text>
           </View>
           <View style={styles.infoInnerView}>
             <Text style={styles.infoText}>Place of departure:</Text>
-            <Text style={styles.text}>{props.placeOfDeparture}</Text>
+            <Text style={styles.text}>{placeOfDeparture}</Text>
           </View>
         </View>
 
         <View style={styles.QRView}>
-          {!!qr && (
+          {!!QRCodeString && (
             <QRCode
-              style={styles.qrstyle}
-              value={qr}
+              style={styles.QR}
+              value={QRCodeString}
               size={250}
               logoSize={250}
             />

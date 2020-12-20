@@ -39,29 +39,20 @@ const AddTripContainer = (props) => {
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
 
-  let CalendarEventChandler = addEventToCalendar;
-
-  let destinationRegex = new RegExp(
-    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
-  );
-  const destinationChangeHandler = (text) => {
-    text.trim().length === 0 || !destinationRegex.test(text)
-      ? setDestinationIsValid(false)
-      : setDestinationIsValid(true);
-    setDestination(text);
-  };
-
+  let handleCalendarEvent = addEventToCalendar;
   let localNotify = notificationManager;
-  const callNotification = (destination, startDate) => {
+
+  const callNotification = (dest, date) => {
     localNotify.configure();
-    var notificationDateTrigger = new Date();
-    var currentDate = new Date(Date.now());
-    notificationDateTrigger.setDate(startDate.getDate() - 1);
-    if (startDate.getDate() <= currentDate.getDate()) {
+    const notificationDateTrigger = new Date();
+    const currentDate = new Date(Date.now());
+    notificationDateTrigger.setDate(date.getDate() - 1);
+
+    if (date.getDate() <= currentDate.getDate()) {
       return localNotify.scheduleNotification(
         'DepartureAlert',
         5,
-        'Journey to ' + destination + ' starts today!',
+        'Journey to ' + dest + ' starts today!',
         'We wish you a great trip!',
         {},
         {},
@@ -78,6 +69,16 @@ const AddTripContainer = (props) => {
         notificationDateTrigger,
       );
     }
+  };
+
+  let destinationRegex = new RegExp(
+    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
+  );
+  const destinationChangeHandler = (text) => {
+    text.trim().length === 0 || !destinationRegex.test(text)
+      ? setDestinationIsValid(false)
+      : setDestinationIsValid(true);
+    setDestination(text);
   };
 
   let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
@@ -169,7 +170,7 @@ const AddTripContainer = (props) => {
       );
       props.navigation.goBack();
       setIsLoading(false);
-      callNotification(destination, startDate)
+      callNotification(destination, startDate);
       Snackbar.show({
         text: 'Add Trip to Google Calendar',
         duration: Snackbar.LENGTH_LONG,
@@ -177,7 +178,7 @@ const AddTripContainer = (props) => {
           text: 'Add',
           textColor: 'orange',
           onPress: () => {
-            CalendarEventChandler.addToCalendar(
+            handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
               startDate,
               endDate,
@@ -186,7 +187,7 @@ const AddTripContainer = (props) => {
             );
           },
         },
-      })
+      });
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
       await dispatch(
@@ -207,7 +208,7 @@ const AddTripContainer = (props) => {
           text: 'Add',
           textColor: 'orange',
           onPress: () => {
-            CalendarEventChandler.addToCalendar(
+            handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
               startDate,
               endDate,
@@ -216,8 +217,9 @@ const AddTripContainer = (props) => {
             );
           },
         },
-      }) 
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     budget,
     account,

@@ -1,11 +1,11 @@
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 import {
-  View,
+  ImageBackground,
   ScrollView,
   Text,
-  ImageBackground,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -18,38 +18,43 @@ const TripDetailsContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  let CalendarEventChandler = addEventToCalendar;
-  const author = selectedTrip.image.authorName;
-  const username = selectedTrip.image.username;
-  const imageUrl = selectedTrip.image.imageUrl;
-  const destination = selectedTrip.destination;
-  let startDateOrigin= selectedTrip.startDate;
-  let endDateOrigin= selectedTrip.endDate;
-  const startDate = selectedTrip.startDate.split(' ').slice(1, 4).join(' ');
-  const endDate = selectedTrip.endDate.split(' ').slice(1, 4).join(' ');
+  const { destination, startDate, endDate, image } = selectedTrip;
+  const { author, username, imageUrl } = image;
+  const startDateFormatted = selectedTrip.startDate
+    .split(' ')
+    .slice(1, 4)
+    .join(' ');
+  const endDateFormatted = selectedTrip.endDate
+    .split(' ')
+    .slice(1, 4)
+    .join(' ');
+  const CalendarEventChandler = addEventToCalendar;
 
   return (
     <ScrollView style={styles.container}>
       <View>
-        <ImageBackground style={styles.image} source={{uri: imageUrl}}>
+        <ImageBackground style={styles.image} source={{ uri: imageUrl }}>
           <LinearGradient
             colors={['rgba(0,0,0,0.00)', '#222222']}
-            start={{x: 0.0, y: 0.0}}
-            end={{x: 0.0, y: 1.0}}
+            start={{ x: 0.0, y: 0.0 }}
+            end={{ x: 0.0, y: 1.0 }}
             locations={[0.6, 1]}
-            style={[{flex: 1}]}>
+            style={[{ flex: 1 }]}
+          >
             <View style={styles.dateContainer}>
-              <View style={{justifyContent: 'space-around'}}>
-                <Text style={[styles.text, {textAlign: 'center'}]}>
+              <View style={{ justifyContent: 'space-around' }}>
+                <Text style={[styles.text, { textAlign: 'center' }]}>
                   Photo by {author} @Unsplash/{username}
                 </Text>
               </View>
               <Text style={[styles.text, styles.header, styles.date]}>
                 {startDate === endDate ? (
-                  <Text style={[styles.text, styles.date]}>{startDate}</Text>
+                  <Text style={[styles.text, styles.date]}>
+                    {startDateFormatted}
+                  </Text>
                 ) : (
                   <Text style={[styles.text, styles.date]}>
-                    {startDate} - {endDate}
+                    {startDateFormatted} - {endDateFormatted}
                   </Text>
                 )}
               </Text>
@@ -100,12 +105,13 @@ const TripDetailsContainer = (props) => {
             onPress={() => {
               CalendarEventChandler.addToCalendar(
                 'Trip to ' + destination,
-                Date.parse(startDateOrigin),
-                Date.parse(endDateOrigin),
+                Date.parse(startDate),
+                Date.parse(endDate),
                 destination,
                 'Remember to pack everything and check weather forecast!',
               );
-            }}>
+            }}
+          >
             <Text style={[styles.action, styles.callToAction]}>
               Add your trip to your Google Calendar!
             </Text>
@@ -118,7 +124,7 @@ const TripDetailsContainer = (props) => {
 
 export const tripDetailsOptions = (navigation) => {
   return {
-    headerTitle: navigation.route.params.tripDestination,
+    headerTitle: navigation.route.params.destination,
   };
 };
 
