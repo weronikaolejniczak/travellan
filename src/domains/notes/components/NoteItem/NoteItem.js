@@ -40,7 +40,7 @@ const NoteItem = (props) => {
             <Text numberOfLines={1} style={styles.subtitle}>
               {category}
             </Text>
-            <TouchableOpacity onPress={() => handleEdit(id)}>
+            <TouchableOpacity onPress={() => handleEdit(id, title, description)}>
               <Icon name="edit" style={styles.icon} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleDelete(id)}>

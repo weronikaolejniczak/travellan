@@ -17,8 +17,9 @@ import {
 
   const EditNoteContainer = (props) => {
 
-    const { noteId } = props;
-    console.log(noteId)
+    noteId = props.route.params.noteId;
+    title = props.route.params.title;
+    description= props.route.params.description;
     return (
         <ScrollView style={styles.container}>
         <View style={styles.smallPaddingTop}>
