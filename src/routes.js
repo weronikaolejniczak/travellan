@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -127,7 +127,7 @@ export default function Navigation() {
         <Stack.Screen
           name="Map"
           component={MapContainer}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Weather" component={WeatherContainer} />
       </Stack.Navigator>
@@ -151,7 +151,7 @@ const defaultNavOptions = {
   headerTitleStyle: {
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 7,
   },
 };
