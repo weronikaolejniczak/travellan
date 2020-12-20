@@ -1,7 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+
 import Colors from 'constants/Colors';
 
-export const datePickerStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
   label: {
     color: Colors.primary,
     fontSize: 18,

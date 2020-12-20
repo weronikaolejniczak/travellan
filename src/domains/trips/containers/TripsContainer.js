@@ -1,16 +1,16 @@
 import * as tripsActions from 'actions/tripsActions';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import SplashScreen from 'react-native-splash-screen';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, Alert, TouchableHighlight, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import SplashScreen from 'react-native-splash-screen';
 
+import Colors from 'constants/Colors';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
-import Colors from 'constants/Colors';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,15 +8,13 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import fetchWeather from 'services/fetchWeather';
-import Background from 'domains/weather/components/background/Background';
-import Graphics from 'domains/weather/components/graphics/Graphics';
-import Ground from 'domains/weather/components/ground/Ground';
-import { styles } from './WeatherContainerStyle';
 import Colors from 'constants/Colors';
-import {notificationManager} from 'services/manageNotifications';
+import fetchWeather from 'services/fetchWeather';
+import { Background, Graphics, Ground } from '../components';
+import { notificationManager } from 'services/manageNotifications';
+import { styles } from './WeatherContainerStyle';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -156,7 +154,7 @@ const WeatherContainer = (props) => {
                     </View>
                   </View>
                   <View
-                    style={[styles.ground, {bottom: -windowHeight * 0.015}]}>
+                    style={[styles.ground, { bottom: -windowHeight * 0.015 }]}>
                     <Ground styles={styles} activeDay={activeDay} />
                   </View>
                 </View>
@@ -233,10 +231,7 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}>
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Feels like</Text>
                         </View>
@@ -248,10 +243,7 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}>
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Sunrise</Text>
                         </View>
@@ -280,10 +272,7 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}>
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Feels like</Text>
                         </View>
@@ -295,10 +284,7 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}>
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Sunset</Text>
                         </View>

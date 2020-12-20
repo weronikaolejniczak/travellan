@@ -1,10 +1,17 @@
-import React from 'react';
-import {View, ScrollView, Text, ImageBackground, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import {addEventToCalendar} from 'services/handleCalendarEvent';
-import NavigationButton from '../components/navigationButton/NavigationButton';
-import {styles} from './TripDetailsContainerStyle.js';
+import React from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
+import { useSelector } from 'react-redux';
+
+import NavigationButton from '../components';
+import { addEventToCalendar } from 'services/handleCalendarEvent';
+import { styles } from './TripDetailsContainerStyle.js';
 
 const TripDetailsContainer = (props) => {
   const tripId = props.route.params.tripId;
@@ -103,7 +110,6 @@ const TripDetailsContainer = (props) => {
               Add your trip to your Google Calendar!
             </Text>
           </TouchableOpacity>
-          
         </View>
       </View>
     </ScrollView>
