@@ -139,7 +139,7 @@ export const editNoteRequest = (tripId, noteId, title, category, description) =>
         noteId,
         date,
         title,
-        'To Pack',
+        category,
         description,
       );
       dispatch(editNote(tripId, newNote, noteId))

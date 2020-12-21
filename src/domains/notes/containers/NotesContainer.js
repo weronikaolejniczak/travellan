@@ -22,9 +22,10 @@ const NotesContainer = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleEdit = (noteId, title, description) => {
+  const handleEdit = (noteId, category, title, description) => {
       props.navigation.navigate('Edit note', {
         noteId,
+        category,
         title,
         description,
         tripId: props.route.params.tripId,

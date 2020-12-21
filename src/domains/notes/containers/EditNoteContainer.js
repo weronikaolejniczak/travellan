@@ -33,6 +33,8 @@ import {
     const [category, setCategory] = useState(props.route.params.category);
     const [categoryIsValid, setCategoryIsValid] = useState(false);
 
+    console.log(props)
+    console.log(description)
     const categoryList = [
         {
           label: 'To Do',
@@ -79,7 +81,7 @@ import {
           setDescriptionSubmitted(true);
         } else {
           await dispatch(
-            notesActions.editNoteRequest(tripId, noteId, title, 'To Do', description),
+            notesActions.editNoteRequest(tripId, noteId, title, category, description),
           );
           props.navigation.navigate('Notes', {
             tripId: selectedTrip.id,
@@ -92,7 +94,7 @@ import {
         tripId,
         noteId,
         title,
-        'To Do',
+        category,
         description,
       ]);
     
