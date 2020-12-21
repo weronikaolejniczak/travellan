@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
     ScrollView,
     Text,
@@ -8,9 +8,7 @@ import {
     ActivityIndicator,
   } from 'react-native';
   import {useDispatch, useSelector} from 'react-redux';
-  import RNPickerSelect from 'react-native-picker-select';
   
-  import {notificationManager} from 'services/manageNotifications';
   import * as notesActions from 'actions/notesActions';
   import {styles} from './EditNoteContainerStyle';
   import Colors from 'constants/Colors';
@@ -31,37 +29,7 @@ import {
     const [title, setTitle] = useState(props.route.params.title);
     const [description, setDescription] = useState(props.route.params.description);
     const [category, setCategory] = useState(props.route.params.category);
-    const [categoryIsValid, setCategoryIsValid] = useState(false);
 
-    console.log(props)
-    console.log(description)
-    const categoryList = [
-        {
-          label: 'To Do',
-          value: 'To Do',
-          color: '#FF4500',
-          fontWeight: 'bold',
-        },
-        {
-          label: 'To Pack',
-          value: 'To Pack',
-          color: '#FF4500',
-          fontWeight: 'bold',
-        },
-        {
-          label: 'Diaries',
-          value: 'Diaries',
-          color: '#FF4500',
-          fontWeight: 'bold',
-        },
-      ];
-    
-      const categoryChangeHandler = (cat) => {
-        cat.trim().length === 0
-          ? setCategoryIsValid(false)
-          : setCategoryIsValid(true);
-        setCategory(cat);
-      };
 
     const titleChangeHandler = (text) => {
         text.trim().length === 0 ? setTitleIsValid(false) : setTitleIsValid(true);
