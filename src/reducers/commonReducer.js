@@ -1,17 +1,22 @@
 import produceImmer from 'utilities/produceImmer';
 
-import {SET_TRIPS, DELETE_TRIP, CREATE_TRIP} from 'actions/tripsActions';
+import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
 import {
-  SET_TRANSPORT,
   CREATE_TRANSPORT,
   DELETE_TRANSPORT,
-  SET_QR,
   SET_PDF,
+  SET_QR,
+  SET_TRANSPORT,
 } from 'actions/transportActions';
-import {SET_ACCOMMODATION} from 'actions/accommodationActions';
-import {SET_NOTES, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE} from 'actions/notesActions';
-import {SET_BUDGET} from 'actions/budgetActions';
-import {SET_MAP} from 'actions/mapActions';
+import { SET_ACCOMMODATION } from 'actions/accommodationActions';
+import {
+  CREATE_NOTE,
+  DELETE_NOTE,
+  EDIT_NOTE,
+  SET_NOTES,
+} from 'actions/notesActions';
+import { SET_BUDGET } from 'actions/budgetActions';
+import { SET_MAP } from 'actions/mapActions';
 
 export const initialState = {
   trips: [],
@@ -76,12 +81,10 @@ export default (state = initialState, action) => {
         break;
 
       case EDIT_NOTE:
-        draft.trips[tripIndex].notes = [
-          ...draft.trips[tripIndex].notes
-        ];
-        draft.trips[tripIndex].notes[noteId] = action.newNote
-          break;
-      
+        draft.trips[tripIndex].notes = [...draft.trips[tripIndex].notes];
+        draft.trips[tripIndex].notes[noteId] = action.newNote;
+        break;
+
       case SET_BUDGET:
         draft.trips[tripIndex].budget = action.budget;
         break;

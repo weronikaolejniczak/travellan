@@ -1,13 +1,13 @@
 import React from 'react';
-import {TouchableOpacity, Text, Dimensions} from 'react-native';
+import { Dimensions, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from 'constants/Colors';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const NavigationButton = (props) => {
-  const {navigation, to, tripId, icon} = props;
+  const { navigation, to, tripId, icon } = props;
 
   const styles = {
     button: {
@@ -31,8 +31,9 @@ const NavigationButton = (props) => {
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        navigation.navigate(to, {tripId});
-      }}>
+        navigation.navigate(to, { tripId });
+      }}
+    >
       <Text style={styles.buttonText}>{to}</Text>
       <Icon name={icon} size={42} color={Colors.text} />
     </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -12,10 +12,7 @@ const DatePicker = (props) => {
       <View style={styles.pickerContainer}>
         <TouchableOpacity onPress={props.showDatePicker} style={styles.picker}>
           <View style={styles.textContainer}>
-            <Icon
-              name="calendar"
-              style={props.styles.icon}
-            />
+            <Icon name="calendar" style={props.styles.icon} />
             <Text style={styles.pickerText}>
               {props.date.toString().split(' ').slice(1, 4).join(' ')}
             </Text>

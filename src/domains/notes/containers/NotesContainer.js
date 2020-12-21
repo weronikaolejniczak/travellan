@@ -23,13 +23,13 @@ const NotesContainer = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleEdit = (noteId, category, title, description) => {
-      props.navigation.navigate('Edit note', {
-        noteId,
-        category,
-        title,
-        description,
-        tripId: props.route.params.tripId,
-      });
+    props.navigation.navigate('Edit note', {
+      noteId,
+      category,
+      title,
+      description,
+      tripId: props.route.params.tripId,
+    });
   };
 
   const persistDelete = useCallback(
@@ -106,8 +106,12 @@ const NotesContainer = (props) => {
         data={notes}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
-          <NoteItem handleDelete={handleDelete} {...data.item}
-            handleEdit={handleEdit} {...data.item} />
+          <NoteItem
+            handleDelete={handleDelete}
+            {...data.item}
+            handleEdit={handleEdit}
+            {...data.item}
+          />
         )}
       />
     </View>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FIREBASE_URL} from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-dotenv';
 
 export const SET_BUDGET = 'SET_BUDGET';
 
@@ -42,7 +42,7 @@ export const patchBudgetRequest = (tripId, updatedBudget) => {
 
     await axios.patch(
       `https://travellan-project.firebaseio.com/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {budget},
+      { budget },
     );
 
     dispatch(setBudget(tripId, budget));

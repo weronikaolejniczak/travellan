@@ -1,4 +1,4 @@
-import {Colors, Layout} from 'constants';
+import { Colors, Layout } from 'constants';
 
 export default {
   container: {

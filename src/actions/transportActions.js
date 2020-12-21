@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FIREBASE_URL} from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Transport from 'models/Transport';
 
@@ -165,7 +165,7 @@ export const patchQRRequest = (tripId, ticketId, QR) => {
 
     await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      {QR},
+      { QR },
     );
 
     await dispatch(setQR(tripId, ticketId, QR));
@@ -186,7 +186,7 @@ export const patchPDFRequest = (tripId, ticketId, PDF) => {
 
     await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      {PDF},
+      { PDF },
     );
 
     dispatch(setPDF(tripId, PDF));

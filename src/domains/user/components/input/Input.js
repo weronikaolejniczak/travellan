@@ -1,6 +1,6 @@
-import React, {useReducer, useEffect} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-/** IMPORTS FROM WITHIN THE MODULE */
+import React, { useEffect, useReducer } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+/** iMPORTS FROM WITHIN THE MODULE */
 import Colors from 'constants/Colors';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
@@ -31,7 +31,7 @@ const Input = (props) => {
     touched: false,
   });
 
-  const {onInputChange, id} = props;
+  const { onInputChange, id } = props;
 
   useEffect(() => {
     if (inputState.touched) {
@@ -57,11 +57,11 @@ const Input = (props) => {
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
-    dispatch({type: INPUT_CHANGE, value: text, isValid: isValid});
+    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
 
   const lostFocusHandler = () => {
-    dispatch({type: INPUT_BLUR});
+    dispatch({ type: INPUT_BLUR });
   };
 
   return (

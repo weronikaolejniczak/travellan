@@ -1,13 +1,13 @@
-import React, {useCallback, useState} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
-import {RNCamera} from 'react-native-camera';
-import {useDispatch, useSelector} from 'react-redux';
+import { RNCamera } from 'react-native-camera';
+import { useDispatch, useSelector } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as transportActions from 'actions/transportActions';
-import {styles} from './AddQRContainerStyle';
+import { styles } from './AddQRContainerStyle';
 import Colors from 'constants/Colors';
 
 const AddQRContainer = (props) => {
@@ -20,7 +20,7 @@ const AddQRContainer = (props) => {
     state.trips.trips.find((item) => item.id === tripId),
   );
 
-  var qr = props.qr;
+  let qr = props.qr;
 
   const [QR, setQR] = useState('');
   const [showQRscanner, setshowQRscanner] = useState(true);
@@ -34,7 +34,7 @@ const AddQRContainer = (props) => {
 
   const acceptHandler = useCallback(async () => {
     setIsLoading(true);
-    qr = {QR};
+    qr = { QR };
     qr = qr.QR;
     await dispatch(transportActions.patchQRRequest(tripId, ticketId, qr));
     props.navigation.navigate('Transport', {
@@ -64,7 +64,8 @@ const AddQRContainer = (props) => {
           topContent={
             <TouchableOpacity
               style={styles.buttonTouchable}
-              onPress={switchLight}>
+              onPress={switchLight}
+            >
               <MaterialIcon name={'flashlight'} style={styles.icon} />
             </TouchableOpacity>
           }
@@ -86,13 +87,15 @@ const AddQRContainer = (props) => {
             ) : (
               <TouchableOpacity
                 style={styles.buttonTouchable}
-                onPress={acceptHandler}>
+                onPress={acceptHandler}
+              >
                 <MaterialIcon name={'check'} style={styles.icon} />
               </TouchableOpacity>
             )}
             <TouchableOpacity
               style={styles.buttonTouchable}
-              onPress={redoHandler}>
+              onPress={redoHandler}
+            >
               <MaterialIcon name={'close'} style={styles.icon} />
             </TouchableOpacity>
           </View>

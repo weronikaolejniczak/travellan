@@ -1,18 +1,18 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   ScrollView,
   Text,
-  View,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
+  View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
 
-import {notificationManager} from 'services/manageNotifications';
+import { notificationManager } from 'services/manageNotifications';
 import * as notesActions from 'actions/notesActions';
-import {styles} from './AddNoteContainerStyle';
+import { styles } from './AddNoteContainerStyle';
 import Colors from 'constants/Colors';
 
 const AddNoteContainer = (props) => {
@@ -83,13 +83,15 @@ const AddNoteContainer = (props) => {
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titleIsValid,
+  }, [
+    titleIsValid,
     descriptionIsValid,
     categoryIsValid,
     tripId,
     category,
     title,
-    description]);
+    description,
+  ]);
 
   const submitHandlerToPack = useCallback(async () => {
     setToPackList(description.split(' '));
@@ -106,10 +108,7 @@ const AddNoteContainer = (props) => {
       });
     }
     setIsLoading(false);
-    callNotification(
-      category,
-      description,
-    )
+    callNotification(category, description);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     titleIsValid,
@@ -157,7 +156,7 @@ const AddNoteContainer = (props) => {
       <View style={styles.smallPaddingTop}>
         <Text style={styles.label}>Set Category</Text>
         <View style={styles.smallPaddingTop} />
-        <View style={{borderWidth: 1, borderColor: 'white', borderRadius: 4}}>
+        <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
           <RNPickerSelect
             onChangeText={categoryChangeHandler}
             items={categoryList}
@@ -220,7 +219,8 @@ const AddNoteContainer = (props) => {
             ) : (
               <TouchableOpacity
                 style={styles.button}
-                onPress={submitHandlerToPack}>
+                onPress={submitHandlerToPack}
+              >
                 <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             )}

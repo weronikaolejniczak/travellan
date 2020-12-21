@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FIREBASE_URL} from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Note from 'models/Note';
 
@@ -39,7 +39,7 @@ export const editNote = (tripId, newNote, noteId) => {
     type: EDIT_NOTE,
     tripId,
     newNote,
-    noteId
+    noteId,
   };
 };
 
@@ -123,30 +123,34 @@ export const createNoteRequest = (tripId, category, title, description) => {
   };
 };
 
-export const editNoteRequest = (tripId, noteId, title, category, description) => {
+export const editNoteRequest = (
+  tripId,
+  noteId,
+  title,
+  category,
+  description,
+) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const date = new Date();
     axios
-      .put(`${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,{
-      date,
-      category,
-      title,
-      description,
-    }).then(() => {
-      const newNote = new Note(
-        noteId,
-        date,
-        title,
-        category,
-        description,
-      );
-      dispatch(editNote(tripId, newNote, noteId))
-    })
-    
-    .catch(() => {
-      throw new Error("Couldn't edit note");
-    });
-      
-  }};
+      .put(
+        `${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,
+        {
+          date,
+          category,
+          title,
+          description,
+        },
+      )
+      .then(() => {
+        const newNote = new Note(noteId, date, title, category, description);
+        dispatch(editNote(tripId, newNote, noteId));
+      })
+
+      .catch(() => {
+        throw new Error("Couldn't edit note");
+      });
+  };
+};

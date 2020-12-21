@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {Layout, Typography} from 'constants';
+import { Layout, Typography } from 'constants';
 import AppStyles from 'styles/AppStyles';
 
 export const styles = StyleSheet.create({

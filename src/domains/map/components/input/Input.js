@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 
 const Input = (props) => {
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{ alignItems: 'center' }}>
       <View style={props.styles.inputContainer}>
         <TextInput
           placeholder="Add title"

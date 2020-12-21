@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {TOM_TOM_API} from 'react-native-dotenv';
+import { TOM_TOM_API } from 'react-native-dotenv';
 
 const API_KEY = TOM_TOM_API;
 

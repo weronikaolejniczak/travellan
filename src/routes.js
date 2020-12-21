@@ -1,11 +1,11 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
+  DrawerItemList,
+  createDrawerNavigator,
 } from '@react-navigation/drawer';
 
 import StartupContainer, {
@@ -39,7 +39,7 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
-import EditNoteContainer from 'domains/notes/containers/EditNoteContainer'
+import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
@@ -62,7 +62,8 @@ function DrawerNavigator() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       drawerType="front"
-      backBehavior="none">
+      backBehavior="none"
+    >
       <Drawer.Screen name="My trips" component={TripsContainer} />
     </Drawer.Navigator>
   );
@@ -129,7 +130,7 @@ export default function Navigation() {
         <Stack.Screen
           name="Map"
           component={MapContainer}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Weather" component={WeatherContainer} />
       </Stack.Navigator>
@@ -153,7 +154,7 @@ const defaultNavOptions = {
   headerTitleStyle: {
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 7,
   },
 };
