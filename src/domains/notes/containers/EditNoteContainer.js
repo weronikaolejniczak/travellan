@@ -23,9 +23,9 @@ import {
   );
     const dispatch = useDispatch();
     noteId = props.route.params.noteId;
-    const [titleIsValid, setTitleIsValid] = useState(false);
+    const [titleIsValid, setTitleIsValid] = useState(true);
     const [titleSubmitted, setTitleSubmitted] = useState(false);
-    const [descriptionIsValid, setDescriptionIsValid] = useState(false);
+    const [descriptionIsValid, setDescriptionIsValid] = useState(true);
     const [descriptionSubmitted, setDescriptionSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState(props.route.params.title);
@@ -97,9 +97,68 @@ import {
         category,
         description,
       ]);
+
+      const submitHandlerToPack = useCallback(async () => {
+        setIsLoading(true);
+        if (!descriptionIsValid) {
+          setTitleSubmitted(true);
+          setDescriptionSubmitted(true);
+        } else {
+          await dispatch(
+            notesActions.editNoteRequest(tripId, noteId, title, category, description),
+          );
+          props.navigation.navigate('Notes', {
+            tripId: selectedTrip.id,
+          });
+        }
+        setIsLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [titleIsValid,
+        descriptionIsValid,
+        tripId,
+        noteId,
+        title,
+        category,
+        description,
+      ]);
     
     return (
-        <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}>
+      
+
+      {category === 'To Pack' ? (
+        <ScrollView>
+          <View style={styles.smallPaddingTop}>
+            <Text style={styles.label}>Content</Text>
+            <TextInput
+              numberOfLines={4}
+              style={styles.input}
+              placeholder="Content"
+              placeholderTextColor={'grey'}
+              value={description}
+              onChangeText={descriptionChangeHandler}
+              multiline
+            />
+            {!descriptionIsValid && descriptionSubmitted && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>Enter a description!</Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.buttonContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.white} />
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={submitHandlerToPack}>
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+      ) : (
+        <ScrollView>
           <View style={styles.smallPaddingTop}>
             <Text style={styles.label}>Title</Text>
             <TextInput
@@ -143,8 +202,12 @@ import {
             )}
           </View>
         </ScrollView>
-      );
-  }
+      )}
+    </ScrollView>
+  );
+};
+
+        
 
 
   export default EditNoteContainer;
