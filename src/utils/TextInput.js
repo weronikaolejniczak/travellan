@@ -5,7 +5,7 @@ const CustomTextInput = (props) => {
   const {
     disabled,
     error,
-    handleChange,
+    onChange,
     label,
     multiline,
     outlined,
@@ -21,11 +21,11 @@ const CustomTextInput = (props) => {
         mode={outlined && 'outlined'}
         multiline={multiline}
         numberOfLines={multiline && 5}
-        onChangeText={handleChange}
+        onChangeText={onChange}
         value={value}
       />
       <HelperText type="error" visible={!!error}>
-        Error: {error}
+        {error}
       </HelperText>
     </>
   );
