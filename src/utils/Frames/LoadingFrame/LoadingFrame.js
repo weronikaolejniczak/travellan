@@ -1,8 +1,7 @@
-import React from 'react';
-import {View, ActivityIndicator} from 'react-native';
-
 import Colors from 'constants/Colors';
-import {styles} from './LoadingFrameStyle';
+import React from 'react';
+import styles from './LoadingFrameStyle';
+import { ActivityIndicator, View } from 'react-native';
 
 const Loading = () => {
   return (

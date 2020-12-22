@@ -7,5 +7,7 @@ export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';
 export { default as LoadingFrame } from './Frames/LoadingFrame/LoadingFrame';
 export { default as RadioButton } from './RadioButton';
 export { default as ReadMore } from './ReadMore';
+export { default as ScrollView } from './Frames/ScrollView';
 export { default as Switch } from './Switch';
 export { default as TextInput } from './TextInput';
+export { default as View } from './Frames/View';
