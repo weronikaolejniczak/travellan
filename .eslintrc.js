@@ -18,13 +18,7 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'sort-imports': [
       'error',
-      {
-        ignoreCase: false,
-        ignoreDeclarationSort: false,
-        ignoreMemberSort: false,
-        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
-        allowSeparatedGroups: false,
-      },
+      { memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'] },
     ],
     'sort-keys': ['error', 'asc'],
     'space-before-blocks': ['error', 'always'],
@@ -34,10 +28,8 @@ module.exports = {
       2,
       {
         ignoreCase: false,
-        ignoreDeclarationSort: false,
         ignoreMemberSort: false,
         memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
-        allowSeparatedGroups: false,
       },
     ],
   },
