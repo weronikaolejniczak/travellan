@@ -1,10 +1,11 @@
 export { default as Button } from './Button';
 export { default as Card } from './Card/Card';
-export { default as Checkbox } from './Checkbox/Checkbox';
+export { default as Checkbox } from './Checkbox';
 export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as HeaderButton } from './HeaderButton';
-export { default as TextInput } from './TextInput';
 export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';
 export { default as LoadingFrame } from './Frames/LoadingFrame/LoadingFrame';
+export { default as RadioButton } from './RadioButton';
 export { default as ReadMore } from './ReadMore';
 export { default as Switch } from './Switch';
+export { default as TextInput } from './TextInput';
