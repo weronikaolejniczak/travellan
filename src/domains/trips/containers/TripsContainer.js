@@ -1,21 +1,22 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {Text, View, Alert, TouchableHighlight, FlatList} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
 
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TripItem} from '../components';
+import { ItemlessFrame, LoadingFrame } from 'components/frames';
+import { TripItem } from '../components';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripsActions from 'actions/tripsActions';
-import {styles} from './TripsContainerStyle';
+import { styles } from './TripsContainerStyle';
 import Colors from 'constants/Colors';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => state.trips.trips);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
 
   const loadTrips = useCallback(() => {
@@ -25,41 +26,48 @@ const TripsContainer = (props) => {
       setError('Something went wrong!');
     }
     setIsLoading(false);
-  }, []);
+  }, [dispatch]);
 
-  const deleteTrip = useCallback((id) => {
-    setIsLoading(true);
-    try {
-      dispatch(tripsActions.deleteTripRequest(id));
-    } catch {
-      setError('Something went wrong!');
-    }
-    setIsLoading(false);
-  }, []);
+  const deleteTrip = useCallback(
+    (id) => {
+      setIsLoading(true);
+      try {
+        dispatch(tripsActions.deleteTripRequest(id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsLoading(false);
+      setIsDeleting(false);
+    },
+    [dispatch],
+  );
 
   const handleDeleteTrip = (item) => {
+    setIsDeleting(true);
     Alert.alert(
       `Delete a trip to ${item.destination}`,
       'Are you sure?',
       [
         {
-          text: 'Cancel',
+          onPress: () => setIsDeleting(false),
           style: 'cancel',
+          text: 'Cancel',
         },
         {
-          text: 'OK',
           onPress: () => deleteTrip(item.id),
+          text: 'OK',
         },
       ],
-      {cancelable: true},
+      { cancelable: true, onDismiss: () => setIsDeleting(false) },
     );
   };
 
   const handleSelectItem = (id, destination) => {
-    props.navigation.navigate('Details', {
-      tripId: id,
-      tripDestination: destination,
-    });
+    !isDeleting &&
+      props.navigation.navigate('Details', {
+        destination,
+        tripId: id,
+      });
   };
 
   useEffect(() => {
@@ -73,7 +81,7 @@ const TripsContainer = (props) => {
 
   if (error) {
     return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
         <Text style={styles.text}>{error}</Text>
       </View>
     );
@@ -96,10 +104,12 @@ const TripsContainer = (props) => {
             endDate={data.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
               handleSelectItem(data.item.id, data.item.destination);
-            }}>
+            }}
+          >
             <TouchableHighlight
               style={styles.deleteButton}
-              onPress={() => handleDeleteTrip(data.item)}>
+              onPress={() => handleDeleteTrip(data.item)}
+            >
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>

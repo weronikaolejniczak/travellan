@@ -21,18 +21,16 @@ const AddTransportContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-
-  const [to, setToDestination] = useState(true);
-  const [from, setFromDestination] = useState(false);
-  const [QR, setQR] = useState('');
-  const [PDFUri, setPDFUri] = useState('');
-
   const initialMinutes =
     new Date().getMinutes() < 10
       ? '0' + new Date().getMinutes()
       : new Date().getMinutes();
   const initialHour = new Date().getHours() + ':' + initialMinutes;
 
+  const [isTicketTo, setToDestination] = useState(true);
+  const [isTicketFrom, setFromDestination] = useState(false);
+  const [QR, setQR] = useState('');
+  const [PDFUri, setPDFUri] = useState('');
   const [dateOfDeparture, setDateOfDeparture] = useState(new Date());
   const [showDateOfDeparture, setShowDateOfDeparture] = useState(false);
   const [hourOfDeparture, setHourOfDeparture] = useState(initialHour);
@@ -44,6 +42,7 @@ const AddTransportContainer = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const cutDate = (date) => date.toString().split(' ').slice(1, 4).join(' ');
+
   const cutHour = (hour) =>
     hour.toTimeString().split(' ')[0].split(':').slice(0, 2).join(':');
 
@@ -101,8 +100,8 @@ const AddTransportContainer = (props) => {
     await dispatch(
       transportActions.createTransportRequest(
         tripId,
-        to,
-        from,
+        isTicketTo,
+        isTicketFrom,
         prepareDate(dateOfDeparture, hourOfDeparture),
         placeOfDeparture,
         QR,
@@ -113,15 +112,16 @@ const AddTransportContainer = (props) => {
     props.navigation.navigate('Transport', {
       tripId: selectedTrip.id,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     tripId,
-    to,
-    from,
+    isTicketTo,
+    isTicketFrom,
     dateOfDeparture,
     hourOfDeparture,
     placeOfDeparture,
     QR,
-    PDFUri
+    PDFUri,
   ]);
 
   return (
@@ -132,15 +132,17 @@ const AddTransportContainer = (props) => {
             <Text
               style={[
                 styles.label,
-                to ? styles.activeLabel : styles.disactiveLabel,
+                isTicketTo ? styles.activeLabel : styles.disactiveLabel,
               ]}>
               to
             </Text>
             <TouchableOpacity onPress={toggleToDestinationSwitch}>
               <Icon
-                name={to ? 'radiobox-marked' : 'radiobox-blank'}
+                name={isTicketTo ? 'radiobox-marked' : 'radiobox-blank'}
                 style={[
-                  to ? styles.activeRadioIcon : styles.nonactiveRadioIcon,
+                  isTicketTo
+                    ? styles.activeRadioIcon
+                    : styles.nonactiveRadioIcon,
                 ]}
               />
             </TouchableOpacity>
@@ -149,15 +151,17 @@ const AddTransportContainer = (props) => {
             <Text
               style={[
                 styles.label,
-                from ? styles.activeLabel : styles.disactiveLabel,
+                isTicketFrom ? styles.activeLabel : styles.disactiveLabel,
               ]}>
               from
             </Text>
             <TouchableOpacity onPress={toggleFromDestinationSwitch}>
               <Icon
-                name={from ? 'radiobox-marked' : 'radiobox-blank'}
+                name={isTicketFrom ? 'radiobox-marked' : 'radiobox-blank'}
                 style={[
-                  from ? styles.activeRadioIcon : styles.nonactiveRadioIcon,
+                  isTicketFrom
+                    ? styles.activeRadioIcon
+                    : styles.nonactiveRadioIcon,
                 ]}
               />
             </TouchableOpacity>

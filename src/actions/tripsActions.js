@@ -54,10 +54,10 @@ export const fetchTripsRequest = () => {
               data[key].image,
               data[key].startDate,
               data[key].endDate,
-              data[key].budget,
-              data[key].notes,
               data[key].transport,
               data[key].accommodation,
+              data[key].budget,
+              data[key].notes,
               data[key].map,
             ),
           );
@@ -100,9 +100,9 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
-    const notes = [];
     const transport = [];
     const accommodation = [];
+    const notes = [];
     const map = new Map([], [], null);
 
     await axios
@@ -112,26 +112,25 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         image,
         startDate,
         endDate,
-        budget,
-        notes,
         transport,
         accommodation,
+        budget,
+        notes,
         map,
       })
       .then((res) => res.data)
       .then((data) => {
-        const tripId = data.id;
         const newTrip = new Trip(
-          tripId,
+          data.name,
           destination,
           region,
           image,
           startDate,
           endDate,
-          budget,
-          notes,
           transport,
           accommodation,
+          budget,
+          notes,
           map,
         );
 

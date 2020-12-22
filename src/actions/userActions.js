@@ -67,9 +67,9 @@ export const logout = () => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
-      token: undefined,
-      userId: undefined,
-      expiryDate: undefined,
+      token: '',
+      userId: '',
+      expiryDate: '',
     }),
   );
 }

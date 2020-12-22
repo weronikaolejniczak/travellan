@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
-  qrstyle: {
+  QR: {
     height: '100%',
     width: '100%',
     borderColor: Colors.white,
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  pdf: {
+  PDF: {
     flex: 1,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
