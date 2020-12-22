@@ -16,10 +16,6 @@ module.exports = {
     'no-unneeded-ternary': 'error',
     'no-var': 'error',
     'object-curly-spacing': ['error', 'always'],
-    'sort-imports': [
-      'error',
-      { memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'] },
-    ],
     'sort-keys': ['error', 'asc'],
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
