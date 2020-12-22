@@ -16,6 +16,7 @@
           "services": "./src/services",
           "src": "./src",
           "styles": "./src/common/styles",
+          "themes": "./src/common/themes",
           "utils": "./src/utils"
         }
       }
