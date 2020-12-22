@@ -1,22 +1,10 @@
 import React from 'react';
-import { Switch } from 'react-native';
-
-import Colors from 'constants/Colors';
+import { Switch } from 'react-native-paper';
 
 const CustomSwitch = (props) => {
-  return (
-    <Switch
-      style={props.style}
-      trackColor={{
-        false: Colors.switchDisabledTrack,
-        true: Colors.switchEnabledTrack,
-      }}
-      thumbColor={Colors.switchThumb}
-      ios_backgroundColor={Colors.background}
-      onValueChange={props.onValueChange}
-      value={props.value}
-    />
-  );
-}
+  const { toggled, onToggleSwitch } = props;
+
+  return <Switch value={toggled} onValueChange={onToggleSwitch} />;
+};
 
 export default CustomSwitch;
