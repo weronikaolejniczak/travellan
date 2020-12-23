@@ -44,7 +44,7 @@ import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
 
-import * as auth_func from 'src/actions/userActions.js';
+import * as authFunc from 'src/actions/userActions.js';
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createStackNavigator();
@@ -65,7 +65,7 @@ function CustomDrawerContent(props) {
           label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
           icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
           onPress={() => {
-            auth_func.logout();
+            authFunc.logout();
             props.navigation.navigate('Startup');
           }}
         />
