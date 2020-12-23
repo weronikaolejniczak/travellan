@@ -1,22 +1,22 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  TouchableOpacity,
   ActivityIndicator,
   Dimensions,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import fetchWeather from 'services/fetchWeather';
 import Background from 'domains/weather/components/background/Background';
 import Graphics from 'domains/weather/components/graphics/Graphics';
 import Ground from 'domains/weather/components/ground/Ground';
-import {styles} from './WeatherContainerStyle';
+import { styles } from './WeatherContainerStyle';
 import Colors from 'constants/Colors';
-import {notificationManager} from 'services/manageNotifications';
+import { notificationManager } from 'services/manageNotifications';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -128,7 +128,8 @@ const WeatherContainer = (props) => {
                           styles.bubble,
                           styles.bigBubble,
                           styles.marginLeftAndRight,
-                        ]}>
+                        ]}
+                      >
                         <Text style={[styles.text, styles.textShadow]}>
                           average
                         </Text>
@@ -137,7 +138,8 @@ const WeatherContainer = (props) => {
                             styles.text,
                             styles.textShadow,
                             styles.bigText,
-                          ]}>
+                          ]}
+                        >
                           {Math.floor(
                             (activeDay.maxTemp + activeDay.minTemp) / 2,
                           )}
@@ -156,7 +158,8 @@ const WeatherContainer = (props) => {
                     </View>
                   </View>
                   <View
-                    style={[styles.ground, {bottom: -windowHeight * 0.015}]}>
+                    style={[styles.ground, { bottom: -windowHeight * 0.015 }]}
+                  >
                     <Ground styles={styles} activeDay={activeDay} />
                   </View>
                 </View>
@@ -218,10 +221,12 @@ const WeatherContainer = (props) => {
                     </View>
                   </View>
                   <View
-                    style={[styles.row, styles.halfFlex, styles.marginLeft]}>
+                    style={[styles.row, styles.halfFlex, styles.marginLeft]}
+                  >
                     <View>
                       <View
-                        style={[styles.alignCenter, styles.paddingHorizontal]}>
+                        style={[styles.alignCenter, styles.paddingHorizontal]}
+                      >
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>During day</Text>
                         </View>
@@ -233,10 +238,8 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}
+                      >
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Feels like</Text>
                         </View>
@@ -248,10 +251,8 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}
+                      >
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Sunrise</Text>
                         </View>
@@ -280,10 +281,8 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}
+                      >
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Feels like</Text>
                         </View>
@@ -295,10 +294,8 @@ const WeatherContainer = (props) => {
                       </View>
 
                       <View
-                        style={[
-                          styles.alignAndJustifyCenter,
-                          styles.marginTop,
-                        ]}>
+                        style={[styles.alignAndJustifyCenter, styles.marginTop]}
+                      >
                         <View style={styles.marginRight}>
                           <Text style={styles.subdate}>Sunset</Text>
                         </View>
@@ -328,7 +325,8 @@ const WeatherContainer = (props) => {
                   renderItem={(item) => (
                     <TouchableOpacity
                       activeOpacity={0.7}
-                      onPress={() => setActiveDay(item.item)}>
+                      onPress={() => setActiveDay(item.item)}
+                    >
                       <View
                         style={[
                           styles.dateContainer,
@@ -346,7 +344,8 @@ const WeatherContainer = (props) => {
                                 ? Colors.primary
                                 : Colors.transparent,
                           },
-                        ]}>
+                        ]}
+                      >
                         <Text style={styles.subdate}>
                           {prepareDate(item.item.date)}
                         </Text>
@@ -354,7 +353,7 @@ const WeatherContainer = (props) => {
                           {getDay(item.item.date)}
                         </Text>
                         <Image
-                          style={{width: 45, height: 45}}
+                          style={{ width: 45, height: 45 }}
                           source={{
                             uri:
                               'http://openweathermap.org/img/wn/' +
@@ -386,7 +385,8 @@ const WeatherContainer = (props) => {
           <TouchableOpacity
             onPress={() => {
               setDateGuard(true);
-            }}>
+            }}
+          >
             <Text style={[styles.action, styles.callToAction]}>
               Check the forecast for next 7 days
             </Text>

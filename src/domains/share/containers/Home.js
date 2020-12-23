@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import ShareExtension from 'rn-extensions-share';
 
-import {store} from 'src/store';
-import {homeStyle as styles} from './HomeStyle';
+import { store } from 'src/store';
+import { homeStyle as styles } from './HomeStyle';
 
 const Home = (props) => {
   const [type, setType] = useState(undefined);

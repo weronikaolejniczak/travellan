@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Switch from 'components/switch/Switch';
-import {styles} from './BudgetFieldStyle';
-import {CURRENCIES} from 'data/Currencies';
+import { styles } from './BudgetFieldStyle';
+import { CURRENCIES } from 'data/Currencies';
 
 const BudgetField = (props) => {
   const query = props.currency;
@@ -56,15 +56,16 @@ const BudgetField = (props) => {
                 <Text style={props.styles.error}>Enter a valid budget!</Text>
               </View>
             )}
-          <View style={[props.styles.rowAndCenter, {marginTop: '4%'}]}>
+          <View style={[props.styles.rowAndCenter, { marginTop: '4%' }]}>
             <View>
               <TouchableOpacity
-                style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
-                onPress={() => props.setAccount('cash')}>
+                style={[props.styles.rowAndCenter, { alignItems: 'center' }]}
+                onPress={() => props.setAccount('cash')}
+              >
                 <Icon
                   name="cash"
                   style={[
-                    {marginRight: '5%'},
+                    { marginRight: '5%' },
                     props.styles.icon,
                     props.account === 'cash'
                       ? props.styles.activeCategory
@@ -77,20 +78,22 @@ const BudgetField = (props) => {
                     props.account === 'cash'
                       ? props.styles.activeCategory
                       : props.styles.nonactiveCategory,
-                  ]}>
+                  ]}
+                >
                   Cash
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <View style={{marginLeft: '5%'}}>
+            <View style={{ marginLeft: '5%' }}>
               <TouchableOpacity
-                style={[props.styles.rowAndCenter, {alignItems: 'center'}]}
-                onPress={() => props.setAccount('card')}>
+                style={[props.styles.rowAndCenter, { alignItems: 'center' }]}
+                onPress={() => props.setAccount('card')}
+              >
                 <Icon
                   name="credit-card"
                   style={[
-                    {marginRight: '5%'},
+                    { marginRight: '5%' },
                     props.styles.icon,
                     props.account === 'card'
                       ? props.styles.activeCategory
@@ -103,7 +106,8 @@ const BudgetField = (props) => {
                     props.account === 'card'
                       ? props.styles.activeCategory
                       : props.styles.nonactiveCategory,
-                  ]}>
+                  ]}
+                >
                   Card
                 </Text>
               </TouchableOpacity>
@@ -126,10 +130,11 @@ const BudgetField = (props) => {
               placeholderTextColor="grey"
               onChangeText={(text) => props.currencyChangeHandler(text)}
               keyExtractor={(item) => item.iso.toString()}
-              renderItem={({item, i}) => (
+              renderItem={({ item, i }) => (
                 <TouchableOpacity
                   style={styles.result}
-                  onPress={() => props.currencyChangeHandler(item.name)}>
+                  onPress={() => props.currencyChangeHandler(item.name)}
+                >
                   <Text style={styles.text}>
                     {item.name} ({item.iso})
                   </Text>

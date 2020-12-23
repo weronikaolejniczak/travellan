@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
   ActivityIndicator,
-  ScrollView,
-  Text,
   Image,
   KeyboardAvoidingView,
-  TouchableOpacity,
   Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as userActions from 'actions/userActions';
-import {styles} from './StartupContainerStyle';
+import { styles } from './StartupContainerStyle';
 import Colors from 'constants/Colors';
 
 const StartupContainer = (props) => {
@@ -29,7 +29,7 @@ const StartupContainer = (props) => {
       }
 
       const transformedData = JSON.parse(userData);
-      const {token, userId, expiryDate} = transformedData;
+      const { token, userId, expiryDate } = transformedData;
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
@@ -46,12 +46,13 @@ const StartupContainer = (props) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={styles.screen}>
+      style={styles.screen}
+    >
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{marginBottom: 20, alignItems: 'center'}}>
+          <View style={{ marginBottom: 20, alignItems: 'center' }}>
             <Image
-              style={{width: 150, height: 150, resizeMode: 'stretch'}}
+              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
               source={require('assets/images/logo.png')}
             />
           </View>
@@ -60,17 +61,19 @@ const StartupContainer = (props) => {
               <ActivityIndicator size="small" color={Colors.white} />
             ) : (
               <TouchableOpacity
-                style={[styles.buttonContainer, {marginRight: 10}]}
+                style={[styles.buttonContainer, { marginRight: 10 }]}
                 onPress={() => {
                   props.navigation.navigate('Register');
-                }}>
+                }}
+              >
                 <Text style={styles.buttonText}>Get Started</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Auth');
-              }}>
+              }}
+            >
               <Text style={styles.buttonText}>Have an account? Log in!</Text>
             </TouchableOpacity>
           </View>

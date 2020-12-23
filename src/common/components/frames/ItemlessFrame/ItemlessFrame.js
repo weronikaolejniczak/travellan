@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { Text, View } from 'react-native';
 
-import {styles} from './ItemlessFrameStyle';
+import { styles } from './ItemlessFrameStyle';
 
-const ItemlessFrame = ({message}) => {
+const ItemlessFrame = ({ message }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{message}</Text>

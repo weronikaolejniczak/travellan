@@ -1,14 +1,21 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, ScrollView, FlatList, Animated, Alert} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  FlatList,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from 'components/headerButton/HeaderButton';
-import {ItemlessFrame, LoadingFrame} from 'components/frames';
-import {TransportItem} from '../components';
+import { ItemlessFrame, LoadingFrame } from 'components/frames';
+import { TransportItem } from '../components';
 import * as transportActions from 'actions/transportActions';
-import {cardWidth} from '../components/TransportItem/TransportItemStyle';
-import {styles} from './TransportContainerStyle';
+import { cardWidth } from '../components/TransportItem/TransportItemStyle';
+import { styles } from './TransportContainerStyle';
 
 const TransportContainer = (props) => {
   const dispatch = useDispatch();
@@ -70,7 +77,7 @@ const TransportContainer = (props) => {
           onPress: () => persistDelete(noteId),
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
     setIsRefreshing(false);
   }, []);
@@ -114,7 +121,8 @@ const TransportContainer = (props) => {
   return (
     <ScrollView
       style={styles.scrollView}
-      contentContainerStyle={styles.contentContainer}>
+      contentContainerStyle={styles.contentContainer}
+    >
       <View>
         <FlatList
           onRefresh={loadTransport}
@@ -123,8 +131,8 @@ const TransportContainer = (props) => {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {useNativeDriver: false},
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false },
           )}
           scrollEventThrottle={16}
           decelerationRate={0}
@@ -157,7 +165,7 @@ const TransportContainer = (props) => {
               extrapolate: 'clamp',
             });
 
-            return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
+            return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
           })}
         </View>
       </View>

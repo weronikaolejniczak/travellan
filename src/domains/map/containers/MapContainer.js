@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import MapboxGL from "@react-native-mapbox-gl/maps";
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import MapboxGL from '@react-native-mapbox-gl/maps';
 import Geolocation from '@react-native-community/geolocation';
-import {MAPBOX_KEY} from 'react-native-dotenv';
+import { MAPBOX_KEY } from 'react-native-dotenv';
 
 import * as mapActions from 'actions/mapActions';
 import PointOfInterest from 'models/PointOfInterest';
 import Toolbar from '../components/toolbar/Toolbar';
 import PlaceOverview from '../components/placeOverview/PlaceOverview';
-import {styles} from './MapContainerStyle';
+import { styles } from './MapContainerStyle';
 import Colors from 'constants/Colors';
 import { Marker } from 'react-native-svg';
 
@@ -51,7 +51,7 @@ const MapContainer = (props) => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
-        const {longitude, latitude} = position.coords;
+        const { longitude, latitude } = position.coords;
         setCurrentPosition({
           ...currentPosition,
           longitude,
@@ -59,7 +59,7 @@ const MapContainer = (props) => {
         });
       },
       (err) => setError(err.message),
-      {timeout: 20000, maximumAge: 1000},
+      { timeout: 20000, maximumAge: 1000 },
     );
   }, [currentPosition]);
 
@@ -88,7 +88,6 @@ const MapContainer = (props) => {
   };
 
   const onExitHandler = async () => {
-   
     setIsLoading(true);
     try {
       await dispatch(
@@ -103,9 +102,8 @@ const MapContainer = (props) => {
   };
 
   const markerOnPressHandler = async (coords) => {
-    
     const [latitude, longitude] = coords.geometry.coordinates;
-    
+
     let marker = markers.filter(
       (item) => item.lat === latitude && item.lon === longitude,
     )[0];
@@ -118,13 +116,12 @@ const MapContainer = (props) => {
   };
 
   const mapOnPressHandler = async (event) => {
-    
     const [latitude, longitude] = event.geometry.coordinates;
-     
+
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
-        
+
         setMarkers(
           markers
             ? [
@@ -145,7 +142,7 @@ const MapContainer = (props) => {
                 ),
               ],
         );
-        
+
         setMarkerTitle('');
       } else {
         setError('Enter the title');
@@ -157,30 +154,32 @@ const MapContainer = (props) => {
 
   return (
     <View style={styles.flex}>
-          <MapboxGL.MapView 
-            style={styles.map} 
-            styleURL='mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016'
-            onPress={(event) => mapOnPressHandler(event)}
-            onRegionDidChange={(region) => setCurrentRegion(region)}>
-            <MapboxGL.Camera
-              zoomLevel={8}
-              centerCoordinate={[extractRegion().longitude,extractRegion().latitude]}
-            />
-            
-            
-            {!!markers &&
-              markers.map((marker) => (
+      <MapboxGL.MapView
+        style={styles.map}
+        styleURL="mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016"
+        onPress={(event) => mapOnPressHandler(event)}
+        onRegionDidChange={(region) => setCurrentRegion(region)}
+      >
+        <MapboxGL.Camera
+          zoomLevel={8}
+          centerCoordinate={[
+            extractRegion().longitude,
+            extractRegion().latitude,
+          ]}
+        />
+
+        {!!markers &&
+          markers.map((marker) => (
             <MapboxGL.PointAnnotation
               id={marker.id}
-              coordinate={
-                [marker.lat, marker.lon]
-              }
-               onSelected={(event) => markerOnPressHandler(event)}>
-              <MapboxGL.Callout title={marker.title}/>
+              coordinate={[marker.lat, marker.lon]}
+              onSelected={(event) => markerOnPressHandler(event)}
+            >
+              <MapboxGL.Callout title={marker.title} />
             </MapboxGL.PointAnnotation>
-              ))}
-            <MapboxGL.UserLocation />
-          </MapboxGL.MapView>
+          ))}
+        <MapboxGL.UserLocation />
+      </MapboxGL.MapView>
 
       <Toolbar
         styles={styles}

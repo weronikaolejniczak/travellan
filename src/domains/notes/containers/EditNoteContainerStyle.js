@@ -5,14 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingHorizontal: '5%',
     paddingTop: '12%',
-  },
-  bigMarginTop: {
-    marginTop: '10%',
-  },
-  smallMarginTop: {
-    marginTop: '5%',
+    paddingHorizontal: '5%',
   },
   label: {
     color: Colors.primary,
@@ -25,21 +19,8 @@ export const styles = StyleSheet.create({
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
   },
-  errorContainer: {
-    marginVertical: 5,
-  },
-  error: {
-    color: Colors.error,
-  },
-  icon: {
-    color: Colors.text,
-    fontSize: 30,
-  },
-  switch: {
-    marginLeft: '5%',
-  },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: '10%',
     alignItems: 'center',
   },
   button: {
@@ -47,8 +28,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     alignItems: 'center',
     width: '40%',
-    marginTop: '1%',
-    marginBottom: '17%',
     padding: 15,
   },
   buttonText: {
@@ -56,15 +35,14 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.text,
   },
-  rowAndCenter: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  smallPaddingTop: {
+    paddingTop: '5%',
   },
-  activeCategory: {
-    color: Colors.primary,
+  errorContainer: {
+    marginVertical: 5,
+    marginHorizontal: 40,
   },
-  nonactiveCategory: {
-    color: 'grey',
+  error: {
+    color: Colors.error,
   },
 });

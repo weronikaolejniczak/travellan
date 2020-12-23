@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 /* imports from within the module */
 import Grass from 'assets/images/grass.svg';
 import SnowGround from 'assets/images/snow_ground.svg';

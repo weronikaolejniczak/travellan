@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {styles} from './ToolbarButtonStyle';
+import { styles } from './ToolbarButtonStyle';
 import Colors from 'constants/Colors';
 
 const ToolbarButton = (props) => {
@@ -10,7 +10,8 @@ const ToolbarButton = (props) => {
     <View
       style={{
         backgroundColor: props.handler ? Colors.background : Colors.cards,
-      }}>
+      }}
+    >
       <TouchableOpacity styles={styles.button} onPress={props.onPress}>
         {props.loader && props.isLoading ? (
           <View style={styles.button}>

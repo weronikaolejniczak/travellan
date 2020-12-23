@@ -1,13 +1,13 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {MAIN_FIREBASE_API} from 'react-native-dotenv';
+import { MAIN_FIREBASE_API } from 'react-native-dotenv';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
 const API_KEY = MAIN_FIREBASE_API;
 
 export const authenticate = (userId, token) => {
-  return {type: AUTHENTICATE, userId: userId, token: token};
+  return { type: AUTHENTICATE, userId: userId, token: token };
 };
 
 export const signUpRequest = (email, password) => {
@@ -62,6 +62,10 @@ export const loginRequest = (email, password) => {
       });
   };
 };
+
+export const logout = () => {
+  AsyncStorage.removeItem('userData');
+}
 
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
