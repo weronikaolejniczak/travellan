@@ -1,18 +1,18 @@
-import React, {useState, useCallback} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
+  ActivityIndicator,
+  Platform,
   Text,
-  View,
   TextInput,
   TouchableOpacity,
-  Platform,
-  ActivityIndicator,
+  View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as transportActions from 'actions/transportActions';
-import {styles} from './AddTransportContainerStyle';
+import { styles } from './AddTransportContainerStyle';
 import Colors from 'constants/Colors';
 
 const AddTransportContainer = (props) => {
@@ -46,7 +46,7 @@ const AddTransportContainer = (props) => {
   const cutHour = (hour) =>
     hour.toTimeString().split(' ')[0].split(':').slice(0, 2).join(':');
 
-  /* GODZINA SIĘ NIE ZGADZA - O DWIE GODZINY ZA DUŻO */
+  /* gODZINA SIĘ NIE ZGADZA - O DWIE GODZINY ZA DUŻO */
   const prepareDate = (date, hour) => {
     let hours = hour.split(':')[0];
     let minutes = hour.split(':')[1];
@@ -127,13 +127,14 @@ const AddTransportContainer = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.metrics}>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <View style={{alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <View style={{ alignItems: 'center' }}>
             <Text
               style={[
                 styles.label,
                 isTicketTo ? styles.activeLabel : styles.disactiveLabel,
-              ]}>
+              ]}
+            >
               to
             </Text>
             <TouchableOpacity onPress={toggleToDestinationSwitch}>
@@ -147,12 +148,13 @@ const AddTransportContainer = (props) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginLeft: '5%', alignItems: 'center'}}>
+          <View style={{ marginLeft: '5%', alignItems: 'center' }}>
             <Text
               style={[
                 styles.label,
                 isTicketFrom ? styles.activeLabel : styles.disactiveLabel,
-              ]}>
+              ]}
+            >
               from
             </Text>
             <TouchableOpacity onPress={toggleFromDestinationSwitch}>
@@ -167,7 +169,8 @@ const AddTransportContainer = (props) => {
             </TouchableOpacity>
           </View>
           <View
-            style={{marginLeft: '7%', marginTop: '5%', alignItems: 'center'}}>
+            style={{ marginLeft: '7%', marginTop: '5%', alignItems: 'center' }}
+          >
             <Text style={[styles.label, styles.text]}>
               {selectedTrip.destination}
             </Text>
@@ -175,17 +178,18 @@ const AddTransportContainer = (props) => {
         </View>
       </View>
 
-      <View style={{marginTop: '5%'}}>
+      <View style={{ marginTop: '5%' }}>
         <View style={styles.metrics}>
           <Text style={styles.label}>Date of departure</Text>
           <View style={styles.pickerContainer}>
             <TouchableOpacity
               onPress={showDateOfDeparturePicker}
-              style={styles.picker}>
+              style={styles.picker}
+            >
               <View style={styles.rowAndAlign}>
                 <Icon
                   name="calendar"
-                  style={[styles.icon, {marginRight: '10%'}]}
+                  style={[styles.icon, { marginRight: '10%' }]}
                 />
                 <Text style={styles.pickerText}>
                   {cutDate(dateOfDeparture)}
@@ -212,11 +216,12 @@ const AddTransportContainer = (props) => {
           <View style={styles.pickerContainer}>
             <TouchableOpacity
               onPress={showHourOfDeparturePicker}
-              style={styles.picker}>
+              style={styles.picker}
+            >
               <View style={styles.rowAndAlign}>
                 <Icon
                   name="clock"
-                  style={[styles.icon, {marginRight: '10%'}]}
+                  style={[styles.icon, { marginRight: '10%' }]}
                 />
                 <Text style={styles.pickerText}>{hourOfDeparture}</Text>
               </View>

@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import * as mapActions from 'actions/mapActions';
 import PointOfInterest from 'models/PointOfInterest';
 import Toolbar from '../components/toolbar/Toolbar';
 import PlaceOverview from '../components/placeOverview/PlaceOverview';
-import {darkModeMap} from './DarkModeMap';
-import {styles} from './MapContainerStyle';
+import { darkModeMap } from './DarkModeMap';
+import { styles } from './MapContainerStyle';
 import Colors from 'constants/Colors';
 
 const MapContainer = (props) => {
@@ -47,7 +47,7 @@ const MapContainer = (props) => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
-        const {longitude, latitude} = position.coords;
+        const { longitude, latitude } = position.coords;
         setCurrentPosition({
           ...currentPosition,
           longitude,
@@ -55,7 +55,7 @@ const MapContainer = (props) => {
         });
       },
       (err) => setError(err.message),
-      {timeout: 20000, maximumAge: 1000},
+      { timeout: 20000, maximumAge: 1000 },
     );
   }, [currentPosition]);
 
@@ -98,7 +98,7 @@ const MapContainer = (props) => {
   };
 
   const markerOnPressHandler = async (coords) => {
-    const {latitude, longitude} = coords.nativeEvent.coordinate;
+    const { latitude, longitude } = coords.nativeEvent.coordinate;
     let marker = markers.filter(
       (item) => item.lat === latitude && item.lon === longitude,
     )[0];
@@ -111,7 +111,7 @@ const MapContainer = (props) => {
   };
 
   const mapOnPressHandler = async (coords) => {
-    const {latitude, longitude} = coords.nativeEvent.coordinate;
+    const { latitude, longitude } = coords.nativeEvent.coordinate;
 
     if (addingMarkerActive) {
       if (markerTitle !== '') {
@@ -161,7 +161,8 @@ const MapContainer = (props) => {
         loadingIndicatorColor={Colors.primary}
         loadingBackgroundColor={Colors.background}
         tintColor={Colors.primary}
-        onPress={(event) => mapOnPressHandler(event)}>
+        onPress={(event) => mapOnPressHandler(event)}
+      >
         {!!markers &&
           markers.map((marker) => (
             <MapView.Marker
@@ -170,7 +171,8 @@ const MapContainer = (props) => {
                 longitude: marker.lon,
               }}
               pinColor={Colors.primary}
-              onPress={(event) => markerOnPressHandler(event)}>
+              onPress={(event) => markerOnPressHandler(event)}
+            >
               <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
                 <Text>{marker.title}</Text>
               </MapView.Callout>

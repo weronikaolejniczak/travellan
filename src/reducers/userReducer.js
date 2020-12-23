@@ -1,4 +1,4 @@
-import {AUTHENTICATE} from 'actions/userActions';
+import { AUTHENTICATE } from 'actions/userActions';
 
 const initialState = {
   token: null,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FIREBASE_URL} from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Accommodation from 'models/Accommodation';
 
@@ -46,7 +46,7 @@ export const deleteAccommodationRequest = (tripId, reservationId) => {
 
     await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {accommodation},
+      { accommodation },
     );
 
     dispatch(setAccommodation(tripId, accommodation));
@@ -89,7 +89,7 @@ export const createAccommodationRequest = (
 
     await axios.patch(
       `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-      {accommodation},
+      { accommodation },
     );
 
     dispatch(setAccommodation(tripId, accommodation));

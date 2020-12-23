@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
   textShadow: {
     textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 7,
   },
   centered: {

@@ -1,20 +1,20 @@
-import React, {useState, useCallback} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-  View,
+  ActivityIndicator,
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  Platform,
-  ActivityIndicator,
+  View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {MultiPickerMaterialDialog} from 'react-native-material-dialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { MultiPickerMaterialDialog } from 'react-native-material-dialog';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Card from 'components/card/Card';
 import * as accommodationActions from 'actions/accommodationActions';
-import {styles} from './AddAccommodationContainerStyle';
+import { styles } from './AddAccommodationContainerStyle';
 import Colors from 'constants/Colors';
 
 const AddAccommodationContainer = (props) => {
@@ -152,13 +152,14 @@ const AddAccommodationContainer = (props) => {
       </View>
 
       <View style={styles.metrics}>
-        <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+        <View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
           <Text style={styles.label}>Amenities</Text>
           <TouchableOpacity
             onPress={() => {
               setMultiPickerVisible(true);
             }}
-            style={styles.iconButton}>
+            style={styles.iconButton}
+          >
             <Icon
               name={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
               style={styles.icon}
@@ -169,7 +170,7 @@ const AddAccommodationContainer = (props) => {
           title={'Pick accommodation availableAmmenities'}
           colorAccent={Colors.primary}
           items={availableAmmenities.map((row, index) => {
-            return {value: index, label: row};
+            return { value: index, label: row };
           })}
           visible={multiPickerVisible}
           selectedItems={amenities}
@@ -179,7 +180,7 @@ const AddAccommodationContainer = (props) => {
             setAmmenities(result.selectedItems);
           }}
         />
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {amenities.map((item) => (
             <Card style={styles.amenityCard}>
               <Text style={styles.text}>{item.label}</Text>

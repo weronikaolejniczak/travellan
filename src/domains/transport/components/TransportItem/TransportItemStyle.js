@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 export const cardHeight = height * 0.8;
 export const cardWidth = width * 0.915;
 export const spacingForCardInset = width * 0.03;
@@ -158,5 +158,5 @@ export const styles = StyleSheet.create({
   infoScrollView: {
     marginTop: cardHeight * 0.0465,
   },
-  infoInnerView: {flex: 0.5}
+  infoInnerView: { flex: 0.5 },
 });
