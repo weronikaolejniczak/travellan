@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, ScrollView, FlatList, Animated} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { Animated, FlatList, ScrollView, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import {ItemlessFrame} from 'components/frames';
-import {AccommodationItem} from 'domains/accommodation/components';
+import { ItemlessFrame } from 'components/frames';
+import { AccommodationItem } from 'domains/accommodation/components';
 import HeaderButton from 'components/headerButton/HeaderButton';
-import {cardWidth} from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
-import {styles} from './AccommodationContainerStyle';
+import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
+import { styles } from './AccommodationContainerStyle';
 
-import {DUMMY_HOTELS as accommodation} from '../data/DummyHotels';
+import { DUMMY_HOTELS as accommodation } from '../data/DummyHotels';
 
 const AccommodationContainer = () => {
   if (accommodation === undefined) {
@@ -25,8 +25,8 @@ const AccommodationContainer = () => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {x: scrollX}}}],
-          {useNativeDriver: false},
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: false },
         )}
         scrollEventThrottle={16}
         decelerationRate={0}
@@ -45,7 +45,7 @@ const AccommodationContainer = () => {
             extrapolate: 'clamp',
           });
 
-          return <Animated.View key={i} style={{opacity, ...styles.dot}} />;
+          return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
         })}
       </View>
     </ScrollView>

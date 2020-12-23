@@ -1,20 +1,20 @@
-import React, {useState, useEffect, useReducer, useCallback} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
-  View,
-  ScrollView,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Image,
+  KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Input from 'domains/user/components/input/Input';
 import * as userActions from 'actions/userActions';
-import {styles} from './RegisterContainerStyle';
+import { styles } from './RegisterContainerStyle';
 import Colors from 'constants/Colors';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -62,7 +62,7 @@ const RegisterContainer = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured!', error, [{text: 'Okay'}]);
+      Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
 
@@ -109,12 +109,13 @@ const RegisterContainer = (props) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={styles.screen}>
+      style={styles.screen}
+    >
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{marginBottom: 20, alignItems: 'center'}}>
+          <View style={{ marginBottom: 20, alignItems: 'center' }}>
             <Image
-              style={{width: 150, height: 150, resizeMode: 'stretch'}}
+              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
               source={require('assets/images/logo.png')}
             />
           </View>
@@ -161,15 +162,17 @@ const RegisterContainer = (props) => {
               <ActivityIndicator size="small" color={Colors.white} />
             ) : (
               <TouchableOpacity
-                style={[styles.buttonContainer, {marginRight: 10}]}
-                onPress={handleSubmit}>
+                style={[styles.buttonContainer, { marginRight: 10 }]}
+                onPress={handleSubmit}
+              >
                 <Text style={styles.buttonText}>Join</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Auth');
-              }}>
+              }}
+            >
               <Text style={styles.buttonText}>Or sign in instead</Text>
             </TouchableOpacity>
           </View>

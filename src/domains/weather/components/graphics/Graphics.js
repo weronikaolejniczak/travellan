@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Dimensions} from 'react-native';
+import { Dimensions, View } from 'react-native';
 /* day graphics */
 import Sun from 'assets/images/sun.svg';
 import SunWithClouds from 'assets/images/sun_with_clouds.svg';

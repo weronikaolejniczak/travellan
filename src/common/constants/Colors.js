@@ -1,14 +1,14 @@
 /**
- * This file contains colors that are global to the application
+ * this file contains colors that are global to the application
  */
 export default {
-  /** STANDARD */
+  /** sTANDARD */
   transparent: 'rgba(0,0,0,0)',
   blackTransparent: 'rgba(0, 0, 0, 0.5)',
   white: '#FFFFFF',
   green: '#06C258',
   grey: 'grey',
-  /** SPECIFIC */
+  /** sPECIFIC */
   shadow: '#000000',
   cards: '#111111',
   background: '#222222',

@@ -1,4 +1,4 @@
-import produce, {enableES5} from 'immer';
+import produce, { enableES5 } from 'immer';
 
 const produceImmer = (...args) => {
   enableES5();

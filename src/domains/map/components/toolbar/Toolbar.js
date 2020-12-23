@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 import ToolbarButton from 'domains/map/components/toolbarButton/ToolbarButton';
 import Input from 'domains/map/components/input/Input';

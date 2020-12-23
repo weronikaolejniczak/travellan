@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch} from 'react-native';
+import { Switch } from 'react-native';
 
 import Colors from 'constants/Colors';
 
@@ -17,6 +17,6 @@ const CustomSwitch = (props) => {
       value={props.value}
     />
   );
-}
+};
 
 export default CustomSwitch;
