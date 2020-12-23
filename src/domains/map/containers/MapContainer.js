@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapboxGL from '@react-native-mapbox-gl/maps';
 import Geolocation from '@react-native-community/geolocation';
+import { MAPBOX_KEY } from 'react-native-dotenv';
 
 import * as mapActions from 'actions/mapActions';
 import PointOfInterest from 'models/PointOfInterest';
 import Toolbar from '../components/toolbar/Toolbar';
 import PlaceOverview from '../components/placeOverview/PlaceOverview';
-import { darkModeMap } from './DarkModeMap';
 import { styles } from './MapContainerStyle';
 import Colors from 'constants/Colors';
+import { Marker } from 'react-native-svg';
+
+MapboxGL.setAccessToken(MAPBOX_KEY);
+MapboxGL.setConnected(true);
 
 const MapContainer = (props) => {
   const dispatch = useDispatch();
@@ -98,7 +102,8 @@ const MapContainer = (props) => {
   };
 
   const markerOnPressHandler = async (coords) => {
-    const { latitude, longitude } = coords.nativeEvent.coordinate;
+    const [latitude, longitude] = coords.geometry.coordinates;
+
     let marker = markers.filter(
       (item) => item.lat === latitude && item.lon === longitude,
     )[0];
@@ -110,8 +115,8 @@ const MapContainer = (props) => {
     }
   };
 
-  const mapOnPressHandler = async (coords) => {
-    const { latitude, longitude } = coords.nativeEvent.coordinate;
+  const mapOnPressHandler = async (event) => {
+    const [latitude, longitude] = event.geometry.coordinates;
 
     if (addingMarkerActive) {
       if (markerTitle !== '') {
@@ -149,36 +154,32 @@ const MapContainer = (props) => {
 
   return (
     <View style={styles.flex}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.flex}
-        customMapStyle={darkModeMap}
-        initialRegion={extractRegion()}
-        onRegionChangeComplete={(region) => setCurrentRegion(region)}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-        loadingEnabled={true}
-        loadingIndicatorColor={Colors.primary}
-        loadingBackgroundColor={Colors.background}
-        tintColor={Colors.primary}
+      <MapboxGL.MapView
+        style={styles.map}
+        styleURL="mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016"
         onPress={(event) => mapOnPressHandler(event)}
+        onRegionDidChange={(region) => setCurrentRegion(region)}
       >
+        <MapboxGL.Camera
+          zoomLevel={8}
+          centerCoordinate={[
+            extractRegion().longitude,
+            extractRegion().latitude,
+          ]}
+        />
+
         {!!markers &&
           markers.map((marker) => (
-            <MapView.Marker
-              coordinate={{
-                latitude: marker.lat,
-                longitude: marker.lon,
-              }}
-              pinColor={Colors.primary}
-              onPress={(event) => markerOnPressHandler(event)}
+            <MapboxGL.PointAnnotation
+              id={marker.id}
+              coordinate={[marker.lat, marker.lon]}
+              onSelected={(event) => markerOnPressHandler(event)}
             >
-              <MapView.Callout onPress={() => setShowPlaceInfo(true)}>
-                <Text>{marker.title}</Text>
-              </MapView.Callout>
-            </MapView.Marker>
+              <MapboxGL.Callout title={marker.title} />
+            </MapboxGL.PointAnnotation>
           ))}
-      </MapView>
+        <MapboxGL.UserLocation />
+      </MapboxGL.MapView>
 
       <Toolbar
         styles={styles}
