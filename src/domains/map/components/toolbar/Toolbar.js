@@ -23,6 +23,7 @@ const Toolbar = (props) => {
           onPress={props.addingActivityHandler}
         />
         <ToolbarButton
+          iconName="map-marker-minus"
           isLoading={props.isLoading}
           loader={false}
           handler={props.deletingMarkerActive}
