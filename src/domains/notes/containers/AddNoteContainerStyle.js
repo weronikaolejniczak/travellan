@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     color: Colors.text,
     fontSize: 18,
     borderBottomColor: Colors.primary,
+    maxHeight: 150,
     borderBottomWidth: 1,
   },
   buttonContainer: {
