@@ -11,6 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { NavigationButton } from '../components';
 import { styles } from './TripDetailsContainerStyle.js';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TripDetailsContainer = (props) => {
   const tripId = props.route.params.tripId;
@@ -56,6 +57,19 @@ const TripDetailsContainer = (props) => {
                     {startDateFormatted} - {endDateFormatted}
                   </Text>
                 )}
+                <Icon
+                  name="calendar"
+                  size={35}
+                  onPress={() => {
+                    CalendarEventChandler.addToCalendar(
+                      'Trip to ' + destination,
+                      Date.parse(startDate),
+                      Date.parse(endDate),
+                      destination,
+                      'Remember to pack everything and check weather forecast!',
+                    );
+                  }}
+                />
               </Text>
             </View>
           </LinearGradient>
@@ -100,21 +114,6 @@ const TripDetailsContainer = (props) => {
             tripId={selectedTrip.id}
             icon="note"
           />
-          <TouchableOpacity
-            onPress={() => {
-              CalendarEventChandler.addToCalendar(
-                'Trip to ' + destination,
-                Date.parse(startDate),
-                Date.parse(endDate),
-                destination,
-                'Remember to pack everything and check weather forecast!',
-              );
-            }}
-          >
-            <Text style={[styles.action, styles.callToAction]}>
-              Add your trip to your Google Calendar!
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
