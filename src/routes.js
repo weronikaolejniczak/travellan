@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
@@ -44,16 +45,33 @@ import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
 
+import * as authFunc from 'src/actions/userActions.js';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+/** iN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
 function CustomDrawerContent(props) {
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label="Example" onPress={() => alert('This is an example')} />
-      <DrawerItem label="Logout" onPress={() => alert('Placeholder')} />
-    </DrawerContentScrollView>
+    <SafeAreaView
+      style={{ flex: 1 }}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View>
+        <DrawerItem
+          label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
+          icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
+          onPress={() => {
+            authFunc.logout();
+            props.navigation.navigate('Startup');
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 

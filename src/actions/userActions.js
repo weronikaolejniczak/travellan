@@ -63,6 +63,10 @@ export const loginRequest = (email, password) => {
   };
 };
 
+export const logout = () => {
+  AsyncStorage.removeItem('userData');
+}
+
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
