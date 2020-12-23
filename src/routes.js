@@ -66,6 +66,7 @@ function CustomDrawerContent(props) {
           icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
           onPress={() => {
             auth_func.logout();
+            props.navigation.navigate('Startup');
           }}
         />
       </View>
