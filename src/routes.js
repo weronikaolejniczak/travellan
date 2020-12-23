@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, SafeAreaView} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { SafeAreaView, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
+  DrawerItemList,
+  createDrawerNavigator,
 } from '@react-navigation/drawer';
 
 import StartupContainer, {
@@ -45,22 +45,25 @@ import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 import Colors from 'constants/Colors';
 
 import * as auth_func from 'src/actions/userActions.js';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-/** IN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
+/** iN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
 function CustomDrawerContent(props) {
   return (
     <SafeAreaView
-      style={{flex: 1}}
-      forceInset={{top: 'always', horizontal: 'never'}}>
+      style={{ flex: 1 }}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
       <View>
         <DrawerItem
-          label="Logout"
+          label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
+          icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
           onPress={() => {
             auth_func.logout();
           }}
@@ -75,7 +78,8 @@ function DrawerNavigator() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       drawerType="front"
-      backBehavior="none">
+      backBehavior="none"
+    >
       <Drawer.Screen name="My trips" component={TripsContainer} />
     </Drawer.Navigator>
   );
@@ -141,7 +145,7 @@ export default function Navigation() {
         <Stack.Screen
           name="Map"
           component={MapContainer}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Weather" component={WeatherContainer} />
       </Stack.Navigator>
@@ -165,7 +169,7 @@ const defaultNavOptions = {
   headerTitleStyle: {
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 7,
   },
 };
