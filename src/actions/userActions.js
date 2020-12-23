@@ -68,8 +68,6 @@ export const logout = () => {
     'userData',
     JSON.stringify({
       token: '',
-      userId: '',
-      expiryDate: '',
     }),
   );
 }
