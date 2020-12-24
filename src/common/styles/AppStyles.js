@@ -12,6 +12,7 @@ export default {
   },
   scrollViewContent: {
     ...Metrics.bigPadding,
+    ...Metrics.hugeTopPadding,
   },
   text: {
     color: Colors.text,

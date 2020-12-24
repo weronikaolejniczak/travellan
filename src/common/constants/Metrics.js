@@ -34,6 +34,9 @@ export default {
   horizontalPadding: {
     paddingHorizontal: normal,
   },
+  hugeTopPadding: {
+    paddingTop: big * 5,
+  },
   margin: {
     margin: normal,
   },

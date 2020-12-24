@@ -1,9 +1,9 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { styles } from './DatePickerStyle';
+import { styles } from './DateTimePickerStyle';
 
 const DatePicker = (props) => {
   const {
