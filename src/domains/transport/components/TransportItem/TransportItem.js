@@ -15,7 +15,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import Card from 'components/card/Card';
+import { Card } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = (props) => {

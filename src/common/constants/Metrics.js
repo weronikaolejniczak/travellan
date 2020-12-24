@@ -2,6 +2,7 @@ export const tiny = 2;
 export const small = tiny * 2; // 4
 export const normal = tiny * 3; // 6
 export const big = normal * 2; // 12
+export const huge = big * 4; // 48
 
 export default {
   bigBottomMargin: {
@@ -35,7 +36,7 @@ export default {
     paddingHorizontal: normal,
   },
   hugeTopPadding: {
-    paddingTop: big * 5,
+    paddingTop: huge,
   },
   margin: {
     margin: normal,

@@ -1,14 +1,18 @@
-import * as tripsActions from 'actions/tripsActions';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, Alert, TouchableHighlight, FlatList } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
+import * as tripsActions from 'actions/tripsActions';
 import Colors from 'constants/Colors';
-import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import {
+  View as Container,
+  HeaderButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
 
@@ -92,7 +96,7 @@ const TripsContainer = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <Container>
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
@@ -115,7 +119,7 @@ const TripsContainer = (props) => {
           </TripItem>
         )}
       />
-    </View>
+    </Container>
   );
 };
 

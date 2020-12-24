@@ -4,6 +4,7 @@ export default {
   container: {
     ...Layout.fill,
     ...Metrics.bigPadding,
+    ...Metrics.hugeTopPadding,
     backgroundColor: Colors.background,
   },
   scrollView: {

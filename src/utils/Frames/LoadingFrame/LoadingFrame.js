@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 import Colors from 'constants/Colors';
 import { styles } from './LoadingFrameStyle';
 
-const Loading = () => {
+const LoadingFrame = () => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={Colors.primary} />
@@ -12,4 +12,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingFrame;
