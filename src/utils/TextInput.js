@@ -2,15 +2,7 @@ import React from 'react';
 import { HelperText, TextInput } from 'react-native-paper';
 
 const CustomTextInput = (props) => {
-  const {
-    disabled,
-    error,
-    onChange,
-    label,
-    multiline,
-    outlined,
-    value,
-  } = props;
+  const { disabled, error, onChange, label, multiline, flat, value } = props;
 
   return (
     <>
@@ -18,7 +10,7 @@ const CustomTextInput = (props) => {
         disabled={disabled}
         error={error}
         label={label || 'Label'}
-        mode={outlined && 'outlined'}
+        mode={flat ? 'flat' : 'outlined'}
         multiline={multiline}
         numberOfLines={multiline && 5}
         onChangeText={onChange}
