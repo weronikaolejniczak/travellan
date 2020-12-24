@@ -9,6 +9,7 @@ export { default as RadioButton } from './RadioButton/RadioButton';
 export { default as RadioButtonGroup } from './RadioButtonGroup';
 export { default as ReadMore } from './ReadMore';
 export { default as ScrollView } from './Frames/ScrollView';
+export { default as Select } from './Select/Select';
 export { default as Switch } from './Switch/Switch';
 export { default as TextInput } from './TextInput';
 export { default as View } from './Frames/View';

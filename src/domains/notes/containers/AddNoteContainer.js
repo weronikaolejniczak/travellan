@@ -8,12 +8,12 @@ import {
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import RNPickerSelect from 'react-native-picker-select';
 
-import { notificationManager } from 'services/manageNotifications';
 import * as notesActions from 'actions/notesActions';
-import { styles } from './AddNoteContainerStyle';
 import Colors from 'constants/Colors';
+import { Select } from 'utils';
+import { notificationManager } from 'services/manageNotifications';
+import { styles } from './AddNoteContainerStyle';
 
 const AddNoteContainer = (props) => {
   const dispatch = useDispatch();
@@ -124,27 +124,20 @@ const AddNoteContainer = (props) => {
     {
       label: 'To Do',
       value: 'To Do',
-      color: '#FF4500',
-      fontWeight: 'bold',
     },
     {
       label: 'To Pack',
       value: 'To Pack',
-      color: '#FF4500',
-      fontWeight: 'bold',
     },
     {
       label: 'Diaries',
       value: 'Diaries',
-      color: '#FF4500',
-      fontWeight: 'bold',
     },
   ];
 
   const placeholder = {
     label: 'Select a category...',
     value: 'Without category',
-    color: 'grey',
   };
 
   useEffect(() => {
@@ -154,44 +147,12 @@ const AddNoteContainer = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.smallPaddingTop}>
-        <Text style={styles.label}>Set Category</Text>
-        <View style={styles.smallPaddingTop} />
-        <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 4 }}>
-          <RNPickerSelect
-            onChangeText={categoryChangeHandler}
-            items={categoryList}
-            placeholder={placeholder}
-            onValueChange={(value) => setCategory(value)}
-            style={{
-              inputAndroid: {
-                backgroundColor: 'transparent',
-              },
-              iconContainer: {
-                top: 5,
-                right: 15,
-              },
-              color: categoryList.color,
-            }}
-            Icon={() => {
-              return (
-                <View
-                  style={{
-                    backgroundColor: 'transparent',
-                    borderTopWidth: 10,
-                    borderTopColor: 'gray',
-                    borderRightWidth: 10,
-                    borderRightColor: 'transparent',
-                    borderLeftWidth: 10,
-                    borderLeftColor: 'transparent',
-                    width: 0,
-                    height: 0,
-                    top: 15,
-                  }}
-                />
-              );
-            }}
-          />
-        </View>
+        <Select
+          onChangeText={categoryChangeHandler}
+          items={categoryList}
+          placeholder={placeholder}
+          onValueChange={(value) => setCategory(value)}
+        />
       </View>
 
       {category === 'To Pack' ? (
