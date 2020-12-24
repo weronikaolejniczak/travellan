@@ -1,7 +1,7 @@
 export { default as Button } from './Button';
 export { default as Card } from './Card/Card';
 export { default as Checkbox } from './Checkbox';
-export { default as DatePicker } from './DatePicker/DatePicker';
+export { default as DateTimePicker } from './DateTimePicker/DateTimePicker';
 export { default as HeaderButton } from './HeaderButton';
 export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';
 export { default as LoadingFrame } from './Frames/LoadingFrame/LoadingFrame';
