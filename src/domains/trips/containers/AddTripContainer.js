@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
 import {
   ActivityIndicator,
-  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -12,10 +11,10 @@ import {
 import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
-import BudgetField from 'components';
 import Colors from 'constants/Colors';
+import { BudgetPicker } from 'components';
 import { CURRENCIES } from 'data/Currencies';
-import { DatePicker } from 'utils';
+import { DateTimePicker } from 'utils';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
@@ -72,7 +71,7 @@ const AddTripContainer = (props) => {
   };
 
   let destinationRegex = new RegExp(
-    '^([a-zA-Z\u0080-\u024F]+(?:. |-| |\'))*[a-zA-Z\u0080-\u024F]*$',
+    `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
   );
   const destinationChangeHandler = (text) => {
     text.trim().length === 0 || !destinationRegex.test(text)
@@ -91,22 +90,8 @@ const AddTripContainer = (props) => {
     }
   };
 
-  const startDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowStartDate(Platform.OS === 'ios');
-    setStartDate(currentDate);
-    currentDate > endDate ? setEndDate(currentDate) : '';
-  };
-
-  const endDateChangeHandler = (event, selectedDate) => {
-    const currentDate = selectedDate || startDate;
-    setShowEndDate(Platform.OS === 'ios');
-    setEndDate(currentDate);
-  };
-
-  const showDatePicker = (type) => {
-    type === 'start' ? setShowStartDate(true) : setShowEndDate(true);
-  };
+  const adjustEndDateToStartDate = (currentDate) =>
+    currentDate > endDate && setEndDate(currentDate);
 
   const clearBudget = () => {
     setBudget('0');
@@ -250,27 +235,26 @@ const AddTripContainer = (props) => {
         )}
       </View>
 
-      <DatePicker
+      <DateTimePicker
         label="Start date"
-        styles={styles}
-        showDatePicker={() => showDatePicker('start')}
+        setShowPicker={setShowStartDate}
         date={startDate}
-        showDate={showStartDate}
+        showPicker={showStartDate}
         minimumDate={Date.now()}
-        dateChangeHandler={startDateChangeHandler}
+        setDate={setStartDate}
+        adjustDate={adjustEndDateToStartDate}
       />
 
-      <DatePicker
+      <DateTimePicker
         label="End date"
-        styles={styles}
-        showDatePicker={() => showDatePicker('end')}
+        setShowPicker={setShowEndDate}
         date={endDate}
-        showDate={showEndDate}
+        showPicker={showEndDate}
         minimumDate={startDate}
-        dateChangeHandler={endDateChangeHandler}
+        setDate={setEndDate}
       />
 
-      <BudgetField
+      <BudgetPicker
         label="Budget"
         styles={styles}
         showSwitch={true}

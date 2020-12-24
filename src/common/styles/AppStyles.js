@@ -3,7 +3,7 @@ import { Colors, Layout, Metrics } from 'constants';
 export default {
   container: {
     ...Layout.fill,
-    ...Metrics.bigPadding,
+    ...Metrics.mediumPadding,
     ...Metrics.hugeTopPadding,
     backgroundColor: Colors.background,
   },
@@ -12,7 +12,7 @@ export default {
     backgroundColor: Colors.background,
   },
   scrollViewContent: {
-    ...Metrics.bigPadding,
+    ...Metrics.mediumPadding,
     ...Metrics.hugeTopPadding,
   },
   text: {

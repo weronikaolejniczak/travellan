@@ -3,31 +3,27 @@ import { StyleSheet } from 'react-native';
 import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
+  icon: {
+    color: Colors.placeholder,
+    fontSize: 24,
+    position: 'absolute',
+    right: 7,
+    top: 22,
+  },
   label: {
     color: Colors.primary,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  pickerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 7,
   },
   picker: {
-    width: '100%',
-    borderWidth: 2,
-    borderRadius: 50,
-    borderColor: Colors.primary,
-    marginTop: 15,
-    paddingVertical: 15,
-    paddingHorizontal: 35,
+    borderColor: Colors.placeholder,
+    borderRadius: 4,
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginVertical: 15,
+    padding: 7,
   },
-  pickerText: {
+  text: {
     color: Colors.text,
     fontSize: 18,
-  },
-  textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 });
