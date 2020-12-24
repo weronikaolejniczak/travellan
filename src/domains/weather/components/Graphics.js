@@ -1,20 +1,20 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 /* day graphics */
+import Rain from 'assets/images/rain.svg';
 import Sun from 'assets/images/sun.svg';
 import SunWithClouds from 'assets/images/sun_with_clouds.svg';
-import Rain from 'assets/images/rain.svg';
 /* night graphics */
 import Moon from 'assets/images/moon1.svg';
-import MoonWithClouds from 'assets/images/moon_with_clouds.svg';
 import MoonRain from 'assets/images/moon_rain.svg';
+import MoonWithClouds from 'assets/images/moon_with_clouds.svg';
 /* common graphics */
 import BrokenClouds from 'assets/images/broken_clouds.svg';
-import ScatteredClouds from 'assets/images/scattered_clouds.svg';
 import HeavyRain from 'assets/images/heavy_rain.svg';
-import Thunderstorm from 'assets/images/storm.svg';
-import Snow from 'assets/images/snow.svg';
 import Mist from 'assets/images/mist.svg';
+import ScatteredClouds from 'assets/images/scattered_clouds.svg';
+import Snow from 'assets/images/snow.svg';
+import Thunderstorm from 'assets/images/storm.svg';
 
 const windowWidth = Dimensions.get('window').width;
 

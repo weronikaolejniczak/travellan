@@ -1,11 +1,18 @@
-import * as transportActions from 'actions/transportActions';
-
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Animated, FlatList, ScrollView, View } from 'react-native';
+import {
+  Alert,
+  Animated,
+  FlatList,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import * as transportActions from 'actions/transportActions';
+import HeaderButton from 'components/headerButton/HeaderButton';
+import { ItemlessFrame, LoadingFrame } from 'components/frames';
 import { TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';

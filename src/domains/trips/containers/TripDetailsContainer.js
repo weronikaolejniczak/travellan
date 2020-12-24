@@ -1,14 +1,9 @@
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ImageBackground, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationButton } from '../components';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { styles } from './TripDetailsContainerStyle.js';
@@ -57,6 +52,19 @@ const TripDetailsContainer = (props) => {
                     {startDateFormatted} - {endDateFormatted}
                   </Text>
                 )}
+                <Icon
+                  name="calendar"
+                  size={35}
+                  onPress={() => {
+                    CalendarEventChandler.addToCalendar(
+                      'Trip to ' + destination,
+                      Date.parse(startDate),
+                      Date.parse(endDate),
+                      destination,
+                      'Remember to pack everything and check weather forecast!',
+                    );
+                  }}
+                />
               </Text>
             </View>
           </LinearGradient>
@@ -101,21 +109,6 @@ const TripDetailsContainer = (props) => {
             tripId={selectedTrip.id}
             icon="note"
           />
-          <TouchableOpacity
-            onPress={() => {
-              CalendarEventChandler.addToCalendar(
-                'Trip to ' + destination,
-                Date.parse(startDate),
-                Date.parse(endDate),
-                destination,
-                'Remember to pack everything and check weather forecast!',
-              );
-            }}
-          >
-            <Text style={[styles.action, styles.callToAction]}>
-              Add your trip to your Google Calendar!
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

@@ -1,23 +1,22 @@
-import * as transportActions from 'actions/transportActions';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import QRCode from 'react-native-qrcode-svg';
 import DocumentPicker from 'react-native-document-picker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Pdf from 'react-native-pdf';
+import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
 import {
-  View,
+  Alert,
+  Modal,
   ScrollView,
   Text,
-  Alert,
   TouchableOpacity,
-  Modal,
+  View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { Card } from 'utils';
-import { styles, cardHeight } from './TransportItemStyle';
+import * as transportActions from 'actions/transportActions';
+import Card from 'components/card/Card';
+import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = (props) => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const TransportItem = (props) => {
     handleAddQR,
     handleDeleteTransport,
   } = props;
-  const source = {uri: PDF};
+  const source = { uri: PDF };
 
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
@@ -76,10 +75,7 @@ const TransportItem = (props) => {
 
       await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-      } else {
-        throw err;
-      }
+      if (!DocumentPicker.isCancel(err)) throw err;
     }
   };
 
@@ -91,11 +87,13 @@ const TransportItem = (props) => {
         visible={showQR}
         onRequestClose={() => {
           setShowQR(false);
-        }}>
+        }}
+      >
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
-            onPress={closeQRhandler}>
+            onPress={closeQRhandler}
+          >
             <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <View style={styles.containerQR}>
@@ -117,9 +115,10 @@ const TransportItem = (props) => {
                         onPress: deleteQR,
                       },
                     ],
-                    {cancelable: true},
+                    { cancelable: true },
                   );
-                }}>
+                }}
+              >
                 <Icon name="delete" style={styles.icon3} />
               </TouchableOpacity>
             </View>
@@ -133,11 +132,13 @@ const TransportItem = (props) => {
         visible={showPDF}
         onRequestClose={() => {
           setShowPDF(false);
-        }}>
+        }}
+      >
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
-            onPress={closePDFhandler}>
+            onPress={closePDFhandler}
+          >
             <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <Pdf
@@ -146,16 +147,16 @@ const TransportItem = (props) => {
             }}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {
-              /**INSTRUCTIONS WHEN PDF IS LOADED */
+              /**iNSTRUCTIONS WHEN PDF IS LOADED */
             }}
             onPageChanged={(page, numberOfPages) => {
-              /**INSTRUCTIONS IF USER CHANGES PAGE */
+              /**iNSTRUCTIONS IF USER CHANGES PAGE */
             }}
             onError={(error) => {
-              /**INSTRUCTIONS IF ERROR */
+              /**iNSTRUCTIONS IF ERROR */
             }}
             onPressLink={(uri) => {
-              /**INSTRUCTIONS IF USER PRESSES LINK */
+              /**iNSTRUCTIONS IF USER PRESSES LINK */
             }}
             style={styles.PDF}
           />
@@ -175,9 +176,10 @@ const TransportItem = (props) => {
                     onPress: deletePDF,
                   },
                 ],
-                {cancelable: true},
+                { cancelable: true },
               );
-            }}>
+            }}
+          >
             <Icon name="delete" style={styles.icon2} />
           </TouchableOpacity>
         </View>
@@ -207,19 +209,21 @@ const TransportItem = (props) => {
                     onPress: pickPDF,
                   },
                 ],
-                {cancelable: true},
+                { cancelable: true },
               );
             } else {
               setShowPDF(true);
             }
-          }}>
+          }}
+        >
           <CommunityIcon name="file-pdf-box" style={styles.icon} />
         </TouchableOpacity>
       </View>
 
       <ScrollView
-        style={[{marginTop: cardHeight * 0.0465}]}
-        indicatorStyle="white">
+        style={[{ marginTop: cardHeight * 0.0465 }]}
+        indicatorStyle="white"
+      >
         <View style={styles.rowCenter}>
           {isTicketTo === true ? (
             <Text style={styles.header}>to {destination}</Text>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Weather from 'models/Weather';
-import {WEATHER_API} from 'react-native-dotenv';
+import { WEATHER_API } from 'react-native-dotenv';
 
 const API_KEY = WEATHER_API;
 

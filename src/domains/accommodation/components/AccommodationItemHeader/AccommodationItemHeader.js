@@ -1,6 +1,6 @@
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { View, Text, ImageBackground } from 'react-native';
+import React from 'react';
+import { ImageBackground, Text, View } from 'react-native';
 
 import { Colors, Layout } from 'constants';
 import { styles } from './AccommodationItemHeaderStyle';

@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import Colors from 'constants/Colors';
 
@@ -20,7 +20,8 @@ const ReadMore = (props) => {
           numberOfLines={showMore ? NUM_OF_LINES - 1 : undefined}
           ellipsizeMode="tail"
           onTextLayout={onTextLayout}
-          style={styles.text}>
+          style={styles.text}
+        >
           {props.longText}
         </Text>
       ) : (
@@ -32,7 +33,8 @@ const ReadMore = (props) => {
           style={styles.text}
           onPress={() => {
             setReadMore((prevState) => !prevState);
-          }}>
+          }}
+        >
           {readMore === false ? (
             <View style={styles.textContainer}>
               <Text style={styles.clickableText}>Read more</Text>

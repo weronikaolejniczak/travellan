@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 import ToolbarButton from 'domains/map/components/toolbarButton/ToolbarButton';
 import Input from 'domains/map/components/input/Input';
@@ -23,6 +23,7 @@ const Toolbar = (props) => {
           onPress={props.addingActivityHandler}
         />
         <ToolbarButton
+          iconName="map-marker-minus"
           isLoading={props.isLoading}
           loader={false}
           handler={props.deletingMarkerActive}

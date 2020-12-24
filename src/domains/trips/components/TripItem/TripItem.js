@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, Platform } from 'react-native';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import { Card } from 'utils';

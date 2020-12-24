@@ -1,29 +1,28 @@
-import * as categories from 'data/SpendingCategories';
-import * as budgetActions from 'actions/budgetActions';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  View,
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  FlatList,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
-  Dimensions,
-  ActivityIndicator,
-  Alert,
+  View,
 } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import * as budgetActions from 'actions/budgetActions';
+import * as categories from 'data/SpendingCategories';
 import Colors from 'constants/Colors';
 import { Card } from 'utils';
 import {
-  calculateCash,
   calculateCard,
-  prepareLabelsForLinechart,
+  calculateCash,
   prepareDataForLinechart,
+  prepareLabelsForLinechart,
   prepareValue,
 } from 'helpers';
 import { styles } from './BudgetContainerStyle';
@@ -210,7 +209,7 @@ const BudgetContainer = (props) => {
 
   if (isLoading || isRefreshing) {
     return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
         <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
@@ -226,7 +225,7 @@ const BudgetContainer = (props) => {
           <Text style={[styles.text, styles.budgetlessText]}>
             Create a currency card with the
           </Text>
-          <Icon name={'plus'} size={32} style={[styles.text, {margin: 10}]} />
+          <Icon name={'plus'} size={32} style={[styles.text, { margin: 10 }]} />
           <Text style={[styles.text, styles.budgetlessText]}>sign above!</Text>
         </View>
       </View>
@@ -239,8 +238,8 @@ const BudgetContainer = (props) => {
         <FlatList
           horizontal
           data={budget}
-          ItemSeparatorComponent={() => <View style={{width: 7}} />}
-          renderItem={({item}) => (
+          ItemSeparatorComponent={() => <View style={{ width: 7 }} />}
+          renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.currencyHolder}
               onLongPress={() => {
@@ -259,7 +258,7 @@ const BudgetContainer = (props) => {
                       },
                     },
                   ],
-                  {cancelable: true},
+                  { cancelable: true },
                 );
               }}
               onPress={() => {
@@ -268,14 +267,16 @@ const BudgetContainer = (props) => {
                 setTitle('');
                 setAmount('');
                 setAccount(item.defaultAccount);
-              }}>
+              }}
+            >
               {!!selectedCurrency && (
                 <Text
                   style={
                     selectedCurrency.currency === item.currency
                       ? styles.currencyActive
                       : styles.currencyNonactive
-                  }>
+                  }
+                >
                   {item.currency}
                 </Text>
               )}
@@ -288,7 +289,7 @@ const BudgetContainer = (props) => {
       {selectedCurrency !== undefined && (
         <View style={styles.overviewContainer}>
           <View style={styles.center}>
-            <Text style={{color: Colors.grey}}>Cash</Text>
+            <Text style={{ color: Colors.grey }}>Cash</Text>
             <View style={styles.accounts}>
               <Icon name={'cash'} style={[styles.icon, styles.text]} />
               <Text
@@ -297,26 +298,28 @@ const BudgetContainer = (props) => {
                   calculateCash(selectedCurrency.history) < 0
                     ? styles.negative
                     : styles.positive,
-                ]}>
+                ]}
+              >
                 {calculateCash(selectedCurrency.history)}
               </Text>
             </View>
           </View>
 
           <View style={styles.center}>
-            <Text style={{color: Colors.grey}}>General balance</Text>
+            <Text style={{ color: Colors.grey }}>General balance</Text>
             <Text
               style={[
                 styles.icon,
                 displayableValue < 0 ? styles.negative : styles.positive,
-              ]}>
+              ]}
+            >
               {displayableValue < 0 ? '-' : '+'}
               {displayableValue}
             </Text>
           </View>
 
           <View style={styles.center}>
-            <Text style={{color: Colors.grey}}>Card</Text>
+            <Text style={{ color: Colors.grey }}>Card</Text>
             <View style={[styles.accounts]}>
               <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
               <Text
@@ -325,7 +328,8 @@ const BudgetContainer = (props) => {
                   calculateCard(selectedCurrency.history) < 0
                     ? styles.negative
                     : styles.positive,
-                ]}>
+                ]}
+              >
                 {calculateCard(selectedCurrency.history)}
               </Text>
             </View>
@@ -363,7 +367,8 @@ const BudgetContainer = (props) => {
                       padding: 15,
                       borderRadius: 20,
                     },
-                  ]}>
+                  ]}
+                >
                   <Text style={styles.text}>
                     {new Date(selectedHistoryItem.date).toLocaleDateString()}
                   </Text>
@@ -372,8 +377,9 @@ const BudgetContainer = (props) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                    }}>
-                    <Text style={[styles.text, {fontSize: 22}]}>
+                    }}
+                  >
+                    <Text style={[styles.text, { fontSize: 22 }]}>
                       {selectedHistoryItem.value}
                     </Text>
                     <Text style={[styles.text]}>
@@ -385,21 +391,23 @@ const BudgetContainer = (props) => {
             </View>
           )}
           <View style={styles.smallMarginTop}>
-            <Card style={{padding: '5%'}}>
+            <Card style={{ padding: '5%' }}>
               <Text style={[styles.text, styles.label]}>Operations</Text>
             </Card>
-            <View style={{padding: '5%'}}>
+            <View style={{ padding: '5%' }}>
               <View>
-                <Text style={{color: 'grey'}}>Categories</Text>
+                <Text style={{ color: 'grey' }}>Categories</Text>
                 <View
                   style={[
                     styles.categoriesContainer,
                     styles.extraSmallMarginTop,
-                  ]}>
+                  ]}
+                >
                   {categories.icons.map((item) => (
                     <TouchableOpacity
                       style={[styles.iconButton]}
-                      onPress={() => chooseCategory(item)}>
+                      onPress={() => chooseCategory(item)}
+                    >
                       <Icon
                         name={item}
                         style={[
@@ -418,17 +426,18 @@ const BudgetContainer = (props) => {
                   </Text>
                 </View>
               </View>
-              <View style={{marginVertical: '5%'}}>
-                <Text style={{color: 'grey'}}>Accounts</Text>
+              <View style={{ marginVertical: '5%' }}>
+                <Text style={{ color: 'grey' }}>Accounts</Text>
                 <View style={[styles.extraSmallMarginTop, styles.justifyRow]}>
                   <View>
                     <TouchableOpacity
-                      style={[styles.justifyRow, {alignItems: 'center'}]}
-                      onPress={() => setAccount('cash')}>
+                      style={[styles.justifyRow, { alignItems: 'center' }]}
+                      onPress={() => setAccount('cash')}
+                    >
                       <Icon
                         name={'cash'}
                         style={[
-                          {marginRight: '5%'},
+                          { marginRight: '5%' },
                           styles.icon,
                           account === 'cash'
                             ? styles.activeCategory
@@ -441,19 +450,21 @@ const BudgetContainer = (props) => {
                           account === 'cash'
                             ? styles.activeCategory
                             : styles.nonactiveCategory,
-                        ]}>
+                        ]}
+                      >
                         Cash
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{marginLeft: '5%'}}>
+                  <View style={{ marginLeft: '5%' }}>
                     <TouchableOpacity
-                      style={[styles.justifyRow, {alignItems: 'center'}]}
-                      onPress={() => setAccount('card')}>
+                      style={[styles.justifyRow, { alignItems: 'center' }]}
+                      onPress={() => setAccount('card')}
+                    >
                       <Icon
                         name={'credit-card'}
                         style={[
-                          {marginRight: '5%'},
+                          { marginRight: '5%' },
                           styles.icon,
                           account === 'card'
                             ? styles.activeCategory
@@ -466,7 +477,8 @@ const BudgetContainer = (props) => {
                           account === 'card'
                             ? styles.activeCategory
                             : styles.nonactiveCategory,
-                        ]}>
+                        ]}
+                      >
                         Card
                       </Text>
                     </TouchableOpacity>
@@ -497,7 +509,7 @@ const BudgetContainer = (props) => {
                       style={[
                         styles.icon,
                         styles.positive,
-                        {marginRight: '3%'},
+                        { marginRight: '3%' },
                       ]}
                       name="plus"
                     />
@@ -515,7 +527,7 @@ const BudgetContainer = (props) => {
             </View>
           </View>
           <View style={styles.smallMarginTop}>
-            <Card style={{padding: '5%'}}>
+            <Card style={{ padding: '5%' }}>
               <Text style={[styles.text, styles.label]}>History</Text>
             </Card>
             {!selectedCurrency.history.length ? (
@@ -535,13 +547,14 @@ const BudgetContainer = (props) => {
                           justifyContent: 'center',
                           alignItems: 'center',
                           marginRight: '5%',
-                        }}>
+                        }}
+                      >
                         <Icon
                           name={categories.categoryIcons[item.category]}
                           style={[
                             styles.icon,
                             styles.text,
-                            {marginRight: '10%'},
+                            { marginRight: '10%' },
                           ]}
                         />
                         <Icon
@@ -560,7 +573,8 @@ const BudgetContainer = (props) => {
                           <Text
                             style={
                               item.value < 0 ? styles.negative : styles.positive
-                            }>
+                            }
+                          >
                             {item.value}
                             {'   '}
                           </Text>
@@ -587,7 +601,8 @@ export const budgetOptions = (navData) => {
           navData.navigation.navigate('Add currency', {
             tripId: navData.route.params.tripId,
           });
-        }}>
+        }}
+      >
         <Text style={styles.navigationText}>Add currency</Text>
       </TouchableOpacity>
     ),

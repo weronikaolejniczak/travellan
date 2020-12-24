@@ -1,13 +1,13 @@
+import React, { useCallback, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import React, { useState, useCallback } from 'react';
 import {
-  Text,
-  View,
+  ActivityIndicator,
+  Platform,
   ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
-  Platform,
-  ActivityIndicator,
+  View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -72,7 +72,7 @@ const AddTripContainer = (props) => {
   };
 
   let destinationRegex = new RegExp(
-    "^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$",
+    '^([a-zA-Z\u0080-\u024F]+(?:. |-| |\'))*[a-zA-Z\u0080-\u024F]*$',
   );
   const destinationChangeHandler = (text) => {
     text.trim().length === 0 || !destinationRegex.test(text)

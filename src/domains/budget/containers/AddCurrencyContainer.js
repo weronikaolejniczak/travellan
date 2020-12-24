@@ -1,15 +1,14 @@
-import * as budgetActions from 'actions/budgetActions';
-
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-  View,
+  ActivityIndicator,
   ScrollView,
   Text,
   TouchableOpacity,
-  ActivityIndicator,
+  View,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import * as budgetActions from 'actions/budgetActions';
 import Budget from 'models/Budget';
 import BudgetField from 'components';
 import Colors from 'constants/Colors';
@@ -17,7 +16,7 @@ import { CURRENCIES } from 'data/Currencies';
 import { prepareValue } from 'helpers';
 import { styles } from './AddCurrencyContainerStyle';
 
-var incorrectCurrency =
+let incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';
 
 const AddCurrencyContainer = (props) => {
@@ -152,7 +151,8 @@ const AddCurrencyContainer = (props) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => submitHandler()}>
+            onPress={() => submitHandler()}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

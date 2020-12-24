@@ -1,5 +1,5 @@
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import React from 'react';
 
 const Background = (props) => {
   const icon = props.activeDay.icon;
@@ -26,7 +26,8 @@ const Background = (props) => {
     return (
       <LinearGradient
         colors={['#80E0FF', '#2BABE1']} // intense light blue
-        style={props.styles.linearGradient}>
+        style={props.styles.linearGradient}
+      >
         {props.children}
       </LinearGradient>
     );
@@ -34,7 +35,8 @@ const Background = (props) => {
     return (
       <LinearGradient
         colors={['#999999', '#99ccff']} // grey to light blue
-        style={props.styles.linearGradient}>
+        style={props.styles.linearGradient}
+      >
         {props.children}
       </LinearGradient>
     );
@@ -42,7 +44,8 @@ const Background = (props) => {
     return (
       <LinearGradient
         colors={['#475f6b', '#6A7B8A']} // low sat blue to grey
-        style={props.styles.linearGradient}>
+        style={props.styles.linearGradient}
+      >
         {props.children}
       </LinearGradient>
     );
@@ -50,7 +53,8 @@ const Background = (props) => {
     return (
       <LinearGradient
         colors={['#000d4d', '#000d68']} // dark navy
-        style={props.styles.linearGradient}>
+        style={props.styles.linearGradient}
+      >
         {props.children}
       </LinearGradient>
     );
@@ -58,7 +62,8 @@ const Background = (props) => {
     return (
       <LinearGradient
         colors={['#80E0FF', '#2BABE1']} // intense light blue (just as a fallback)
-        style={props.styles.linearGradient}>
+        style={props.styles.linearGradient}
+      >
         {props.children}
       </LinearGradient>
     );

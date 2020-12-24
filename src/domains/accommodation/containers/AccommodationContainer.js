@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, FlatList, Animated } from 'react-native';
+import { Animated, FlatList, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import { AccommodationItem } from 'domains/accommodation/components';

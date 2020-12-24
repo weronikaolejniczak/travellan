@@ -1,5 +1,5 @@
 /**
- * This file contains font sizes that are global to the application
+ * this file contains font sizes that are global to the application
  */
 import { StyleSheet } from 'react-native';
 

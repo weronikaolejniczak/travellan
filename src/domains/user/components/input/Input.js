@@ -1,5 +1,5 @@
-import React, { useReducer, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, { useEffect, useReducer } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import Colors from 'constants/Colors';
 

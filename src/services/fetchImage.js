@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {UNSPLASH_API} from 'react-native-dotenv';
+import { UNSPLASH_API } from 'react-native-dotenv';
 
 const API_KEY = UNSPLASH_API;
 
@@ -20,7 +20,7 @@ async function fetchImage(keyword) {
       const authorName = json.data.results[0].user.name.toString();
       const username = json.data.results[0].user.username.toString();
 
-      const image = {imageUrl, authorName, username};
+      const image = { imageUrl, authorName, username };
 
       return image;
     })
