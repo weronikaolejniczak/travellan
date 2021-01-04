@@ -1,18 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { ScrollView, Text, View, TouchableOpacity } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from './NotificationContainerStyle';
-import Colors from 'constants/Colors';
 
 const NotificationContainer = (props) => {
   const localNotify = notificationManager;
