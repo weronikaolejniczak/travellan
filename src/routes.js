@@ -43,6 +43,7 @@ import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
+import NotificationContainer from 'domains/user/containers/NotificationContainer';
 import Colors from 'constants/Colors';
 
 import * as authFunc from 'src/actions/userActions.js';
@@ -66,6 +67,10 @@ function CustomDrawerContent(props) {
           label={() => (
             <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
           )}
+          onPress={() => {
+            authFunc.logout();
+            props.navigation.navigate('Notification');
+          }}
         />
         <DrawerItem
           label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
@@ -95,6 +100,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
+        <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen
           name="Startup"
           component={StartupContainer}
