@@ -63,6 +63,11 @@ function CustomDrawerContent(props) {
       </DrawerContentScrollView>
       <View>
         <DrawerItem
+          label={() => (
+            <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
+          )}
+        />
+        <DrawerItem
           label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
           icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
           onPress={() => {
