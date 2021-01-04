@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ScrollView, Text, View, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import { notificationManager } from 'services/manageNotifications';
@@ -9,8 +9,24 @@ const NotificationContainer = (props) => {
   const localNotify = notificationManager;
 
   const handleNotificationDeletion = () => {
-    localNotify.configure();
-    localNotify.cancelAllLocalNotification();
+    Alert.alert(
+      'Delete notifications',
+      'Are you sure to delete all your scheduled notifications?',
+      [
+        {
+          style: 'cancel',
+          text: 'Cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            localNotify.configure();
+            localNotify.cancelAllLocalNotification();
+          },
+        },
+      ],
+      { cancelable: true },
+    );
   };
 
   useEffect(() => {
