@@ -45,4 +45,25 @@ export const styles = StyleSheet.create({
   error: {
     color: Colors.error,
   },
+  itemlessContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemlessText: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  text: {
+    color: Colors.text,
+  },
+  callToAction: {
+    padding: 15,
+  },
+  action: {
+    color: Colors.primary,
+  },
+  marginTop: {
+    marginTop: 20,
+  },
 });

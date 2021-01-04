@@ -68,7 +68,6 @@ function CustomDrawerContent(props) {
             <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
           )}
           onPress={() => {
-            authFunc.logout();
             props.navigation.navigate('Notification');
           }}
         />
