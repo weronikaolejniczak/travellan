@@ -4,6 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from './NotificationContainerStyle';
+import Snackbar from 'react-native-snackbar';
 
 const NotificationContainer = (props) => {
   const localNotify = notificationManager;
