@@ -40,11 +40,7 @@ const NotificationContainer = (props) => {
           Tired of Travellan's notifications?
         </Text>
 
-        <TouchableOpacity
-          onPress={() => {
-            handleNotificationDeletion();
-          }}
-        >
+        <TouchableOpacity onPress={() => handleNotificationDeletion()}>
           <Text style={[styles.action, styles.callToAction]}>
             Delete all scheduled notifications
           </Text>
