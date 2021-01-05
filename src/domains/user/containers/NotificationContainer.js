@@ -23,6 +23,14 @@ const NotificationContainer = (props) => {
           onPress: () => {
             localNotify.configure();
             localNotify.cancelAllLocalNotification();
+            Snackbar.show({
+              text: 'You have deleted all scheduled notifications!',
+              duration: Snackbar.LENGTH_LONG,
+              action: {
+                text: 'Ok',
+                textColor: 'orange',
+              },
+            });
           },
         },
       ],
