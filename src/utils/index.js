@@ -1,6 +1,8 @@
 export { default as Button } from './Button';
 export { default as Card } from './Card/Card';
 export { default as Checkbox } from './Checkbox';
+export { default as Chip } from './Chip';
+export { default as ChipGroup } from './ChipGroup/ChipGroup';
 export { default as DateTimePicker } from './DateTimePicker/DateTimePicker';
 export { default as HeaderButton } from './HeaderButton';
 export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';

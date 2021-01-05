@@ -2,17 +2,17 @@ import { Colors, Layout, Metrics } from 'constants';
 
 export default {
   container: {
-    ...Layout.fill,
-    ...Metrics.mediumPadding,
+    ...Layout.fullSize,
+    ...Metrics.bigPadding,
     ...Metrics.hugeTopPadding,
     backgroundColor: Colors.background,
   },
   scrollView: {
-    ...Layout.fill,
+    ...Layout.fullSize,
     backgroundColor: Colors.background,
   },
   scrollViewContent: {
-    ...Metrics.mediumPadding,
+    ...Metrics.bigPadding,
     ...Metrics.hugeTopPadding,
   },
   text: {

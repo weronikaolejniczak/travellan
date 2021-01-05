@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import {
   Button,
   Checkbox,
+  Chip,
+  ChipGroup,
+  ScrollView as Container,
   RadioButtonGroup,
-  ScrollView,
   Switch,
   TextInput,
 } from 'utils';
@@ -15,7 +17,11 @@ const AddAccommodationContainer = (props) => {
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
+  const [chipValue, setChipValue] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [radioValue, setRadioValue] = useState(null);
+
+  console.log(chipValue);
 
   const handleChange = (val) => {
     setValue(val);
@@ -25,6 +31,15 @@ const AddAccommodationContainer = (props) => {
   const handlePress = () => console.log('hello!');
 
   const toggleSwitch = () => setEnabled((prevState) => !prevState);
+
+  const checkIfChipIsSelected = (val) => chipValue.includes(val);
+
+  const handleChipsClose = (val) =>
+    checkIfChipIsSelected(val) &&
+    setChipValue([...chipValue.filter((item) => item !== val)]);
+
+  const handleChipsPress = (val) =>
+    !checkIfChipIsSelected && setChipValue([...chipValue, val]);
 
   const options = [
     {
@@ -45,8 +60,23 @@ const AddAccommodationContainer = (props) => {
     },
   ];
 
+  const items = [
+    {
+      label: 'Hello',
+      value: 'hello',
+    },
+    {
+      label: 'World',
+      value: 'world',
+    },
+    {
+      label: 'This',
+      value: 'this',
+    },
+  ];
+
   return (
-    <ScrollView>
+    <Container>
       <TextInput error={error} onChange={handleChange} value={value} />
       <TextInput outlined />
       <TextInput outlined multiline />
@@ -74,7 +104,16 @@ const AddAccommodationContainer = (props) => {
         value={radioValue}
         onSelect={setRadioValue}
       />
-    </ScrollView>
+      <ChipGroup
+        disabled={isLoading}
+        isSelected={checkIfChipIsSelected}
+        items={items}
+        onClose={handleChipsClose}
+        onPress={handleChipsPress}
+        setValue={setChipValue}
+        value={chipValue}
+      />
+    </Container>
   );
 };
 

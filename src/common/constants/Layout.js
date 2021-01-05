@@ -38,8 +38,8 @@ export default {
     flex: 1,
   },
   fillCenter: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
   fillCol: {
