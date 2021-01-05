@@ -99,7 +99,6 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
-        <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen
           name="Startup"
           component={StartupContainer}
@@ -120,6 +119,7 @@ export default function Navigation() {
           component={DrawerNavigator}
           options={tripsOptions}
         />
+        <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen
           name="Details"
