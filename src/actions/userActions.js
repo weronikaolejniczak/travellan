@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MAIN_FIREBASE_API } from 'react-native-dotenv';
+import auth from '@react-native-firebase/auth';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
