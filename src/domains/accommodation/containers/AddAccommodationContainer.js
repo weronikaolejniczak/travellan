@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
   Button,
   Checkbox,
-  Chip,
   ChipGroup,
   ScrollView as Container,
   RadioButtonGroup,
+  Searchbar,
   Switch,
   TextInput,
 } from 'utils';
@@ -20,8 +20,11 @@ const AddAccommodationContainer = (props) => {
   const [chipValue, setChipValue] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [radioValue, setRadioValue] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   console.log(chipValue);
+
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const handleChange = (val) => {
     setValue(val);
@@ -113,6 +116,7 @@ const AddAccommodationContainer = (props) => {
         setValue={setChipValue}
         value={chipValue}
       />
+      <Searchbar onChangeText={onChangeSearch} value={searchQuery} />
     </Container>
   );
 };

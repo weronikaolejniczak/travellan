@@ -19,7 +19,7 @@ export default {
   placeholder: baseColors.lightGrey,
   primary: baseColors.orange,
   shadow: baseColors.black,
-  surface: baseColors.white,
+  surface: baseColors.darkGrey,
   text: baseColors.white,
   transparent: baseColors.transparent,
 };

@@ -3,16 +3,16 @@ import { DefaultTheme } from 'react-native-paper';
 
 const DarkTheme = {
   ...DefaultTheme,
-  dark: true,
   colors: {
     ...DefaultTheme.colors,
-    primary: Colors.primary,
     accent: Colors.accent,
     background: Colors.background,
-    surface: Colors.surface,
     placeholder: Colors.placeholder,
+    primary: Colors.primary,
+    surface: Colors.surface,
     text: Colors.text,
   },
+  dark: true,
 };
 
 export default DarkTheme;
