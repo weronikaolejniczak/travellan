@@ -17,10 +17,11 @@ module.exports = {
     'no-var': 'error',
     'object-curly-spacing': ['error', 'always'],
     'sort-imports': 'error',
-    'sort-keys': ['error', 'asc'],
+    'sort-keys': ['error', 'asc', { natural: true }],
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'prettier/prettier': 'error',
+    'sort-keys-fix/sort-keys-fix': 'error'
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'sort-keys-fix'],
 };
