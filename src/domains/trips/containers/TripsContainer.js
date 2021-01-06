@@ -19,9 +19,9 @@ const TripsContainer = (props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
 
-  const loadTrips = useCallback(() => {
+  const loadTrips = useCallback(async () => {
     try {
-      dispatch(tripsActions.fetchTripsRequest());
+      await dispatch(tripsActions.fetchTripsRequest());
     } catch {
       setError('Something went wrong!');
     }
