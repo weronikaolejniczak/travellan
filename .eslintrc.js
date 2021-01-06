@@ -16,7 +16,7 @@ module.exports = {
     'no-unneeded-ternary': 'error',
     'no-var': 'error',
     'object-curly-spacing': ['error', 'always'],
-    'sort-keys': ['error', 'asc'],
+    'sort-keys': ['error', 'asc', { natural: true }],
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'prettier/prettier': 'error',
@@ -28,6 +28,7 @@ module.exports = {
         memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
       },
     ],
+    'sort-keys-fix/sort-keys-fix': 'error'
   },
-  plugins: ['sort-imports-es6-autofix', 'prettier'],
+  plugins: ['sort-imports-es6-autofix', 'sort-keys-fix', 'prettier'],
 };

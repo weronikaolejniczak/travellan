@@ -24,12 +24,12 @@ import AuthenticationContainer, {
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
-import Colors from 'constants/Colors';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
+import NotificationContainer from 'domains/user/containers/NotificationContainer';
 import RegisterContainer from 'domains/user/containers/RegisterContainer';
 import StartupContainer, {
   startupOptions,
@@ -46,22 +46,30 @@ import TripsContainer, {
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
 import * as authFunc from 'src/actions/userActions.js';
+import Colors from 'constants/Colors';
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-/** iN THIS FUNCTION YOU MAY DEFINE NEW ITEMS IN THE DRAWER LIST */
 function CustomDrawerContent(props) {
   return (
     <SafeAreaView
       style={{ flex: 1 }}
-      forceInset={{ top: 'always', horizontal: 'never' }}
+      forceInset={{ horizontal: 'never', top: 'always' }}
     >
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
       <View>
+        <DrawerItem
+          label={() => (
+            <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
+          )}
+          onPress={() => {
+            props.navigation.navigate('Notification');
+          }}
+        />
         <DrawerItem
           label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
           icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
@@ -110,6 +118,7 @@ export default function Navigation() {
           component={DrawerNavigator}
           options={tripsOptions}
         />
+        <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen
           name="Details"
@@ -157,14 +166,6 @@ export default function Navigation() {
 }
 
 const defaultNavOptions = {
-  headerTransparent: {
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    zIndex: 100,
-    top: 0,
-    left: 0,
-    right: 0,
-  },
   headerStyle: {
     backgroundColor: Colors.background,
   },
@@ -172,7 +173,15 @@ const defaultNavOptions = {
   headerTitleStyle: {
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowOffset: { height: 1, width: 1 },
     textShadowRadius: 7,
+  },
+  headerTransparent: {
+    backgroundColor: 'transparent',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 100,
   },
 };
