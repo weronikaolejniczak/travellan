@@ -22,4 +22,5 @@ export default {
   surface: baseColors.darkGrey,
   text: baseColors.white,
   transparent: baseColors.transparent,
+  transparentShadow: baseColors.semiTransparent,
 };

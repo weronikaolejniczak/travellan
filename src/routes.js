@@ -45,55 +45,50 @@ import TripsContainer, {
 } from 'domains/trips/containers/TripsContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
-import * as authFunc from 'src/actions/userActions.js';
-import Colors from 'constants/Colors';
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as userActions from 'src/actions/userActions.js';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Colors, Layout } from 'constants';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function CustomDrawerContent(props) {
-  return (
-    <SafeAreaView
-      style={{ flex: 1 }}
-      forceInset={{ horizontal: 'never', top: 'always' }}
-    >
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-      </DrawerContentScrollView>
-      <View>
-        <DrawerItem
-          label={() => (
-            <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
-          )}
-          onPress={() => {
-            props.navigation.navigate('Notification');
-          }}
-        />
-        <DrawerItem
-          label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
-          icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
-          onPress={() => {
-            authFunc.logout();
-            props.navigation.navigate('Startup');
-          }}
-        />
-      </View>
-    </SafeAreaView>
-  );
-}
+const CustomDrawerContent = (props) => (
+  <SafeAreaView
+    style={Layout.fill}
+    forceInset={{ horizontal: 'never', top: 'always' }}
+  >
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+    <View>
+      <DrawerItem
+        label={() => <Text>Notifications</Text>}
+        onPress={() => {
+          props.navigation.navigate('Notification');
+        }}
+      />
+      <DrawerItem
+        label={() => <Text>Logout</Text>}
+        icon={() => <Icon name="logout" size={18} />}
+        onPress={() => {
+          userActions.logout();
+          props.navigation.navigate('Startup');
+        }}
+      />
+    </View>
+  </SafeAreaView>
+);
 
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      drawerType="front"
-      backBehavior="none"
-    >
-      <Drawer.Screen name="My trips" component={TripsContainer} />
-    </Drawer.Navigator>
-  );
-}
+const DrawerNavigator = () => (
+  <Drawer.Navigator
+    drawerContent={(props) => <CustomDrawerContent {...props} />}
+    drawerType="front"
+    backBehavior="none"
+  >
+    <Drawer.Screen name="My trips" component={TripsContainer} />
+  </Drawer.Navigator>
+);
+
 export default function Navigation() {
   return (
     <NavigationContainer>
@@ -172,16 +167,16 @@ const defaultNavOptions = {
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowColor: Colors.transparentShadow,
     textShadowOffset: { height: 1, width: 1 },
     textShadowRadius: 7,
   },
   headerTransparent: {
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.transparent,
     left: 0,
     position: 'absolute',
     right: 0,
     top: 0,
-    zIndex: 100,
+    zIndex: 1,
   },
 };
