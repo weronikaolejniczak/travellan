@@ -1,6 +1,7 @@
 import React from 'react';
-import { RadioButton } from './';
 import { View } from 'react-native';
+
+import { RadioButton } from './';
 
 const RadioButtonGroup = (props) => {
   const { options, value, onSelect } = props;

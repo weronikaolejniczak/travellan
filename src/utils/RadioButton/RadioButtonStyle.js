@@ -1,7 +1,7 @@
-import { Colors } from 'constants';
 import { StyleSheet } from 'react-native';
 
-// tODO: refactor styles
+import { Colors } from 'constants';
+
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',

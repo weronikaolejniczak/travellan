@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text } from 'react-native-paper';
 import { TouchableOpacity, View } from 'react-native';
+
 import { styles } from './RadioButtonStyle';
 
 const CustomRadioButton = (props) => {

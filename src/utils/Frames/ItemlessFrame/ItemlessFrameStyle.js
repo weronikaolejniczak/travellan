@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { Layout, Typography } from 'constants';
 import AppStyles from 'styles/AppStyles';
+import { Layout, Typography } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {

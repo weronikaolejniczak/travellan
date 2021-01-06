@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
+
+const NUM_OF_LINES = 3;
 
 const ReadMore = (props) => {
-  const NUM_OF_LINES = 3;
   const [readMore, setReadMore] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
@@ -51,14 +52,14 @@ const ReadMore = (props) => {
 };
 
 const styles = StyleSheet.create({
-  textContainer: {
-    marginVertical: 5,
+  clickableText: {
+    color: Colors.primary,
   },
   text: {
     color: Colors.text,
   },
-  clickableText: {
-    color: Colors.primary,
+  textContainer: {
+    marginVertical: 5,
   },
 });
 
