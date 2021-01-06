@@ -43,6 +43,7 @@ import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
+import NotificationContainer from 'domains/user/containers/NotificationContainer';
 import Colors from 'constants/Colors';
 
 import * as authFunc from 'src/actions/userActions.js';
@@ -62,6 +63,14 @@ function CustomDrawerContent(props) {
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
       <View>
+        <DrawerItem
+          label={() => (
+            <Text style={{ fontWeight: 'bold' }}> Notifications </Text>
+          )}
+          onPress={() => {
+            props.navigation.navigate('Notification');
+          }}
+        />
         <DrawerItem
           label={() => <Text style={{ fontWeight: 'bold' }}> Logout </Text>}
           icon={() => <CommunityIcon name="logout" style={{ fontSize: 30 }} />}
@@ -110,6 +119,7 @@ export default function Navigation() {
           component={DrawerNavigator}
           options={tripsOptions}
         />
+        <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen
           name="Details"
