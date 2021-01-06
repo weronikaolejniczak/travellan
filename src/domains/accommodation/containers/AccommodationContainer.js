@@ -1,5 +1,5 @@
-import React from 'react';
-import { Animated, FlatList, ScrollView, View } from 'react-native';
+import React, { createRef } from 'react';
+import { Animated, FlatList, ScrollView, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import { ItemlessFrame } from 'components/frames';
@@ -10,7 +10,20 @@ import { styles } from './AccommodationContainerStyle';
 
 import { DUMMY_HOTELS as accommodation } from '../data/DummyHotels';
 
-const AccommodationContainer = () => {
+import { ActionSheet } from '../../../utils';
+
+const actionSheetRef = createRef();
+
+const AccommodationContainer = (props) => {
+  const { navigation, route } = props;
+
+  const navigateToScreen = (screen) => {
+    actionSheetRef.current?.hide();
+    navigation.navigate(screen, {
+      tripId: route.params.tripId,
+    });
+  };
+
   if (accommodation === undefined) {
     return <ItemlessFrame message="You have no saved accommodation!" />;
   }
@@ -48,26 +61,35 @@ const AccommodationContainer = () => {
           return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
         })}
       </View>
+      <ActionSheet
+        ref={actionSheetRef}
+        elements={[
+          {
+            id: '0',
+            label: 'Add accommodation manually',
+            onPress: () => navigateToScreen('Add accommodation'),
+          },
+          {
+            id: '1',
+            label: 'Add hotel by name/address',
+            onPress: () => navigateToScreen('Add accommodation'),
+          },
+        ]}
+      />
     </ScrollView>
   );
 };
 
-export const accommodationOptions = (navData) => {
-  return {
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create a trip"
-          iconName="plus"
-          onPress={() => {
-            navData.navigation.navigate('Add accommodation', {
-              tripId: navData.route.params.tripId,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
+export const accommodationOptions = (navData) => ({
+  headerRight: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Create an accommodation"
+        iconName="plus"
+        onPress={() => actionSheetRef.current?.setModalVisible()}
+      />
+    </HeaderButtons>
+  ),
+});
 
 export default AccommodationContainer;
