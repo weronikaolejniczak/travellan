@@ -161,9 +161,6 @@ export default function Navigation() {
 }
 
 const defaultNavOptions = {
-  headerStyle: {
-    backgroundColor: Colors.background,
-  },
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
@@ -173,10 +170,5 @@ const defaultNavOptions = {
   },
   headerTransparent: {
     backgroundColor: Colors.transparent,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
   },
 };
