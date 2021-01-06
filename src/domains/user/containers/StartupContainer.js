@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as userActions from 'actions/userActions';
 import { styles } from './StartupContainerStyle';
 import Colors from 'constants/Colors';
+import auth from '@react-native-firebase/auth';
 
 const StartupContainer = (props) => {
   const dispatch = useDispatch();

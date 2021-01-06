@@ -17,6 +17,7 @@ import Input from '../components/input/Input';
 import * as userActions from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 import Colors from 'constants/Colors';
+import auth from '@react-native-firebase/auth';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
