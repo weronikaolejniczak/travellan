@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import {
   Button,
+  Caption,
   Checkbox,
   ChipGroup,
   ScrollView as Container,
+  Headline,
+  Paragraph,
   RadioButtonGroup,
   Searchbar,
+  Subheading,
   Switch,
+  Text,
   TextInput,
+  Title,
 } from 'utils';
-import { Text, View } from 'react-native';
-//import { styles } from './AddAccommodationContainerStyle';
+import { View } from 'react-native';
 
 const AddAccommodationContainer = (props) => {
-  //const tripId = props.route.params.tripId;
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
@@ -21,8 +25,6 @@ const AddAccommodationContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [radioValue, setRadioValue] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  console.log(chipValue);
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
@@ -80,6 +82,12 @@ const AddAccommodationContainer = (props) => {
 
   return (
     <Container>
+      <Headline>Headline!</Headline>
+      <Subheading>Subheading!</Subheading>
+      <Title>Title!</Title>
+      <Paragraph>Paragraph!</Paragraph>
+      <Caption>Caption!</Caption>
+      <Text>Text!</Text>
       <TextInput error={error} onChange={handleChange} value={value} />
       <TextInput outlined />
       <TextInput outlined multiline />
