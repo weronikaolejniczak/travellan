@@ -13,7 +13,24 @@ export const authenticate = (userId, token) => {
 
 export const signUpRequest = (email, password) => {
   return async function (dispatch) {
-    await axios({
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+
+    /**await axios({
       method: 'POST',
       url: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
       data: {
@@ -34,6 +51,7 @@ export const signUpRequest = (email, password) => {
         let message = 'Something went wrong!';
         throw new Error(message);
       });
+      */
   };
 };
 
