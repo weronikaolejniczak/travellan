@@ -4,14 +4,7 @@ import { View } from 'react-native';
 import { Chip } from 'utils';
 import { styles } from './ChipGroupStyle';
 
-const ChipGroup = ({
-  disabled,
-  isSelected,
-  items,
-  onClose,
-  onPress,
-  value,
-}) => (
+const ChipGroup = ({ disabled, items, onPress, value }) => (
   <View>
     <View style={styles.wrapper}>
       {items &&
@@ -21,9 +14,8 @@ const ChipGroup = ({
             key={`chip-${item.value}`}
             disabled={disabled}
             icon={item.icon}
-            onClose={() => onClose(item.value)}
             onPress={() => onPress(item.value)}
-            selected={() => isSelected(item.value)}
+            //selected={items.find()}
           >
             {item.label}
           </Chip>

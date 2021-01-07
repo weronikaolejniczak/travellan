@@ -39,12 +39,12 @@ const AddAccommodationContainer = (props) => {
 
   const checkIfChipIsSelected = (val) => chipValue.includes(val);
 
-  const handleChipsClose = (val) =>
-    checkIfChipIsSelected(val) &&
-    setChipValue([...chipValue.filter((item) => item !== val)]);
-
   const handleChipsPress = (val) =>
-    !checkIfChipIsSelected && setChipValue([...chipValue, val]);
+    !checkIfChipIsSelected(val)
+      ? setChipValue([...chipValue, val])
+      : setChipValue([...chipValue.filter((item) => item !== val)]);
+
+  console.log(chipValue);
 
   const options = [
     {
@@ -117,9 +117,7 @@ const AddAccommodationContainer = (props) => {
       />
       <ChipGroup
         disabled={isLoading}
-        isSelected={checkIfChipIsSelected}
         items={items}
-        onClose={handleChipsClose}
         onPress={handleChipsPress}
         setValue={setChipValue}
         value={chipValue}
