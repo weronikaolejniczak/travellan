@@ -68,11 +68,11 @@ const NotesContainer = (props) => {
     [persistDelete],
   );
 
-  const loadNotes = useCallback(() => {
+  const loadNotes = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
-      dispatch(notesActions.fetchNotesRequest(tripId));
+      await dispatch(notesActions.fetchNotesRequest(tripId));
     } catch (err) {
       setError(err.message);
     }
@@ -83,7 +83,7 @@ const NotesContainer = (props) => {
     loadNotes();
   }, [loadNotes]);
 
-  if (!Array.isArray(notes) || isLoading || isRefreshing) {
+  if (isLoading) {
     return <LoadingFrame />;
   }
 
