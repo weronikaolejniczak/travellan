@@ -22,6 +22,8 @@ const NotesContainer = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  let sad = 'hello';
+
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
       noteId,
