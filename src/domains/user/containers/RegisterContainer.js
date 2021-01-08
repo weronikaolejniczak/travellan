@@ -14,12 +14,10 @@ import { useDispatch } from 'react-redux';
 
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
-<<<<<<< HEAD
 import auth from '@react-native-firebase/auth';
-=======
 import { Input } from '../components';
 import { styles } from './RegisterContainerStyle';
->>>>>>> 2953cc8803aad7bd3bb59ecde41ea9a1f13b5afd
+import { useFormik } from 'formik';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
