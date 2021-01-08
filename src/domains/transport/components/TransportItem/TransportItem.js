@@ -1,3 +1,8 @@
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DocumentPicker from 'react-native-document-picker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Pdf from 'react-native-pdf';
+import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
 import {
   Alert,
@@ -8,14 +13,9 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import QRCode from 'react-native-qrcode-svg';
-import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
 
-import Card from 'components/card/Card';
 import * as transportActions from 'actions/transportActions';
+import { Card } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = (props) => {
@@ -75,10 +75,7 @@ const TransportItem = (props) => {
 
       await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-      } else {
-        throw err;
-      }
+      if (!DocumentPicker.isCancel(err)) throw err;
     }
   };
 

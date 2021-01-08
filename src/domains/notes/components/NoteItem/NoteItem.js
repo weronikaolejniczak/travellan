@@ -1,9 +1,8 @@
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Card from 'components/card/Card';
-import ReadMore from 'components/readMore/ReadMore';
+import { Card, ReadMore } from 'utils';
 import { styles } from './NoteItemStyle';
 
 const NoteItem = (props) => {

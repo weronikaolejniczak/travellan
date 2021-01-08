@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {
   ActivityIndicator,
   Alert,
@@ -11,13 +12,15 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
 
-import Input from '../components/input/Input';
 import * as userActions from 'actions/userActions';
-import { styles } from './AuthenticationContainerStyle';
 import Colors from 'constants/Colors';
+<<<<<<< HEAD
 import auth from '@react-native-firebase/auth';
+=======
+import { Input } from '../components';
+import { styles } from './AuthenticationContainerStyle';
+>>>>>>> 2953cc8803aad7bd3bb59ecde41ea9a1f13b5afd
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 

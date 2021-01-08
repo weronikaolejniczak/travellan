@@ -1,21 +1,26 @@
-/**
- * this file contains colors that are global to the application
- */
-export default {
-  /** sTANDARD */
-  transparent: 'rgba(0,0,0,0)',
-  blackTransparent: 'rgba(0, 0, 0, 0.5)',
-  white: '#FFFFFF',
+const baseColors = {
+  black: '#000000',
+  darkGrey: '#111111',
   green: '#06C258',
-  grey: 'grey',
-  /** sPECIFIC */
-  shadow: '#000000',
-  cards: '#111111',
-  background: '#222222',
-  primary: '#FF8C00', // dark orange
-  text: '#FFFFFF',
-  error: 'red',
-  switchEnabledTrack: '#FF8C00',
-  switchDisabledTrack: '#767577',
-  switchThumb: '#FFFFFF',
+  grey: '#222222',
+  lightGrey: '#777777',
+  orange: '#FF8C00',
+  red: 'red',
+  semiTransparent: 'rgba(0, 0, 0, 0.5)',
+  transparent: 'rgba(0,0,0,0)',
+  white: '#FFFFFF',
+};
+
+export default {
+  accent: baseColors.green,
+  background: baseColors.grey,
+  cards: baseColors.darkGrey,
+  error: baseColors.red,
+  placeholder: baseColors.lightGrey,
+  primary: baseColors.orange,
+  shadow: baseColors.black,
+  surface: baseColors.darkGrey,
+  text: baseColors.white,
+  transparent: baseColors.transparent,
+  transparentShadow: baseColors.semiTransparent,
 };

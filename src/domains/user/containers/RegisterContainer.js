@@ -12,11 +12,14 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import Input from 'domains/user/components/input/Input';
 import * as userActions from 'actions/userActions';
-import { styles } from './RegisterContainerStyle';
 import Colors from 'constants/Colors';
+<<<<<<< HEAD
 import auth from '@react-native-firebase/auth';
+=======
+import { Input } from '../components';
+import { styles } from './RegisterContainerStyle';
+>>>>>>> 2953cc8803aad7bd3bb59ecde41ea9a1f13b5afd
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 

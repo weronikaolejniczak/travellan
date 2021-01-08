@@ -1,17 +1,12 @@
-import React from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import { addEventToCalendar } from 'services/handleCalendarEvent';
-import { NavigationButton } from '../components';
-import { styles } from './TripDetailsContainerStyle.js';
+import React from 'react';
+import { ImageBackground, ScrollView, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NavigationButton } from '../components';
+import { addEventToCalendar } from 'services/handleCalendarEvent';
+import { styles } from './TripDetailsContainerStyle.js';
 
 const TripDetailsContainer = (props) => {
   const tripId = props.route.params.tripId;

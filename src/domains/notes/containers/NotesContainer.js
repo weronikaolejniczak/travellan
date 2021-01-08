@@ -1,26 +1,56 @@
 import * as notesActions from 'actions/notesActions';
 
-import { Alert, FlatList, Text, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { ItemlessFrame, LoadingFrame } from 'components/frames';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import Colors from 'constants/Colors';
-import HeaderButton from 'components/headerButton/HeaderButton';
+import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { NoteItem } from '../components';
 import { styles } from './NotesContainerStyle';
 
 const NotesContainer = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  const notes = useSelector(
-    (state) => state.trips.trips.find((item) => item.id === tripId).notes,
-  );
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+  const [notes, setNotes] = useState(
+    useSelector(
+      (state) => state.trips.trips.find((item) => item.id === tripId).notes,
+    ),
+  );
+  const [filteredDataSource, setFilteredDataSource] = useState(
+    useSelector(
+      (state) => state.trips.trips.find((item) => item.id === tripId).notes,
+    ),
+  );
+
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = notes.filter(function (item) {
+        const itemData = item.category
+          ? item.category.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setNotes(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setNotes(filteredDataSource);
+      setSearch(text);
+    }
+  };
 
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
@@ -96,12 +126,19 @@ const NotesContainer = (props) => {
     );
   }
 
-  if (Array.isArray(notes) && notes.length < 1) {
+  if (Array.isArray(filteredDataSource) && filteredDataSource.length < 1) {
     return <ItemlessFrame message="You have no notes saved!" />;
   }
 
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.textInputStyle}
+        onChangeText={(text) => searchFilterFunction(text)}
+        value={search}
+        underlineColorAndroid="transparent"
+        placeholder="Search Here"
+      />
       <FlatList
         data={notes}
         keyExtractor={(item) => item.id}

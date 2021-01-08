@@ -1,16 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ItemlessFrame, LoadingFrame } from 'components/frames';
-import { TripItem } from '../components';
-import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripsActions from 'actions/tripsActions';
-import { styles } from './TripsContainerStyle';
 import Colors from 'constants/Colors';
+import {
+  View as Container,
+  HeaderButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
+import { TripItem } from '../components';
+import { styles } from './TripsContainerStyle';
 
 const TripsContainer = (props) => {
   const dispatch = useDispatch();
@@ -92,7 +96,7 @@ const TripsContainer = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <Container>
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
@@ -115,7 +119,7 @@ const TripsContainer = (props) => {
           </TripItem>
         )}
       />
-    </View>
+    </Container>
   );
 };
 

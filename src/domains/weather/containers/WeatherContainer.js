@@ -10,13 +10,11 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import fetchWeather from 'services/fetchWeather';
-import Background from 'domains/weather/components/background/Background';
-import Graphics from 'domains/weather/components/graphics/Graphics';
-import Ground from 'domains/weather/components/ground/Ground';
-import { styles } from './WeatherContainerStyle';
 import Colors from 'constants/Colors';
+import fetchWeather from 'services/fetchWeather';
+import { Background, Graphics, Ground } from '../components';
 import { notificationManager } from 'services/manageNotifications';
+import { styles } from './WeatherContainerStyle';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -95,7 +93,7 @@ const WeatherContainer = (props) => {
                 'Weather',
                 1,
                 'Weather alert!',
-                "Today's weather predicts " +
+                'Today\'s weather predicts ' +
                   activeDay.description +
                   ', the temperature the day will be around ' +
                   Math.floor(activeDay.tempDay) +

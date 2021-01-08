@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -10,22 +11,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import { LineChart } from 'react-native-chart-kit';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Card from 'components/card/Card';
-import * as categories from 'domains/budget/data/Categories';
 import * as budgetActions from 'actions/budgetActions';
+import * as categories from 'data/SpendingCategories';
+import Colors from 'constants/Colors';
+import { Card } from 'utils';
 import {
   calculateCard,
   calculateCash,
   prepareDataForLinechart,
   prepareLabelsForLinechart,
   prepareValue,
-} from 'domains/budget/utils';
+} from 'helpers';
 import { styles } from './BudgetContainerStyle';
-import Colors from 'constants/Colors';
 
 const screenWidth = Dimensions.get('window').width;
 

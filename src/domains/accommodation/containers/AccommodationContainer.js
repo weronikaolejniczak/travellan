@@ -2,13 +2,12 @@ import React, { createRef } from 'react';
 import { Animated, FlatList, ScrollView, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { ItemlessFrame } from 'components/frames';
 import { AccommodationItem } from 'domains/accommodation/components';
-import HeaderButton from 'components/headerButton/HeaderButton';
+import { HeaderButton, ItemlessFrame } from 'utils';
 import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 import { styles } from './AccommodationContainerStyle';
 
-import { DUMMY_HOTELS as accommodation } from '../data/DummyHotels';
+import { DUMMY_HOTELS as accommodation } from 'data/DummyHotels';
 
 import { ActionSheet } from '../../../utils';
 
