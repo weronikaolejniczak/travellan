@@ -1,11 +1,11 @@
 import axios from 'axios';
+import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MAIN_FIREBASE_API } from 'react-native-dotenv';
-import auth from '@react-native-firebase/auth';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
-const API_KEY = MAIN_FIREBASE_API;
+//const API_KEY = MAIN_FIREBASE_API;
 
 export const authenticate = (userId, token) => {
   return { type: AUTHENTICATE, userId: userId, token: token };
