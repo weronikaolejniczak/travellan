@@ -1,11 +1,11 @@
+import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 import { ImageBackground, Text, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
-import { styles } from './AccommodationItemHeaderStyle';
 import { Colors, Layout } from 'constants';
+import { styles } from './AccommodationItemHeaderStyle';
 
-const AccItemHeader = (props) => {
+const AccommodationItemHeader = (props) => {
   const { image, type, rating, name, address } = props;
 
   return (
@@ -32,4 +32,4 @@ const AccItemHeader = (props) => {
   );
 };
 
-export default AccItemHeader;
+export default AccommodationItemHeader;

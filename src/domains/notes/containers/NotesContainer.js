@@ -1,13 +1,12 @@
 import * as notesActions from 'actions/notesActions';
 
-import { Alert, FlatList, Text, View, TextInput } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { ItemlessFrame, LoadingFrame } from 'components/frames';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import Colors from 'constants/Colors';
-import HeaderButton from 'components/headerButton/HeaderButton';
+import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { NoteItem } from '../components';
 import { styles } from './NotesContainerStyle';
 

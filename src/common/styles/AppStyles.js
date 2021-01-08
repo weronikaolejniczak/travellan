@@ -1,10 +1,19 @@
-import { Colors, Layout } from 'constants';
+import { Colors, Layout, Metrics } from 'constants';
 
 export default {
   container: {
-    ...Layout.fill,
+    ...Layout.fullSize,
+    ...Metrics.bigPadding,
+    ...Metrics.hugeTopPadding,
     backgroundColor: Colors.background,
-    paddingTop: '12%',
+  },
+  scrollView: {
+    ...Layout.fullSize,
+    backgroundColor: Colors.background,
+  },
+  scrollViewContent: {
+    ...Metrics.bigPadding,
+    ...Metrics.hugeTopPadding,
   },
   text: {
     color: Colors.text,

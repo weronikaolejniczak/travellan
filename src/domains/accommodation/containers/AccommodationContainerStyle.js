@@ -1,6 +1,6 @@
+import Colors from 'constants/Colors';
 import { Platform, StyleSheet } from 'react-native';
 import { spacingForCardInset } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
-import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
   button: {

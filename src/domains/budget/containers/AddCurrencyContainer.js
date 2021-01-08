@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
+import * as budgetActions from 'actions/budgetActions';
 import Budget from 'models/Budget';
-import BudgetField from 'components/budgetField/BudgetField';
-import { patchBudgetRequest } from 'actions/budgetActions';
-import { prepareValue } from '../utils';
-import { CURRENCIES } from 'data/Currencies';
-import { styles } from './AddCurrencyContainerStyle';
+import BudgetField from 'components';
 import Colors from 'constants/Colors';
+import { CURRENCIES } from 'data/Currencies';
+import { prepareValue } from 'helpers';
+import { styles } from './AddCurrencyContainerStyle';
 
 let incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';

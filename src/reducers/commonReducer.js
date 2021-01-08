@@ -1,4 +1,4 @@
-import produceImmer from 'utilities/produceImmer';
+import produceImmer from 'helpers/produceImmer';
 
 import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
 import {

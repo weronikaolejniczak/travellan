@@ -16,12 +16,19 @@ module.exports = {
     'no-unneeded-ternary': 'error',
     'no-var': 'error',
     'object-curly-spacing': ['error', 'always'],
-    'sort-imports': 'error',
     'sort-keys': ['error', 'asc', { natural: true }],
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'prettier/prettier': 'error',
+    'sort-imports-es6-autofix/sort-imports-es6': [
+      2,
+      {
+        ignoreCase: false,
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+      },
+    ],
     'sort-keys-fix/sort-keys-fix': 'error'
   },
-  plugins: ['prettier', 'sort-keys-fix'],
+  plugins: ['sort-imports-es6-autofix', 'sort-keys-fix', 'prettier'],
 };

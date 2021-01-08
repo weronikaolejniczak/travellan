@@ -10,12 +10,14 @@
           "constants": "./src/common/constants",
           "data": "./src/common/data",
           "domains": "./src/domains",
+          "helpers": "./src/helpers",
           "models": "./src/models",
           "reducers": "./src/reducers",
           "services": "./src/services",
           "src": "./src",
           "styles": "./src/common/styles",
-          "utilities": "./src/utilities"
+          "themes": "./src/common/themes",
+          "utils": "./src/utils"
         }
       }
     ]
