@@ -167,7 +167,7 @@ const RegisterContainer = (props) => {
                 />
                 {touched.email && errors.email && (
                   <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.text }}>{errors.email}</Text>
+                    <Text style={{ color: Colors.red }}>{errors.email}</Text>
                   </View>
                 )}
               </View>
@@ -182,7 +182,7 @@ const RegisterContainer = (props) => {
                 />
                 {touched.password && errors.password && (
                   <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.text }}>
+                    <Text style={{ color: Colors.red }}>
                       {errors.password}
                     </Text>
                   </View>
@@ -199,7 +199,7 @@ const RegisterContainer = (props) => {
                 />
                 {touched.confirmPassword && errors.confirmPassword && (
                   <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.text }}>
+                    <Text style={{ color: Colors.red }}>
                       {errors.confirmPassword}
                     </Text>
                   </View>
