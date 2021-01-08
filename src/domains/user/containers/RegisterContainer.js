@@ -49,17 +49,28 @@ const RegisterContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [formState, dispatchFormState] = useReducer(formReducer, {
-    inputValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
+    formIsValid: false,
     inputValidities: {
+      confirmPassword: false,
       email: false,
       password: false,
-      confirmPassword: false,
     },
-    formIsValid: false,
+    inputValues: {
+      confirmPassword: '',
+      email: '',
+      password: '',
+    },
+  });
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
+    validate,
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    },
   });
 
   useEffect(() => {
@@ -67,6 +78,32 @@ const RegisterContainer = (props) => {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = 'Invalid email address';
+    }
+
+    if (!values.password) {
+      errors.firstName = 'Required';
+    } else if (values.firstName.length > 15) {
+      errors.firstName = 'Must be 15 characters or less';
+    }
+
+    if (!values.confirmPassword) {
+      errors.lastName = 'Required';
+    } else if (values.lastName.length > 20) {
+      errors.lastName = 'Must be 20 characters or less';
+    }
+
+    return errors;
+  };
 
   const handleSubmit = () => {
     if (
@@ -99,10 +136,10 @@ const RegisterContainer = (props) => {
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       dispatchFormState({
+        input: inputIdentifier,
+        isValid: inputValidity,
         type: FORM_INPUT_UPDATE,
         value: inputValue,
-        isValid: inputValidity,
-        input: inputIdentifier,
       });
     },
     [dispatchFormState],
@@ -115,9 +152,9 @@ const RegisterContainer = (props) => {
     >
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{ marginBottom: 20, alignItems: 'center' }}>
+          <View style={{ alignItems: 'center', marginBottom: 20 }}>
             <Image
-              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
+              style={{ height: 150, resizeMode: 'stretch', width: 150 }}
               source={require('assets/images/logo.png')}
             />
           </View>
