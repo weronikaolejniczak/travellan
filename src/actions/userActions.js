@@ -15,9 +15,6 @@ export const signUpRequest = (email, password) => {
   return async function (dispatch) {
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        //console.log('User account created & signed in!');
-      })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
           const message = 'That email address is already in use!';
