@@ -124,12 +124,15 @@ const RegisterContainer = (props) => {
       validationSchema={yup.object().shape({
         confirmPassword: yup
           .string()
-          .required('Required')
+          .required('Cannot be left empty')
           .oneOf([yup.ref('password'), null], 'Passwords must match'),
-        email: yup.string().email('Invalid email address').required('Required'),
+        email: yup
+          .string()
+          .email('Invalid email address')
+          .required('Cannot be left empty'),
         password: yup
           .string()
-          .required('Required')
+          .required('Cannot be left empty')
           .matches(
             /[a-zA-Z0-9_]/,
             'Password can only contain Latin letters and numbers.',
@@ -162,6 +165,7 @@ const RegisterContainer = (props) => {
                 <TextInput
                   value={values.email}
                   style={styles.input}
+                  autoCapitalize="none"
                   onChangeText={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
                 />
@@ -176,7 +180,7 @@ const RegisterContainer = (props) => {
                 <TextInput
                   value={values.password}
                   style={styles.input}
-                  label="Password"
+                  autoCapitalize="none"
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
                 />
@@ -193,7 +197,7 @@ const RegisterContainer = (props) => {
                 <TextInput
                   value={values.confirmPassword}
                   style={styles.input}
-                  label="Confirm Password"
+                  autoCapitalize="none"
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={() => setFieldTouched('confirmPassword')}
                 />
