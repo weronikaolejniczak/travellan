@@ -69,7 +69,7 @@ const RegisterContainer = (props) => {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
-
+/**
   const handleSubmit = () => {
     if (
       formState.inputValues.password !== formState.inputValues.confirmPassword
@@ -79,6 +79,8 @@ const RegisterContainer = (props) => {
       authHandler();
     }
   };
+
+  */
 
   const authHandler = async () => {
     let action;
@@ -163,36 +165,32 @@ const RegisterContainer = (props) => {
                 placeholder="Email"
               />
               {touched.email && errors.email && (
-                <Text style={{ color: '#FF0D10', fontSize: 12 }}>
-                  {errors.email}
-                </Text>
+                <Text style={{ color: Colors.text }}>{errors.email}</Text>
               )}
               <Input
-                styles={styles.input}
-                id="password"
+                value={values.password}
+                style={styles.input}
                 label="Password"
-                keyboardType="default"
-                secureTextEntry
-                required
-                minLength={5}
-                autoCapitalize="none"
-                errorText="Please enter a valid password (at least 5 characters)"
-                onInputChange={inputChangeHandler}
-                initialValue=""
+                onChangeText={handleChange('password')}
+                onBlur={() => setFieldTouched('password')}
+                placeholder="Password"
               />
+              {touched.password && errors.password && (
+                <Text style={{ color: Colors.text }}>{errors.password}</Text>
+              )}
               <Input
-                styles={styles.input}
-                id="confirmPassword"
+                value={values.confirmPassword}
+                style={styles.input}
                 label="Confirm Password"
-                keyboardType="default"
-                secureTextEntry
-                required
-                minLength={5}
-                autoCapitalize="none"
-                errorText="The passwords must match"
-                onInputChange={inputChangeHandler}
-                initialValue=""
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={() => setFieldTouched('confirmPassword')}
+                placeholder="confirmPassword"
               />
+              {touched.confirmPassword && errors.confirmPassword && (
+                <Text style={{ color: Colors.text }}>
+                  {errors.confirmPassword}
+                </Text>
+              )}
               <View style={styles.actionsContainer}>
                 {isLoading ? (
                   <ActivityIndicator size="small" color={Colors.white} />
