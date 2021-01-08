@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -125,7 +126,7 @@ const AddTransportContainer = (props) => {
   ]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.metrics}>
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <View style={{ alignItems: 'center' }}>
@@ -266,7 +267,7 @@ const AddTransportContainer = (props) => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
