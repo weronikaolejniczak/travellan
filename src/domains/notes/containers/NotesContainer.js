@@ -14,14 +14,16 @@ import { styles } from './NotesContainerStyle';
 const NotesContainer = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  const notes = useSelector(
-    (state) => state.trips.trips.find((item) => item.id === tripId).notes,
-  );
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [search, setSearch] = useState('');
+  const [notes, setNotes] = useState(
+    useSelector(
+      (state) => state.trips.trips.find((item) => item.id === tripId).notes,
+    ),
+  );
   const [filteredDataSource, setFilteredDataSource] = useState(
     useSelector(
       (state) => state.trips.trips.find((item) => item.id === tripId).notes,
@@ -41,12 +43,12 @@ const NotesContainer = (props) => {
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      setFilteredDataSource(newData);
+      setNotes(newData);
       setSearch(text);
     } else {
       // Inserted text is blank
       // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(notes);
+      setNotes(filteredDataSource);
       setSearch(text);
     }
   };
@@ -125,7 +127,7 @@ const NotesContainer = (props) => {
     );
   }
 
-  if (Array.isArray(notes) && notes.length < 1) {
+  if (Array.isArray(filteredDataSource) && filteredDataSource.length < 1) {
     return <ItemlessFrame message="You have no notes saved!" />;
   }
 
@@ -139,7 +141,7 @@ const NotesContainer = (props) => {
         placeholder="Search Here"
       />
       <FlatList
-        data={filteredDataSource}
+        data={notes}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <NoteItem
