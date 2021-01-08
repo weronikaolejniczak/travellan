@@ -188,18 +188,23 @@ const RegisterContainer = (props) => {
                   </View>
                 )}
               </View>
-              <TextInput
-                value={values.confirmPassword}
-                style={styles.input}
-                label="Confirm Password"
-                onChangeText={handleChange('confirmPassword')}
-                onBlur={() => setFieldTouched('confirmPassword')}
-              />
-              {touched.confirmPassword && errors.confirmPassword && (
-                <Text style={{ color: Colors.text }}>
-                  {errors.confirmPassword}
-                </Text>
-              )}
+              <View style={styles.formControl}>
+                <Text style={styles.label}>Confirm Password</Text>
+                <TextInput
+                  value={values.confirmPassword}
+                  style={styles.input}
+                  label="Confirm Password"
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={() => setFieldTouched('confirmPassword')}
+                />
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <View style={styles.errorContainer}>
+                    <Text style={{ color: Colors.text }}>
+                      {errors.confirmPassword}
+                    </Text>
+                  </View>
+                )}
+              </View>
               <View style={styles.actionsContainer}>
                 {isLoading ? (
                   <ActivityIndicator size="small" color={Colors.white} />
