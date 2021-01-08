@@ -62,17 +62,6 @@ const RegisterContainer = (props) => {
       password: '',
     },
   });
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-    },
-    validate,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
 
   useEffect(() => {
     if (error) {
@@ -80,31 +69,29 @@ const RegisterContainer = (props) => {
     }
   }, [error]);
 
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.email) {
-      errors.email = 'Required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = 'Invalid email address';
-    }
-
-    if (!values.password) {
-      errors.firstName = 'Required';
-    } else if (values.firstName.length > 15) {
-      errors.firstName = 'Must be 15 characters or less';
-    }
-
-    if (!values.confirmPassword) {
-      errors.lastName = 'Required';
-    } else if (values.lastName.length > 20) {
-      errors.lastName = 'Must be 20 characters or less';
-    }
-
-    return errors;
-  };
+  const SignupForm = () => {
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
+      validationSchema: Yup.object({
+        email: Yup.string().email('Invalid email address').required('Required'),
+        password: Yup.string()
+          .min(6, 'Must be at least 6 characters long')
+          .required('Required')
+          .matches(/[a-zA-Z0-9_]/, 'Password can only contain Latin letters and numbers.'),
+        confirmPassword: Yup.string()
+          .min(6, 'Must be at least 6 characters long')
+          .required('Required')
+          .matches(/[a-zA-Z0-9_]/, 'Password can only contain Latin letters and numbers.')
+          .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      }),
+      onSubmit: values => {
+        alert(JSON.stringify(values, null, 2));
+      },
+    });
 
   const handleSubmit = () => {
     if (
