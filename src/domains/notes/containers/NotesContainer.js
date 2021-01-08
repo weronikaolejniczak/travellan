@@ -21,6 +21,9 @@ const NotesContainer = (props) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
 
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
