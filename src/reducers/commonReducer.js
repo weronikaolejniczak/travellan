@@ -8,7 +8,11 @@ import {
   SET_QR,
   SET_TRANSPORT,
 } from 'actions/transportActions';
-import { SET_ACCOMMODATION } from 'actions/accommodationActions';
+import {
+  CREATE_ACCOMMODATION,
+  DELETE_ACCOMMODATION,
+  SET_ACCOMMODATION,
+} from 'actions/accommodationActions';
 import {
   CREATE_NOTE,
   DELETE_NOTE,
@@ -63,6 +67,17 @@ export default (state = initialState, action) => {
 
       case SET_ACCOMMODATION:
         draft.trips[tripIndex].accommodation = action.accommodation;
+        break;
+      case CREATE_ACCOMMODATION:
+        draft.trips[tripIndex].accommodation = [
+          ...draft.trips[tripIndex].accommodation,
+          action.newAccommodation,
+        ];
+        break;
+      case DELETE_ACCOMMODATION:
+        draft.trips[tripIndex].accommodation = draft.trips[
+          tripIndex
+        ].accommodation.filter((item) => item.id !== action.accommodationId);
         break;
 
       case SET_NOTES:
