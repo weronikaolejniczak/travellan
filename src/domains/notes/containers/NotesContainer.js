@@ -17,12 +17,35 @@ const NotesContainer = (props) => {
   const notes = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).notes,
   );
-  const filteredNotes = [...notes];
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([...notes]);
+
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = notes.filter(function (item) {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(notes);
+      setSearch(text);
+    }
+  };
 
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
@@ -106,12 +129,13 @@ const NotesContainer = (props) => {
     <View style={styles.container}>
       <TextInput
         style={styles.textInputStyle}
-        onChangeText={(text) => console.log(text)}
+        onChangeText={(text) => searchFilterFunction(text)}
+        value={search}
         underlineColorAndroid="transparent"
         placeholder="Search Here"
       />
       <FlatList
-        data={filteredNotes}
+        data={filteredDataSource}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <NoteItem
