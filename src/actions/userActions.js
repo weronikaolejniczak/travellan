@@ -20,13 +20,11 @@ export const signUpRequest = (email, password) => {
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
           const message = 'That email address is already in use!'
           throw new Error(message);
         }
 
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
           const message = 'That email address is invalid!'
           throw new Error(message);
         }
@@ -54,8 +52,6 @@ export const loginRequest = (email, password) => {
         saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
       .catch((err) => {
-        //const message = 'Email or password are incorrect. Please try again.';
-        //console.log(err);
         throw new Error(err);
       });
   };
@@ -63,9 +59,7 @@ export const loginRequest = (email, password) => {
 
 
 export const logout = () => {
-  auth()
-    .signOut()
-    .then(() => console.log('User signed out!'));
+  auth().signOut();
 };
 
 const saveDataToStorage = (token, userId, expirationDate) => {
