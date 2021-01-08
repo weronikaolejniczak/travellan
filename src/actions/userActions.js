@@ -20,12 +20,12 @@ export const signUpRequest = (email, password) => {
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-          const message = 'That email address is already in use!'
+          const message = 'That email address is already in use!';
           throw new Error(message);
         }
 
         if (error.code === 'auth/invalid-email') {
-          const message = 'That email address is invalid!'
+          const message = 'That email address is invalid!';
           throw new Error(message);
         }
       });
@@ -35,13 +35,13 @@ export const signUpRequest = (email, password) => {
 export const loginRequest = (email, password) => {
   return async function (dispatch) {
     await axios({
-      method: 'POST',
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
       data: {
         email: email,
         password: password,
         returnSecureToken: true,
       },
+      method: 'POST',
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
     })
       .then((res) => res.data)
       .then((data) => {
@@ -54,12 +54,13 @@ export const loginRequest = (email, password) => {
       .catch((err) => {
         throw new Error(err);
       });
+    auth().signInWithEmailAndPassword(email, password);
   };
 };
 
-
 export const logout = () => {
   auth().signOut();
+  AsyncStorage.removeItem('userData');
 };
 
 const saveDataToStorage = (token, userId, expirationDate) => {
