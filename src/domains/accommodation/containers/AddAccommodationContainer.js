@@ -3,7 +3,6 @@ import {
   Button,
   Caption,
   Checkbox,
-  ChipGroup,
   ScrollView as Container,
   Headline,
   Paragraph,
@@ -21,7 +20,6 @@ const AddAccommodationContainer = (props) => {
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const [chipValue, setChipValue] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [radioValue, setRadioValue] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,15 +34,6 @@ const AddAccommodationContainer = (props) => {
   const handlePress = () => console.log('hello!');
 
   const toggleSwitch = () => setEnabled((prevState) => !prevState);
-
-  const checkIfChipIsSelected = (val) => chipValue.includes(val);
-
-  const handleChipsPress = (val) =>
-    !checkIfChipIsSelected(val)
-      ? setChipValue([...chipValue, val])
-      : setChipValue([...chipValue.filter((item) => item !== val)]);
-
-  console.log(chipValue);
 
   const options = [
     {
@@ -114,13 +103,6 @@ const AddAccommodationContainer = (props) => {
         options={options}
         value={radioValue}
         onSelect={setRadioValue}
-      />
-      <ChipGroup
-        disabled={isLoading}
-        items={items}
-        onPress={handleChipsPress}
-        setValue={setChipValue}
-        value={chipValue}
       />
       <Searchbar onChangeText={onChangeSearch} value={searchQuery} />
     </Container>
