@@ -164,7 +164,6 @@ const RegisterContainer = (props) => {
                   style={styles.input}
                   onChangeText={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
-                  placeholder="Email"
                 />
                 {touched.email && errors.email && (
                   <View style={styles.errorContainer}>
@@ -178,7 +177,6 @@ const RegisterContainer = (props) => {
                 label="Password"
                 onChangeText={handleChange('password')}
                 onBlur={() => setFieldTouched('password')}
-                placeholder="Password"
               />
               {touched.password && errors.password && (
                 <Text style={{ color: Colors.text }}>{errors.password}</Text>
@@ -189,7 +187,6 @@ const RegisterContainer = (props) => {
                 label="Confirm Password"
                 onChangeText={handleChange('confirmPassword')}
                 onBlur={() => setFieldTouched('confirmPassword')}
-                placeholder="confirmPassword"
               />
               {touched.confirmPassword && errors.confirmPassword && (
                 <Text style={{ color: Colors.text }}>
