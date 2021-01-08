@@ -17,13 +17,12 @@ const NotesContainer = (props) => {
   const notes = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).notes,
   );
+  const filteredNotes = [...notes];
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
 
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
@@ -112,7 +111,7 @@ const NotesContainer = (props) => {
         placeholder="Search Here"
       />
       <FlatList
-        data={notes}
+        data={filteredNotes}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <NoteItem
