@@ -69,18 +69,6 @@ const RegisterContainer = (props) => {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
-  /**
-  const handleSubmit = () => {
-    if (
-      formState.inputValues.password !== formState.inputValues.confirmPassword
-    ) {
-      alert("Passwords don't match");
-    } else {
-      authHandler();
-    }
-  };
-
-  */
 
   const authHandler = async () => {
     let action;
@@ -120,7 +108,19 @@ const RegisterContainer = (props) => {
         email: '',
         password: '',
       }}
-      onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+      onSubmit={async (values) => {
+        setError(null);
+        setIsLoading(true);
+        let action;
+        action = userActions.signUpRequest(values.email, values.password);
+        try {
+          await dispatch(action);
+          setIsLoading(false);
+          props.navigation.navigate('Auth');
+        } catch (err) {
+          setError(err.message);
+        }
+      }}
       validationSchema={yup.object().shape({
         confirmPassword: yup
           .string()
@@ -161,7 +161,7 @@ const RegisterContainer = (props) => {
                 />
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>Email</Text>
+                <Text style={styles.label}>E-mail</Text>
                 <TextInput
                   value={values.email}
                   style={styles.input}
@@ -183,6 +183,7 @@ const RegisterContainer = (props) => {
                   autoCapitalize="none"
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
+                  secureTextEntry={true}
                 />
                 {touched.password && errors.password && (
                   <View style={styles.errorContainer}>
@@ -200,6 +201,7 @@ const RegisterContainer = (props) => {
                   autoCapitalize="none"
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={() => setFieldTouched('confirmPassword')}
+                  secureTextEntry={true}
                 />
                 {touched.confirmPassword && errors.confirmPassword && (
                   <View style={styles.errorContainer}>
