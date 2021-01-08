@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  TextInput,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -12,13 +13,13 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as Yup from 'yup';
 import * as userActions from 'actions/userActions';
+import * as yup from 'yup';
 import Colors from 'constants/Colors';
 import auth from '@react-native-firebase/auth';
+import { Formik, useFormik } from 'formik';
 import { Input } from '../components';
 import { styles } from './RegisterContainerStyle';
-import { useFormik } from 'formik';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -69,35 +70,6 @@ const RegisterContainer = (props) => {
     }
   }, [error]);
 
-  const formik = useFormik({
-    initialValues: {
-      confirmPassword: '',
-      email: '',
-      password: '',
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-    validationSchema: Yup.object({
-      confirmPassword: Yup.string()
-        .min(6, 'Must be at least 6 characters long')
-        .required('Required')
-        .matches(
-          /[a-zA-Z0-9_]/,
-          'Password can only contain Latin letters and numbers.',
-        )
-        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-      password: Yup.string()
-        .min(6, 'Must be at least 6 characters long')
-        .required('Required')
-        .matches(
-          /[a-zA-Z0-9_]/,
-          'Password can only contain Latin letters and numbers.',
-        ),
-    }),
-  });
-
   const handleSubmit = () => {
     if (
       formState.inputValues.password !== formState.inputValues.confirmPassword
@@ -139,78 +111,112 @@ const RegisterContainer = (props) => {
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={styles.screen}
+    <Formik
+      initialValues={{
+        confirmPassword: '',
+        email: '',
+        password: '',
+      }}
+      onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+      validationSchema={yup.object().shape({
+        confirmPassword: yup
+          .string()
+          .required('Required')
+          .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        email: yup.string().email('Invalid email address').required('Required'),
+        password: yup
+          .string()
+          .required('Required')
+          .matches(
+            /[a-zA-Z0-9_]/,
+            'Password can only contain Latin letters and numbers.',
+          ),
+      })}
     >
-      <View style={styles.authContainer}>
-        <ScrollView>
-          <View style={{ alignItems: 'center', marginBottom: 20 }}>
-            <Image
-              style={{ height: 150, resizeMode: 'stretch', width: 150 }}
-              source={require('assets/images/logo.png')}
-            />
+      {({
+        values,
+        handleChange,
+        errors,
+        setFieldTouched,
+        touched,
+        isValid,
+        handleSubmit,
+      }) => (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          style={styles.screen}
+        >
+          <View style={styles.authContainer}>
+            <ScrollView>
+              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Image
+                  style={{ height: 150, resizeMode: 'stretch', width: 150 }}
+                  source={require('assets/images/logo.png')}
+                />
+              </View>
+              <Input
+                value={values.email}
+                style={styles.input}
+                label="Email"
+                onChangeText={handleChange('email')}
+                onBlur={() => setFieldTouched('email')}
+                placeholder="Email"
+              />
+              {touched.email && errors.email && (
+                <Text style={{ color: '#FF0D10', fontSize: 12 }}>
+                  {errors.email}
+                </Text>
+              )}
+              <Input
+                styles={styles.input}
+                id="password"
+                label="Password"
+                keyboardType="default"
+                secureTextEntry
+                required
+                minLength={5}
+                autoCapitalize="none"
+                errorText="Please enter a valid password (at least 5 characters)"
+                onInputChange={inputChangeHandler}
+                initialValue=""
+              />
+              <Input
+                styles={styles.input}
+                id="confirmPassword"
+                label="Confirm Password"
+                keyboardType="default"
+                secureTextEntry
+                required
+                minLength={5}
+                autoCapitalize="none"
+                errorText="The passwords must match"
+                onInputChange={inputChangeHandler}
+                initialValue=""
+              />
+              <View style={styles.actionsContainer}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color={Colors.white} />
+                ) : (
+                  <TouchableOpacity
+                    style={[styles.buttonContainer, { marginRight: 10 }]}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.buttonText}>Join</Text>
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('Auth');
+                  }}
+                >
+                  <Text style={styles.buttonText}>Or sign in instead</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
-          <Input
-            style={[styles.input]}
-            id="email"
-            label="E-mail"
-            keyboardType="email-address"
-            required
-            email
-            autoCapitalize="none"
-            errorText="Please enter a valid email address."
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <Input
-            styles={styles.input}
-            id="password"
-            label="Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            errorText="Please enter a valid password (at least 5 characters)"
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <Input
-            styles={styles.input}
-            id="confirmPassword"
-            label="Confirm Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            errorText="The passwords must match"
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <View style={styles.actionsContainer}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.white} />
-            ) : (
-              <TouchableOpacity
-                style={[styles.buttonContainer, { marginRight: 10 }]}
-                onPress={handleSubmit}
-              >
-                <Text style={styles.buttonText}>Join</Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Auth');
-              }}
-            >
-              <Text style={styles.buttonText}>Or sign in instead</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      )}
+    </Formik>
   );
 };
 
