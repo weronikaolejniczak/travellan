@@ -8,7 +8,7 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 //const API_KEY = MAIN_FIREBASE_API;
 
 export const authenticate = (userId, token) => {
-  return { type: AUTHENTICATE, userId: userId, token: token };
+  return { token: token, type: AUTHENTICATE, userId: userId };
 };
 
 export const signUpRequest = (email, password) => {
@@ -58,14 +58,23 @@ export const signUpRequest = (email, password) => {
 export const loginRequest = (email, password) => {
   return async function (dispatch) {
     try {
-      let response = await auth().signInWithEmailAndPassword(email, password)
+      let response = await auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((res) => res.data)
+        .then((data) => {
+          const expirationDate = new Date(
+            new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
+          );
+          dispatch(authenticate(data.localId, data.idToken));
+          saveDataToStorage(data.idToken, data.localId, expirationDate);
+        });
       if (response && response.user) {
         console.log('Signed In');
       }
     } catch (e) {
-      console.error(e.message)
+      console.error(e.message);
     }
-   /**  await axios({
+    /**  await axios({
       method: 'POST',
       url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
       data: {
@@ -101,9 +110,9 @@ const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
+      expiryDate: expirationDate.toISOString(),
       token: token,
       userId: userId,
-      expiryDate: expirationDate.toISOString(),
     }),
   );
 };
