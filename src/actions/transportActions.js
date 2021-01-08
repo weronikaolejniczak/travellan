@@ -6,7 +6,6 @@ import Transport from 'models/Transport';
 export const SET_TRANSPORT = 'SET_TRANSPORT';
 export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
 export const DELETE_TRANSPORT = 'DELETE_TRANSPORT';
-
 export const SET_QR = 'SET_QR';
 export const SET_PDF = 'SET_PDF';
 
@@ -14,42 +13,43 @@ const API_URL = FIREBASE_URL;
 
 export const setTransport = (tripId, transport) => {
   return {
-    type: SET_TRANSPORT,
-    tripId,
     transport,
+    tripId,
+    type: SET_TRANSPORT,
   };
 };
 
 export const createTransport = (tripId, newTransport) => {
   return {
-    type: CREATE_TRANSPORT,
-    tripId,
     newTransport,
+    tripId,
+    type: CREATE_TRANSPORT,
   };
 };
 
 export const deleteTransport = (tripId, transportId) => {
   return {
-    type: DELETE_TRANSPORT,
-    tripId,
     transportId,
+    tripId,
+    type: DELETE_TRANSPORT,
   };
 };
 
-export const setQR = (tripId, ticketId, QR) => {
+export const setQR = (tripId, transportId, QR) => {
   return {
-    type: SET_QR,
-    tripId,
-    ticketId,
     QR,
+    transportId,
+    tripId,
+    type: SET_QR,
   };
 };
 
-export const setPDF = (tripId, PDF) => {
+export const setPDF = (tripId, transportId, PDF) => {
   return {
-    type: SET_PDF,
-    tripId,
     PDF,
+    transportId,
+    tripId,
+    type: SET_PDF,
   };
 };
 
@@ -99,7 +99,7 @@ export const deleteTransportRequest = (tripId, transportId) => {
       })
       .catch(() => {
         throw new Error(
-          "Couldn't delete the transport. Are you sure it exists?",
+          `Couldn't delete the transport. Are you sure it exists?`,
         );
       });
   };
@@ -122,12 +122,12 @@ export const createTransportRequest = (
       .post(
         `${API_URL}/Trips/${userId}/${tripId}/transport.json?auth=${token}`,
         {
-          isTicketTo,
-          isTicketFrom,
-          dateOfDeparture,
-          placeOfDeparture,
-          QR,
           PDF,
+          QR,
+          dateOfDeparture,
+          isTicketFrom,
+          isTicketTo,
+          placeOfDeparture,
         },
       )
       .then((res) => [res.data, unescape(res.config.data)])
@@ -151,44 +151,55 @@ export const createTransportRequest = (
   };
 };
 
-export const patchQRRequest = (tripId, ticketId, QR) => {
+export const patchQRRequest = (tripId, transportId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let transport = data.transport;
-    let ticketKey = transport.findIndex((item) => item.id === ticketId);
-
-    await axios.patch(
-      `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      { QR },
-    );
-
-    await dispatch(setQR(tripId, ticketId, QR));
+    axios
+      .patch(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
+        {
+          QR,
+        },
+      )
+      .then(() => dispatch(setQR(tripId, transportId, QR)))
+      .catch(() => {
+        throw new Error(`Couldn't update the QR code!`);
+      });
   };
 };
 
-export const patchPDFRequest = (tripId, ticketId, PDF) => {
+export const patchPDFRequest = (tripId, transportId, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let transport = data.transport;
-    let ticketKey = transport.findIndex((item) => item.id === ticketId);
+    console.log('√ tripId:', tripId);
+    console.log('√ transportId:', transportId);
+    console.log('√ PDF:', PDF);
 
-    await axios.patch(
-      `${API_URL}/Trips/${userId}/${tripId}/transport/${ticketKey}.json?auth=${token}`,
-      { PDF },
-    );
+    axios
+      .get(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
+        {
+          PDF,
+        },
+      )
+      .then((res) => res.data)
+      .then((data) => console.log('data returned from endpoint:', data));
 
-    dispatch(setPDF(tripId, PDF));
+    axios
+      .patch(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
+        {
+          PDF,
+        },
+      )
+      .then(() => dispatch(setPDF(tripId, transportId, PDF)))
+      .catch((err) => {
+        console.error(err.message);
+        throw new Error(`Couldn't update the PDF code! ${err.message}`);
+      });
   };
 };

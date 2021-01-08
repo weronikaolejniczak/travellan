@@ -16,9 +16,9 @@ import { TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
-const TransportContainer = (props) => {
+const TransportContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = props.route.params.tripId;
+  const tripId = route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
@@ -34,17 +34,16 @@ const TransportContainer = (props) => {
     async (id) => {
       setIsRefreshing(true);
       try {
-        props.navigation.navigate('Add QR', {
-          tripId: tripId,
+        navigation.navigate('Add QR', {
           ticketId: id,
+          tripId: tripId,
         });
       } catch {
         setError('Something went wrong!');
       }
       setIsRefreshing(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tripId],
+    [navigation, tripId],
   );
 
   const persistDelete = useCallback(
@@ -57,29 +56,31 @@ const TransportContainer = (props) => {
       }
       setIsRefreshing(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tripId],
+    [dispatch, tripId],
   );
 
-  const handleDelete = useCallback((noteId) => {
-    setIsRefreshing(true);
-    Alert.alert(
-      'Delete note',
-      'Are you sure?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => persistDelete(noteId),
-        },
-      ],
-      { cancelable: true },
-    );
-    setIsRefreshing(false);
-  }, []);
+  const handleDelete = useCallback(
+    (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete note',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDelete(noteId),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDelete],
+  );
 
   const loadTransport = useCallback(() => {
     setError(null);
@@ -90,12 +91,15 @@ const TransportContainer = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripId]);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
     loadTransport();
   }, [loadTransport]);
+
+  if (Array.isArray(transport) && transport.length < 1) {
+    return <ItemlessFrame message="You have no transport saved!" />;
+  }
 
   if (!Array.isArray(transport) || isLoading || isRefreshing) {
     return <LoadingFrame />;
@@ -108,10 +112,6 @@ const TransportContainer = (props) => {
         <Text>Error: {error}</Text>
       </View>
     );
-  }
-
-  if (Array.isArray(transport) && transport.length < 1) {
-    return <ItemlessFrame message="You have no transport saved!" />;
   }
 
   let scrollX = new Animated.Value(0);
@@ -159,9 +159,9 @@ const TransportContainer = (props) => {
         <View style={styles.justifyRow}>
           {transport.map((_, i) => {
             let opacity = position.interpolate({
+              extrapolate: 'clamp',
               inputRange: [i - 1, i, i + 1],
               outputRange: [0.3, 1, 0.3],
-              extrapolate: 'clamp',
             });
 
             return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
