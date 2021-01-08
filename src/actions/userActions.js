@@ -54,9 +54,9 @@ export const loginRequest = (email, password) => {
         saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
       .catch((err) => {
-        const message = 'Email or password are incorrect. Please try again.';
-        console.log(err);
-        throw new Error(message);
+        //const message = 'Email or password are incorrect. Please try again.';
+        //console.log(err);
+        throw new Error(err);
       });
   };
 };
