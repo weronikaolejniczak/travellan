@@ -57,7 +57,15 @@ export const signUpRequest = (email, password) => {
 
 export const loginRequest = (email, password) => {
   return async function (dispatch) {
-    await axios({
+    try {
+      let response = await auth().signInWithEmailAndPassword(email, password)
+      if (response && response.user) {
+        console.log('Signed In');
+      }
+    } catch (e) {
+      console.error(e.message)
+    }
+   /**  await axios({
       method: 'POST',
       url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
       data: {
@@ -79,6 +87,7 @@ export const loginRequest = (email, password) => {
         console.log(err);
         throw new Error(message);
       });
+      */
   };
 };
 
