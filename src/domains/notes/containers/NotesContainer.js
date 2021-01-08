@@ -22,7 +22,11 @@ const NotesContainer = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([...notes]);
+  const [filteredDataSource, setFilteredDataSource] = useState(
+    useSelector(
+      (state) => state.trips.trips.find((item) => item.id === tripId).notes,
+    ),
+  );
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -31,8 +35,8 @@ const NotesContainer = (props) => {
       // Filter the masterDataSource
       // Update FilteredDataSource
       const newData = notes.filter(function (item) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
+        const itemData = item.category
+          ? item.category.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
