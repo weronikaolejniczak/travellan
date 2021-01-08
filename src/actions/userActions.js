@@ -5,7 +5,7 @@ import { MAIN_FIREBASE_API } from 'react-native-dotenv';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
-//const API_KEY = MAIN_FIREBASE_API;
+const API_KEY = MAIN_FIREBASE_API;
 
 export const authenticate = (userId, token) => {
   return { token: token, type: AUTHENTICATE, userId: userId };
@@ -16,65 +16,27 @@ export const signUpRequest = (email, password) => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('User account created & signed in!');
+        //console.log('User account created & signed in!');
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
           console.log('That email address is already in use!');
+          const message = 'That email address is already in use!'
+          throw new Error(message);
         }
 
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
+          const message = 'That email address is invalid!'
+          throw new Error(message);
         }
-
-        console.error(error);
       });
-
-    /**await axios({
-      method: 'POST',
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
-      data: {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      },
-    })
-      .then((res) => res.data)
-      .then((data) => {
-        const expirationDate = new Date(
-          new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
-        );
-        dispatch(authenticate(data.localId, data.idToken));
-        saveDataToStorage(data.idToken, data.localId, expirationDate);
-      })
-      .catch(() => {
-        let message = 'Something went wrong!';
-        throw new Error(message);
-      });
-      */
   };
 };
 
 export const loginRequest = (email, password) => {
   return async function (dispatch) {
-    try {
-      let response = await auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => res.data)
-        .then((data) => {
-          const expirationDate = new Date(
-            new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
-          );
-          dispatch(authenticate(data.localId, data.idToken));
-          saveDataToStorage(data.idToken, data.localId, expirationDate);
-        });
-      if (response && response.user) {
-        console.log('Signed In');
-      }
-    } catch (e) {
-      console.error(e.message);
-    }
-    /**  await axios({
+    await axios({
       method: 'POST',
       url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
       data: {
@@ -96,9 +58,9 @@ export const loginRequest = (email, password) => {
         console.log(err);
         throw new Error(message);
       });
-      */
   };
 };
+
 
 export const logout = () => {
   auth()
