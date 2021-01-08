@@ -18,6 +18,7 @@ import auth from '@react-native-firebase/auth';
 import { Input } from '../components';
 import { styles } from './RegisterContainerStyle';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
