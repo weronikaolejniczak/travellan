@@ -102,6 +102,12 @@ const NotesContainer = (props) => {
 
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.textInputStyle}
+        onChangeText={(text) => console.log(text)}
+        underlineColorAndroid="transparent"
+        placeholder="Search Here"
+      />
       <FlatList
         data={notes}
         keyExtractor={(item) => item.id}
