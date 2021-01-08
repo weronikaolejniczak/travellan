@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
+import * as Yup from 'yup';
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
 import auth from '@react-native-firebase/auth';
 import { Input } from '../components';
 import { styles } from './RegisterContainerStyle';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -69,29 +69,34 @@ const RegisterContainer = (props) => {
     }
   }, [error]);
 
-  const SignupForm = () => {
-    const formik = useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-        confirmPassword: '',
-      },
-      validationSchema: Yup.object({
-        email: Yup.string().email('Invalid email address').required('Required'),
-        password: Yup.string()
-          .min(6, 'Must be at least 6 characters long')
-          .required('Required')
-          .matches(/[a-zA-Z0-9_]/, 'Password can only contain Latin letters and numbers.'),
-        confirmPassword: Yup.string()
-          .min(6, 'Must be at least 6 characters long')
-          .required('Required')
-          .matches(/[a-zA-Z0-9_]/, 'Password can only contain Latin letters and numbers.')
-          .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      }),
-      onSubmit: values => {
-        alert(JSON.stringify(values, null, 2));
-      },
-    });
+  const formik = useFormik({
+    initialValues: {
+      confirmPassword: '',
+      email: '',
+      password: '',
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+    validationSchema: Yup.object({
+      confirmPassword: Yup.string()
+        .min(6, 'Must be at least 6 characters long')
+        .required('Required')
+        .matches(
+          /[a-zA-Z0-9_]/,
+          'Password can only contain Latin letters and numbers.',
+        )
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string()
+        .min(6, 'Must be at least 6 characters long')
+        .required('Required')
+        .matches(
+          /[a-zA-Z0-9_]/,
+          'Password can only contain Latin letters and numbers.',
+        ),
+    }),
+  });
 
   const handleSubmit = () => {
     if (
