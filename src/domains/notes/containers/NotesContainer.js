@@ -1,6 +1,6 @@
 import * as notesActions from 'actions/notesActions';
 
-import { Alert, FlatList, Text, View } from 'react-native';
+import { Alert, FlatList, Text, View, TextInput } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { ItemlessFrame, LoadingFrame } from 'components/frames';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -21,8 +21,6 @@ const NotesContainer = (props) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  let sad = 'hello';
 
   const handleEdit = (noteId, category, title, description) => {
     props.navigation.navigate('Edit note', {
