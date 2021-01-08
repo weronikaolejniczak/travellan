@@ -79,7 +79,6 @@ export default (state = initialState, action) => {
           (item) => item.id !== action.noteId,
         );
         break;
-
       case EDIT_NOTE:
         draft.trips[tripIndex].notes = [...draft.trips[tripIndex].notes];
         draft.trips[tripIndex].notes[noteId] = action.newNote;

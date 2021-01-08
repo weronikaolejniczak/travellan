@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Budget from 'models/Budget';
 import BudgetField from 'components/budgetField/BudgetField';
-import * as budgetActions from 'actions/budgetActions';
+import { patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from '../utils';
 import { CURRENCIES } from 'data/Currencies';
 import { styles } from './AddCurrencyContainerStyle';
@@ -19,13 +19,12 @@ import Colors from 'constants/Colors';
 let incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';
 
-const AddCurrencyContainer = (props) => {
+const AddCurrencyContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = props.route.params.tripId;
-  const selectedTrip = useSelector((state) =>
-    state.trips.trips.find((item) => item.id === tripId),
+  const tripId = route.params.tripId;
+  const currentBudget = useSelector(
+    (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
-  const currentBudget = selectedTrip.budget;
 
   const [budget, setBudget] = useState('');
   const [budgetIsValid, setBudgetIsValid] = useState(false);
@@ -78,12 +77,12 @@ const AddCurrencyContainer = (props) => {
           : undefined,
         [
           {
+            account: account.toString(),
+            category: '',
+            date: new Date(),
             id: 0,
             title: 'Initial budget',
             value: prepareValue(budget),
-            category: '',
-            account: account.toString(),
-            date: new Date(),
           },
         ],
         account.toString(),
@@ -95,15 +94,11 @@ const AddCurrencyContainer = (props) => {
 
       setIsLoading(true);
       try {
-        await dispatch(
-          budgetActions.patchBudgetRequest(tripId, budgetToSubmit),
-          () => {
-            setIsLoading(false);
-            props.navigation.navigate('Budget', {
-              tripId: tripId,
-            });
-          },
-        );
+        await dispatch(patchBudgetRequest(tripId, budgetToSubmit));
+        setIsLoading(false);
+        navigation.navigate('Budget', {
+          tripId: tripId,
+        });
       } catch {
         setError('Something went wrong...');
       }
@@ -117,16 +112,16 @@ const AddCurrencyContainer = (props) => {
     budget,
     account,
     currentBudget,
+    currency,
     dispatch,
     tripId,
-    props.navigation,
-    currency,
+    navigation,
   ]);
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
       <BudgetField
-        label={'Enter initial value'}
+        label="Enter initial value"
         styles={styles}
         showSwitch={false}
         toggleBudgetSwitch={() => {}}
