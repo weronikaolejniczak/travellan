@@ -35,4 +35,31 @@ export const styles = StyleSheet.create({
   input: {
     color: Colors.text,
   },
+  
+  //break
+  formControl: {
+    width: '100%',
+  },
+  label: {
+    color: Colors.text,
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginVertical: 8,
+  },
+  input: {
+    color: Colors.text,
+    fontSize: 14,
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+    borderBottomColor: Colors.text,
+    borderBottomWidth: 1,
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  errorText: {
+    fontFamily: 'open-sans',
+    color: 'red',
+    fontSize: 13,
+  },
 });

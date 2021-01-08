@@ -3,11 +3,11 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -69,7 +69,7 @@ const RegisterContainer = (props) => {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
-/**
+  /**
   const handleSubmit = () => {
     if (
       formState.inputValues.password !== formState.inputValues.confirmPassword
@@ -99,7 +99,7 @@ const RegisterContainer = (props) => {
     }
     setIsLoading(false);
   };
-
+  /**
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       dispatchFormState({
@@ -111,6 +111,7 @@ const RegisterContainer = (props) => {
     },
     [dispatchFormState],
   );
+  */
 
   return (
     <Formik
@@ -156,18 +157,22 @@ const RegisterContainer = (props) => {
                   source={require('assets/images/logo.png')}
                 />
               </View>
-              <Input
-                value={values.email}
-                style={styles.input}
-                label="Email"
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
-                placeholder="Email"
-              />
-              {touched.email && errors.email && (
-                <Text style={{ color: Colors.text }}>{errors.email}</Text>
-              )}
-              <Input
+              <View style={styles.formControl}>
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                  value={values.email}
+                  style={styles.input}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  placeholder="Email"
+                />
+                {touched.email && errors.email && (
+                  <View style={styles.errorContainer}>
+                    <Text style={{ color: Colors.text }}>{errors.email}</Text>
+                  </View>
+                )}
+              </View>
+              <TextInput
                 value={values.password}
                 style={styles.input}
                 label="Password"
@@ -178,7 +183,7 @@ const RegisterContainer = (props) => {
               {touched.password && errors.password && (
                 <Text style={{ color: Colors.text }}>{errors.password}</Text>
               )}
-              <Input
+              <TextInput
                 value={values.confirmPassword}
                 style={styles.input}
                 label="Confirm Password"
