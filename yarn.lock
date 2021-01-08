@@ -1759,14 +1759,6 @@ ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-amadeus@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/amadeus/-/amadeus-5.6.0.tgz#4daa6fe34cfcd30dfdfed9e89ad024edce3ddc58"
-  integrity sha512-pdXch4SMm5mfg8DXBcONc2gR9ggsEyfBAAj3/MEKmlc54pnRt/Q4PL3UjUiIbls6TPQ/KF9CT4j3wOL9vCf7bw==
-  dependencies:
-    bluebird "^3.5.1"
-    qs "^6.9.1"
-
 anser@^1.4.9:
   version "1.4.10"
   resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"
