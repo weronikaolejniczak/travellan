@@ -97,7 +97,6 @@ const RegisterContainer = (props, ...rest) => {
                   value={values.email}
                   autoCapitalize="none"
                   onChangeText={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
                   label="E-mail"
                   error={errors.email}
                 />
@@ -113,7 +112,6 @@ const RegisterContainer = (props, ...rest) => {
                   value={values.password}
                   autoCapitalize="none"
                   onChangeText={handleChange('password')}
-                  onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
                   label="Password"
                   error={errors.password}
@@ -132,7 +130,6 @@ const RegisterContainer = (props, ...rest) => {
                   value={values.confirmPassword}
                   autoCapitalize="none"
                   onChangeText={handleChange('confirmPassword')}
-                  onBlur={() => setFieldTouched('confirmPassword')}
                   secureTextEntry={true}
                   label="Confirm Password"
                   error={errors.confirmPassword}

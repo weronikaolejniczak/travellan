@@ -94,8 +94,6 @@ const AuthenticationContainer = (props, { ...rest }) => {
                   value={values.email}
                   style={styles.input}
                   autoCapitalize="none"
-                  onChange={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
                   label="E-mail"
                   error={errors.email}
                 />
@@ -106,7 +104,6 @@ const AuthenticationContainer = (props, { ...rest }) => {
                   value={values.password}
                   autoCapitalize="none"
                   onChange={handleChange('password')}
-                  onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
                   label="Password"
                   error={errors.password}
