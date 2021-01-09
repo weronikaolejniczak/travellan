@@ -28,7 +28,9 @@ const AddAccommodationByNameContainer = (props) => {
     handleChange();
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    formatDate(startDate);
+  });
 
   return (
     <Container>
