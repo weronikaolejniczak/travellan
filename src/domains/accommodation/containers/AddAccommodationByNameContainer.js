@@ -7,7 +7,6 @@ import {
   ItemlessFrame,
 } from 'utils';
 import { View } from 'react-native';
-import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
