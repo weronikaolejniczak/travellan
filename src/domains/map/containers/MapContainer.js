@@ -127,7 +127,7 @@ const MapContainer = ({ route, navigation }) => {
 
   useEffect(() => {
     try {
-      dispatch(fetchMapRequest());
+      // dispatch(fetchMapRequest());
     } catch {
       setError('Something went wrong!');
     }
