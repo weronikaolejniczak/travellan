@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -100,65 +101,113 @@ const AuthenticationContainer = (props) => {
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={styles.screen}
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      onSubmit={async (values) => {
+        setError(null);
+        setIsLoading(true);
+        let action;
+        action = userActions.loginRequest(values.email, values.password);
+        try {
+          await dispatch(action);
+          setIsLoading(false);
+          props.navigation.navigate('My Trips');
+        } catch (err) {
+          setError(err.message);
+        }
+      }}
+      validationSchema={yup.object().shape({
+        email: yup
+          .string()
+          .email('Invalid email address')
+          .required('Cannot be left empty'),
+        password: yup
+          .string()
+          .min(6)
+          .max(20)
+          .required('Cannot be left empty')
+          .matches(
+            /[a-zA-Z0-9_]/,
+            'Password only contains Latin letters and numbers.',
+          ),
+      })}
     >
-      <View style={styles.authContainer}>
-        <ScrollView>
-          <View style={{ alignItems: 'center', marginBottom: 20 }}>
-            <Image
-              style={{ height: 150, resizeMode: 'stretch', width: 150 }}
-              source={require('assets/images/logo.png')}
-            />
+      {({
+        values,
+        handleChange,
+        errors,
+        setFieldTouched,
+        touched,
+        isValid,
+        handleSubmit,
+      }) => (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          style={styles.screen}
+        >
+          <View style={styles.authContainer}>
+            <ScrollView>
+              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Image
+                  style={{ height: 150, resizeMode: 'stretch', width: 150 }}
+                  source={require('assets/images/logo.png')}
+                />
+              </View>
+              <View style={styles.formControl}>
+                <Text style={styles.label}>E-mail</Text>
+                <TextInput
+                  value={values.email}
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                />
+                {touched.email && errors.email && (
+                  <View style={styles.errorContainer}>
+                    <Text style={{ color: Colors.error }}>{errors.email}</Text>
+                  </View>
+                )}
+              </View>
+              <Input
+                styles={styles.input}
+                id="password"
+                label="Password"
+                keyboardType="default"
+                secureTextEntry
+                required
+                minLength={5}
+                autoCapitalize="none"
+                errorText="Please enter a valid password (at least 5 characters)"
+                onInputChange={inputChangeHandler}
+                initialValue=""
+              />
+              <View style={styles.actionsContainer}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color={Colors.white} />
+                ) : (
+                  <TouchableOpacity
+                    style={[styles.buttonContainer, { marginRight: 10 }]}
+                    onPress={authHandler}
+                  >
+                    <Text style={styles.buttonText}>Login</Text>
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('Register');
+                  }}
+                >
+                  <Text style={styles.buttonText}>Switch to Sign up</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
-          <Input
-            style={[styles.input]}
-            id="email"
-            label="E-mail"
-            keyboardType="email-address"
-            required
-            email
-            autoCapitalize="none"
-            errorText="Please enter a valid email address."
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <Input
-            styles={styles.input}
-            id="password"
-            label="Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            errorText="Please enter a valid password (at least 5 characters)"
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <View style={styles.actionsContainer}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.white} />
-            ) : (
-              <TouchableOpacity
-                style={[styles.buttonContainer, { marginRight: 10 }]}
-                onPress={authHandler}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Register');
-              }}
-            >
-              <Text style={styles.buttonText}>Switch to Sign up</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      )}
+    </Formik>
   );
 };
 
