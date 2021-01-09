@@ -1,162 +1,163 @@
 import { StyleSheet } from 'react-native';
-import Colors from 'constants/Colors';
+
+import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  currenciesContainer: {
-    backgroundColor: Colors.cards,
-    alignItems: 'center',
-    paddingTop: '17%',
-  },
-  detailsContainer: {
-    paddingHorizontal: '5%',
-    paddingBottom: '5%',
-  },
-  chartContainer: {
-    borderRadius: 25,
-    overflow: 'hidden',
-    borderColor: Colors.primary,
-    shadowColor: '#111',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
-  currencyHolder: {
-    backgroundColor: Colors.background,
-    borderRadius: 50,
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-  },
-  currencyActive: {
-    color: Colors.primary,
-    fontSize: 22,
-  },
-  currencyNonactive: {
-    color: 'grey',
-    fontSize: 22,
-  },
-  categoriesContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-  },
-  iconButton: {
-    paddingVertical: '2%',
-    paddingHorizontal: '3%',
-  },
-  activeCategory: {
-    color: Colors.primary,
-  },
-  nonactiveCategory: {
-    color: 'grey',
-  },
-  overviewContainer: {
-    backgroundColor: Colors.cards,
-    alignItems: 'baseline',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    paddingVertical: 10,
-  },
-  operationCard: {
-    marginTop: '4%',
-    padding: '4%',
-  },
-  input: {
-    fontSize: 18,
-    color: Colors.text,
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-  },
-  actions: {
-    position: 'absolute',
-    right: 0,
-    justifyContent: 'center',
-    marginTop: '3%',
-  },
-  seperator: {
-    width: '100%',
-    marginVertical: '5%',
-    borderBottomWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: 'grey',
-  },
-  label: {
-    fontSize: 18,
-  },
-  icon: {
-    fontSize: 28,
-  },
-  text: {
-    color: Colors.text,
-  },
-  date: {
-    color: 'grey',
-  },
-  negative: {
-    fontWeight: 'bold',
-    color: Colors.error,
-  },
-  positive: {
-    fontWeight: 'bold',
-    color: Colors.green,
-  },
-  justifyRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   accounts: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
-  center: {
+  actions: {
     justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: '3%',
+    position: 'absolute',
+    right: 0,
   },
-  smallMarginTop: {
-    marginTop: '5%',
-  },
-  extraSmallMarginTop: {
-    marginTop: '2%',
+  activeCategory: {
+    color: Colors.primary,
   },
   bigMarginTop: {
     marginTop: '10%',
   },
   budgetlessContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    justifyContent: 'center',
   },
   budgetlessText: {
     fontSize: 18,
   },
+  categoriesContainer: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   centered: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  errorContainer: {
-    marginTop: '5%',
+  chartContainer: {
+    borderColor: Colors.primary,
+    borderRadius: 25,
+    elevation: 3,
+    overflow: 'hidden',
+    shadowColor: '#111',
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+  },
+  contentContainer: {
+    backgroundColor: Colors.background,
+    flex: 1,
+  },
+  currenciesContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.cards,
+    paddingTop: '17%',
+  },
+  currencyActive: {
+    color: Colors.primary,
+    fontSize: 22,
+  },
+  currencyHolder: {
+    backgroundColor: Colors.background,
+    borderRadius: 50,
+    paddingHorizontal: 25,
+    paddingVertical: 8,
+  },
+  currencyNonactive: {
+    color: 'grey',
+    fontSize: 22,
+  },
+  date: {
+    color: 'grey',
+  },
+  detailsContainer: {
+    paddingBottom: '5%',
+    paddingHorizontal: '5%',
   },
   error: {
     color: Colors.error,
   },
-  navigationButton: {
-    justifyContent: 'center',
+  errorContainer: {
+    marginTop: '5%',
+  },
+  extraSmallMarginTop: {
+    marginTop: '2%',
+  },
+  icon: {
+    fontSize: 28,
+  },
+  iconButton: {
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
+  },
+  input: {
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 1,
+    color: Colors.text,
+    fontSize: 18,
+  },
+  justifyRow: {
     alignItems: 'center',
+    flexDirection: 'row',
+  },
+  label: {
+    fontSize: 18,
+  },
+  navigationButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 10,
   },
   navigationText: {
-    fontSize: 18,
     color: Colors.primary,
+    fontSize: 18,
+  },
+  negative: {
+    color: Colors.negative,
+    fontWeight: 'bold',
+  },
+  nonactiveCategory: {
+    color: 'grey',
+  },
+  operationCard: {
+    marginTop: '4%',
+    padding: '4%',
+  },
+  overviewContainer: {
+    alignItems: 'baseline',
+    backgroundColor: Colors.cards,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingVertical: 10,
+  },
+  positive: {
+    color: Colors.positive,
+    fontWeight: 'bold',
+  },
+  seperator: {
+    borderBottomWidth: 1,
+    borderColor: 'grey',
+    borderStyle: 'dashed',
+    marginVertical: '5%',
+    width: '100%',
+  },
+  smallMarginTop: {
+    marginTop: '5%',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  text: {
+    color: Colors.text,
   },
 });

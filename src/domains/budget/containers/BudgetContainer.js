@@ -60,18 +60,18 @@ const BudgetContainer = (props) => {
   );
 
   const data = {
-    labels: selectedCurrency
-      ? prepareLabelsForLinechart(selectedCurrency.history)
-      : [],
     datasets: [
       {
+        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`,
         data: selectedCurrency
           ? prepareDataForLinechart(selectedCurrency.history)
-          : [],
-        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // optional
+          : [], // optional
         strokeWidth: 2, // optional
       },
     ],
+    labels: selectedCurrency
+      ? prepareLabelsForLinechart(selectedCurrency.history)
+      : [],
     legend: ['Budget value'],
   };
 
@@ -80,9 +80,11 @@ const BudgetContainer = (props) => {
     backgroundGradientFromOpacity: 0.0,
     backgroundGradientTo: Colors.cards,
     backgroundGradientToOpacity: 0.9,
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    // optional, default 3
     barPercentage: 0.5,
+
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    strokeWidth: 2,
     useShadowColorFromDataset: false, // optional
   };
 
@@ -118,12 +120,12 @@ const BudgetContainer = (props) => {
         changedCurrency.value =
           changedCurrency.value + Math.abs(prepareValue(amount));
         changedCurrency.history.push({
+          account: account,
+          category: category,
+          date: new Date(),
           id: changedCurrency.history.length + 1,
           title: title,
           value: Math.abs(prepareValue(amount)),
-          category: category,
-          account: account,
-          date: new Date(),
         });
         // persist changes in the budget
         persistBudget();
@@ -134,12 +136,12 @@ const BudgetContainer = (props) => {
         changedCurrency.value =
           changedCurrency.value - Math.abs(prepareValue(amount));
         changedCurrency.history.push({
+          account: account,
+          category: category,
+          date: new Date(),
           id: changedCurrency.history.length + 1,
           title: title,
           value: -Math.abs(prepareValue(amount)),
-          category: category,
-          account: account,
-          date: new Date(),
         });
         // persist changes in the budget
         persistBudget();
@@ -248,14 +250,14 @@ const BudgetContainer = (props) => {
                   'Delete currency.',
                   [
                     {
-                      text: 'Cancel',
                       style: 'cancel',
+                      text: 'Cancel',
                     },
                     {
-                      text: 'Delete',
                       onPress: () => {
                         deleteCurrency(item.id);
                       },
+                      text: 'Delete',
                     },
                   ],
                   { cancelable: true },
@@ -289,7 +291,7 @@ const BudgetContainer = (props) => {
       {selectedCurrency !== undefined && (
         <View style={styles.overviewContainer}>
           <View style={styles.center}>
-            <Text style={{ color: Colors.grey }}>Cash</Text>
+            <Text style={{ color: Colors.placeholder }}>Cash</Text>
             <View style={styles.accounts}>
               <Icon name={'cash'} style={[styles.icon, styles.text]} />
               <Text
@@ -306,7 +308,7 @@ const BudgetContainer = (props) => {
           </View>
 
           <View style={styles.center}>
-            <Text style={{ color: Colors.grey }}>General balance</Text>
+            <Text style={{ color: Colors.placeholder }}>General balance</Text>
             <Text
               style={[
                 styles.icon,
@@ -319,7 +321,7 @@ const BudgetContainer = (props) => {
           </View>
 
           <View style={styles.center}>
-            <Text style={{ color: Colors.grey }}>Card</Text>
+            <Text style={{ color: Colors.placeholder }}>Card</Text>
             <View style={[styles.accounts]}>
               <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
               <Text
@@ -364,8 +366,8 @@ const BudgetContainer = (props) => {
                     {
                       backgroundColor:
                         selectedHistoryItem.value < 0 ? '#b20000' : 'green',
-                      padding: 15,
                       borderRadius: 20,
+                      padding: 15,
                     },
                   ]}
                 >
@@ -374,8 +376,8 @@ const BudgetContainer = (props) => {
                   </Text>
                   <View
                     style={{
-                      flexDirection: 'row',
                       alignItems: 'center',
+                      flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}
                   >
@@ -543,9 +545,9 @@ const BudgetContainer = (props) => {
                     <View style={styles.justifyRow}>
                       <View
                         style={{
+                          alignItems: 'center',
                           flexDirection: 'row',
                           justifyContent: 'center',
-                          alignItems: 'center',
                           marginRight: '5%',
                         }}
                       >

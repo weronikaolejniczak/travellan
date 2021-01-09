@@ -9,8 +9,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import Budget from 'models/Budget';
-import BudgetPicker from 'components';
 import Colors from 'constants/Colors';
+import { BudgetPicker } from 'components';
 import { CURRENCIES } from 'data/Currencies';
 import { patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
@@ -122,7 +122,6 @@ const AddCurrencyContainer = ({ route, navigation }) => {
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
       <BudgetPicker
         label="Enter initial value"
-        passedStyles={styles}
         showSwitch={false}
         toggleBudgetSwitch={() => {}}
         budget={budget}
