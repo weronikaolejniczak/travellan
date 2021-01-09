@@ -24,9 +24,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  errorContainer: {
-    marginVertical: 5,
-  },
   formControl: {
     width: '100%',
   },
@@ -38,20 +35,6 @@ export const styles = StyleSheet.create({
   imageView: {
     alignItems: 'center',
     marginBottom: 20,
-  },
-  input: {
-    borderBottomColor: Colors.text,
-    borderBottomWidth: 1,
-    color: Colors.text,
-    fontSize: 14,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-  },
-  label: {
-    color: Colors.text,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 8,
   },
   screen: {
     alignItems: 'center',
