@@ -63,7 +63,7 @@ const AddAccommodationByNameContainer = (props) => {
         <Headline>Add your accomodation by typing name of your hotel</Headline>
       </View>
       <TextInput
-        label={'Hotel name'}
+        label="Hotel name"
         error={error}
         onChange={handleChange}
         value={value}
