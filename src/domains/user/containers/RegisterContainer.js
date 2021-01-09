@@ -109,7 +109,6 @@ const RegisterContainer = (props, ...rest) => {
                 )}
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>Password</Text>
                 <TextInput
                   {...rest}
                   value={values.password}
@@ -129,7 +128,6 @@ const RegisterContainer = (props, ...rest) => {
                 )}
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>Confirm Password</Text>
                 <TextInput
                   {...rest}
                   value={values.confirmPassword}
