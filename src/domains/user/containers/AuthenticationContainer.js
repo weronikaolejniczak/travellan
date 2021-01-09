@@ -16,8 +16,8 @@ import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
+import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
-import { TextInput } from 'utils';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
@@ -112,19 +112,16 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
-                )}
               </View>
               <View style={styles.actionsContainer}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color={Colors.white} />
-                ) : (
-                  <TouchableOpacity
-                    style={[styles.buttonContainer, { marginRight: 10 }]}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={styles.buttonText}>Login</Text>
-                  </TouchableOpacity>
-                )}
+                <Button
+                  loading={isLoading}
+                  disabled={isLoading}
+                  onPress={handleSubmit}
+                  mode="outlined"
+                >
+                  <Text style={styles.buttonText}>Login</Text>
+                </Button>
                 <TouchableOpacity
                   onPress={() => {
                     props.navigation.navigate('Register');
