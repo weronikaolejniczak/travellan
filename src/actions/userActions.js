@@ -1,6 +1,6 @@
-import axios from 'axios';
-import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+import axios from 'axios';
 import { MAIN_FIREBASE_API } from 'react-native-dotenv';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
@@ -49,7 +49,7 @@ export const loginRequest = (email, password) => {
         saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new Error('Something went wrong. Try again');
       });
     auth().signInWithEmailAndPassword(email, password);
   };
