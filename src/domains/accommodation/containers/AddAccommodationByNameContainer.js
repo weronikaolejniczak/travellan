@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ScrollView as Container, Headline, TextInput } from 'utils';
+import {
+  Button,
+  ScrollView as Container,
+  Headline,
+  TextInput,
+  Text,
+} from 'utils';
 import { View } from 'react-native';
+import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isDateSame, SetIsDateSame] = useState(true);
@@ -41,6 +48,18 @@ const AddAccommodationByNameContainer = (props) => {
       SetIsDateSame(false);
     }
   });
+
+  if (isDateSame)
+    return (
+      <Container>
+        <View style={styles.itemlessContainer}>
+          <Text style={[styles.text, styles.itemlessText]}>
+            Searching for a hotel by name is not possible if you are going on a
+            one day trip!
+          </Text>
+        </View>
+      </Container>
+    );
 
   return (
     <Container>
