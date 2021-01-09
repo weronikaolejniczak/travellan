@@ -11,11 +11,15 @@ const AddAccommodationByNameContainer = (props) => {
     setValue(val);
   };
 
-  const handlePress = () => console.log('hello!');
+  const handlePress = () => {
+    handleChange();
+  };
 
   return (
     <Container>
-      <Headline>Headline!</Headline>
+      <View style={{ marginTop: 10, marginBottom: 10 }}>
+        <Headline>Add your accomodation by typing name of your hotel</Headline>
+      </View>
       <TextInput
         label={'Hotel address'}
         error={error}
