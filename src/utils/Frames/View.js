@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import AppStyles from 'styles/AppStyles';
 
-const CustomView = ({ children }) => {
-  return <View style={AppStyles.container}>{children}</View>;
+const CustomView = ({ children, style }) => {
+  return <View style={[AppStyles.container, style]}>{children}</View>;
 };
 
 export default CustomView;

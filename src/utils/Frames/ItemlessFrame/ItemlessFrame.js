@@ -1,13 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 
+import { View as Container, Headline } from '../../';
 import { styles } from './ItemlessFrameStyle';
 
 const ItemlessFrame = ({ message }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{message}</Text>
-    </View>
+    <Container style={styles.container}>
+      <Headline>{message}</Headline>
+    </Container>
   );
 };
 

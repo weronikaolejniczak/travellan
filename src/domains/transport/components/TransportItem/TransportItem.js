@@ -14,24 +14,23 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as transportActions from 'actions/transportActions';
-import { Card } from 'utils';
+import { Card, View as Container } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';
+import { patchPDFRequest, patchQRRequest } from 'actions/transportActions';
 
-const TransportItem = (props) => {
+const TransportItem = ({
+  tripId,
+  destination,
+  isTicketTo,
+  dateOfDeparture,
+  placeOfDeparture,
+  id,
+  QR,
+  PDF,
+  handleAddQR,
+  handleDeleteTransport,
+}) => {
   const dispatch = useDispatch();
-  const {
-    tripId,
-    destination,
-    isTicketTo,
-    dateOfDeparture,
-    placeOfDeparture,
-    id,
-    QR,
-    PDF,
-    handleAddQR,
-    handleDeleteTransport,
-  } = props;
   const source = { uri: PDF };
 
   const [QRCodeString, setQRCodeString] = useState(QR);
@@ -49,35 +48,31 @@ const TransportItem = (props) => {
 
   const deleteQR = useCallback(async () => {
     setQRCodeString('');
-    await dispatch(transportActions.updateQR(tripId, id, QRCodeString));
+    await dispatch(patchQRRequest(tripId, id, ''));
     setShowQR(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripId, id, QRCodeString]);
+  }, [dispatch, tripId, id]);
 
   const deletePDF = useCallback(async () => {
     setPDFUri('');
-    await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
+    await dispatch(patchPDFRequest(tripId, id, ''));
     setShowPDF(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripId, id, PDFUri]);
+  }, [dispatch, tripId, id]);
 
   const closeQRhandler = () => setShowQR(false);
 
   const closePDFhandler = () => setShowPDF(false);
 
-  const pickPDF = async () => {
+  const pickPDF = useCallback(async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
       const temp = res.uri;
-      setPDFUri(temp);
-
-      await dispatch(transportActions.updatePDF(tripId, id, PDFUri));
+      await dispatch(patchPDFRequest(tripId, id, temp));
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) throw err;
     }
-  };
+  }, [dispatch, tripId, id]);
 
   return (
     <Card style={styles.transportCard}>
@@ -89,7 +84,7 @@ const TransportItem = (props) => {
           setShowQR(false);
         }}
       >
-        <View style={styles.container}>
+        <Container>
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
             onPress={closeQRhandler}
@@ -107,12 +102,12 @@ const TransportItem = (props) => {
                     'Are you sure?',
                     [
                       {
-                        text: 'Cancel',
                         style: 'cancel',
+                        text: 'Cancel',
                       },
                       {
-                        text: 'OK',
                         onPress: deleteQR,
+                        text: 'OK',
                       },
                     ],
                     { cancelable: true },
@@ -123,18 +118,16 @@ const TransportItem = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </Container>
       </Modal>
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={showPDF}
-        onRequestClose={() => {
-          setShowPDF(false);
-        }}
+        onRequestClose={() => setShowPDF(false)}
       >
-        <View style={styles.container}>
+        <Container>
           <TouchableOpacity
             style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}
@@ -142,22 +135,10 @@ const TransportItem = (props) => {
             <Icon name="close" style={styles.icon2} />
           </TouchableOpacity>
           <Pdf
-            ref={(pdf) => {
+            /* ref={(pdf) => {
               this.pdf = pdf;
-            }}
+            }} */
             source={source}
-            onLoadComplete={(numberOfPages, filePath) => {
-              /**iNSTRUCTIONS WHEN PDF IS LOADED */
-            }}
-            onPageChanged={(page, numberOfPages) => {
-              /**iNSTRUCTIONS IF USER CHANGES PAGE */
-            }}
-            onError={(error) => {
-              /**iNSTRUCTIONS IF ERROR */
-            }}
-            onPressLink={(uri) => {
-              /**iNSTRUCTIONS IF USER PRESSES LINK */
-            }}
             style={styles.PDF}
           />
           <TouchableOpacity
@@ -168,12 +149,12 @@ const TransportItem = (props) => {
                 'Are you sure?',
                 [
                   {
-                    text: 'Cancel',
                     style: 'cancel',
+                    text: 'Cancel',
                   },
                   {
-                    text: 'OK',
                     onPress: deletePDF,
+                    text: 'OK',
                   },
                 ],
                 { cancelable: true },
@@ -182,8 +163,9 @@ const TransportItem = (props) => {
           >
             <Icon name="delete" style={styles.icon2} />
           </TouchableOpacity>
-        </View>
+        </Container>
       </Modal>
+
       <View style={styles.actions}>
         <TouchableOpacity onPress={handleDeleteTransport}>
           <Icon name="delete" style={styles.icon} />
@@ -201,12 +183,12 @@ const TransportItem = (props) => {
                 'Attach document to the ticket.',
                 [
                   {
-                    text: 'Cancel',
                     style: 'cancel',
+                    text: 'Cancel',
                   },
                   {
-                    text: 'OK',
                     onPress: pickPDF,
+                    text: 'OK',
                   },
                 ],
                 { cancelable: true },
