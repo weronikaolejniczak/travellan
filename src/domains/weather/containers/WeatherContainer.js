@@ -42,12 +42,13 @@ const WeatherContainer = ({ route }) => {
 
   useEffect(() => {
     async function getWeather() {
-      let result = await fetchWeather(latitude, longitude);
-      let weather = result[0];
+      const result = await fetchWeather(latitude, longitude);
+      const weather = result[0];
       setForecast(weather);
       setActiveDay(weather[0]);
     }
     setIsLoading(true);
+
     checkDates();
     getWeather().then(() => {
       setIsLoading(false);
@@ -258,7 +259,7 @@ const WeatherContainer = ({ route }) => {
                         </View>
                         <View>
                           <Text style={styles.text}>
-                            {activeDay.sunrise
+                            {new Date(activeDay.sunrise)
                               .toTimeString()
                               .split(' ')[0]
                               .split(':')
@@ -301,7 +302,7 @@ const WeatherContainer = ({ route }) => {
                         </View>
                         <View>
                           <Text style={styles.text}>
-                            {activeDay.sunset
+                            {new Date(activeDay.sunset)
                               .toTimeString()
                               .split(' ')[0]
                               .split(':')
@@ -336,8 +337,9 @@ const WeatherContainer = ({ route }) => {
                                 ? Colors.background
                                 : Colors.cards,
                             borderBottomColor:
-                              item.item.date.getTime() > startDate.getTime() &&
-                              item.item.date.getTime() <=
+                              new Date(item.item.date).getTime() >
+                                startDate.getTime() &&
+                              new Date(item.item.date).getTime() <=
                                 endDate.getTime() + 60 * 60 * 24 * 1000
                                 ? Colors.primary
                                 : Colors.transparent,
