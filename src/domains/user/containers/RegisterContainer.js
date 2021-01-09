@@ -12,7 +12,6 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
-import Colors from 'constants/Colors';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { signUpRequest } from 'actions/userActions';
@@ -100,11 +99,6 @@ const RegisterContainer = (props, ...rest) => {
                   label="E-mail"
                   error={errors.email}
                 />
-                {touched.email && errors.email && (
-                  <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.error }}>{errors.email}</Text>
-                  </View>
-                )}
               </View>
               <View style={styles.formControl}>
                 <TextInput
@@ -116,13 +110,6 @@ const RegisterContainer = (props, ...rest) => {
                   label="Password"
                   error={errors.password}
                 />
-                {touched.password && errors.password && (
-                  <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.error }}>
-                      {errors.password}
-                    </Text>
-                  </View>
-                )}
               </View>
               <View style={styles.formControl}>
                 <TextInput
