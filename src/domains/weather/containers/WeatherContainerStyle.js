@@ -1,93 +1,102 @@
+import { Colors } from 'constants';
 import { StyleSheet } from 'react-native';
-import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: Colors.background,
+  action: {
+    color: Colors.primary,
+  },
+  alignAndJustifyCenter: {
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  alignCenter: {
     alignItems: 'center',
   },
-  weatherContainer: {
-    backgroundColor: Colors.background,
+  bigBubble: {
+    borderRadius: 60,
+    height: 120,
+    width: 120,
   },
-  graphicsContainer: {
-    flex: 0.7,
-    justifyContent: 'flex-end',
+  bigText: {
+    fontSize: 38,
+  },
+  bubble: {
     alignItems: 'center',
-  },
-  graphics: {
-    flex: 1,
-  },
-  dataContainer: {
-    flex: 0.3,
-    paddingHorizontal: 15,
-    backgroundColor: Colors.background,
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
   },
   callToAction: {
     padding: 15,
   },
-  action: {
-    color: Colors.primary,
+  centered: {
+    alignContent: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
-  bigText: {
-    fontSize: 38,
+  container: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    paddingTop: '12%',
   },
-  text: {
-    color: Colors.text,
+  contentContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
   },
-  subdate: {
-    fontSize: 11,
-    color: Colors.grey,
+  dataContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    borderBottomWidth: 2,
+    flex: 0.3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    width: '100%',
   },
   date: {
     color: Colors.text,
   },
-  textShadow: {
-    textShadowColor: 'rgba(0, 0, 0, 0.45)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 7,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  linearGradient: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   dateContainer: {
-    paddingVertical: 7,
-    paddingHorizontal: 13,
-    width: '100%',
+    alignItems: 'center',
     backgroundColor: Colors.cards,
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+    width: '100%',
   },
-  container: {
+  graphics: {
     flex: 1,
-    backgroundColor: Colors.background,
+  },
+  graphicsContainer: {
     alignItems: 'center',
-    paddingTop: '12%',
+    flex: 0.7,
+    justifyContent: 'flex-end',
+  },
+  ground: {
+    alignItems: 'flex-end',
+  },
+  halfFlex: {
+    flex: 0.5,
   },
   itemlessContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   itemlessText: {
     fontSize: 18,
     textAlign: 'center',
   },
-  paddingHorizontal: {
-    paddingHorizontal: 15,
+  justifyCenter: {
+    justifyContent: 'center',
+  },
+  linearGradient: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
   },
   marginLeft: {
     marginLeft: 10,
@@ -102,46 +111,38 @@ export const styles = StyleSheet.create({
   marginTop: {
     marginTop: 5,
   },
-  halfFlex: {
-    flex: 0.5,
-  },
-  bubble: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  smallBubble: {
-    width: 70,
-    height: 70,
-    borderRadius: 50,
-  },
-  bigBubble: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-  },
-  rowAlignCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  alignAndJustifyCenter: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  alignCenter: {
-    alignItems: 'center',
-  },
-  justifyCenter: {
-    justifyContent: 'center',
-  },
-  ground: {
-    alignItems: 'flex-end',
-  },
-  separator: {
-    width: 1,
-    backgroundColor: Colors.background,
+  paddingHorizontal: {
+    paddingHorizontal: 15,
   },
   row: {
     flexDirection: 'row',
+  },
+  rowAlignCenter: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  separator: {
+    backgroundColor: Colors.background,
+    width: 1,
+  },
+  smallBubble: {
+    borderRadius: 50,
+    height: 70,
+    width: 70,
+  },
+  subdate: {
+    color: Colors.placeholder,
+    fontSize: 11,
+  },
+  text: {
+    color: Colors.text,
+  },
+  textShadow: {
+    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowOffset: { height: 1, width: 1 },
+    textShadowRadius: 7,
+  },
+  weatherContainer: {
+    backgroundColor: Colors.background,
   },
 });
