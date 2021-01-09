@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as userActions from 'actions/userActions';
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
 import { Formik } from 'formik';
+import { signUpRequest } from 'actions/userActions';
 import { styles } from './RegisterContainerStyle';
 
 const RegisterContainer = (props) => {
@@ -41,7 +41,7 @@ const RegisterContainer = (props) => {
         setError(null);
         setIsLoading(true);
         let action;
-        action = userActions.signUpRequest(values.email, values.password);
+        action = signUpRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
