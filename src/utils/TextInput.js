@@ -10,6 +10,8 @@ const CustomTextInput = ({
   flat,
   value,
   keyboardType,
+  autoCapitalize,
+  secureTextEntry,
 }) => (
   <>
     <TextInput
@@ -22,6 +24,8 @@ const CustomTextInput = ({
       onChangeText={onChange}
       value={value}
       keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
+      secureTextEntry={secureTextEntry}
     />
     <HelperText type="error" visible={!!error}>
       {error}

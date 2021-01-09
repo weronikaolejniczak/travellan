@@ -24,6 +24,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  errorContainer: {
+    marginVertical: 5,
+  },
   formControl: {
     width: '100%',
   },

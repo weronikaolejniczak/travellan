@@ -96,7 +96,7 @@ const AuthenticationContainer = (props) => {
                   value={values.email}
                   style={styles.input}
                   autoCapitalize="none"
-                  onChangeText={handleChange('email')}
+                  onChange={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
                   label="E-mail"
                 />
@@ -110,7 +110,7 @@ const AuthenticationContainer = (props) => {
                 <TextInput
                   value={values.password}
                   autoCapitalize="none"
-                  onChangeText={handleChange('password')}
+                  onChange={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
                   label="Password"
