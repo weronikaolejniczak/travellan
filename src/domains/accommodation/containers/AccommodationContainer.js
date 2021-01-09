@@ -20,6 +20,8 @@ const AccommodationContainer = (props) => {
     actionSheetRef.current?.hide();
     navigation.navigate(screen, {
       tripId: route.params.tripId,
+      startDate: route.params.startDate,
+      endDate: route.params.endDate,
     });
   };
 
