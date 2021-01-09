@@ -17,7 +17,7 @@ const AddAccommodationByNameContainer = (props) => {
   let formattedStartDate = '';
   let formattedEndDate = '';
 
-  function formatDate(date) {
+  const formatDate = (date) => {
     //format to YYYY-MM-DD
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -28,7 +28,7 @@ const AddAccommodationByNameContainer = (props) => {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
-  }
+  };
 
   const handleChange = (val) => {
     setValue(val);
