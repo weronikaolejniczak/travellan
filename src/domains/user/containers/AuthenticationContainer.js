@@ -51,17 +51,6 @@ const AuthenticationContainer = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [formState, dispatchFormState] = useReducer(formReducer, {
-    formIsValid: false,
-    inputValidities: {
-      email: false,
-      password: false,
-    },
-    inputValues: {
-      email: '',
-      password: '',
-    },
-  });
 
   useEffect(() => {
     SplashScreen.hide();
@@ -69,36 +58,6 @@ const AuthenticationContainer = (props) => {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
-
-  const authHandler = async () => {
-    let action;
-    action = userActions.loginRequest(
-      formState.inputValues.email,
-      formState.inputValues.password,
-    );
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      await dispatch(action);
-      props.navigation.navigate('My trips');
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  };
-
-  const inputChangeHandler = useCallback(
-    (inputIdentifier, inputValue, inputValidity) => {
-      dispatchFormState({
-        input: inputIdentifier,
-        isValid: inputValidity,
-        type: FORM_INPUT_UPDATE,
-        value: inputValue,
-      });
-    },
-    [dispatchFormState],
-  );
 
   return (
     <Formik
@@ -195,7 +154,7 @@ const AuthenticationContainer = (props) => {
                 ) : (
                   <TouchableOpacity
                     style={[styles.buttonContainer, { marginRight: 10 }]}
-                    onPress={authHandler}
+                    onPress={handleSubmit}
                   >
                     <Text style={styles.buttonText}>Login</Text>
                   </TouchableOpacity>
