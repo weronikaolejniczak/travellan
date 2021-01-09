@@ -16,7 +16,7 @@ import {
 } from 'utils';
 import { View } from 'react-native';
 
-const AddAccommodationContainer = (props) => {
+const AddAccommodationByName = (props) => {
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
@@ -109,4 +109,4 @@ const AddAccommodationContainer = (props) => {
   );
 };
 
-export default AddAccommodationContainer;
+export default AddAccommodationByName;
