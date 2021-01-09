@@ -138,6 +138,10 @@ export default function Navigation() {
           component={AddAccommodationContainer}
         />
         <Stack.Screen
+          name="Add accommodation by name"
+          component={AddAccommodationByNameContainer}
+        />
+        <Stack.Screen
           name="Budget"
           component={BudgetContainer}
           options={budgetOptions}
