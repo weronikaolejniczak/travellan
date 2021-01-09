@@ -54,21 +54,6 @@ const AddAccommodationByNameContainer = (props) => {
     },
   ];
 
-  const items = [
-    {
-      label: 'Hello',
-      value: 'hello',
-    },
-    {
-      label: 'World',
-      value: 'world',
-    },
-    {
-      label: 'This',
-      value: 'this',
-    },
-  ];
-
   return (
     <Container>
       <Headline>Headline!</Headline>
@@ -85,26 +70,6 @@ const AddAccommodationByNameContainer = (props) => {
         Hello, World!
       </Button>
       <Button mode="outlined">Hello, World!</Button>
-      <Button mode="outlined" loading>
-        Hello, World!
-      </Button>
-      <View>
-        <Text>Hello</Text>
-      </View>
-      <Button mode="text">Hello, World!</Button>
-      <Checkbox onPress={toggleSwitch} checked={enabled} />
-      <Checkbox
-        label="Something that needs to be checked!"
-        onPress={toggleSwitch}
-        checked={enabled}
-      />
-      <Switch toggled={enabled} onToggleSwitch={toggleSwitch} />
-      <RadioButtonGroup
-        options={options}
-        value={radioValue}
-        onSelect={setRadioValue}
-      />
-      <Searchbar onChangeText={onChangeSearch} value={searchQuery} />
     </Container>
   );
 };
