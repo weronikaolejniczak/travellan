@@ -85,12 +85,12 @@ const TripDetailsContainer = (props) => {
             tripId={selectedTrip.id}
             icon="hotel"
           />
-          <NavigationButton
+          {/* <NavigationButton
             navigation={props.navigation}
             to="Map"
             tripId={selectedTrip.id}
             icon="map"
-          />
+          /> */}
           <NavigationButton
             navigation={props.navigation}
             to="Weather"

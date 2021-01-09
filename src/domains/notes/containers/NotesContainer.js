@@ -1,18 +1,22 @@
-import * as notesActions from 'actions/notesActions';
-
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Alert, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Colors from 'constants/Colors';
-import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import * as notesActions from 'actions/notesActions';
+import {
+  View as Container,
+  HeaderButton,
+  ItemlessFrame,
+  LoadingFrame,
+  Searchbar,
+  Text,
+} from 'utils';
 import { NoteItem } from '../components';
-import { styles } from './NotesContainerStyle';
 
-const NotesContainer = (props) => {
+const NotesContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = props.route.params.tripId;
+  const tripId = route.params.tripId;
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -29,12 +33,10 @@ const NotesContainer = (props) => {
     ),
   );
 
+  console.log(notes);
+
   const searchFilterFunction = (text) => {
-    // Check if searched text is not blank
     if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource
-      // Update FilteredDataSource
       const newData = notes.filter(function (item) {
         const itemData = item.category
           ? item.category.toUpperCase()
@@ -42,23 +44,22 @@ const NotesContainer = (props) => {
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
+
       setNotes(newData);
       setSearch(text);
     } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
       setNotes(filteredDataSource);
       setSearch(text);
     }
   };
 
   const handleEdit = (noteId, category, title, description) => {
-    props.navigation.navigate('Edit note', {
-      noteId,
+    navigation.navigate('Edit note', {
       category,
-      title,
       description,
-      tripId: props.route.params.tripId,
+      noteId,
+      title,
+      tripId: route.params.tripId,
     });
   };
 
@@ -76,7 +77,7 @@ const NotesContainer = (props) => {
   );
 
   const handleDelete = useCallback(
-    (noteId) => {
+    async (noteId) => {
       setIsRefreshing(true);
       Alert.alert(
         'Delete note',
@@ -113,35 +114,30 @@ const NotesContainer = (props) => {
     loadNotes();
   }, [loadNotes]);
 
-  if (isLoading) {
-    return <LoadingFrame />;
-  }
-
-  if (error) {
-    return (
-      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
-        <Text style={styles.text}>Something went wrong!</Text>
-        <Text style={styles.text}>Error: {error}</Text>
-      </View>
-    );
-  }
-
-  if (Array.isArray(filteredDataSource) && filteredDataSource.length < 1) {
+  if (Array.isArray(filteredDataSource) && filteredDataSource.length < 1)
     return <ItemlessFrame message="You have no notes saved!" />;
-  }
+
+  if (!Array.isArray(notes) || isRefreshing || isLoading)
+    return <LoadingFrame />;
+
+  if (error)
+    return (
+      <Container>
+        <Text>Something went wrong!</Text>
+        <Text>Error: {error}</Text>
+      </Container>
+    );
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInputStyle}
+    <Container>
+      <Searchbar
         onChangeText={(text) => searchFilterFunction(text)}
         value={search}
-        underlineColorAndroid="transparent"
-        placeholder="Search Here"
+        placeholder="Search by category"
       />
       <FlatList
         data={notes}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={(data) => (
           <NoteItem
             handleDelete={handleDelete}
@@ -151,7 +147,7 @@ const NotesContainer = (props) => {
           />
         )}
       />
-    </View>
+    </Container>
   );
 };
 

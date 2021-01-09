@@ -43,6 +43,7 @@
     "logkitty": "^0.7.1",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
+    "prettier": "^2.2.1",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-actions-sheet": "^0.4.2",

@@ -41,6 +41,9 @@ export default {
   margin: {
     margin: normal,
   },
+  marginTop: {
+    marginTop: normal,
+  },
   padding: {
     padding: normal,
   },

@@ -9,9 +9,9 @@ const API_URL = FIREBASE_URL;
 
 export const setMap = (tripId, map) => {
   return {
-    type: SET_MAP,
-    tripId,
     map,
+    tripId,
+    type: SET_MAP,
   };
 };
 
@@ -19,30 +19,36 @@ export const fetchMapRequest = (tripId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let map = data.map;
+    axios
+      .get(`${API_URL}/Trips/${userId}/${tripId}/map.json?auth=${token}`)
+      .then((res) => res.data)
+      .then((map) => {
+        console.log('map on fetch:', JSON.stringify(map));
 
-    dispatch(setMap(tripId, map));
+        dispatch(setMap(tripId, {}));
+      })
+      .catch(() => {
+        throw new Error('Something went wrong while getting the map!');
+      });
   };
 };
 
-export const updateMapRequest = (tripId, markers, routes, region) => {
+export const patchMapRequest = (tripId, markers, routes, region) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const response = await axios.get(
-      `${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`,
-    );
-    const data = await response.json();
 
-    let map = data.map;
-    let newMap = new Map(markers, routes, region);
-    map = newMap;
+    const map = new Map(markers, routes, region);
+    console.log('map on patch:', JSON.stringify(map));
 
-    dispatch(setMap(tripId, map));
+    axios
+      .patch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
+        map,
+      })
+      .then(() => dispatch(setMap(tripId, {})))
+      .catch(() => {
+        throw new Error(`Couldn't update the map!`);
+      });
   };
 };

@@ -1,13 +1,5 @@
 import produceImmer from 'helpers/produceImmer';
 
-import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
-import {
-  CREATE_TRANSPORT,
-  DELETE_TRANSPORT,
-  SET_PDF,
-  SET_QR,
-  SET_TRANSPORT,
-} from 'actions/transportActions';
 import {
   CREATE_ACCOMMODATION,
   DELETE_ACCOMMODATION,
@@ -19,6 +11,14 @@ import {
   EDIT_NOTE,
   SET_NOTES,
 } from 'actions/notesActions';
+import {
+  CREATE_TRANSPORT,
+  DELETE_TRANSPORT,
+  SET_PDF,
+  SET_QR,
+  SET_TRANSPORT,
+} from 'actions/transportActions';
+import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
 import { SET_BUDGET } from 'actions/budgetActions';
 import { SET_MAP } from 'actions/mapActions';
 
@@ -37,8 +37,7 @@ export default (state = initialState, action) => {
         break;
 
       case DELETE_TRIP:
-        const filteredTrips = draft.trips.filter((item) => item.id !== tripId);
-        draft.trips = filteredTrips;
+        draft.trips = draft.trips.filter((item) => item.id !== tripId);
         break;
 
       case CREATE_TRIP:
@@ -59,10 +58,19 @@ export default (state = initialState, action) => {
           tripIndex
         ].transport.filter((item) => item.id !== action.transportId);
         break;
-
       case SET_QR:
+        draft.trips[tripIndex].transport[
+          draft.trips[tripIndex].transport.findIndex(
+            (item) => item.id === action.transportId,
+          )
+        ].QR = action.QR;
+        break;
       case SET_PDF:
-        draft.trips[tripIndex].transport = action.transport;
+        draft.trips[tripIndex].transport[
+          draft.trips[tripIndex].transport.findIndex(
+            (item) => item.id === action.transportId,
+          )
+        ].PDF = action.PDF;
         break;
 
       case SET_ACCOMMODATION:
@@ -96,7 +104,7 @@ export default (state = initialState, action) => {
         break;
       case EDIT_NOTE:
         draft.trips[tripIndex].notes = [...draft.trips[tripIndex].notes];
-        draft.trips[tripIndex].notes[noteId] = action.newNote;
+        draft.trips[tripIndex].notes[action.noteId] = action.newNote;
         break;
 
       case SET_BUDGET:

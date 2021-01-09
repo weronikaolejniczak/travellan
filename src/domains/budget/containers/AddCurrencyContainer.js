@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as budgetActions from 'actions/budgetActions';
 import Budget from 'models/Budget';
-import BudgetField from 'components';
 import Colors from 'constants/Colors';
+import { BudgetPicker } from 'components';
 import { CURRENCIES } from 'data/Currencies';
+import { patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './AddCurrencyContainerStyle';
 
@@ -120,9 +120,8 @@ const AddCurrencyContainer = ({ route, navigation }) => {
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
-      <BudgetField
+      <BudgetPicker
         label="Enter initial value"
-        styles={styles}
         showSwitch={false}
         toggleBudgetSwitch={() => {}}
         budget={budget}

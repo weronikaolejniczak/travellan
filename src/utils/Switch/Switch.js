@@ -4,15 +4,15 @@ import { View } from 'react-native';
 
 import { styles } from './SwitchStyle';
 
-const CustomSwitch = (props) => {
-  const { children, toggled, onToggleSwitch } = props;
-
-  return (
-    <View style={styles.wrapper}>
-      {children}
-      <Switch value={toggled} onValueChange={onToggleSwitch} />
-    </View>
-  );
-};
+const CustomSwitch = ({ children, toggled, onToggleSwitch }) => (
+  <View style={styles.wrapper}>
+    {children}
+    <Switch
+      value={toggled}
+      onValueChange={onToggleSwitch}
+      style={styles.switch}
+    />
+  </View>
+);
 
 export default CustomSwitch;
