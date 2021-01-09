@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
-import { MAIN_FIREBASE_API } from 'react-native-dotenv';
+import { AUTH_URL } from 'react-native-dotenv';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
-const API_KEY = MAIN_FIREBASE_API;
+const URL = AUTH_URL;
 
 export const authenticate = (userId, token) => {
   return { token: token, type: AUTHENTICATE, userId: userId };
@@ -17,7 +17,7 @@ export const signUpRequest = (email, password) => {
       .createUserWithEmailAndPassword(email, password)
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-          const message = 'That email address is already in use!';
+          const message = 'That email address is invalid!';
           throw new Error(message);
         }
 
@@ -38,7 +38,7 @@ export const loginRequest = (email, password) => {
         returnSecureToken: true,
       },
       method: 'POST',
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
+      url: URL,
     })
       .then((res) => res.data)
       .then((data) => {
@@ -51,18 +51,7 @@ export const loginRequest = (email, password) => {
       .catch((err) => {
         throw new Error('Something went wrong. Try again');
       });
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .onAuthStateChanged(function (user) {
-        if (user) {
-          console.log(user); // it shows the Firebase user
-          console.log(auth().user); // it is still undefined
-          user.getIdToken().then(function (idToken) {
-            // <------ Check this line
-            console.log(idToken); // it shows the Firebase token now
-          });
-        }
-      });
+    auth().signInWithEmailAndPassword(email, password);
   };
 };
 

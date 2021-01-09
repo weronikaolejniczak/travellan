@@ -14,10 +14,10 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as userActions from 'actions/userActions';
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
 import { Formik } from 'formik';
+import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
 const AuthenticationContainer = (props) => {
@@ -43,7 +43,7 @@ const AuthenticationContainer = (props) => {
         setError(null);
         setIsLoading(true);
         let action;
-        action = userActions.loginRequest(values.email, values.password);
+        action = loginRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
