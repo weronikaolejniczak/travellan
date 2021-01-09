@@ -1,45 +1,54 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import ToolbarButton from 'domains/map/components/toolbarButton/ToolbarButton';
-import Input from 'domains/map/components/input/Input';
+import ToolbarButton from './ToolbarButton/ToolbarButton';
+import { Searchbar } from 'utils';
+import { styles } from './ToolbarStyle';
 
-const Toolbar = (props) => {
-  return (
-    <View style={props.styles.overlay}>
-      <View style={props.styles.actionBar}>
-        <ToolbarButton
-          iconName="close"
-          isLoading={props.isLoading}
-          loader={true}
-          handler={false}
-          onPress={props.onExitHandler}
-        />
-        <ToolbarButton
-          iconName="map-marker-plus"
-          isLoading={props.isLoading}
-          loader={false}
-          handler={props.addingMarkerActive}
-          onPress={props.addingActivityHandler}
-        />
-        <ToolbarButton
-          iconName="map-marker-minus"
-          isLoading={props.isLoading}
-          loader={false}
-          handler={props.deletingMarkerActive}
-          onPress={props.deletingActivityHandler}
-        />
-        {props.addingMarkerActive && (
-          <Input
-            type="title"
-            styles={props.styles}
-            markerTitle={props.markerTitle}
-            setMarkerTitle={props.setMarkerTitle}
-          />
-        )}
-      </View>
+const Toolbar = ({
+  addingActivityHandler,
+  addingMarkerActive,
+  deletingActivityHandler,
+  deletingMarkerActive,
+  isLoading,
+  markerTitle,
+  onExitHandler,
+  setMarkerTitle,
+}) => (
+  <View style={styles.overlay}>
+    <View style={styles.actionBar}>
+      <ToolbarButton
+        icon="close"
+        isLoading={isLoading}
+        loader={true}
+        handler={false}
+        onPress={onExitHandler}
+      />
+      <ToolbarButton
+        icon="map-marker-plus"
+        isLoading={isLoading}
+        loader={false}
+        handler={addingMarkerActive}
+        onPress={addingActivityHandler}
+      />
+      <ToolbarButton
+        icon="map-marker-minus"
+        isLoading={isLoading}
+        loader={false}
+        handler={deletingMarkerActive}
+        onPress={deletingActivityHandler}
+      />
     </View>
-  );
-};
+
+    {addingMarkerActive && (
+      <Searchbar
+        icon="map-marker-question"
+        placeholder={addingMarkerActive && 'Marker title'}
+        value={markerTitle}
+        onChangeText={(text) => setMarkerTitle(text)}
+      />
+    )}
+  </View>
+);
 
 export default Toolbar;
