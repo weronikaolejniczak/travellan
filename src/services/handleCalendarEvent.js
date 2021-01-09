@@ -7,11 +7,11 @@ const utcDateToString = (momentInUTC) =>
 class AddEventToCalendar {
   addToCalendar = (title, startDateUTC, endDateUTC, location, notes) => {
     const eventConfig = {
-      title,
-      startDate: utcDateToString(startDateUTC),
       endDate: utcDateToString(endDateUTC),
       location: location,
       notes: notes,
+      startDate: utcDateToString(startDateUTC),
+      title,
     };
 
     AddCalendarEvent.presentEventCreatingDialog(eventConfig);
@@ -35,12 +35,12 @@ class AddEventToCalendar {
     }
 
     const eventConfig = {
-      eventId,
-      allowsEditing: true,
       allowsCalendarPreview: true,
+      allowsEditing: true,
+      eventId,
       navigationBarIOS: {
-        tintColor: 'orange',
         backgroundColor: 'green',
+        tintColor: 'orange',
       },
     };
 
