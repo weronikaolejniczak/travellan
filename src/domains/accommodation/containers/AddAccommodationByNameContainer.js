@@ -45,6 +45,7 @@ const AddAccommodationByNameContainer = (props) => {
   useEffect(() => {
     if (formatDate(startDate) == formatDate(endDate)) {
       SetIsDateSame(true);
+      async function getCityCode() {}
     } else {
       SetIsDateSame(false);
     }
