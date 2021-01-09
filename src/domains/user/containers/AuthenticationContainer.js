@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {
-  ActivityIndicator,
   Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
-  //textInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
-import Colors from 'constants/Colors';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
@@ -117,6 +114,7 @@ const AuthenticationContainer = (props, { ...rest }) => {
               </View>
               <View style={styles.actionsContainer}>
                 <Button
+                  {...rest}
                   loading={isLoading}
                   disabled={isLoading}
                   onPress={handleSubmit}
