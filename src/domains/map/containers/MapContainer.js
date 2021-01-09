@@ -1,7 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
-import { MAPBOX_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from 'react-native-dotenv';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ import { Toolbar } from '../components';
 import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
 
-MapboxGL.setAccessToken(MAPBOX_KEY);
+MapboxGL.setAccessToken(MAPBOX_API_KEY);
 MapboxGL.setConnected(true);
 
 const MapContainer = ({ route, navigation }) => {
