@@ -3,7 +3,7 @@ import { Button, ScrollView as Container, Headline, TextInput } from 'utils';
 import { View } from 'react-native';
 
 const AddAccommodationByNameContainer = (props) => {
-  const [enabled, setEnabled] = useState(false);
+  const [isDateSame, SetIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate } = props.route.params;
@@ -11,6 +11,7 @@ const AddAccommodationByNameContainer = (props) => {
   let formattedEndDate = '';
 
   function formatDate(date) {
+    //format to YYYY-MM-DD
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -33,7 +34,13 @@ const AddAccommodationByNameContainer = (props) => {
     console.log(formattedEndDate, formattedStartDate);
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (formatDate(startDate) == formatDate(endDate)) {
+      SetIsDateSame(true);
+    } else {
+      SetIsDateSame(false);
+    }
+  });
 
   return (
     <Container>
