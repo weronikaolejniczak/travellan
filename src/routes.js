@@ -92,7 +92,7 @@ const DrawerNavigator = () => (
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={defaultNavOptions}>
+      <AuthStack.Navigator screenOptions={defaultNavOptions}>
         <Stack.Screen
           name="Startup"
           component={StartupContainer}
