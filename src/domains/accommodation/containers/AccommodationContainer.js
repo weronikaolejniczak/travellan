@@ -20,6 +20,8 @@ const AccommodationContainer = (props) => {
     actionSheetRef.current?.hide();
     navigation.navigate(screen, {
       tripId: route.params.tripId,
+      startDate: route.params.startDate,
+      endDate: route.params.endDate,
     });
   };
 
@@ -70,8 +72,8 @@ const AccommodationContainer = (props) => {
           },
           {
             id: '1',
-            label: 'Add hotel by name/address',
-            onPress: () => navigateToScreen('Add accommodation'),
+            label: 'Add hotel by name',
+            onPress: () => navigateToScreen('Add accommodation by name'),
           },
         ]}
       />

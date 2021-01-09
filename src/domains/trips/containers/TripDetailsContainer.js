@@ -77,12 +77,16 @@ const TripDetailsContainer = (props) => {
             navigation={props.navigation}
             to="Transport"
             tripId={selectedTrip.id}
+            startDate={selectedTrip.startDate}
+            endDate={selectedTrip.endDate}
             icon="flight"
           />
           <NavigationButton
             navigation={props.navigation}
             to="Accommodation"
             tripId={selectedTrip.id}
+            startDate={selectedTrip.startDate}
+            endDate={selectedTrip.endDate}
             icon="hotel"
           />
           {/* <NavigationButton
