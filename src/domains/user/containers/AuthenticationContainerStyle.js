@@ -33,4 +33,27 @@ export const styles = StyleSheet.create({
   input: {
     color: Colors.text,
   },
+  formControl: {
+    width: '100%',
+  },
+  input: {
+    borderBottomColor: Colors.text,
+    borderBottomWidth: 1,
+    color: Colors.text,
+    fontSize: 14,
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+  },
+  label: {
+    color: Colors.text,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 8,
+  },
+  screen: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
