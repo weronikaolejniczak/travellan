@@ -51,7 +51,18 @@ export const loginRequest = (email, password) => {
       .catch((err) => {
         throw new Error('Something went wrong. Try again');
       });
-    auth().signInWithEmailAndPassword(email, password);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .onAuthStateChanged(function (user) {
+        if (user) {
+          console.log(user); // it shows the Firebase user
+          console.log(auth().user); // it is still undefined
+          user.getIdToken().then(function (idToken) {
+            // <------ Check this line
+            console.log(idToken); // it shows the Firebase token now
+          });
+        }
+      });
   };
 };
 
