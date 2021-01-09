@@ -6,7 +6,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-
+  const { startDate, endDate } = props.route.params;
   const handleChange = (val) => {
     setValue(val);
   };
