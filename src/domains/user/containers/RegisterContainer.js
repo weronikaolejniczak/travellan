@@ -69,15 +69,7 @@ const RegisterContainer = (props, ...rest) => {
           ),
       })}
     >
-      {({
-        values,
-        handleChange,
-        errors,
-        setFieldTouched,
-        touched,
-        isValid,
-        handleSubmit,
-      }) => (
+      {({ values, handleChange, errors, isValid, handleSubmit }) => (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : null}
           style={styles.screen}
