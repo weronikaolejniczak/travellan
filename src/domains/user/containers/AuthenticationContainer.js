@@ -8,7 +8,7 @@ import {
   Platform,
   ScrollView,
   Text,
-  TextInput,
+  //textInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
 import { Formik } from 'formik';
+import { TextInput } from 'utils';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
@@ -91,13 +92,13 @@ const AuthenticationContainer = (props) => {
                 />
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>E-mail</Text>
                 <TextInput
                   value={values.email}
                   style={styles.input}
                   autoCapitalize="none"
                   onChangeText={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
+                  label="E-mail"
                 />
                 {touched.email && errors.email && (
                   <View style={styles.errorContainer}>
@@ -106,14 +107,13 @@ const AuthenticationContainer = (props) => {
                 )}
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>Password</Text>
                 <TextInput
                   value={values.password}
-                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
+                  label="Password"
                 />
                 {touched.password && errors.password && (
                   <View style={styles.errorContainer}>
