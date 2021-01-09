@@ -14,7 +14,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [isDateSame, SetIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const { startDate, endDate } = props.route.params;
+  const { startDate, endDate, destination } = props.route.params;
   let formattedStartDate = '';
   let formattedEndDate = '';
 
