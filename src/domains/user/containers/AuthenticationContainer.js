@@ -171,19 +171,24 @@ const AuthenticationContainer = (props) => {
                   </View>
                 )}
               </View>
-              <Input
-                styles={styles.input}
-                id="password"
-                label="Password"
-                keyboardType="default"
-                secureTextEntry
-                required
-                minLength={5}
-                autoCapitalize="none"
-                errorText="Please enter a valid password (at least 5 characters)"
-                onInputChange={inputChangeHandler}
-                initialValue=""
-              />
+              <View style={styles.formControl}>
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                  value={values.password}
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  secureTextEntry={true}
+                />
+                {touched.password && errors.password && (
+                  <View style={styles.errorContainer}>
+                    <Text style={{ color: Colors.error }}>
+                      {errors.password}
+                    </Text>
+                  </View>
+                )}
+              </View>
               <View style={styles.actionsContainer}>
                 {isLoading ? (
                   <ActivityIndicator size="small" color={Colors.white} />
