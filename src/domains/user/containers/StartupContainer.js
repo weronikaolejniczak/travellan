@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
@@ -20,6 +21,7 @@ import { styles } from './StartupContainerStyle';
 const StartupContainer = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -42,7 +44,7 @@ const StartupContainer = (props) => {
     };
 
     tryLogin();
-  }, []);
+  }, [isFocused, dispatch, props.navigation]);
 
   return (
     <KeyboardAvoidingView
