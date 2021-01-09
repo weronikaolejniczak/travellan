@@ -49,6 +49,7 @@ const RegisterContainer = (props) => {
         } catch (err) {
           setError(err.message);
         }
+        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         confirmPassword: yup
