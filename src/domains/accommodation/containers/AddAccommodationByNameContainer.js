@@ -7,6 +7,8 @@ const AddAccommodationByNameContainer = (props) => {
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate } = props.route.params;
+  let formattedStartDate = '';
+  let formattedEndDate = '';
 
   function formatDate(date) {
     var d = new Date(date),
@@ -17,7 +19,7 @@ const AddAccommodationByNameContainer = (props) => {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
-    return console.log([year, month, day].join('-'));
+    return [year, month, day].join('-');
   }
 
   const handleChange = (val) => {
@@ -26,12 +28,12 @@ const AddAccommodationByNameContainer = (props) => {
 
   const handlePress = () => {
     handleChange();
+    formattedStartDate = formatDate(startDate);
+    formattedEndDate = formatDate(endDate);
+    console.log(formattedEndDate, formattedStartDate);
   };
 
-  useEffect(() => {
-    formatDate(startDate);
-    formatDate(endDate);
-  });
+  useEffect(() => {});
 
   return (
     <Container>
