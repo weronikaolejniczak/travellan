@@ -21,31 +21,6 @@ import Input from '../components/input/Input';
 import { Formik } from 'formik';
 import { styles } from './AuthenticationContainerStyle';
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-
-const formReducer = (state, action) => {
-  if (action.type === FORM_INPUT_UPDATE) {
-    const updatedValues = {
-      ...state.inputValues,
-      [action.input]: action.value,
-    };
-    const updatedValidities = {
-      ...state.inputValidities,
-      [action.input]: action.isValid,
-    };
-    let updatedFormIsValid = true;
-    for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-    }
-    return {
-      formIsValid: updatedFormIsValid,
-      inputValidities: updatedValidities,
-      inputValues: updatedValues,
-    };
-  }
-  return state;
-};
-
 const AuthenticationContainer = (props) => {
   const dispatch = useDispatch();
 
@@ -73,10 +48,11 @@ const AuthenticationContainer = (props) => {
         try {
           await dispatch(action);
           setIsLoading(false);
-          props.navigation.navigate('My Trips');
+          props.navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
         }
+        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         email: yup
