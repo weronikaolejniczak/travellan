@@ -52,12 +52,10 @@ const AddAccommodationByNameContainer = (props) => {
   if (isDateSame)
     return (
       <Container>
-        <View style={styles.itemlessContainer}>
-          <Text style={[styles.text, styles.itemlessText]}>
-            Searching for a hotel by name is not possible if you are going on a
-            one day trip!
-          </Text>
-        </View>
+        <Headline>
+          Searching for a hotel by name is not possible if you are going on a
+          one day trip!
+        </Headline>
       </Container>
     );
 
