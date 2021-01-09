@@ -4,7 +4,7 @@ import { BACKEND_API_KEY, BACKEND_URL } from 'react-native-dotenv';
 async function fetchCoordinates(keyword) {
   return await axios
     .get(`${BACKEND_URL}/location/coordinates?keyword=${keyword}`)
-    .then((json) => console.log(json.data))
+    .then((json) => json.data)
     .catch((error) => {
       throw error;
     });
