@@ -18,14 +18,16 @@ import { styles } from './WeatherContainerStyle';
 
 const windowHeight = Dimensions.get('window').height;
 
-const WeatherContainer = (props) => {
-  const tripId = props.route.params.tripId;
+const WeatherContainer = ({ route }) => {
+  const tripId = route.params.tripId;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
   const region = selectedTrip.region;
   const latitude = region.latitude;
   const longitude = region.longitude;
+  const localNotify = notificationManager;
+  localNotify.configure();
 
   const startDate = new Date(selectedTrip.startDate);
   const endDate = new Date(selectedTrip.endDate);
@@ -75,8 +77,22 @@ const WeatherContainer = (props) => {
     return dateGuard;
   }, [currentDate, dateGuard, endDate, startDate]);
 
-  let localNotify = notificationManager;
-  localNotify.configure();
+  const scheduleNotification = () => {
+    localNotify.scheduleNotification(
+      'Weather',
+      1,
+      'Weather alert!',
+      `Today's weather predicts ${
+        activeDay.description
+      } the temperature the day will be around ${Math.floor(
+        activeDay.tempDay,
+      )} °C`,
+      {},
+      {},
+      new Date(Date.now() + 10 * 1000),
+    );
+    setNotifyGuard(false);
+  };
 
   return (
     <View style={styles.contentContainer}>
@@ -88,21 +104,7 @@ const WeatherContainer = (props) => {
       )}
       {isLoaded && dateGuard && (
         <View style={styles.weatherContainer}>
-          {notifyGuard
-            ? localNotify.scheduleNotification(
-                'Weather',
-                1,
-                'Weather alert!',
-                'Today\'s weather predicts ' +
-                  activeDay.description +
-                  ', the temperature the day will be around ' +
-                  Math.floor(activeDay.tempDay) +
-                  '°C',
-                {},
-                {},
-                new Date(Date.now() + 10 * 1000),
-              ) & setNotifyGuard(false)
-            : console.log('err')}
+          {notifyGuard && scheduleNotification()}
           {forecast && (
             <View>
               <Background styles={styles} activeDay={activeDay}>
@@ -329,18 +331,17 @@ const WeatherContainer = (props) => {
                         style={[
                           styles.dateContainer,
                           {
-                            height: windowHeight * 0.175,
                             backgroundColor:
                               item.item === activeDay
                                 ? Colors.background
                                 : Colors.cards,
-                            borderBottomWidth: 2,
                             borderBottomColor:
                               item.item.date.getTime() > startDate.getTime() &&
                               item.item.date.getTime() <=
                                 endDate.getTime() + 60 * 60 * 24 * 1000
                                 ? Colors.primary
                                 : Colors.transparent,
+                            height: windowHeight * 0.175,
                           },
                         ]}
                       >
@@ -351,7 +352,7 @@ const WeatherContainer = (props) => {
                           {getDay(item.item.date)}
                         </Text>
                         <Image
-                          style={{ width: 45, height: 45 }}
+                          style={{ height: 45, width: 45 }}
                           source={{
                             uri:
                               'http://openweathermap.org/img/wn/' +
