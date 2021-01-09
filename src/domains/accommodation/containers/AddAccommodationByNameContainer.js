@@ -30,6 +30,7 @@ const AddAccommodationByNameContainer = (props) => {
 
   useEffect(() => {
     formatDate(startDate);
+    formatDate(endDate);
   });
 
   return (
