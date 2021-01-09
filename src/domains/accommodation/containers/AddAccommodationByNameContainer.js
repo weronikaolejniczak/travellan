@@ -57,19 +57,8 @@ const AddAccommodationByNameContainer = (props) => {
   return (
     <Container>
       <Headline>Headline!</Headline>
-      <Subheading>Subheading!</Subheading>
-      <Title>Title!</Title>
-      <Paragraph>Paragraph!</Paragraph>
-      <Caption>Caption!</Caption>
-      <Text>Text!</Text>
       <TextInput error={error} onChange={handleChange} value={value} />
-      <TextInput outlined />
-      <TextInput outlined multiline />
       <Button onPress={handlePress}>Hello, World!</Button>
-      <Button onPress={handlePress} disabled>
-        Hello, World!
-      </Button>
-      <Button mode="outlined">Hello, World!</Button>
     </Container>
   );
 };
