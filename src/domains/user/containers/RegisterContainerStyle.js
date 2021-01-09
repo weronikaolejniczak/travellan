@@ -38,6 +38,15 @@ export const styles = StyleSheet.create({
   formControl: {
     width: '100%',
   },
+  image: {
+    height: 150,
+    resizeMode: 'stretch',
+    width: 150,
+  },
+  imageView: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   input: {
     borderBottomColor: Colors.text,
     borderBottomWidth: 1,

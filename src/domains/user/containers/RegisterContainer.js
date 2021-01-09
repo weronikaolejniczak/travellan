@@ -86,9 +86,9 @@ const RegisterContainer = (props) => {
         >
           <View style={styles.authContainer}>
             <ScrollView>
-              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+              <View style={styles.imageView}>
                 <Image
-                  style={{ height: 150, resizeMode: 'stretch', width: 150 }}
+                  style={styles.image}
                   source={require('assets/images/logo.png')}
                 />
               </View>
