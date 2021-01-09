@@ -99,12 +99,8 @@ const AuthenticationContainer = (props) => {
                   onChange={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
                   label="E-mail"
+                  error={errors.email}
                 />
-                {touched.email && errors.email && (
-                  <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.error }}>{errors.email}</Text>
-                  </View>
-                )}
               </View>
               <View style={styles.formControl}>
                 <TextInput
@@ -114,13 +110,8 @@ const AuthenticationContainer = (props) => {
                   onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
                   label="Password"
+                  error={errors.password}
                 />
-                {touched.password && errors.password && (
-                  <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.error }}>
-                      {errors.password}
-                    </Text>
-                  </View>
                 )}
               </View>
               <View style={styles.actionsContainer}>
