@@ -20,8 +20,10 @@ import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from './AddTripContainerStyle';
 
-const AddTripContainer = (props) => {
+const AddTripContainer = ({ navigation }) => {
   const dispatch = useDispatch();
+  const handleCalendarEvent = addEventToCalendar;
+  const localNotify = notificationManager;
 
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
@@ -37,9 +39,6 @@ const AddTripContainer = (props) => {
   const [currency, setCurrency] = useState('');
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
-
-  let handleCalendarEvent = addEventToCalendar;
-  let localNotify = notificationManager;
 
   const callNotification = (dest, date) => {
     localNotify.configure();
@@ -121,12 +120,12 @@ const AddTripContainer = (props) => {
           : undefined,
         [
           {
+            account: account.toString(),
+            category: '',
+            date: new Date(),
             id: 0,
             title: 'Initial budget',
             value: parseInt(budget, 10),
-            category: '',
-            account: account.toString(),
-            date: new Date(),
           },
         ],
         account.toString(),
@@ -153,15 +152,11 @@ const AddTripContainer = (props) => {
           budgetToSubmit,
         ),
       );
-      props.navigation.goBack();
+      navigation.goBack();
       setIsLoading(false);
       callNotification(destination, startDate);
       Snackbar.show({
-        text: 'Add Trip to Google Calendar',
-        duration: Snackbar.LENGTH_LONG,
         action: {
-          text: 'Add',
-          textColor: 'orange',
           onPress: () => {
             handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
@@ -171,7 +166,11 @@ const AddTripContainer = (props) => {
               'Remember to pack everything and check weather forecast!',
             );
           },
+          text: 'Add',
+          textColor: 'orange',
         },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
       });
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
@@ -183,15 +182,11 @@ const AddTripContainer = (props) => {
           undefined,
         ),
       );
-      props.navigation.goBack();
+      navigation.goBack();
       setIsLoading(false);
       callNotification(destination, startDate);
       Snackbar.show({
-        text: 'Add Trip to Google Calendar',
-        duration: Snackbar.LENGTH_LONG,
         action: {
-          text: 'Add',
-          textColor: 'orange',
           onPress: () => {
             handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
@@ -201,7 +196,11 @@ const AddTripContainer = (props) => {
               'Remember to pack everything and check weather forecast!',
             );
           },
+          text: 'Add',
+          textColor: 'orange',
         },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -257,7 +256,7 @@ const AddTripContainer = (props) => {
       <BudgetPicker
         label="Budget"
         styles={styles}
-        showSwitch={true}
+        showSwitch
         toggleBudgetSwitch={toggleBudgetSwitch}
         budget={budget}
         budgetIsEnabled={budgetIsEnabled}

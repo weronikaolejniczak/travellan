@@ -29,15 +29,17 @@ const BudgetField = (props) => {
   return (
     <View style={props.styles.bigMarginTop}>
       <View style={props.showSwitch ? props.styles.rowAndCenter : {}}>
-        <Text style={props.styles.label}>{props.label}</Text>
         {props.showSwitch && (
           <Switch
             style={props.styles.switch}
-            onValueChange={props.toggleBudgetSwitch}
-            value={props.budgetIsEnabled}
-          />
+            onToggleSwitch={props.toggleBudgetSwitch}
+            toggled={props.budgetIsEnabled}
+          >
+            <Text style={props.styles.label}>{props.label}</Text>
+          </Switch>
         )}
       </View>
+
       {props.budgetIsEnabled && (
         <View>
           <TextInput
@@ -56,6 +58,7 @@ const BudgetField = (props) => {
                 <Text style={props.styles.error}>Enter a valid budget!</Text>
               </View>
             )}
+
           <View style={[props.styles.rowAndCenter, { marginTop: '4%' }]}>
             <View>
               <TouchableOpacity
