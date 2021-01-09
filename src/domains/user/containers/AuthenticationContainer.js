@@ -14,8 +14,10 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as userActions from 'actions/userActions';
+import * as yup from 'yup';
 import Colors from 'constants/Colors';
 import Input from '../components/input/Input';
+import { Formik } from 'formik';
 import { styles } from './AuthenticationContainerStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
