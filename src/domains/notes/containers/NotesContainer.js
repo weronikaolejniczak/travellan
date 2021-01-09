@@ -33,8 +33,6 @@ const NotesContainer = ({ route, navigation }) => {
     ),
   );
 
-  console.log(notes);
-
   const searchFilterFunction = (text) => {
     if (text) {
       const newData = notes.filter(function (item) {
