@@ -7,6 +7,19 @@ const AddAccommodationByNameContainer = (props) => {
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate } = props.route.params;
+
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return console.log([year, month, day].join('-'));
+  }
+
   const handleChange = (val) => {
     setValue(val);
   };
