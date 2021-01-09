@@ -15,8 +15,7 @@ import { useDispatch } from 'react-redux';
 
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
-import auth from '@react-native-firebase/auth';
-import { Input } from '../components';
+import Input from '../components/input/Input';
 import { styles } from './AuthenticationContainerStyle';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -50,15 +49,15 @@ const AuthenticationContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [formState, dispatchFormState] = useReducer(formReducer, {
-    inputValues: {
-      email: '',
-      password: '',
-    },
+    formIsValid: false,
     inputValidities: {
       email: false,
       password: false,
     },
-    formIsValid: false,
+    inputValues: {
+      email: '',
+      password: '',
+    },
   });
 
   useEffect(() => {
@@ -89,10 +88,10 @@ const AuthenticationContainer = (props) => {
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       dispatchFormState({
+        input: inputIdentifier,
+        isValid: inputValidity,
         type: FORM_INPUT_UPDATE,
         value: inputValue,
-        isValid: inputValidity,
-        input: inputIdentifier,
       });
     },
     [dispatchFormState],
@@ -105,9 +104,9 @@ const AuthenticationContainer = (props) => {
     >
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{ marginBottom: 20, alignItems: 'center' }}>
+          <View style={{ alignItems: 'center', marginBottom: 20 }}>
             <Image
-              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
+              style={{ height: 150, resizeMode: 'stretch', width: 150 }}
               source={require('assets/images/logo.png')}
             />
           </View>

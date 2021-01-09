@@ -16,90 +16,19 @@ import { useDispatch } from 'react-redux';
 import * as userActions from 'actions/userActions';
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
-import auth from '@react-native-firebase/auth';
-import { Formik, useFormik } from 'formik';
-import { Input } from '../components';
+import { Formik } from 'formik';
 import { styles } from './RegisterContainerStyle';
-
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-
-const formReducer = (state, action) => {
-  if (action.type === FORM_INPUT_UPDATE) {
-    const updatedValues = {
-      ...state.inputValues,
-      [action.input]: action.value,
-    };
-    const updatedValidities = {
-      ...state.inputValidities,
-      [action.input]: action.isValid,
-    };
-    let updatedFormIsValid = true;
-    for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-    }
-    return {
-      formIsValid: updatedFormIsValid,
-      inputValidities: updatedValidities,
-      inputValues: updatedValues,
-    };
-  }
-  return state;
-};
 
 const RegisterContainer = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [formState, dispatchFormState] = useReducer(formReducer, {
-    formIsValid: false,
-    inputValidities: {
-      confirmPassword: false,
-      email: false,
-      password: false,
-    },
-    inputValues: {
-      confirmPassword: '',
-      email: '',
-      password: '',
-    },
-  });
 
   useEffect(() => {
     if (error) {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
-
-  const authHandler = async () => {
-    let action;
-    action = userActions.signUpRequest(
-      formState.inputValues.email,
-      formState.inputValues.password,
-    );
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      await dispatch(action);
-      props.navigation.navigate('Auth');
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  };
-  /**
-  const inputChangeHandler = useCallback(
-    (inputIdentifier, inputValue, inputValidity) => {
-      dispatchFormState({
-        input: inputIdentifier,
-        isValid: inputValidity,
-        type: FORM_INPUT_UPDATE,
-        value: inputValue,
-      });
-    },
-    [dispatchFormState],
-  );
-  */
 
   return (
     <Formik
@@ -132,6 +61,8 @@ const RegisterContainer = (props) => {
           .required('Cannot be left empty'),
         password: yup
           .string()
+          .min(6, 'Password must be at least 6 characters long')
+          .max(20, 'Password cannot exceed 20 characters')
           .required('Cannot be left empty')
           .matches(
             /[a-zA-Z0-9_]/,
