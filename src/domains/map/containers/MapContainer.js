@@ -38,6 +38,18 @@ const MapContainer = ({ route, navigation }) => {
         : selectedTrip.region
       : selectedTrip.region;
 
+  const renderMarkers = () =>
+    !!markers &&
+    markers.map((marker) => (
+      <MapboxGL.MarkerView
+        id={`marker-${marker.id}`}
+        coordinate={[marker.lat, marker.lon]}
+        onSelected={(event) => markerOnPressHandler(event)}
+      >
+        <MapboxGL.Callout title={marker.title} />
+      </MapboxGL.MarkerView>
+    ));
+
   const activityHandler = (type) => {
     switch (type) {
       case 'adding':
@@ -74,25 +86,18 @@ const MapContainer = ({ route, navigation }) => {
 
   const markerOnPressHandler = async (coords) => {
     const [latitude, longitude] = coords.geometry.coordinates;
-
-    let marker = markers.filter(
+    const marker = markers.filter(
       (item) => item.lat === latitude && item.lon === longitude,
     )[0];
-
-    if (deletingMarkerActive) {
+    deletingMarkerActive &&
       setMarkers(markers.filter((item) => item.id !== marker.id));
-    } else {
-      setActiveMarker(marker);
-    }
   };
 
   const mapOnPressHandler = async (event) => {
     const [latitude, longitude] = event.geometry.coordinates;
-
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
-
         setMarkers(
           markers
             ? [
@@ -117,13 +122,16 @@ const MapContainer = ({ route, navigation }) => {
       } else {
         setError('Enter the title');
       }
-    } else {
-      setShowPlaceInfo(false);
     }
   };
 
   useEffect(() => {
-    dispatch(fetchMapRequest);
+    try {
+      dispatch(fetchMapRequest());
+    } catch {
+      setError('Something went wrong!');
+    }
+
     Geolocation.getCurrentPosition(
       (position) => {
         const { longitude, latitude } = position.coords;
@@ -143,7 +151,7 @@ const MapContainer = ({ route, navigation }) => {
       <MapboxGL.MapView
         style={styles.map}
         styleURL="mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016"
-        onPress={(event) => mapOnPressHandler(event)}
+        onLongPress={(event) => mapOnPressHandler(event)}
         onRegionDidChange={(region) => setCurrentRegion(region)}
       >
         <MapboxGL.Camera
@@ -153,17 +161,7 @@ const MapContainer = ({ route, navigation }) => {
             extractRegion().latitude,
           ]}
         />
-
-        {!!markers &&
-          markers.map((marker) => (
-            <MapboxGL.PointAnnotation
-              id={marker.id}
-              coordinate={[marker.lat, marker.lon]}
-              onSelected={(event) => markerOnPressHandler(event)}
-            >
-              <MapboxGL.Callout title={marker.title} />
-            </MapboxGL.PointAnnotation>
-          ))}
+        {renderMarkers()}
         <MapboxGL.UserLocation />
       </MapboxGL.MapView>
 
@@ -177,9 +175,9 @@ const MapContainer = ({ route, navigation }) => {
         deletingMarkerActive={deletingMarkerActive}
         deletingActivityHandler={() => activityHandler('deleting')}
         error={error}
-        setError={() => setError()}
+        setError={setError}
         isLoading={isLoading}
-        onExitHandler={async () => await onExitHandler()}
+        onExitHandler={onExitHandler}
       />
     </View>
   );

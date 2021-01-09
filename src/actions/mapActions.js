@@ -24,9 +24,9 @@ export const fetchMapRequest = (tripId) => {
       .get(`${API_URL}/Trips/${userId}/${tripId}/map.json?auth=${token}`)
       .then((res) => res.data)
       .then((map) => {
-        console.log(map);
+        console.log('map on fetch:', JSON.stringify(map));
 
-        dispatch(setMap(tripId, map));
+        dispatch(setMap(tripId, {}));
       })
       .catch(() => {
         throw new Error('Something went wrong while getting the map!');
@@ -40,12 +40,13 @@ export const patchMapRequest = (tripId, markers, routes, region) => {
     const userId = getState().auth.userId;
 
     const map = new Map(markers, routes, region);
+    console.log('map on patch:', JSON.stringify(map));
 
     axios
       .patch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
         map,
       })
-      .then(() => dispatch(setMap(tripId, map)))
+      .then(() => dispatch(setMap(tripId, {})))
       .catch(() => {
         throw new Error(`Couldn't update the map!`);
       });

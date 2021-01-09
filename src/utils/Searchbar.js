@@ -1,10 +1,11 @@
 import React from 'react';
 import { Searchbar } from 'react-native-paper';
 
-const CustomSearchbar = ({ value, onChangeText, placeholder }) => (
+const CustomSearchbar = ({ icon, onChangeText, placeholder, value }) => (
   <Searchbar
-    placeholder={placeholder || 'Search'}
+    icon={icon}
     onChangeText={onChangeText}
+    placeholder={placeholder || 'Search'}
     value={value}
   />
 );

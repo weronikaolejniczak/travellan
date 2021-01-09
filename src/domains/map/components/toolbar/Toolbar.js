@@ -38,16 +38,16 @@ const Toolbar = ({
         handler={deletingMarkerActive}
         onPress={deletingActivityHandler}
       />
-
-      {addingMarkerActive && (
-        <Searchbar
-          type="title"
-          styles={styles}
-          markerTitle={markerTitle}
-          setMarkerTitle={setMarkerTitle}
-        />
-      )}
     </View>
+
+    {addingMarkerActive && (
+      <Searchbar
+        icon="map-marker-question"
+        placeholder={addingMarkerActive && 'Marker title'}
+        value={markerTitle}
+        onChangeText={(text) => setMarkerTitle(text)}
+      />
+    )}
   </View>
 );
 
