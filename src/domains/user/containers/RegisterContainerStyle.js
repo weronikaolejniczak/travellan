@@ -1,38 +1,47 @@
-import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
+  actionsContainer: {
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: 30,
   },
   authContainer: {
     width: '80%',
   },
-  actionsContainer: {
-    marginTop: 30,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   buttonContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
     display: 'flex',
+    justifyContent: 'center',
     margin: 10,
     padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    backgroundColor: Colors.primary,
     width: '40%',
   },
   buttonText: {
-    fontWeight: 'bold',
+    color: Colors.text,
     fontSize: 16,
-    color: Colors.text,
+    fontWeight: 'bold',
   },
-  input: {
-    color: Colors.text,
+  formControl: {
+    width: '100%',
+  },
+  image: {
+    height: 150,
+    resizeMode: 'stretch',
+    width: 150,
+  },
+  imageView: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  screen: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
   },
 });
