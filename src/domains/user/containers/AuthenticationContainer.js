@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {
   ActivityIndicator,
@@ -17,7 +17,6 @@ import { useDispatch } from 'react-redux';
 import * as userActions from 'actions/userActions';
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
-import Input from '../components/input/Input';
 import { Formik } from 'formik';
 import { styles } from './AuthenticationContainerStyle';
 
@@ -85,9 +84,9 @@ const AuthenticationContainer = (props) => {
         >
           <View style={styles.authContainer}>
             <ScrollView>
-              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+              <View style={styles.imageView}>
                 <Image
-                  style={{ height: 150, resizeMode: 'stretch', width: 150 }}
+                  style={styles.image}
                   source={require('assets/images/logo.png')}
                 />
               </View>
