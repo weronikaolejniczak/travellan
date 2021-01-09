@@ -93,6 +93,7 @@ const AuthenticationContainer = (props, { ...rest }) => {
                   {...rest}
                   value={values.email}
                   style={styles.input}
+                  onChange={handleChange('email')}
                   autoCapitalize="none"
                   label="E-mail"
                   error={errors.email}

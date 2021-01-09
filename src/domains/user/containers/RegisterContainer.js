@@ -96,7 +96,7 @@ const RegisterContainer = (props, ...rest) => {
                   {...rest}
                   value={values.email}
                   autoCapitalize="none"
-                  onChangeText={handleChange('email')}
+                  onChange={handleChange('email')}
                   label="E-mail"
                   error={errors.email}
                 />
@@ -111,7 +111,7 @@ const RegisterContainer = (props, ...rest) => {
                   {...rest}
                   value={values.password}
                   autoCapitalize="none"
-                  onChangeText={handleChange('password')}
+                  onChange={handleChange('password')}
                   secureTextEntry={true}
                   label="Password"
                   error={errors.password}
@@ -129,7 +129,7 @@ const RegisterContainer = (props, ...rest) => {
                   {...rest}
                   value={values.confirmPassword}
                   autoCapitalize="none"
-                  onChangeText={handleChange('confirmPassword')}
+                  onChange={handleChange('confirmPassword')}
                   secureTextEntry={true}
                   label="Confirm Password"
                   error={errors.confirmPassword}
