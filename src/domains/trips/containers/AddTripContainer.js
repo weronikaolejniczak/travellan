@@ -1,20 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import {
-  ActivityIndicator,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
 import Colors from 'constants/Colors';
 import { BudgetPicker } from 'components';
+import {
+  Button,
+  ScrollView as Container,
+  DateTimePicker,
+  TextInput,
+} from 'utils';
 import { CURRENCIES } from 'data/Currencies';
-import { DateTimePicker } from 'utils';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
@@ -40,36 +38,39 @@ const AddTripContainer = ({ navigation }) => {
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
 
-  const callNotification = (dest, date) => {
-    localNotify.configure();
-    const notificationDateTrigger = new Date();
-    const currentDate = new Date(Date.now());
-    notificationDateTrigger.setDate(date.getDate() - 1);
+  const callNotification = useCallback(
+    (dest, date) => {
+      localNotify.configure();
+      const notificationDateTrigger = new Date();
+      const currentDate = new Date(Date.now());
+      notificationDateTrigger.setDate(date.getDate() - 1);
 
-    if (date.getDate() <= currentDate.getDate()) {
-      return localNotify.scheduleNotification(
-        'DepartureAlert',
-        5,
-        'Journey to ' + dest + ' starts today!',
-        'We wish you a great trip!',
-        {},
-        {},
-        notificationDateTrigger,
-      );
-    } else {
-      return localNotify.scheduleNotification(
-        'DepartureAlert',
-        5,
-        'Journey to ' + destination + ' starts tomorrow!',
-        'We wish you a great trip!',
-        {},
-        {},
-        notificationDateTrigger,
-      );
-    }
-  };
+      if (date.getDate() <= currentDate.getDate()) {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + dest + ' starts today!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      } else {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + destination + ' starts tomorrow!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      }
+    },
+    [destination, localNotify],
+  );
 
-  let destinationRegex = new RegExp(
+  const destinationRegex = new RegExp(
     `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
   );
   const destinationChangeHandler = (text) => {
@@ -79,7 +80,7 @@ const AddTripContainer = ({ navigation }) => {
     setDestination(text);
   };
 
-  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     if (budgetIsEnabled) {
       !(!budgetRegex.test(text) || text.trim().length === 0)
@@ -109,7 +110,7 @@ const AddTripContainer = ({ navigation }) => {
   };
 
   const submitHandler = useCallback(async () => {
-    let budgetToSubmit = [
+    const budgetToSubmit = [
       new Budget(
         0,
         parseInt(budget, 10),
@@ -203,7 +204,6 @@ const AddTripContainer = ({ navigation }) => {
         text: 'Add Trip to Google Calendar',
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     budget,
     account,
@@ -211,28 +211,27 @@ const AddTripContainer = ({ navigation }) => {
     budgetIsValid,
     budgetIsEnabled,
     currency,
+    dispatch,
     destination,
     startDate,
     endDate,
+    navigation,
+    callNotification,
+    handleCalendarEvent,
   ]);
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
-      <View style={styles.smallMarginTop}>
-        <Text style={styles.label}>Trip destination</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="City and/or country"
-          placeholderTextColor="grey"
-          value={destination}
-          onChangeText={destinationChangeHandler}
-        />
-        {!destinationIsValid && destinationSubmitted && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>Enter a valid city and/or country!</Text>
-          </View>
-        )}
-      </View>
+    <Container keyboardShouldPersistTaps="always">
+      <TextInput
+        label="City and/or country"
+        value={destination}
+        onChange={destinationChangeHandler}
+        error={
+          !destinationIsValid &&
+          destinationSubmitted &&
+          'Enter a valid city and/or country!'
+        }
+      />
 
       <DateTimePicker
         label="Start date"
@@ -255,7 +254,6 @@ const AddTripContainer = ({ navigation }) => {
 
       <BudgetPicker
         label="Budget"
-        styles={styles}
         showSwitch
         toggleBudgetSwitch={toggleBudgetSwitch}
         budget={budget}
@@ -269,18 +267,10 @@ const AddTripContainer = ({ navigation }) => {
         setAccount={setAccount}
       />
 
-      {isLoading ? (
-        <View style={styles.smallMarginTop}>
-          <ActivityIndicator color={Colors.primary} />
-        </View>
-      ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </ScrollView>
+      <Button loading={isLoading} disabled={isLoading} onPress={submitHandler}>
+        Submit
+      </Button>
+    </Container>
   );
 };
 

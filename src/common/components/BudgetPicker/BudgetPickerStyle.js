@@ -1,33 +1,30 @@
-import Colors from 'constants/Colors';
 import { StyleSheet } from 'react-native';
+
+import { Colors, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
   autocompleteContainer: {
+    color: Colors.text,
     flex: 1,
     marginTop: 5,
-    color: Colors.text,
   },
-  result: {
-    padding: 10,
-    backgroundColor: '#333',
-    borderWidth: 0,
-  },
-  text: {
-    color: Colors.text,
+  budgetPickerWrapper: {
+    ...Metrics.marginTop,
   },
   input: {
     borderWidth: 0,
   },
-  error: {
-    color: Colors.text,
-    textAlign: 'center',
+  label: {
+    color: Colors.primary,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  errorContainer: {
-    marginTop: 10,
-    padding: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-    backgroundColor: Colors.cards,
+  result: {
+    backgroundColor: '#333',
+    borderWidth: 0,
+    padding: 10,
+  },
+  text: {
+    color: Colors.text,
   },
 });

@@ -1,70 +1,26 @@
-import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingHorizontal: '5%',
-    paddingTop: '12%',
+  button: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    padding: 15,
+    width: '40%',
   },
-  bigMarginTop: {
-    marginTop: '10%',
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
   },
-  smallMarginTop: {
-    marginTop: '5%',
+  buttonText: {
+    color: Colors.text,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   label: {
     color: Colors.primary,
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  input: {
-    color: Colors.text,
-    fontSize: 18,
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-  },
-  errorContainer: {
-    marginVertical: 5,
-  },
-  error: {
-    color: Colors.error,
-  },
-  icon: {
-    color: Colors.text,
-    fontSize: 30,
-  },
-  switch: {
-    marginLeft: '5%',
-  },
-  buttonContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  button: {
-    borderRadius: 25,
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    width: '40%',
-    marginTop: '1%',
-    marginBottom: '17%',
-    padding: 15,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors.text,
-  },
-  rowAndCenter: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  activeCategory: {
-    color: Colors.primary,
-  },
-  nonactiveCategory: {
-    color: 'grey',
   },
 });
