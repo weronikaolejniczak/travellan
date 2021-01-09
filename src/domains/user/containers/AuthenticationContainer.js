@@ -21,7 +21,7 @@ import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
-const AuthenticationContainer = (props) => {
+const AuthenticationContainer = (props, { ...rest }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -93,6 +93,7 @@ const AuthenticationContainer = (props) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
+                  {...rest}
                   value={values.email}
                   style={styles.input}
                   autoCapitalize="none"
@@ -104,6 +105,7 @@ const AuthenticationContainer = (props) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
+                  {...rest}
                   value={values.password}
                   autoCapitalize="none"
                   onChange={handleChange('password')}

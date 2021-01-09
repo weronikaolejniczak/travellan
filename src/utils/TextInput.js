@@ -12,6 +12,7 @@ const CustomTextInput = ({
   keyboardType,
   autoCapitalize,
   secureTextEntry,
+  onBlur,
 }) => (
   <>
     <TextInput
@@ -26,6 +27,7 @@ const CustomTextInput = ({
       keyboardType={keyboardType}
       autoCapitalize={autoCapitalize}
       secureTextEntry={secureTextEntry}
+      onBlur={onBlur}
     />
     <HelperText type="error" visible={!!error}>
       {error}
