@@ -12,10 +12,11 @@ const CustomTextInput = ({
   keyboardType,
   autoCapitalize,
   secureTextEntry,
-  onBlur,
+  ...rest
 }) => (
   <>
-    <TextInput
+    <TextInput 
+      {...rest}
       disabled={disabled}
       error={error}
       label={label || 'Label'}

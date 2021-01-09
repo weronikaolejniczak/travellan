@@ -5,8 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -17,7 +15,7 @@ import { Formik } from 'formik';
 import { signUpRequest } from 'actions/userActions';
 import { styles } from './RegisterContainerStyle';
 
-const RegisterContainer = (props, ...rest) => {
+const RegisterContainer = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -84,7 +82,6 @@ const RegisterContainer = (props, ...rest) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
-                  {...rest}
                   value={values.email}
                   autoCapitalize="none"
                   onChange={handleChange('email')}
@@ -94,7 +91,6 @@ const RegisterContainer = (props, ...rest) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
-                  {...rest}
                   value={values.password}
                   autoCapitalize="none"
                   onChange={handleChange('password')}
@@ -105,7 +101,6 @@ const RegisterContainer = (props, ...rest) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
-                  {...rest}
                   value={values.confirmPassword}
                   autoCapitalize="none"
                   onChange={handleChange('confirmPassword')}
@@ -116,21 +111,20 @@ const RegisterContainer = (props, ...rest) => {
               </View>
               <View style={styles.actionsContainer}>
                 <Button
-                  {...rest}
                   loading={isLoading}
                   disabled={isLoading}
                   onPress={handleSubmit}
-                  mode="outlined"
                 >
                   Sign up
                 </Button>
-                <TouchableOpacity
+                <Button
                   onPress={() => {
                     props.navigation.navigate('Auth');
                   }}
+                  mode="outlined"
                 >
-                  <Text style={styles.buttonText}>Or sign in instead</Text>
-                </TouchableOpacity>
+                  Or Sign In instead
+                </Button>
               </View>
             </ScrollView>
           </View>

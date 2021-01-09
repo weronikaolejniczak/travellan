@@ -6,8 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -18,7 +16,7 @@ import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
-const AuthenticationContainer = (props, { ...rest }) => {
+const AuthenticationContainer = (props) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +80,6 @@ const AuthenticationContainer = (props, { ...rest }) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
-                  {...rest}
                   value={values.email}
                   style={styles.input}
                   onChange={handleChange('email')}
@@ -93,7 +90,6 @@ const AuthenticationContainer = (props, { ...rest }) => {
               </View>
               <View style={styles.formControl}>
                 <TextInput
-                  {...rest}
                   value={values.password}
                   autoCapitalize="none"
                   onChange={handleChange('password')}
@@ -104,21 +100,20 @@ const AuthenticationContainer = (props, { ...rest }) => {
               </View>
               <View style={styles.actionsContainer}>
                 <Button
-                  {...rest}
                   loading={isLoading}
                   disabled={isLoading}
                   onPress={handleSubmit}
-                  mode="outlined"
                 >
                   Login
                 </Button>
-                <TouchableOpacity
+                <Button
                   onPress={() => {
                     props.navigation.navigate('Register');
                   }}
+                  mode="outlined"
                 >
-                  <Text style={styles.buttonText}>Switch to Sign up</Text>
-                </TouchableOpacity>
+                  Switch to Sign up
+                </Button>
               </View>
             </ScrollView>
           </View>
