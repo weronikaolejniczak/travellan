@@ -9,6 +9,7 @@ const CustomTextInput = ({
   multiline,
   flat,
   value,
+  keyboardType,
 }) => (
   <>
     <TextInput
@@ -20,6 +21,7 @@ const CustomTextInput = ({
       numberOfLines={multiline && 5}
       onChangeText={onChange}
       value={value}
+      keyboardType={keyboardType}
     />
     <HelperText type="error" visible={!!error}>
       {error}

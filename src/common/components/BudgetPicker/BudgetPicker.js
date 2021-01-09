@@ -1,14 +1,34 @@
 import Autocomplete from 'react-native-autocomplete-input';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
+import { AccountButton } from 'components';
 import { CURRENCIES } from 'data/Currencies';
-import { Switch } from 'utils';
+import { Layout } from 'constants';
+import { Switch, TextInput } from 'utils';
 import { styles } from './BudgetPickerStyle';
 
-const BudgetField = (props) => {
-  const query = props.currency;
+const BudgetField = ({
+  account,
+  budget,
+  budgetChangeHandler,
+  budgetIsEnabled,
+  budgetIsValid,
+  budgetSubmitted,
+  currency,
+  currencyChangeHandler,
+  error,
+  label,
+  setAccount,
+  showSwitch,
+  toggleBudgetSwitch,
+}) => {
+  const query = currency;
 
   const filterCurrencies = (input, currencies) => {
     const regex = new RegExp(`${input.trim()}`, 'i');
@@ -16,7 +36,7 @@ const BudgetField = (props) => {
       return [];
     } else {
       const filtered = currencies.filter(
-        (curr) => curr.name.search(regex) >= 0,
+        (curr) => curr.name.search(regex) >= 0 || curr.iso.search(regex) >= 0,
       );
       return filtered.splice(0, 6);
     }
@@ -26,129 +46,85 @@ const BudgetField = (props) => {
 
   const filteredCurrencies = filterCurrencies(query, CURRENCIES);
 
+  const data =
+    filteredCurrencies.length >= 1 && comp(query, filteredCurrencies[0].name)
+      ? []
+      : filteredCurrencies;
+
   return (
-    <View style={props.styles.bigMarginTop}>
-      <View style={props.showSwitch ? props.styles.rowAndCenter : {}}>
-        <Text style={props.styles.label}>{props.label}</Text>
-        {props.showSwitch && (
-          <Switch
-            style={props.styles.switch}
-            onValueChange={props.toggleBudgetSwitch}
-            value={props.budgetIsEnabled}
-          />
+    <View style={styles.budgetPickerWrapper}>
+      <View style={showSwitch ? Layout.fillRowCross : {}}>
+        {showSwitch && (
+          <Switch onToggleSwitch={toggleBudgetSwitch} toggled={budgetIsEnabled}>
+            <Text style={styles.label}>{label}</Text>
+          </Switch>
         )}
       </View>
-      {props.budgetIsEnabled && (
-        <View>
+
+      {budgetIsEnabled && (
+        <>
           <TextInput
-            style={props.styles.input}
-            placeholder="Number"
-            placeholderTextColor="grey"
-            value={props.budget}
-            onChangeText={props.budgetChangeHandler}
+            label="Amount"
+            value={budget}
+            onChange={budgetChangeHandler}
             keyboardType="numeric"
           />
 
-          {props.budgetIsEnabled &&
-            !props.budgetIsValid &&
-            props.budgetSubmitted && (
-              <View style={props.styles.errorContainer}>
-                <Text style={props.styles.error}>Enter a valid budget!</Text>
+          <View style={Layout.fillRowCross}>
+            <AccountButton
+              account={account}
+              value="cash"
+              icon="cash"
+              setAccount={setAccount}
+            >
+              Cash
+            </AccountButton>
+            <AccountButton
+              value="card"
+              account={account}
+              icon="credit-card"
+              setAccount={setAccount}
+            >
+              Cash
+            </AccountButton>
+          </View>
+
+          <KeyboardAvoidingView behavior="padding">
+            <View style={styles.autocompleteContainer}>
+              <Autocomplete
+                data={data}
+                style={styles.input}
+                inputContainerStyle={styles.input}
+                defaultValue={query}
+                listStyle={styles.result}
+                keyExtractor={(item) => item.iso.toString()}
+                renderTextInput={() => (
+                  <TextInput
+                    label="Currency"
+                    value={query}
+                    onChange={(text) => currencyChangeHandler(text)}
+                  />
+                )}
+                renderItem={({ item, i }) => (
+                  <TouchableOpacity
+                    style={styles.result}
+                    onPress={() => currencyChangeHandler(item.name)}
+                  >
+                    <Text style={styles.text}>
+                      {item.name} ({item.iso})
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+
+            {!!error && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>{error}</Text>
               </View>
             )}
-          <View style={[props.styles.rowAndCenter, { marginTop: '4%' }]}>
-            <View>
-              <TouchableOpacity
-                style={[props.styles.rowAndCenter, { alignItems: 'center' }]}
-                onPress={() => props.setAccount('cash')}
-              >
-                <Icon
-                  name="cash"
-                  style={[
-                    { marginRight: '5%' },
-                    props.styles.icon,
-                    props.account === 'cash'
-                      ? props.styles.activeCategory
-                      : props.styles.nonactiveCategory,
-                  ]}
-                />
-                <Text
-                  style={[
-                    props.styles.label,
-                    props.account === 'cash'
-                      ? props.styles.activeCategory
-                      : props.styles.nonactiveCategory,
-                  ]}
-                >
-                  Cash
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ marginLeft: '5%' }}>
-              <TouchableOpacity
-                style={[props.styles.rowAndCenter, { alignItems: 'center' }]}
-                onPress={() => props.setAccount('card')}
-              >
-                <Icon
-                  name="credit-card"
-                  style={[
-                    { marginRight: '5%' },
-                    props.styles.icon,
-                    props.account === 'card'
-                      ? props.styles.activeCategory
-                      : props.styles.nonactiveCategory,
-                  ]}
-                />
-                <Text
-                  style={[
-                    props.styles.label,
-                    props.account === 'card'
-                      ? props.styles.activeCategory
-                      : props.styles.nonactiveCategory,
-                  ]}
-                >
-                  Card
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={styles.autocompleteContainer}>
-            <Autocomplete
-              data={
-                filteredCurrencies.length >= 1 &&
-                comp(query, filteredCurrencies[0].name)
-                  ? []
-                  : filteredCurrencies
-              }
-              style={props.styles.input}
-              inputContainerStyle={styles.input}
-              defaultValue={query}
-              listStyle={styles.result}
-              placeholder="Currency"
-              placeholderTextColor="grey"
-              onChangeText={(text) => props.currencyChangeHandler(text)}
-              keyExtractor={(item) => item.iso.toString()}
-              renderItem={({ item, i }) => (
-                <TouchableOpacity
-                  style={styles.result}
-                  onPress={() => props.currencyChangeHandler(item.name)}
-                >
-                  <Text style={styles.text}>
-                    {item.name} ({item.iso})
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-
-          {!!props.error && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.error}>{props.error}</Text>
-            </View>
-          )}
-        </View>
+          </KeyboardAvoidingView>
+        </>
       )}
     </View>
   );

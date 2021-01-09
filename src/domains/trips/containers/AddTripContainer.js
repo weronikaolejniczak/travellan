@@ -1,27 +1,27 @@
 import React, { useCallback, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import {
-  ActivityIndicator,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
 import Colors from 'constants/Colors';
 import { BudgetPicker } from 'components';
+import {
+  Button,
+  ScrollView as Container,
+  DateTimePicker,
+  TextInput,
+} from 'utils';
 import { CURRENCIES } from 'data/Currencies';
-import { DateTimePicker } from 'utils';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from './AddTripContainerStyle';
 
-const AddTripContainer = (props) => {
+const AddTripContainer = ({ navigation }) => {
   const dispatch = useDispatch();
+  const handleCalendarEvent = addEventToCalendar;
+  const localNotify = notificationManager;
 
   const [destination, setDestination] = useState('');
   const [destinationIsValid, setDestinationIsValid] = useState(false);
@@ -38,39 +38,39 @@ const AddTripContainer = (props) => {
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
 
-  let handleCalendarEvent = addEventToCalendar;
-  let localNotify = notificationManager;
+  const callNotification = useCallback(
+    (dest, date) => {
+      localNotify.configure();
+      const notificationDateTrigger = new Date();
+      const currentDate = new Date(Date.now());
+      notificationDateTrigger.setDate(date.getDate() - 1);
 
-  const callNotification = (dest, date) => {
-    localNotify.configure();
-    const notificationDateTrigger = new Date();
-    const currentDate = new Date(Date.now());
-    notificationDateTrigger.setDate(date.getDate() - 1);
+      if (date.getDate() <= currentDate.getDate()) {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + dest + ' starts today!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      } else {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + destination + ' starts tomorrow!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      }
+    },
+    [destination, localNotify],
+  );
 
-    if (date.getDate() <= currentDate.getDate()) {
-      return localNotify.scheduleNotification(
-        'DepartureAlert',
-        5,
-        'Journey to ' + dest + ' starts today!',
-        'We wish you a great trip!',
-        {},
-        {},
-        notificationDateTrigger,
-      );
-    } else {
-      return localNotify.scheduleNotification(
-        'DepartureAlert',
-        5,
-        'Journey to ' + destination + ' starts tomorrow!',
-        'We wish you a great trip!',
-        {},
-        {},
-        notificationDateTrigger,
-      );
-    }
-  };
-
-  let destinationRegex = new RegExp(
+  const destinationRegex = new RegExp(
     `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
   );
   const destinationChangeHandler = (text) => {
@@ -80,7 +80,7 @@ const AddTripContainer = (props) => {
     setDestination(text);
   };
 
-  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const budgetChangeHandler = (text) => {
     if (budgetIsEnabled) {
       !(!budgetRegex.test(text) || text.trim().length === 0)
@@ -110,7 +110,7 @@ const AddTripContainer = (props) => {
   };
 
   const submitHandler = useCallback(async () => {
-    let budgetToSubmit = [
+    const budgetToSubmit = [
       new Budget(
         0,
         parseInt(budget, 10),
@@ -121,12 +121,12 @@ const AddTripContainer = (props) => {
           : undefined,
         [
           {
+            account: account.toString(),
+            category: '',
+            date: new Date(),
             id: 0,
             title: 'Initial budget',
             value: parseInt(budget, 10),
-            category: '',
-            account: account.toString(),
-            date: new Date(),
           },
         ],
         account.toString(),
@@ -153,15 +153,11 @@ const AddTripContainer = (props) => {
           budgetToSubmit,
         ),
       );
-      props.navigation.goBack();
+      navigation.goBack();
       setIsLoading(false);
       callNotification(destination, startDate);
       Snackbar.show({
-        text: 'Add Trip to Google Calendar',
-        duration: Snackbar.LENGTH_LONG,
         action: {
-          text: 'Add',
-          textColor: 'orange',
           onPress: () => {
             handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
@@ -171,7 +167,11 @@ const AddTripContainer = (props) => {
               'Remember to pack everything and check weather forecast!',
             );
           },
+          text: 'Add',
+          textColor: 'orange',
         },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
       });
     } else if (destinationIsValid && !budgetIsEnabled) {
       setIsLoading(true);
@@ -183,15 +183,11 @@ const AddTripContainer = (props) => {
           undefined,
         ),
       );
-      props.navigation.goBack();
+      navigation.goBack();
       setIsLoading(false);
       callNotification(destination, startDate);
       Snackbar.show({
-        text: 'Add Trip to Google Calendar',
-        duration: Snackbar.LENGTH_LONG,
         action: {
-          text: 'Add',
-          textColor: 'orange',
           onPress: () => {
             handleCalendarEvent.addToCalendar(
               'Trip to ' + destination,
@@ -201,10 +197,13 @@ const AddTripContainer = (props) => {
               'Remember to pack everything and check weather forecast!',
             );
           },
+          text: 'Add',
+          textColor: 'orange',
         },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     budget,
     account,
@@ -212,28 +211,27 @@ const AddTripContainer = (props) => {
     budgetIsValid,
     budgetIsEnabled,
     currency,
+    dispatch,
     destination,
     startDate,
     endDate,
+    navigation,
+    callNotification,
+    handleCalendarEvent,
   ]);
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
-      <View style={styles.smallMarginTop}>
-        <Text style={styles.label}>Trip destination</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="City and/or country"
-          placeholderTextColor="grey"
-          value={destination}
-          onChangeText={destinationChangeHandler}
-        />
-        {!destinationIsValid && destinationSubmitted && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>Enter a valid city and/or country!</Text>
-          </View>
-        )}
-      </View>
+    <Container keyboardShouldPersistTaps="always">
+      <TextInput
+        label="City and/or country"
+        value={destination}
+        onChange={destinationChangeHandler}
+        error={
+          !destinationIsValid &&
+          destinationSubmitted &&
+          'Enter a valid city and/or country!'
+        }
+      />
 
       <DateTimePicker
         label="Start date"
@@ -256,8 +254,7 @@ const AddTripContainer = (props) => {
 
       <BudgetPicker
         label="Budget"
-        styles={styles}
-        showSwitch={true}
+        showSwitch
         toggleBudgetSwitch={toggleBudgetSwitch}
         budget={budget}
         budgetIsEnabled={budgetIsEnabled}
@@ -270,18 +267,10 @@ const AddTripContainer = (props) => {
         setAccount={setAccount}
       />
 
-      {isLoading ? (
-        <View style={styles.smallMarginTop}>
-          <ActivityIndicator color={Colors.primary} />
-        </View>
-      ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </ScrollView>
+      <Button loading={isLoading} disabled={isLoading} onPress={submitHandler}>
+        Submit
+      </Button>
+    </Container>
   );
 };
 
