@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ScrollView as Container, Headline, TextInput } from 'utils';
 import { View } from 'react-native';
 
@@ -27,6 +27,8 @@ const AddAccommodationByNameContainer = (props) => {
   const handlePress = () => {
     handleChange();
   };
+
+  useEffect(() => {});
 
   return (
     <Container>
