@@ -38,7 +38,7 @@ const AddAccommodationByNameContainer = (props) => {
   const options = [
     {
       key: 'samsung',
-      text: 'Samsung',
+      text: 'Samsung123',
     },
     {
       key: 'apple',
