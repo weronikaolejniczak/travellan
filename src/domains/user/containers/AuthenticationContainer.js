@@ -120,7 +120,7 @@ const AuthenticationContainer = (props, { ...rest }) => {
                   onPress={handleSubmit}
                   mode="outlined"
                 >
-                  <Text style={styles.buttonText}>Login</Text>
+                  Login
                 </Button>
                 <TouchableOpacity
                   onPress={() => {

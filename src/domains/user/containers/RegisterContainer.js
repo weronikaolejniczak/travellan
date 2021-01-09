@@ -7,7 +7,6 @@ import {
   Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -15,11 +14,12 @@ import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
 import Colors from 'constants/Colors';
+import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { signUpRequest } from 'actions/userActions';
 import { styles } from './RegisterContainerStyle';
 
-const RegisterContainer = (props) => {
+const RegisterContainer = (props, ...rest) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -93,13 +93,14 @@ const RegisterContainer = (props) => {
                 />
               </View>
               <View style={styles.formControl}>
-                <Text style={styles.label}>E-mail</Text>
                 <TextInput
+                  {...rest}
                   value={values.email}
-                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
+                  label="E-mail"
+                  error={errors.email}
                 />
                 {touched.email && errors.email && (
                   <View style={styles.errorContainer}>
@@ -110,12 +111,14 @@ const RegisterContainer = (props) => {
               <View style={styles.formControl}>
                 <Text style={styles.label}>Password</Text>
                 <TextInput
+                  {...rest}
                   value={values.password}
-                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
+                  label="Password"
+                  error={errors.password}
                 />
                 {touched.password && errors.password && (
                   <View style={styles.errorContainer}>
@@ -128,32 +131,26 @@ const RegisterContainer = (props) => {
               <View style={styles.formControl}>
                 <Text style={styles.label}>Confirm Password</Text>
                 <TextInput
+                  {...rest}
                   value={values.confirmPassword}
-                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={() => setFieldTouched('confirmPassword')}
                   secureTextEntry={true}
+                  label="Confirm Password"
+                  error={errors.confirmPassword}
                 />
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <View style={styles.errorContainer}>
-                    <Text style={{ color: Colors.error }}>
-                      {errors.confirmPassword}
-                    </Text>
-                  </View>
-                )}
               </View>
               <View style={styles.actionsContainer}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color={Colors.white} />
-                ) : (
-                  <TouchableOpacity
-                    style={[styles.buttonContainer, { marginRight: 10 }]}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={styles.buttonText}>Join</Text>
-                  </TouchableOpacity>
-                )}
+                <Button
+                  {...rest}
+                  loading={isLoading}
+                  disabled={isLoading}
+                  onPress={handleSubmit}
+                  mode="outlined"
+                >
+                  Sign up
+                </Button>
                 <TouchableOpacity
                   onPress={() => {
                     props.navigation.navigate('Auth');
