@@ -4,12 +4,13 @@ import {
   ScrollView as Container,
   Headline,
   TextInput,
-  Text,
+  ItemlessFrame,
 } from 'utils';
 import { View } from 'react-native';
 import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, SetIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
@@ -38,6 +39,7 @@ const AddAccommodationByNameContainer = (props) => {
     handleChange();
     formattedStartDate = formatDate(startDate);
     formattedEndDate = formatDate(endDate);
+    setIsLoading(true);
   };
 
   useEffect(() => {
@@ -50,12 +52,10 @@ const AddAccommodationByNameContainer = (props) => {
 
   if (isDateSame)
     return (
-      <Container>
-        <Headline>
-          Searching for a hotel by name is not possible if you are going on a
-          one day trip!
-        </Headline>
-      </Container>
+      <ItemlessFrame
+        message="Searching for a hotel by name is not possible if you are going on a
+    one day trip!"
+      />
     );
 
   return (
@@ -64,12 +64,14 @@ const AddAccommodationByNameContainer = (props) => {
         <Headline>Add your accomodation by typing name of your hotel</Headline>
       </View>
       <TextInput
-        label={'Hotel address'}
+        label={'Hotel name'}
         error={error}
         onChange={handleChange}
         value={value}
       />
-      <Button onPress={handlePress}>Submit</Button>
+      <Button loading={isLoading} disabled={isLoading} onPress={handlePress}>
+        Submit
+      </Button>
     </Container>
   );
 };
