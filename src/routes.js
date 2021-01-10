@@ -22,16 +22,13 @@ import AddTripContainer from 'domains/trips/containers/AddTripContainer';
 import AuthenticationContainer, {
   authOptions,
 } from 'domains/user/containers/AuthenticationContainer';
-import ForgotContainer, {
-  forgotOptions,
-} from 'domains/user/containers/ForgotContainer';
-import AfterForgotContainer, {
-  afterForgotOptions,
-} from 'domains/user/containers/AfterForgotContainer';
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
+import ForgotContainer, {
+  forgotOptions,
+} from 'domains/user/containers/ForgotContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import NotesContainer, {
   notesOptions,
@@ -119,11 +116,6 @@ export default function Navigation() {
           name="Forgot"
           component={ForgotContainer}
           options={forgotOptions}
-        />
-        <Stack.Screen
-          name="AftForgot"
-          component={AfterForgotContainer}
-          options={afterForgotOptions}
         />
         <Stack.Screen
           name="My trips"
