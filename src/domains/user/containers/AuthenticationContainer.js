@@ -114,6 +114,14 @@ const AuthenticationContainer = (props) => {
                 >
                   Switch to Sign up
                 </Button>
+                <Button
+                  onPress={() => {
+                    props.navigation.navigate('Forgot');
+                  }}
+                  mode="outlined"
+                >
+                  Forgot Password?
+                </Button>
               </View>
             </ScrollView>
           </View>
