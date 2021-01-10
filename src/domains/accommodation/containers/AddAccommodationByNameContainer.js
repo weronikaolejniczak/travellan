@@ -14,6 +14,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [isDateSame, SetIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
+  const [data, setData] = useState();
   const { startDate, endDate, cityCode } = props.route.params;
 
   const formatDate = (date) => {
@@ -32,19 +33,21 @@ const AddAccommodationByNameContainer = (props) => {
   const handleChange = (val) => {
     setValue(val);
   };
-  const fetchHotelByName = useCallback(async () => {
+
+  const fetchHotel = useCallback(async () => {
     try {
       const result = await fetchHotelByName(cityCode, value);
-      console.log(result);
+      setData(result[0]);
     } catch {
       setError(error);
+      throw error;
     }
   }, [cityCode, value]);
 
   const handlePress = () => {
     handleChange();
     setIsLoading(true);
-    fetchHotelByName(cityCode, value);
+    fetchHotel(cityCode, value);
   };
 
   useEffect(() => {
