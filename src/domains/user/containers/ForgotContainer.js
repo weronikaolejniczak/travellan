@@ -5,6 +5,7 @@ import { View as Container } from 'utils';
 import { Formik } from 'formik';
 
 import { Button, TextInput } from 'utils';
+import { sendResetEmail } from 'actions/userActions';
 import { styles } from './ForgotContainerStyle';
 import { useDispatch } from 'react-redux';
 
