@@ -1,5 +1,5 @@
 import LinearGradient from 'react-native-linear-gradient';
-import React from 'react';
+import React, { memo } from 'react';
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -15,61 +15,60 @@ const TripDetailsContainer = (props) => {
   );
   const { destination, startDate, endDate, image } = selectedTrip;
   const { author, username, imageUrl } = image;
+
   const startDateFormatted = selectedTrip.startDate
     .split(' ')
     .slice(1, 4)
     .join(' ');
+
   const endDateFormatted = selectedTrip.endDate
     .split(' ')
     .slice(1, 4)
     .join(' ');
+
   const CalendarEventChandler = addEventToCalendar;
+
+  const addTripToCalendar = () =>
+    CalendarEventChandler.addToCalendar(
+      'Trip to ' + destination,
+      Date.parse(startDate),
+      Date.parse(endDate),
+      destination,
+      'Remember to pack everything and check weather forecast!',
+    );
 
   return (
     <ScrollView style={styles.container}>
-      <View>
-        <ImageBackground style={styles.image} source={{ uri: imageUrl }}>
-          <LinearGradient
-            colors={['rgba(0,0,0,0.00)', '#222222']}
-            start={{ x: 0.0, y: 0.0 }}
-            end={{ x: 0.0, y: 1.0 }}
-            locations={[0.6, 1]}
-            style={[{ flex: 1 }]}
-          >
-            <View style={styles.dateContainer}>
-              <View style={{ justifyContent: 'space-around' }}>
-                <Text style={[styles.text, { textAlign: 'center' }]}>
-                  Photo by {author} @Unsplash/{username}
-                </Text>
-              </View>
-              <Text style={[styles.text, styles.header, styles.date]}>
-                {startDate === endDate ? (
-                  <Text style={[styles.text, styles.date]}>
-                    {startDateFormatted}
-                  </Text>
-                ) : (
-                  <Text style={[styles.text, styles.date]}>
-                    {startDateFormatted} - {endDateFormatted}
-                  </Text>
-                )}
-                <Icon
-                  name="calendar"
-                  size={35}
-                  onPress={() => {
-                    CalendarEventChandler.addToCalendar(
-                      'Trip to ' + destination,
-                      Date.parse(startDate),
-                      Date.parse(endDate),
-                      destination,
-                      'Remember to pack everything and check weather forecast!',
-                    );
-                  }}
-                />
+      <ImageBackground style={styles.image} source={{ uri: imageUrl }}>
+        <Icon
+          name="calendar"
+          onPress={addTripToCalendar}
+          size={35}
+          style={styles.calendarIcon}
+        />
+        <LinearGradient
+          colors={['rgba(0,0,0,0.00)', '#222222']}
+          start={{ x: 0.0, y: 0.0 }}
+          end={{ x: 0.0, y: 1.0 }}
+          locations={[0.6, 1]}
+          style={styles.linearGradient}
+        >
+          <View style={styles.dateContainer}>
+            <View style={{ justifyContent: 'space-around' }}>
+              <Text style={[styles.text, { textAlign: 'center' }]}>
+                Photo by {author} @Unsplash/{username}
               </Text>
             </View>
-          </LinearGradient>
-        </ImageBackground>
-      </View>
+            <Text style={[styles.text, styles.header, styles.date]}>
+              <Text style={[styles.text, styles.date]}>
+                {startDate === endDate
+                  ? startDateFormatted
+                  : `${startDateFormatted} - ${endDateFormatted}`}
+              </Text>
+            </Text>
+          </View>
+        </LinearGradient>
+      </ImageBackground>
 
       <View>
         <View style={styles.tiles}>
@@ -125,4 +124,4 @@ export const tripDetailsOptions = (navigation) => {
   };
 };
 
-export default TripDetailsContainer;
+export default memo(TripDetailsContainer);
