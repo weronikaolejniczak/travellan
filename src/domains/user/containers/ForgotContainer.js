@@ -33,11 +33,22 @@ const ForgotContainer = (props) => {
         try {
           dispatch(action);
           setIsLoading(false);
-          props.navigation.navigate('AftForgot');
+          //props.navigation.navigate('AftForgot');
         } catch (err) {
           setError(err.message);
         }
         setIsLoading(false);
+        Alert.alert(
+          'E-mail sent',
+          'Please check your email for instructions on how to reset your password.',
+          [
+            {
+              onPress: () => props.navigation.navigate('Auth'),
+              text: 'OK',
+            },
+          ],
+          { cancelable: false },
+        );
       }}
       validationSchema={yup.object().shape({
         email: yup
