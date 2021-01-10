@@ -66,11 +66,12 @@ const TripsContainer = (props) => {
     );
   };
 
-  const handleSelectItem = (id, destination) => {
+  const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
         destination,
         tripId: id,
+        cityCode: cityCode,
       });
   };
 
@@ -107,7 +108,11 @@ const TripsContainer = (props) => {
             startDate={data.item.startDate.split(' ').slice(1, 4).join(' ')}
             endDate={data.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
-              handleSelectItem(data.item.id, data.item.destination);
+              handleSelectItem(
+                data.item.id,
+                data.item.destination,
+                data.item.cityCode,
+              );
             }}
           >
             <TouchableHighlight

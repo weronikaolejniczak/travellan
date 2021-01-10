@@ -60,6 +60,7 @@ export const fetchTripsRequest = () => {
               data[key].budget,
               data[key].notes,
               data[key].map,
+              data[key].cityCode,
             ),
           );
         }
@@ -118,6 +119,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         region,
         startDate,
         transport,
+        cityCode,
       })
       .then((res) => res.data)
       .then((data) => {
@@ -133,6 +135,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
           budget,
           notes,
           map,
+          cityCode,
         );
 
         dispatch(createTrip(newTrip));

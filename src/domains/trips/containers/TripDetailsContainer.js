@@ -13,7 +13,7 @@ const TripDetailsContainer = (props) => {
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
-  const { destination, startDate, endDate, image } = selectedTrip;
+  const { destination, startDate, endDate, image, cityCode } = selectedTrip;
   const { author, username, imageUrl } = image;
   const startDateFormatted = selectedTrip.startDate
     .split(' ')
