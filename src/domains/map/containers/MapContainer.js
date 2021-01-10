@@ -27,6 +27,8 @@ const MapContainer = ({ route, navigation }) => {
   );
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
+  const [searchingActive, setSearchingActive] = useState(false);
+  const [searchQuerry, setSearchQuerry] = useState('');
   const [markerTitle, setMarkerTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -66,6 +68,15 @@ const MapContainer = ({ route, navigation }) => {
           setMarkerTitle('');
         }
         setDeletingMarkerActive(!deletingMarkerActive);
+        break;
+      case 'searching':
+        if (!searchingActive) {
+          setDeletingMarkerActive(false);
+          setAddingMarkerActive(false);
+        } else {
+          setSearchQuerry('');
+        }
+        setSearchingActive(!searchingActive);
         break;
     }
   };
@@ -174,6 +185,8 @@ const MapContainer = ({ route, navigation }) => {
         setMarkerTitle={(text) => setMarkerTitle(text)}
         deletingMarkerActive={deletingMarkerActive}
         deletingActivityHandler={() => activityHandler('deleting')}
+        searchingActive={searchingActive}
+        searchingActivityHandler={() => activityHandler('searching')}
         error={error}
         setError={setError}
         isLoading={isLoading}
