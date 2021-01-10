@@ -83,6 +83,14 @@ const CustomDrawerContent = (props) => (
   </SafeAreaView>
 );
 
+const AltSpace = () => (
+  <Stack.Screen
+    name="My trips"
+    component={TripsContainer}
+    options={tripsOptions}
+  />
+);
+
 export default function DrawerNavigator() {
   return (
     <NavigationContainer>
