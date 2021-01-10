@@ -32,10 +32,21 @@ const AddAccommodationByNameContainer = (props) => {
   const handleChange = (val) => {
     setValue(val);
   };
+  const fetchHotelByName = useCallback(async () => {
+    try {
+      const result = await fetchHotelByName(cityCode, value);
+      console.log(result);
+    } catch {
+      setError(error);
+    }
+  }, [cityCode, value]);
+
+  //fetch();
 
   const handlePress = () => {
     handleChange();
     setIsLoading(true);
+    fetchHotelByName(cityCode, value);
   };
 
   useEffect(() => {
