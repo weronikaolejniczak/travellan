@@ -15,9 +15,7 @@ const ForgotContainer = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
-      Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
-    }
+    error && Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
   }, [error]);
 
   return (
