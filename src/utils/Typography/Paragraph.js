@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Paragraph } from 'react-native-paper';
 
 const CustomParagraph = ({ children }) => <Paragraph>{children}</Paragraph>;
 
-export default CustomParagraph;
+export default memo(CustomParagraph);

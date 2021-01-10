@@ -1,14 +1,18 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect from 'react-native-picker-select';
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 
 import { Colors } from 'constants';
 import { selectStyle, styles } from './SelectStyle';
 
-const Select = (props) => {
-  const { disabled, items, onChangeText, onValueChange, placeholder } = props;
-
+const Select = ({
+  disabled,
+  items,
+  onChangeText,
+  onValueChange,
+  placeholder,
+}) => {
   items.forEach((item) => {
     item.color = Colors.primary;
   });
@@ -31,4 +35,4 @@ const Select = (props) => {
   );
 };
 
-export default Select;
+export default memo(Select);
