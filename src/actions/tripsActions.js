@@ -92,7 +92,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-
+    const cityCode = await fetchCityCode(destination);
     const image = await fetchDestinationImage(destination);
     const location = await fetchCoordinates(destination);
     const region = {
