@@ -25,6 +25,9 @@ import AuthenticationContainer, {
 import ForgotContainer, {
   forgotOptions,
 } from 'domains/user/containers/ForgotContainer';
+import AfterForgotContainer, {
+  afterForgotOptions,
+} from 'domains/user/containers/AfterForgotContainer';
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
@@ -116,6 +119,11 @@ export default function Navigation() {
           name="Forgot"
           component={ForgotContainer}
           options={forgotOptions}
+        />
+        <Stack.Screen
+          name="AftForgot"
+          component={AfterForgotContainer}
+          options={afterForgotOptions}
         />
         <Stack.Screen
           name="My trips"

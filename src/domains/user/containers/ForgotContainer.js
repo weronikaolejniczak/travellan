@@ -33,7 +33,7 @@ const ForgotContainer = (props) => {
         try {
           dispatch(action);
           setIsLoading(false);
-          //navigation to screen placeholder
+          //navigation
         } catch (err) {
           setError(err.message);
         }
