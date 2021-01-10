@@ -1,13 +1,6 @@
 import * as yup from 'yup';
 import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from 'react-native';
+import { Alert } from 'react-native';
 import { View as Container } from 'utils';
 import { Formik } from 'formik';
 
@@ -37,7 +30,7 @@ const ForgotContainer = (props) => {
         email: yup
           .string()
           .email('Invalid email address')
-          .required('Cannot be left empty'),
+          .required('Enter email address'),
       })}
     >
       {({ values, handleChange, errors, isValid, handleSubmit }) => (
