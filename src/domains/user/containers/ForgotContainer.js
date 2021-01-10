@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 const ForgotContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error) {
@@ -24,8 +25,19 @@ const ForgotContainer = (props) => {
       initialValues={{
         email: '',
       }}
-      onSubmit={(values) => {
-        //placeholder
+      onSubmit={async (values) => {
+        setError(null);
+        setIsLoading(true);
+        let action;
+        action = sendResetEmail(values.email);
+        try {
+          await dispatch(action);
+          setIsLoading(false);
+          //navigation to screen placeholder
+        } catch (err) {
+          setError(err.message);
+        }
+        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         email: yup
