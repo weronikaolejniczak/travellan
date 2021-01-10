@@ -61,7 +61,9 @@ export const logout = () => {
 };
 
 export const sendResetEmail = (email) => {
-  auth().sendPasswordResetEmail(email);
+  return async function (dispatch) {
+    auth().sendPasswordResetEmail(email);
+  };
 };
 
 const saveDataToStorage = (token, userId, expirationDate) => {

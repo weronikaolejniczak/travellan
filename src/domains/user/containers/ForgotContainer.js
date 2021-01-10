@@ -31,7 +31,7 @@ const ForgotContainer = (props) => {
         let action;
         action = sendResetEmail(values.email);
         try {
-          await dispatch(action);
+          dispatch(action);
           setIsLoading(false);
           //navigation to screen placeholder
         } catch (err) {
