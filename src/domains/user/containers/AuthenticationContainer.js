@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -16,7 +18,7 @@ import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
-const AuthenticationContainer = (props) => {
+const AuthenticationContainer = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,12 +40,11 @@ const AuthenticationContainer = (props) => {
       onSubmit={async (values) => {
         setError(null);
         setIsLoading(true);
-        let action;
-        action = loginRequest(values.email, values.password);
+        const action = loginRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
-          props.navigation.navigate('My trips');
+          navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
         }
@@ -97,6 +98,9 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
+                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                  <Text style={styles.forgot}>Forgot Password?</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.actionsContainer}>
                 <Button
@@ -107,12 +111,10 @@ const AuthenticationContainer = (props) => {
                   Login
                 </Button>
                 <Button
-                  onPress={() => {
-                    props.navigation.navigate('Register');
-                  }}
+                  onPress={() => navigation.navigate('Register')}
                   mode="outlined"
                 >
-                  Switch to Sign up
+                  Create new account
                 </Button>
               </View>
             </ScrollView>

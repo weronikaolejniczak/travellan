@@ -12,8 +12,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AccommodationContainer, {
   accommodationOptions,
 } from 'domains/accommodation/containers/AccommodationContainer';
-import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
+import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
@@ -26,6 +26,9 @@ import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
+import ForgotPasswordContainer, {
+  forgotOptions,
+} from 'domains/user/containers/ForgotPasswordContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import NotesContainer, {
   notesOptions,
@@ -108,6 +111,11 @@ export default function Navigation() {
           name="Auth"
           component={AuthenticationContainer}
           options={authOptions}
+        />
+        <Stack.Screen
+          name="Forgot"
+          component={ForgotPasswordContainer}
+          options={forgotOptions}
         />
         <Stack.Screen
           name="My trips"
