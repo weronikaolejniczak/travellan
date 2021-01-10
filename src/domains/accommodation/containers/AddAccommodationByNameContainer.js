@@ -7,12 +7,10 @@ import {
   ItemlessFrame,
 } from 'utils';
 import { View } from 'react-native';
-import fetchCityCode from 'services/fetchCityCode';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, SetIsDateSame] = useState(true);
-  const [data, setData] = useState('');
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate, destination, cityCode } = props.route.params;
