@@ -8,12 +8,14 @@ const AfterForgotContainer = (props) => {
       <Text>
         Please check your email for instructions on how to reset your password.
       </Text>
-      <Button onPress={props.navigation.navigate('Auth')}>Move to Login</Button>
+      <Button onPress={() => props.navigation.navigate('Auth')}>
+        Move to Login
+      </Button>
     </Container>
   );
 };
 
-export const forgotOptions = {
+export const afterForgotOptions = {
   headerShown: false,
 };
 
