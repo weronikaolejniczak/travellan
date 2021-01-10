@@ -2,7 +2,7 @@ export const tiny = 2;
 export const small = tiny * 2; // 4
 export const normal = tiny * 3; // 6
 export const big = normal * 2; // 12
-export const huge = big * 4; // 48
+export const huge = big * 5; // 60
 
 export default {
   bigBottomMargin: {

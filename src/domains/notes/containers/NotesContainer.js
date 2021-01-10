@@ -111,6 +111,7 @@ const NotesContainer = ({ route, navigation }) => {
       />
       <FlatList
         data={notes}
+        indicatorStyle="white"
         keyExtractor={(item) => item.id.toString()}
         renderItem={(params) => (
           <NoteItem
