@@ -1,7 +1,6 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Dimensions,
   FlatList,
@@ -14,13 +13,12 @@ import {
 import { LineChart } from 'react-native-chart-kit';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as budgetActions from 'actions/budgetActions';
 import * as categories from 'data/SpendingCategories';
-import Colors from 'constants/Colors';
-import { Card } from 'utils';
+import { BalanceDashboard } from '../components';
+import { Card, ItemlessFrame, LoadingFrame } from 'utils';
+import { Colors } from 'constants';
+import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import {
-  calculateCard,
-  calculateCash,
   prepareDataForLinechart,
   prepareLabelsForLinechart,
   prepareValue,
@@ -40,11 +38,9 @@ const BudgetContainer = (props) => {
   const [selectedCurrency, setSelectedCurrency] = useState(
     selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
   );
-
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
-
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [amountIsValid, setAmountIsValid] = useState(false);
@@ -65,8 +61,8 @@ const BudgetContainer = (props) => {
         color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`,
         data: selectedCurrency
           ? prepareDataForLinechart(selectedCurrency.history)
-          : [], // optional
-        strokeWidth: 2, // optional
+          : [],
+        strokeWidth: 2,
       },
     ],
     labels: selectedCurrency
@@ -80,12 +76,10 @@ const BudgetContainer = (props) => {
     backgroundGradientFromOpacity: 0.0,
     backgroundGradientTo: Colors.cards,
     backgroundGradientToOpacity: 0.9,
-    // optional, default 3
     barPercentage: 0.5,
-
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     strokeWidth: 2,
-    useShadowColorFromDataset: false, // optional
+    useShadowColorFromDataset: false,
   };
 
   const clear = () => {
@@ -101,7 +95,7 @@ const BudgetContainer = (props) => {
     );
   };
 
-  let amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+  const amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
   const amountChangeHandler = (text) => {
     text.trim().length === 0 || !amountRegex.test(text)
       ? setAmountIsValid(false)
@@ -109,130 +103,113 @@ const BudgetContainer = (props) => {
     setAmount(text);
   };
 
-  const modifyAmount = (typeOfOperation) => {
+  const modifyAmount = (type) => {
     if (title && amount && amountIsValid) {
       const changedCurrency = selectedCurrency;
-      // modification control flow
-      if (typeOfOperation === 'plus') {
-        // change displayableValue
-        setDisplayableValue(displayableValue + Math.abs(prepareValue(amount)));
-        // modify selectedCurrency
-        changedCurrency.value =
-          changedCurrency.value + Math.abs(prepareValue(amount));
-        changedCurrency.history.push({
-          account: account,
-          category: category,
-          date: new Date(),
-          id: changedCurrency.history.length + 1,
-          title: title,
-          value: Math.abs(prepareValue(amount)),
-        });
-        // persist changes in the budget
+
+      type === 'plus'
+        ? (setDisplayableValue(
+            displayableValue + Math.abs(prepareValue(amount)),
+          ),
+          (changedCurrency.value =
+            changedCurrency.value + Math.abs(prepareValue(amount))))
+        : (setDisplayableValue(
+            displayableValue + -Math.abs(prepareValue(amount)),
+          ),
+          (changedCurrency.value =
+            changedCurrency.value - Math.abs(prepareValue(amount))));
+
+      changedCurrency.history.push({
+        account: account,
+        category: category,
+        date: new Date(),
+        id: changedCurrency.history.length + 1,
+        title: title,
+        value:
+          type === 'plus'
+            ? Math.abs(prepareValue(amount))
+            : -Math.abs(prepareValue(amount)),
+      });
+
+      try {
         persistBudget();
-      } else if (typeOfOperation === 'minus') {
-        // change displayableValue
-        setDisplayableValue(displayableValue + -Math.abs(prepareValue(amount)));
-        // modify selectedCurrency
-        changedCurrency.value =
-          changedCurrency.value - Math.abs(prepareValue(amount));
-        changedCurrency.history.push({
-          account: account,
-          category: category,
-          date: new Date(),
-          id: changedCurrency.history.length + 1,
-          title: title,
-          value: -Math.abs(prepareValue(amount)),
-        });
-        // persist changes in the budget
-        persistBudget();
-      } else {
-        setError('Something went wrong...');
+      } catch {
+        setError('Something went wrong!');
       }
-      // update selectedCurrency in budget
+
       const index = budget.findIndex((item) => item.id === selectedCurrency.id);
       budget[index] = changedCurrency;
-      // clear placeholders
       clear();
     } else {
       setError('Enter correct amount and title.');
     }
   };
 
-  // delete a currency and persist changes
   const deleteCurrency = useCallback(
     async (id) => {
       setIsRefreshing(true);
-      // update selectedCurrency in budget
       const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
-      // update budget
-      await dispatch(
-        budgetActions.patchBudgetRequest(tripId, filteredActiveCurrencies),
-      ).then(() => loadBudget());
-      // if there are no active currencies clear selectedCurrency
+      await dispatch(patchBudgetRequest(tripId, filteredActiveCurrencies));
       budget !== undefined
         ? setSelectedCurrency(filteredActiveCurrencies[0])
         : setSelectedCurrency(null);
-      // stop refresh
       setIsRefreshing(false);
     },
-    [budget, dispatch, loadBudget, tripId],
+    [budget, dispatch, tripId],
   );
 
-  // persist changed budget
+  const handleDelete = (id) =>
+    Alert.alert(
+      'Are you sure?',
+      'Delete currency.',
+      [
+        {
+          style: 'cancel',
+          text: 'Cancel',
+        },
+        {
+          onPress: () => {
+            deleteCurrency(id);
+          },
+          text: 'Delete',
+        },
+      ],
+      { cancelable: true },
+    );
+
   const persistBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
-      await dispatch(budgetActions.patchBudgetRequest(tripId, budget));
+      await dispatch(patchBudgetRequest(tripId, budget));
     } catch (err) {
       setError(err.message);
     }
     setIsLoading(false);
   }, [budget, dispatch, tripId]);
 
-  // fetch the budget to display new data
   const loadBudget = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      await dispatch(budgetActions.fetchBudgetRequest(tripId));
+      await dispatch(fetchBudgetRequest(tripId));
     } catch (err) {
       setError(err.message);
     }
     setIsRefreshing(false);
   }, [dispatch, setIsRefreshing, tripId]);
 
-  // fetch the budget on render
   useEffect(() => {
     setIsLoading(true);
+
     loadBudget().then(() => {
       setIsLoading(false);
     });
   }, [dispatch, loadBudget]);
 
-  if (isLoading || isRefreshing) {
-    return (
-      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
-        <ActivityIndicator size="large" color={Colors.primary} />
-      </View>
-    );
-  }
+  if (isLoading || isRefreshing) return <LoadingFrame />;
 
-  if (budget === [] || budget === undefined) {
-    return (
-      <View style={styles.contentContainer}>
-        <View style={styles.budgetlessContainer}>
-          <Text style={[styles.text, styles.budgetlessText]}>
-            There is no budget to show!
-          </Text>
-          <Text style={[styles.text, styles.budgetlessText]}>
-            Create a currency card with the
-          </Text>
-          <Icon name={'plus'} size={32} style={[styles.text, { margin: 10 }]} />
-          <Text style={[styles.text, styles.budgetlessText]}>sign above!</Text>
-        </View>
-      </View>
-    );
-  }
+  if (budget === [] || budget === undefined)
+    <ItemlessFrame message="There is no budget to show!" />;
 
   return (
     <View style={styles.contentContainer}>
@@ -244,25 +221,7 @@ const BudgetContainer = (props) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.currencyHolder}
-              onLongPress={() => {
-                Alert.alert(
-                  'Are you sure?',
-                  'Delete currency.',
-                  [
-                    {
-                      style: 'cancel',
-                      text: 'Cancel',
-                    },
-                    {
-                      onPress: () => {
-                        deleteCurrency(item.id);
-                      },
-                      text: 'Delete',
-                    },
-                  ],
-                  { cancelable: true },
-                );
-              }}
+              onLongPress={() => handleDelete(item.id)}
               onPress={() => {
                 setSelectedCurrency(item);
                 setDisplayableValue(item.value);
@@ -271,17 +230,15 @@ const BudgetContainer = (props) => {
                 setAccount(item.defaultAccount);
               }}
             >
-              {!!selectedCurrency && (
-                <Text
-                  style={
-                    selectedCurrency.currency === item.currency
-                      ? styles.currencyActive
-                      : styles.currencyNonactive
-                  }
-                >
-                  {item.currency}
-                </Text>
-              )}
+              <Text
+                style={
+                  selectedCurrency.currency === item.currency
+                    ? styles.currencyActive
+                    : styles.currencyNonactive
+                }
+              >
+                {item.currency}
+              </Text>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -289,55 +246,9 @@ const BudgetContainer = (props) => {
       </View>
 
       {selectedCurrency !== undefined && (
-        <View style={styles.overviewContainer}>
-          <View style={styles.center}>
-            <Text style={{ color: Colors.placeholder }}>Cash</Text>
-            <View style={styles.accounts}>
-              <Icon name={'cash'} style={[styles.icon, styles.text]} />
-              <Text
-                style={[
-                  styles.label,
-                  calculateCash(selectedCurrency.history) < 0
-                    ? styles.negative
-                    : styles.positive,
-                ]}
-              >
-                {calculateCash(selectedCurrency.history)}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.center}>
-            <Text style={{ color: Colors.placeholder }}>General balance</Text>
-            <Text
-              style={[
-                styles.icon,
-                displayableValue < 0 ? styles.negative : styles.positive,
-              ]}
-            >
-              {displayableValue < 0 ? '-' : '+'}
-              {displayableValue}
-            </Text>
-          </View>
-
-          <View style={styles.center}>
-            <Text style={{ color: Colors.placeholder }}>Card</Text>
-            <View style={[styles.accounts]}>
-              <Icon name={'credit-card'} style={[styles.icon, styles.text]} />
-              <Text
-                style={[
-                  styles.label,
-                  calculateCard(selectedCurrency.history) < 0
-                    ? styles.negative
-                    : styles.positive,
-                ]}
-              >
-                {calculateCard(selectedCurrency.history)}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <BalanceDashboard currency={selectedCurrency} />
       )}
+
       {selectedCurrency !== undefined && (
         <ScrollView contentContainerStyle={styles.detailsContainer}>
           {selectedCurrency.history.length > 1 && (
@@ -392,6 +303,7 @@ const BudgetContainer = (props) => {
               )}
             </View>
           )}
+
           <View style={styles.smallMarginTop}>
             <Card style={{ padding: '5%' }}>
               <Text style={[styles.text, styles.label]}>Operations</Text>
@@ -528,6 +440,7 @@ const BudgetContainer = (props) => {
               )}
             </View>
           </View>
+
           <View style={styles.smallMarginTop}>
             <Card style={{ padding: '5%' }}>
               <Text style={[styles.text, styles.label]}>History</Text>
@@ -599,11 +512,11 @@ export const budgetOptions = (navData) => {
     headerRight: () => (
       <TouchableOpacity
         style={styles.navigationButton}
-        onPress={() => {
+        onPress={() =>
           navData.navigation.navigate('Add currency', {
             tripId: navData.route.params.tripId,
-          });
-        }}
+          })
+        }
       >
         <Text style={styles.navigationText}>Add currency</Text>
       </TouchableOpacity>

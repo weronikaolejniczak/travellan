@@ -133,13 +133,6 @@ export const styles = StyleSheet.create({
     marginTop: '4%',
     padding: '4%',
   },
-  overviewContainer: {
-    alignItems: 'baseline',
-    backgroundColor: Colors.cards,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    paddingVertical: 10,
-  },
   positive: {
     color: Colors.positive,
     fontWeight: 'bold',
