@@ -99,18 +99,15 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
-                <View style={styles.forgotContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      props.navigation.navigate('Forgot');
-                    }}
-                  >
-                    <Text style={styles.forgot}>Forgot Password?</Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('Forgot');
+                  }}
+                >
+                  <Text style={styles.forgot}>Forgot Password?</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.actionsContainer}>
-
                 <Button
                   loading={isLoading}
                   disabled={isLoading}

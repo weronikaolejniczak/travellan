@@ -28,10 +28,6 @@ export const styles = StyleSheet.create({
     color: Colors.text,
     fontSize: 14,
   },
-  forgotContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   formControl: {
     width: '100%',
   },
