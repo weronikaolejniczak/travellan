@@ -34,8 +34,6 @@ const AddAccommodationByNameContainer = (props) => {
 
   const handlePress = () => {
     handleChange();
-    formattedStartDate = formatDate(startDate);
-    formattedEndDate = formatDate(endDate);
     setIsLoading(true);
   };
 
