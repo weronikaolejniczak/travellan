@@ -13,7 +13,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [isDateSame, SetIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const { startDate, endDate, destination, cityCode } = props.route.params;
+  const { startDate, endDate, cityCode } = props.route.params;
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
