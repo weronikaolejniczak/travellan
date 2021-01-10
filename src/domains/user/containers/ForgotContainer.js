@@ -63,4 +63,8 @@ const ForgotContainer = (props) => {
   );
 };
 
+export const forgotOptions = {
+  headerShown: false,
+};
+
 export default ForgotContainer;
