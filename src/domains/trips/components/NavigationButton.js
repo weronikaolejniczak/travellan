@@ -15,6 +15,7 @@ const NavigationButton = (props) => {
     startDate,
     endDate,
     destination,
+    cityCode,
   } = props;
 
   const styles = {
@@ -39,7 +40,13 @@ const NavigationButton = (props) => {
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        navigation.navigate(to, { tripId, startDate, endDate, destination });
+        navigation.navigate(to, {
+          tripId,
+          startDate,
+          endDate,
+          destination,
+          cityCode,
+        });
       }}
     >
       <Text style={styles.buttonText}>{to}</Text>
