@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 
 import { Button, TextInput } from 'utils';
 import { sendResetEmail } from 'actions/userActions';
-import { styles } from './ForgotContainerStyle';
+import { styles } from './ForgotPasswordContainerStyle';
 import { useDispatch } from 'react-redux';
 
 const ForgotContainer = (props) => {

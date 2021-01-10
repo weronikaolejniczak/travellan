@@ -26,9 +26,9 @@ import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
-import ForgotContainer, {
+import ForgotPasswordContainer, {
   forgotOptions,
-} from 'domains/user/containers/ForgotContainer';
+} from 'domains/user/containers/ForgotPasswordContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import NotesContainer, {
   notesOptions,
@@ -114,7 +114,7 @@ export default function Navigation() {
         />
         <Stack.Screen
           name="Forgot"
-          component={ForgotContainer}
+          component={ForgotPasswordContainer}
           options={forgotOptions}
         />
         <Stack.Screen
