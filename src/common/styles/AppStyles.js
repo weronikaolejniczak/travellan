@@ -2,7 +2,7 @@ import { Colors, Layout, Metrics } from 'constants';
 
 export default {
   container: {
-    ...Layout.fullSize,
+    ...Layout.fillCenter,
     ...Metrics.bigPadding,
     ...Metrics.hugeTopPadding,
     backgroundColor: Colors.background,

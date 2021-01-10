@@ -13,6 +13,7 @@ import {
 } from 'utils';
 import { NoteItem } from '../components';
 import { deleteNoteRequest, fetchNotesRequest } from 'actions/notesActions';
+import { styles } from './NotesContainerStyle';
 
 const NotesContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const NotesContainer = ({ route, navigation }) => {
     );
 
   return (
-    <Container>
+    <Container style={styles.container}>
       <Searchbar
         onChangeText={(text) => setSearch(text)}
         value={search}
