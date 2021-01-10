@@ -15,7 +15,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [data, setData] = useState('');
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const { startDate, endDate, destination } = props.route.params;
+  const { startDate, endDate, destination, cityCode } = props.route.params;
   let formattedStartDate = '';
   let formattedEndDate = '';
 
@@ -43,14 +43,14 @@ const AddAccommodationByNameContainer = (props) => {
     setIsLoading(true);
   };
 
-  const fetch = useCallback(async () => {
+  /*const fetch = useCallback(async () => {
     try {
       const result = await fetchCityCode(destination);
       setData(result);
     } catch {
       setError(error);
     }
-  }, [destination]);
+  }, [destination]);*/
 
   useEffect(() => {
     if (formatDate(startDate) == formatDate(endDate)) {
