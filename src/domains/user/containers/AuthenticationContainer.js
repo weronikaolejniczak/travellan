@@ -100,9 +100,7 @@ const AuthenticationContainer = (props) => {
                   error={errors.password}
                 />
                 <TouchableOpacity
-                  onPress={() => {
-                    props.navigation.navigate('Forgot');
-                  }}
+                  onPress={() => props.navigation.navigate('Forgot')}
                 >
                   <Text style={styles.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
@@ -116,9 +114,7 @@ const AuthenticationContainer = (props) => {
                   Login
                 </Button>
                 <Button
-                  onPress={() => {
-                    props.navigation.navigate('Register');
-                  }}
+                  onPress={() => props.navigation.navigate('Register')}
                   mode="outlined"
                 >
                   Create new account

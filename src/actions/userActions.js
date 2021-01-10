@@ -60,11 +60,10 @@ export const logout = () => {
   AsyncStorage.removeItem('userData');
 };
 
-export const sendResetEmail = (email) => {
-  return async function (dispatch) {
+export const sendResetEmail = (email) =>
+  async function (dispatch) {
     auth().sendPasswordResetEmail(email);
   };
-};
 
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
