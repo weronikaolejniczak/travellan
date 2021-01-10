@@ -43,22 +43,12 @@ const AddAccommodationByNameContainer = (props) => {
     setIsLoading(true);
   };
 
-  /*const fetch = useCallback(async () => {
-    try {
-      const result = await fetchCityCode(destination);
-      setData(result);
-    } catch {
-      setError(error);
-    }
-  }, [destination]);*/
-
   useEffect(() => {
     if (formatDate(startDate) == formatDate(endDate)) {
       SetIsDateSame(true);
     } else {
       SetIsDateSame(false);
     }
-    //fetch();
   }, [startDate, endDate, destination]);
 
   if (isDateSame)
