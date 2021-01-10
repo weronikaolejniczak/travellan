@@ -1,4 +1,4 @@
-import Navigation from './routes';
+import AppStack from './routes';
 import React from 'react';
 import { DarkTheme } from 'themes';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -9,7 +9,7 @@ export default function App() {
   return (
     <PaperProvider theme={DarkTheme}>
       <StoreProvider store={store}>
-        <Navigation />
+        <AppStack />
       </StoreProvider>
     </PaperProvider>
   );

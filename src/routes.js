@@ -119,7 +119,7 @@ export default function Navigation() {
         />
         <Stack.Screen
           name="My trips"
-          component={DrawerNavigator}
+          component={TripsContainer}
           options={tripsOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
