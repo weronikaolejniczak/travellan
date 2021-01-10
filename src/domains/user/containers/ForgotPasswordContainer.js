@@ -9,7 +9,7 @@ import { sendResetEmail } from 'actions/userActions';
 import { styles } from './ForgotPasswordContainerStyle';
 import { useDispatch } from 'react-redux';
 
-const ForgotContainer = (props) => {
+const ForgotContainer = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const ForgotContainer = (props) => {
           'Please check your email for instructions on how to reset your password.',
           [
             {
-              onPress: () => props.navigation.navigate('Auth'),
+              onPress: () => navigation.navigate('Auth'),
               text: 'OK',
             },
           ],
