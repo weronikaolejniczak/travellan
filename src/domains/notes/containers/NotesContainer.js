@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import filter from 'lodash.filter';
 import { Alert, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ const NotesContainer = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [search, setSearch] = useState('');
+  const [filteredNotes, setFilteredNotes] = useState(notes);
 
   const handleEdit = (noteId, category, title, description) => {
     navigation.navigate('Edit note', {
@@ -36,6 +38,22 @@ const NotesContainer = ({ route, navigation }) => {
       tripId: route.params.tripId,
     });
   };
+
+  const handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = filter(notes, (note) =>
+      contains(note, formattedQuery),
+    );
+    setFilteredNotes(filteredData);
+    setSearch(text);
+  };
+
+  const contains = ({ category, description, title }, query) =>
+    !!(
+      category.toLowerCase().includes(query) ||
+      description.toLowerCase().includes(query) ||
+      title.toLowerCase().includes(query)
+    );
 
   const persistDelete = useCallback(
     (id) => {
@@ -88,6 +106,11 @@ const NotesContainer = ({ route, navigation }) => {
     loadNotes();
   }, [loadNotes]);
 
+  useEffect(() => {
+    setSearch('');
+    setFilteredNotes(notes);
+  }, [notes]);
+
   if (Array.isArray(notes) && notes.length < 1)
     return <ItemlessFrame message="You have no notes saved!" />;
 
@@ -105,12 +128,12 @@ const NotesContainer = ({ route, navigation }) => {
   return (
     <Container style={styles.container}>
       <Searchbar
-        onChangeText={(text) => setSearch(text)}
+        onChangeText={(text) => handleSearch(text)}
         value={search}
-        placeholder="Search by category"
+        placeholder="Search"
       />
       <FlatList
-        data={notes}
+        data={filteredNotes}
         indicatorStyle="white"
         keyExtractor={(item) => item.id.toString()}
         renderItem={(params) => (
