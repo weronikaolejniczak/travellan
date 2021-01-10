@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -10,15 +11,17 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 import * as userActions from 'actions/userActions';
-import { styles } from './StartupContainerStyle';
 import Colors from 'constants/Colors';
+import auth from '@react-native-firebase/auth';
+import { styles } from './StartupContainerStyle';
 
 const StartupContainer = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -41,7 +44,7 @@ const StartupContainer = (props) => {
     };
 
     tryLogin();
-  }, []);
+  }, [isFocused, dispatch, props.navigation]);
 
   return (
     <KeyboardAvoidingView
@@ -50,9 +53,9 @@ const StartupContainer = (props) => {
     >
       <View style={styles.authContainer}>
         <ScrollView>
-          <View style={{ marginBottom: 20, alignItems: 'center' }}>
+          <View style={styles.imageView}>
             <Image
-              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
+              style={styles.image}
               source={require('assets/images/logo.png')}
             />
           </View>

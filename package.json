@@ -20,11 +20,14 @@
     "@react-native-community/progress-bar-android": "^1.0.3",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-community/toolbar-android": "^0.1.0-rc.2",
+    "@react-native-firebase/app": "^10.4.0",
+    "@react-native-firebase/auth": "^10.4.0",
     "@react-native-mapbox-gl/maps": "^8.1.0-rc10",
     "@react-navigation/bottom-tabs": "^5.3.3",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.2.1",
     "@react-navigation/stack": "^5.2.16",
+    "@welldone-software/why-did-you-render": "^6.0.5",
     "axios": "^0.21.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-preset-react-native": "^4.0.1",
@@ -83,7 +86,8 @@
     "redux-thunk": "^2.3.0",
     "rn-extensions-share": "^2.4.0",
     "rn-fetch-blob": "^0.12.0",
-    "yargs-parser": "13.1.2"
+    "yargs-parser": "13.1.2",
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
