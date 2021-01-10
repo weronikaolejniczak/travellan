@@ -18,17 +18,18 @@ import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
+const ForgotPasswordNavigation = ({ navigation, }) => (
+  <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+    <Text style={styles.forgot}>Forgot Password?</Text>
+  </TouchableOpacity>
+);
+
 const AuthenticationContainer = (props) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-
-  const ForgotMovement = ({ navigation, }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-      <Text style={styles.forgot}>Forgot Password?</Text>
-    </TouchableOpacity>
-  );
+  const navigation = props.navigation;
 
   useEffect(() => {
     SplashScreen.hide();
@@ -105,7 +106,7 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
-                <ForgotMovement />
+                <ForgotPasswordNavigation navigation={navigation} />
               </View>
               <View style={styles.actionsContainer}>
                 <Button
