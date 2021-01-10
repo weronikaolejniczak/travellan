@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -97,8 +99,16 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('Forgot');
+                  }}
+                >
+                  <Text style={styles.forgot}>Forgot Password?</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.actionsContainer}>
+
                 <Button
                   loading={isLoading}
                   disabled={isLoading}
@@ -112,15 +122,7 @@ const AuthenticationContainer = (props) => {
                   }}
                   mode="outlined"
                 >
-                  Switch to Sign up
-                </Button>
-                <Button
-                  onPress={() => {
-                    props.navigation.navigate('Forgot');
-                  }}
-                  mode="outlined"
-                >
-                  Forgot Password?
+                  Create new account
                 </Button>
               </View>
             </ScrollView>
