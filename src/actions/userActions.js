@@ -65,7 +65,7 @@ export const sendResetEmail = (email) =>
     auth().sendPasswordResetEmail(email);
   };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userId, expirationDate) =>
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
@@ -74,4 +74,3 @@ const saveDataToStorage = (token, userId, expirationDate) => {
       userId: userId,
     }),
   );
-};
