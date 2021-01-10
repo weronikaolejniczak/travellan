@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button,
   ScrollView as Container,
@@ -7,11 +7,12 @@ import {
   ItemlessFrame,
 } from 'utils';
 import { View } from 'react-native';
-import { fetchCityCode } from 'services/fetchCityCode';
+import fetchCityCode from 'services/fetchCityCode';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, SetIsDateSame] = useState(true);
+  const [data, setData] = useState('');
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate, destination } = props.route.params;
@@ -42,17 +43,24 @@ const AddAccommodationByNameContainer = (props) => {
     setIsLoading(true);
   };
 
+  const fetch = useCallback(async () => {
+    try {
+      const result = await fetchCityCode(destination);
+      setData(result);
+      console.log(result);
+    } catch {
+      setError(error);
+    }
+  }, [destination]);
+
   useEffect(() => {
     if (formatDate(startDate) == formatDate(endDate)) {
       SetIsDateSame(true);
-      async function getCityCode() {
-        const cityCode = await fetchCityCode();
-        console.log(cityCode);
-      }
     } else {
       SetIsDateSame(false);
     }
-  });
+    fetch();
+  }, [startDate, endDate, destination]);
 
   if (isDateSame)
     return (
