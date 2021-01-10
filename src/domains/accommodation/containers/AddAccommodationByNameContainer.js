@@ -50,6 +50,11 @@ const AddAccommodationByNameContainer = (props) => {
     }
   }, [startDate, endDate, destination]);
 
+  if (cityCode == undefined)
+    return (
+      <ItemlessFrame message="Sorry, searching for hotels by name near your destination is impossible!" />
+    );
+
   if (isDateSame)
     return (
       <ItemlessFrame
