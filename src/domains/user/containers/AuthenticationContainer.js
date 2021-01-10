@@ -108,7 +108,7 @@ const AuthenticationContainer = (props) => {
                 </Button>
                 <Button
                   onPress={() => {
-                    props.navigation.navigate('Register');
+                    props.navigation.navigate('Forgot');
                   }}
                   mode="outlined"
                 >

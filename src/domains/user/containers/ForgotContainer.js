@@ -47,7 +47,7 @@ const ForgotContainer = (props) => {
             style={styles.input}
             onChange={handleChange('email')}
             autoCapitalize="none"
-            label="E-mail"
+            label="Enter email"
             error={errors.email}
           />
           <Button
@@ -64,7 +64,7 @@ const ForgotContainer = (props) => {
 };
 
 export const forgotOptions = {
-  headerShown: false,
+  headerTitle: 'Forgot Password?',
 };
 
 export default ForgotContainer;
