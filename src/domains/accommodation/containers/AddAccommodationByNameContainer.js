@@ -41,8 +41,6 @@ const AddAccommodationByNameContainer = (props) => {
     }
   }, [cityCode, value]);
 
-  //fetch();
-
   const handlePress = () => {
     handleChange();
     setIsLoading(true);
