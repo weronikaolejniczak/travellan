@@ -7,6 +7,7 @@ import {
   ItemlessFrame,
 } from 'utils';
 import { View } from 'react-native';
+import fetchHotelByName from 'services/fetchHotelByName';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
