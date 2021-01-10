@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_API_KEY, BACKEND_URL } from 'react-native-dotenv';
+import { BACKEND_URL } from 'react-native-dotenv';
 
 async function fetchHotelByName(cityCode, hotel) {
   return await axios

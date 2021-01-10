@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
   ScrollView as Container,
   Headline,
-  TextInput,
   ItemlessFrame,
+  TextInput,
 } from 'utils';
 import { View } from 'react-native';
-import fetchHotelByName from 'services/fetchHotelByName';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isDateSame, SetIsDateSame] = useState(true);
+  const [isDateSame, setIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const [data, setData] = useState();
@@ -19,7 +19,7 @@ const AddAccommodationByNameContainer = (props) => {
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
-    var d = new Date(date),
+    let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear();
@@ -30,9 +30,7 @@ const AddAccommodationByNameContainer = (props) => {
     return [year, month, day].join('-');
   };
 
-  const handleChange = (val) => {
-    setValue(val);
-  };
+  const handleChange = (val) => setValue(val);
 
   const fetchHotel = useCallback(async () => {
     try {
@@ -40,9 +38,8 @@ const AddAccommodationByNameContainer = (props) => {
       setData(result[0]);
     } catch {
       setError(error);
-      throw error;
     }
-  }, [cityCode, value]);
+  }, [cityCode, error, value]);
 
   const handlePress = () => {
     handleChange();
@@ -51,14 +48,14 @@ const AddAccommodationByNameContainer = (props) => {
   };
 
   useEffect(() => {
-    if (formatDate(startDate) == formatDate(endDate)) {
-      SetIsDateSame(true);
+    if (formatDate(startDate) === formatDate(endDate)) {
+      setIsDateSame(true);
     } else {
-      SetIsDateSame(false);
+      setIsDateSame(false);
     }
   }, [startDate, endDate]);
 
-  if (cityCode == undefined)
+  if (cityCode === undefined)
     return (
       <ItemlessFrame message="Sorry, searching for hotels by name near your destination is impossible!" />
     );
@@ -73,7 +70,7 @@ const AddAccommodationByNameContainer = (props) => {
 
   return (
     <Container>
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
+      <View style={{ marginBottom: 10, marginTop: 10 }}>
         <Headline>Add your accomodation by typing name of your hotel</Headline>
       </View>
       <TextInput
