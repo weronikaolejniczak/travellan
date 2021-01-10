@@ -31,7 +31,6 @@ const ForgotContainer = (props) => {
         try {
           dispatch(action);
           setIsLoading(false);
-          //props.navigation.navigate('AftForgot');
         } catch (err) {
           setError(err.message);
         }
