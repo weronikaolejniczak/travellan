@@ -83,95 +83,94 @@ const CustomDrawerContent = (props) => (
   </SafeAreaView>
 );
 
-const DrawerNavigator = () => (
-  <Drawer.Navigator
-    drawerContent={(props) => <CustomDrawerContent {...props} />}
-    drawerType="front"
-    backBehavior="none"
-  >
-    <Drawer.Screen name="My trips" component={TripsContainer} />
-  </Drawer.Navigator>
-);
-
-export default function Navigation() {
+export default function DrawerNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={defaultNavOptions}>
-        <Stack.Screen
-          name="Startup"
-          component={StartupContainer}
-          options={startupOptions}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterContainer}
-          options={authOptions}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={AuthenticationContainer}
-          options={authOptions}
-        />
-        <Stack.Screen
-          name="Forgot"
-          component={ForgotPasswordContainer}
-          options={forgotOptions}
-        />
-        <Stack.Screen
-          name="My trips"
-          component={TripsContainer}
-          options={tripsOptions}
-        />
-        <Stack.Screen name="Notification" component={NotificationContainer} />
-        <Stack.Screen name="Add trip" component={AddTripContainer} />
-        <Stack.Screen
-          name="Details"
-          component={TripDetailsContainer}
-          options={tripDetailsOptions}
-        />
-        <Stack.Screen
-          name="Transport"
-          component={TransportContainer}
-          options={transportOptions}
-        />
-        <Stack.Screen name="Add transport" component={AddTransportContainer} />
-        <Stack.Screen name="Add QR" component={AddQRContainer} />
-        <Stack.Screen
-          name="Accommodation"
-          component={AccommodationContainer}
-          options={accommodationOptions}
-        />
-        <Stack.Screen
-          name="Add accommodation"
-          component={AddAccommodationContainer}
-        />
-        <Stack.Screen
-          name="Add accommodation by name"
-          component={AddAccommodationByNameContainer}
-        />
-        <Stack.Screen
-          name="Budget"
-          component={BudgetContainer}
-          options={budgetOptions}
-        />
-        <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
-        <Stack.Screen
-          name="Notes"
-          component={NotesContainer}
-          options={notesOptions}
-        />
-        <Stack.Screen name="Add note" component={AddNoteContainer} />
-        <Stack.Screen name="Edit note" component={EditNoteContainer} />
-        <Stack.Screen
-          name="Map"
-          component={MapContainer}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Weather" component={WeatherContainer} />
-      </Stack.Navigator>
+      <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        drawerType="front"
+        backBehavior="none"
+      >
+        <Drawer.Screen name="Navigation" component={Navigation} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
+const Navigation = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen
+      name="Startup"
+      component={StartupContainer}
+      options={startupOptions}
+    />
+    <Stack.Screen
+      name="Register"
+      component={RegisterContainer}
+      options={authOptions}
+    />
+    <Stack.Screen
+      name="Auth"
+      component={AuthenticationContainer}
+      options={authOptions}
+    />
+    <Stack.Screen
+      name="Forgot"
+      component={ForgotPasswordContainer}
+      options={forgotOptions}
+    />
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
+    <Stack.Screen name="Notification" component={NotificationContainer} />
+    <Stack.Screen name="Add trip" component={AddTripContainer} />
+    <Stack.Screen
+      name="Details"
+      component={TripDetailsContainer}
+      options={tripDetailsOptions}
+    />
+    <Stack.Screen
+      name="Transport"
+      component={TransportContainer}
+      options={transportOptions}
+    />
+    <Stack.Screen name="Add transport" component={AddTransportContainer} />
+    <Stack.Screen name="Add QR" component={AddQRContainer} />
+    <Stack.Screen
+      name="Accommodation"
+      component={AccommodationContainer}
+      options={accommodationOptions}
+    />
+    <Stack.Screen
+      name="Add accommodation"
+      component={AddAccommodationContainer}
+    />
+    <Stack.Screen
+      name="Add accommodation by name"
+      component={AddAccommodationByNameContainer}
+    />
+    <Stack.Screen
+      name="Budget"
+      component={BudgetContainer}
+      options={budgetOptions}
+    />
+    <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
+    <Stack.Screen
+      name="Notes"
+      component={NotesContainer}
+      options={notesOptions}
+    />
+    <Stack.Screen name="Add note" component={AddNoteContainer} />
+    <Stack.Screen name="Edit note" component={EditNoteContainer} />
+    <Stack.Screen
+      name="Map"
+      component={MapContainer}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen name="Weather" component={WeatherContainer} />
+  </Stack.Navigator>
+);
 
 const defaultNavOptions = {
   headerTintColor: Colors.text,
