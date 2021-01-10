@@ -8,12 +8,16 @@ import { styles } from './ToolbarStyle';
 const Toolbar = ({
   addingActivityHandler,
   addingMarkerActive,
+  searchingActive,
+  searchingActivityHandler,
   deletingActivityHandler,
   deletingMarkerActive,
   isLoading,
   markerTitle,
+  searchQuerry,
   onExitHandler,
   setMarkerTitle,
+  setSearchQuerry,
 }) => (
   <View style={styles.overlay}>
     <View style={styles.actionBar}>
@@ -38,6 +42,13 @@ const Toolbar = ({
         handler={deletingMarkerActive}
         onPress={deletingActivityHandler}
       />
+      <ToolbarButton
+        icon="map-search"
+        isLoading={isLoading}
+        loader={false}
+        handler={searchingActive}
+        onPress={searchingActivityHandler}
+      />
     </View>
 
     {addingMarkerActive && (
@@ -46,6 +57,15 @@ const Toolbar = ({
         placeholder={addingMarkerActive && 'Marker title'}
         value={markerTitle}
         onChangeText={(text) => setMarkerTitle(text)}
+      />
+    )}
+
+    {searchingActive && (
+      <Searchbar
+        icon="map-marker-question"
+        placeholder={searchingActive && 'Search'}
+        value={searchQuerry}
+        onChangeText={(text) => setSearchQuerry(text)}
       />
     )}
   </View>

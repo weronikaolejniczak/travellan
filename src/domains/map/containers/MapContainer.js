@@ -41,13 +41,13 @@ const MapContainer = ({ route, navigation }) => {
   const renderMarkers = () =>
     !!markers &&
     markers.map((marker) => (
-      <MapboxGL.MarkerView
+      <MapboxGL.PointAnnotation
         id={`marker-${marker.id}`}
         coordinate={[marker.lat, marker.lon]}
         onSelected={(event) => markerOnPressHandler(event)}
       >
         <MapboxGL.Callout title={marker.title} />
-      </MapboxGL.MarkerView>
+      </MapboxGL.PointAnnotation>
     ));
 
   const activityHandler = (type) => {
@@ -155,7 +155,7 @@ const MapContainer = ({ route, navigation }) => {
         onRegionDidChange={(region) => setCurrentRegion(region)}
       >
         <MapboxGL.Camera
-          zoomLevel={8}
+          zoomLevel={10}
           centerCoordinate={[
             extractRegion().longitude,
             extractRegion().latitude,
