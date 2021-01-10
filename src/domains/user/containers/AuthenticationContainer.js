@@ -24,6 +24,12 @@ const AuthenticationContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  const ForgotMovement = ({ navigation, }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+      <Text style={styles.forgot}>Forgot Password?</Text>
+    </TouchableOpacity>
+  );
+
   useEffect(() => {
     SplashScreen.hide();
     if (error) {
@@ -99,11 +105,7 @@ const AuthenticationContainer = (props) => {
                   label="Password"
                   error={errors.password}
                 />
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Forgot')}
-                >
-                  <Text style={styles.forgot}>Forgot Password?</Text>
-                </TouchableOpacity>
+                <ForgotMovement />
               </View>
               <View style={styles.actionsContainer}>
                 <Button
