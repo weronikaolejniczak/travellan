@@ -19,6 +19,7 @@ module.exports = {
     'sort-keys': ['error', 'asc', { natural: true }],
     'space-before-blocks': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
+    'no-console': 'warn',
     'prettier/prettier': 'error',
     'sort-imports-es6-autofix/sort-imports-es6': [
       2,
