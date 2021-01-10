@@ -1,5 +1,5 @@
 import Autocomplete from 'react-native-autocomplete-input';
-import React from 'react';
+import React, { memo } from 'react';
 import {
   KeyboardAvoidingView,
   Text,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-import { AccountButton } from 'components';
+import AccountButton from 'components/AccountButton/AccountButton';
 import { CURRENCIES } from 'data/Currencies';
 import { Layout } from 'constants';
 import { Switch, TextInput } from 'utils';
@@ -130,4 +130,4 @@ const BudgetField = ({
   );
 };
 
-export default BudgetField;
+export default memo(BudgetField);
