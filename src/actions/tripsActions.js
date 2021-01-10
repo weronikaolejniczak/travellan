@@ -5,6 +5,7 @@ import Map from 'models/Map';
 import Trip from 'models/Trip';
 import fetchCoordinates from 'services/fetchCoordinates';
 import fetchDestinationImage from 'services/fetchDestinationImage';
+import fetchCityCode from 'services/fetchCityCode';
 
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';

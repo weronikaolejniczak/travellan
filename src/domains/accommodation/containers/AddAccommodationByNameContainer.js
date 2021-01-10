@@ -47,7 +47,6 @@ const AddAccommodationByNameContainer = (props) => {
     try {
       const result = await fetchCityCode(destination);
       setData(result);
-      console.log(result);
     } catch {
       setError(error);
     }
@@ -59,7 +58,7 @@ const AddAccommodationByNameContainer = (props) => {
     } else {
       SetIsDateSame(false);
     }
-    fetch();
+    //fetch();
   }, [startDate, endDate, destination]);
 
   if (isDateSame)
