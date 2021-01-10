@@ -14,6 +14,7 @@ const AddAccommodationByNameContainer = (props) => {
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
   const { startDate, endDate, destination, cityCode } = props.route.params;
+  console.log(cityCode);
   let formattedStartDate = '';
   let formattedEndDate = '';
 

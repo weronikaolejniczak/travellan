@@ -6,7 +6,9 @@ async function fetchCityCode(destination) {
     .get(`${BACKEND_URL}/location/cityCode?keyword=${destination}`)
     .then((json) => json.data)
     .catch((error) => {
-      throw error;
+      if (error) {
+        return undefined;
+      }
     });
 }
 
