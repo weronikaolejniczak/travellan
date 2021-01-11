@@ -144,7 +144,6 @@ const MapContainer = ({ route, navigation }) => {
             latitude,
             longitude,
           );
-          console.log('podaje', searchAnswer);
           const [lat, lon] = searchAnswer.geometry.coordinates;
           const name = searchAnswer.place_name;
           setMarkers(
@@ -190,18 +189,13 @@ const MapContainer = ({ route, navigation }) => {
         style={styles.map}
         styleURL="mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016"
         onLongPress={(event) => mapOnPressHandler(event)}
-        onRegionDidChange={(region) => setCurrentRegion(region)}
+        // onRegionDidChange={(region) => setCurrentRegion(region)} - left for further debugging
       >
         <MapboxGL.Camera
           zoomLevel={10}
           centerCoordinate={
-            extractRegion().geometry.coordinates
-            //   [
-            //   16.931992,
-            //   52.409538,
-            //   extractRegion().longitude,
-            //   extractRegion().latitude,
-            // ]
+            // extractRegion().geometry.coordinates - left for further debugging
+            [extractRegion().longitude, extractRegion().latitude]
           }
         />
         {renderMarkers()}
