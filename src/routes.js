@@ -83,13 +83,24 @@ const CustomDrawerContent = (props) => (
   </SafeAreaView>
 );
 
+const Trips = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
+  </Stack.Navigator>
+);
+
 const DrawerNavigator = () => (
   <Drawer.Navigator
+    screenOptions={defaultNavOptions}
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="My trips" component={TripsContainer} />
+    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
   </Drawer.Navigator>
 );
 
@@ -113,14 +124,14 @@ export default function Navigation() {
           options={authOptions}
         />
         <Stack.Screen
+          name="My trips"
+          component={DrawerNavigator}
+          options={authOptions}
+        />
+        <Stack.Screen
           name="Forgot"
           component={ForgotPasswordContainer}
           options={forgotOptions}
-        />
-        <Stack.Screen
-          name="My trips"
-          component={DrawerNavigator}
-          options={tripsOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
