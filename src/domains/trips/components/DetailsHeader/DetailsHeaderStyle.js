@@ -29,10 +29,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   dateBubble: {
-    backgroundColor: Colors.transparentShadow,
-    borderRadius: 20,
     margin: 5,
-    padding: 10,
+    padding: 5,
     paddingHorizontal: 20,
   },
   dateContainer: {
@@ -41,7 +39,7 @@ export const styles = StyleSheet.create({
     padding: 2,
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
   },
   icon: {
     color: Colors.text,

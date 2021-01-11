@@ -32,7 +32,7 @@ const DetailsHeader = ({
         colors={[Colors.transparent, Colors.background]}
         start={{ x: 0.0, y: 0.0 }}
         end={{ x: 0.0, y: 1.0 }}
-        locations={[0.6, 1]}
+        locations={[0.5, 1]}
         style={styles.linearGradient}
       >
         <View style={styles.infoContainer}>
