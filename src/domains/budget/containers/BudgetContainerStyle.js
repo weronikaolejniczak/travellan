@@ -67,6 +67,11 @@ export const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 22,
   },
+  selectedHistoryItemInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   currencyHolder: {
     backgroundColor: Colors.background,
     borderRadius: 50,
