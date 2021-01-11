@@ -140,15 +140,19 @@ const MapContainer = ({ route, navigation }) => {
       if (searchingActive) {
         if (searchQuerry !== '') {
           const title = searchQuerry;
-          const { lat, lon } = await fetchMapSearch(title, latitude, longitude);
-          setMarkers(
-            markers
-              ? [
-                  ...markers,
-                  new PointOfInterest(new Date().toString(), lat, lon, title),
-                ]
-              : [new PointOfInterest(new Date().toString(), lat, lon, title)],
+          console.log(
+            'podaje',
+            await fetchMapSearch(title, latitude, longitude),
           );
+          // const { lat, lon } = await fetchMapSearch(title, latitude, longitude);
+          // setMarkers(
+          //   markers
+          //     ? [
+          //         ...markers,
+          //         new PointOfInterest(new Date().toString(), lat, lon, title),
+          //       ]
+          //     : [new PointOfInterest(new Date().toString(), lat, lon, title)],
+          // );
           setSearchQuerry('');
         } else {
           setError('Enter the querry');
@@ -188,10 +192,15 @@ const MapContainer = ({ route, navigation }) => {
       >
         <MapboxGL.Camera
           zoomLevel={10}
-          centerCoordinate={[
-            extractRegion().longitude,
-            extractRegion().latitude,
-          ]}
+          centerCoordinate={
+            extractRegion().geometry.coordinates
+            //   [
+            //   16.931992,
+            //   52.409538,
+            //   extractRegion().longitude,
+            //   extractRegion().latitude,
+            // ]
+          }
         />
         {renderMarkers()}
         <MapboxGL.UserLocation />
