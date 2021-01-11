@@ -218,6 +218,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
     implementation project(':react-native-splash-screen')
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
 
 
