@@ -54,7 +54,7 @@ const Toolbar = ({
     {addingMarkerActive && (
       <Searchbar
         icon="map-marker-question"
-        placeholder={addingMarkerActive && 'Marker title'}
+        placeholder={addingMarkerActive && 'Enter marker title'}
         value={markerTitle}
         onChangeText={(text) => setMarkerTitle(text)}
       />

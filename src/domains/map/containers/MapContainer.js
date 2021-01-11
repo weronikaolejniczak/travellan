@@ -139,21 +139,21 @@ const MapContainer = ({ route, navigation }) => {
     } else {
       if (searchingActive) {
         if (searchQuerry !== '') {
-          const querry = searchQuerry;
           const searchAnswer = await fetchMapSearch(
-            querry,
+            searchQuerry,
             latitude,
             longitude,
           );
-          console.log('podaje', searchAnswer.geometry.coordinates);
+          console.log('podaje', searchAnswer);
           const [lat, lon] = searchAnswer.geometry.coordinates;
+          const name = searchAnswer.place_name;
           setMarkers(
             markers
               ? [
                   ...markers,
-                  new PointOfInterest(new Date().toString(), lat, lon, querry),
+                  new PointOfInterest(new Date().toString(), lat, lon, name),
                 ]
-              : [new PointOfInterest(new Date().toString(), lat, lon, querry)],
+              : [new PointOfInterest(new Date().toString(), lat, lon, name)],
           );
           setSearchQuerry('');
         } else {
