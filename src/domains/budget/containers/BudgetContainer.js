@@ -7,11 +7,13 @@ import * as categories from 'data/SpendingCategories';
 import { AccountButton } from 'components';
 import {
   BalanceDashboard,
+  BudgetHistory,
   Chart,
   ChartTab,
   CurrencyPicker,
+  SectionHeader,
 } from '../components';
-import { Card, ItemlessFrame, LoadingFrame, TextInput } from 'utils';
+import { ItemlessFrame, LoadingFrame, TextInput } from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
@@ -213,10 +215,7 @@ const BudgetContainer = (props) => {
         )}
 
         <View style={styles.smallMarginTop}>
-          {/* header */}
-          <Card style={{ padding: '5%' }}>
-            <Text style={[styles.text, styles.label]}>Operations</Text>
-          </Card>
+          <SectionHeader>Operations</SectionHeader>
 
           {/* operations content */}
           <View style={{ padding: '5%' }}>
@@ -251,7 +250,6 @@ const BudgetContainer = (props) => {
               </View>
             </View>
 
-            {/* choose account */}
             <View>
               <Text style={{ color: 'grey' }}>Accounts</Text>
               <View style={styles.justifyRow}>
@@ -275,7 +273,7 @@ const BudgetContainer = (props) => {
               </View>
             </View>
 
-            {/* fORM */}
+            {/* form */}
             {/* inputs - use Formik validation */}
             <TextInput
               label="Title of transaction"
@@ -296,67 +294,8 @@ const BudgetContainer = (props) => {
           </View>
 
           <View style={styles.smallMarginTop}>
-            {/* history header */}
-            <Card style={{ padding: '5%' }}>
-              <Text style={[styles.text, styles.label]}>History</Text>
-            </Card>
-
-            {/* selected history currency item */}
-            {!selectedCurrency.history.length ? (
-              <View style={styles.smallMarginTop}>
-                <Text style={styles.text}>No operations to show</Text>
-              </View>
-            ) : (
-              selectedCurrency.history
-                .slice(0)
-                .reverse()
-                .map((item) => (
-                  <Card style={styles.operationCard}>
-                    <View style={styles.justifyRow}>
-                      <View
-                        style={{
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          marginRight: '5%',
-                        }}
-                      >
-                        <Icon
-                          name={categories.categoryIcons[item.category]}
-                          style={[
-                            styles.icon,
-                            styles.text,
-                            { marginRight: '10%' },
-                          ]}
-                        />
-                        <Icon
-                          name={
-                            item.account === 'card' ? 'credit-card' : 'cash'
-                          }
-                          style={[styles.icon, styles.text]}
-                        />
-                      </View>
-                      <View>
-                        <Text style={styles.date}>
-                          {new Date(item.date).toLocaleDateString()} at{' '}
-                          {new Date(item.date).toLocaleTimeString()}
-                        </Text>
-                        <View style={[styles.justifyRow]}>
-                          <Text
-                            style={
-                              item.value < 0 ? styles.negative : styles.positive
-                            }
-                          >
-                            {item.value}
-                            {'   '}
-                          </Text>
-                          <Text style={styles.text}>{item.title}</Text>
-                        </View>
-                      </View>
-                    </View>
-                  </Card>
-                ))
-            )}
+            <SectionHeader>History</SectionHeader>
+            <BudgetHistory history={selectedCurrency.history} />
           </View>
         </View>
       </ScrollView>
