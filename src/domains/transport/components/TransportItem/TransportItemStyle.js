@@ -1,5 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
 export const cardHeight = height * 0.8;
@@ -7,68 +7,126 @@ export const cardWidth = width * 0.915;
 export const spacingForCardInset = width * 0.03;
 
 export const styles = StyleSheet.create({
-  transportCard: {
-    width: cardWidth,
-    height: cardHeight,
-    marginHorizontal: 5,
-    paddingTop: height * 0.0365,
-    borderRadius: 15,
+  PDF: {
+    flex: 1,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
+  QR: {
+    alignContent: 'center',
+    alignItems: 'center',
+    borderColor: Colors.white,
+    borderWidth: 2,
+    height: '100%',
+    justifyContent: 'center',
+    width: '100%',
+    zIndex: 5,
+  },
+  QRView: {
+    alignItems: 'center',
+    flex: 1,
+    marginBottom: '5%',
   },
   actions: {
-    flexDirection: 'row',
-    padding: cardHeight * 0.018,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    position: 'absolute',
-    top: 0,
+    flexDirection: 'row',
     left: 0,
+    padding: cardHeight * 0.018,
+    position: 'absolute',
     right: 0,
+    top: 0,
+  },
+  buttonTouchableLeft: {
+    alignSelf: 'stretch',
+    padding: 16,
+    textAlign: 'left',
+  },
+  columnDirection: {
+    flexDirection: 'column',
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: '5%',
+  },
+  containerQR: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: '5%',
+    paddingTop: '50%',
+  },
+  containerRow: {
+    alignContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: '5%',
+  },
+  counterContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 24,
+    height: 48,
+    justifyContent: 'center',
+    paddingHorizontal: cardWidth * 0.035,
+    paddingVertical: cardHeight * 0.01,
+    width: 48,
   },
   header: {
     color: Colors.text,
     fontSize: 24,
   },
-  subtitle: {
-    color: Colors.text,
-    fontSize: 20,
-  },
-  text: {
-    fontSize: 16,
-    color: Colors.text,
-  },
-  icon: {
-    fontSize: 30,
-    color: Colors.text,
-    marginRight: 20,
-  },
-  iconsAndLinesContainer: {
-    marginRight: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  verticalLine: {
-    borderColor: Colors.primary,
-    height: cardHeight * 0.075,
-    borderLeftWidth: 3,
-  },
   horizontalLine: {
-    marginVertical: 10,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
+    marginVertical: 10,
   },
-  counterContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    paddingHorizontal: cardWidth * 0.035,
-    paddingVertical: cardHeight * 0.01,
-    backgroundColor: Colors.primary,
-    justifyContent: 'center',
+  icon: {
+    color: Colors.text,
+    fontSize: 30,
+    marginRight: 20,
+  },
+  icon2: {
+    color: Colors.text,
+    fontSize: 30,
+  },
+  icon3: {
+    color: Colors.text,
+    fontSize: 30,
+    marginTop: 40,
+  },
+  iconsAndLinesContainer: {
     alignItems: 'center',
+    justifyContent: 'space-between',
+    marginRight: 20,
   },
-  columnDirection: {
-    flexDirection: 'column',
+  infoInnerView: { flex: 0.5 },
+  infoScrollView: {
+    marginTop: cardHeight * 0.0465,
+  },
+  infoText: {
+    color: Colors.primary,
+    fontWeight: 'bold',
+  },
+  infoView: {
+    alignItems: 'baseline',
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: '5%',
+    paddingHorizontal: 22,
+  },
+  rowCenter: {
+    alignItems: 'center',
   },
   rowDirection: {
     flexDirection: 'row',
@@ -76,87 +134,29 @@ export const styles = StyleSheet.create({
   spaceBetween: {
     justifyContent: 'space-between',
   },
-  rowCenter: {
-    alignItems: 'center',
+  subtitle: {
+    color: Colors.text,
+    fontSize: 20,
+  },
+  text: {
+    color: Colors.text,
+    fontSize: 16,
   },
   textAndIconContainer: {
-    justifyContent: 'space-around',
     alignItems: 'center',
+    justifyContent: 'space-around',
     marginVertical: 10,
   },
-  QR: {
-    height: '100%',
-    width: '100%',
-    borderColor: Colors.white,
-    borderWidth: 2,
-    zIndex: 5,
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
+  transportCard: {
+    height: cardHeight,
+    borderRadius: 15,
+    marginHorizontal: 5,
+    paddingTop: height * 0.0365,
+    width: cardWidth,
   },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
+  verticalLine: {
+    borderColor: Colors.primary,
+    borderLeftWidth: 3,
+    height: cardHeight * 0.075,
   },
-  PDF: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  buttonTouchableLeft: {
-    padding: 16,
-    textAlign: 'left',
-    alignSelf: 'stretch',
-  },
-  containerRow: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'space-between',
-  },
-  containerQR: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: '50%',
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  icon2: {
-    fontSize: 30,
-    color: Colors.text,
-  },
-  icon3: {
-    fontSize: 30,
-    color: Colors.text,
-    marginTop: 40,
-  },
-  infoView: {
-    flex: 1,
-    paddingHorizontal: 22,
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    marginBottom: '5%',
-  },
-  infoText: {
-    color: Colors.primary,
-    fontWeight: 'bold',
-  },
-  QRView: {
-    flex: 1,
-    alignItems: 'center',
-    marginBottom: '5%',
-  },
-  infoScrollView: {
-    marginTop: cardHeight * 0.0465,
-  },
-  infoInnerView: { flex: 0.5 },
 });
