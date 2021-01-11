@@ -5,6 +5,7 @@ import Map from 'models/Map';
 import Trip from 'models/Trip';
 import fetchCoordinates from 'services/fetchCoordinates';
 import fetchDestinationImage from 'services/fetchDestinationImage';
+import fetchCityCode from 'services/fetchCityCode';
 
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
@@ -59,6 +60,7 @@ export const fetchTripsRequest = () => {
               data[key].budget,
               data[key].notes,
               data[key].map,
+              data[key].cityCode,
             ),
           );
         }
@@ -91,7 +93,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-
+    const cityCode = await fetchCityCode(destination);
     const image = await fetchDestinationImage(destination);
     const location = await fetchCoordinates(destination);
     const region = {
@@ -117,6 +119,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         region,
         startDate,
         transport,
+        cityCode,
       })
       .then((res) => res.data)
       .then((data) => {
@@ -132,6 +135,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
           budget,
           notes,
           map,
+          cityCode,
         );
 
         dispatch(createTrip(newTrip));

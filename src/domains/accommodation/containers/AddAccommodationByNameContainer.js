@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
   ScrollView as Container,
   Headline,
-  TextInput,
   ItemlessFrame,
+  TextInput,
 } from 'utils';
 import { View } from 'react-native';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isDateSame, SetIsDateSame] = useState(true);
+  const [isDateSame, setIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const { startDate, endDate } = props.route.params;
-  let formattedStartDate = '';
-  let formattedEndDate = '';
+  const [data, setData] = useState();
+  const { startDate, endDate, cityCode } = props.route.params;
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
-    var d = new Date(date),
+    let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear();
@@ -30,24 +30,35 @@ const AddAccommodationByNameContainer = (props) => {
     return [year, month, day].join('-');
   };
 
-  const handleChange = (val) => {
-    setValue(val);
-  };
+  const handleChange = (val) => setValue(val);
+
+  const fetchHotel = useCallback(async () => {
+    try {
+      const result = await fetchHotelByName(cityCode, value);
+      setData(result[0]);
+    } catch {
+      setError(error);
+    }
+  }, [cityCode, error, value]);
 
   const handlePress = () => {
     handleChange();
-    formattedStartDate = formatDate(startDate);
-    formattedEndDate = formatDate(endDate);
     setIsLoading(true);
+    fetchHotel(cityCode, value);
   };
 
   useEffect(() => {
-    if (formatDate(startDate) == formatDate(endDate)) {
-      SetIsDateSame(true);
+    if (formatDate(startDate) === formatDate(endDate)) {
+      setIsDateSame(true);
     } else {
-      SetIsDateSame(false);
+      setIsDateSame(false);
     }
-  });
+  }, [startDate, endDate]);
+
+  if (cityCode === undefined)
+    return (
+      <ItemlessFrame message="Sorry, searching for hotels by name near your destination is impossible!" />
+    );
 
   if (isDateSame)
     return (
@@ -59,7 +70,7 @@ const AddAccommodationByNameContainer = (props) => {
 
   return (
     <Container>
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
+      <View style={{ marginBottom: 10, marginTop: 10 }}>
         <Headline>Add your accomodation by typing name of your hotel</Headline>
       </View>
       <TextInput

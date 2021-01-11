@@ -157,7 +157,7 @@ export default function Navigation() {
           component={AddAccommodationContainer}
         />
         <Stack.Screen
-          name="Add accommodation by name"
+          name="Add hotel by name "
           component={AddAccommodationByNameContainer}
         />
         <Stack.Screen
