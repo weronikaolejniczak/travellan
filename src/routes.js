@@ -12,8 +12,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AccommodationContainer, {
   accommodationOptions,
 } from 'domains/accommodation/containers/AccommodationContainer';
-import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
+import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
@@ -26,6 +26,9 @@ import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
+import ForgotPasswordContainer, {
+  forgotOptions,
+} from 'domains/user/containers/ForgotPasswordContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import NotesContainer, {
   notesOptions,
@@ -80,13 +83,24 @@ const CustomDrawerContent = (props) => (
   </SafeAreaView>
 );
 
+const Trips = () => (
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
+  </Stack.Navigator>
+);
+
 const DrawerNavigator = () => (
   <Drawer.Navigator
+    screenOptions={defaultNavOptions}
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="My trips" component={TripsContainer} />
+    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
   </Drawer.Navigator>
 );
 
@@ -112,7 +126,12 @@ export default function Navigation() {
         <Stack.Screen
           name="My trips"
           component={DrawerNavigator}
-          options={tripsOptions}
+          options={authOptions}
+        />
+        <Stack.Screen
+          name="Forgot"
+          component={ForgotPasswordContainer}
+          options={forgotOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
