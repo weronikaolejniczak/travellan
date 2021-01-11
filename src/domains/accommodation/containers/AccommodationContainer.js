@@ -24,7 +24,6 @@ const AccommodationContainer = (props) => {
       endDate: route.params.endDate,
       startDate: route.params.startDate,
       tripId: route.params.tripId,
-      cityCode: route.params.cityCode,
     });
   };
 
