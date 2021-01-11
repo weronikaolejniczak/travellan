@@ -1,30 +1,20 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Alert,
-  Dimensions,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as categories from 'data/SpendingCategories';
 import { AccountButton } from 'components';
-import { BalanceDashboard, CurrencyPicker } from '../components';
-import { Card, ItemlessFrame, LoadingFrame, TextInput } from 'utils';
-import { Colors } from 'constants';
-import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import {
-  prepareDataForLinechart,
-  prepareLabelsForLinechart,
-  prepareValue,
-} from 'helpers';
+  BalanceDashboard,
+  Chart,
+  ChartTab,
+  CurrencyPicker,
+} from '../components';
+import { Card, ItemlessFrame, LoadingFrame, TextInput } from 'utils';
+import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
+import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
-
-const screenWidth = Dimensions.get('window').width;
 
 const BudgetContainer = (props) => {
   const dispatch = useDispatch();
@@ -53,33 +43,6 @@ const BudgetContainer = (props) => {
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(
     selectedCurrency ? selectedCurrency.history[0] : null,
   );
-
-  const data = {
-    datasets: [
-      {
-        color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`,
-        data: selectedCurrency
-          ? prepareDataForLinechart(selectedCurrency.history)
-          : [],
-        strokeWidth: 2,
-      },
-    ],
-    labels: selectedCurrency
-      ? prepareLabelsForLinechart(selectedCurrency.history)
-      : [],
-    legend: ['Budget value'],
-  };
-
-  const chartConfig = {
-    backgroundGradientFrom: Colors.cards,
-    backgroundGradientFromOpacity: 0.0,
-    backgroundGradientTo: Colors.cards,
-    backgroundGradientToOpacity: 0.9,
-    barPercentage: 0.5,
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    strokeWidth: 2,
-    useShadowColorFromDataset: false,
-  };
 
   const clear = () => {
     setTitle('');
@@ -213,7 +176,8 @@ const BudgetContainer = (props) => {
     });
   }, [dispatch, loadBudget]);
 
-  if (isLoading || isRefreshing) return <LoadingFrame />;
+  if (selectedCurrency === undefined || isLoading || isRefreshing)
+    return <LoadingFrame />;
 
   if (budget === [] || budget === undefined)
     <ItemlessFrame message="There is no budget to show!" />;
@@ -226,57 +190,26 @@ const BudgetContainer = (props) => {
         handleSelectCurrency={handleSelectCurrency}
         handleDeleteCurrency={handleDeleteCurrency}
       />
-
       <BalanceDashboard currency={selectedCurrency} />
 
       <ScrollView contentContainerStyle={styles.detailsContainer}>
-        {/* statistics */}
         {selectedCurrency.history.length > 1 && (
-          <View>
-            {/* statistics chart */}
-            <View style={[styles.smallMarginTop, styles.chartContainer]}>
-              <LineChart
-                data={data}
-                width={screenWidth * 0.9}
-                height={220}
-                chartConfig={chartConfig}
-                fromZero={true}
-                onDataPointClick={(item) =>
-                  setSelectedHistoryItem(selectedCurrency.history[item.index])
-                }
-                getDotColor={(item, index) =>
-                  selectedCurrency.history[index].value < 0
-                    ? '#b20000'
-                    : 'green'
-                }
-              />
-            </View>
-
-            {/* selected chart item - when you click on point on chart */}
+          <>
+            <Chart
+              getValue={(index) => selectedCurrency.history[index].value}
+              data={selectedCurrency.history}
+              onDataPointClick={(item) =>
+                setSelectedHistoryItem(selectedCurrency.history[item.index])
+              }
+            />
             {!!selectedHistoryItem && (
-              <View
-                style={[
-                  styles.smallMarginTop,
-                  {
-                    backgroundColor:
-                      selectedHistoryItem.value < 0 ? '#b20000' : 'green',
-                    borderRadius: 20,
-                    padding: 15,
-                  },
-                ]}
-              >
-                <Text style={styles.text}>
-                  {new Date(selectedHistoryItem.date).toLocaleDateString()}
-                </Text>
-                <View style={styles.selectedHistoryItemInfo}>
-                  <Text style={[styles.text, { fontSize: 22 }]}>
-                    {selectedHistoryItem.value}
-                  </Text>
-                  <Text style={[styles.text]}>{selectedHistoryItem.title}</Text>
-                </View>
-              </View>
+              <ChartTab
+                date={selectedHistoryItem.date}
+                title={selectedHistoryItem.title}
+                value={selectedHistoryItem.value}
+              />
             )}
-          </View>
+          </>
         )}
 
         <View style={styles.smallMarginTop}>
