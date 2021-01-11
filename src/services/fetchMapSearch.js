@@ -8,7 +8,7 @@ async function fetchMapSearch(querry, longitude, latitude) {
     .get(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${querry}.json?limit=1&proximity=${longitude},${latitude}&access_token=${API_KEY}`,
     )
-    .then((json) => json.data.features);
+    .then((json) => json.data.features[0]);
 }
 
 export default fetchMapSearch;

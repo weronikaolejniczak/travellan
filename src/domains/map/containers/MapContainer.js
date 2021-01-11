@@ -139,20 +139,22 @@ const MapContainer = ({ route, navigation }) => {
     } else {
       if (searchingActive) {
         if (searchQuerry !== '') {
-          const title = searchQuerry;
-          console.log(
-            'podaje',
-            await fetchMapSearch(title, latitude, longitude),
+          const querry = searchQuerry;
+          const searchAnswer = await fetchMapSearch(
+            querry,
+            latitude,
+            longitude,
           );
-          // const { lat, lon } = await fetchMapSearch(title, latitude, longitude);
-          // setMarkers(
-          //   markers
-          //     ? [
-          //         ...markers,
-          //         new PointOfInterest(new Date().toString(), lat, lon, title),
-          //       ]
-          //     : [new PointOfInterest(new Date().toString(), lat, lon, title)],
-          // );
+          console.log('podaje', searchAnswer.geometry.coordinates);
+          const [lat, lon] = searchAnswer.geometry.coordinates;
+          setMarkers(
+            markers
+              ? [
+                  ...markers,
+                  new PointOfInterest(new Date().toString(), lat, lon, querry),
+                ]
+              : [new PointOfInterest(new Date().toString(), lat, lon, querry)],
+          );
           setSearchQuerry('');
         } else {
           setError('Enter the querry');
