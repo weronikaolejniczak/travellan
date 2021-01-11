@@ -60,7 +60,12 @@ export const logout = () => {
   AsyncStorage.removeItem('userData');
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+export const sendResetEmail = (email) =>
+  async function (dispatch) {
+    auth().sendPasswordResetEmail(email);
+  };
+
+const saveDataToStorage = (token, userId, expirationDate) =>
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
@@ -69,4 +74,3 @@ const saveDataToStorage = (token, userId, expirationDate) => {
       userId: userId,
     }),
   );
-};

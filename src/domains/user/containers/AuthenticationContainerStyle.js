@@ -24,6 +24,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  forgot: {
+    color: Colors.text,
+    fontSize: 14,
+  },
   formControl: {
     width: '100%',
   },
