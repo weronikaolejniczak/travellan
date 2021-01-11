@@ -84,20 +84,23 @@ const CustomDrawerContent = (props) => (
 );
 
 const Trips = () => (
-  <Stack.Screen
-    name="Trips"
-    component={TripsContainer}
-    options={tripsOptions}
-  />
+  <Stack.Navigator screenOptions={defaultNavOptions}>
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
+  </Stack.Navigator>
 );
 
 const DrawerNavigator = () => (
   <Drawer.Navigator
+    screenOptions={defaultNavOptions}
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="Trips" component={Trips} options={tripsOptions} />
+    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
   </Drawer.Navigator>
 );
 
@@ -120,7 +123,11 @@ export default function Navigation() {
           component={AuthenticationContainer}
           options={authOptions}
         />
-        <Stack.Screen name="My trips" component={DrawerNavigator} />
+        <Stack.Screen
+          name="My trips"
+          component={DrawerNavigator}
+          options={authOptions}
+        />
         <Stack.Screen
           name="Forgot"
           component={ForgotPasswordContainer}
