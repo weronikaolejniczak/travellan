@@ -85,7 +85,7 @@ const BudgetField = ({
               icon="credit-card"
               setAccount={setAccount}
             >
-              Cash
+              Card
             </AccountButton>
           </View>
 
