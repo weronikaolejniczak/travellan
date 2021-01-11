@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import ToolbarButton from './toolbarButton/ToolbarButton';
+import ToolbarButton from './ToolbarButton/ToolbarButton';
 import { Searchbar } from 'utils';
 import { styles } from './ToolbarStyle';
 
