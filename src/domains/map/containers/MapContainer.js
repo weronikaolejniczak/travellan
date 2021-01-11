@@ -9,6 +9,7 @@ import PointOfInterest from 'models/PointOfInterest';
 import { Toolbar } from '../components';
 import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
+import fetchMapSearch from '../../../services/fetchMapSearch';
 
 MapboxGL.setAccessToken(MAPBOX_KEY);
 MapboxGL.setConnected(true);
@@ -57,6 +58,7 @@ const MapContainer = ({ route, navigation }) => {
       case 'adding':
         if (!addingMarkerActive) {
           setDeletingMarkerActive(false);
+          setSearchingActive(false);
         } else {
           setMarkerTitle('');
         }
@@ -65,6 +67,7 @@ const MapContainer = ({ route, navigation }) => {
       case 'deleting':
         if (!deletingMarkerActive) {
           setAddingMarkerActive(false);
+          setSearchingActive(false);
           setMarkerTitle('');
         }
         setDeletingMarkerActive(!deletingMarkerActive);
@@ -133,6 +136,24 @@ const MapContainer = ({ route, navigation }) => {
       } else {
         setError('Enter the title');
       }
+    } else {
+      if (searchingActive) {
+        if (searchQuerry !== '') {
+          const title = searchQuerry;
+          const { lat, lon } = await fetchMapSearch(title, latitude, longitude);
+          setMarkers(
+            markers
+              ? [
+                  ...markers,
+                  new PointOfInterest(new Date().toString(), lat, lon, title),
+                ]
+              : [new PointOfInterest(new Date().toString(), lat, lon, title)],
+          );
+          setSearchQuerry('');
+        } else {
+          setError('Enter the querry');
+        }
+      }
     }
   };
 
@@ -187,6 +208,7 @@ const MapContainer = ({ route, navigation }) => {
         deletingActivityHandler={() => activityHandler('deleting')}
         searchingActive={searchingActive}
         searchingActivityHandler={() => activityHandler('searching')}
+        setSearchQuerry={(text) => setSearchQuerry(text)}
         error={error}
         setError={setError}
         isLoading={isLoading}
