@@ -74,7 +74,13 @@ const TripsContainer = (props) => {
         cityCode: cityCode,
       });
   };
-
+  const handleEdit = (destination, budget) => {
+    navigation.navigate('Edit note', {
+      id: route.params.tripId,
+      destination,
+      budget,
+    });
+  };
   useEffect(() => {
     loadTrips();
     SplashScreen.hide();
