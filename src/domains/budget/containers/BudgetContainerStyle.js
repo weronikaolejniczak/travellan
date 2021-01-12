@@ -13,6 +13,11 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  actionsContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   activeCategory: {
     color: Colors.primary,
   },
@@ -67,11 +72,6 @@ export const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 22,
   },
-  selectedHistoryItemInfo: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   currencyHolder: {
     backgroundColor: Colors.background,
     borderRadius: 50,
@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
-    fontSize: 18,
+    color: Colors.placeholder,
   },
   navigationButton: {
     alignItems: 'center',
@@ -138,9 +138,17 @@ export const styles = StyleSheet.create({
     marginTop: '4%',
     padding: '4%',
   },
+  operationsContent: {
+    padding: '5%',
+  },
   positive: {
     color: Colors.positive,
     fontWeight: 'bold',
+  },
+  selectedHistoryItemInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   seperator: {
     borderBottomWidth: 1,

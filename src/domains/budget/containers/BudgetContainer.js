@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
+import * as categories from 'data/SpendingCategories';
 import { AccountButton } from 'components';
 import {
   BalanceDashboard,
@@ -12,7 +13,8 @@ import {
   SectionHeader,
   SpendingCategories,
 } from '../components';
-import { ItemlessFrame, LoadingFrame, TextInput } from 'utils';
+import { Colors } from 'constants';
+import { ItemlessFrame, LoadingFrame, RoundButton, TextInput } from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
@@ -216,15 +218,14 @@ const BudgetContainer = (props) => {
         <View style={styles.smallMarginTop}>
           <SectionHeader>Operations</SectionHeader>
 
-          {/* operations content */}
-          <View style={{ padding: '5%' }}>
+          <View style={styles.operationsContent}>
             <SpendingCategories
               category={category}
               chooseCategory={chooseCategory}
             />
 
             <View>
-              <Text style={{ color: 'grey' }}>Accounts</Text>
+              <Text style={styles.label}>Accounts</Text>
               <View style={styles.justifyRow}>
                 <AccountButton
                   setAccount={setAccount}
@@ -260,10 +261,18 @@ const BudgetContainer = (props) => {
               keyboardType="numeric"
             />
 
-            {/* + and - round buttons
-              onPress={() => modifyAmount('plus')}
-              onPress={() => modifyAmount('minus')}
-              */}
+            <View style={styles.actionsContainer}>
+              <RoundButton
+                color={Colors.positive}
+                iconName="plus"
+                onPress={() => modifyAmount('plus')}
+              />
+              <RoundButton
+                color={Colors.negative}
+                iconName="minus"
+                onPress={() => modifyAmount('minus')}
+              />
+            </View>
           </View>
 
           <View style={styles.smallMarginTop}>

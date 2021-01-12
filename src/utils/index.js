@@ -7,6 +7,7 @@ export { default as HeaderButton } from './HeaderButton';
 export { default as RadioButton } from './RadioButton/RadioButton';
 export { default as RadioButtonGroup } from './RadioButtonGroup';
 export { default as ReadMore } from './ReadMore/ReadMore';
+export { default as RoundButton } from './RoundButton/RoundButton';
 export { default as Searchbar } from './Searchbar';
 export { default as Select } from './Select/Select';
 export { default as Switch } from './Switch/Switch';
