@@ -67,7 +67,7 @@ const RegisterContainer = (props) => {
           ),
       })}
     >
-      {({ values, handleChange, errors, isValid, handleSubmit }) => (
+      {({ values, handleChange, errors, isValid, handleSubmit, touched }) => (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : null}
           style={styles.screen}
@@ -86,7 +86,7 @@ const RegisterContainer = (props) => {
                   autoCapitalize="none"
                   onChange={handleChange('email')}
                   label="E-mail"
-                  error={errors.email}
+                  error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
               <View style={styles.formControl}>
@@ -96,7 +96,9 @@ const RegisterContainer = (props) => {
                   onChange={handleChange('password')}
                   secureTextEntry={true}
                   label="Password"
-                  error={errors.password}
+                  error={
+                    errors.password && touched.password ? errors.password : null
+                  }
                 />
               </View>
               <View style={styles.formControl}>
@@ -106,7 +108,11 @@ const RegisterContainer = (props) => {
                   onChange={handleChange('confirmPassword')}
                   secureTextEntry={true}
                   label="Confirm Password"
-                  error={errors.confirmPassword}
+                  error={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? errors.confirmPassword
+                      : null
+                  }
                 />
               </View>
               <View style={styles.actionsContainer}>
