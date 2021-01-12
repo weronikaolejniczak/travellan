@@ -151,7 +151,13 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
   };
 };
 
-export const editTripRequest = (destination, startDate, endDate, budget) => {
+export const editTripRequest = (
+  tripId,
+  destination,
+  startDate,
+  endDate,
+  budget,
+) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

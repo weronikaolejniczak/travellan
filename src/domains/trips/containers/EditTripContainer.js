@@ -11,11 +11,13 @@ import {
   TextInput,
 } from 'utils';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
-import { createTripRequest } from 'actions/tripsActions';
+import { editTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from '././EditTripContainerStyle';
+import Budget from 'models/Budget';
 
 const EditTripContainer = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const budget = route.params.budget;
   const [destinationIsValid, setDestinationIsValid] = useState(false);
@@ -39,9 +41,20 @@ const EditTripContainer = ({ route, navigation }) => {
   const adjustEndDateToStartDate = (currentDate) =>
     currentDate > endDate && setEndDate(currentDate);
 
-  const submitHandler = () => {
-    console.log('omg');
-  };
+  const submitHandler = useCallback(async () => {
+    setIsLoading(true);
+    await dispatch(
+      editTripRequest(
+        tripId,
+        destination,
+        startDate.toString(),
+        endDate.toString(),
+        budget,
+      ),
+    );
+    navigation.goBack();
+    setIsLoading(false);
+  }, [tripId, destination, startDate, endDate, budget]);
 
   return (
     <Container keyboardShouldPersistTaps="always">
