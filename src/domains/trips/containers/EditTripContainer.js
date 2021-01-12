@@ -81,54 +81,59 @@ const EditTripContainer = ({ route, navigation }) => {
 
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
-    if (budget === undefined) {
-      await dispatch(
-        tripsActions.editTripRequest(
-          tripId,
-          destination,
-          startDate.toString(),
-          endDate.toString(),
-          undefined,
-          transport,
-          accommodation,
-          notes,
-          map,
-        ),
-      );
+    if (!destinationIsValid) {
+      setDestinationSubmitted(true);
     } else {
-      const budgetToSubmit = [
-        new Budget(
-          budget[0].id,
-          budget[0].value,
-          budget[0].currency,
-          [
-            {
-              account: budget[0].history[0].account,
-              category: budget[0].history[0].category,
-              date: budget[0].history[0].date,
-              id: budget[0].history[0].id,
-              title: budget[0].history[0].title,
-              value: budget[0].history[0].value,
-            },
-          ],
-          budget[0].defaultAccount,
-        ),
-      ];
-      await dispatch(
-        tripsActions.editTripRequest(
-          tripId,
-          destination,
-          startDate.toString(),
-          endDate.toString(),
-          budgetToSubmit,
-          transport,
-          accommodation,
-          notes,
-          map,
-        ),
-      );
+      if (budget === undefined) {
+        await dispatch(
+          tripsActions.editTripRequest(
+            tripId,
+            destination,
+            startDate.toString(),
+            endDate.toString(),
+            undefined,
+            transport,
+            accommodation,
+            notes,
+            map,
+          ),
+        );
+        navigation.goBack();
+      } else {
+        const budgetToSubmit = [
+          new Budget(
+            budget[0].id,
+            budget[0].value,
+            budget[0].currency,
+            [
+              {
+                account: budget[0].history[0].account,
+                category: budget[0].history[0].category,
+                date: budget[0].history[0].date,
+                id: budget[0].history[0].id,
+                title: budget[0].history[0].title,
+                value: budget[0].history[0].value,
+              },
+            ],
+            budget[0].defaultAccount,
+          ),
+        ];
+        await dispatch(
+          tripsActions.editTripRequest(
+            tripId,
+            destination,
+            startDate.toString(),
+            endDate.toString(),
+            budgetToSubmit,
+            transport,
+            accommodation,
+            notes,
+            map,
+          ),
+        );
+        navigation.goBack();
+      }
     }
-    navigation.goBack();
     setIsLoading(false);
   }, [
     tripId,
