@@ -82,10 +82,14 @@ const TripsContainer = (props) => {
       budget,
     });
   };
+
+  const waitTrips = useCallback(async () => {
+    await loadTrips();
+  });
   useEffect(() => {
-    loadTrips();
+    waitTrips();
     SplashScreen.hide();
-  }, [loadTrips]);
+  }, [waitTrips]);
 
   if (isLoading) {
     return <LoadingFrame />;
