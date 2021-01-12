@@ -1,9 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as categories from 'data/SpendingCategories';
 import { AccountButton } from 'components';
 import {
   BalanceDashboard,
@@ -12,6 +10,7 @@ import {
   ChartTab,
   CurrencyPicker,
   SectionHeader,
+  SpendingCategories,
 } from '../components';
 import { ItemlessFrame, LoadingFrame, TextInput } from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
@@ -219,36 +218,10 @@ const BudgetContainer = (props) => {
 
           {/* operations content */}
           <View style={{ padding: '5%' }}>
-            {/* categories */}
-            <View>
-              <Text style={{ color: 'grey' }}>Categories</Text>
-              <View
-                style={[styles.categoriesContainer, styles.extraSmallMarginTop]}
-              >
-                {categories.icons.map((item) => (
-                  <TouchableOpacity
-                    style={[styles.iconButton]}
-                    onPress={() => chooseCategory(item)}
-                  >
-                    <Icon
-                      name={item}
-                      style={[
-                        styles.icon,
-                        categories.categoryIcons[category] === item
-                          ? styles.activeCategory
-                          : styles.nonactiveCategory,
-                      ]}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-              {/* chosen category */}
-              <View style={styles.center}>
-                <Text style={[styles.activeCategory]}>
-                  {categories.categoryLabels[category].toString()}
-                </Text>
-              </View>
-            </View>
+            <SpendingCategories
+              category={category}
+              chooseCategory={chooseCategory}
+            />
 
             <View>
               <Text style={{ color: 'grey' }}>Accounts</Text>

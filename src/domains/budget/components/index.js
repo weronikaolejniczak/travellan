@@ -4,3 +4,4 @@ export { default as ChartTab } from './ChartTab/ChartTab';
 export { default as CurrencyPicker } from './CurrencyPicker/CurrencyPicker';
 export { default as BalanceDashboard } from './BalanceDashboard/BalanceDashboard';
 export { default as SectionHeader } from './SectionHeader/SectionHeader';
+export { default as SpendingCategories } from './SpendingCategories/SpendingCategories';
