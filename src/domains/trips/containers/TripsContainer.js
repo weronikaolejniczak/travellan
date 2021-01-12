@@ -117,16 +117,16 @@ const TripsContainer = (props) => {
           >
             <View style={styles.iconContainer}>
               <TouchableHighlight
-                style={styles.deleteButton}
+                style={styles.actionButton}
                 onPress={() => handleDeleteTrip(data.item)}
               >
-                <Icon name="delete" style={styles.deleteIcon} />
+                <Icon name="delete" style={styles.actionIcon} />
               </TouchableHighlight>
               <TouchableHighlight
-                style={styles.deleteButton}
+                style={styles.actionButton}
                 onPress={() => handleDeleteTrip(data.item)}
               >
-                <Icon name="edit" style={styles.deleteIcon} />
+                <Icon name="edit" style={styles.actionIcon} />
               </TouchableHighlight>
             </View>
           </TripItem>

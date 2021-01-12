@@ -21,10 +21,10 @@ export const styles = StyleSheet.create({
   triplessText: {
     fontSize: 18,
   },
-  deleteButton: {
+  actionButton: {
     padding: 15,
   },
-  deleteIcon: {
+  actionIcon: {
     fontSize: 30,
     color: Colors.primary,
   },
