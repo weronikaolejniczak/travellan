@@ -138,13 +138,7 @@ const TransportItem = ({
           >
             <Icon name="close" style={styles.icon} />
           </TouchableOpacity>
-          <Pdf
-            /* ref={(pdf) => {
-              this.pdf = pdf;
-            }} */
-            source={source}
-            style={styles.PDF}
-          />
+          <Pdf source={source} style={styles.PDF} />
           <TouchableOpacity
             style={styles.buttonTouchable}
             onPress={() => {
