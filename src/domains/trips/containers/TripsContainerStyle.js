@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
+  },
   flex: {
     flex: 1,
   },
