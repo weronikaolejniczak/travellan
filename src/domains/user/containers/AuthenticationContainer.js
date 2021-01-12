@@ -66,7 +66,7 @@ const AuthenticationContainer = ({ navigation }) => {
           ),
       })}
     >
-      {({ values, handleChange, errors, isValid, handleSubmit }) => (
+      {({ values, handleChange, errors, isValid, handleSubmit, touched }) => (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : null}
           style={styles.screen}
@@ -86,7 +86,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   onChange={handleChange('email')}
                   autoCapitalize="none"
                   label="E-mail"
-                  error={errors.email}
+                  error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
               <View style={styles.formControl}>
@@ -96,7 +96,9 @@ const AuthenticationContainer = ({ navigation }) => {
                   onChange={handleChange('password')}
                   secureTextEntry={true}
                   label="Password"
-                  error={errors.password}
+                  error={
+                    errors.password && touched.password ? errors.password : null
+                  }
                 />
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot Password?</Text>
