@@ -26,6 +26,9 @@ const EditTripContainer = ({ route, navigation }) => {
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
 
+  const destinationRegex = new RegExp(
+    `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
+  );
   const destinationChangeHandler = (text) => {
     text.trim().length === 0 || !destinationRegex.test(text)
       ? setDestinationIsValid(false)
