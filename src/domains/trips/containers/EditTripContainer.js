@@ -26,7 +26,7 @@ const EditTripContainer = ({ route, navigation }) => {
   const map = route.params.map;
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
-  const [destination, setDestination] = useState(route.params.destination);
+  const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
