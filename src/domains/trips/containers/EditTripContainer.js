@@ -38,6 +38,7 @@ const EditTripContainer = ({ route, navigation }) => {
   const callNotification = useCallback(
     (dest, date) => {
       localNotify.configure();
+      localNotify.cancelScheduledLocalNotification(5);
       const notificationDateTrigger = new Date();
       const currentDate = new Date(Date.now());
       notificationDateTrigger.setDate(date.getDate() - 1);
