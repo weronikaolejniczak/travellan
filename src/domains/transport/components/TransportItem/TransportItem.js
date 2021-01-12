@@ -87,11 +87,8 @@ const TransportItem = ({
           <Card style={styles.qrCardContainer}>
             <View style={styles.innerQrContainer}>
               <View style={styles.miniHeader}>
-                <TouchableOpacity
-                  //style={styles.}
-                  onPress={closeQRhandler}
-                >
-                  <Icon name="close" style={styles.icon} />
+                <TouchableOpacity onPress={closeQRhandler}>
+                  <Icon name="close" style={styles.iconQR} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
@@ -112,13 +109,14 @@ const TransportItem = ({
                     );
                   }}
                 >
-                  <Icon name="delete" style={styles.icon} />
+                  <Icon name="delete" style={styles.iconQR} />
                 </TouchableOpacity>
               </View>
               <View style={styles.containerQR}>
                 <QRCode
                   value={QR}
                   size={Dimensions.get('window').width - 100}
+                  bgColor="black"
                   fgColor="white"
                 />
               </View>

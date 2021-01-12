@@ -90,6 +90,10 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     marginRight: 20,
   },
+  iconQR: {
+    fontSize: 30,
+    marginRight: 20,
+  },
   infoInnerView: { flex: 0.5 },
   infoScrollView: {
     marginTop: cardHeight * 0.0465,
@@ -112,8 +116,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   qrCardContainer: {
+    backgroundColor: Colors.text,
     padding: 5,
-    width: (Dimensions.get('window').width / 5) * 4,
+    width: (Dimensions.get('window').width / 6) * 5,
   },
   qrContainer: {
     alignItems: 'center',
