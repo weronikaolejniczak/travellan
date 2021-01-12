@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Animated,
   FlatList,
@@ -12,7 +11,6 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import Colors from 'constants/Colors';
 import SplashScreen from 'react-native-splash-screen';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TransportItem } from '../components';
