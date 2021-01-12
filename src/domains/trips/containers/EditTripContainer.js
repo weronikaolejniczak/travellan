@@ -24,7 +24,6 @@ const EditTripContainer = ({ route, navigation }) => {
   const transport = route.params.transport;
   const accommodation = route.params.accommodation;
   const map = route.params.map;
-
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
   const [destination, setDestination] = useState(route.params.description);
@@ -33,6 +32,39 @@ const EditTripContainer = ({ route, navigation }) => {
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const localNotify = notificationManager;
+
+  const callNotification = useCallback(
+    (dest, date) => {
+      localNotify.configure();
+      const notificationDateTrigger = new Date();
+      const currentDate = new Date(Date.now());
+      notificationDateTrigger.setDate(date.getDate() - 1);
+
+      if (date.getDate() <= currentDate.getDate()) {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + dest + ' starts today!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      } else {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + destination + ' starts tomorrow!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDateTrigger,
+        );
+      }
+    },
+    [destination, localNotify],
+  );
 
   const destinationRegex = new RegExp(
     `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
