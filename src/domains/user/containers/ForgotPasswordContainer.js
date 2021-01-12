@@ -54,7 +54,7 @@ const ForgotContainer = ({navigation}) => {
           .required('Enter email address'),
       })}
     >
-      {({ values, handleChange, errors, isValid, handleSubmit }) => (
+      {({ values, handleChange, errors, isValid, handleSubmit, touched }) => (
         <Container>
           <TextInput
             value={values.email}
@@ -62,7 +62,7 @@ const ForgotContainer = ({navigation}) => {
             onChange={handleChange('email')}
             autoCapitalize="none"
             label="Enter email"
-            error={errors.email}
+            error={errors.email && touched.email ? errors.email : null}
           />
           <Button
             loading={isLoading}
