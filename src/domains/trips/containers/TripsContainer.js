@@ -124,7 +124,7 @@ const TripsContainer = (props) => {
               </TouchableHighlight>
               <TouchableHighlight
                 style={styles.actionButton}
-                onPress={() => handleDeleteTrip(data.item)}
+                onPress={() => console.log('pressed')}
               >
                 <Icon name="edit" style={styles.actionIcon} />
               </TouchableHighlight>
