@@ -106,19 +106,17 @@ const TransportContainer = ({ route, navigation }) => {
   }, [dispatch, tripId]);
 
   useEffect(() => {
+    setIsLoading(true);
     loadTransport();
-  }, [loadTransport]);
+    setIsLoading(false);
+  }, [loadTransport, isLoading]);
+
+  if (!Array.isArray(transport) || isLoading || isRefreshing) {
+    return <LoadingFrame />;
+  }
 
   if (Array.isArray(transport) && transport.length < 1) {
     return <ItemlessFrame message="You have no transport saved!" />;
-  }
-
-  if (
-    !Array.isArray(transport) ||
-    (isLoading && transport.length < 1) ||
-    (isRefreshing && transport.length < 1)
-  ) {
-    return <LoadingFrame />;
   }
 
   if (error) {
