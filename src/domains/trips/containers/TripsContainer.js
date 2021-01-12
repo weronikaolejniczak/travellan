@@ -74,9 +74,10 @@ const TripsContainer = (props) => {
         cityCode: cityCode,
       });
   };
-  const handleEdit = (destination, budget) => {
-    navigation.navigate('Edit note', {
-      id: route.params.tripId,
+
+  const handleEdit = (id, destination, budget) => {
+    props.navigation.navigate('Edit trip', {
+      tripId: id,
       destination,
       budget,
     });
@@ -130,7 +131,13 @@ const TripsContainer = (props) => {
               </TouchableHighlight>
               <TouchableHighlight
                 style={styles.actionButton}
-                onPress={() => console.log('pressed')}
+                onPress={() => {
+                  handleEdit(
+                    data.item.id,
+                    data.item.destination,
+                    data.item.budget,
+                  );
+                }}
               >
                 <Icon name="edit" style={styles.actionIcon} />
               </TouchableHighlight>
