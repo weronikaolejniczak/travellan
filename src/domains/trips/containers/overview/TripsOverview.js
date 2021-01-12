@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Text,
   View,
@@ -8,16 +8,16 @@ import {
   Platform,
   Button,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 import Itemless from 'components/frames/itemless/Itemless';
 import Loading from 'components/frames/loading/Loading';
 import TripItem from 'trips/components/item/Trip';
 import HeaderButton from 'components/headerButton/HeaderButton';
 import * as tripActions from 'state/trip/tripActions';
-import {tripsOverviewStyle as styles} from './TripsOverviewStyle';
+import { tripsOverviewStyle as styles } from './TripsOverviewStyle';
 import Colors from 'constants/Colors';
 
 const TripsOverview = (props) => {
@@ -40,7 +40,7 @@ const TripsOverview = (props) => {
 
   useEffect(() => {
     loadTrips();
-    SplashScreen.hide()
+    SplashScreen.hide();
   }, [dispatch, loadTrips]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const TripsOverview = (props) => {
 
   const mover = () => {
     props.navigation.navigate('Startup');
-  }
+  };
 
   /* KNOWN ISSUE: user can click on the card and immediately after on the trip,
   which navigates him to trip details and still shows an alert to delete the trip;
@@ -86,7 +86,7 @@ const TripsOverview = (props) => {
           },
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -96,7 +96,7 @@ const TripsOverview = (props) => {
 
   if (error) {
     return (
-      <View style={[styles.centered, {backgroundColor: Colors.background}]}>
+      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
         <Text style={styles.text}>{error}</Text>
         <Button title="Try again" onPress={loadTrips} color={Colors.primary} />
       </View>
@@ -120,10 +120,12 @@ const TripsOverview = (props) => {
             endDate={itemData.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
               selectItemHandler(itemData.item.id, itemData.item.destination);
-            }}>
+            }}
+          >
             <TouchableHighlight
               style={styles.deleteButton}
-              onPress={() => deleteItemHandler(itemData.item)}>
+              onPress={() => deleteItemHandler(itemData.item)}
+            >
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableHighlight>
           </TripItem>
@@ -142,7 +144,7 @@ export const tripsOverviewOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="New trip"
-          style={{marginRight: 3}}
+          style={{ marginRight: 3 }}
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
             navData.navigation.navigate('New trip');
