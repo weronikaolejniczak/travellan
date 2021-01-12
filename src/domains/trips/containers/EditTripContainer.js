@@ -17,11 +17,8 @@ import { styles } from '././EditTripContainerStyle';
 
 const EditTripContainer = ({ route, navigation }) => {
   const tripId = route.params.tripId;
-  const destination = route.params.destination;
   const budget = route.params.budget;
-  console.log(tripId);
-  console.log(destination);
-  console.log(budget);
+  const [destination, setDestination] = useState(route.params.description);
   return <Container keyboardShouldPersistTaps="always"></Container>;
 };
 
