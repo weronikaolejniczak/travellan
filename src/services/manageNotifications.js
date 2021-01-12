@@ -101,6 +101,10 @@ class NotificationManager {
     PushNotification.cancelAllLocalNotifications();
   };
 
+  cancelScheduledLocalNotification = (id) => {
+    PushNotification.cancelLocalNotifications({ id });
+  };
+
   unregister = () => {
     PushNotification.unregister();
   };

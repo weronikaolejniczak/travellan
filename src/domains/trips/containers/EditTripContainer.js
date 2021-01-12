@@ -99,6 +99,24 @@ const EditTripContainer = ({ route, navigation }) => {
           ),
         );
         navigation.goBack();
+        callNotification(destination, startDate);
+        Snackbar.show({
+          action: {
+            onPress: () => {
+              handleCalendarEvent.addToCalendar(
+                'Trip to ' + destination,
+                startDate,
+                endDate,
+                destination,
+                'Remember to pack everything and check weather forecast!',
+              );
+            },
+            text: 'Add',
+            textColor: 'orange',
+          },
+          duration: Snackbar.LENGTH_LONG,
+          text: 'Add Trip to Google Calendar',
+        });
       } else {
         const budgetToSubmit = [
           new Budget(
@@ -132,6 +150,24 @@ const EditTripContainer = ({ route, navigation }) => {
           ),
         );
         navigation.goBack();
+        callNotification(destination, startDate);
+        Snackbar.show({
+          action: {
+            onPress: () => {
+              handleCalendarEvent.addToCalendar(
+                'Trip to ' + destination,
+                startDate,
+                endDate,
+                destination,
+                'Remember to pack everything and check weather forecast!',
+              );
+            },
+            text: 'Add',
+            textColor: 'orange',
+          },
+          duration: Snackbar.LENGTH_LONG,
+          text: 'Add Trip to Google Calendar',
+        });
       }
     }
     setIsLoading(false);
