@@ -1,64 +1,24 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as userActions from 'actions/userActions';
-import Colors from 'constants/Colors';
-import { Input } from '../components';
+import * as yup from 'yup';
+import { Button, TextInput } from 'utils';
+import { Formik } from 'formik';
+import { signUpRequest } from 'actions/userActions';
 import { styles } from './RegisterContainerStyle';
-
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-
-const formReducer = (state, action) => {
-  if (action.type === FORM_INPUT_UPDATE) {
-    const updatedValues = {
-      ...state.inputValues,
-      [action.input]: action.value,
-    };
-    const updatedValidities = {
-      ...state.inputValidities,
-      [action.input]: action.isValid,
-    };
-    let updatedFormIsValid = true;
-    for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-    }
-    return {
-      formIsValid: updatedFormIsValid,
-      inputValidities: updatedValidities,
-      inputValues: updatedValues,
-    };
-  }
-  return state;
-};
 
 const RegisterContainer = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [formState, dispatchFormState] = useReducer(formReducer, {
-    inputValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-    inputValidities: {
-      email: false,
-      password: false,
-      confirmPassword: false,
-    },
-    formIsValid: false,
-  });
 
   useEffect(() => {
     if (error) {
@@ -66,119 +26,111 @@ const RegisterContainer = (props) => {
     }
   }, [error]);
 
-  const handleSubmit = () => {
-    if (
-      formState.inputValues.password !== formState.inputValues.confirmPassword
-    ) {
-      alert("Passwords don't match");
-    } else {
-      authHandler();
-    }
-  };
-
-  const authHandler = async () => {
-    let action;
-    action = userActions.signUpRequest(
-      formState.inputValues.email,
-      formState.inputValues.password,
-    );
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      await dispatch(action);
-      props.navigation.navigate('Auth');
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  };
-
-  const inputChangeHandler = useCallback(
-    (inputIdentifier, inputValue, inputValidity) => {
-      dispatchFormState({
-        type: FORM_INPUT_UPDATE,
-        value: inputValue,
-        isValid: inputValidity,
-        input: inputIdentifier,
-      });
-    },
-    [dispatchFormState],
-  );
-
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={styles.screen}
+    <Formik
+      initialValues={{
+        confirmPassword: '',
+        email: '',
+        password: '',
+      }}
+      onSubmit={async (values) => {
+        setError(null);
+        setIsLoading(true);
+        let action;
+        action = signUpRequest(values.email, values.password);
+        try {
+          await dispatch(action);
+          setIsLoading(false);
+          props.navigation.navigate('Auth');
+        } catch (err) {
+          setError(err.message);
+        }
+        setIsLoading(false);
+      }}
+      validationSchema={yup.object().shape({
+        confirmPassword: yup
+          .string()
+          .required('Cannot be left empty')
+          .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        email: yup
+          .string()
+          .email('Invalid email address')
+          .required('Cannot be left empty'),
+        password: yup
+          .string()
+          .min(6, 'Password must be at least 6 characters long')
+          .max(20, 'Password cannot exceed 20 characters')
+          .required('Cannot be left empty')
+          .matches(
+            /[a-zA-Z0-9_]/,
+            'Password can only contain Latin letters and numbers.',
+          ),
+      })}
     >
-      <View style={styles.authContainer}>
-        <ScrollView>
-          <View style={{ marginBottom: 20, alignItems: 'center' }}>
-            <Image
-              style={{ width: 150, height: 150, resizeMode: 'stretch' }}
-              source={require('assets/images/logo.png')}
-            />
+      {({ values, handleChange, errors, isValid, handleSubmit }) => (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          style={styles.screen}
+        >
+          <View style={styles.authContainer}>
+            <ScrollView>
+              <View style={styles.imageView}>
+                <Image
+                  style={styles.image}
+                  source={require('assets/images/logo.png')}
+                />
+              </View>
+              <View style={styles.formControl}>
+                <TextInput
+                  value={values.email}
+                  autoCapitalize="none"
+                  onChange={handleChange('email')}
+                  label="E-mail"
+                  error={errors.email}
+                />
+              </View>
+              <View style={styles.formControl}>
+                <TextInput
+                  value={values.password}
+                  autoCapitalize="none"
+                  onChange={handleChange('password')}
+                  secureTextEntry={true}
+                  label="Password"
+                  error={errors.password}
+                />
+              </View>
+              <View style={styles.formControl}>
+                <TextInput
+                  value={values.confirmPassword}
+                  autoCapitalize="none"
+                  onChange={handleChange('confirmPassword')}
+                  secureTextEntry={true}
+                  label="Confirm Password"
+                  error={errors.confirmPassword}
+                />
+              </View>
+              <View style={styles.actionsContainer}>
+                <Button
+                  loading={isLoading}
+                  disabled={isLoading}
+                  onPress={handleSubmit}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  onPress={() => {
+                    props.navigation.navigate('Auth');
+                  }}
+                  mode="outlined"
+                >
+                  Or Sign In instead
+                </Button>
+              </View>
+            </ScrollView>
           </View>
-          <Input
-            style={[styles.input]}
-            id="email"
-            label="E-mail"
-            keyboardType="email-address"
-            required
-            email
-            autoCapitalize="none"
-            errorText="Please enter a valid email address."
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <Input
-            styles={styles.input}
-            id="password"
-            label="Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            errorText="Please enter a valid password (at least 5 characters)"
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <Input
-            styles={styles.input}
-            id="confirmPassword"
-            label="Confirm Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            errorText="The passwords must match"
-            onInputChange={inputChangeHandler}
-            initialValue=""
-          />
-          <View style={styles.actionsContainer}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.white} />
-            ) : (
-              <TouchableOpacity
-                style={[styles.buttonContainer, { marginRight: 10 }]}
-                onPress={handleSubmit}
-              >
-                <Text style={styles.buttonText}>Join</Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Auth');
-              }}
-            >
-              <Text style={styles.buttonText}>Or sign in instead</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      )}
+    </Formik>
   );
 };
 

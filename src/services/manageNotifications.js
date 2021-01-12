@@ -5,25 +5,31 @@ class NotificationManager {
   configure = () => {
     PushNotification.createChannel({
       channelId: 'Weather', // (required)
-      channelName: 'Weather', // (required)
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: 4, // (optional) default: 4. Int value of the Android notification importance
+      channelName: 'Weather',
+      // (optional) See `soundName` parameter of `localNotification` function
+      importance: 4,
+      // (required)
+      soundName: 'default', // (optional) default: 4. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
     });
 
     PushNotification.createChannel({
       channelId: 'Notes', // (required)
-      channelName: 'Notes', // (required)
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: 4, // (optional) default: 4. Int value of the Android notification importance
+      channelName: 'Notes',
+      // (optional) See `soundName` parameter of `localNotification` function
+      importance: 4,
+      // (required)
+      soundName: 'default', // (optional) default: 4. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
     });
 
     PushNotification.createChannel({
       channelId: 'DepartureAlert', // (required)
-      channelName: 'DepartureAlert', // (required)
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: 4, // (optional) default: 4. Int value of the Android notification importance
+      channelName: 'DepartureAlert',
+      // (optional) See `soundName` parameter of `localNotification` function
+      importance: 4,
+      // (required)
+      soundName: 'default', // (optional) default: 4. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
     });
 
@@ -39,17 +45,17 @@ class NotificationManager {
 
   _buildAndroidNotifcation = (id, title, message, data = {}, options = {}) => {
     return {
-      id: id,
       autoCancel: true,
-      largeIcon: options.largeIcon || 'ic_launcher',
-      smallIcon: options.smallIcon || 'ic_launcher',
       bigText: message || '',
+      data: data,
+      id: id,
+      importance: options.importance || 'high',
+      largeIcon: options.largeIcon || 'ic_launcher',
+      priority: options.priority || 'high',
+      smallIcon: options.smallIcon || 'ic_launcher',
       subText: title || '',
       vibrate: options.vibrate || false,
       vibration: options.vibration || 300,
-      priority: options.priority || 'high',
-      importance: options.importance || 'high',
-      data: data,
     };
   };
 
@@ -63,11 +69,11 @@ class NotificationManager {
   ) => {
     PushNotification.localNotification({
       channelId,
-      id,
-      title,
-      message,
       data,
+      id,
+      message,
       options,
+      title,
     });
   };
 
@@ -82,12 +88,12 @@ class NotificationManager {
   ) => {
     PushNotification.localNotificationSchedule({
       channelId,
-      id,
-      title,
-      message,
       data,
-      options,
       date,
+      id,
+      message,
+      options,
+      title,
     });
   };
 

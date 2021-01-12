@@ -4,7 +4,7 @@ import { Layout } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {
-    ...Layout.center,
-    textAlign: 'center',
+    ...Layout.colCross,
+    padding: 0,
   },
 });

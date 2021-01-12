@@ -19,6 +19,10 @@ const AccommodationContainer = (props) => {
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
     navigation.navigate(screen, {
+      cityCode: route.params.cityCode,
+      destination: route.params.destination,
+      endDate: route.params.endDate,
+      startDate: route.params.startDate,
       tripId: route.params.tripId,
     });
   };
@@ -52,9 +56,9 @@ const AccommodationContainer = (props) => {
       <View style={styles.rowDirection}>
         {accommodation.map((_, i) => {
           let opacity = position.interpolate({
+            extrapolate: 'clamp',
             inputRange: [i - 1, i, i + 1],
             outputRange: [0.3, 1, 0.3],
-            extrapolate: 'clamp',
           });
 
           return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
@@ -70,8 +74,8 @@ const AccommodationContainer = (props) => {
           },
           {
             id: '1',
-            label: 'Add hotel by name/address',
-            onPress: () => navigateToScreen('Add accommodation'),
+            label: 'Add hotel by name',
+            onPress: () => navigateToScreen('Add hotel by name '),
           },
         ]}
       />

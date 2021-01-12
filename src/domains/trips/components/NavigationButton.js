@@ -7,7 +7,16 @@ import Colors from 'constants/Colors';
 const { height } = Dimensions.get('window');
 
 const NavigationButton = (props) => {
-  const { navigation, to, tripId, icon } = props;
+  const {
+    navigation,
+    to,
+    tripId,
+    icon,
+    startDate,
+    endDate,
+    destination,
+    cityCode,
+  } = props;
 
   const styles = {
     button: {
@@ -31,7 +40,13 @@ const NavigationButton = (props) => {
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        navigation.navigate(to, { tripId });
+        navigation.navigate(to, {
+          tripId,
+          startDate,
+          endDate,
+          destination,
+          cityCode,
+        });
       }}
     >
       <Text style={styles.buttonText}>{to}</Text>

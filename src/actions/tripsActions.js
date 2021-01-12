@@ -3,8 +3,9 @@ import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Map from 'models/Map';
 import Trip from 'models/Trip';
-import fetchImage from 'services/fetchImage';
 import fetchCoordinates from 'services/fetchCoordinates';
+import fetchDestinationImage from 'services/fetchDestinationImage';
+import fetchCityCode from 'services/fetchCityCode';
 
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
@@ -14,22 +15,22 @@ const API_URL = FIREBASE_URL;
 
 export const setTrips = (loadedTrips) => {
   return {
-    type: SET_TRIPS,
     trips: loadedTrips,
+    type: SET_TRIPS,
   };
 };
 
 export const deleteTrip = (tripId) => {
   return {
-    type: DELETE_TRIP,
     tripId,
+    type: DELETE_TRIP,
   };
 };
 
 export const createTrip = (newTrip) => {
   return {
-    type: CREATE_TRIP,
     newTrip,
+    type: CREATE_TRIP,
   };
 };
 
@@ -59,6 +60,7 @@ export const fetchTripsRequest = () => {
               data[key].budget,
               data[key].notes,
               data[key].map,
+              data[key].cityCode,
             ),
           );
         }
@@ -91,13 +93,13 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-
-    const image = await fetchImage(destination);
+    const cityCode = await fetchCityCode(destination);
+    const image = await fetchDestinationImage(destination);
     const location = await fetchCoordinates(destination);
     const region = {
       latitude: location.lat,
-      longitude: location.lon,
       latitudeDelta: 0.0922,
+      longitude: location.lon,
       longitudeDelta: 0.0421,
     };
     const transport = [];
@@ -107,16 +109,17 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
 
     await axios
       .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
-        destination,
-        region,
-        image,
-        startDate,
-        endDate,
-        transport,
         accommodation,
         budget,
-        notes,
+        destination,
+        endDate,
+        image,
         map,
+        notes,
+        region,
+        startDate,
+        transport,
+        cityCode,
       })
       .then((res) => res.data)
       .then((data) => {
@@ -132,6 +135,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
           budget,
           notes,
           map,
+          cityCode,
         );
 
         dispatch(createTrip(newTrip));
