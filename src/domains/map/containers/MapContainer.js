@@ -2,7 +2,7 @@ import Geolocation from '@react-native-community/geolocation';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
 import { MAPBOX_API_KEY } from 'react-native-dotenv';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PointOfInterest from 'models/PointOfInterest';
@@ -10,6 +10,7 @@ import { Toolbar } from '../components';
 import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
 import fetchMapSearch from 'services/fetchMapSearch';
+import Colors from 'constants/Colors';
 
 MapboxGL.setAccessToken(MAPBOX_API_KEY);
 MapboxGL.setConnected(true);
@@ -141,6 +142,7 @@ const MapContainer = ({ route, navigation }) => {
     } else {
       if (searchingActive) {
         if (searchQuery !== '') {
+          setIsLoading(true);
           const searchAnswer = await fetchMapSearch(
             searchQuery,
             latitude,
@@ -152,11 +154,26 @@ const MapContainer = ({ route, navigation }) => {
             markers
               ? [
                   ...markers,
-                  new PointOfInterest(new Date().toString(), lat, lon, name),
+                  new PointOfInterest(
+                    new Date().getTime().toString(),
+                    new Date().toString(),
+                    lat,
+                    lon,
+                    name,
+                  ),
                 ]
-              : [new PointOfInterest(new Date().toString(), lat, lon, name)],
+              : [
+                  new PointOfInterest(
+                    new Date().getTime().toString(),
+                    new Date().toString(),
+                    lat,
+                    lon,
+                    name,
+                  ),
+                ],
           );
           setSearchQuery('');
+          setIsLoading(false);
         } else {
           setError('Enter the query');
         }
@@ -203,25 +220,28 @@ const MapContainer = ({ route, navigation }) => {
         {renderMarkers()}
         <MapboxGL.UserLocation />
       </MapboxGL.MapView>
-
-      <Toolbar
-        styles={styles}
-        navigation={navigation}
-        addingMarkerActive={addingMarkerActive}
-        addingActivityHandler={() => activityHandler('adding')}
-        markerTitle={markerTitle}
-        setMarkerTitle={(text) => setMarkerTitle(text)}
-        deletingMarkerActive={deletingMarkerActive}
-        deletingActivityHandler={() => activityHandler('deleting')}
-        searchingActive={searchingActive}
-        searchingActivityHandler={() => activityHandler('searching')}
-        setSearchQuery={(text) => setSearchQuery(text)}
-        searchQuery={searchQuery}
-        error={error}
-        setError={setError}
-        isLoading={isLoading}
-        onExitHandler={onExitHandler}
-      />
+      {isLoading ? (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      ) : (
+        <Toolbar
+          styles={styles}
+          navigation={navigation}
+          addingMarkerActive={addingMarkerActive}
+          addingActivityHandler={() => activityHandler('adding')}
+          markerTitle={markerTitle}
+          setMarkerTitle={(text) => setMarkerTitle(text)}
+          deletingMarkerActive={deletingMarkerActive}
+          deletingActivityHandler={() => activityHandler('deleting')}
+          searchingActive={searchingActive}
+          searchingActivityHandler={() => activityHandler('searching')}
+          setSearchQuery={(text) => setSearchQuery(text)}
+          searchQuery={searchQuery}
+          error={error}
+          setError={setError}
+          isLoading={isLoading}
+          onExitHandler={onExitHandler}
+        />
+      )}
     </View>
   );
 };
