@@ -29,24 +29,6 @@ const EditTripContainer = ({ route, navigation }) => {
   const [showEndDate, setShowEndDate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const budgetToSubmit = [
-    new Budget(
-      budget[0].id,
-      budget[0].value,
-      budget[0].currency,
-      [
-        {
-          account: budget[0].history[0].account,
-          category: budget[0].history[0].category,
-          date: budget[0].history[0].date,
-          id: budget[0].history[0].id,
-          title: budget[0].history[0].title,
-          value: budget[0].history[0].value,
-        },
-      ],
-      budget[0].defaultAccount,
-    ),
-  ];
   const destinationRegex = new RegExp(
     `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
   );
@@ -61,15 +43,45 @@ const EditTripContainer = ({ route, navigation }) => {
 
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
-    await dispatch(
-      editTripRequest(
-        tripId,
-        destination,
-        startDate.toString(),
-        endDate.toString(),
-        budgetToSubmit,
-      ),
-    );
+    if (budget === undefined) {
+      await dispatch(
+        editTripRequest(
+          tripId,
+          destination,
+          startDate.toString(),
+          endDate.toString(),
+          undefined,
+        ),
+      );
+    } else {
+      const budgetToSubmit = [
+        new Budget(
+          budget[0].id,
+          budget[0].value,
+          budget[0].currency,
+          [
+            {
+              account: budget[0].history[0].account,
+              category: budget[0].history[0].category,
+              date: budget[0].history[0].date,
+              id: budget[0].history[0].id,
+              title: budget[0].history[0].title,
+              value: budget[0].history[0].value,
+            },
+          ],
+          budget[0].defaultAccount,
+        ),
+      ];
+      await dispatch(
+        editTripRequest(
+          tripId,
+          destination,
+          startDate.toString(),
+          endDate.toString(),
+          budgetToSubmit,
+        ),
+      );
+    }
     navigation.goBack();
     setIsLoading(false);
   }, [tripId, destination, startDate, endDate, budget]);
