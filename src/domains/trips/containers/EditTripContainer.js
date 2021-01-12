@@ -15,7 +15,7 @@ import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from './EditTripContainerStyle';
 
-const EditTripContainer = ({ navigation }) => {
+const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const handleCalendarEvent = addEventToCalendar;
   const localNotify = notificationManager;
