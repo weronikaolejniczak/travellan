@@ -25,6 +25,7 @@ const EditTripContainer = ({ route, navigation }) => {
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const destinationRegex = new RegExp(
     `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
@@ -37,6 +38,10 @@ const EditTripContainer = ({ route, navigation }) => {
   };
   const adjustEndDateToStartDate = (currentDate) =>
     currentDate > endDate && setEndDate(currentDate);
+
+  const submitHandler = () => {
+    console.log('omg');
+  };
 
   return (
     <Container keyboardShouldPersistTaps="always">
@@ -69,6 +74,10 @@ const EditTripContainer = ({ route, navigation }) => {
         minimumDate={startDate}
         setDate={setEndDate}
       />
+
+      <Button loading={isLoading} disabled={isLoading} onPress={submitHandler}>
+        Submit
+      </Button>
     </Container>
   );
 };
