@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   containerQR: {
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.text,
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: '5%',
@@ -125,6 +125,15 @@ export const styles = StyleSheet.create({
     marginBottom: '5%',
     paddingHorizontal: 22,
   },
+  innerQrContainer: {
+    alignSelf: 'stretch',
+  },
+  qrContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.text,
+    flex: 1,
+    justifyContent: 'center',
+  },
   rowCenter: {
     alignItems: 'center',
   },
@@ -148,8 +157,8 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   transportCard: {
-    height: cardHeight,
     borderRadius: 15,
+    height: cardHeight,
     marginHorizontal: 5,
     paddingTop: height * 0.0365,
     width: cardWidth,

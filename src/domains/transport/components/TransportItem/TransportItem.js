@@ -84,41 +84,50 @@ const TransportItem = ({
           setShowQR(false);
         }}
       >
-        <Container>
-          <TouchableOpacity
-            style={styles.buttonTouchableLeft}
-            onPress={closeQRhandler}
-          >
-            <Icon name="close" style={styles.icon2} />
-          </TouchableOpacity>
-          <View style={styles.containerQR}>
-            <QRCode style={styles.QR} value={QR} size={300} logoSize={300} />
-            <View style={styles.containerRow}>
+        <View style={styles.qrContainer}>
+          <Card style={styles.qrCardContainer}>
+            <View style={styles.innerQrContainer}>
               <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={() => {
-                  Alert.alert(
-                    'Delete QR',
-                    'Are you sure?',
-                    [
-                      {
-                        style: 'cancel',
-                        text: 'Cancel',
-                      },
-                      {
-                        onPress: deleteQR,
-                        text: 'OK',
-                      },
-                    ],
-                    { cancelable: true },
-                  );
-                }}
+                style={styles.buttonTouchableLeft}
+                onPress={closeQRhandler}
               >
-                <Icon name="delete" style={styles.icon3} />
+                <Icon name="close" style={styles.icon2} />
               </TouchableOpacity>
+              <View style={styles.containerQR}>
+                <QRCode
+                  style={styles.QR}
+                  value={QR}
+                  size={300}
+                  logoSize={300}
+                />
+                <View style={styles.containerRow}>
+                  <TouchableOpacity
+                    style={styles.buttonTouchable}
+                    onPress={() => {
+                      Alert.alert(
+                        'Delete QR',
+                        'Are you sure?',
+                        [
+                          {
+                            style: 'cancel',
+                            text: 'Cancel',
+                          },
+                          {
+                            onPress: deleteQR,
+                            text: 'OK',
+                          },
+                        ],
+                        { cancelable: true },
+                      );
+                    }}
+                  >
+                    <Icon name="delete" style={styles.icon3} />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          </View>
-        </Container>
+          </Card>
+        </View>
       </Modal>
 
       <Modal
