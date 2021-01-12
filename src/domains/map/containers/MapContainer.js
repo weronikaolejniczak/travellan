@@ -214,6 +214,7 @@ const MapContainer = ({ route, navigation }) => {
         searchingActive={searchingActive}
         searchingActivityHandler={() => activityHandler('searching')}
         setSearchQuerry={(text) => setSearchQuerry(text)}
+        searchQuerry={searchQuerry}
         error={error}
         setError={setError}
         isLoading={isLoading}
