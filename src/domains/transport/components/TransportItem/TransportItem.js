@@ -6,6 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   Modal,
   ScrollView,
   Text,
@@ -87,43 +88,39 @@ const TransportItem = ({
         <View style={styles.qrContainer}>
           <Card style={styles.qrCardContainer}>
             <View style={styles.innerQrContainer}>
-              <TouchableOpacity
-                style={styles.buttonTouchableLeft}
-                onPress={closeQRhandler}
-              >
-                <Icon name="close" style={styles.icon2} />
-              </TouchableOpacity>
+              <View style={styles.miniHeader}>
+                <TouchableOpacity onPress={closeQRhandler}>
+                  <Icon name="close" style={styles.icon2} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert(
+                      'Delete QR',
+                      'Are you sure?',
+                      [
+                        {
+                          style: 'cancel',
+                          text: 'Cancel',
+                        },
+                        {
+                          onPress: deleteQR,
+                          text: 'OK',
+                        },
+                      ],
+                      { cancelable: true },
+                    );
+                  }}
+                >
+                  <Icon name="delete" style={styles.icon3} />
+                </TouchableOpacity>
+              </View>
               <View style={styles.containerQR}>
                 <QRCode
-                  style={styles.QR}
+                  //style={styles.QR}
                   value={QR}
-                  size={300}
-                  logoSize={300}
+                  size={Dimensions.get('window').width - 100}
+                  //logoSize={300}
                 />
-                <View style={styles.containerRow}>
-                  <TouchableOpacity
-                    style={styles.buttonTouchable}
-                    onPress={() => {
-                      Alert.alert(
-                        'Delete QR',
-                        'Are you sure?',
-                        [
-                          {
-                            style: 'cancel',
-                            text: 'Cancel',
-                          },
-                          {
-                            onPress: deleteQR,
-                            text: 'OK',
-                          },
-                        ],
-                        { cancelable: true },
-                      );
-                    }}
-                  >
-                    <Icon name="delete" style={styles.icon3} />
-                  </TouchableOpacity>
-                </View>
               </View>
             </View>
           </Card>

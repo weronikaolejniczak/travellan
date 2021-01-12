@@ -103,7 +103,6 @@ export const styles = StyleSheet.create({
   icon3: {
     color: Colors.text,
     fontSize: 30,
-    marginTop: 40,
   },
   iconsAndLinesContainer: {
     alignItems: 'center',
@@ -127,6 +126,10 @@ export const styles = StyleSheet.create({
   },
   innerQrContainer: {
     alignSelf: 'stretch',
+  },
+  miniHeader: {
+    alignContent: 'space-between',
+    flexDirection: 'row'
   },
   qrContainer: {
     alignItems: 'center',
