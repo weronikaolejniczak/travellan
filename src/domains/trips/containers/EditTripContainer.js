@@ -33,6 +33,7 @@ const EditTripContainer = ({ route, navigation }) => {
   const [showEndDate, setShowEndDate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const localNotify = notificationManager;
+  const handleCalendarEvent = addEventToCalendar;
 
   const callNotification = useCallback(
     (dest, date) => {
