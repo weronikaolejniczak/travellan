@@ -79,7 +79,7 @@ const TransportItem = ({
     <Card style={styles.transportCard}>
       <Modal
         animationType="slide"
-        transparent={false}
+        transparent={true}
         visible={showQR}
         onRequestClose={() => setShowQR(false)}
       >
@@ -87,8 +87,11 @@ const TransportItem = ({
           <Card style={styles.qrCardContainer}>
             <View style={styles.innerQrContainer}>
               <View style={styles.miniHeader}>
-                <TouchableOpacity onPress={closeQRhandler}>
-                  <Icon name="close" style={styles.icon2} />
+                <TouchableOpacity
+                  //style={styles.}
+                  onPress={closeQRhandler}
+                >
+                  <Icon name="close" style={styles.icon} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
@@ -109,7 +112,7 @@ const TransportItem = ({
                     );
                   }}
                 >
-                  <Icon name="delete" style={styles.icon3} />
+                  <Icon name="delete" style={styles.icon} />
                 </TouchableOpacity>
               </View>
               <View style={styles.containerQR}>

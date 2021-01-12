@@ -90,19 +90,6 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     marginRight: 20,
   },
-  icon2: {
-    color: Colors.text,
-    fontSize: 30,
-  },
-  icon3: {
-    color: Colors.text,
-    fontSize: 30,
-  },
-  iconsAndLinesContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginRight: 20,
-  },
   infoInnerView: { flex: 0.5 },
   infoScrollView: {
     marginTop: cardHeight * 0.0465,
@@ -122,8 +109,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   miniHeader: {
-    alignContent: 'space-between',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
   },
   qrCardContainer: {
     padding: 5,
@@ -131,7 +117,7 @@ export const styles = StyleSheet.create({
   },
   qrContainer: {
     alignItems: 'center',
-    backgroundColor: Colors.,
+    backgroundColor: 'rgba(0,0,0,0.7)',
     flex: 1,
     justifyContent: 'center',
   },
