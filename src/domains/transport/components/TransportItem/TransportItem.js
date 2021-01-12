@@ -79,11 +79,9 @@ const TransportItem = ({
     <Card style={styles.transportCard}>
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent={false}
         visible={showQR}
-        onRequestClose={() => {
-          setShowQR(false);
-        }}
+        onRequestClose={() => setShowQR(false)}
       >
         <View style={styles.qrContainer}>
           <Card style={styles.qrCardContainer}>
@@ -116,10 +114,9 @@ const TransportItem = ({
               </View>
               <View style={styles.containerQR}>
                 <QRCode
-                  //style={styles.QR}
                   value={QR}
                   size={Dimensions.get('window').width - 100}
-                  //logoSize={300}
+                  fgColor="white"
                 />
               </View>
             </View>

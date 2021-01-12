@@ -54,13 +54,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   containerQR: {
-    alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.text,
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: '5%',
-    paddingTop: '50%',
+    padding: 10,
   },
   containerRow: {
     alignContent: 'space-between',
@@ -129,11 +123,15 @@ export const styles = StyleSheet.create({
   },
   miniHeader: {
     alignContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+  },
+  qrCardContainer: {
+    padding: 5,
+    width: (Dimensions.get('window').width / 5) * 4,
   },
   qrContainer: {
     alignItems: 'center',
-    backgroundColor: Colors.text,
+    backgroundColor: Colors.,
     flex: 1,
     justifyContent: 'center',
   },
