@@ -14,10 +14,10 @@ const Toolbar = ({
   deletingMarkerActive,
   isLoading,
   markerTitle,
-  searchQuerry,
+  searchQuery,
   onExitHandler,
   setMarkerTitle,
-  setSearchQuerry,
+  setSearchQuery,
 }) => (
   <View style={styles.overlay}>
     <View style={styles.actionBar}>
@@ -63,9 +63,9 @@ const Toolbar = ({
     {searchingActive && (
       <Searchbar
         icon="map-marker-question"
-        placeholder={searchingActive && 'Search'}
-        value={searchQuerry}
-        onChangeText={(text) => setSearchQuerry(text)}
+        placeholder={searchingActive && 'Search by name/adress'}
+        value={searchQuery}
+        onChangeText={(text) => setSearchQuery(text)}
       />
     )}
   </View>

@@ -29,7 +29,7 @@ const MapContainer = ({ route, navigation }) => {
   const [addingMarkerActive, setAddingMarkerActive] = useState(false);
   const [deletingMarkerActive, setDeletingMarkerActive] = useState(false);
   const [searchingActive, setSearchingActive] = useState(false);
-  const [searchQuerry, setSearchQuerry] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [markerTitle, setMarkerTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -77,7 +77,7 @@ const MapContainer = ({ route, navigation }) => {
           setDeletingMarkerActive(false);
           setAddingMarkerActive(false);
         } else {
-          setSearchQuerry('');
+          setSearchQuery('');
         }
         setSearchingActive(!searchingActive);
         break;
@@ -138,9 +138,9 @@ const MapContainer = ({ route, navigation }) => {
       }
     } else {
       if (searchingActive) {
-        if (searchQuerry !== '') {
+        if (searchQuery !== '') {
           const searchAnswer = await fetchMapSearch(
-            searchQuerry,
+            searchQuery,
             latitude,
             longitude,
           );
@@ -154,9 +154,9 @@ const MapContainer = ({ route, navigation }) => {
                 ]
               : [new PointOfInterest(new Date().toString(), lat, lon, name)],
           );
-          setSearchQuerry('');
+          setSearchQuery('');
         } else {
-          setError('Enter the querry');
+          setError('Enter the query');
         }
       }
     }
@@ -213,8 +213,8 @@ const MapContainer = ({ route, navigation }) => {
         deletingActivityHandler={() => activityHandler('deleting')}
         searchingActive={searchingActive}
         searchingActivityHandler={() => activityHandler('searching')}
-        setSearchQuerry={(text) => setSearchQuerry(text)}
-        searchQuerry={searchQuerry}
+        setSearchQuery={(text) => setSearchQuery(text)}
+        searchQuery={searchQuery}
         error={error}
         setError={setError}
         isLoading={isLoading}
