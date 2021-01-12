@@ -176,7 +176,7 @@ export const editTripRequest = (
     const map = new Map([], [], null);
 
     await axios
-      .put(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
+      .put(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
         accommodation,
         budget,
         destination,
