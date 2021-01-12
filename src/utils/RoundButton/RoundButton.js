@@ -4,9 +4,9 @@ import { TouchableOpacity } from 'react-native';
 
 import { styles } from './RoundButtonStyle';
 
-const RoundButton = ({ color, iconName, onPress }) => (
+const RoundButton = ({ color, iconName, onPress, isValid = true }) => (
   <TouchableOpacity style={[styles.roundButton, { backgroundColor: color }]}>
-    <Icon name={iconName} onPress={onPress} />
+    <Icon name={iconName} onPress={isValid ? onPress : () => {}} />
   </TouchableOpacity>
 );
 

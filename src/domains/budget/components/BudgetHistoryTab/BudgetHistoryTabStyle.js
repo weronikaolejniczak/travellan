@@ -4,15 +4,17 @@ import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   card: {
-    //operationCard
-    //justifyRow
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: '4%',
+    padding: '4%',
   },
   date: {
-    //date
+    color: Colors.placeholder,
   },
   firstIcon: {
-    //icon
-    //text
+    color: Colors.text,
+    fontSize: 28,
     marginRight: '10%',
   },
   icons: {
@@ -22,7 +24,8 @@ export const styles = StyleSheet.create({
     marginRight: '5%',
   },
   info: {
-    //justifyRow
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   negative: {
     color: Colors.negative,
@@ -31,8 +34,8 @@ export const styles = StyleSheet.create({
     color: Colors.positive,
   },
   secondIcon: {
-    //icon
-    //text
+    color: Colors.text,
+    fontSize: 28,
   },
   title: {
     color: Colors.text,

@@ -4,15 +4,17 @@ import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {
-    //smallMarginTop
     borderRadius: 20,
+    marginTop: '5%',
     padding: 15,
   },
   date: {
     color: Colors.text,
   },
   info: {
-    //selectedHistoryItemInfo
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     color: Colors.text,

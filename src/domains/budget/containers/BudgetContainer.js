@@ -10,11 +10,11 @@ import {
   Chart,
   ChartTab,
   CurrencyPicker,
+  OperationsForm,
   SectionHeader,
   SpendingCategories,
 } from '../components';
-import { Colors } from 'constants';
-import { ItemlessFrame, LoadingFrame, RoundButton, TextInput } from 'utils';
+import { View as Container, ItemlessFrame, LoadingFrame } from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
@@ -27,15 +27,18 @@ const BudgetContainer = (props) => {
   );
   const budget = selectedTrip.budget;
 
+  // $todo: index instead of "selectedCurrency" - choose currencyIndex
+  // budget[currencyIndex],
+  // budget[currencyIndex].value,
+  // budget[currencyIndex].defaultAccount
+  // $todo: index instead of "selectedCurrency" - choose historyItemIndex
+  // budget[currencyIndex].history[historyItemIndex],
   const [selectedCurrency, setSelectedCurrency] = useState(
-    selectedTrip.budget === undefined ? undefined : selectedTrip.budget[0],
+    budget === undefined ? undefined : budget[0],
   );
   const [displayableValue, setDisplayableValue] = useState(
     selectedCurrency ? selectedCurrency.value : null,
   );
-  const [title, setTitle] = useState('');
-  const [amount, setAmount] = useState('');
-  const [amountIsValid, setAmountIsValid] = useState(false);
   const [category, setCategory] = useState('general');
   const [account, setAccount] = useState(
     selectedCurrency ? selectedCurrency.defaultAccount : 'card',
@@ -47,11 +50,6 @@ const BudgetContainer = (props) => {
     selectedCurrency ? selectedCurrency.history[0] : null,
   );
 
-  const clear = () => {
-    setTitle('');
-    setAmount('');
-  };
-
   const chooseCategory = (iconPressed) => {
     setCategory(
       Object.keys(categories.categoryIcons).find(
@@ -60,54 +58,37 @@ const BudgetContainer = (props) => {
     );
   };
 
-  const amountRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
-  const amountChangeHandler = (text) => {
-    text.trim().length === 0 || !amountRegex.test(text)
-      ? setAmountIsValid(false)
-      : setAmountIsValid(true);
-    setAmount(text);
-  };
+  const modifyAmount = ({ title, cost, type }) => {
+    const changedCurrency = selectedCurrency;
 
-  const modifyAmount = (type) => {
-    if (title && amount && amountIsValid) {
-      const changedCurrency = selectedCurrency;
+    type === 'plus'
+      ? (setDisplayableValue(displayableValue + Math.abs(prepareValue(cost))),
+        (changedCurrency.value =
+          changedCurrency.value + Math.abs(prepareValue(cost))))
+      : (setDisplayableValue(displayableValue + -Math.abs(prepareValue(cost))),
+        (changedCurrency.value =
+          changedCurrency.value - Math.abs(prepareValue(cost))));
 
-      type === 'plus'
-        ? (setDisplayableValue(
-            displayableValue + Math.abs(prepareValue(amount)),
-          ),
-          (changedCurrency.value =
-            changedCurrency.value + Math.abs(prepareValue(amount))))
-        : (setDisplayableValue(
-            displayableValue + -Math.abs(prepareValue(amount)),
-          ),
-          (changedCurrency.value =
-            changedCurrency.value - Math.abs(prepareValue(amount))));
+    changedCurrency.history.push({
+      account: account,
+      category: category,
+      date: new Date(),
+      id: changedCurrency.history.length + 1,
+      title: title,
+      value:
+        type === 'plus'
+          ? Math.abs(prepareValue(cost))
+          : -Math.abs(prepareValue(cost)),
+    });
 
-      changedCurrency.history.push({
-        account: account,
-        category: category,
-        date: new Date(),
-        id: changedCurrency.history.length + 1,
-        title: title,
-        value:
-          type === 'plus'
-            ? Math.abs(prepareValue(amount))
-            : -Math.abs(prepareValue(amount)),
-      });
-
-      try {
-        persistBudget();
-      } catch {
-        setError('Something went wrong!');
-      }
-
-      const index = budget.findIndex((item) => item.id === selectedCurrency.id);
-      budget[index] = changedCurrency;
-      clear();
-    } else {
-      setError('Enter correct amount and title.');
+    try {
+      persistBudget();
+    } catch {
+      setError('Something went wrong!');
     }
+
+    const index = budget.findIndex((item) => item.id === selectedCurrency.id);
+    budget[index] = changedCurrency;
   };
 
   const deleteCurrency = useCallback(
@@ -126,8 +107,6 @@ const BudgetContainer = (props) => {
   const handleSelectCurrency = (item) => {
     setSelectedCurrency(item);
     setDisplayableValue(item.value);
-    setTitle('');
-    setAmount('');
     setAccount(item.defaultAccount);
   };
 
@@ -186,7 +165,7 @@ const BudgetContainer = (props) => {
     <ItemlessFrame message="There is no budget to show!" />;
 
   return (
-    <View style={styles.contentContainer}>
+    <Container>
       <CurrencyPicker
         currencies={budget}
         selectedCurrency={selectedCurrency}
@@ -215,7 +194,7 @@ const BudgetContainer = (props) => {
           </>
         )}
 
-        <View style={styles.smallMarginTop}>
+        <View style={styles.operationsContainer}>
           <SectionHeader>Operations</SectionHeader>
 
           <View style={styles.operationsContent}>
@@ -226,7 +205,7 @@ const BudgetContainer = (props) => {
 
             <View>
               <Text style={styles.label}>Accounts</Text>
-              <View style={styles.justifyRow}>
+              <View style={styles.accountsContainer}>
                 <AccountButton
                   setAccount={setAccount}
                   value="cash"
@@ -247,41 +226,16 @@ const BudgetContainer = (props) => {
               </View>
             </View>
 
-            {/* form */}
-            {/* inputs - use Formik validation */}
-            <TextInput
-              label="Title of transaction"
-              value={title}
-              onChange={(text) => setTitle(text)}
-            />
-            <TextInput
-              label="Cost"
-              value={amount}
-              onChange={(number) => amountChangeHandler(number)}
-              keyboardType="numeric"
-            />
-
-            <View style={styles.actionsContainer}>
-              <RoundButton
-                color={Colors.positive}
-                iconName="plus"
-                onPress={() => modifyAmount('plus')}
-              />
-              <RoundButton
-                color={Colors.negative}
-                iconName="minus"
-                onPress={() => modifyAmount('minus')}
-              />
-            </View>
+            <OperationsForm onSubmit={modifyAmount} />
           </View>
 
-          <View style={styles.smallMarginTop}>
+          <View style={styles.historyContainer}>
             <SectionHeader>History</SectionHeader>
             <BudgetHistory history={selectedCurrency.history} />
           </View>
         </View>
       </ScrollView>
-    </View>
+    </Container>
   );
 };
 
