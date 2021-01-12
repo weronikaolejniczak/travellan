@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-
+import SplashScreen from 'react-native-splash-screen';
 import Colors from 'constants/Colors';
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   TextInput,
 } from 'utils';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
-import { editTripRequest } from 'actions/tripsActions';
+import * as tripsActions from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from '././EditTripContainerStyle';
 import Budget from 'models/Budget';
@@ -20,6 +20,11 @@ const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const budget = route.params.budget;
+  const notes = route.params.notes;
+  const transport = route.params.transport;
+  const accommodation = route.params.accommodation;
+  const map = route.params.map;
+
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
   const [destination, setDestination] = useState(route.params.description);
@@ -45,12 +50,16 @@ const EditTripContainer = ({ route, navigation }) => {
     setIsLoading(true);
     if (budget === undefined) {
       await dispatch(
-        editTripRequest(
+        tripsActions.editTripRequest(
           tripId,
           destination,
           startDate.toString(),
           endDate.toString(),
           undefined,
+          transport,
+          accommodation,
+          notes,
+          map,
         ),
       );
     } else {
@@ -73,18 +82,36 @@ const EditTripContainer = ({ route, navigation }) => {
         ),
       ];
       await dispatch(
-        editTripRequest(
+        tripsActions.editTripRequest(
           tripId,
           destination,
           startDate.toString(),
           endDate.toString(),
           budgetToSubmit,
+          transport,
+          accommodation,
+          notes,
+          map,
         ),
       );
     }
     navigation.goBack();
     setIsLoading(false);
-  }, [tripId, destination, startDate, endDate, budget]);
+  }, [
+    tripId,
+    destination,
+    startDate,
+    endDate,
+    budget,
+    transport,
+    accommodation,
+    notes,
+    map,
+  ]);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <Container keyboardShouldPersistTaps="always">

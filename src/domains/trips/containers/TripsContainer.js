@@ -75,21 +75,30 @@ const TripsContainer = (props) => {
       });
   };
 
-  const handleEdit = (id, destination, budget) => {
+  const handleEdit = (
+    id,
+    destination,
+    budget,
+    notes,
+    transport,
+    accommodation,
+    map,
+  ) => {
     props.navigation.navigate('Edit trip', {
       tripId: id,
       destination,
       budget,
+      notes,
+      transport,
+      accommodation,
+      map,
     });
   };
 
-  const waitTrips = useCallback(async () => {
-    await loadTrips();
-  });
   useEffect(() => {
-    waitTrips();
+    loadTrips();
     SplashScreen.hide();
-  }, [waitTrips]);
+  }, [loadTrips]);
 
   if (isLoading) {
     return <LoadingFrame />;
@@ -140,6 +149,10 @@ const TripsContainer = (props) => {
                     data.item.id,
                     data.item.destination,
                     data.item.budget,
+                    data.item.notes,
+                    data.item.transport,
+                    data.item.accommodation,
+                    data.item.map,
                   );
                 }}
               >

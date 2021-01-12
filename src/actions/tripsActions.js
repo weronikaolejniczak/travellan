@@ -157,6 +157,10 @@ export const editTripRequest = (
   startDate,
   endDate,
   budget,
+  transport,
+  accommodation,
+  notes,
+  map,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -170,10 +174,6 @@ export const editTripRequest = (
       longitude: location.lon,
       longitudeDelta: 0.0421,
     };
-    const transport = [];
-    const accommodation = [];
-    const notes = [];
-    const map = new Map([], [], null);
 
     await axios
       .put(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
