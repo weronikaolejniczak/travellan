@@ -183,8 +183,7 @@ export const editTripRequest = (destination, startDate, endDate, budget) => {
         transport,
         cityCode,
       })
-      .then((res) => res.data)
-      .then((data) => {
+      .then(() => {
         const newTrip = new Trip(
           tripId,
           destination,
