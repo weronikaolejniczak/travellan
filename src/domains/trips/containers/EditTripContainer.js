@@ -197,7 +197,7 @@ const EditTripContainer = ({ route, navigation }) => {
         error={
           !destinationIsValid &&
           destinationSubmitted &&
-          'You entered the same or an incorrect destination!'
+          'Enter valid city/country!'
         }
       />
 
