@@ -126,7 +126,7 @@ const TripsContainer = (props) => {
                 style={styles.deleteButton}
                 onPress={() => handleDeleteTrip(data.item)}
               >
-                <Icon name="delete" style={styles.deleteIcon} />
+                <Icon name="edit" style={styles.deleteIcon} />
               </TouchableHighlight>
             </View>
           </TripItem>
