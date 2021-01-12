@@ -136,7 +136,7 @@ const TransportItem = ({
             style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}
           >
-            <Icon name="close" style={styles.icon2} />
+            <Icon name="close" style={styles.icon} />
           </TouchableOpacity>
           <Pdf
             /* ref={(pdf) => {
@@ -165,7 +165,7 @@ const TransportItem = ({
               );
             }}
           >
-            <Icon name="delete" style={styles.icon2} />
+            <Icon name="delete" style={styles.icon} />
           </TouchableOpacity>
         </Container>
       </Modal>

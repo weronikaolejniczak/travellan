@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Animated,
   FlatList,
@@ -11,6 +12,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
+import Colors from 'constants/Colors';
+import SplashScreen from 'react-native-splash-screen';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
@@ -29,6 +32,15 @@ const TransportContainer = ({ route, navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  /**
+  const waitTransport = useCallback(() => {
+    loadTransport();
+  });
+  useEffect(() => {
+    waitTransport();
+    SplashScreen.hide();
+  }, [waitTransport]);
+*/
 
   const addQR = useCallback(
     async (id) => {
@@ -101,7 +113,11 @@ const TransportContainer = ({ route, navigation }) => {
     return <ItemlessFrame message="You have no transport saved!" />;
   }
 
-  if (!Array.isArray(transport) || isLoading || isRefreshing) {
+  if (
+    !Array.isArray(transport) ||
+    (isLoading && transport.length < 1) ||
+    (isRefreshing && transport.length < 1)
+  ) {
     return <LoadingFrame />;
   }
 
