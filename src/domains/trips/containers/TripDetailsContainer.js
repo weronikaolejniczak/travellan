@@ -36,45 +36,43 @@ const TripDetailsContainer = ({ route, navigation }) => {
         addTripToCalendar={addTripToCalendar}
       />
 
-      <View>
-        <View style={styles.tiles}>
-          <NavigationButton
-            navigation={navigation}
-            to="Transport"
-            tripId={selectedTrip.id}
-            icon="flight"
-          />
-          <NavigationButton
-            navigation={navigation}
-            to="Accommodation"
-            tripId={selectedTrip.id}
-            icon="hotel"
-          />
-          <NavigationButton
-            navigation={navigation}
-            to="Map"
-            tripId={selectedTrip.id}
-            icon="map"
-          />
-          <NavigationButton
-            navigation={navigation}
-            to="Weather"
-            tripId={selectedTrip.id}
-            icon="cloud"
-          />
-          <NavigationButton
-            navigation={navigation}
-            to="Budget"
-            tripId={selectedTrip.id}
-            icon="account-balance-wallet"
-          />
-          <NavigationButton
-            navigation={navigation}
-            to="Notes"
-            tripId={selectedTrip.id}
-            icon="note"
-          />
-        </View>
+      <View style={styles.tiles}>
+        <NavigationButton
+          navigation={navigation}
+          to="Transport"
+          tripId={selectedTrip.id}
+          icon="flight"
+        />
+        <NavigationButton
+          navigation={navigation}
+          to="Accommodation"
+          tripId={selectedTrip.id}
+          icon="hotel"
+        />
+        <NavigationButton
+          navigation={navigation}
+          to="Map"
+          tripId={selectedTrip.id}
+          icon="map"
+        />
+        <NavigationButton
+          navigation={navigation}
+          to="Weather"
+          tripId={selectedTrip.id}
+          icon="cloud"
+        />
+        <NavigationButton
+          navigation={navigation}
+          to="Budget"
+          tripId={selectedTrip.id}
+          icon="account-balance-wallet"
+        />
+        <NavigationButton
+          navigation={navigation}
+          to="Notes"
+          tripId={selectedTrip.id}
+          icon="note"
+        />
       </View>
     </ScrollView>
   );

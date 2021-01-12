@@ -9,7 +9,7 @@ import PointOfInterest from 'models/PointOfInterest';
 import { Toolbar } from '../components';
 import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
-import fetchMapSearch from '../../../services/fetchMapSearch';
+import fetchMapSearch from 'services/fetchMapSearch';
 
 MapboxGL.setAccessToken(MAPBOX_API_KEY);
 MapboxGL.setConnected(true);
@@ -117,6 +117,7 @@ const MapContainer = ({ route, navigation }) => {
             ? [
                 ...markers,
                 new PointOfInterest(
+                  new Date().getTime().toString(),
                   new Date().toString(),
                   latitude,
                   longitude,
@@ -125,6 +126,7 @@ const MapContainer = ({ route, navigation }) => {
               ]
             : [
                 new PointOfInterest(
+                  new Date().getTime().toString(),
                   new Date().toString(),
                   latitude,
                   longitude,

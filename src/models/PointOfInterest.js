@@ -1,5 +1,6 @@
 class PointOfInterest {
-  constructor(id, lat, lon, title) {
+  constructor(key, id, lat, lon, title) {
+    this.key = key;
     this.id = id;
     this.lat = lat;
     this.lon = lon;
