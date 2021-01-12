@@ -24,7 +24,6 @@ const EditTripContainer = ({ route, navigation }) => {
   const transport = route.params.transport;
   const accommodation = route.params.accommodation;
   const map = route.params.map;
-  const originalDestination = route.params.destination;
   const [destinationIsValid, setDestinationIsValid] = useState(false);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
   const [destination, setDestination] = useState('');
@@ -84,9 +83,6 @@ const EditTripContainer = ({ route, navigation }) => {
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
     if (!destinationIsValid) {
-      setDestinationSubmitted(true);
-    } else if (originalDestination === destination && destinationIsValid) {
-      setDestinationIsValid(false);
       setDestinationSubmitted(true);
     } else {
       if (budget === undefined) {
