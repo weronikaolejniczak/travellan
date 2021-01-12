@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     marginRight: 20,
   },
-  iconQR: {
+  iconQrModal: {
     fontSize: 30,
     marginRight: 20,
   },
@@ -129,12 +129,6 @@ export const styles = StyleSheet.create({
   rowCenter: {
     alignItems: 'center',
   },
-  rowDirection: {
-    flexDirection: 'row',
-  },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
   subtitle: {
     color: Colors.text,
     fontSize: 20,
@@ -142,11 +136,6 @@ export const styles = StyleSheet.create({
   text: {
     color: Colors.text,
     fontSize: 16,
-  },
-  textAndIconContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    marginVertical: 10,
   },
   transportCard: {
     borderRadius: 15,

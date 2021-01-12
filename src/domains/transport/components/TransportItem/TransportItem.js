@@ -88,7 +88,7 @@ const TransportItem = ({
             <View style={styles.innerQrContainer}>
               <View style={styles.miniHeader}>
                 <TouchableOpacity onPress={closeQRhandler}>
-                  <Icon name="close" style={styles.iconQR} />
+                  <Icon name="close" style={styles.iconQrModal} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
@@ -109,7 +109,7 @@ const TransportItem = ({
                     );
                   }}
                 >
-                  <Icon name="delete" style={styles.iconQR} />
+                  <Icon name="delete" style={styles.iconQrModal} />
                 </TouchableOpacity>
               </View>
               <View style={styles.containerQR}>
