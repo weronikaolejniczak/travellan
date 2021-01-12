@@ -10,6 +10,7 @@ import fetchCityCode from 'services/fetchCityCode';
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const CREATE_TRIP = 'CREATE_TRIP';
+export const EDIT_TRIP = 'EDIT_TRIP';
 
 const API_URL = FIREBASE_URL;
 
@@ -24,6 +25,13 @@ export const deleteTrip = (tripId) => {
   return {
     tripId,
     type: DELETE_TRIP,
+  };
+};
+export const editTrip = (tripId, newTrip) => {
+  return {
+    tripId,
+    newTrip,
+    type: EDIT_TRIP,
   };
 };
 
@@ -139,6 +147,59 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         );
 
         dispatch(createTrip(newTrip));
+      });
+  };
+};
+
+export const editTripRequest = (destination, startDate, endDate, budget) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const cityCode = await fetchCityCode(destination);
+    const image = await fetchDestinationImage(destination);
+    const location = await fetchCoordinates(destination);
+    const region = {
+      latitude: location.lat,
+      latitudeDelta: 0.0922,
+      longitude: location.lon,
+      longitudeDelta: 0.0421,
+    };
+    const transport = [];
+    const accommodation = [];
+    const notes = [];
+    const map = new Map([], [], null);
+
+    await axios
+      .put(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
+        accommodation,
+        budget,
+        destination,
+        endDate,
+        image,
+        map,
+        notes,
+        region,
+        startDate,
+        transport,
+        cityCode,
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        const newTrip = new Trip(
+          tripId,
+          destination,
+          region,
+          image,
+          startDate,
+          endDate,
+          transport,
+          accommodation,
+          budget,
+          notes,
+          map,
+          cityCode,
+        );
+        dispatch(editTrip(newTrip));
       });
   };
 };

@@ -46,7 +46,7 @@ const EditTripContainer = ({ route, navigation }) => {
   return (
     <Container keyboardShouldPersistTaps="always">
       <TextInput
-        label="City and/or country"
+        label={'City and/or country'}
         value={destination}
         onChange={destinationChangeHandler}
         error={
