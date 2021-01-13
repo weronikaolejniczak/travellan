@@ -47,16 +47,16 @@ const TransportContainer = ({ route, navigation }) => {
     [navigation, tripId],
   );
   const deleteQR = useCallback(
-    async (id) => {
+    (id) => {
       setIsRefreshing(true);
       try {
-        dispatch(transportActions.patchQRRequest(tripId, id, ''));
+        dispatch(transportActions.patchQRRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
       setIsRefreshing(false);
     },
-    [dispatch, tripId]
+    [dispatch, tripId],
   )
 
   const persistDelete = useCallback(

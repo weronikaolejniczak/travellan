@@ -150,7 +150,23 @@ export const createTransportRequest = (
       });
   };
 };
+/** 
+export const patchQRRequest = (tripId, transportId, QR) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
 
+    axios
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}/QR.json?auth=${token}`,
+      )
+      //.then(() => dispatch(setQR(tripId, transportId, QR)))
+      .catch(() => {
+        throw new Error(`Couldn't update the QR code!`);
+      });
+  };
+};
+*/
 export const patchQRRequest = (tripId, transportId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
