@@ -160,7 +160,7 @@ export const patchQRRequest = (tripId, transportId, QR) => {
       .delete(
         `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}/QR.json?auth=${token}`,
       )
-      //.then(() => dispatch(setQR(tripId, transportId, QR)))
+      .then(() => dispatch(setQR(tripId, transportId, QR)))
       .catch(() => {
         throw new Error(`Couldn't update the QR code!`);
       });
