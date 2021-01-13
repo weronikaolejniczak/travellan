@@ -57,7 +57,7 @@ const TransportContainer = ({ route, navigation }) => {
       setIsRefreshing(false);
     },
     [dispatch, tripId],
-  )
+  );
 
   const persistDelete = useCallback(
     (id) => {
@@ -169,7 +169,6 @@ const TransportContainer = ({ route, navigation }) => {
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
               handleDeleteQR={() => deleteQR(data.item.id)}
-
             />
           )}
         />
