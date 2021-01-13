@@ -22,44 +22,36 @@ import { styles } from './BudgetContainerStyle';
 const BudgetContainer = (props) => {
   const dispatch = useDispatch();
   const tripId = props.route.params.tripId;
-  const selectedTrip = useSelector((state) =>
-    state.trips.trips.find((item) => item.id === tripId),
+  const budget = useSelector(
+    (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
-  const budget = selectedTrip.budget;
+
+  //console.log('budget: ', budget);
 
   // $todo: index instead of "selectedCurrency" - choose currencyIndex
   // budget[currencyIndex],
   // budget[currencyIndex].value,
   // budget[currencyIndex].defaultAccount
-  // $todo: index instead of "selectedCurrency" - choose historyItemIndex
+  const [currencyIndex, setCurrencyIndex] = useState(0);
+  // $todo: index instead of "selectedHistoryItem" - choose historyItemIndex
   // budget[currencyIndex].history[historyItemIndex],
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    budget === undefined ? undefined : budget[0],
-  );
-  const [displayableValue, setDisplayableValue] = useState(
-    selectedCurrency ? selectedCurrency.value : null,
-  );
+  const [historyItemIndex, setHistoryItemIndex] = useState(0);
   const [category, setCategory] = useState('general');
   const [account, setAccount] = useState(
-    selectedCurrency ? selectedCurrency.defaultAccount : 'card',
+    Array.isArray(budget) && budget[0] ? budget[0].defaultAccount : 'card',
   );
   const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [selectedHistoryItem, setSelectedHistoryItem] = useState(
-    selectedCurrency ? selectedCurrency.history[0] : null,
-  );
+  const [isLoading, setIsLoading] = useState(true);
 
-  const chooseCategory = (iconPressed) => {
+  const chooseCategory = (iconPressed) =>
     setCategory(
       Object.keys(categories.categoryIcons).find(
         (key) => categories.categoryIcons[key] === iconPressed,
       ),
     );
-  };
 
   const modifyAmount = ({ title, cost, type }) => {
-    const changedCurrency = selectedCurrency;
+    /* const changedCurrency = selectedCurrency;
 
     type === 'plus'
       ? (setDisplayableValue(displayableValue + Math.abs(prepareValue(cost))),
@@ -88,11 +80,15 @@ const BudgetContainer = (props) => {
     }
 
     const index = budget.findIndex((item) => item.id === selectedCurrency.id);
-    budget[index] = changedCurrency;
+    budget[index] = changedCurrency; */
+    console.log('title: ', title);
+    console.log('type: ', type);
+    console.log('cost: ', cost);
   };
 
   const deleteCurrency = useCallback(
-    async (id) => {
+    () => console.log('delete currency...'),
+    /* async (id) => {
       setIsRefreshing(true);
       const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
       await dispatch(patchBudgetRequest(tripId, filteredActiveCurrencies));
@@ -101,12 +97,13 @@ const BudgetContainer = (props) => {
         : setSelectedCurrency(null);
       setIsRefreshing(false);
     },
-    [budget, dispatch, tripId],
+    [budget, dispatch, tripId], */
+    [],
   );
 
   const handleSelectCurrency = (item) => {
-    setSelectedCurrency(item);
-    setDisplayableValue(item.value);
+    //setSelectedCurrency(item);
+    //setDisplayableValue(item.value);
     setAccount(item.defaultAccount);
   };
 
@@ -129,7 +126,7 @@ const BudgetContainer = (props) => {
       { cancelable: true },
     );
 
-  const persistBudget = useCallback(async () => {
+  /* const persistBudget = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
@@ -138,61 +135,58 @@ const BudgetContainer = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
-  }, [budget, dispatch, tripId]);
+  }, [budget, dispatch, tripId]); */
 
-  const loadBudget = useCallback(async () => {
-    setIsRefreshing(true);
+  const loadBudget = useCallback(() => {
+    setIsLoading(true);
     try {
-      await dispatch(fetchBudgetRequest(tripId));
+      dispatch(fetchBudgetRequest(tripId));
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
-  }, [dispatch, setIsRefreshing, tripId]);
+    setIsLoading(false);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
-    setIsLoading(true);
+    loadBudget();
+  }, [loadBudget]);
 
-    loadBudget().then(() => {
-      setIsLoading(false);
-    });
-  }, [dispatch, loadBudget]);
+  if (isLoading) return <LoadingFrame />;
 
-  if (selectedCurrency === undefined || isLoading || isRefreshing)
-    return <LoadingFrame />;
-
-  if (budget === [] || budget === undefined)
-    <ItemlessFrame message="There is no budget to show!" />;
+  if (budget === undefined || (Array.isArray(budget) && budget.length === 0))
+    return <ItemlessFrame message="There is no budget to show!" />;
 
   return (
     <Container>
       <CurrencyPicker
         currencies={budget}
-        selectedCurrency={selectedCurrency}
+        selectedCurrency={budget[currencyIndex]}
         handleSelectCurrency={handleSelectCurrency}
         handleDeleteCurrency={handleDeleteCurrency}
       />
-      <BalanceDashboard currency={selectedCurrency} />
+      <BalanceDashboard currency={budget[currencyIndex]} />
 
       <ScrollView contentContainerStyle={styles.detailsContainer}>
-        {selectedCurrency.history.length > 1 && (
-          <>
-            <Chart
-              getValue={(index) => selectedCurrency.history[index].value}
-              data={selectedCurrency.history}
-              onDataPointClick={(item) =>
-                setSelectedHistoryItem(selectedCurrency.history[item.index])
-              }
-            />
-            {!!selectedHistoryItem && (
-              <ChartTab
-                date={selectedHistoryItem.date}
-                title={selectedHistoryItem.title}
-                value={selectedHistoryItem.value}
+        {budget[currencyIndex] &&
+          Array.isArray(budget[currencyIndex].history) &&
+          budget[currencyIndex].history.length > 1 && (
+            <>
+              <Chart
+                getValue={(index) => budget[currencyIndex].history[index].value}
+                data={budget[currencyIndex].history}
+                onDataPointClick={(item) =>
+                  setHistoryItemIndex(budget[currencyIndex].history[item.index])
+                }
               />
-            )}
-          </>
-        )}
+              {!!historyItemIndex && (
+                <ChartTab
+                  date={budget[currencyIndex].history[historyItemIndex].date}
+                  title={budget[currencyIndex].history[historyItemIndex].title}
+                  value={budget[currencyIndex].history[historyItemIndex].value}
+                />
+              )}
+            </>
+          )}
 
         <View style={styles.operationsContainer}>
           <SectionHeader>Operations</SectionHeader>
@@ -231,7 +225,7 @@ const BudgetContainer = (props) => {
 
           <View style={styles.historyContainer}>
             <SectionHeader>History</SectionHeader>
-            <BudgetHistory history={selectedCurrency.history} />
+            <BudgetHistory history={budget[currencyIndex].history} />
           </View>
         </View>
       </ScrollView>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Budget from 'models/Budget';
 import { BudgetPicker } from 'components';
-import { Button, CustomScrollView as Container } from 'utils';
+import { Button, ScrollView as Container } from 'utils';
 import { CURRENCIES } from 'data/Currencies';
 import { patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';

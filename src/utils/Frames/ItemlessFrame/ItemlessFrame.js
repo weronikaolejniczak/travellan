@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import Headline from 'utils/Typography/Headline';
-import { View as Container } from 'utils/Frames/View';
+import { View as Container } from 'utils';
 import { styles } from './ItemlessFrameStyle';
 
 const ItemlessFrame = ({ message }) => (

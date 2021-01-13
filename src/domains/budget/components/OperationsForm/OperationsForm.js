@@ -37,7 +37,7 @@ const OperationsForm = ({ onSubmit }) => (
           value={values.title}
           //onChange={(text) => setTitle(text)}
           onChange={handleChange('title')}
-          onBlur={handleBlur}
+          onBlur={handleBlur('title')}
           error={errors.title && touched.title ? errors.tile : null}
         />
         <TextInput
@@ -45,7 +45,7 @@ const OperationsForm = ({ onSubmit }) => (
           value={values.cost}
           //onChange={(number) => amountChangeHandler(number)}
           onChange={handleChange('cost')}
-          onBlur={handleBlur}
+          onBlur={handleBlur('cost')}
           keyboardType="numeric"
           error={errors.cost && touched.cost ? errors.cost : null}
         />
