@@ -30,15 +30,6 @@ const TransportContainer = ({ route, navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-  /**
-  const waitTransport = useCallback(() => {
-    loadTransport();
-  });
-  useEffect(() => {
-    waitTransport();
-    SplashScreen.hide();
-  }, [waitTransport]);
-*/
 
   const addQR = useCallback(
     async (id) => {
