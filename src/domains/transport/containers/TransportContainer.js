@@ -46,6 +46,18 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [navigation, tripId],
   );
+  const deleteQR = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      try {
+        dispatch(transportActions.patchQRRequest(tripId, id, ''));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId]
+  )
 
   const persistDelete = useCallback(
     (id) => {
@@ -156,8 +168,8 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
-              //handleDeleteQR
-              
+              handleDeleteQR={() => deleteQR(data.item.id)}
+
             />
           )}
         />
