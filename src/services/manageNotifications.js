@@ -102,7 +102,7 @@ class NotificationManager {
   };
 
   cancelScheduledLocalNotification = (id) => {
-    cancelId = id;
+    const cancelId = id;
     PushNotification.cancelLocalNotifications({ id: cancelId });
   };
 
