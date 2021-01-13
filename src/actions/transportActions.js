@@ -150,7 +150,7 @@ export const createTransportRequest = (
       });
   };
 };
-/** 
+///**
 export const patchQRRequest = (tripId, transportId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -166,7 +166,8 @@ export const patchQRRequest = (tripId, transportId, QR) => {
       });
   };
 };
-*/
+//*/
+/** 
 export const patchQRRequest = (tripId, transportId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -185,6 +186,7 @@ export const patchQRRequest = (tripId, transportId, QR) => {
       });
   };
 };
+*/
 
 export const patchPDFRequest = (tripId, transportId, PDF) => {
   return async function (dispatch, getState) {
