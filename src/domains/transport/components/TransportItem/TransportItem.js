@@ -6,6 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   Modal,
   ScrollView,
   Text,
@@ -80,45 +81,48 @@ const TransportItem = ({
         animationType="slide"
         transparent={true}
         visible={showQR}
-        onRequestClose={() => {
-          setShowQR(false);
-        }}
+        onRequestClose={() => setShowQR(false)}
       >
-        <Container>
-          <TouchableOpacity
-            style={styles.buttonTouchableLeft}
-            onPress={closeQRhandler}
-          >
-            <Icon name="close" style={styles.icon2} />
-          </TouchableOpacity>
-          <View style={styles.containerQR}>
-            <QRCode style={styles.QR} value={QR} size={300} logoSize={300} />
-            <View style={styles.containerRow}>
-              <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={() => {
-                  Alert.alert(
-                    'Delete QR',
-                    'Are you sure?',
-                    [
-                      {
-                        style: 'cancel',
-                        text: 'Cancel',
-                      },
-                      {
-                        onPress: deleteQR,
-                        text: 'OK',
-                      },
-                    ],
-                    { cancelable: true },
-                  );
-                }}
-              >
-                <Icon name="delete" style={styles.icon3} />
-              </TouchableOpacity>
+        <View style={styles.qrContainer}>
+          <Card style={styles.qrCardContainer}>
+            <View style={styles.innerQrContainer}>
+              <View style={styles.miniHeader}>
+                <TouchableOpacity onPress={closeQRhandler}>
+                  <Icon name="close" style={styles.iconQrModal} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert(
+                      'Delete QR',
+                      'Are you sure?',
+                      [
+                        {
+                          style: 'cancel',
+                          text: 'Cancel',
+                        },
+                        {
+                          onPress: deleteQR,
+                          text: 'OK',
+                        },
+                      ],
+                      { cancelable: true },
+                    );
+                  }}
+                >
+                  <Icon name="delete" style={styles.iconQrModal} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.containerQR}>
+                <QRCode
+                  value={QR}
+                  size={Dimensions.get('window').width - 100}
+                  bgColor="black"
+                  fgColor="white"
+                />
+              </View>
             </View>
-          </View>
-        </Container>
+          </Card>
+        </View>
       </Modal>
 
       <Modal
@@ -132,15 +136,9 @@ const TransportItem = ({
             style={styles.buttonTouchableLeft}
             onPress={closePDFhandler}
           >
-            <Icon name="close" style={styles.icon2} />
+            <Icon name="close" style={styles.icon} />
           </TouchableOpacity>
-          <Pdf
-            /* ref={(pdf) => {
-              this.pdf = pdf;
-            }} */
-            source={source}
-            style={styles.PDF}
-          />
+          <Pdf source={source} style={styles.PDF} />
           <TouchableOpacity
             style={styles.buttonTouchable}
             onPress={() => {
@@ -161,7 +159,7 @@ const TransportItem = ({
               );
             }}
           >
-            <Icon name="delete" style={styles.icon2} />
+            <Icon name="delete" style={styles.icon} />
           </TouchableOpacity>
         </Container>
       </Modal>

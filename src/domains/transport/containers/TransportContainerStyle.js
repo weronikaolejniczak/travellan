@@ -1,61 +1,61 @@
+import Colors from 'constants/Colors';
 import { Platform, StyleSheet } from 'react-native';
 import { spacingForCardInset } from '../components/TransportItem/TransportItemStyle';
-import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
-  scrollView: {
+  button: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 10,
+    margin: 10,
+    padding: 15,
+    width: '40%',
+  },
+  buttonText: {
+    color: Colors.text,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  centered: {
+    alignContent: 'center',
     flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: '12%',
+    justifyContent: 'center',
+  },
+  columnAndRowCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   contentContainer: {
     flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: Platform.OS === 'android' ? spacingForCardInset : 0,
   },
-  justifyRow: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
   contentInsetIOS: {
-    top: 0,
-    left: spacingForCardInset,
     bottom: 0,
+    left: spacingForCardInset,
     right: spacingForCardInset,
+    top: 0,
   },
-  columnAndRowCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  text: {
-    color: Colors.text,
-  },
-  button: {
-    borderRadius: 10,
+  dot: {
     backgroundColor: Colors.primary,
-    alignItems: 'center',
-    width: '40%',
-    padding: 15,
-    margin: 10,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors.text,
+    borderRadius: 5,
+    height: 10,
+    margin: 8,
+    width: 10,
   },
   icon: {
     margin: 10,
   },
-  dot: {
-    height: 10,
-    width: 10,
-    backgroundColor: Colors.primary,
-    margin: 8,
-    borderRadius: 5,
+  justifyRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  scrollView: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    paddingTop: '12%',
+  },
+  text: {
+    color: Colors.text,
   },
 });
