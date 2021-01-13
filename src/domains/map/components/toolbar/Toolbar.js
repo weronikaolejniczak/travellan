@@ -69,9 +69,7 @@ const Toolbar = ({
           onChangeText={(text) => setSearchQuery(text)}
         />
         <View style={styles.actionBar}>
-          <Text style={{ color: 'orange' }}>
-            Press on the area to search in
-          </Text>
+          <Text style={styles.text}>Press on the area to search in</Text>
         </View>
       </View>
     )}

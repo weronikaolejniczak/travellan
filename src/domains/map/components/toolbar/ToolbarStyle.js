@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  text: { color: 'orange' },
   overlay: {
     backgroundColor: Colors.cards,
     justifyContent: 'flex-end',
