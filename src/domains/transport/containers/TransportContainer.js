@@ -58,6 +58,28 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [dispatch, tripId],
   );
+  const handleDelete = useCallback(
+    (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete note',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDelete(noteId),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDelete],
+  );
 
   const persistDelete = useCallback(
     (id) => {
@@ -72,7 +94,7 @@ const TransportContainer = ({ route, navigation }) => {
     [dispatch, tripId],
   );
 
-  const handleDelete = useCallback(
+  const handleQRDelete = useCallback(
     (noteId) => {
       setIsRefreshing(true);
       Alert.alert(
@@ -168,7 +190,7 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
-              handleDeleteQR={() => deleteQR(data.item.id)}
+              handleDeleteQR={() => handleQRDelete(data.item.id)}
             />
           )}
         />
