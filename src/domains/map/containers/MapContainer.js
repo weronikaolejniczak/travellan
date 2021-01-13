@@ -48,7 +48,7 @@ const MapContainer = ({ route, navigation }) => {
       <MapboxGL.PointAnnotation
         id={`marker-${marker.id}`}
         coordinate={[marker.lat, marker.lon]}
-        onSelected={(event) => markerOnPressHandler(event)}
+        onDeselected={(event) => markerOnPressHandler(event)}
       >
         <MapboxGL.Callout title={marker.title} />
       </MapboxGL.PointAnnotation>
