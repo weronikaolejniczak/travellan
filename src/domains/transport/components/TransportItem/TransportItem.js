@@ -47,15 +47,6 @@ const TransportItem = ({
       setShowQR(true);
     }
   };
-  /**
-  const deleteQR = useCallback(async () => {
-    setQRCodeString('');
-    await dispatch(patchQRRequest(tripId, id, ''));
-    setShowQR(false);
-  }, [dispatch, tripId, id]);
-
-  */
-
   const deletePDF = useCallback(async () => {
     setPDFUri('');
     await dispatch(patchPDFRequest(tripId, id, ''));
