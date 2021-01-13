@@ -156,6 +156,8 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
+              //handleDeleteQR
+              
             />
           )}
         />

@@ -30,6 +30,7 @@ const TransportItem = ({
   PDF,
   handleAddQR,
   handleDeleteTransport,
+  handleDeleteQR,
 }) => {
   const dispatch = useDispatch();
   const source = { uri: PDF };
@@ -101,7 +102,7 @@ const TransportItem = ({
                           text: 'Cancel',
                         },
                         {
-                          onPress: deleteQR,
+                          onPress: handleDeleteQR,
                           text: 'OK',
                         },
                       ],
