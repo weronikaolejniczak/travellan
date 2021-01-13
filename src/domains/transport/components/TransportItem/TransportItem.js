@@ -84,25 +84,7 @@ const TransportItem = ({
                 <TouchableOpacity onPress={closeQRhandler}>
                   <Icon name="close" style={styles.iconQrModal} />
                 </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    Alert.alert(
-                      'Delete QR',
-                      'Are you sure?',
-                      [
-                        {
-                          style: 'cancel',
-                          text: 'Cancel',
-                        },
-                        {
-                          onPress: handleDeleteQR,
-                          text: 'OK',
-                        },
-                      ],
-                      { cancelable: true },
-                    );
-                  }}
-                >
+                <TouchableOpacity onPress={handleDeleteQR}>
                   <Icon name="delete" style={styles.iconQrModal} />
                 </TouchableOpacity>
               </View>

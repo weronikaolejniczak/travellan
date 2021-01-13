@@ -46,7 +46,30 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [navigation, tripId],
   );
-  const deleteQR = useCallback(
+  const handleQRDelete = useCallback(
+    (noteId) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete QR',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: persistDeleteQR(noteId),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDeleteQR],
+  );
+
+  const persistDeleteQR = useCallback(
     (id) => {
       setIsRefreshing(true);
       try {
@@ -58,6 +81,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [dispatch, tripId],
   );
+
   const handleDelete = useCallback(
     (noteId) => {
       setIsRefreshing(true);
@@ -92,29 +116,6 @@ const TransportContainer = ({ route, navigation }) => {
       setIsRefreshing(false);
     },
     [dispatch, tripId],
-  );
-
-  const handleQRDelete = useCallback(
-    (noteId) => {
-      setIsRefreshing(true);
-      Alert.alert(
-        'Delete note',
-        'Are you sure?',
-        [
-          {
-            style: 'cancel',
-            text: 'Cancel',
-          },
-          {
-            onPress: () => persistDelete(noteId),
-            text: 'OK',
-          },
-        ],
-        { cancelable: true },
-      );
-      setIsRefreshing(false);
-    },
-    [persistDelete],
   );
 
   const loadTransport = useCallback(() => {
