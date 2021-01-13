@@ -1,9 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import Colors from 'constants/Colors';
 import {
   Button,
   ScrollView as Container,
@@ -14,7 +12,6 @@ import { addEventToCalendar } from 'services/handleCalendarEvent';
 import * as tripsActions from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
 import { styles } from '././EditTripContainerStyle';
-import Budget from 'models/Budget';
 
 const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -85,91 +82,38 @@ const EditTripContainer = ({ route, navigation }) => {
     if (!destinationIsValid) {
       setDestinationSubmitted(true);
     } else {
-      if (budget === undefined) {
-        await dispatch(
-          tripsActions.editTripRequest(
-            tripId,
-            destination,
-            startDate.toString(),
-            endDate.toString(),
-            undefined,
-            transport,
-            accommodation,
-            notes,
-            map,
-          ),
-        );
-        navigation.goBack();
-        callNotification(destination, startDate);
-        Snackbar.show({
-          action: {
-            onPress: () => {
-              handleCalendarEvent.addToCalendar(
-                'Trip to ' + destination,
-                startDate,
-                endDate,
-                destination,
-                'Remember to pack everything and check weather forecast!',
-              );
-            },
-            text: 'Add',
-            textColor: 'orange',
+      await dispatch(
+        tripsActions.editTripRequest(
+          tripId,
+          destination,
+          startDate.toString(),
+          endDate.toString(),
+          budget,
+          transport,
+          accommodation,
+          notes,
+          map,
+        ),
+      );
+      navigation.goBack();
+      callNotification(destination, startDate);
+      Snackbar.show({
+        action: {
+          onPress: () => {
+            handleCalendarEvent.addToCalendar(
+              'Trip to ' + destination,
+              startDate,
+              endDate,
+              destination,
+              'Remember to pack everything and check weather forecast!',
+            );
           },
-          duration: Snackbar.LENGTH_LONG,
-          text: 'Add Trip to Google Calendar',
-        });
-      } else {
-        const budgetToSubmit = [
-          new Budget(
-            budget[0].id,
-            budget[0].value,
-            budget[0].currency,
-            [
-              {
-                account: budget[0].history[0].account,
-                category: budget[0].history[0].category,
-                date: budget[0].history[0].date,
-                id: budget[0].history[0].id,
-                title: budget[0].history[0].title,
-                value: budget[0].history[0].value,
-              },
-            ],
-            budget[0].defaultAccount,
-          ),
-        ];
-        await dispatch(
-          tripsActions.editTripRequest(
-            tripId,
-            destination,
-            startDate.toString(),
-            endDate.toString(),
-            budgetToSubmit,
-            transport,
-            accommodation,
-            notes,
-            map,
-          ),
-        );
-        navigation.goBack();
-        callNotification(destination, startDate);
-        Snackbar.show({
-          action: {
-            onPress: () => {
-              handleCalendarEvent.addToCalendar(
-                'Trip to ' + destination,
-                startDate,
-                endDate,
-                destination,
-                'Remember to pack everything and check weather forecast!',
-              );
-            },
-            text: 'Add',
-            textColor: 'orange',
-          },
-          duration: Snackbar.LENGTH_LONG,
-          text: 'Add Trip to Google Calendar',
-        });
-      }
+          text: 'Add',
+          textColor: 'orange',
+        },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
+      });
     }
     setIsLoading(false);
   }, [
