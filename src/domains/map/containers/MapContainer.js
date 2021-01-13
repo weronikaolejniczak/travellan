@@ -2,7 +2,7 @@ import Geolocation from '@react-native-community/geolocation';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
 import { MAPBOX_API_KEY } from 'react-native-dotenv';
-import { View, ActivityIndicator } from 'react-native';
+import { Alert, View, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PointOfInterest from 'models/PointOfInterest';
@@ -33,6 +33,7 @@ const MapContainer = ({ route, navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [markerTitle, setMarkerTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [error, setError] = useState(null);
 
   const extractRegion = () =>
@@ -48,7 +49,7 @@ const MapContainer = ({ route, navigation }) => {
       <MapboxGL.PointAnnotation
         id={`marker-${marker.id}`}
         coordinate={[marker.lat, marker.lon]}
-        onDeselected={(event) => markerOnPressHandler(event)}
+        onSelected={(event) => handleDeleteTrip(event, marker.title)}
       >
         <MapboxGL.Callout title={marker.title} />
       </MapboxGL.PointAnnotation>
@@ -82,6 +83,28 @@ const MapContainer = ({ route, navigation }) => {
         }
         setSearchingActive(!searchingActive);
         break;
+    }
+  };
+
+  const handleDeleteTrip = (event, title) => {
+    if (deletingMarkerActive) {
+      setIsSelected(true);
+      Alert.alert(
+        `Delete ${title}`,
+        'Are you sure?',
+        [
+          {
+            onPress: () => setIsSelected(false),
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => markerOnPressHandler(event),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true, onDismiss: () => setIsSelected(false) },
+      );
     }
   };
 
