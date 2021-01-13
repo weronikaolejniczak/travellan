@@ -151,7 +151,7 @@ export const createTransportRequest = (
   };
 };
 
-export const patchQRRequest = (tripId, transportId, QR) => {
+export const deleteQRRequest = (tripId, transportId, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

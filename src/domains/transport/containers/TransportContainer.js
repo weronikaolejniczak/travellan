@@ -50,7 +50,7 @@ const TransportContainer = ({ route, navigation }) => {
     (id) => {
       setIsRefreshing(true);
       try {
-        dispatch(transportActions.patchQRRequest(tripId, id));
+        dispatch(transportActions.deleteQRRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
