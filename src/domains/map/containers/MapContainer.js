@@ -206,7 +206,7 @@ const MapContainer = ({ route, navigation }) => {
     <View style={styles.container}>
       <MapboxGL.MapView
         style={styles.map}
-        styleURL="mapbox://styles/travellan/ckixgtxyh5rdn19qo4hka8016"
+        styleURL="mapbox://styles/travellan/ckju6y3ae119l19o6od0j9wi5"
         onLongPress={(event) => mapOnPressHandler(event)}
         // onRegionDidChange={(region) => setCurrentRegion(region)} - left for further debugging
       >
