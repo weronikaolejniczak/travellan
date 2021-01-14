@@ -111,7 +111,7 @@ export const createTransportRequest = (
   isTicketFrom,
   dateOfDeparture,
   placeOfDeparture,
-  QR,
+  //QR,
   PDF,
 ) => {
   return async function (dispatch, getState) {
@@ -123,7 +123,7 @@ export const createTransportRequest = (
         `${API_URL}/Trips/${userId}/${tripId}/transport.json?auth=${token}`,
         {
           PDF,
-          QR,
+          //QR,
           dateOfDeparture,
           isTicketFrom,
           isTicketTo,
@@ -140,7 +140,7 @@ export const createTransportRequest = (
           requestConfig.isTicketFrom,
           requestConfig.dateOfDeparture,
           requestConfig.placeOfDeparture,
-          requestConfig.QR,
+          //requestConfig.QR,
           requestConfig.PDF,
         );
         dispatch(createTransport(tripId, newTransport));
