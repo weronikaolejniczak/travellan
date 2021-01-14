@@ -26,22 +26,25 @@ const TransportContainer = ({ route, navigation }) => {
   const transport = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).transport,
   );
-
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [showQR, setShowQR] = useState(false);
 
   const handleQR = useCallback(
-    (noteId) => {
-      if (!noteId.QR) {
+    (QR, noteId) => {
+      if (QR === undefined) {
+        console.log(QR);
         addQR(noteId);
       } else {
+        console.log(QR);
         setShowQR(true);
       }
     },
     [addQR],
   );
+
+  const handleQRClose = (id) => setShowQR(false);
 
   const addQR = useCallback(
     async (id) => {
@@ -90,6 +93,7 @@ const TransportContainer = ({ route, navigation }) => {
         setError('Something went wrong!');
       }
       setIsRefreshing(false);
+      setShowQR(false);
     },
     [dispatch, tripId],
   );
@@ -202,9 +206,10 @@ const TransportContainer = ({ route, navigation }) => {
               QR={data.item.QR}
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
-              handleQR={() => handleQR(data.item.id)}
+              handleQR={() => handleQR(data.item.QR, data.item.id)}
               handleDeleteQR={() => handleQRDelete(data.item.id)}
-              handleShowQR={showQR}
+              isVisibleQR={showQR}
+              handleCloseQR={() => handleQRClose(data.item.id)}
             />
           )}
         />

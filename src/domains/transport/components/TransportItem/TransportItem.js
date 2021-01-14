@@ -31,7 +31,7 @@ const TransportItem = ({
   handleQR,
   handleDeleteTransport,
   handleDeleteQR,
-  isDisplayQR,
+  isVisibleQR,
   handleCloseQR,
 }) => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const TransportItem = ({
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
   const [showPDF, setShowPDF] = useState(false);
-  
+
   const deletePDF = useCallback(async () => {
     setPDFUri('');
     await dispatch(patchPDFRequest(tripId, id, ''));
@@ -66,7 +66,7 @@ const TransportItem = ({
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isDisplayQR}
+        visible={isVisibleQR}
         onRequestClose={handleCloseQR}
       >
         <View style={styles.qrContainer}>
@@ -82,7 +82,7 @@ const TransportItem = ({
               </View>
               <View style={styles.containerQR}>
                 <QRCode
-                  value={QR}
+                  value={QRCodeString}
                   size={Dimensions.get('window').width - 100}
                   bgColor="black"
                   fgColor="white"
