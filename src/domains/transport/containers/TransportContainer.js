@@ -34,10 +34,8 @@ const TransportContainer = ({ route, navigation }) => {
   const handleQR = useCallback(
     (QR, noteId) => {
       if (QR === undefined) {
-        console.log(QR);
         addQR(noteId);
       } else {
-        console.log(QR);
         setShowQR(true);
       }
     },
