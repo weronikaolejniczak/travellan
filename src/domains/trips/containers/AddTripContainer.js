@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
-import Colors from 'constants/Colors';
+
 import { BudgetPicker } from 'components';
 import {
   Button,
@@ -16,7 +15,6 @@ import { CURRENCIES } from 'data/Currencies';
 import { addEventToCalendar } from 'services/handleCalendarEvent';
 import { createTripRequest } from 'actions/tripsActions';
 import { notificationManager } from 'services/manageNotifications';
-import { styles } from './AddTripContainerStyle';
 
 const AddTripContainer = ({ navigation }) => {
   const dispatch = useDispatch();

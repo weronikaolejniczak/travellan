@@ -19,6 +19,7 @@ import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
 import AddTripContainer from 'domains/trips/containers/AddTripContainer';
+import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import AuthenticationContainer, {
   authOptions,
 } from 'domains/user/containers/AuthenticationContainer';
@@ -135,6 +136,7 @@ export default function Navigation() {
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
+        <Stack.Screen name="Edit trip" component={EditTripContainer} />
         <Stack.Screen
           name="Details"
           component={TripDetailsContainer}
