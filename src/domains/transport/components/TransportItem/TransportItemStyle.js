@@ -59,24 +59,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: '5%',
   },
-  counterContainer: {
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 24,
-    height: 48,
-    justifyContent: 'center',
-    paddingHorizontal: cardWidth * 0.035,
-    paddingVertical: cardHeight * 0.01,
-    width: 48,
-  },
   header: {
     color: Colors.text,
     fontSize: 24,
-  },
-  horizontalLine: {
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-    marginVertical: 10,
   },
   icon: {
     color: Colors.text,
