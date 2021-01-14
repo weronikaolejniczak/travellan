@@ -107,10 +107,6 @@ export const styles = StyleSheet.create({
   rowCenter: {
     alignItems: 'center',
   },
-  subtitle: {
-    color: Colors.text,
-    fontSize: 20,
-  },
   text: {
     color: Colors.text,
     fontSize: 16,
