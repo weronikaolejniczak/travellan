@@ -31,6 +31,8 @@ const TransportContainer = ({ route, navigation }) => {
   const [error, setError] = useState();
   const [showQR, setShowQR] = useState(false);
 
+  let items;
+
   const handleQR = useCallback(
     (QR, noteId) => {
       if (QR === undefined || QR === ' ' || QR === null) {
@@ -210,7 +212,7 @@ const TransportContainer = ({ route, navigation }) => {
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleQR={() => handleQR(data.item.QR, data.item.id)}
               handleDeleteQR={() => handleQRDelete(data.item.id)}
-              isVisibleQR={showQR}
+              isVisibleQR={}
               handleCloseQR={() => handleQRClose(data.item.id)}
             />
           )}
