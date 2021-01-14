@@ -31,7 +31,7 @@ const TransportContainer = ({ route, navigation }) => {
   const [error, setError] = useState();
   const [showQR, setShowQR] = useState(false);
 
-  let items;
+  let stateItems;
 
   const handleQR = useCallback(
     (QR, noteId) => {

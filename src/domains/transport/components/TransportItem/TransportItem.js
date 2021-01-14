@@ -67,7 +67,7 @@ const TransportItem = ({
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isVisibleQR}
+        visible={showQR}
         onRequestClose={handleCloseQR}
       >
         <View style={styles.qrContainer}>
