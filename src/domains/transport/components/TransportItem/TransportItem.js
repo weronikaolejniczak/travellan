@@ -28,18 +28,19 @@ const TransportItem = ({
   id,
   QR,
   PDF,
-  handleAddQR,
+  handleQR,
   handleDeleteTransport,
   handleDeleteQR,
+  isDisplayQR,
+  handleCloseQR,
 }) => {
   const dispatch = useDispatch();
   const source = { uri: PDF };
 
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
-  const [showQR, setShowQR] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
-
+  /**
   const checkHandler = () => {
     if (QR === '' || QR === null || QR === undefined) {
       handleAddQR();
@@ -47,13 +48,13 @@ const TransportItem = ({
       setShowQR(true);
     }
   };
+
+  */
   const deletePDF = useCallback(async () => {
     setPDFUri('');
     await dispatch(patchPDFRequest(tripId, id, ''));
     setShowPDF(false);
   }, [dispatch, tripId, id]);
-
-  const closeQRhandler = () => setShowQR(false);
 
   const closePDFhandler = () => setShowPDF(false);
 
@@ -74,14 +75,14 @@ const TransportItem = ({
       <Modal
         animationType="slide"
         transparent={true}
-        visible={showQR}
-        onRequestClose={() => setShowQR(false)}
+        visible={isDisplayQR}
+        onRequestClose={handleCloseQR}
       >
         <View style={styles.qrContainer}>
           <Card style={styles.qrCardContainer}>
             <View style={styles.innerQrContainer}>
               <View style={styles.miniHeader}>
-                <TouchableOpacity onPress={closeQRhandler}>
+                <TouchableOpacity onPress={handleCloseQR}>
                   <Icon name="close" style={styles.iconQrModal} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleDeleteQR}>
@@ -145,7 +146,7 @@ const TransportItem = ({
           <Icon name="delete" style={styles.icon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={checkHandler}>
+        <TouchableOpacity onPress={handleQR}>
           <CommunityIcon name="qrcode-scan" style={styles.icon} />
         </TouchableOpacity>
 

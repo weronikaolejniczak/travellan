@@ -30,6 +30,16 @@ const TransportContainer = ({ route, navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  const [showQR, setShowQR] = useState(false);
+
+  
+  const checkHandler = () => {
+    if (QR === '' || QR === null || QR === undefined) {
+      handleAddQR();
+    } else {
+      setShowQR(true);
+    }
+  };
 
   const addQR = useCallback(
     async (id) => {
@@ -192,6 +202,7 @@ const TransportContainer = ({ route, navigation }) => {
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleAddQR={() => addQR(data.item.id)}
               handleDeleteQR={() => handleQRDelete(data.item.id)}
+              handleShowQR={showQR}
             />
           )}
         />
