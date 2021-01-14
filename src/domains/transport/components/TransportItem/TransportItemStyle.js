@@ -46,13 +46,6 @@ export const styles = StyleSheet.create({
   columnDirection: {
     flexDirection: 'column',
   },
-  container: {
-    alignItems: 'center',
-    backgroundColor: Colors.background,
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: '5%',
-  },
   containerQR: {
     padding: 10,
   },
