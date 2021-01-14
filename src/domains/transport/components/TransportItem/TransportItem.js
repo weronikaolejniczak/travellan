@@ -40,6 +40,7 @@ const TransportItem = ({
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
   const [showPDF, setShowPDF] = useState(false);
+  const [showQR, setShowQR] = useState(false);
 
   const deletePDF = useCallback(async () => {
     setPDFUri('');
