@@ -40,16 +40,7 @@ const TransportItem = ({
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
   const [showPDF, setShowPDF] = useState(false);
-  /**
-  const checkHandler = () => {
-    if (QR === '' || QR === null || QR === undefined) {
-      handleAddQR();
-    } else {
-      setShowQR(true);
-    }
-  };
-
-  */
+  
   const deletePDF = useCallback(async () => {
     setPDFUri('');
     await dispatch(patchPDFRequest(tripId, id, ''));
