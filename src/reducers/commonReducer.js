@@ -50,7 +50,6 @@ export default (state = initialState, action) => {
         break;
 
       case EDIT_TRIP:
-        draft.trips = [...draft.trips];
         draft.trips[tripIndex] = action.newTrip;
         break;
 
