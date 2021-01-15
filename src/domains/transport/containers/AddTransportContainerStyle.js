@@ -83,12 +83,6 @@ export const styles = StyleSheet.create({
     color: Colors.text,
     fontSize: 18,
   },
-  returnIcon: {
-    color: Colors.text,
-    fontSize: 25,
-    marginRight: '5%',
-    paddingVertical: 7,
-  },
   rowAndAlign: {
     alignItems: 'center',
     flexDirection: 'row',
