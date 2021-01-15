@@ -40,7 +40,7 @@ const TransportItem = ({
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
   const [showPDF, setShowPDF] = useState(false);
-  const [showQR, setShowQR] = useState(false);
+
 
   const deletePDF = useCallback(async () => {
     setPDFUri('');
@@ -64,36 +64,6 @@ const TransportItem = ({
 
   return (
     <Card style={styles.transportCard}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showQR}
-        onRequestClose={handleCloseQR}
-      >
-        <View style={styles.qrContainer}>
-          <Card style={styles.qrCardContainer}>
-            <View style={styles.innerQrContainer}>
-              <View style={styles.miniHeader}>
-                <TouchableOpacity onPress={handleCloseQR}>
-                  <Icon name="close" style={styles.iconQrModal} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleDeleteQR}>
-                  <Icon name="delete" style={styles.iconQrModal} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.containerQR}>
-                <QRCode
-                  value={QRCodeString}
-                  size={Dimensions.get('window').width - 100}
-                  bgColor="black"
-                  fgColor="white"
-                />
-              </View>
-            </View>
-          </Card>
-        </View>
-      </Modal>
-
       <Modal
         animationType="slide"
         transparent={true}

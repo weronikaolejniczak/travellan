@@ -34,29 +34,26 @@ const TransportContainer = ({ route, navigation }) => {
   const handleQR = useCallback(
     (QR, noteId) => {
       if (QR === undefined || QR === ' ' || QR === null) {
-        console.log(noteId);
-        console.log(QR);
         addQR(noteId);
       } else {
-        console.log(noteId);
-        console.log(QR);
-        setIsQRModalOpen(true);
+        openQRModal(noteId);
       }
     },
     [addQR],
   );
 
   const openQRModal = (id) => {
-    setIsQRModalOpen(true);
     setSelectedTransportId(id);
+    setIsQRModalOpen(true);
   };
 
   const findTransportQR = (id) => {
     const index = transport.findIndex((item) => item.id === id);
+    console.log(transport[index].QR);
     return transport[index].QR;
   };
 
-  const handleQRClose = (id) => setIsQRModalOpen(false);
+  //const handleQRClose = () => setIsQRModalOpen(false);
 
   const addQR = useCallback(
     async (id) => {
@@ -75,7 +72,8 @@ const TransportContainer = ({ route, navigation }) => {
   );
 
   const handleQRDelete = useCallback(
-    (noteId) => {
+    (items) => {
+      let qr = findTransportQR(items);
       setIsRefreshing(true);
       Alert.alert(
         'Delete QR',
@@ -190,6 +188,17 @@ const TransportContainer = ({ route, navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View>
+        {Array.isArray(transport) && transport.length < 1} ? () : (
+        <QRModal
+          QR={findTransportQR(selectedTransportId)}
+          handleDeleteQR={() => handleQRDelete(selectedTransportId)}
+          handleCloseQR={setIsQRModalOpen(false)}
+          isQRModalOpen={isQRModalOpen}
+          handleQRDelete={() => handleQRDelete(selectedTransportId)}
+          // selectedTransportId={selectedTransportId}
+          handleError={setError(error)}
+        />
+        )
         <FlatList
           onRefresh={loadTransport}
           refreshing={isRefreshing}
@@ -220,20 +229,11 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleQR={() => handleQR(data.item.QR, data.item.id)}
-              handleDeleteQR={() => handleQRDelete(data.item.id)}
-              //isVisibleQR={}
-              openQRModal={() => openQRModal(data.item.id)}
+              //handleDeleteQR={() => handleQRDelete(data.item.id)}
+              //openQRModal={() => openQRModal(data.item.id)}
               // handleCloseQR={() => handleQRClose(data.item.id)}
             />
           )}
-        />
-        <QRModal
-          QR={findTransportQR(transport)}
-          handleDeleteQR
-          handleCloseQRQR={findTransportQR(transport)}
-          isQRModalOpen={isQRModalOpen}
-          handleQRDelete={() => handleQRDelete(selectedTransportId)}
-          // selectedTransportId={selectedTransportId}
         />
         <View style={styles.justifyRow}>
           {transport.map((_, i) => {

@@ -6,7 +6,13 @@ import { styles } from './QRModalStyle';
 
 import { Card } from 'utils';
 
-const QRModal = ({ QR, handleDeleteQR, isQRModalOpen, handleCloseQR }) => {
+const QRModal = ({
+  QR,
+  handleDeleteQR,
+  isQRModalOpen,
+  handleCloseQR,
+  handleError,
+}) => {
   return (
     <Modal
       animationType="slide"
@@ -31,6 +37,7 @@ const QRModal = ({ QR, handleDeleteQR, isQRModalOpen, handleCloseQR }) => {
                 size={Dimensions.get('window').width - 100}
                 bgColor="black"
                 fgColor="white"
+                onError={handleError}
               />
             </View>
           </View>
