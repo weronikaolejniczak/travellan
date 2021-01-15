@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 
 import { Card, View as Container } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';
-import { patchPDFRequest, patchQRRequest } from 'actions/transportActions';
+import { patchPDFRequest } from 'actions/transportActions';
 
 const TransportItem = ({
   tripId,
