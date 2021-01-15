@@ -49,7 +49,8 @@ const MapContainer = ({ route, navigation }) => {
       <MapboxGL.PointAnnotation
         id={`marker-${marker.id}`}
         coordinate={[marker.lat, marker.lon]}
-        onSelected={(event) => handleDeleteTrip(event, marker.title)}
+        onDeselected={(event) => handleDeleteTrip(event, marker.title)}
+        selected={isSelected}
       >
         <MapboxGL.Callout title={marker.title} />
       </MapboxGL.PointAnnotation>
@@ -88,7 +89,7 @@ const MapContainer = ({ route, navigation }) => {
 
   const handleDeleteTrip = (event, title) => {
     if (deletingMarkerActive) {
-      setIsSelected(true);
+      setIsSelected(false);
       Alert.alert(
         `Delete ${title}`,
         'Are you sure?',
