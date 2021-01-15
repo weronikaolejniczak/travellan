@@ -30,9 +30,6 @@ const TransportItem = ({
   PDF,
   handleQR,
   handleDeleteTransport,
-  handleDeleteQR,
-  isVisibleQR,
-  handleCloseQR,
 }) => {
   const dispatch = useDispatch();
   const source = { uri: PDF };
