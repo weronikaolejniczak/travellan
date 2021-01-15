@@ -68,21 +68,6 @@ export const styles = StyleSheet.create({
   metrics: {
     marginTop: '5%',
   },
-  modal: {
-    backgroundColor: Colors.background,
-    flex: 1,
-  },
-  modalContent: {
-    paddingHorizontal: '5%',
-  },
-  modalHeader: {
-    marginTop: '2%',
-  },
-  modalHeaderText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: '5%',
-  },
   nonactiveRadioIcon: {
     color: 'grey',
     fontSize: 26,
