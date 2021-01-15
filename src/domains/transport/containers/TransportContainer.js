@@ -113,7 +113,7 @@ const TransportContainer = ({ route, navigation }) => {
     (noteId) => {
       setIsRefreshing(true);
       Alert.alert(
-        'Delete note',
+        'Delete saved ticket',
         'Are you sure?',
         [
           {
