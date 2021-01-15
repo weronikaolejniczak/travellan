@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { TransportItem } from '../components';
+import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
@@ -228,8 +228,10 @@ const TransportContainer = ({ route, navigation }) => {
           )}
         />
         <QRModal
-          isQRModalOpen={isQRModalOpen}
           QR={findTransportQR(transport)}
+          handleDeleteQR
+          handleCloseQRQR={findTransportQR(transport)}
+          isQRModalOpen={isQRModalOpen}
           handleQRDelete={() => handleQRDelete(selectedTransportId)}
           // selectedTransportId={selectedTransportId}
         />

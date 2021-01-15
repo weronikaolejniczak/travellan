@@ -1,8 +1,6 @@
 import Colors from 'constants/Colors';
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
-
 export const styles = StyleSheet.create({
   icon: {
     fontSize: 30,

@@ -6,12 +6,12 @@ import { styles } from './QRModalStyle';
 
 import { Card } from 'utils';
 
-const QRModal = ({ QR, handleDeleteQR, isVisibleQR, handleCloseQR }) => {
+const QRModal = ({ QR, handleDeleteQR, isQRModalOpen, handleCloseQR }) => {
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={isVisibleQR}
+      visible={isQRModalOpen}
       onRequestClose={handleCloseQR}
     >
       <View style={styles.qrContainer}>
