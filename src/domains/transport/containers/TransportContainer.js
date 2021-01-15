@@ -31,12 +31,12 @@ const TransportContainer = ({ route, navigation }) => {
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [selectedTransportId, setSelectedTransportId] = useState(' ');
 
-  const handleQR = useCallback(
+  const handlePressQR = useCallback(
     (QR, noteId) => {
       if (QR === undefined || QR === ' ' || QR === null) {
         addQR(noteId);
       } else {
-        openQRModal(noteId);
+        setIsQRModalOpen(true);
       }
     },
     [addQR],
@@ -56,7 +56,7 @@ const TransportContainer = ({ route, navigation }) => {
     }
   };
 
-  //const handleQRClose = () => setIsQRModalOpen(false);
+  //const handlePressQRClose = () => setIsQRModalOpen(false);
 
   const addQR = useCallback(
     async (id) => {
@@ -231,7 +231,7 @@ const TransportContainer = ({ route, navigation }) => {
               QR={data.item.QR}
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
-              handleQR={() => handleQR(data.item.QR, data.item.id)}
+              handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
             />
           )}
         />

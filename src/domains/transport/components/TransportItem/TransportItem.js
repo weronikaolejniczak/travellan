@@ -27,7 +27,7 @@ const TransportItem = ({
   id,
   QR,
   PDF,
-  handleQR,
+  handlePressQR,
   handleDeleteTransport,
 }) => {
   const dispatch = useDispatch();
