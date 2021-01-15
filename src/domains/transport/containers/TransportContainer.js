@@ -74,7 +74,6 @@ const TransportContainer = ({ route, navigation }) => {
 
   const handleQRDelete = useCallback(
     (items) => {
-      let qr = findTransportQR(items);
       setIsRefreshing(true);
       Alert.alert(
         'Delete QR',
@@ -196,7 +195,6 @@ const TransportContainer = ({ route, navigation }) => {
             handleCloseQR={setIsQRModalOpen(false)}
             isQRModalOpen={isQRModalOpen}
             handleQRDelete={() => handleQRDelete(selectedTransportId)}
-            // selectedTransportId={selectedTransportId}
             handleError={setError(error)}
           />
         ) : null}
