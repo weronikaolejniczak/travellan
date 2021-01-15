@@ -11,7 +11,6 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import SplashScreen from 'react-native-splash-screen';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
@@ -29,9 +28,8 @@ const TransportContainer = ({ route, navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-  const [showQR, setShowQR] = useState(false);
-
-  let stateItems;
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const [selectedTransportId, setSelectedTransportId] = useState(0);
 
   const handleQR = useCallback(
     (QR, noteId) => {
@@ -42,13 +40,23 @@ const TransportContainer = ({ route, navigation }) => {
       } else {
         console.log(noteId);
         console.log(QR);
-        setShowQR(true);
+        setIsQRModalOpen(true);
       }
     },
     [addQR],
   );
 
-  const handleQRClose = (id) => setShowQR(false);
+  const openQRModal = (id) => {
+    setIsQRModalOpen(true);
+    setSelectedTransportId(id);
+  };
+
+  const findTransportQR = (id) => {
+    const index = transport.findIndex((item) => item.id === id);
+    return transport[index].QR;
+  };
+
+  const handleQRClose = (id) => setIsQRModalOpen(false);
 
   const addQR = useCallback(
     async (id) => {
@@ -65,6 +73,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [navigation, tripId],
   );
+
   const handleQRDelete = useCallback(
     (noteId) => {
       setIsRefreshing(true);
@@ -97,7 +106,7 @@ const TransportContainer = ({ route, navigation }) => {
         setError('Something went wrong!');
       }
       setIsRefreshing(false);
-      setShowQR(false);
+      setIsQRModalOpen(false);
     },
     [dispatch, tripId],
   );
@@ -212,10 +221,17 @@ const TransportContainer = ({ route, navigation }) => {
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleQR={() => handleQR(data.item.QR, data.item.id)}
               handleDeleteQR={() => handleQRDelete(data.item.id)}
-              isVisibleQR={}
-              handleCloseQR={() => handleQRClose(data.item.id)}
+              //isVisibleQR={}
+              openQRModal={() => openQRModal(data.item.id)}
+              // handleCloseQR={() => handleQRClose(data.item.id)}
             />
           )}
+        />
+        <QRModal
+          isQRModalOpen={isQRModalOpen}
+          QR={findTransportQR(transport)}
+          handleQRDelete={() => handleQRDelete(selectedTransportId)}
+          // selectedTransportId={selectedTransportId}
         />
         <View style={styles.justifyRow}>
           {transport.map((_, i) => {
