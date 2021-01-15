@@ -36,7 +36,7 @@ const TransportContainer = ({ route, navigation }) => {
       if (QR === undefined || QR === ' ' || QR === null) {
         addQR(noteId);
       } else {
-        setIsQRModalOpen(true);
+        openQRModal(noteId);
       }
     },
     [addQR],

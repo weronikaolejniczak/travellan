@@ -103,7 +103,7 @@ const TransportItem = ({
           <Icon name="delete" style={styles.icon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleQR}>
+        <TouchableOpacity onPress={handlePressQR}>
           <CommunityIcon name="qrcode-scan" style={styles.icon} />
         </TouchableOpacity>
 
