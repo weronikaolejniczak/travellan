@@ -29,7 +29,7 @@ const TransportContainer = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
-  const [selectedTransportId, setSelectedTransportId] = useState(0);
+  const [selectedTransportId, setSelectedTransportId] = useState(' ');
 
   const handleQR = useCallback(
     (QR, noteId) => {
@@ -48,7 +48,7 @@ const TransportContainer = ({ route, navigation }) => {
   };
 
   const findTransportQR = (id) => {
-    if (id === 0) {
+    if (id === ' ') {
       return transport[0].QR;
     } else {
       const index = transport.findIndex((item) => item.id === id);
