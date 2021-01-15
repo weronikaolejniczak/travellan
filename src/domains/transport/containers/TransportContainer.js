@@ -48,6 +48,8 @@ const TransportContainer = ({ route, navigation }) => {
   };
 
   const findTransportQR = (id) => {
+    console.log(transport);
+    console.log(transport[0].QR);
     const index = transport.findIndex((item) => item.id === id);
     console.log(transport[index].QR);
     return transport[index].QR;
@@ -84,7 +86,7 @@ const TransportContainer = ({ route, navigation }) => {
             text: 'Cancel',
           },
           {
-            onPress: persistDeleteQR(noteId),
+            onPress: persistDeleteQR(items),
             text: 'OK',
           },
         ],
