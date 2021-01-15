@@ -22,7 +22,7 @@ const Toolbar = ({
   <View style={styles.overlay}>
     <View style={styles.actionBar}>
       <ToolbarButton
-        icon="close"
+        icon="arrow-left"
         isLoading={isLoading}
         loader={true}
         handler={false}
