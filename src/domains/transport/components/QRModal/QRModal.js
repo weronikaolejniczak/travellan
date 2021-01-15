@@ -1,13 +1,12 @@
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import QRCode from 'react-native-qrcode-svg';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { Dimensions, Modal, TouchableOpacity, View } from 'react-native';
-import { styles } from './TransportItemStyle';
+import { styles } from './QRModalStyle';
 
 import { Card } from 'utils';
 
-const TransportItem = ({ QR, handleDeleteQR, isVisibleQR, handleCloseQR }) => {
+const QRModal = ({ QR, handleDeleteQR, isVisibleQR, handleCloseQR }) => {
   return (
     <Modal
       animationType="slide"
@@ -20,13 +19,13 @@ const TransportItem = ({ QR, handleDeleteQR, isVisibleQR, handleCloseQR }) => {
           <View style={styles.innerQrContainer}>
             <View style={styles.miniHeader}>
               <TouchableOpacity onPress={handleCloseQR}>
-                <Icon name="close" style={styles.iconQrModal} />
+                <Icon name="close" style={styles.icon} />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleDeleteQR}>
-                <Icon name="delete" style={styles.iconQrModal} />
+                <Icon name="delete" style={styles.icon} />
               </TouchableOpacity>
             </View>
-            <View style={styles.containerQR}>
+            <View style={styles.iconContainerQR}>
               <QRCode
                 value={QR}
                 size={Dimensions.get('window').width - 100}
@@ -41,4 +40,4 @@ const TransportItem = ({ QR, handleDeleteQR, isVisibleQR, handleCloseQR }) => {
   );
 };
 
-export default TransportItem;
+export default QRModal;
