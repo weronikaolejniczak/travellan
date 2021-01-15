@@ -3,6 +3,7 @@ import {
   Alert,
   Animated,
   FlatList,
+  Fragment,
   ScrollView,
   Text,
   View,
@@ -191,17 +192,6 @@ const TransportContainer = ({ route, navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View>
-        {Array.isArray(transport) && transport.length < 1} ? () : (
-        <QRModal
-          QR={findTransportQR(selectedTransportId)}
-          handleDeleteQR={() => handleQRDelete(selectedTransportId)}
-          handleCloseQR={setIsQRModalOpen(false)}
-          isQRModalOpen={isQRModalOpen}
-          handleQRDelete={() => handleQRDelete(selectedTransportId)}
-          // selectedTransportId={selectedTransportId}
-          handleError={setError(error)}
-        />
-        )
         <FlatList
           onRefresh={loadTransport}
           refreshing={isRefreshing}
@@ -220,22 +210,33 @@ const TransportContainer = ({ route, navigation }) => {
           data={transport}
           keyExtractor={(item) => item.id.toString()}
           renderItem={(data) => (
-            <TransportItem
-              tripId={tripId}
-              destination={selectedTrip.destination}
-              id={data.item.id}
-              isTicketTo={data.item.isTicketTo}
-              isTicketFrom={data.item.isTicketFrom}
-              dateOfDeparture={data.item.dateOfDeparture}
-              placeOfDeparture={data.item.placeOfDeparture}
-              QR={data.item.QR}
-              PDF={data.item.PDF}
-              handleDeleteTransport={() => handleDelete(data.item.id)}
-              handleQR={() => handleQR(data.item.QR, data.item.id)}
-              //handleDeleteQR={() => handleQRDelete(data.item.id)}
-              //openQRModal={() => openQRModal(data.item.id)}
-              // handleCloseQR={() => handleQRClose(data.item.id)}
-            />
+            <Fragment>
+              <QRModal
+                QR={findTransportQR(selectedTransportId)}
+                handleDeleteQR={() => handleQRDelete(selectedTransportId)}
+                handleCloseQR={setIsQRModalOpen(false)}
+                isQRModalOpen={isQRModalOpen}
+                handleQRDelete={() => handleQRDelete(selectedTransportId)}
+                // selectedTransportId={selectedTransportId}
+                handleError={setError(error)}
+              />
+              <TransportItem
+                tripId={tripId}
+                destination={selectedTrip.destination}
+                id={data.item.id}
+                isTicketTo={data.item.isTicketTo}
+                isTicketFrom={data.item.isTicketFrom}
+                dateOfDeparture={data.item.dateOfDeparture}
+                placeOfDeparture={data.item.placeOfDeparture}
+                QR={data.item.QR}
+                PDF={data.item.PDF}
+                handleDeleteTransport={() => handleDelete(data.item.id)}
+                handleQR={() => handleQR(data.item.QR, data.item.id)}
+                //handleDeleteQR={() => handleQRDelete(data.item.id)}
+                //openQRModal={() => openQRModal(data.item.id)}
+                // handleCloseQR={() => handleQRClose(data.item.id)}
+              />
+            </Fragment>
           )}
         />
         <View style={styles.justifyRow}>
