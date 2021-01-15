@@ -3,7 +3,6 @@ import {
   Alert,
   Animated,
   FlatList,
-  Fragment,
   ScrollView,
   Text,
   View,

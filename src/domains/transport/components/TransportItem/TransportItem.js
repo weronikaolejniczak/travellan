@@ -6,7 +6,6 @@ import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
 import {
   Alert,
-  Dimensions,
   Modal,
   ScrollView,
   Text,
@@ -37,7 +36,6 @@ const TransportItem = ({
   const [QRCodeString, setQRCodeString] = useState(QR);
   const [PDFUri, setPDFUri] = useState(PDF);
   const [showPDF, setShowPDF] = useState(false);
-
 
   const deletePDF = useCallback(async () => {
     setPDFUri('');
