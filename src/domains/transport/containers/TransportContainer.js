@@ -76,7 +76,7 @@ const TransportContainer = ({ route, navigation }) => {
     (items) => {
       setIsRefreshing(true);
       Alert.alert(
-        'Delete QR',
+        'Delete QR code',
         'Are you sure?',
         [
           {
