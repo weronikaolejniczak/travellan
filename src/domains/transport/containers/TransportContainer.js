@@ -233,9 +233,6 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handleQR={() => handleQR(data.item.QR, data.item.id)}
-              //handleDeleteQR={() => handleQRDelete(data.item.id)}
-              //openQRModal={() => openQRModal(data.item.id)}
-              // handleCloseQR={() => handleQRClose(data.item.id)}
             />
           )}
         />
