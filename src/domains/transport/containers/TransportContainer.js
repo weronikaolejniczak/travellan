@@ -56,8 +56,6 @@ const TransportContainer = ({ route, navigation }) => {
     }
   };
 
-  //const handlePressQRClose = () => setIsQRModalOpen(false);
-
   const addQR = useCallback(
     async (id) => {
       setIsRefreshing(true);
