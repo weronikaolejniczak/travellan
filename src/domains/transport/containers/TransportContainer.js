@@ -48,11 +48,12 @@ const TransportContainer = ({ route, navigation }) => {
   };
 
   const findTransportQR = (id) => {
-    console.log(transport);
-    console.log(transport[0].QR);
-    const index = transport.findIndex((item) => item.id === id);
-    console.log(transport[index].QR);
-    return transport[index].QR;
+    if (id === 0) {
+      return transport[0].QR;
+    } else {
+      const index = transport.findIndex((item) => item.id === id);
+      return transport[index].QR;
+    }
   };
 
   //const handleQRClose = () => setIsQRModalOpen(false);
