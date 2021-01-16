@@ -40,9 +40,6 @@ export const styles = StyleSheet.create({
   disactiveLabel: {
     color: 'grey',
   },
-  error: {
-    color: Colors.error,
-  },
   errorContainer: {
     marginVertical: 5,
   },

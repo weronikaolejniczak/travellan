@@ -32,11 +32,12 @@ const TransportContainer = ({ route, navigation }) => {
   const [selectedTransportId, setSelectedTransportId] = useState(' ');
 
   const handlePressQR = useCallback(
-    (QR, noteId) => {
+    (QR, id) => {
+      console.log(QR);
       if (QR === undefined || QR === ' ' || QR === null) {
-        addQR(noteId);
+        addQR(id);
       } else {
-        openQRModal(noteId);
+        openQRModal(id);
       }
     },
     [addQR],
