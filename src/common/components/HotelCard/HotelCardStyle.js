@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: '3%',
   },
   content: {
-    padding: '4%',
+    padding: 15,
   },
   header: {
     alignItems: 'center',
@@ -37,8 +37,9 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   image: {
-    height: height * 0.45,
-    width: '100%',
+    height: height * 0.4,
+    resizeMode: 'contain',
+    width: 'auto',
   },
   linearGradient: {
     flex: 1,

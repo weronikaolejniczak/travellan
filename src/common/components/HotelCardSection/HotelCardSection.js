@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 
 import { Title } from 'utils';
@@ -11,4 +11,4 @@ const HotelCardSection = ({ title = 'Section title', children }) => (
   </View>
 );
 
-export default HotelCardSection;
+export default memo(HotelCardSection);

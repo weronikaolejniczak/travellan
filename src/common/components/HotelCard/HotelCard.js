@@ -2,7 +2,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import React, { memo } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
-import HotelCardSection from '../HotelCardSection/HotelCardSection';
 import {
   Caption,
   Card,
@@ -13,12 +12,14 @@ import {
   Text,
 } from 'utils';
 import { Colors } from 'constants';
+import { HotelCardSection } from '../';
 import { styles } from './HotelCardStyle';
 
 const HotelCard = ({
   sharing,
   inAccommodationListing,
   amenities,
+  cardStyle,
   creditCardPaymentPossible,
   checkInHours,
   checkOutHours,
@@ -31,7 +32,7 @@ const HotelCard = ({
   phone,
   reservationDetails,
 }) => (
-  <Card>
+  <Card style={cardStyle}>
     <ScrollView>
       <ImageBackground style={styles.image} source={{ uri: image }}>
         <LinearGradient
