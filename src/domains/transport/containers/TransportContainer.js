@@ -33,9 +33,7 @@ const TransportContainer = ({ route, navigation }) => {
 
   const handlePressQR = useCallback(
     (QR, id) => {
-      console.log(QR);
-      if (QR === undefined || QR === ' ' || QR === null) {
-        console.log('I am undefined');
+      if (QR === undefined || QR === ' ' || QR === null || QR === '') {
         addQR(id);
       } else {
         openQRModal(id);
@@ -44,16 +42,10 @@ const TransportContainer = ({ route, navigation }) => {
     [addQR, openQRModal],
   );
 
-  const openQRModal = useCallback(
-    (id) => {
-      setSelectedTransportId(id);
-      setIsQRModalOpen(true);
-      console.log('I have a value');
-      console.log(id);
-      console.log(isQRModalOpen);
-    },
-    [isQRModalOpen],
-  );
+  const openQRModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsQRModalOpen(true);
+  }, []);
 
   const findTransportQR = (id) => {
     if (id === ' ') {
@@ -143,6 +135,7 @@ const TransportContainer = ({ route, navigation }) => {
   const persistDelete = useCallback(
     (id) => {
       setIsRefreshing(true);
+      setSelectedTransportId(' ');
       try {
         dispatch(transportActions.deleteTransportRequest(tripId, id));
       } catch {
@@ -178,19 +171,6 @@ const TransportContainer = ({ route, navigation }) => {
     return <ItemlessFrame message="You have no transport saved!" />;
   }
 
-  if (isQRModalOpen === true) {
-    return (
-      <QRModal
-        QR={findTransportQR(selectedTransportId)}
-        handleDeleteQR={() => handleQRDelete(selectedTransportId)}
-        handleCloseQR={() => setIsQRModalOpen(false)}
-        isQRModalOpen={isQRModalOpen}
-        handleQRDelete={() => handleQRDelete(selectedTransportId)}
-        handleError={() => setError(error)}
-      />
-    );
-  }
-
   if (error) {
     return (
       <View>
@@ -209,6 +189,13 @@ const TransportContainer = ({ route, navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View>
+        <QRModal
+          QR={findTransportQR(selectedTransportId)}
+          handleDeleteQR={() => handleQRDelete(selectedTransportId)}
+          handleCloseQR={() => setIsQRModalOpen(false)}
+          isQRModalOpen={isQRModalOpen}
+          handleError={() => setError(error)}
+        />
         <FlatList
           onRefresh={loadTransport}
           refreshing={isRefreshing}
