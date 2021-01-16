@@ -113,11 +113,7 @@ const TransportItem = ({
           <CommunityIcon name="qrcode-scan" style={styles.icon} />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            handlePressPDF;
-          }}
-        >
+        <TouchableOpacity onPress={handlePressPDF}>
           <CommunityIcon name="file-pdf-box" style={styles.icon} />
         </TouchableOpacity>
       </View>
