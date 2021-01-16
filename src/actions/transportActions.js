@@ -112,7 +112,7 @@ export const createTransportRequest = (
   dateOfDeparture,
   placeOfDeparture,
   //QR,
-  PDF,
+  //PDF,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -122,7 +122,7 @@ export const createTransportRequest = (
       .post(
         `${API_URL}/Trips/${userId}/${tripId}/transport.json?auth=${token}`,
         {
-          PDF,
+          //PDF,
           //QR,
           dateOfDeparture,
           isTicketFrom,
@@ -141,7 +141,7 @@ export const createTransportRequest = (
           requestConfig.dateOfDeparture,
           requestConfig.placeOfDeparture,
           //requestConfig.QR,
-          requestConfig.PDF,
+          //requestConfig.PDF,
         );
         dispatch(createTransport(tripId, newTransport));
       })
