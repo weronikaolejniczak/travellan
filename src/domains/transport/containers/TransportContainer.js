@@ -329,7 +329,7 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
-              handlePressPDF={() => handlePressPDF(data.item.QR, data.item.id)}
+              handlePressPDF={() => handlePressPDF(data.item.PDF, data.item.id)}
             />
           )}
         />
