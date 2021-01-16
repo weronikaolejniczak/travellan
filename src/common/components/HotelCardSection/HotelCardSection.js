@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Title } from 'utils';
-import { styles } from './BookingHotelCardSectionStyle';
+import { styles } from './HotelCardSectionStyle';
 
-const BookingHotelCardSection = ({ title = 'Section title', children }) => (
+const HotelCardSection = ({ title = 'Section title', children }) => (
   <View style={styles.section}>
     <Title style={styles.text}>{title}</Title>
     {children}
   </View>
 );
 
-export default BookingHotelCardSection;
+export default HotelCardSection;

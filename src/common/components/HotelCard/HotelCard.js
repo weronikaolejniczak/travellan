@@ -1,8 +1,8 @@
 import LinearGradient from 'react-native-linear-gradient';
-import React from 'react';
+import React, { memo } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
-import BookingHotelCardSection from '../BookingHotelCardSection/BookingHotelCardSection';
+import HotelCardSection from '../HotelCardSection/HotelCardSection';
 import {
   Caption,
   Card,
@@ -13,7 +13,7 @@ import {
   Text,
 } from 'utils';
 import { Colors } from 'constants';
-import { styles } from './BookingHotelCardStyle';
+import { styles } from './HotelCardStyle';
 
 // $todo: break into smaller components:
 //        - card header
@@ -21,7 +21,7 @@ import { styles } from './BookingHotelCardStyle';
 //        - move components to shared components folder
 //        - refactor to make it reusable for: Amadeus hotel preview, hotel cards in the application
 //        - extract strings
-const BookingHotelCard = ({
+const HotelCard = ({
   amenities,
   creditCardPaymentPossible,
   checkInHours,
@@ -53,7 +53,7 @@ const BookingHotelCard = ({
       </ImageBackground>
 
       <View style={styles.content}>
-        <BookingHotelCardSection title="Hotel hours">
+        <HotelCardSection title="Hotel hours">
           {frontDesk24h && (
             <Paragraph style={styles.caution}>
               Front desk is open 24 hours a day!
@@ -72,26 +72,26 @@ const BookingHotelCard = ({
               <Text style={styles.text}>{checkOutHours}</Text>
             </View>
           </View>
-        </BookingHotelCardSection>
+        </HotelCardSection>
 
-        <BookingHotelCardSection title="Amenities">
+        <HotelCardSection title="Amenities">
           <ReadMore longText={amenities.join(', ')} />
-        </BookingHotelCardSection>
+        </HotelCardSection>
 
-        <BookingHotelCardSection title="Description">
+        <HotelCardSection title="Description">
           <ReadMore longText={description} />
-        </BookingHotelCardSection>
+        </HotelCardSection>
 
-        <BookingHotelCardSection title="Payment">
+        <HotelCardSection title="Payment">
           <Paragraph style={styles.text}>
             {creditCardPaymentPossible
               ? 'Credit card payment is possible!'
               : 'Credit card payment is NOT possible!'}
           </Paragraph>
-        </BookingHotelCardSection>
+        </HotelCardSection>
       </View>
     </ScrollView>
   </Card>
 );
 
-export default BookingHotelCard;
+export default memo(HotelCard);

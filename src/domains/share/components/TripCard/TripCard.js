@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { Card, Paragraph, Title } from 'utils';
@@ -35,4 +35,4 @@ const TripCard = ({
   </Card>
 );
 
-export default TripCard;
+export default memo(TripCard);
