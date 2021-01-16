@@ -34,6 +34,12 @@ const HotelRecommendationContainer = (props) => {
   const handleAdults = (adults) => setAdults(adults);
   const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
 
+  const handlePress = () => {
+    handleAdults();
+    handleRoomQuantity();
+    setIsLoading(true);
+  };
+
   useEffect(() => {
     if (formatDate(startDate) === formatDate(endDate)) {
       setIsDateSame(true);
@@ -72,6 +78,10 @@ const HotelRecommendationContainer = (props) => {
           onChange={handleRoomQuantity}
           keyboardType="numeric"
         />
+
+        <Button loading={isLoading} disabled={isLoading} onPress={handlePress}>
+          Submit
+        </Button>
       </View>
     </Container>
   );
