@@ -13,12 +13,6 @@ export const styles = StyleSheet.create({
   buttonTouchable: {
     padding: 16,
   },
-  centerText: {
-    color: '#777',
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-  },
   centered: {
     alignContent: 'center',
     flex: 1,
@@ -52,9 +46,5 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     zIndex: 5,
-  },
-  textBold: {
-    color: '#000',
-    fontWeight: '500',
   },
 });
