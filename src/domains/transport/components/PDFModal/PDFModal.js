@@ -33,7 +33,7 @@ const PDFModal = ({
         }}
       />
       <TouchableOpacity
-        style={styles.buttonTouchable}
+        style={styles.buttonTouchableCenter}
         onPress={handleDeletePDF}
       >
         <Icon name="delete" style={styles.icon} />
