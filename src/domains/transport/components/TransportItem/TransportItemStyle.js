@@ -7,11 +7,6 @@ export const cardWidth = width * 0.915;
 export const spacingForCardInset = width * 0.03;
 
 export const styles = StyleSheet.create({
-  PDF: {
-    flex: 1,
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-  },
   QR: {
     alignContent: 'center',
     alignItems: 'center',
@@ -37,11 +32,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-  },
-  buttonTouchableLeft: {
-    alignSelf: 'stretch',
-    padding: 16,
-    textAlign: 'left',
   },
   columnDirection: {
     flexDirection: 'column',
