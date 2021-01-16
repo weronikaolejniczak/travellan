@@ -14,7 +14,7 @@ import * as transportActions from 'actions/transportActions';
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { QRModal, TransportItem } from '../components';
+import { PDFModal, QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
@@ -63,10 +63,10 @@ const TransportContainer = ({ route, navigation }) => {
           { cancelable: true },
         );
       } else {
-        //openPDFModal(id);
+        openPDFModal(id);
       }
     },
-    [addPDF],
+    [addPDF, openPDFModal],
   );
   const addQR = useCallback(
     async (id) => {
@@ -113,6 +113,14 @@ const TransportContainer = ({ route, navigation }) => {
     } else {
       const index = transport.findIndex((item) => item.id === id);
       return transport[index].QR;
+    }
+  };
+  const findTransportPDF = (id) => {
+    if (id === ' ') {
+      return transport[0].PDF;
+    } else {
+      const index = transport.findIndex((item) => item.id === id);
+      return transport[index].PDF;
     }
   };
   const handleQRDelete = useCallback(
@@ -271,6 +279,13 @@ const TransportContainer = ({ route, navigation }) => {
           handleDeleteQR={() => handleQRDelete(selectedTransportId)}
           handleCloseQR={() => setIsQRModalOpen(false)}
           isQRModalOpen={isQRModalOpen}
+          handleError={() => setError(error)}
+        />
+        <PDFModal
+          QR={findTransportPDF(selectedTransportId)}
+          handleDeleteQR={() => handlePDFDelete(selectedTransportId)}
+          handleCloseQR={() => setIsPDFModalOpen(false)}
+          isQRModalOpen={isPDFModalOpen}
           handleError={() => setError(error)}
         />
         <FlatList
