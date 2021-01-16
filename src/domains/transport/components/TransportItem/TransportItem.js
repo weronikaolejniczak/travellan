@@ -46,19 +46,6 @@ const TransportItem = ({
 
   const closePDFhandler = () => setShowPDF(false);
 
-  const pickPDF = useCallback(async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf],
-      });
-      console.log(res);
-      const temp = res.fileCopyUri;
-      await dispatch(addPDFRequest(tripId, id, temp));
-    } catch (err) {
-      if (!DocumentPicker.isCancel(err)) throw err;
-    }
-  }, [dispatch, tripId, id]);
-
   return (
     <Card style={styles.transportCard}>
       <Modal
