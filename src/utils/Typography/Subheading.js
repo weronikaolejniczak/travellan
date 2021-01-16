@@ -1,6 +1,8 @@
 import React from 'react';
 import { Subheading } from 'react-native-paper';
 
-const CustomSubheading = ({ children }) => <Subheading>{children}</Subheading>;
+const CustomSubheading = ({ children, style }) => (
+  <Subheading style={style}>{children}</Subheading>
+);
 
 export default CustomSubheading;
