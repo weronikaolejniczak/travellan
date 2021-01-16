@@ -25,13 +25,7 @@ const PDFModal = ({
       >
         <Icon name="close" style={styles.icon} />
       </TouchableOpacity>
-      <Pdf
-        source={PDF}
-        style={styles.PDF}
-        onError={(error) => {
-          console.log(error);
-        }}
-      />
+      <Pdf source={PDF} style={styles.PDF} onError={handleError} />
       <TouchableOpacity
         style={styles.buttonTouchableCenter}
         onPress={handleDeletePDF}

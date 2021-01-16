@@ -116,10 +116,14 @@ const TransportContainer = ({ route, navigation }) => {
   };
   const findTransportPDF = (id) => {
     if (id === ' ') {
-      return transport[0].PDF;
+      let temp = transport[0].PDF;
+      let source = { uri: temp };
+      return source;
     } else {
       const index = transport.findIndex((item) => item.id === id);
-      return transport[index].PDF;
+      let temp = transport[index].PDF;
+      let source = { uri: temp };
+      return source;
     }
   };
   const handleQRDelete = useCallback(
@@ -281,7 +285,7 @@ const TransportContainer = ({ route, navigation }) => {
           handleError={() => setError(error)}
         />
         <PDFModal
-          QR={findTransportPDF(selectedTransportId)}
+          PDF={findTransportPDF(selectedTransportId)}
           handleDeleteQR={() => handlePDFDelete(selectedTransportId)}
           handleCloseQR={() => setIsPDFModalOpen(false)}
           isQRModalOpen={isPDFModalOpen}
