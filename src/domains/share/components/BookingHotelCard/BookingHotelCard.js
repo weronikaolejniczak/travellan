@@ -15,6 +15,12 @@ import {
 import { Colors } from 'constants';
 import { styles } from './BookingHotelCardStyle';
 
+// $todo: break into smaller components:
+//        - card header
+//        - card sections
+//        - move components to shared components folder
+//        - refactor to make it reusable for: Amadeus hotel preview, hotel cards in the application
+//        - extract strings
 const BookingHotelCard = ({
   amenities,
   creditCardPaymentPossible,
@@ -45,6 +51,7 @@ const BookingHotelCard = ({
           </View>
         </LinearGradient>
       </ImageBackground>
+
       <View style={styles.content}>
         <BookingHotelCardSection title="Hotel hours">
           {frontDesk24h && (
