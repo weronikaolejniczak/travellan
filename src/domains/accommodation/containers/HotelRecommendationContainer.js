@@ -8,6 +8,7 @@ import {
   Subheading,
 } from 'utils';
 import { View } from 'react-native';
+import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = (props) => {
   const { startDate, endDate, cityCode } = props.route.params;
@@ -64,6 +65,10 @@ const HotelRecommendationContainer = (props) => {
   return (
     <Container>
       <View>
+        <Headline style={styles.headline}>
+          We will find the most attractive accommodation offers for your
+          destination
+        </Headline>
         <Subheading>Add number of adults:</Subheading>
         <TextInput
           label="Adults"
