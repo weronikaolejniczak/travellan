@@ -1,9 +1,9 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Pdf from 'react-native-pdf';
 import React from 'react';
+import { Card } from 'utils';
 import { Dimensions, Modal, TouchableOpacity, View } from 'react-native';
 import { styles } from './PDFModalStyle';
-import Pdf from 'react-native-pdf';
-import { Card } from 'utils';
 
 const PDFModal = ({
   PDF,
@@ -26,7 +26,7 @@ const PDFModal = ({
         <Icon name="close" style={styles.icon} />
       </TouchableOpacity>
       <Pdf
-        source={uri : PDF}
+        source={PDF}
         style={styles.PDF}
         onError={(error) => {
           console.log(error);
@@ -42,4 +42,4 @@ const PDFModal = ({
   );
 };
 
-export default QRModal;
+export default PDFModal;
