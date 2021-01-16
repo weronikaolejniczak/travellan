@@ -1,14 +1,10 @@
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import DocumentPicker from 'react-native-document-picker';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Pdf from 'react-native-pdf';
-import QRCode from 'react-native-qrcode-svg';
-import React, { useCallback, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
-import { Card, View as Container } from 'utils';
-import { addPDFRequest, deletePDFRequest } from 'actions/transportActions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import QRCode from 'react-native-qrcode-svg';
+import React, { useState } from 'react';
+import { Card } from 'utils';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = ({
