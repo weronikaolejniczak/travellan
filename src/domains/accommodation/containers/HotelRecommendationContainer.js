@@ -9,6 +9,7 @@ import {
 } from 'utils';
 import { View } from 'react-native';
 import { styles } from './HotelRecommendationContainerStyle';
+import recommendHotel from 'services/recommendHotel';
 
 const HotelRecommendationContainer = (props) => {
   const { startDate, endDate, cityCode } = props.route.params;
@@ -17,7 +18,13 @@ const HotelRecommendationContainer = (props) => {
   const [adults, setAdults] = useState(0);
   const [roomQuantity, setRoomQuantity] = useState(0);
 
-  // for api call: (D)adults, (D)cityCode, (D)checkIn(startDate), (D)checkOut(endDate), (D)radius, (D)roomQuantity, page[limit[]]
+  // async function recommendHotel(
+  //cityCode,
+  //checkInDate,
+  //checkOutDate,
+  //adults,
+  //roomQuantity,
+  //)
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -36,9 +43,9 @@ const HotelRecommendationContainer = (props) => {
   const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
 
   const handlePress = () => {
+    setIsLoading(true);
     handleAdults();
     handleRoomQuantity();
-    setIsLoading(true);
   };
 
   useEffect(() => {
