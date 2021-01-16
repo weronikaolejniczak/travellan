@@ -8,6 +8,7 @@ import {
   TextInput,
 } from 'utils';
 import { View } from 'react-native';
+import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -70,8 +71,10 @@ const AddAccommodationByNameContainer = (props) => {
 
   return (
     <Container>
-      <View style={{ marginBottom: 10, marginTop: 10 }}>
-        <Headline>Add your accomodation by typing name of your hotel</Headline>
+      <View style={styles.view}>
+        <Headline style={styles.headline}>
+          Add your accomodation by typing name of your hotel
+        </Headline>
       </View>
       <TextInput
         label="Hotel name"
