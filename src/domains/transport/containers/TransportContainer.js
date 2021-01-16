@@ -55,14 +55,13 @@ const TransportContainer = ({ route, navigation }) => {
               text: 'Cancel',
             },
             {
-              onPress: addPDF(id),
+              onPress: () => addPDF(id),
               text: 'OK',
             },
           ],
           { cancelable: true },
         );
       } else {
-        console.log(isPDFModalOpen);
         openPDFModal(id);
       }
     },
@@ -326,7 +325,6 @@ const TransportContainer = ({ route, navigation }) => {
               dateOfDeparture={data.item.dateOfDeparture}
               placeOfDeparture={data.item.placeOfDeparture}
               QR={data.item.QR}
-              PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
               handlePressPDF={() => handlePressPDF(data.item.PDF, data.item.id)}
