@@ -75,7 +75,7 @@ const AccommodationContainer = (props) => {
           {
             id: '1',
             label: 'Add hotel by name',
-            onPress: () => navigateToScreen('Add hotel by name '),
+            onPress: () => navigateToScreen('Add hotel by name'),
           },
           {
             id: '2',
