@@ -4,14 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Pdf from 'react-native-pdf';
 import QRCode from 'react-native-qrcode-svg';
 import React, { useCallback, useState } from 'react';
-import {
-  Alert,
-  Modal,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Card, View as Container } from 'utils';
@@ -31,66 +24,10 @@ const TransportItem = ({
   handlePressPDF,
   handleDeleteTransport,
 }) => {
-  const dispatch = useDispatch();
-  const source = { uri: PDF };
-
   const [QRCodeString, setQRCodeString] = useState(QR);
-  const [PDFUri, setPDFUri] = useState(PDF);
-  const [showPDF, setShowPDF] = useState(false);
-
-  const deletePDF = useCallback(async () => {
-    setPDFUri('');
-    await dispatch(deletePDFRequest(tripId, id, ''));
-    setShowPDF(false);
-  }, [dispatch, tripId, id]);
-
-  const closePDFhandler = () => setShowPDF(false);
 
   return (
     <Card style={styles.transportCard}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={showPDF}
-        onRequestClose={() => setShowPDF(false)}
-      >
-        <TouchableOpacity
-          style={styles.buttonTouchableLeft}
-          onPress={closePDFhandler}
-        >
-          <Icon name="close" style={styles.icon} />
-        </TouchableOpacity>
-        <Pdf
-          source={source}
-          style={styles.PDF}
-          onError={(error) => {
-            console.log(error);
-          }}
-        />
-        <TouchableOpacity
-          style={styles.buttonTouchable}
-          onPress={() => {
-            Alert.alert(
-              'Delete PDF ticket.',
-              'Are you sure?',
-              [
-                {
-                  style: 'cancel',
-                  text: 'Cancel',
-                },
-                {
-                  onPress: deletePDF,
-                  text: 'OK',
-                },
-              ],
-              { cancelable: true },
-            );
-          }}
-        >
-          <Icon name="delete" style={styles.icon} />
-        </TouchableOpacity>
-      </Modal>
-
       <View style={styles.actions}>
         <TouchableOpacity onPress={handleDeleteTransport}>
           <Icon name="delete" style={styles.icon} />
