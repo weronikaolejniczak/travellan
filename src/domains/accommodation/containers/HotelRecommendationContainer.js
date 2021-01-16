@@ -9,7 +9,13 @@ import {
 import { View } from 'react-native';
 
 const HotelRecommendationContaier = (props) => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <View>
+        <Headline>Add your accomodation by typing name of your hotel</Headline>
+      </View>
+    </Container>
+  );
 };
 
 export default HotelRecommendationContaier;
