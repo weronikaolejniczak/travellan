@@ -95,6 +95,7 @@ const TransportContainer = ({ route, navigation }) => {
       } catch (err) {
         if (!DocumentPicker.isCancel(err)) throw err;
       }
+      setIsRefreshing(false);
     },
     [dispatch, tripId],
   );
