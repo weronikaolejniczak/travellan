@@ -5,6 +5,7 @@ import {
   Headline,
   ItemlessFrame,
   TextInput,
+  Subheading,
 } from 'utils';
 import { View } from 'react-native';
 
@@ -12,6 +13,9 @@ const HotelRecommendationContainer = (props) => {
   const { startDate, endDate, cityCode } = props.route.params;
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
+  const [adults, setAdults] = useState(0);
+
+  // for api call: adults, cityCode, checkIn(startDate), checkOut(endDate), radius, roomQuantity
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -25,6 +29,8 @@ const HotelRecommendationContainer = (props) => {
 
     return [year, month, day].join('-');
   };
+
+  const handleAdults = (adults) => setAdults(adults);
 
   useEffect(() => {
     if (formatDate(startDate) === formatDate(endDate)) {
@@ -50,7 +56,13 @@ const HotelRecommendationContainer = (props) => {
   return (
     <Container>
       <View>
-        <Headline>Add your accomodation by typing name of your hotel</Headline>
+        <Subheading>Add number of adults:</Subheading>
+        <TextInput
+          label="Adults"
+          value={adults}
+          onChange={handleAdults}
+          keyboardType="numeric"
+        />
       </View>
     </Container>
   );
