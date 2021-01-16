@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
 import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { PDFModal, QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
