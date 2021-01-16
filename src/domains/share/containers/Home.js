@@ -130,7 +130,7 @@ const Home = () => {
               Be sure to check it's valid!
             </Subheading>
             <View style={styles.hotelCardWrapper}>
-              {!!hotel && <HotelCard {...hotel} />}
+              {!!hotel && <HotelCard sharing {...hotel} />}
             </View>
           </View>
 

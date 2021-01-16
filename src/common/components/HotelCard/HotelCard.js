@@ -22,6 +22,8 @@ import { styles } from './HotelCardStyle';
 //        - refactor to make it reusable for: Amadeus hotel preview, hotel cards in the application
 //        - extract strings
 const HotelCard = ({
+  sharing,
+  recommendation,
   amenities,
   creditCardPaymentPossible,
   checkInHours,
@@ -32,6 +34,7 @@ const HotelCard = ({
   image,
   location,
   name,
+  phone,
 }) => (
   <Card>
     <ScrollView>
