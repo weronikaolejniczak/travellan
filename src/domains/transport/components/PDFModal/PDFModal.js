@@ -1,12 +1,11 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import QRCode from 'react-native-qrcode-svg';
 import React from 'react';
 import { Dimensions, Modal, TouchableOpacity, View } from 'react-native';
-import { styles } from './QRModalStyle';
-
+import { styles } from './PDFModalStyle';
+import Pdf from 'react-native-pdf';
 import { Card } from 'utils';
 
-const QRModal = ({
+const PDFModal = ({
   PDF,
   handleDeletePDF,
   isPDFModalOpen,
