@@ -9,6 +9,8 @@ import {
 import { View } from 'react-native';
 
 const HotelRecommendationContainer = (props) => {
+  const { startDate, endDate, cityCode } = props.route.params;
+
   return (
     <Container>
       <View>
