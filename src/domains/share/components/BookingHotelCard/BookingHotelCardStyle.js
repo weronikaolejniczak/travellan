@@ -5,6 +5,24 @@ import { Colors } from 'constants';
 const { height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
+  caption: {
+    color: Colors.placeholder,
+  },
+  caution: {
+    color: Colors.primary,
+    fontWeight: 'bold',
+  },
+  checkInAndCheckOutHoursWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  checkInWrapper: {
+    paddingHorizontal: '3%',
+    paddingLeft: 0,
+  },
+  checkOutWrapper: {
+    paddingHorizontal: '3%',
+  },
   content: {
     padding: '4%',
   },
@@ -12,6 +30,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
+    padding: '1%',
   },
   image: {
     height: height * 0.45,
@@ -19,9 +38,6 @@ export const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-  },
-  section: {
-    marginTop: '3%',
   },
   subheading: {
     color: Colors.text,

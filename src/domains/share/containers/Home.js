@@ -16,9 +16,9 @@ import {
 import { store } from 'src/store';
 import { homeStyle as styles } from './HomeStyle';
 
-const COULD_NOT_SCRAPE_HOTEL_ERROR = `Sorry, we couldn't get your hotel info! Are you sure you have internet connection?`;
-const INCORRECT_SHARING_DATA_ERROR = `You didn't share a Booking.com hotel page! Unfortunately, we don't support any other sharing data.`;
-const USER_NOT_LOGGED_IN_ERROR = `You are not logged in! Please, log in and share the webpage again!`;
+const COULD_NOT_SCRAPE_HOTEL_ERROR = `Sorry, we couldn't get your hotel info!\nAre you sure you have internet connection?`;
+const INCORRECT_SHARING_DATA_ERROR = `You didn't share a Booking.com hotel page!\nUnfortunately, we don't support any other sharing data.`;
+const USER_NOT_LOGGED_IN_ERROR = `You are not logged in!\nPlease, log in and share the webpage again!`;
 const bookingRegex = new RegExp('www.booking.com/hotel');
 
 // $todo: create accommodation card
@@ -94,7 +94,7 @@ const Home = () => {
 
   useEffect(() => {
     authenticateUser();
-    //fetchHotel();
+    // fetchHotel();
     mockFetch();
   }, [mockFetch]);
 
