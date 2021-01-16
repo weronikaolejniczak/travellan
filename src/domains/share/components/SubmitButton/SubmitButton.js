@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import { Colors } from 'constants';
@@ -17,4 +17,4 @@ const SubmitButton = ({ isLoading, isDisabled, onPress, children }) => (
   </TouchableOpacity>
 );
 
-export default SubmitButton;
+export default memo(SubmitButton);

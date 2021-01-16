@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { Card, Paragraph, Title } from 'utils';
@@ -7,6 +7,7 @@ import { styles } from './TripCardStyle';
 
 const TripCard = ({
   id,
+  isDisabled,
   destination,
   startDate,
   endDate,
@@ -16,7 +17,7 @@ const TripCard = ({
   <Card style={[styles.trip, isTripSelected && styles.selectedTrip]}>
     <TouchableOpacity
       style={styles.touchable}
-      onPress={() => handleSelectTrip(id)}
+      onPress={!isDisabled ? () => handleSelectTrip(id) : () => {}}
     >
       <>
         <Title
@@ -35,4 +36,4 @@ const TripCard = ({
   </Card>
 );
 
-export default TripCard;
+export default memo(TripCard);

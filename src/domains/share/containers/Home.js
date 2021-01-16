@@ -145,6 +145,7 @@ const Home = () => {
                     key={item.id}
                     isTripSelected={selectedTrips.includes(item.id)}
                     handleSelectTrip={handleSelectTrip}
+                    isDisabled={isSubmitting}
                     {...item}
                   />
                 ))
