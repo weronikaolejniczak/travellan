@@ -62,6 +62,7 @@ const TransportContainer = ({ route, navigation }) => {
           { cancelable: true },
         );
       } else {
+        console.log(isPDFModalOpen);
         openPDFModal(id);
       }
     },
@@ -123,11 +124,13 @@ const TransportContainer = ({ route, navigation }) => {
     if (id === ' ') {
       let pdf = transport[0].PDF;
       let source = { uri: pdf };
+      console.log(isPDFModalOpen);
       return source;
     } else {
       const index = transport.findIndex((item) => item.id === id);
       let pdf = transport[index].PDF;
       let source = { uri: pdf };
+      console.log(isPDFModalOpen);
       return source;
     }
   };
@@ -291,9 +294,9 @@ const TransportContainer = ({ route, navigation }) => {
         />
         <PDFModal
           PDF={findTransportPDF(selectedTransportId)}
-          handleDeleteQR={() => handlePDFDelete(selectedTransportId)}
-          handleCloseQR={() => setIsPDFModalOpen(false)}
-          isQRModalOpen={isPDFModalOpen}
+          handleDeletePDF={() => handlePDFDelete(selectedTransportId)}
+          handleClosePDF={() => setIsPDFModalOpen(false)}
+          isPDFModalOpen={isPDFModalOpen}
           handleError={() => setError(error)}
         />
         <FlatList
