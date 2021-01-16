@@ -178,6 +178,19 @@ const TransportContainer = ({ route, navigation }) => {
     return <ItemlessFrame message="You have no transport saved!" />;
   }
 
+  if (isQRModalOpen === true) {
+    return (
+      <QRModal
+        QR={findTransportQR(selectedTransportId)}
+        handleDeleteQR={() => handleQRDelete(selectedTransportId)}
+        handleCloseQR={() => setIsQRModalOpen(false)}
+        isQRModalOpen={isQRModalOpen}
+        handleQRDelete={() => handleQRDelete(selectedTransportId)}
+        handleError={() => setError(error)}
+      />
+    );
+  }
+
   if (error) {
     return (
       <View>
@@ -196,16 +209,6 @@ const TransportContainer = ({ route, navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View>
-        {isQRModalOpen ? (
-          <QRModal
-            QR={findTransportQR(selectedTransportId)}
-            handleDeleteQR={() => handleQRDelete(selectedTransportId)}
-            handleCloseQR={() => setIsQRModalOpen(false)}
-            isQRModalOpen={isQRModalOpen}
-            handleQRDelete={() => handleQRDelete(selectedTransportId)}
-            handleError={setError(error)}
-          />
-        ) : null}
         <FlatList
           onRefresh={loadTransport}
           refreshing={isRefreshing}
