@@ -44,7 +44,7 @@ const BookingHotelCard = ({
           style={styles.linearGradient}
         >
           <View style={styles.header}>
-            <Headline style={styles.text}>{name}</Headline>
+            <Headline style={styles.headline}>{name}</Headline>
             <Subheading style={styles.subheading}>
               {location.address}
             </Subheading>

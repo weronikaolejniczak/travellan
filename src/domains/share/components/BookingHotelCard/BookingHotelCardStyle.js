@@ -32,6 +32,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     padding: '1%',
   },
+  headline: {
+    color: Colors.text,
+    textAlign: 'center',
+  },
   image: {
     height: height * 0.45,
     width: '100%',
