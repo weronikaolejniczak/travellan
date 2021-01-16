@@ -17,7 +17,7 @@ const HotelRecommendationContainer = (props) => {
   const [adults, setAdults] = useState(0);
   const [roomQuantity, setRoomQuantity] = useState(0);
 
-  // for api call: (D)adults, (D)cityCode, (D)checkIn(startDate), (D)checkOut(endDate), (D)radius, (D)roomQuantity
+  // for api call: (D)adults, (D)cityCode, (D)checkIn(startDate), (D)checkOut(endDate), (D)radius, (D)roomQuantity, page[limit[]]
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -71,7 +71,7 @@ const HotelRecommendationContainer = (props) => {
         </Headline>
         <Subheading>Add number of adults:</Subheading>
         <TextInput
-          label="Adults"
+          label="Number of adults"
           value={adults}
           onChange={handleAdults}
           keyboardType="numeric"
