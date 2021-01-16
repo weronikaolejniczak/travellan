@@ -15,8 +15,8 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { Card, View as Container } from 'utils';
+import { addPDFRequest, deletePDFRequest } from 'actions/transportActions';
 import { cardHeight, styles } from './TransportItemStyle';
-import { patchPDFRequest } from 'actions/transportActions';
 
 const TransportItem = ({
   tripId,
@@ -28,6 +28,7 @@ const TransportItem = ({
   QR,
   PDF,
   handlePressQR,
+  handlePressPDF,
   handleDeleteTransport,
 }) => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const TransportItem = ({
 
   const deletePDF = useCallback(async () => {
     setPDFUri('');
-    await dispatch(patchPDFRequest(tripId, id, ''));
+    await dispatch(deletePDFRequest(tripId, id, ''));
     setShowPDF(false);
   }, [dispatch, tripId, id]);
 
@@ -50,8 +51,9 @@ const TransportItem = ({
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
-      const temp = res.uri;
-      await dispatch(patchPDFRequest(tripId, id, temp));
+      console.log(res);
+      const temp = res.fileCopyUri;
+      await dispatch(addPDFRequest(tripId, id, temp));
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) throw err;
     }
@@ -113,25 +115,7 @@ const TransportItem = ({
 
         <TouchableOpacity
           onPress={() => {
-            if (PDFUri === '' || PDFUri === null || PDFUri === undefined) {
-              Alert.alert(
-                'Add a ticket PDF?',
-                'Attach document to the ticket.',
-                [
-                  {
-                    style: 'cancel',
-                    text: 'Cancel',
-                  },
-                  {
-                    onPress: pickPDF,
-                    text: 'OK',
-                  },
-                ],
-                { cancelable: true },
-              );
-            } else {
-              setShowPDF(true);
-            }
+            handlePressPDF;
           }}
         >
           <CommunityIcon name="file-pdf-box" style={styles.icon} />

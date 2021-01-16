@@ -11,6 +11,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
+import DocumentPicker from 'react-native-document-picker';
+import Pdf from 'react-native-pdf';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
@@ -41,21 +43,30 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [addQR, openQRModal],
   );
-
-  const openQRModal = useCallback((id) => {
-    setSelectedTransportId(id);
-    setIsQRModalOpen(true);
-  }, []);
-
-  const findTransportQR = (id) => {
-    if (id === ' ') {
-      return transport[0].QR;
-    } else {
-      const index = transport.findIndex((item) => item.id === id);
-      return transport[index].QR;
-    }
-  };
-
+  const handlePressPDF = useCallback(
+    (PDF, id) => {
+      if (PDF === undefined || PDF === ' ' || PDF === null || PDF === '') {
+        Alert.alert(
+          'Add a ticket PDF?',
+          'Attach document to the ticket.',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: addPDF(id),
+              text: 'OK',
+            },
+          ],
+          { cancelable: true },
+        );
+      } else {
+        //openPDFModal(id);
+      }
+    },
+    [addPDF],
+  );
   const addQR = useCallback(
     async (id) => {
       setIsRefreshing(true);
@@ -72,6 +83,33 @@ const TransportContainer = ({ route, navigation }) => {
     [navigation, tripId],
   );
 
+  const addPDF = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.pdf],
+        });
+        const temp = res.uri;
+        await dispatch(transportActions.addPDFRequest(tripId, id, temp));
+      } catch (err) {
+        if (!DocumentPicker.isCancel(err)) throw err;
+      }
+    },
+    [dispatch, tripId],
+  );
+  const openQRModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsQRModalOpen(true);
+  }, []);
+  const findTransportQR = (id) => {
+    if (id === ' ') {
+      return transport[0].QR;
+    } else {
+      const index = transport.findIndex((item) => item.id === id);
+      return transport[index].QR;
+    }
+  };
   const handleQRDelete = useCallback(
     (items) => {
       setIsRefreshing(true);
@@ -94,7 +132,6 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [persistDeleteQR],
   );
-
   const persistDeleteQR = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -226,6 +263,7 @@ const TransportContainer = ({ route, navigation }) => {
               PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
+              handlePressPDF={() => handlePressPDF(data.item.QR, data.item.id)}
             />
           )}
         />
