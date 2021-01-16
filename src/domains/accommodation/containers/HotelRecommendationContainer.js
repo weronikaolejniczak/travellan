@@ -8,7 +8,7 @@ import {
 } from 'utils';
 import { View } from 'react-native';
 
-const HotelRecommendationContaier = (props) => {
+const HotelRecommendationContainer = (props) => {
   return (
     <Container>
       <View>
@@ -18,4 +18,4 @@ const HotelRecommendationContaier = (props) => {
   );
 };
 
-export default HotelRecommendationContaier;
+export default HotelRecommendationContainer;

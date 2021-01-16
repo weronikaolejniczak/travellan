@@ -77,6 +77,11 @@ const AccommodationContainer = (props) => {
             label: 'Add hotel by name',
             onPress: () => navigateToScreen('Add hotel by name '),
           },
+          {
+            id: '2',
+            label: 'Hotel recommendation',
+            onPress: () => navigateToScreen('Hotel recommendation'),
+          },
         ]}
       />
     </ScrollView>
