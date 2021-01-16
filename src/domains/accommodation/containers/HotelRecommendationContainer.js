@@ -14,8 +14,9 @@ const HotelRecommendationContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
   const [adults, setAdults] = useState(0);
+  const [roomQuantity, setRoomQuantity] = useState(0);
 
-  // for api call: adults, cityCode, checkIn(startDate), checkOut(endDate), radius, roomQuantity
+  // for api call: (D)adults, (D)cityCode, (D)checkIn(startDate), (D)checkOut(endDate), (D)radius, (D)roomQuantity
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -31,6 +32,7 @@ const HotelRecommendationContainer = (props) => {
   };
 
   const handleAdults = (adults) => setAdults(adults);
+  const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
 
   useEffect(() => {
     if (formatDate(startDate) === formatDate(endDate)) {
@@ -61,6 +63,13 @@ const HotelRecommendationContainer = (props) => {
           label="Adults"
           value={adults}
           onChange={handleAdults}
+          keyboardType="numeric"
+        />
+        <Subheading>Add number of rooms:</Subheading>
+        <TextInput
+          label="Room Quantity"
+          value={roomQuantity}
+          onChange={handleRoomQuantity}
           keyboardType="numeric"
         />
       </View>
