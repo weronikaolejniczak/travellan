@@ -34,6 +34,19 @@ const HotelRecommendationContainer = (props) => {
     }
   }, [startDate, endDate]);
 
+  if (cityCode === undefined)
+    return (
+      <ItemlessFrame message="Sorry, recommendation for hotels near your destination is impossible!" />
+    );
+
+  if (isDateSame)
+    return (
+      <ItemlessFrame
+        message="Recommendation for hotels is not possible if you are going on a
+    one day trip!"
+      />
+    );
+
   return (
     <Container>
       <View>
