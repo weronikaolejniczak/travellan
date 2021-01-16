@@ -43,6 +43,9 @@ export const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
+  placeholder: {
+    color: Colors.placeholder,
+  },
   subheading: {
     color: Colors.text,
     textAlign: 'center',

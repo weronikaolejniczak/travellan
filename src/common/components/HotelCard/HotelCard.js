@@ -15,15 +15,9 @@ import {
 import { Colors } from 'constants';
 import { styles } from './HotelCardStyle';
 
-// $todo: break into smaller components:
-//        - card header
-//        - card sections
-//        - move components to shared components folder
-//        - refactor to make it reusable for: Amadeus hotel preview, hotel cards in the application
-//        - extract strings
 const HotelCard = ({
   sharing,
-  recommendation,
+  inAccommodationListing,
   amenities,
   creditCardPaymentPossible,
   checkInHours,
@@ -35,6 +29,7 @@ const HotelCard = ({
   location,
   name,
   phone,
+  reservationDetails,
 }) => (
   <Card>
     <ScrollView>
@@ -56,26 +51,37 @@ const HotelCard = ({
       </ImageBackground>
 
       <View style={styles.content}>
-        <HotelCardSection title="Hotel hours">
-          {frontDesk24h && (
-            <Paragraph style={styles.caution}>
-              Front desk is open 24 hours a day!
+        {!sharing && (
+          <HotelCardSection title="Contact">
+            <Caption style={styles.caption}>Phone</Caption>
+            <Paragraph style={styles.text}>
+              {phone ? phone : 'not declared'}
             </Paragraph>
-          )}
-          {!!checkInExtra && (
-            <Paragraph style={styles.caution}>{checkInExtra}</Paragraph>
-          )}
-          <View style={styles.checkInAndCheckOutHoursWrapper}>
-            <View style={styles.checkInWrapper}>
-              <Caption style={styles.caption}>Check in hours</Caption>
-              <Text style={styles.text}>{checkInHours}</Text>
+          </HotelCardSection>
+        )}
+
+        {checkInHours && checkOutHours && (
+          <HotelCardSection title="Hotel hours">
+            {frontDesk24h && (
+              <Paragraph style={styles.caution}>
+                Front desk is open 24 hours a day!
+              </Paragraph>
+            )}
+            {!!checkInExtra && (
+              <Paragraph style={styles.caution}>{checkInExtra}</Paragraph>
+            )}
+            <View style={styles.checkInAndCheckOutHoursWrapper}>
+              <View style={styles.checkInWrapper}>
+                <Caption style={styles.caption}>Check in hours</Caption>
+                <Text style={styles.text}>{checkInHours}</Text>
+              </View>
+              <View style={styles.checkOutWrapper}>
+                <Caption style={styles.caption}>Check out hours</Caption>
+                <Text style={styles.text}>{checkOutHours}</Text>
+              </View>
             </View>
-            <View style={styles.checkOutWrapper}>
-              <Caption style={styles.caption}>Check out hours</Caption>
-              <Text style={styles.text}>{checkOutHours}</Text>
-            </View>
-          </View>
-        </HotelCardSection>
+          </HotelCardSection>
+        )}
 
         <HotelCardSection title="Amenities">
           <ReadMore longText={amenities.join(', ')} />
@@ -92,6 +98,19 @@ const HotelCard = ({
               : 'Credit card payment is NOT possible!'}
           </Paragraph>
         </HotelCardSection>
+
+        {inAccommodationListing && (
+          <HotelCardSection title="Reservation details">
+            {reservationDetails ? (
+              <ReadMore longText={reservationDetails} />
+            ) : (
+              <Paragraph style={styles.placeholder}>
+                check in/out information, room number, direction tips, contact,
+                is all-inclusive etc.
+              </Paragraph>
+            )}
+          </HotelCardSection>
+        )}
       </View>
     </ScrollView>
   </Card>
