@@ -5,11 +5,13 @@ async function recommendHotel(
   cityCode,
   checkInDate,
   checkOutDate,
-  radius,
+  adults,
   roomQuantity,
 ) {
   return await axios
-    .get(`${BACKEND_URL}/accommodation/recommendation`)
+    .get(
+      `${BACKEND_URL}/accommodation/recommendation?cityCode=${cityCode}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&radius=100&adults=${adults}&roomQuantity=${roomQuantity}`,
+    )
     .then((json) => json.data)
     .catch((error) => {
       throw error;
