@@ -1,25 +1,33 @@
 class Accommodation {
   constructor(
     id,
-    name,
-    address,
-    ammenities,
-    hotelHours,
-    coordinates,
-    image,
+    amenities,
+    breakfast,
+    checkInExtra,
+    checkInHours,
+    checkOutHours,
+    phone,
+    creditCardPaymentPossible,
     description,
-    reservationDetails,
+    frontDesk24H,
+    location,
+    image,
+    name,
   ) {
     this.id = id;
-    this.name = name;
-    this.address = address;
-    this.ammenities = ammenities;
-    this.hotelHours = hotelHours;
-    this.coordinates = coordinates;
-    this.image = image;
+    this.amenities = amenities;
+    this.breakfast = breakfast;
+    this.checkInExtra = checkInExtra;
+    this.checkInHours = checkInHours;
+    this.checkOutHours = checkOutHours;
+    this.phone = phone;
+    this.creditCardPaymentPossible = creditCardPaymentPossible;
     this.description = description;
-    this.reservationDetails = reservationDetails;
+    this.frontDesk24H = frontDesk24H;
+    this.location = location;
+    this.image = image;
+    this.name = name;
   }
 }
 
-export default Accommodation;
+module.exports = Accommodation;
