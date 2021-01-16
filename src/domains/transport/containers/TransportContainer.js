@@ -31,6 +31,7 @@ const TransportContainer = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedTransportId, setSelectedTransportId] = useState(' ');
 
   const handlePressQR = useCallback(
@@ -101,6 +102,10 @@ const TransportContainer = ({ route, navigation }) => {
   const openQRModal = useCallback((id) => {
     setSelectedTransportId(id);
     setIsQRModalOpen(true);
+  }, []);
+  const openPDFModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsPDFModalOpen(true);
   }, []);
   const findTransportQR = (id) => {
     if (id === ' ') {
