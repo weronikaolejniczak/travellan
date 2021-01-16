@@ -32,7 +32,6 @@ const QRModal = ({
               </TouchableOpacity>
             </View>
             <View style={styles.iconContainerQR}>
-              {QR === undefined} ? () : (
               <QRCode
                 value={QR}
                 size={Dimensions.get('window').width - 100}
@@ -40,7 +39,6 @@ const QRModal = ({
                 fgColor="white"
                 onError={handleError}
               />
-              )
             </View>
           </View>
         </Card>

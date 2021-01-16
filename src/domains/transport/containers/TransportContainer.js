@@ -35,18 +35,25 @@ const TransportContainer = ({ route, navigation }) => {
     (QR, id) => {
       console.log(QR);
       if (QR === undefined || QR === ' ' || QR === null) {
+        console.log('I am undefined');
         addQR(id);
       } else {
         openQRModal(id);
       }
     },
-    [addQR],
+    [addQR, openQRModal],
   );
 
-  const openQRModal = (id) => {
-    setSelectedTransportId(id);
-    setIsQRModalOpen(true);
-  };
+  const openQRModal = useCallback(
+    (id) => {
+      setSelectedTransportId(id);
+      setIsQRModalOpen(true);
+      console.log('I have a value');
+      console.log(id);
+      console.log(isQRModalOpen);
+    },
+    [isQRModalOpen],
+  );
 
   const findTransportQR = (id) => {
     if (id === ' ') {
@@ -193,7 +200,7 @@ const TransportContainer = ({ route, navigation }) => {
           <QRModal
             QR={findTransportQR(selectedTransportId)}
             handleDeleteQR={() => handleQRDelete(selectedTransportId)}
-            handleCloseQR={setIsQRModalOpen(false)}
+            handleCloseQR={() => setIsQRModalOpen(false)}
             isQRModalOpen={isQRModalOpen}
             handleQRDelete={() => handleQRDelete(selectedTransportId)}
             handleError={setError(error)}
