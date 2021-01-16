@@ -102,15 +102,10 @@ const TransportContainer = ({ route, navigation }) => {
     setSelectedTransportId(id);
     setIsQRModalOpen(true);
   }, []);
-  const openPDFModal = useCallback(
-    (id) => {
-      console.log(isPDFModalOpen);
-      setSelectedTransportId(id);
-      setIsPDFModalOpen(true);
-      console.log(isPDFModalOpen);
-    },
-    [isPDFModalOpen],
-  );
+  const openPDFModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsPDFModalOpen(true);
+  }, []);
   const findTransportQR = (id) => {
     if (id === ' ') {
       return transport[0].QR;
@@ -123,13 +118,11 @@ const TransportContainer = ({ route, navigation }) => {
     if (id === ' ') {
       let pdf = transport[0].PDF;
       let source = { uri: pdf };
-      console.log(isPDFModalOpen);
       return source;
     } else {
       const index = transport.findIndex((item) => item.id === id);
       let pdf = transport[index].PDF;
       let source = { uri: pdf };
-      console.log(isPDFModalOpen);
       return source;
     }
   };
