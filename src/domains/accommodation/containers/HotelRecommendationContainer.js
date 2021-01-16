@@ -12,19 +12,14 @@ import { styles } from './HotelRecommendationContainerStyle';
 import recommendHotel from 'services/recommendHotel';
 
 const HotelRecommendationContainer = (props) => {
-  const { startDate, endDate, cityCode } = props.route.params;
+  let { startDate, endDate } = props.route.params;
+  const cityCode = props.route.params.cityCode;
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
   const [adults, setAdults] = useState(0);
   const [roomQuantity, setRoomQuantity] = useState(0);
-
-  // async function recommendHotel(
-  //cityCode,
-  //checkInDate,
-  //checkOutDate,
-  //adults,
-  //roomQuantity,
-  //)
+  const [data, setData] = useState();
+  const [error, setError] = useState('');
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -42,10 +37,28 @@ const HotelRecommendationContainer = (props) => {
   const handleAdults = (adults) => setAdults(adults);
   const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
 
+  const findHotels = useCallback(async () => {
+    startDate = formatDate(startDate);
+    endDate = formatDate(endDate);
+    try {
+      const result = await recommendHotel(
+        cityCode,
+        startDate,
+        endDate,
+        adults,
+        roomQuantity,
+      );
+      setData(result);
+    } catch {
+      setError(error);
+    }
+  }, [cityCode, startDate, endDate, adults, roomQuantity, error]);
+
   const handlePress = () => {
     setIsLoading(true);
     handleAdults();
     handleRoomQuantity();
+    findHotels(cityCode, startDate, endDate, adults, roomQuantity);
   };
 
   useEffect(() => {
@@ -54,7 +67,8 @@ const HotelRecommendationContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [startDate, endDate]);
+    console.log(data);
+  }, [startDate, endDate, data]);
 
   if (cityCode === undefined)
     return (

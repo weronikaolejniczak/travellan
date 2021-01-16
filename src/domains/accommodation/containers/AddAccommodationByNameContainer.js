@@ -54,7 +54,8 @@ const AddAccommodationByNameContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [startDate, endDate]);
+    console.log(data);
+  }, [startDate, endDate, data]);
 
   if (cityCode === undefined)
     return (
