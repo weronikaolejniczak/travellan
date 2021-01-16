@@ -61,41 +61,45 @@ const TransportItem = ({
     <Card style={styles.transportCard}>
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent={false}
         visible={showPDF}
         onRequestClose={() => setShowPDF(false)}
       >
-        <Container>
-          <TouchableOpacity
-            style={styles.buttonTouchableLeft}
-            onPress={closePDFhandler}
-          >
-            <Icon name="close" style={styles.icon} />
-          </TouchableOpacity>
-          <Pdf source={source} style={styles.PDF} />
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              Alert.alert(
-                'Delete PDF ticket.',
-                'Are you sure?',
-                [
-                  {
-                    style: 'cancel',
-                    text: 'Cancel',
-                  },
-                  {
-                    onPress: deletePDF,
-                    text: 'OK',
-                  },
-                ],
-                { cancelable: true },
-              );
-            }}
-          >
-            <Icon name="delete" style={styles.icon} />
-          </TouchableOpacity>
-        </Container>
+        <TouchableOpacity
+          style={styles.buttonTouchableLeft}
+          onPress={closePDFhandler}
+        >
+          <Icon name="close" style={styles.icon} />
+        </TouchableOpacity>
+        <Pdf
+          source={source}
+          style={styles.PDF}
+          onError={(error) => {
+            console.log(error);
+          }}
+        />
+        <TouchableOpacity
+          style={styles.buttonTouchable}
+          onPress={() => {
+            Alert.alert(
+              'Delete PDF ticket.',
+              'Are you sure?',
+              [
+                {
+                  style: 'cancel',
+                  text: 'Cancel',
+                },
+                {
+                  onPress: deletePDF,
+                  text: 'OK',
+                },
+              ],
+              { cancelable: true },
+            );
+          }}
+        >
+          <Icon name="delete" style={styles.icon} />
+        </TouchableOpacity>
       </Modal>
 
       <View style={styles.actions}>

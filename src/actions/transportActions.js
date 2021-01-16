@@ -184,26 +184,25 @@ export const addQRRequest = (tripId, transportId, QR) => {
   };
 };
 
-
-export const patchPDFRequest = (tripId, transportId, PDF) => {
+export const deletePDFRequest = (tripId, transportId, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-
-    console.log('√ tripId:', tripId);
-    console.log('√ transportId:', transportId);
-    console.log('√ PDF:', PDF);
-
     axios
-      .get(
-        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
-        {
-          PDF,
-        },
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}/PDF.json?auth=${token}`,
       )
-      .then((res) => res.data)
-      .then((data) => console.log('data returned from endpoint:', data));
+      .then(() => dispatch(setPDF(tripId, transportId, PDF)))
+      .catch(() => {
+        throw new Error(`Couldn't delete PDF!`);
+      });
+  };
+};
 
+export const addPDFRequest = (tripId, transportId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     axios
       .patch(
         `${API_URL}/Trips/${userId}/${tripId}/transport/${transportId}.json?auth=${token}`,
@@ -212,9 +211,8 @@ export const patchPDFRequest = (tripId, transportId, PDF) => {
         },
       )
       .then(() => dispatch(setPDF(tripId, transportId, PDF)))
-      .catch((err) => {
-        console.error(err.message);
-        throw new Error(`Couldn't update the PDF code! ${err.message}`);
+      .catch(() => {
+        throw new Error(`Couldn't update PDF`);
       });
   };
 };
