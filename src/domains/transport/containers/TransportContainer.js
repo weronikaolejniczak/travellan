@@ -137,6 +137,41 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [persistDeleteQR],
   );
+  const persistDeletePDF = useCallback(
+    (id) => {
+      setIsRefreshing(true);
+      try {
+        dispatch(transportActions.deletePDFRequest(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+      setIsPDFModalOpen(false);
+    },
+    [dispatch, tripId],
+  );
+  const handlePDFDelete = useCallback(
+    (items) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete the document',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: persistDeletePDF(items),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDeletePDF],
+  );
   const persistDeleteQR = useCallback(
     (id) => {
       setIsRefreshing(true);
