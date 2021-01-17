@@ -7,10 +7,12 @@ import {
   TextInput,
   Subheading,
 } from 'utils';
-import { View } from 'react-native';
+import { View, Animated, FlatList } from 'react-native';
 import { styles } from './HotelRecommendationContainerStyle';
 import recommendHotel from 'services/recommendHotel';
 import { DUMMY_AMADEUS_RECOMMENDATION } from 'data/DummyAmadeusHotel';
+import { RecommendationItemShort } from 'domains/accommodation/components';
+import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 
 const HotelRecommendationContainer = (props) => {
   let { startDate, endDate } = props.route.params;
@@ -23,6 +25,8 @@ const HotelRecommendationContainer = (props) => {
   const [error, setError] = useState('');
   const testData = DUMMY_AMADEUS_RECOMMENDATION;
   console.log('test data:', testData);
+  let scrollX = new Animated.Value(0);
+  let position = Animated.divide(scrollX, cardWidth);
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -87,10 +91,13 @@ const HotelRecommendationContainer = (props) => {
 
   if (testData)
     return (
-      <ItemlessFrame
-        message="fadsfdsaRecommendation for hotels is not possible if you are going on a
-    one day trip!"
-      />
+      <Container>
+        <FlatList
+          data={testData}
+          keyExtractor={(item) => item.dupeId.toString()}
+          renderItem={(data) => <RecommendationItemShort data={data.item} />}
+        />
+      </Container>
     );
 
   return (

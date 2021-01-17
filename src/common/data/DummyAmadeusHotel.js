@@ -34,17 +34,17 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
       'fishing',
       'boating',
     ],
-    phone: '(34) 933428000',
-    creditCardPaymentPossible: false,
+    creditCardPaymentPossible: true,
     description:
       "The 4-star hotel Acta Atrium Palace in Barcelona is located in a neoclassical building from 1888 and offers modern interiors. The 71 rooms are comfortably arranged. Furthermore, the hotel features a bar, a restaurant and a conference room. A swimming pool, a sauna, a jacuzzi and fitness area are at the guests' disposal, too.",
+    dupeId: '700025712',
+    image:
+      'https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80',
     location: {
       address: 'Gran Via Corts Catalanes, 656, 8010 Barcelona, Spain',
       latitude: 41.39094,
       longitude: 2.17068,
     },
-    image:
-      'http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/36DF7B0F830B440E85D460CCAA8303B5',
     name: 'Acta Atrium Palace',
     offer: {
       guests: { adults: 1 },
@@ -59,6 +59,8 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
         },
       },
     },
+    phone: '(34) 933428000',
+    rating: '4',
   },
   {
     amenities: [
@@ -83,17 +85,17 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
       'beach',
       'fishing',
     ],
-    phone: '(34) 933185100',
-    creditCardPaymentPossible: false,
+    creditCardPaymentPossible: true,
     description:
       'The hotel Acta BCN 40 in Barcelona provides 42 modernly equipped rooms with TV, air conditioning, bath as well as Wi-Fi internet access. A breakfast buffet offering hot and cold dishes is served in the morning.',
+    dupeId: '700046709',
+    image:
+      'https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80',
     location: {
       address: 'C- Joaquim Costa, 40, 8001 Barcelona, Spain',
       latitude: 41.38266,
       longitude: 2.16579,
     },
-    image:
-      'http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1240EA8A577C4284BE6C44D4ACC07061',
     name: 'Acta Bcn 40',
     offer: {
       guests: { adults: 1 },
@@ -108,6 +110,8 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
         },
       },
     },
+    phone: '(34) 933185100',
+    rating: '2',
   },
   {
     amenities: [
@@ -136,17 +140,17 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
       'miniature golf',
       'golf',
     ],
-    phone: '(34) 934512142',
-    creditCardPaymentPossible: false,
+    creditCardPaymentPossible: true,
     description:
       'The 3-star hotel Acta Splendid in Barcelona offers a charming and modern ambience. Thanks to the technologically advanced equipment of the hotel, guests can enjoy satellite TV and free wireless internet access in the entire building. Wheelchair accessible rooms are also available upon request.',
+    dupeId: '700025471',
+    image:
+      'https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80',
     location: {
       address: 'C- Muntaner, 2, 8011 Barcelona, Spain',
       latitude: 41.38389,
       longitude: 2.16323,
     },
-    image:
-      'http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/7A2B7352278B486BBCD4DAE6AAED4221',
     name: 'Acta Splendid',
     offer: {
       guests: { adults: 1 },
@@ -161,6 +165,8 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
         },
       },
     },
+    phone: '(34) 934512142',
+    rating: '3',
   },
   {
     amenities: [
@@ -186,17 +192,17 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
       'fire detectors',
       'video surveilance',
     ],
-    phone: '(34) 937690300',
     creditCardPaymentPossible: false,
     description:
       'The hotel Advance in Barcelona is a non-smoking hotel located in a historic building. The hotel features a special design and offers rooms equipped with balcony or terrace as well as Wi-Fi Internet access. Moreover, hotel Advance provides a library and a lounge with fireplace.',
+    dupeId: '700040929',
+    image:
+      'https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80',
     location: {
       address: 'C- Sepulveda, 180, 8011 Barcelona, Spain',
       latitude: 41.383,
       longitude: 2.16299,
     },
-    image:
-      'http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/95A029C369D34D37A51BA493A9E23D27',
     name: 'Advance',
     offer: {
       guests: { adults: 1 },
@@ -211,5 +217,7 @@ export const DUMMY_AMADEUS_RECOMMENDATION = [
         },
       },
     },
+    phone: '(34) 937690300',
+    rating: '4',
   },
 ];
