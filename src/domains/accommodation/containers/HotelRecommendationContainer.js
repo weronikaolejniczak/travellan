@@ -95,7 +95,14 @@ const HotelRecommendationContainer = (props) => {
         <FlatList
           data={testData}
           keyExtractor={(item) => item.dupeId.toString()}
-          renderItem={(data) => <RecommendationItemShort data={data.item} />}
+          renderItem={(data) => (
+            <RecommendationItemShort
+              data={data.item}
+              onSelect={() => {
+                console.log('hello');
+              }}
+            />
+          )}
         />
       </Container>
     );

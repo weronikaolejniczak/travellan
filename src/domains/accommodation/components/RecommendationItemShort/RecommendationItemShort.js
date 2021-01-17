@@ -14,7 +14,7 @@ import { Colors, Layout } from 'constants';
 import { Card } from 'utils';
 import { styles } from './RecommendationItemShortStyle';
 
-const RecommendationItemShort = ({ data }) => {
+const RecommendationItemShort = ({ data, onSelect }) => {
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version > 21) {
@@ -23,7 +23,7 @@ const RecommendationItemShort = ({ data }) => {
 
   return (
     <Card style={styles.recommendationCard}>
-      <TouchableCmp onPress={console.log(data.dupeId)} useForeground>
+      <TouchableCmp onPress={onSelect} useForeground>
         <ImageBackground
           style={styles.imageContainer}
           source={{ uri: data.image }}
