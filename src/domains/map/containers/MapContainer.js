@@ -2,7 +2,7 @@ import Geolocation from '@react-native-community/geolocation';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
 import { MAPBOX_API_KEY } from 'react-native-dotenv';
-import { Alert, View, ActivityIndicator } from 'react-native';
+import { FlatList, Alert, View, ActivityIndicator, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PointOfInterest from 'models/PointOfInterest';
@@ -11,6 +11,7 @@ import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
 import fetchMapSearch from 'services/fetchMapSearch';
 import Colors from 'constants/Colors';
+import { Searchbar } from 'utils';
 
 MapboxGL.setAccessToken(MAPBOX_API_KEY);
 MapboxGL.setConnected(true);
@@ -35,6 +36,12 @@ const MapContainer = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [error, setError] = useState(null);
+  const [isChoosing, setIsChoosing] = useState(false);
+
+  const [searchAnswer, setSearchAnswer] = useState([
+    { id: '1', place_name: 'berlin' },
+    { id: '2', place_name: 'paris' },
+  ]);
 
   const extractRegion = () =>
     selectedTrip.map
@@ -163,46 +170,50 @@ const MapContainer = ({ route, navigation }) => {
       } else {
         setError('Enter the title');
       }
-    } else {
-      if (searchingActive) {
-        if (searchQuery !== '') {
-          setIsLoading(true);
-          const searchAnswer = await fetchMapSearch(
-            searchQuery,
-            latitude,
-            longitude,
-          );
-          const [lat, lon] = searchAnswer.geometry.coordinates;
-          const name = searchAnswer.place_name;
-          setMarkers(
-            markers
-              ? [
-                  ...markers,
-                  new PointOfInterest(
-                    new Date().getTime().toString(),
-                    new Date().toString(),
-                    lat,
-                    lon,
-                    name,
-                  ),
-                ]
-              : [
-                  new PointOfInterest(
-                    new Date().getTime().toString(),
-                    new Date().toString(),
-                    lat,
-                    lon,
-                    name,
-                  ),
-                ],
-          );
-          setSearchQuery('');
-          setIsLoading(false);
-        } else {
-          setError('Enter the query');
-        }
-      }
     }
+  };
+
+  const searchHandler = async () => {
+    const [longitude, latitude] = currentRegion;
+    // if (searchingActive) {
+    //   if (searchQuery !== '') {
+    // setIsLoading(true);
+    // setIsChoosing(true);
+    console.log('dzialam');
+    const answer = await fetchMapSearch(searchQuery, longitude, latitude);
+    setSearchAnswer(answer);
+
+    // console.log('wszedlem', searchAnswer);
+    // const [lat, lon] = searchAnswer.geometry.coordinates;
+    // const name = searchAnswer.place_name;
+    // setMarkers(
+    //   markers
+    //     ? [
+    //         ...markers,
+    //         new PointOfInterest(
+    //           new Date().getTime().toString(),
+    //           new Date().toString(),
+    //           lat,
+    //           lon,
+    //           name,
+    //         ),
+    //       ]
+    //     : [
+    //         new PointOfInterest(
+    //           new Date().getTime().toString(),
+    //           new Date().toString(),
+    //           lat,
+    //           lon,
+    //           name,
+    //         ),
+    //       ],
+    // );
+    // setSearchQuery('');
+    // setIsLoading(false);
+    //   } else {
+    //     setError('Enter the query');
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -264,7 +275,41 @@ const MapContainer = ({ route, navigation }) => {
           setError={setError}
           isLoading={isLoading}
           onExitHandler={onExitHandler}
+          searchHandler={(event) => searchHandler(event)}
+          isChoosing={isChoosing}
+          setIsChoosing={setIsChoosing}
+          searchAnswer={searchAnswer}
         />
+      )}
+      {searchingActive && (
+        <View style={styles.overlay}>
+          <Searchbar
+            icon="map-marker-question"
+            placeholder={searchingActive && 'Search by name/adress'}
+            value={searchQuery}
+            onChangeText={(text) => {
+              console.log('podaje', (searchAnswear = searchAnswer));
+
+              setSearchQuery(text);
+              searchHandler();
+              setIsChoosing(true);
+            }}
+          />
+          {isChoosing && (
+            <View style={styles.actionBar}>
+              <FlatList
+                data={(searchAnswear = searchAnswer)}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <Text style={{ fontSize: 22 }}>{item.place_name}</Text>
+                )}
+              />
+            </View>
+          )}
+          <View style={styles.actionBar}>
+            <Text style={styles.text}>Press on the area to search in</Text>
+          </View>
+        </View>
       )}
     </View>
   );

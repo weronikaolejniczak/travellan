@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 
 import ToolbarButton from './toolbarButton/ToolbarButton';
 import { Searchbar } from 'utils';
@@ -18,6 +18,10 @@ const Toolbar = ({
   onExitHandler,
   setMarkerTitle,
   setSearchQuery,
+  searchHandler,
+  isChoosing,
+  setIsChoosing,
+  searchAnswear,
 }) => (
   <View style={styles.overlay}>
     <View style={styles.actionBar}>
@@ -58,20 +62,6 @@ const Toolbar = ({
         value={markerTitle}
         onChangeText={(text) => setMarkerTitle(text)}
       />
-    )}
-
-    {searchingActive && (
-      <View>
-        <Searchbar
-          icon="map-marker-question"
-          placeholder={searchingActive && 'Search by name/adress'}
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
-        <View style={styles.actionBar}>
-          <Text style={styles.text}>Press on the area to search in</Text>
-        </View>
-      </View>
     )}
   </View>
 );
