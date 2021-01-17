@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import ShareExtension from 'rn-extensions-share';
 import axios from 'axios';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Linking, Text, View } from 'react-native';
 import { BACKEND_URL } from 'react-native-dotenv';
 
 import postAccommodation from 'services/accommodation/postAccommodation';
@@ -21,6 +21,8 @@ const COULD_NOT_SCRAPE_HOTEL_ERROR = `Sorry, we couldn't get your hotel info!\nA
 const INCORRECT_SHARING_DATA_ERROR = `You didn't share a Booking.com hotel page!\nUnfortunately, we don't support any other sharing data.`;
 const USER_NOT_LOGGED_IN_ERROR = `You are not logged in!\nPlease, log in and share the webpage again!`;
 const NO_TRIPS_SELECTED_ERROR = `You haven't selected any trip!`;
+const COULD_NOT_SAVE_ACCOMMODATION_ERROR = `Sorry, we could't save the accommodation!\nAre you sure you are logged in and have internet connection?`;
+const APP_URL = 'travellan://app';
 const bookingRegex = new RegExp('www.booking.com/hotel');
 
 const Home = () => {
@@ -109,7 +111,18 @@ const Home = () => {
   const handleSubmit = async () => {
     if (selectedTrips.length > 0) {
       setIsSubmitting(true);
-      await saveAccommodationToTrips();
+      try {
+        await saveAccommodationToTrips();
+      } catch {
+        setError(COULD_NOT_SAVE_ACCOMMODATION_ERROR);
+      }
+
+      if (!error) {
+        Linking.canOpenURL(APP_URL)
+          ? Linking.openURL(APP_URL)
+          : ShareExtension.close();
+      }
+
       setIsSubmitting(false);
     } else {
       setSelectedTripsError(NO_TRIPS_SELECTED_ERROR);
