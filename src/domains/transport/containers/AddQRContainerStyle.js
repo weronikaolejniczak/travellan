@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: '5%',
-    paddingTop: '12%',
+    //paddingHorizontal: '5%',
+    //paddingTop: '12%',
   },
   containerR: {
     backgroundColor: Colors.background,

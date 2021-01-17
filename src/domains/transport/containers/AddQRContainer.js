@@ -56,6 +56,7 @@ const AddQRContainer = (props) => {
         <QRCodeScanner
           style={styles.centered}
           onRead={qrHandler}
+          showMarker={true}
           flashMode={
             torchOn
               ? RNCamera.Constants.FlashMode.torch
