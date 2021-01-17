@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
+  },
   flex: {
     flex: 1,
   },
@@ -17,10 +21,10 @@ export const styles = StyleSheet.create({
   triplessText: {
     fontSize: 18,
   },
-  deleteButton: {
+  actionButton: {
     padding: 15,
   },
-  deleteIcon: {
+  actionIcon: {
     fontSize: 30,
     color: Colors.primary,
   },

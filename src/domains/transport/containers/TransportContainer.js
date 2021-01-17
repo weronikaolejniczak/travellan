@@ -11,6 +11,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
+import SplashScreen from 'react-native-splash-screen';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
@@ -94,15 +95,17 @@ const TransportContainer = ({ route, navigation }) => {
   }, [dispatch, tripId]);
 
   useEffect(() => {
+    setIsLoading(true);
     loadTransport();
-  }, [loadTransport]);
-
-  if (Array.isArray(transport) && transport.length < 1) {
-    return <ItemlessFrame message="You have no transport saved!" />;
-  }
+    setIsLoading(false);
+  }, [loadTransport, isLoading]);
 
   if (!Array.isArray(transport) || isLoading || isRefreshing) {
     return <LoadingFrame />;
+  }
+
+  if (Array.isArray(transport) && transport.length < 1) {
+    return <ItemlessFrame message="You have no transport saved!" />;
   }
 
   if (error) {
