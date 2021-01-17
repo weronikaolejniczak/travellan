@@ -24,16 +24,18 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  containerR: {
-    backgroundColor: Colors.background,
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
+
   icon: {
     color: Colors.text,
     fontSize: 40,
+  },
+  innerQrContainer: {
+    alignSelf: 'stretch',
+  },
+  miniHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   qrstyle: {
     alignContent: 'center',
@@ -44,5 +46,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     zIndex: 5,
+  },
+  text: {
+    color: Colors.error,
+    fontSize: 14,
+    margin: 15,
+    textAlign: 'justify',
   },
 });

@@ -105,8 +105,6 @@ const AddTransportContainer = (props) => {
         isTicketFrom,
         prepareDate(dateOfDeparture, hourOfDeparture),
         placeOfDeparture,
-        //QR,
-        //PDFUri,
       ),
     );
     setIsLoading(false);
@@ -121,8 +119,6 @@ const AddTransportContainer = (props) => {
     dateOfDeparture,
     hourOfDeparture,
     placeOfDeparture,
-    //QR,
-    //PDFUri,
   ]);
 
   return (

@@ -1,14 +1,19 @@
+import * as transportActions from 'actions/transportActions';
+import Colors from 'constants/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import QRCode from 'react-native-qrcode-svg';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { useDispatch, useSelector } from 'react-redux';
-
-import * as transportActions from 'actions/transportActions';
-import Colors from 'constants/Colors';
 import { styles } from './AddQRContainerStyle';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();
@@ -90,24 +95,33 @@ const AddQRContainer = (props) => {
       )}
       {!showQRscanner && (
         <View style={styles.container}>
-          <QRCode style={styles.qrstyle} value={QR} size={300} logoSize={300} />
-          <View style={styles.buttonContainerR}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.white} />
-            ) : (
+          <View styles={{ padding: 10 }}>
+            <QRCode value={QR} size={Dimensions.get('window').width - 100} />
+          </View>
+          <Text style={styles.text}>Notice:</Text>
+          <Text style={styles.text}>
+            QR above may not look identically the same as the QR you have just
+            scanned but it contains the same information.
+          </Text>
+          <View style={styles.innerQrContainer}>
+            <View style={styles.miniHeader}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color={Colors.white} />
+              ) : (
+                <TouchableOpacity
+                  style={styles.buttonTouchable}
+                  onPress={acceptHandler}
+                >
+                  <MaterialIcon name={'check'} style={styles.icon} />
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 style={styles.buttonTouchable}
-                onPress={acceptHandler}
+                onPress={redoHandler}
               >
-                <MaterialIcon name={'check'} style={styles.icon} />
+                <MaterialIcon name={'close'} style={styles.icon} />
               </TouchableOpacity>
-            )}
-            <TouchableOpacity
-              style={styles.buttonTouchable}
-              onPress={redoHandler}
-            >
-              <MaterialIcon name={'close'} style={styles.icon} />
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
       )}
