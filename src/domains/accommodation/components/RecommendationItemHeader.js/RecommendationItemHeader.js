@@ -16,13 +16,11 @@ const RecommendationItemHeader = (props) => {
     <Card style={styles.tripCard}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
-          <View>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.image}
-                source={{ uri: props.image.imageUrl }}
-              />
-            </View>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={{ uri: props.image.imageUrl }}
+            />
           </View>
         </TouchableCmp>
       </View>
