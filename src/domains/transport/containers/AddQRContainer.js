@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Headline, Paragraph } from 'utils';
 import { RNCamera } from 'react-native-camera';
 import { styles } from './AddQRContainerStyle';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,11 +99,11 @@ const AddQRContainer = (props) => {
           <View styles={{ padding: 10 }}>
             <QRCode value={QR} size={Dimensions.get('window').width - 100} />
           </View>
-          <Text style={styles.text}>Notice:</Text>
-          <Text style={styles.text}>
+          <Headline style={styles.text}>Notice:</Headline>
+          <Paragraph style={{Colors.error}}>
             QR above may not look identically the same as the QR you have just
             scanned but it contains the same information.
-          </Text>
+          </Paragraph>
           <View style={styles.innerQrContainer}>
             <View style={styles.miniHeader}>
               {isLoading ? (
