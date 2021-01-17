@@ -174,12 +174,14 @@ const MapContainer = ({ route, navigation }) => {
   };
 
   const searchHandler = async () => {
-    const [longitude, latitude] = currentRegion;
+    console.log(currentRegion);
+    const longitude = currentRegion.longitude;
+    const latitude = currentRegion.latitude;
     // if (searchingActive) {
     //   if (searchQuery !== '') {
     // setIsLoading(true);
     // setIsChoosing(true);
-    console.log('dzialam');
+
     const answer = await fetchMapSearch(searchQuery, longitude, latitude);
     setSearchAnswer(answer);
 
