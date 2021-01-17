@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   PDF: {
+    alignSelf: 'stretch',
     flex: 1,
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
@@ -29,9 +30,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   pdfCardContainer: {
-    backgroundColor: Colors.text,
-    padding: 5,
-    width: (Dimensions.get('window').width / 6) * 5,
+    padding: 20,
+    //width: Dimensions.get('window').width,
   },
   pdfContainer: {
     alignItems: 'center',
