@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { BACKEND_URL } from 'react-native-dotenv';
 
+import postAccommodation from 'services/accommodation/postAccommodation';
 import { Colors } from 'constants';
 import {
   View as Container,
@@ -13,7 +14,6 @@ import {
 } from 'utils';
 import { HotelCard } from 'components';
 import { SubmitButton, TripCard } from '../components';
-import { sleep } from 'helpers';
 import { store } from 'src/store';
 import { homeStyle as styles } from './HomeStyle';
 
@@ -83,10 +83,33 @@ const Home = () => {
       : setSelectedTrips([...selectedTrips, id]);
   };
 
+  const saveAccommodationToTrips = async (data) => {
+    for (let i = 0; i < selectedTrips.length; i++) {
+      await postAccommodation(
+        userId,
+        token,
+        selectedTrips[i],
+        hotel.amenities,
+        hotel.breakfast,
+        hotel.checkInExtra,
+        hotel.checkInHours,
+        hotel.checkOutHours,
+        hotel.creditCardPaymentPossible,
+        hotel.description,
+        hotel.frontDesk24H,
+        hotel.image,
+        hotel.location,
+        hotel.name,
+        '',
+        '',
+      );
+    }
+  };
+
   const handleSubmit = async () => {
     if (selectedTrips.length > 0) {
       setIsSubmitting(true);
-      await sleep(3000);
+      await saveAccommodationToTrips();
       setIsSubmitting(false);
     } else {
       setSelectedTripsError(NO_TRIPS_SELECTED_ERROR);
