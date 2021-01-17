@@ -99,8 +99,8 @@ const AddQRContainer = (props) => {
           <View styles={{ padding: 10 }}>
             <QRCode value={QR} size={Dimensions.get('window').width - 100} />
           </View>
-          <Headline style={styles.text}>Notice:</Headline>
-          <Paragraph style={{Colors.error}}>
+          <Headline style={styles.textHead}>Notice:</Headline>
+          <Paragraph style={styles.text}>
             QR above may not look identically the same as the QR you have just
             scanned but it contains the same information.
           </Paragraph>

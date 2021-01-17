@@ -48,9 +48,15 @@ export const styles = StyleSheet.create({
     zIndex: 5,
   },
   text: {
-    color: Colors.error,
-    fontSize: 14,
-    margin: 15,
+    color: Colors.text,
+    fontSize: 13.5,
+    margin: 16,
+    textAlign: 'justify',
+  },
+  textHead: {
+    color: Colors.primary,
+    fontSize: 20,
+    margin: 16,
     textAlign: 'justify',
   },
 });
