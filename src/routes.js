@@ -15,6 +15,7 @@ import AccommodationContainer, {
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import HotelRecommendationContainer from 'domains/accommodation/containers/HotelRecommendationContainer';
 import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
+import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
@@ -166,6 +167,10 @@ export default function Navigation() {
         <Stack.Screen
           name="Hotel recommendation"
           component={HotelRecommendationContainer}
+        />
+        <Stack.Screen
+          name="Recommended Hotel Details"
+          component={RecommendedHotelDetailsContainer}
         />
         <Stack.Screen
           name="Budget"

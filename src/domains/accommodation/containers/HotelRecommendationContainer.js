@@ -69,7 +69,9 @@ const HotelRecommendationContainer = (props) => {
   };
 
   const handleSelectItem = (data) => {
-    console.log(data);
+    props.navigation.navigate('Recommended Hotel Details', {
+      hotelDetails: data,
+    });
   };
 
   useEffect(() => {
