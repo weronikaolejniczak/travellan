@@ -7,11 +7,13 @@ import {
   TextInput,
   Subheading,
 } from 'utils';
+import RecommendationItemDetails from '../components/RecommendationItemDetails/RecommendationItemDetails';
 
 const HotelRecommendationContainer = (props) => {
+  const hotelInfo = props.route.params.hotelDetails;
   return (
     <Container>
-      <Headline>fasd</Headline>
+      <RecommendationItemDetails data={hotelInfo} />
     </Container>
   );
 };
