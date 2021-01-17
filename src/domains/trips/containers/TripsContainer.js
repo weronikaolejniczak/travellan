@@ -75,6 +75,26 @@ const TripsContainer = (props) => {
       });
   };
 
+  const handleEdit = (
+    id,
+    destination,
+    budget,
+    notes,
+    transport,
+    accommodation,
+    map,
+  ) => {
+    props.navigation.navigate('Edit trip', {
+      tripId: id,
+      destination,
+      budget,
+      notes,
+      transport,
+      accommodation,
+      map,
+    });
+  };
+
   useEffect(() => {
     loadTrips();
     SplashScreen.hide();
@@ -115,12 +135,30 @@ const TripsContainer = (props) => {
               );
             }}
           >
-            <TouchableHighlight
-              style={styles.deleteButton}
-              onPress={() => handleDeleteTrip(data.item)}
-            >
-              <Icon name="delete" style={styles.deleteIcon} />
-            </TouchableHighlight>
+            <View style={styles.iconContainer}>
+              <TouchableHighlight
+                style={styles.actionButton}
+                onPress={() => handleDeleteTrip(data.item)}
+              >
+                <Icon name="delete" style={styles.actionIcon} />
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={styles.actionButton}
+                onPress={() => {
+                  handleEdit(
+                    data.item.id,
+                    data.item.destination,
+                    data.item.budget,
+                    data.item.notes,
+                    data.item.transport,
+                    data.item.accommodation,
+                    data.item.map,
+                  );
+                }}
+              >
+                <Icon name="edit" style={styles.actionIcon} />
+              </TouchableHighlight>
+            </View>
           </TripItem>
         )}
       />

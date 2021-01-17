@@ -18,7 +18,12 @@ import {
   SET_QR,
   SET_TRANSPORT,
 } from 'actions/transportActions';
-import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
+import {
+  CREATE_TRIP,
+  DELETE_TRIP,
+  SET_TRIPS,
+  EDIT_TRIP,
+} from 'actions/tripsActions';
 import { SET_BUDGET } from 'actions/budgetActions';
 import { SET_MAP } from 'actions/mapActions';
 
@@ -42,6 +47,10 @@ export default (state = initialState, action) => {
 
       case CREATE_TRIP:
         draft.trips = draft.trips.concat(action.newTrip);
+        break;
+
+      case EDIT_TRIP:
+        draft.trips[tripIndex] = action.newTrip;
         break;
 
       case SET_TRANSPORT:

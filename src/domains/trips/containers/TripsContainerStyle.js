@@ -3,15 +3,24 @@ import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
-  centered: {
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
+  },
+  flex: {
+    flex: 1,
+  },
+  triplessContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
   },
-  deleteButton: {
+  actionButton: {
     padding: 15,
   },
-  deleteIcon: {
+  actionIcon: {
+    fontSize: 30,
     color: Colors.primary,
     fontSize: 30,
   },
