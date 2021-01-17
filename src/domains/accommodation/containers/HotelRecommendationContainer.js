@@ -68,6 +68,10 @@ const HotelRecommendationContainer = (props) => {
     findHotels(cityCode, startDate, endDate, adults, roomQuantity);
   };
 
+  const handleSelectItem = (data) => {
+    console.log(data);
+  };
+
   useEffect(() => {
     if (formatDate(startDate) === formatDate(endDate)) {
       setIsDateSame(true);
@@ -99,7 +103,7 @@ const HotelRecommendationContainer = (props) => {
             <RecommendationItemShort
               data={data.item}
               onSelect={() => {
-                console.log('hello');
+                handleSelectItem(data.item);
               }}
             />
           )}
