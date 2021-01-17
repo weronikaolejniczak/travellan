@@ -22,4 +22,21 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     marginRight: 20,
   },
+  innerPdfContainer: {
+    alignSelf: 'stretch',
+  },
+  miniHeader: {
+    flexDirection: 'row-reverse',
+  },
+  pdfCardContainer: {
+    backgroundColor: Colors.text,
+    padding: 5,
+    width: (Dimensions.get('window').width / 6) * 5,
+  },
+  pdfContainer: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    flex: 1,
+    justifyContent: 'center',
+  },
 });

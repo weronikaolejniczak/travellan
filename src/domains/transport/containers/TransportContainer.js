@@ -139,7 +139,7 @@ const TransportContainer = ({ route, navigation }) => {
             text: 'Cancel',
           },
           {
-            onPress: persistDeleteQR(items),
+            onPress: () => persistDeleteQR(items),
             text: 'OK',
           },
         ],
@@ -174,7 +174,7 @@ const TransportContainer = ({ route, navigation }) => {
             text: 'Cancel',
           },
           {
-            onPress: persistDeletePDF(items),
+            onPress: () => persistDeletePDF(items),
             text: 'OK',
           },
         ],
