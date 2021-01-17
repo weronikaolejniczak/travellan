@@ -17,11 +17,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   checkInWrapper: {
-    paddingHorizontal: '3%',
+    paddingHorizontal: 10,
     paddingLeft: 0,
   },
   checkOutWrapper: {
-    paddingHorizontal: '3%',
+    paddingHorizontal: 10,
   },
   content: {
     padding: 15,
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
-    padding: '1%',
+    padding: 5,
   },
   headline: {
     color: Colors.text,

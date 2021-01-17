@@ -13,6 +13,7 @@ const cardWidth = width * 0.923;
 const actionSheetRef = createRef();
 
 const AccommodationContainer = ({ navigation, route }) => {
+  const tripId = route.params.tripId;
   const scrollX = new Animated.Value(0);
   const position = Animated.divide(scrollX, cardWidth);
 
@@ -27,9 +28,20 @@ const AccommodationContainer = ({ navigation, route }) => {
     });
   };
 
-  if (accommodation === undefined) {
+  const handlePDFManagement = (id) => {
+    // use: tripId, id
+  };
+
+  const handleNavigationToMap = (id) => {
+    // use: tripId, id
+  };
+
+  const handleHotelEdit = (id) => {
+    // use: tripId, id
+  };
+
+  if (accommodation === undefined)
     return <ItemlessFrame message="You have no saved accommodation!" />;
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -43,7 +55,7 @@ const AccommodationContainer = ({ navigation, route }) => {
         )}
         scrollEventThrottle={16}
         decelerationRate={0}
-        snapToInterval={cardWidth + 20}
+        snapToInterval={cardWidth + 10}
         snapToAlignment="center"
         contentInset={styles.contentInsetIOS}
         data={accommodation}
@@ -52,6 +64,9 @@ const AccommodationContainer = ({ navigation, route }) => {
           <HotelCard
             inAccommodationListing
             cardStyle={styles.accommodation}
+            handlePDFManagement={() => handlePDFManagement(data.item.id)}
+            handleNavigationToMap={() => handleNavigationToMap(data.item.id)}
+            handleHotelEdit={() => handleHotelEdit(data.item.id)}
             {...data.item}
           />
         )}

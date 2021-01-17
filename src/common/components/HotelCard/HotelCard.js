@@ -12,7 +12,7 @@ import {
   Text,
 } from 'utils';
 import { Colors } from 'constants';
-import { HotelCardSection } from '../';
+import { HotelCardActions, HotelCardSection } from '../';
 import { styles } from './HotelCardStyle';
 
 const HotelCard = ({
@@ -25,12 +25,15 @@ const HotelCard = ({
   checkOutHours,
   checkInExtra,
   description,
-  frontDesk24h,
+  frontDesk24H,
   image,
   location,
   name,
   phone,
   reservationDetails,
+  handlePDFManagement,
+  handleNavigationToMap,
+  handleHotelEdit,
 }) => (
   <Card style={cardStyle}>
     <ScrollView>
@@ -39,9 +42,16 @@ const HotelCard = ({
           colors={[Colors.transparent, Colors.cards]}
           start={{ x: 0.0, y: 0.0 }}
           end={{ x: 0.0, y: 1.0 }}
-          locations={[0.6, 1]}
+          locations={[0.4, 1]}
           style={styles.linearGradient}
         >
+          {inAccommodationListing && (
+            <HotelCardActions
+              onPDF={handlePDFManagement}
+              onMap={handleNavigationToMap}
+              onEdit={handleHotelEdit}
+            />
+          )}
           <View style={styles.header}>
             <Headline style={styles.headline}>{name}</Headline>
             <Subheading style={styles.subheading}>
@@ -63,7 +73,7 @@ const HotelCard = ({
 
         {checkInHours && checkOutHours && (
           <HotelCardSection title="Hotel hours">
-            {frontDesk24h && (
+            {frontDesk24H && (
               <Paragraph style={styles.caution}>
                 Front desk is open 24 hours a day!
               </Paragraph>

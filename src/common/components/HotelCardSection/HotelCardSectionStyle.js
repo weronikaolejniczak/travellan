@@ -4,7 +4,7 @@ import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   section: {
-    marginTop: 5,
+    marginTop: 20,
   },
   text: {
     color: Colors.text,
