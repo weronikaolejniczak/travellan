@@ -51,6 +51,7 @@ const TripDetailsContainer = ({ route, navigation }) => {
           tripId={selectedTrip.id}
           startDate={selectedTrip.startDate}
           endDate={selectedTrip.endDate}
+          cityCode={selectedTrip.cityCode}
           icon="hotel"
         />
         {/* <NavigationButton

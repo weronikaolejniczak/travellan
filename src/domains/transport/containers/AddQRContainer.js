@@ -1,14 +1,14 @@
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import QRCode from 'react-native-qrcode-svg';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import QRCode from 'react-native-qrcode-svg';
 import { RNCamera } from 'react-native-camera';
 import { useDispatch, useSelector } from 'react-redux';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as transportActions from 'actions/transportActions';
-import { styles } from './AddQRContainerStyle';
 import Colors from 'constants/Colors';
+import { styles } from './AddQRContainerStyle';
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();

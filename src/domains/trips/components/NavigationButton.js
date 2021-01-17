@@ -44,7 +44,6 @@ const NavigationButton = (props) => {
           tripId,
           startDate,
           endDate,
-          destination,
           cityCode,
         });
       }}
