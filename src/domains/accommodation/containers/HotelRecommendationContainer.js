@@ -11,7 +11,6 @@ import { View } from 'react-native';
 import { styles } from './HotelRecommendationContainerStyle';
 import recommendHotel from 'services/recommendHotel';
 import { DUMMY_AMADEUS_RECOMMENDATION } from 'data/DummyAmadeusHotel';
-import { AccommodationItem } from 'domains/accommodation/components';
 
 const HotelRecommendationContainer = (props) => {
   let { startDate, endDate } = props.route.params;
@@ -89,7 +88,7 @@ const HotelRecommendationContainer = (props) => {
   if (testData)
     return (
       <ItemlessFrame
-        message="Recommendation for hotels is not possible if you are going on a
+        message="fadsfdsaRecommendation for hotels is not possible if you are going on a
     one day trip!"
       />
     );
