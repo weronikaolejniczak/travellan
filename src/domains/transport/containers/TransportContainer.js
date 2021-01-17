@@ -166,8 +166,8 @@ const TransportContainer = ({ route, navigation }) => {
     (items) => {
       setIsRefreshing(true);
       Alert.alert(
-        'Delete the document',
-        'Are you sure?',
+        'Unlink the document',
+        'Are you sure? (Do not worry, the operation will not delete the document from your device)',
         [
           {
             style: 'cancel',
