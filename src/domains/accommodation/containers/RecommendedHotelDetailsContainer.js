@@ -1,12 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  ScrollView as Container,
-  Headline,
-  ItemlessFrame,
-  TextInput,
-  Subheading,
-} from 'utils';
+import React from 'react';
+import { ScrollView as Container } from 'utils';
 import RecommendationItemDetails from '../components/RecommendationItemDetails/RecommendationItemDetails';
 
 const HotelRecommendationContainer = (props) => {
