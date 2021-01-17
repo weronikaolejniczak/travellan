@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   Text,
   TouchableOpacity,
@@ -15,7 +14,7 @@ import { Colors, Layout } from 'constants';
 import { Card, ReadMore } from 'utils';
 import { styles } from './RecommendationItemDetailsStyle';
 
-const RecommendationItemDetails = ({ data, onSelect }) => {
+const RecommendationItemDetails = ({ data }) => {
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version > 21) {

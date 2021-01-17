@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   Text,
   TouchableOpacity,

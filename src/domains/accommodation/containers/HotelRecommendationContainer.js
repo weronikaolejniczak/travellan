@@ -7,12 +7,10 @@ import {
   TextInput,
   Subheading,
 } from 'utils';
-import { View, Animated, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { styles } from './HotelRecommendationContainerStyle';
 import recommendHotel from 'services/recommendHotel';
-import { DUMMY_AMADEUS_RECOMMENDATION } from 'data/DummyAmadeusHotel';
 import { RecommendationItemShort } from 'domains/accommodation/components';
-import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
 
 const HotelRecommendationContainer = (props) => {
   let { startDate, endDate } = props.route.params;
@@ -23,10 +21,6 @@ const HotelRecommendationContainer = (props) => {
   const [roomQuantity, setRoomQuantity] = useState(0);
   const [data, setData] = useState();
   const [error, setError] = useState('');
-  const testData = DUMMY_AMADEUS_RECOMMENDATION;
-  console.log('test data:', testData);
-  let scrollX = new Animated.Value(0);
-  let position = Animated.divide(scrollX, cardWidth);
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -80,7 +74,7 @@ const HotelRecommendationContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [startDate, endDate, testData]);
+  }, [data]);
 
   if (cityCode === undefined)
     return (
@@ -95,12 +89,12 @@ const HotelRecommendationContainer = (props) => {
       />
     );
 
-  if (testData)
+  if (data)
     return (
       <Container>
         <FlatList
-          data={testData}
-          keyExtractor={(item) => item.dupeId.toString()}
+          data={data}
+          keyExtractor={(item) => item.dupeId}
           renderItem={(data) => (
             <RecommendationItemShort
               data={data.item}
