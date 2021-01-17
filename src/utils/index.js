@@ -1,4 +1,5 @@
 export { default as ActionSheet } from './ActionSheet/ActionSheet';
+export { default as Autocomplete } from './Autocomplete/Autocomplete';
 export { default as Button } from './Button';
 export { default as Card } from './Card/Card';
 export { default as Checkbox } from './Checkbox';

@@ -1,16 +1,10 @@
-import Autocomplete from 'react-native-autocomplete-input';
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 import { AccountButton } from 'components';
+import { Autocomplete, Switch, TextInput } from 'utils';
 import { CURRENCIES } from 'data/Currencies';
 import { Layout } from 'constants';
-import { Switch, TextInput } from 'utils';
 import { styles } from './BudgetPickerStyle';
 
 const BudgetField = ({
@@ -89,41 +83,16 @@ const BudgetField = ({
             </AccountButton>
           </View>
 
-          <KeyboardAvoidingView behavior="padding">
-            <View style={styles.autocompleteContainer}>
-              <Autocomplete
-                data={data}
-                style={styles.input}
-                inputContainerStyle={styles.input}
-                defaultValue={query}
-                listStyle={styles.result}
-                keyExtractor={(item) => item.iso.toString()}
-                renderTextInput={() => (
-                  <TextInput
-                    label="Currency"
-                    value={query}
-                    onChange={(text) => currencyChangeHandler(text)}
-                  />
-                )}
-                renderItem={({ item, i }) => (
-                  <TouchableOpacity
-                    style={styles.result}
-                    onPress={() => currencyChangeHandler(item.name)}
-                  >
-                    <Text style={styles.text}>
-                      {item.name} ({item.iso})
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-
-            {!!error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>{error}</Text>
-              </View>
-            )}
-          </KeyboardAvoidingView>
+          <Autocomplete
+            data={data}
+            query={query}
+            error={error}
+            onChange={currencyChangeHandler}
+            onPress={(item) => currencyChangeHandler(item.name)}
+            keyExtractor={(item) => item.iso.toString()}
+            textInputLabel="Currency"
+            itemLabel={(item) => `${item.name} (${item.iso})`}
+          />
         </>
       )}
     </View>

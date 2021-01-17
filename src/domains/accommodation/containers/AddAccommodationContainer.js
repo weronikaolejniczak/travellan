@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Autocomplete,
   Button,
   Caption,
   Checkbox,
@@ -70,7 +71,8 @@ const AddAccommodationContainer = (props) => {
   ];
 
   return (
-    <Container>
+    <Container keyboardShouldPersistTaps>
+      <Autocomplete />
       <Headline>Headline!</Headline>
       <Subheading>Subheading!</Subheading>
       <Title>Title!</Title>
