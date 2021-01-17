@@ -10,6 +10,8 @@ import {
 import { View } from 'react-native';
 import { styles } from './HotelRecommendationContainerStyle';
 import recommendHotel from 'services/recommendHotel';
+import { DUMMY_AMADEUS_RECOMMENDATION } from 'data/DummyAmadeusHotel';
+import { AccommodationItem } from 'domains/accommodation/components';
 
 const HotelRecommendationContainer = (props) => {
   let { startDate, endDate } = props.route.params;
@@ -20,6 +22,8 @@ const HotelRecommendationContainer = (props) => {
   const [roomQuantity, setRoomQuantity] = useState(0);
   const [data, setData] = useState();
   const [error, setError] = useState('');
+  const testData = DUMMY_AMADEUS_RECOMMENDATION;
+  console.log('test data:', testData);
 
   const formatDate = (date) => {
     //format to YYYY-MM-DD
@@ -67,8 +71,7 @@ const HotelRecommendationContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-    console.log(data);
-  }, [startDate, endDate, data]);
+  }, [startDate, endDate, testData]);
 
   if (cityCode === undefined)
     return (
@@ -76,6 +79,14 @@ const HotelRecommendationContainer = (props) => {
     );
 
   if (isDateSame)
+    return (
+      <ItemlessFrame
+        message="Recommendation for hotels is not possible if you are going on a
+    one day trip!"
+      />
+    );
+
+  if (testData)
     return (
       <ItemlessFrame
         message="Recommendation for hotels is not possible if you are going on a
