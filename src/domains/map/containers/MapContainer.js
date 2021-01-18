@@ -347,7 +347,7 @@ const MapContainer = ({ route, navigation }) => {
                   <TouchableOpacity
                     style={styles.currencyHolder}
                     onPress={() => {
-                      const [longitude, latitude] = item.geometry.coordinates;
+                      const [latitude, longitude] = item.geometry.coordinates;
 
                       addSearchMarker(longitude, latitude, item.place_name);
 
