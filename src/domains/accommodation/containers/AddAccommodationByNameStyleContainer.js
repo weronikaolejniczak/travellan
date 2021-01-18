@@ -6,4 +6,7 @@ export const styles = StyleSheet.create({
   hotelCardWrapper: {
     marginVertical: '3%',
   },
+  container: {
+    paddingTop: '3%',
+  },
 });

@@ -70,9 +70,11 @@ const AddAccommodationByNameContainer = (props) => {
 
   if (testData)
     return (
-      <View style={styles.hotelCardWrapper}>
-        <HotelCard {...testData[0]} />
-      </View>
+      <Container contentContainerStyle={styles.container}>
+        <View style={styles.hotelCardWrapper}>
+          <HotelCard {...testData[0]} />
+        </View>
+      </Container>
     );
 
   return (
