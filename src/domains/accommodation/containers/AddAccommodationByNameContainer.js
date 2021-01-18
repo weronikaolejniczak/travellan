@@ -80,6 +80,27 @@ const AddAccommodationByNameContainer = (props) => {
           <View style={styles.hotelCardWrapper}>
             <HotelCard {...testData[0]} />
           </View>
+          <View style={styles.smallPaddingTop}>
+            <Headline style={styles.headline}>
+              2. Is this the hotel thay you were looking for?
+            </Headline>
+            <View style={styles.iconContainer}>
+              <Button
+                loading={isLoading}
+                disabled={isLoading}
+                onPress={() => {}}
+              >
+                Yes, save hotel data
+              </Button>
+              <Button
+                loading={isLoading}
+                disabled={isLoading}
+                onPress={() => {}}
+              >
+                No, try again
+              </Button>
+            </View>
+          </View>
         </View>
       </Container>
     );

@@ -20,4 +20,11 @@ export const styles = StyleSheet.create({
   paddingTop: {
     paddingTop: 40,
   },
+  smallPaddingTop: {
+    paddingTop: 10,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });
