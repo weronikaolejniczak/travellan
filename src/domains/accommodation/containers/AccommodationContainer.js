@@ -1,20 +1,21 @@
 import React, { createRef } from 'react';
-import { Animated, FlatList, ScrollView, Text, View } from 'react-native';
+import { Animated, Dimensions, FlatList, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { AccommodationItem } from 'domains/accommodation/components';
-import { HeaderButton, ItemlessFrame } from 'utils';
-import { cardWidth } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
+import { ActionSheet, HeaderButton, ItemlessFrame } from 'utils';
+import { HotelCard } from 'components';
 import { styles } from './AccommodationContainerStyle';
 
 import { DUMMY_HOTELS as accommodation } from 'data/DummyHotels';
 
-import { ActionSheet } from '../../../utils';
-
+const { width } = Dimensions.get('window');
+const cardWidth = width * 0.923;
 const actionSheetRef = createRef();
 
-const AccommodationContainer = (props) => {
-  const { navigation, route } = props;
+const AccommodationContainer = ({ navigation, route }) => {
+  const tripId = route.params.tripId;
+  const scrollX = new Animated.Value(0);
+  const position = Animated.divide(scrollX, cardWidth);
 
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
@@ -27,12 +28,20 @@ const AccommodationContainer = (props) => {
     });
   };
 
-  if (accommodation === undefined) {
-    return <ItemlessFrame message="You have no saved accommodation!" />;
-  }
+  const handlePDFManagement = (id) => {
+    // use: tripId, id
+  };
 
-  let scrollX = new Animated.Value(0);
-  let position = Animated.divide(scrollX, cardWidth);
+  const handleNavigationToMap = (id) => {
+    // use: tripId, id
+  };
+
+  const handleHotelEdit = (id) => {
+    // use: tripId, id
+  };
+
+  if (accommodation === undefined)
+    return <ItemlessFrame message="You have no saved accommodation!" />;
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -46,12 +55,21 @@ const AccommodationContainer = (props) => {
         )}
         scrollEventThrottle={16}
         decelerationRate={0}
-        snapToInterval={cardWidth + 20}
+        snapToInterval={cardWidth + 10}
         snapToAlignment="center"
         contentInset={styles.contentInsetIOS}
         data={accommodation}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={(data) => <AccommodationItem data={data.item} />}
+        renderItem={(data) => (
+          <HotelCard
+            inAccommodationListing
+            cardStyle={styles.accommodation}
+            handlePDFManagement={() => handlePDFManagement(data.item.id)}
+            handleNavigationToMap={() => handleNavigationToMap(data.item.id)}
+            handleHotelEdit={() => handleHotelEdit(data.item.id)}
+            {...data.item}
+          />
+        )}
       />
       <View style={styles.rowDirection}>
         {accommodation.map((_, i) => {

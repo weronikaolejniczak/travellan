@@ -5,7 +5,7 @@ import { Colors } from 'constants';
 
 const NUM_OF_LINES = 3;
 
-const ReadMore = (props) => {
+const ReadMore = ({ longText }) => {
   const [readMore, setReadMore] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
@@ -23,10 +23,10 @@ const ReadMore = (props) => {
           onTextLayout={onTextLayout}
           style={styles.text}
         >
-          {props.longText}
+          {longText}
         </Text>
       ) : (
-        <Text style={styles.text}>{props.longText}</Text>
+        <Text style={styles.text}>{longText}</Text>
       )}
 
       {showMore && (
