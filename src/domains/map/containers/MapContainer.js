@@ -199,7 +199,13 @@ const MapContainer = ({ route, navigation }) => {
     }
   };
 
-  const addSearchMarker = (longitude, latitude, searchQuery) => {
+  const addSearchMarker = (longitude, latitude, title) => {
+    createMarker(longitude, latitude, title);
+    console.log(markers);
+
+    setSearchQuery('');
+    setIsChoosing(false);
+    setSearchAnswer([]);
     // console.log('wszedlem', searchAnswer);
     // const [lat, lon] = searchAnswer.geometry.coordinates;
     // const name = searchAnswer.place_name;
@@ -321,12 +327,9 @@ const MapContainer = ({ route, navigation }) => {
                     style={styles.currencyHolder}
                     onPress={() => {
                       const [longitude, latitude] = item.geometry.coordinates;
-                      console.log(longitude, latitude);
 
-                      createMarker(longitude, latitude, item.place_name);
-                      setSearchQuery('');
-                      setIsChoosing(false);
-                      setSearchAnswer([]);
+                      addSearchMarker(longitude, latitude, item.place_name);
+
                       // setSelectedCurrency(item);
                       // setDisplayableValue(item.value);
                       // setTitle('');
