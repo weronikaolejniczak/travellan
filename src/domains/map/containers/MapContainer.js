@@ -44,7 +44,7 @@ const MapContainer = ({ route, navigation }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [error, setError] = useState(null);
   const [isChoosing, setIsChoosing] = useState(false);
-
+  const [isSearching, setIsSearching] = useState(false);
   const [searchAnswer, setSearchAnswer] = useState([]);
 
   const extractRegion = () =>
@@ -60,7 +60,7 @@ const MapContainer = ({ route, navigation }) => {
       <MapboxGL.PointAnnotation
         id={`marker-${marker.id}`}
         coordinate={[marker.lat, marker.lon]}
-        onDeselected={(event) => handleDeleteTrip(event, marker.title)}
+        onDeselected={(event) => handleDeleteMarker(event, marker.title)}
         selected={isSelected}
       >
         <MapboxGL.Callout title={marker.title} />
@@ -92,13 +92,14 @@ const MapContainer = ({ route, navigation }) => {
           setAddingMarkerActive(false);
         } else {
           setSearchQuery('');
+          setSearchAnswer([]);
         }
         setSearchingActive(!searchingActive);
         break;
     }
   };
 
-  const handleDeleteTrip = (event, title) => {
+  const handleDeleteMarker = (event, title) => {
     if (deletingMarkerActive) {
       setIsSelected(false);
       Alert.alert(
@@ -181,19 +182,21 @@ const MapContainer = ({ route, navigation }) => {
             ),
           ],
     );
+    console.log('podaje', markers);
   };
 
   const searchHandler = async () => {
-    if (searchQuery.length > 4) {
+    if (searchQuery.length > 3) {
       const longitude = currentRegion.longitude;
       const latitude = currentRegion.latitude;
       // if (searchingActive) {
       //   if (searchQuery !== '') {
       // setIsLoading(true);
       // setIsChoosing(true);
-
+      setIsSearching(true);
       const answer = await fetchMapSearch(searchQuery, longitude, latitude);
       setSearchAnswer(answer);
+      setIsSearching(false);
     } else {
       setSearchAnswer([]);
     }
@@ -206,6 +209,7 @@ const MapContainer = ({ route, navigation }) => {
     setSearchQuery('');
     setIsChoosing(false);
     setSearchAnswer([]);
+    // this._map.flyTo([longitude, latitude]);
     // console.log('wszedlem', searchAnswer);
     // const [lat, lon] = searchAnswer.geometry.coordinates;
     // const name = searchAnswer.place_name;
@@ -239,6 +243,23 @@ const MapContainer = ({ route, navigation }) => {
     // }
   };
 
+  renderFooter = () => {
+    if (!isSearching) return null;
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: '#CED0CE',
+        }}
+      >
+        <ActivityIndicator size="small" color={Colors.primary} />
+        {/* <ActivityIndicator animating size="large" /> */}
+      </View>
+    );
+  };
+
   useEffect(() => {
     try {
       // dispatch(fetchMapRequest());
@@ -263,6 +284,7 @@ const MapContainer = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <MapboxGL.MapView
+        ref={(c) => (this._map = c)}
         style={styles.map}
         styleURL="mapbox://styles/travellan/ckju6y3ae119l19o6od0j9wi5"
         onLongPress={(event) => mapOnPressHandler(event)}
@@ -278,32 +300,30 @@ const MapContainer = ({ route, navigation }) => {
         {renderMarkers()}
         <MapboxGL.UserLocation />
       </MapboxGL.MapView>
-      {isLoading ? (
-        <ActivityIndicator size="small" color={Colors.primary} />
-      ) : (
-        <Toolbar
-          styles={styles}
-          navigation={navigation}
-          addingMarkerActive={addingMarkerActive}
-          addingActivityHandler={() => activityHandler('adding')}
-          markerTitle={markerTitle}
-          setMarkerTitle={(text) => setMarkerTitle(text)}
-          deletingMarkerActive={deletingMarkerActive}
-          deletingActivityHandler={() => activityHandler('deleting')}
-          searchingActive={searchingActive}
-          searchingActivityHandler={() => activityHandler('searching')}
-          setSearchQuery={(text) => setSearchQuery(text)}
-          searchQuery={searchQuery}
-          error={error}
-          setError={setError}
-          isLoading={isLoading}
-          onExitHandler={onExitHandler}
-          searchHandler={(event) => searchHandler(event)}
-          isChoosing={isChoosing}
-          setIsChoosing={setIsChoosing}
-          searchAnswer={searchAnswer}
-        />
-      )}
+
+      <Toolbar
+        styles={styles}
+        navigation={navigation}
+        addingMarkerActive={addingMarkerActive}
+        addingActivityHandler={() => activityHandler('adding')}
+        markerTitle={markerTitle}
+        setMarkerTitle={(text) => setMarkerTitle(text)}
+        deletingMarkerActive={deletingMarkerActive}
+        deletingActivityHandler={() => activityHandler('deleting')}
+        searchingActive={searchingActive}
+        searchingActivityHandler={() => activityHandler('searching')}
+        setSearchQuery={(text) => setSearchQuery(text)}
+        searchQuery={searchQuery}
+        error={error}
+        setError={setError}
+        isLoading={isLoading}
+        onExitHandler={onExitHandler}
+        searchHandler={(event) => searchHandler(event)}
+        isChoosing={isChoosing}
+        setIsChoosing={setIsChoosing}
+        searchAnswer={searchAnswer}
+      />
+
       {searchingActive && (
         <View style={styles.overlay}>
           <Searchbar
@@ -321,6 +341,7 @@ const MapContainer = ({ route, navigation }) => {
               <FlatList
                 data={(searchAnswear = searchAnswer)}
                 ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                ListFooterComponent={renderFooter()}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <TouchableOpacity
