@@ -6,6 +6,7 @@ import {
   Headline,
   ItemlessFrame,
   TextInput,
+  Subheading,
 } from 'utils';
 import { View } from 'react-native';
 import { HotelCard } from 'components';
@@ -71,8 +72,14 @@ const AddAccommodationByNameContainer = (props) => {
   if (testData)
     return (
       <Container contentContainerStyle={styles.container}>
-        <View style={styles.hotelCardWrapper}>
-          <HotelCard {...testData[0]} />
+        <View style={styles.paddingTop}>
+          <Headline style={styles.headline}>1. Verify hotel data</Headline>
+          <Subheading style={styles.caution}>
+            Be sure to check it's valid!
+          </Subheading>
+          <View style={styles.hotelCardWrapper}>
+            <HotelCard {...testData[0]} />
+          </View>
         </View>
       </Container>
     );

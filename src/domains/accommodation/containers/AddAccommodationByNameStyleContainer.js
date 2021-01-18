@@ -9,4 +9,15 @@ export const styles = StyleSheet.create({
   container: {
     paddingTop: '3%',
   },
+  caution: {
+    color: Colors.primary,
+    textAlign: 'center',
+  },
+  headline: {
+    color: Colors.text,
+    textAlign: 'center',
+  },
+  paddingTop: {
+    paddingTop: 40,
+  },
 });
