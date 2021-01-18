@@ -45,10 +45,7 @@ const MapContainer = ({ route, navigation }) => {
   const [error, setError] = useState(null);
   const [isChoosing, setIsChoosing] = useState(false);
 
-  const [searchAnswer, setSearchAnswer] = useState([
-    { id: '1', place_name: 'berlin' },
-    { id: '2', place_name: 'paris' },
-  ]);
+  const [searchAnswer, setSearchAnswer] = useState([]);
 
   const extractRegion = () =>
     selectedTrip.map
@@ -160,6 +157,8 @@ const MapContainer = ({ route, navigation }) => {
   };
 
   const createMarker = (longitude, latitude, title) => {
+    console.log('podaje', markers);
+
     setMarkers(
       markers
         ? [
@@ -185,16 +184,22 @@ const MapContainer = ({ route, navigation }) => {
   };
 
   const searchHandler = async () => {
-    const longitude = currentRegion.longitude;
-    const latitude = currentRegion.latitude;
-    // if (searchingActive) {
-    //   if (searchQuery !== '') {
-    // setIsLoading(true);
-    // setIsChoosing(true);
+    if (searchQuery.length > 4) {
+      const longitude = currentRegion.longitude;
+      const latitude = currentRegion.latitude;
+      // if (searchingActive) {
+      //   if (searchQuery !== '') {
+      // setIsLoading(true);
+      // setIsChoosing(true);
 
-    const answer = await fetchMapSearch(searchQuery, longitude, latitude);
-    setSearchAnswer(answer);
+      const answer = await fetchMapSearch(searchQuery, longitude, latitude);
+      setSearchAnswer(answer);
+    } else {
+      setSearchAnswer([]);
+    }
+  };
 
+  const addSearchMarker = (longitude, latitude, searchQuery) => {
     // console.log('wszedlem', searchAnswer);
     // const [lat, lon] = searchAnswer.geometry.coordinates;
     // const name = searchAnswer.place_name;
@@ -300,8 +305,6 @@ const MapContainer = ({ route, navigation }) => {
             placeholder={searchingActive && 'Search by name/adress'}
             value={searchQuery}
             onChangeText={(text) => {
-              console.log('podaje', (searchAnswear = searchAnswer));
-
               setSearchQuery(text);
               searchHandler();
               setIsChoosing(true);
@@ -317,7 +320,13 @@ const MapContainer = ({ route, navigation }) => {
                   <TouchableOpacity
                     style={styles.currencyHolder}
                     onPress={() => {
-                      console.log(item);
+                      const [longitude, latitude] = item.geometry.coordinates;
+                      console.log(longitude, latitude);
+
+                      createMarker(longitude, latitude, item.place_name);
+                      setSearchQuery('');
+                      setIsChoosing(false);
+                      setSearchAnswer([]);
                       // setSelectedCurrency(item);
                       // setDisplayableValue(item.value);
                       // setTitle('');
