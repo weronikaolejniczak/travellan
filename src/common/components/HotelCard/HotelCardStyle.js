@@ -17,31 +17,35 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   checkInWrapper: {
-    paddingHorizontal: '3%',
+    paddingHorizontal: 10,
     paddingLeft: 0,
   },
   checkOutWrapper: {
-    paddingHorizontal: '3%',
+    paddingHorizontal: 10,
   },
   content: {
-    padding: '4%',
+    padding: 15,
   },
   header: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
-    padding: '1%',
+    padding: 5,
   },
   headline: {
     color: Colors.text,
     textAlign: 'center',
   },
   image: {
-    height: height * 0.45,
-    width: '100%',
+    height: height * 0.4,
+    resizeMode: 'contain',
+    width: 'auto',
   },
   linearGradient: {
     flex: 1,
+  },
+  placeholder: {
+    color: Colors.placeholder,
   },
   subheading: {
     color: Colors.text,

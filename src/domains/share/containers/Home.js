@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import ShareExtension from 'rn-extensions-share';
 import axios from 'axios';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { BACKEND_URL } from 'react-native-dotenv';
 
-import { BookingHotelCard, SubmitButton, TripCard } from '../components';
 import { Colors } from 'constants';
 import {
   View as Container,
@@ -12,6 +11,8 @@ import {
   ScrollView as ScrollContainer,
   Subheading,
 } from 'utils';
+import { HotelCard } from 'components';
+import { SubmitButton, TripCard } from '../components';
 import { sleep } from 'helpers';
 import { store } from 'src/store';
 import { homeStyle as styles } from './HomeStyle';
@@ -129,7 +130,7 @@ const Home = () => {
               Be sure to check it's valid!
             </Subheading>
             <View style={styles.hotelCardWrapper}>
-              {!!hotel && <BookingHotelCard {...hotel} />}
+              {!!hotel && <HotelCard sharing {...hotel} />}
             </View>
           </View>
 
@@ -181,4 +182,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);
