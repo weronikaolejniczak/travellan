@@ -23,9 +23,13 @@ const CustomAutocomplete = ({
       defaultValue={query}
       listStyle={styles.result}
       keyExtractor={keyExtractor}
-      error={error}
       renderTextInput={() => (
-        <TextInput label={textInputLabel} value={query} onChange={onChange} />
+        <TextInput
+          label={textInputLabel}
+          error={error}
+          value={query}
+          onChange={onChange}
+        />
       )}
       renderItem={({ item, i }) => (
         <TouchableOpacity style={styles.result} onPress={() => onPress(item)}>

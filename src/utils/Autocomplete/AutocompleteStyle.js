@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from 'constants';
+import { Colors, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {
     color: Colors.text,
     flex: 1,
-    marginTop: 5,
+    ...Metrics.marginTop,
   },
   input: {
     borderWidth: 0,
@@ -14,6 +14,6 @@ export const styles = StyleSheet.create({
   result: {
     backgroundColor: '#333',
     borderWidth: 0,
-    padding: 10,
+    ...Metrics.bigPadding,
   },
 });

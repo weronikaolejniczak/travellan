@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { Text } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Budget from 'models/Budget';
@@ -9,9 +9,9 @@ import {
   Button,
   ScrollView as Container,
   DateTimePicker,
+  Paragraph,
 } from 'utils';
 import { BudgetPicker } from 'components';
-import { DUMMY_DESTINATIONS } from 'data/DummyDestinations';
 import {
   addEventToCalendar,
   autocompleteCity,
@@ -21,11 +21,14 @@ import { createTripRequest } from 'actions/tripsActions';
 import { CURRENCIES as currencies } from 'data/Currencies';
 import { styles } from './AddTripContainerStyle';
 
+const budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
+
 // $todo: refactor validation, fix up
 const AddTripContainer = ({ navigation }) => {
   const dispatch = useDispatch();
   const handleCalendarEvent = addEventToCalendar;
   const localNotify = notificationManager;
+  const scrollViewRef = useRef();
 
   const [destination, setDestination] = useState('');
   const [destinationError, setDestinationError] = useState('');
@@ -34,11 +37,12 @@ const AddTripContainer = ({ navigation }) => {
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
-  const [budget, setBudget] = useState();
-  const [budgetIsValid, setBudgetIsValid] = useState(false);
+  const [budget, setBudget] = useState('');
+  const [budgetValueError, setBudgetValueError] = useState(false);
   const [budgetIsEnabled, setBudgetIsEnabled] = useState(true);
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
+  const [currencyError, setCurrencyError] = useState('');
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -97,50 +101,45 @@ const AddTripContainer = ({ navigation }) => {
       ? []
       : filteredDestinations;
 
-  const budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
-  const handleBudgetChange = (text) => {
-    if (budgetIsEnabled) {
-      !(!budgetRegex.test(text) || text.trim().length === 0)
-        ? setBudgetIsValid(true)
-        : setBudgetIsValid(false);
-      setBudget(text);
-    }
-  };
-
   const adjustEndDateToStartDate = (currentDate) =>
     currentDate > endDate && setEndDate(currentDate);
 
   const clearBudget = () => {
-    setBudget('0');
-    setBudgetIsValid(true);
+    setBudget('');
+    setBudgetValueError('');
+    setCurrencyError('');
     setBudgetSubmitted(false);
   };
 
   const resetBudget = () => {
-    setBudget();
-    setBudgetIsValid(false);
+    setBudget('');
+    setBudgetValueError('');
+    setCurrencyError('');
   };
 
   const toggleBudgetSwitch = () => {
     setBudgetIsEnabled((previousState) => !previousState);
-    !budgetIsEnabled ? resetBudget() : clearBudget();
+    budgetIsEnabled ? clearBudget() : resetBudget();
   };
 
   const createBudget = useCallback(() => {
+    const fittingCurrencies = currencies.filter(
+      (item) => item.name === currency,
+    );
+    const fittingCurrenciesNumber = fittingCurrencies.length;
+
     if (
       !destinationError &&
       budgetIsEnabled &&
-      budgetIsValid &&
-      currencies.filter((item) => item.name === currency).length === 1
+      budgetValueError &&
+      fittingCurrenciesNumber === 1
     ) {
       return [
         new Budget(
           0,
-          parseInt(budget, 10),
-          currencies.filter((item) => item.name === currency).length > 0
-            ? currencies
-                .filter((item) => item.name === currency)[0]
-                .iso.toString()
+          budget ? parseFloat(budget) : 0,
+          fittingCurrenciesNumber > 0
+            ? fittingCurrencies[0].iso.toString()
             : undefined,
           [
             {
@@ -149,7 +148,7 @@ const AddTripContainer = ({ navigation }) => {
               date: new Date(),
               id: 0,
               title: 'Initial budget',
-              value: parseInt(budget, 10),
+              value: parseFloat(budget),
             },
           ],
           account.toString(),
@@ -162,7 +161,7 @@ const AddTripContainer = ({ navigation }) => {
     account,
     budget,
     budgetIsEnabled,
-    budgetIsValid,
+    budgetValueError,
     currency,
     destinationError,
   ]);
@@ -189,16 +188,56 @@ const AddTripContainer = ({ navigation }) => {
     [destination, endDate, handleCalendarEvent, startDate],
   );
 
-  const submitHandler = useCallback(async () => {
-    const budgetToSubmit = createBudget();
-    const destinationIsValid = !(destinationData.length > 0);
-    budgetIsEnabled && setBudgetSubmitted(true);
+  const validate = useCallback(() => {
+    const destinationIsValid =
+      !(destinationData.length > 0) && destination.length >= 3;
+    const fittingCurrenciesNumber = currencies.filter(
+      (item) => item.name === currency,
+    ).length;
+    let budgetIsValid = false;
+    let currencyIsValid = false;
+
+    if (budgetIsEnabled) {
+      setBudgetSubmitted(true);
+
+      if (!(!budgetRegex.test(budget) || budget.trim().length === 0)) {
+        setBudgetValueError('');
+        budgetIsValid = true;
+      } else {
+        setBudgetValueError('Budget value has to be a number!');
+        budgetIsValid = false;
+      }
+
+      if (fittingCurrenciesNumber > 0) {
+        setCurrencyError('');
+        currencyIsValid = true;
+      } else {
+        setCurrencyError('Choose a currency from the list!');
+        currencyIsValid = false;
+      }
+    } else {
+      budgetIsValid = true;
+      currencyIsValid = true;
+    }
 
     destinationIsValid
       ? setDestinationError('')
-      : setDestinationError('Choose a destination!');
+      : setDestinationError('Choose an existing destination!');
 
-    if (destinationIsValid && budgetIsValid) {
+    return destinationIsValid && budgetIsValid && currencyIsValid;
+  }, [
+    budget,
+    budgetIsEnabled,
+    currency,
+    destination.length,
+    destinationData.length,
+  ]);
+
+  const submitHandler = useCallback(async () => {
+    const budgetToSubmit = createBudget();
+    const dataIsValid = validate();
+
+    if (dataIsValid) {
       setIsLoading(true);
 
       await dispatch(
@@ -218,9 +257,7 @@ const AddTripContainer = ({ navigation }) => {
     }
   }, [
     createBudget,
-    budgetIsValid,
-    destinationData.length,
-    budgetIsEnabled,
+    validate,
     dispatch,
     destination,
     startDate,
@@ -241,8 +278,25 @@ const AddTripContainer = ({ navigation }) => {
     autocompleteDestination();
   }, [autocompleteDestination, destination]);
 
+  useEffect(() => {
+    const fittingCurrenciesNumber = currencies.filter(
+      (item) => item.name === currency,
+    ).length;
+    !!currencyError && fittingCurrenciesNumber === 1 && setCurrencyError('');
+  }, [currency, currencyError]);
+
+  useEffect(() => {
+    !!budgetValueError && budget.match(budgetRegex) && setBudgetValueError('');
+  }, [budget, budgetValueError]);
+
   return (
-    <Container keyboardShouldPersistTaps="always">
+    <Container ref={scrollViewRef} keyboardShouldPersistTaps="always">
+      <View style={styles.noticeWrapper}>
+        <Paragraph style={styles.notice}>
+          Adding a trip may last to a minute!
+        </Paragraph>
+      </View>
+
       <Autocomplete
         data={destinationData}
         textInputLabel="City and/or country"
@@ -254,11 +308,8 @@ const AddTripContainer = ({ navigation }) => {
           setDestinationError('');
           setDestination(`${item.address.name}, ${item.address.country}`);
         }}
-        error={destinationError} // $fix
+        error={destinationError}
       />
-      {!!destinationError && (
-        <Text style={styles.error}>{destinationError}</Text>
-      )}
 
       <DateTimePicker
         label="Start date"
@@ -285,18 +336,25 @@ const AddTripContainer = ({ navigation }) => {
         toggleBudgetSwitch={toggleBudgetSwitch}
         budget={budget}
         budgetIsEnabled={budgetIsEnabled}
-        budgetIsValid={budgetIsValid}
+        budgetValueError={budgetValueError}
         budgetSubmitted={budgetSubmitted}
-        handleBudgetChange={handleBudgetChange}
+        handleBudgetValueChange={setBudget}
         currency={currency}
-        currencyChangeHandler={setCurrency}
+        handleCurrencyChange={setCurrency}
         account={account}
+        currencyError={currencyError}
         setAccount={setAccount}
       />
 
-      <Button loading={isLoading} disabled={isLoading} onPress={submitHandler}>
-        Submit
-      </Button>
+      <View style={styles.submitWrapper}>
+        <Button
+          loading={isLoading}
+          disabled={isLoading}
+          onPress={submitHandler}
+        >
+          Submit
+        </Button>
+      </View>
     </Container>
   );
 };

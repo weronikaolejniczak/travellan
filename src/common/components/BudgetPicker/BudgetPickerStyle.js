@@ -1,8 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors, Metrics } from 'constants';
+import { Colors, Layout, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
+  accounts: {
+    ...Layout.rowCross,
+  },
+  accountsWrapper: {
+    ...Metrics.bigVerticalMargin,
+  },
   budgetPickerWrapper: {
     ...Metrics.marginTop,
   },

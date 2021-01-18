@@ -1,9 +1,17 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from 'constants';
+import { Colors, Layout, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
-  error: {
-    color: Colors.error,
+  notice: {
+    color: Colors.primary,
+    fontWeight: 'bold',
+  },
+  noticeWrapper: {
+    ...Metrics.bigVerticalMargin,
+    ...Layout.fillCenter,
+  },
+  submitWrapper: {
+    ...Metrics.bigMarginTop,
   },
 });

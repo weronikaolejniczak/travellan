@@ -1,22 +1,22 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { AccountButton } from 'components';
-import { Autocomplete, Switch, TextInput } from 'utils';
+import { Autocomplete, Caption, Switch, Text, TextInput } from 'utils';
 import { CURRENCIES } from 'data/Currencies';
 import { Layout } from 'constants';
 import { styles } from './BudgetPickerStyle';
 
-const BudgetField = ({
+const BudgetPicker = ({
   account,
   budget,
-  budgetChangeHandler,
+  handleBudgetValueChange,
   budgetIsEnabled,
-  budgetIsValid,
   budgetSubmitted,
+  budgetValueError,
   currency,
-  currencyChangeHandler,
-  error,
+  handleCurrencyChange,
+  currencyError,
   label,
   setAccount,
   showSwitch,
@@ -25,20 +25,21 @@ const BudgetField = ({
   const query = currency;
 
   const filterCurrencies = (input, currencies) => {
-    const regex = new RegExp(`${input.trim()}`, 'i');
-    if (query === '') {
-      return [];
-    } else {
-      const filtered = currencies.filter(
-        (curr) => curr.name.search(regex) >= 0 || curr.iso.search(regex) >= 0,
-      );
-      return filtered.splice(0, 6);
-    }
+    const inputRegex = new RegExp(`${input.trim()}`, 'i');
+    return query === ''
+      ? []
+      : currencies
+          .filter(
+            (curr) =>
+              curr.name.search(inputRegex) >= 0 ||
+              curr.iso.search(inputRegex) >= 0,
+          )
+          .splice(0, 6);
   };
 
-  const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
   const filteredCurrencies = filterCurrencies(query, CURRENCIES);
+
+  const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
   const data =
     filteredCurrencies.length >= 1 && comp(query, filteredCurrencies[0].name)
@@ -57,38 +58,42 @@ const BudgetField = ({
 
       {budgetIsEnabled && (
         <>
+          <View style={styles.accountsWrapper}>
+            <Caption>Default account</Caption>
+            <View style={styles.accounts}>
+              <AccountButton
+                account={account}
+                value="cash"
+                icon="cash"
+                setAccount={setAccount}
+              >
+                Cash
+              </AccountButton>
+              <AccountButton
+                value="card"
+                account={account}
+                icon="credit-card"
+                setAccount={setAccount}
+              >
+                Card
+              </AccountButton>
+            </View>
+          </View>
+
           <TextInput
             label="Amount"
             value={budget}
-            onChange={budgetChangeHandler}
+            error={budgetValueError}
+            onChange={handleBudgetValueChange}
             keyboardType="numeric"
           />
-
-          <View style={Layout.fillRowCross}>
-            <AccountButton
-              account={account}
-              value="cash"
-              icon="cash"
-              setAccount={setAccount}
-            >
-              Cash
-            </AccountButton>
-            <AccountButton
-              value="card"
-              account={account}
-              icon="credit-card"
-              setAccount={setAccount}
-            >
-              Cash
-            </AccountButton>
-          </View>
 
           <Autocomplete
             data={data}
             query={query}
-            error={error}
-            onChange={currencyChangeHandler}
-            onPress={(item) => currencyChangeHandler(item.name)}
+            error={currencyError} // $fix
+            onChange={handleCurrencyChange}
+            onPress={(item) => handleCurrencyChange(item.name)}
             keyExtractor={(item) => item.iso.toString()}
             textInputLabel="Currency"
             itemLabel={(item) => `${item.name} (${item.iso})`}
@@ -99,4 +104,4 @@ const BudgetField = ({
   );
 };
 
-export default BudgetField;
+export default BudgetPicker;
