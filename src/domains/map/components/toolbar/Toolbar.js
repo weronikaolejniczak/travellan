@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, TouchableOpacity } from 'react-native';
 
 import ToolbarButton from './toolbarButton/ToolbarButton';
 import { Searchbar } from 'utils';
@@ -14,14 +14,15 @@ const Toolbar = ({
   deletingMarkerActive,
   isLoading,
   markerTitle,
-  searchQuery,
   onExitHandler,
   setMarkerTitle,
+  searchQuery,
+  isChoosing,
   setSearchQuery,
   searchHandler,
-  isChoosing,
   setIsChoosing,
-  searchAnswear,
+  searchAnswer,
+  addSearchMarker,
 }) => (
   <View style={styles.overlay}>
     <View style={styles.actionBar}>
@@ -62,6 +63,42 @@ const Toolbar = ({
         value={markerTitle}
         onChangeText={(text) => setMarkerTitle(text)}
       />
+    )}
+
+    {searchingActive && (
+      <View>
+        <Searchbar
+          icon="map-marker-question"
+          placeholder={searchingActive && 'Search by name/adress'}
+          value={searchQuery}
+          onChangeText={(text) => {
+            setSearchQuery(text);
+            searchHandler();
+            setIsChoosing(true);
+          }}
+        />
+        {isChoosing && (
+          <View>
+            <FlatList
+              data={(searchAnswear = searchAnswer)}
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              ListFooterComponent={renderFooter()}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.searchResult}
+                  onPress={() => {
+                    const [latitude, longitude] = item.geometry.coordinates;
+                    addSearchMarker(longitude, latitude, item.place_name);
+                  }}
+                >
+                  <Text style={styles.text}>{item.place_name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
+      </View>
     )}
   </View>
 );

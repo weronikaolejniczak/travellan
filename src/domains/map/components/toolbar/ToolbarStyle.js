@@ -15,4 +15,10 @@ export const styles = StyleSheet.create({
     top: 0,
     width: '100%',
   },
+  searchResult: {
+    backgroundColor: Colors.background,
+    borderRadius: 50,
+    paddingHorizontal: 25,
+    paddingVertical: 8,
+  },
 });

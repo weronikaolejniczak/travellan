@@ -158,8 +158,6 @@ const MapContainer = ({ route, navigation }) => {
   };
 
   const createMarker = (longitude, latitude, title) => {
-    console.log('podaje', markers);
-
     setMarkers(
       markers
         ? [
@@ -182,17 +180,13 @@ const MapContainer = ({ route, navigation }) => {
             ),
           ],
     );
-    console.log('podaje', markers);
   };
 
   const searchHandler = async () => {
     if (searchQuery.length > 3) {
       const longitude = currentRegion.longitude;
       const latitude = currentRegion.latitude;
-      // if (searchingActive) {
-      //   if (searchQuery !== '') {
-      // setIsLoading(true);
-      // setIsChoosing(true);
+
       setIsSearching(true);
       const answer = await fetchMapSearch(searchQuery, longitude, latitude);
       setSearchAnswer(answer);
@@ -204,43 +198,10 @@ const MapContainer = ({ route, navigation }) => {
 
   const addSearchMarker = (longitude, latitude, title) => {
     createMarker(longitude, latitude, title);
-    console.log(markers);
-
     setSearchQuery('');
     setIsChoosing(false);
     setSearchAnswer([]);
     // this._map.flyTo([longitude, latitude]);
-    // console.log('wszedlem', searchAnswer);
-    // const [lat, lon] = searchAnswer.geometry.coordinates;
-    // const name = searchAnswer.place_name;
-    // setMarkers(
-    //   markers
-    //     ? [
-    //         ...markers,
-    //         new PointOfInterest(
-    //           new Date().getTime().toString(),
-    //           new Date().toString(),
-    //           lat,
-    //           lon,
-    //           name,
-    //         ),
-    //       ]
-    //     : [
-    //         new PointOfInterest(
-    //           new Date().getTime().toString(),
-    //           new Date().toString(),
-    //           lat,
-    //           lon,
-    //           name,
-    //         ),
-    //       ],
-    // );
-    // setSearchQuery('');
-    // setIsLoading(false);
-    //   } else {
-    //     setError('Enter the query');
-    //   }
-    // }
   };
 
   renderFooter = () => {
@@ -255,7 +216,6 @@ const MapContainer = ({ route, navigation }) => {
         }}
       >
         <ActivityIndicator size="small" color={Colors.primary} />
-        {/* <ActivityIndicator animating size="large" /> */}
       </View>
     );
   };
@@ -322,53 +282,10 @@ const MapContainer = ({ route, navigation }) => {
         isChoosing={isChoosing}
         setIsChoosing={setIsChoosing}
         searchAnswer={searchAnswer}
+        addSearchMarker={(longitude, latitude, title) =>
+          addSearchMarker(longitude, latitude, title)
+        }
       />
-
-      {searchingActive && (
-        <View style={styles.overlay}>
-          <Searchbar
-            icon="map-marker-question"
-            placeholder={searchingActive && 'Search by name/adress'}
-            value={searchQuery}
-            onChangeText={(text) => {
-              setSearchQuery(text);
-              searchHandler();
-              setIsChoosing(true);
-            }}
-          />
-          {isChoosing && (
-            <View style={styles.actionBar}>
-              <FlatList
-                data={(searchAnswear = searchAnswer)}
-                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                ListFooterComponent={renderFooter()}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.currencyHolder}
-                    onPress={() => {
-                      const [latitude, longitude] = item.geometry.coordinates;
-
-                      addSearchMarker(longitude, latitude, item.place_name);
-
-                      // setSelectedCurrency(item);
-                      // setDisplayableValue(item.value);
-                      // setTitle('');
-                      // setAmount('');
-                      // setAccount(item.defaultAccount);
-                    }}
-                  >
-                    <Text style={styles.text}>{item.place_name}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          )}
-          <View style={styles.actionBar}>
-            <Text style={styles.text}>Press on the area to search in</Text>
-          </View>
-        </View>
-      )}
     </View>
   );
 };
