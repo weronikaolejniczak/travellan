@@ -198,6 +198,8 @@ const MapContainer = ({ route, navigation }) => {
 
   const addSearchMarker = (longitude, latitude, title) => {
     createMarker(longitude, latitude, title);
+    currentRegion.longitude = latitude;
+    currentRegion.latitude = longitude;
     setSearchQuery('');
     setIsChoosing(false);
     setSearchAnswer([]);
