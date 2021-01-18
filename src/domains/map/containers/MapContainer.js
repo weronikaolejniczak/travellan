@@ -151,28 +151,7 @@ const MapContainer = ({ route, navigation }) => {
     if (addingMarkerActive) {
       if (markerTitle !== '') {
         const title = markerTitle;
-        setMarkers(
-          markers
-            ? [
-                ...markers,
-                new PointOfInterest(
-                  new Date().getTime().toString(),
-                  new Date().toString(),
-                  latitude,
-                  longitude,
-                  title,
-                ),
-              ]
-            : [
-                new PointOfInterest(
-                  new Date().getTime().toString(),
-                  new Date().toString(),
-                  latitude,
-                  longitude,
-                  title,
-                ),
-              ],
-        );
+        createMarker(longitude, latitude, title);
         setMarkerTitle('');
       } else {
         setError('Enter the title');
@@ -180,8 +159,32 @@ const MapContainer = ({ route, navigation }) => {
     }
   };
 
+  const createMarker = (longitude, latitude, title) => {
+    setMarkers(
+      markers
+        ? [
+            ...markers,
+            new PointOfInterest(
+              new Date().getTime().toString(),
+              new Date().toString(),
+              latitude,
+              longitude,
+              title,
+            ),
+          ]
+        : [
+            new PointOfInterest(
+              new Date().getTime().toString(),
+              new Date().toString(),
+              latitude,
+              longitude,
+              title,
+            ),
+          ],
+    );
+  };
+
   const searchHandler = async () => {
-    console.log(currentRegion);
     const longitude = currentRegion.longitude;
     const latitude = currentRegion.latitude;
     // if (searchingActive) {
