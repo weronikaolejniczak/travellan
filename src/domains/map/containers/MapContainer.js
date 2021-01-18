@@ -2,7 +2,14 @@ import Geolocation from '@react-native-community/geolocation';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
 import { MAPBOX_API_KEY } from 'react-native-dotenv';
-import { FlatList, Alert, View, ActivityIndicator, Text } from 'react-native';
+import {
+  FlatList,
+  Alert,
+  View,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PointOfInterest from 'models/PointOfInterest';
@@ -301,9 +308,22 @@ const MapContainer = ({ route, navigation }) => {
             <View style={styles.actionBar}>
               <FlatList
                 data={(searchAnswear = searchAnswer)}
+                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                  <Text style={{ fontSize: 22 }}>{item.place_name}</Text>
+                  <TouchableOpacity
+                    style={styles.currencyHolder}
+                    onPress={() => {
+                      console.log(item);
+                      // setSelectedCurrency(item);
+                      // setDisplayableValue(item.value);
+                      // setTitle('');
+                      // setAmount('');
+                      // setAccount(item.defaultAccount);
+                    }}
+                  >
+                    <Text style={styles.text}>{item.place_name}</Text>
+                  </TouchableOpacity>
                 )}
               />
             </View>

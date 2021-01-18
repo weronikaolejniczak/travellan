@@ -21,4 +21,10 @@ export const styles = StyleSheet.create({
     top: 50,
     width: '100%',
   },
+  currencyHolder: {
+    backgroundColor: Colors.background,
+    borderRadius: 50,
+    paddingHorizontal: 25,
+    paddingVertical: 8,
+  },
 });
