@@ -13,7 +13,6 @@ const TripDetailsContainer = ({ route, navigation }) => {
   );
   const { destination, startDate, endDate, image, cityCode } = selectedTrip;
   const { author, username, imageUrl } = image;
-
   const CalendarEventChandler = addEventToCalendar;
 
   const addTripToCalendar = () =>

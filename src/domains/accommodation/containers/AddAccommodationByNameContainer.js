@@ -8,6 +8,9 @@ import {
   TextInput,
 } from 'utils';
 import { View } from 'react-native';
+import { HotelCard } from 'components';
+import { styles } from './AddAccommodationByNameStyleContainer';
+import { DUMMY_HOTELS_BY_NAME as testData } from 'data/DummyHotelByName';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +38,7 @@ const AddAccommodationByNameContainer = (props) => {
   const fetchHotel = useCallback(async () => {
     try {
       const result = await fetchHotelByName(cityCode, value);
-      setData(result[0]);
+      setData(result);
     } catch {
       setError(error);
     }
@@ -53,7 +56,7 @@ const AddAccommodationByNameContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [startDate, endDate]);
+  }, [testData]);
 
   if (cityCode === undefined)
     return (
@@ -62,10 +65,14 @@ const AddAccommodationByNameContainer = (props) => {
 
   if (isDateSame)
     return (
-      <ItemlessFrame
-        message="Searching for a hotel by name is not possible if you are going on a
-    one day trip!"
-      />
+      <ItemlessFrame message="Sorry, searching for hotels by name is not possible if you are going on one day trip!" />
+    );
+
+  if (testData)
+    return (
+      <View style={styles.hotelCardWrapper}>
+        <HotelCard {...testData[0]} />
+      </View>
     );
 
   return (
