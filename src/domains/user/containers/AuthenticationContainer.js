@@ -13,9 +13,9 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
-import SocialButton from '../components/SocialButton';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
+import { SocialButton } from '../components';
 import { loginRequest } from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
@@ -124,6 +124,15 @@ const AuthenticationContainer = ({ navigation }) => {
                   btnType="facebook"
                   color="#4867aa"
                   backgroundColor="#e6eaf4"
+                  onPress={() => {
+                    console.log('yay');
+                  }}
+                />
+                <SocialButton
+                  buttonTitle="Sign In with Google"
+                  btnType="google"
+                  color="#de4d41"
+                  backgroundColor="#f5e7ea"
                   onPress={() => {}}
                 />
               </View>
