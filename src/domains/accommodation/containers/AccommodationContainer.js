@@ -1,21 +1,30 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect, useCallback, useState } from 'react';
 import { Animated, Dimensions, FlatList, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { ActionSheet, HeaderButton, ItemlessFrame } from 'utils';
+import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { HotelCard } from 'components';
 import { styles } from './AccommodationContainerStyle';
-
-import { DUMMY_HOTELS as accommodation } from 'data/DummyHotels';
+import * as accommodationActions from 'actions/accommodationActions';
+import { useDispatch, useSelector } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.923;
 const actionSheetRef = createRef();
 
 const AccommodationContainer = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const scrollX = new Animated.Value(0);
   const position = Animated.divide(scrollX, cardWidth);
+  const accommodation = useSelector(
+    (state) =>
+      state.trips.trips.find((item) => item.id === tripId).accommodation,
+  );
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
@@ -40,8 +49,50 @@ const AccommodationContainer = ({ navigation, route }) => {
     // use: tripId, id
   };
 
-  if (accommodation === undefined)
-    return <ItemlessFrame message="You have no saved accommodation!" />;
+  const loadAccommodation = useCallback(() => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      dispatch(accommodationActions.fetchAccommodationRequest(tripId));
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, tripId]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadAccommodation();
+    SplashScreen.hide();
+    setIsLoading(false);
+  }, [loadAccommodation]);
+
+  if (!Array.isArray(accommodation) || isLoading || isRefreshing) {
+    return <LoadingFrame />;
+  }
+
+  if (Array.isArray(accommodation) && accommodation.length < 1) {
+    return (
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <ItemlessFrame message="You have no accomodation saved!" />
+        <ActionSheet
+          ref={actionSheetRef}
+          elements={[
+            {
+              id: '0',
+              label: 'Add accommodation manually',
+              onPress: () => navigateToScreen('Add accommodation'),
+            },
+            {
+              id: '1',
+              label: 'Add hotel by name',
+              onPress: () => navigateToScreen('Add hotel by name '),
+            },
+          ]}
+        />
+      </ScrollView>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>

@@ -75,7 +75,7 @@ const AddAccommodationByNameContainer = (props) => {
           data.description,
           '',
           data.image,
-          data.location.address,
+          data.location,
           data.name,
           data.phone,
           '',
