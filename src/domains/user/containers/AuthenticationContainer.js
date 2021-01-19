@@ -13,6 +13,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
+import SocialButton from '../components/SocialButton';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { loginRequest } from 'actions/userActions';
@@ -118,6 +119,13 @@ const AuthenticationContainer = ({ navigation }) => {
                 >
                   Create new account
                 </Button>
+                <SocialButton
+                  buttonTitle="Sign In with Facebook"
+                  btnType="facebook"
+                  color="#4867aa"
+                  backgroundColor="#e6eaf4"
+                  onPress={() => {}}
+                />
               </View>
             </ScrollView>
           </View>
