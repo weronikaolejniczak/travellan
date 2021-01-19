@@ -16,7 +16,11 @@ import * as yup from 'yup';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
-import { loginRequest } from 'actions/userActions';
+import {
+  loginRequest,
+  onFacebookButtonPress,
+  onGoogleButtonPress,
+} from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
 const AuthenticationContainer = ({ navigation }) => {
@@ -125,7 +129,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   color="#4867aa"
                   backgroundColor="#e6eaf4"
                   onPress={() => {
-                    console.log('yay');
+                    onFacebookButtonPress();
                   }}
                 />
                 <SocialButton
@@ -133,7 +137,16 @@ const AuthenticationContainer = ({ navigation }) => {
                   btnType="google"
                   color="#de4d41"
                   backgroundColor="#f5e7ea"
-                  onPress={() => {}}
+                  onPress={() => {
+                    const action = onGoogleButtonPress();
+                    try {
+                      setError(null);
+                      dispatch(action);
+                      //navigation.navigate('My trips');
+                    } catch (err) {
+                      setError(err.message);
+                    }
+                  }}
                 />
               </View>
             </ScrollView>

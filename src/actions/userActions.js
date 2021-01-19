@@ -1,11 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
-import { AUTH_URL } from 'react-native-dotenv';
+import { AUTH_URL, AUTH_URL_SOCIAL, WEB_CLIENT_ID } from 'react-native-dotenv';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
 const URL = AUTH_URL;
+const URL_SOCIAL = AUTH_URL_SOCIAL;
+const CLIENT_ID = WEB_CLIENT_ID;
 
 export const authenticate = (userId, token) => {
   return { token: token, type: AUTHENTICATE, userId: userId };
@@ -47,6 +51,7 @@ export const loginRequest = (email, password) => {
         );
         dispatch(authenticate(data.localId, data.idToken));
         saveDataToStorage(data.idToken, data.localId, expirationDate);
+        console.log(data.idToken);
       })
       .catch((err) => {
         throw new Error('Something went wrong. Try again');
@@ -64,6 +69,43 @@ export const sendResetEmail = (email) =>
   async function (dispatch) {
     auth().sendPasswordResetEmail(email);
   };
+
+export async function onFacebookButtonPress() {
+  // attempt login with permissions
+  const result = await LoginManager.logInWithPermissions([
+    'public_profile',
+    'email',
+  ]);
+
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
+  const data = await AccessToken.getCurrentAccessToken();
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
+  const facebookCredential = auth.FacebookAuthProvider.credential(
+    data.accessToken,
+  );
+  return auth().signInWithCredential(facebookCredential);
+}
+
+export async function onGoogleButtonPress() {
+  return async function (dispatch) {
+    GoogleSignin.configure({
+      webClientId: CLIENT_ID,
+    });
+    const { idToken } = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    auth().signInWithCredential(googleCredential);
+    let user = auth().currentUser;
+    console.log(user.uid);
+    const tokena = user.getIdTokenResult(true);
+    const token = (await tokena).token;
+    console.log(token);
+    dispatch(authenticate(user.uid, token))
+  };
+}
 
 const saveDataToStorage = (token, userId, expirationDate) =>
   AsyncStorage.setItem(
