@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   smallPaddingTop: {
     paddingTop: 10,
   },
-  iconContainer: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
