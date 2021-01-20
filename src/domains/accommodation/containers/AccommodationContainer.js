@@ -10,6 +10,7 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import * as accommodationActions from 'actions/accommodationActions';
+import DocumentPicker from 'react-native-document-picker';
 import SplashScreen from 'react-native-splash-screen';
 import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
 import { HotelCard, PDFModal } from 'components';
@@ -70,6 +71,28 @@ const AccommodationContainer = ({ navigation, route }) => {
     },
     [addPDF, openPDFModal],
   );
+
+  const addPDF = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.pdf],
+        });
+        const temp = res.uri;
+        await dispatch(accommodationActions.addPDFRequest(tripId, id, temp));
+      } catch (err) {
+        if (!DocumentPicker.isCancel(err)) throw err;
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+
+  const openPDFModal = useCallback((id) => {
+    setSelectedAccomodationId(id);
+    setIsPDFModalOpen(true);
+  }, []);
 
   const handleNavigationToMap = (id) => {
     // use: tripId, id
