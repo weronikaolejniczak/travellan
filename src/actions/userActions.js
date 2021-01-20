@@ -69,25 +69,32 @@ export const sendResetEmail = (email) =>
     auth().sendPasswordResetEmail(email);
   };
 
-export async function onFacebookButtonPress() {
-  // attempt login with permissions
-  const result = await LoginManager.logInWithPermissions([
-    'public_profile',
-    'email',
-  ]);
-
-  if (result.isCancelled) {
-    throw 'User cancelled the login process';
-  }
-  const data = await AccessToken.getCurrentAccessToken();
-  if (!data) {
-    throw 'Something went wrong obtaining access token';
-  }
-  const facebookCredential = auth.FacebookAuthProvider.credential(
-    data.accessToken,
-  );
-  return auth().signInWithCredential(facebookCredential);
-}
+export const onFacebookButtonPress = () => {
+  return async function (dispatch) {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+    const data = await AccessToken.getCurrentAccessToken();
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+    auth().signInWithCredential(facebookCredential);
+    const user = auth().currentUser;
+    const localId = user.uid;
+    user.getIdToken().then(function (idToken) {
+      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+      dispatch(authenticate(localId, idToken));
+      saveDataToStorage(idToken, localId, expirationDate);
+    });
+  };
+};
 
 export const onGoogleButtonPress = () => {
   return async function (dispatch) {
