@@ -34,10 +34,10 @@ export const deleteAccommodation = (tripId, accommodationId) => {
   };
 };
 
-export const setPDF = (tripId, transportId, PDF) => {
+export const setPDF = (tripId, accommodationId, PDF) => {
   return {
     PDF,
-    transportId,
+    accommodationId,
     tripId,
     type: SET_PDF_ACC,
   };
