@@ -6,6 +6,7 @@ import Accommodation from 'models/Accommodation';
 export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
 export const DELETE_ACCOMMODATION = 'DELETE_ACCOMMODATION';
+export const SET_PDF_ACC = 'SET_PDF_ACC';
 
 const API_URL = FIREBASE_URL;
 
@@ -30,6 +31,15 @@ export const deleteAccommodation = (tripId, accommodationId) => {
     accommodationId,
     tripId,
     type: DELETE_ACCOMMODATION,
+  };
+};
+
+export const setPDF = (tripId, transportId, PDF) => {
+  return {
+    PDF,
+    transportId,
+    tripId,
+    type: SET_PDF_ACC,
   };
 };
 
