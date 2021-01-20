@@ -94,6 +94,19 @@ const AccommodationContainer = ({ navigation, route }) => {
     setIsPDFModalOpen(true);
   }, []);
 
+  const findAccomodationPDF = (id) => {
+    if (id === ' ') {
+      let pdf = accommodation[0].PDF;
+      let source = { uri: pdf };
+      return source;
+    } else {
+      const index = accommodation.findIndex((item) => item.id === id);
+      let pdf = accommodation[index].PDF;
+      let source = { uri: pdf };
+      return source;
+    }
+  };
+
   const handleNavigationToMap = (id) => {
     // use: tripId, id
   };
