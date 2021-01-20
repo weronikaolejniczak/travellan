@@ -4,6 +4,7 @@ import {
   CREATE_ACCOMMODATION,
   DELETE_ACCOMMODATION,
   SET_ACCOMMODATION,
+  SET_PDF_ACC,
 } from 'actions/accommodationActions';
 import {
   CREATE_NOTE,
@@ -21,8 +22,8 @@ import {
 import {
   CREATE_TRIP,
   DELETE_TRIP,
-  SET_TRIPS,
   EDIT_TRIP,
+  SET_TRIPS,
 } from 'actions/tripsActions';
 import { SET_BUDGET } from 'actions/budgetActions';
 import { SET_MAP } from 'actions/mapActions';
@@ -95,6 +96,14 @@ export default (state = initialState, action) => {
         draft.trips[tripIndex].accommodation = draft.trips[
           tripIndex
         ].accommodation.filter((item) => item.id !== action.accommodationId);
+        break;
+
+      case SET_PDF_ACC:
+        draft.trips[tripIndex].transport[
+          draft.trips[tripIndex].transport.findIndex(
+            (item) => item.id === action.transportId,
+          )
+        ].PDF = action.PDF;
         break;
 
       case SET_NOTES:
