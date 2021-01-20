@@ -67,6 +67,11 @@ const MapContainer = ({ route, navigation }) => {
       </MapboxGL.PointAnnotation>
     ));
 
+  const currentRegionHandler = (region) => {
+    currentRegion.longitude = region.geometry.coordinates[0];
+    currentRegion.latitude = region.geometry.coordinates[1];
+  };
+
   const activityHandler = (type) => {
     switch (type) {
       case 'adding':
@@ -250,7 +255,7 @@ const MapContainer = ({ route, navigation }) => {
         style={styles.map}
         styleURL="mapbox://styles/travellan/ckju6y3ae119l19o6od0j9wi5"
         onLongPress={(event) => mapOnPressHandler(event)}
-        // onRegionDidChange={(region) => setCurrentRegion(region)} - left for further debugging
+        onRegionDidChange={(region) => currentRegionHandler(region)}
       >
         <MapboxGL.Camera
           zoomLevel={10}
