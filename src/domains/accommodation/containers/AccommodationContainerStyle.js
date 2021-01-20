@@ -1,8 +1,20 @@
-import Colors from 'constants/Colors';
-import { Platform, StyleSheet } from 'react-native';
-import { spacingForCardInset } from 'domains/accommodation/components/AccommodationItem/AccommodationItemStyle';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
+
+import { Colors } from 'constants';
+
+const { height, width } = Dimensions.get('window');
+export const cardHeight = height * 0.83;
+export const cardWidth = width * 0.923;
+export const spacingForCardInset = width * 0.03;
 
 export const styles = StyleSheet.create({
+  accommodation: {
+    borderRadius: 15,
+    height: cardHeight,
+    marginHorizontal: width * 0.01,
+    overflow: 'hidden',
+    width: cardWidth,
+  },
   button: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
