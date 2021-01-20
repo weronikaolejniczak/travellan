@@ -50,8 +50,6 @@ export const loginRequest = (email, password) => {
           new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
         );
         dispatch(authenticate(data.localId, data.idToken));
-        console.log(data.localId);
-        console.log(data.idToken);
         saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
       .catch((err) => {
@@ -98,13 +96,14 @@ export const onGoogleButtonPress = () => {
     });
     const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    auth().signInWithCredential(googleCredential);
+    await auth().signInWithCredential(googleCredential);
     const user = auth().currentUser;
     const localId = user.uid;
-    const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
-    dispatch(authenticate(localId, idToken));
-    saveDataToStorage(idToken, user.uid, expirationDate);
-
+    user.getIdToken().then(function (idToken) {
+      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+      dispatch(authenticate(localId, idToken));
+      saveDataToStorage(idToken, localId, expirationDate);
+    });
   };
 };
 
