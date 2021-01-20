@@ -71,7 +71,7 @@ const HotelCard = ({
           </HotelCardSection>
         )}
 
-        {checkInHours && checkOutHours && (
+        {!!checkInHours && !!checkOutHours && (
           <HotelCardSection title="Hotel hours">
             {frontDesk24H && (
               <Paragraph style={styles.caution}>

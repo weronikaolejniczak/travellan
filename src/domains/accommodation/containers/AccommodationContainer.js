@@ -188,7 +188,7 @@ const AccommodationContainer = ({ navigation, route }) => {
             {
               id: '1',
               label: 'Add hotel by name',
-              onPress: () => navigateToScreen('Add hotel by name '),
+              onPress: () => navigateToScreen('Add hotel by name'),
             },
             {
               id: '2',
@@ -260,7 +260,7 @@ const AccommodationContainer = ({ navigation, route }) => {
           {
             id: '1',
             label: 'Add hotel by name',
-            onPress: () => navigateToScreen('Add hotel by name '),
+            onPress: () => navigateToScreen('Add hotel by name'),
           },
           {
             id: '2',

@@ -13,7 +13,6 @@ const TripDetailsContainer = ({ route, navigation }) => {
   );
   const { destination, startDate, endDate, image, cityCode } = selectedTrip;
   const { author, username, imageUrl } = image;
-
   const CalendarEventChandler = addEventToCalendar;
 
   const addTripToCalendar = () =>
@@ -41,25 +40,20 @@ const TripDetailsContainer = ({ route, navigation }) => {
           navigation={navigation}
           to="Transport"
           tripId={selectedTrip.id}
-          startDate={selectedTrip.startDate}
-          endDate={selectedTrip.endDate}
           icon="flight"
         />
         <NavigationButton
           navigation={navigation}
           to="Accommodation"
           tripId={selectedTrip.id}
-          startDate={selectedTrip.startDate}
-          endDate={selectedTrip.endDate}
-          cityCode={selectedTrip.cityCode}
           icon="hotel"
         />
-        {/* <NavigationButton
-            navigation={navigation}
-            to="Map"
-            tripId={selectedTrip.id}
-            icon="map"
-          /> */}
+        <NavigationButton
+          navigation={navigation}
+          to="Map"
+          tripId={selectedTrip.id}
+          icon="map"
+        />
         <NavigationButton
           navigation={navigation}
           to="Weather"
