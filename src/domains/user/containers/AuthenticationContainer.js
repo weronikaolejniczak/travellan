@@ -35,7 +35,7 @@ const AuthenticationContainer = ({ navigation }) => {
     const action = onGoogleButtonPress();
     try {
       setError(null);
-      dispatch(action);
+      await dispatch(action);
       navigation.navigate('My trips');
     } catch (err) {
       setError(err.message);
@@ -48,7 +48,7 @@ const AuthenticationContainer = ({ navigation }) => {
     const action = onFacebookButtonPress();
     try {
       setError(null);
-      dispatch(action);
+      await dispatch(action);
       navigation.navigate('My trips');
     } catch (err) {
       setError(err.message);
