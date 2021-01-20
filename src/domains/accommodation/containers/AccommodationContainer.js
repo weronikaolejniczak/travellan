@@ -1,13 +1,13 @@
-import React, { createRef, useEffect, useCallback, useState } from 'react';
+import React, { createRef, useCallback, useEffect, useState } from 'react';
 import { Animated, Dimensions, FlatList, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { HotelCard } from 'components';
-import { styles } from './AccommodationContainerStyle';
 import * as accommodationActions from 'actions/accommodationActions';
-import { useDispatch, useSelector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import { HotelCard, PDFModal } from 'components';
+import { styles } from './AccommodationContainerStyle';
+import { useDispatch, useSelector } from 'react-redux';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.923;
@@ -25,6 +25,8 @@ const AccommodationContainer = ({ navigation, route }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
+  const [selectedAccomodationId, setSelectedAccomodationId] = useState(' ');
 
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
@@ -101,6 +103,13 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
+      <PDFModal
+        PDF={findAccomodationPDF(selectedAccomodationId)}
+        handleDeletePDF={() => handlePDFDelete(selectedAccomodationId)}
+        handleClosePDF={() => setIsPDFModalOpen(false)}
+        isPDFModalOpen={isPDFModalOpen}
+        handleError={() => setError(error)}
+      />
       <FlatList
         horizontal
         pagingEnabled
