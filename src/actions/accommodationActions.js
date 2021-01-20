@@ -162,3 +162,36 @@ export const createAccommodationRequest = (
       });
   };
 };
+
+export const deletePDFRequest = (tripId, accommodationId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    axios
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${accommodationId}/PDF.json?auth=${token}`,
+      )
+      .then(() => dispatch(setPDF(tripId, accommodationId, PDF)))
+      .catch(() => {
+        throw new Error(`Couldn't delete PDF!`);
+      });
+  };
+};
+
+export const addPDFRequest = (tripId, accommodationId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    axios
+      .patch(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${accommodationId}.json?auth=${token}`,
+        {
+          PDF,
+        },
+      )
+      .then(() => dispatch(setPDF(tripId, accommodationId, PDF)))
+      .catch(() => {
+        throw new Error(`Couldn't update PDF`);
+      });
+  };
+};
