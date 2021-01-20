@@ -7,11 +7,6 @@ export const cardWidth = width * 0.915;
 export const spacingForCardInset = width * 0.03;
 
 export const styles = StyleSheet.create({
-  PDF: {
-    flex: 1,
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-  },
   QR: {
     alignContent: 'center',
     alignItems: 'center',
@@ -38,20 +33,8 @@ export const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
-  buttonTouchableLeft: {
-    alignSelf: 'stretch',
-    padding: 16,
-    textAlign: 'left',
-  },
   columnDirection: {
     flexDirection: 'column',
-  },
-  container: {
-    alignItems: 'center',
-    backgroundColor: Colors.background,
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: '5%',
   },
   containerQR: {
     padding: 10,
@@ -66,31 +49,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: '5%',
   },
-  counterContainer: {
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 24,
-    height: 48,
-    justifyContent: 'center',
-    paddingHorizontal: cardWidth * 0.035,
-    paddingVertical: cardHeight * 0.01,
-    width: 48,
-  },
   header: {
     color: Colors.text,
     fontSize: 24,
   },
-  horizontalLine: {
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-    marginVertical: 10,
-  },
   icon: {
     color: Colors.text,
-    fontSize: 30,
-    marginRight: 20,
-  },
-  iconQrModal: {
     fontSize: 30,
     marginRight: 20,
   },
@@ -109,29 +73,8 @@ export const styles = StyleSheet.create({
     marginBottom: '5%',
     paddingHorizontal: 22,
   },
-  innerQrContainer: {
-    alignSelf: 'stretch',
-  },
-  miniHeader: {
-    flexDirection: 'row-reverse',
-  },
-  qrCardContainer: {
-    backgroundColor: Colors.text,
-    padding: 5,
-    width: (Dimensions.get('window').width / 6) * 5,
-  },
-  qrContainer: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    flex: 1,
-    justifyContent: 'center',
-  },
   rowCenter: {
     alignItems: 'center',
-  },
-  subtitle: {
-    color: Colors.text,
-    fontSize: 20,
   },
   text: {
     color: Colors.text,

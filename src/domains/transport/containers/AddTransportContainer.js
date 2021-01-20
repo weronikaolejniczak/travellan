@@ -30,8 +30,8 @@ const AddTransportContainer = (props) => {
 
   const [isTicketTo, setToDestination] = useState(true);
   const [isTicketFrom, setFromDestination] = useState(false);
-  const [QR, setQR] = useState('');
-  const [PDFUri, setPDFUri] = useState('');
+  //const [QR, setQR] = useState('');
+  //const [PDFUri, setPDFUri] = useState('');
   const [dateOfDeparture, setDateOfDeparture] = useState(new Date());
   const [showDateOfDeparture, setShowDateOfDeparture] = useState(false);
   const [hourOfDeparture, setHourOfDeparture] = useState(initialHour);
@@ -105,8 +105,6 @@ const AddTransportContainer = (props) => {
         isTicketFrom,
         prepareDate(dateOfDeparture, hourOfDeparture),
         placeOfDeparture,
-        QR,
-        PDFUri,
       ),
     );
     setIsLoading(false);
@@ -121,8 +119,6 @@ const AddTransportContainer = (props) => {
     dateOfDeparture,
     hourOfDeparture,
     placeOfDeparture,
-    QR,
-    PDFUri,
   ]);
 
   return (

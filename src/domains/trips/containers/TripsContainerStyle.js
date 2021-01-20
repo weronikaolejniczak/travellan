@@ -14,12 +14,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-  },
-  text: {
-    color: Colors.text,
-  },
-  triplessText: {
-    fontSize: 18,
+    justifyContent: 'center',
   },
   actionButton: {
     padding: 15,
@@ -27,10 +22,20 @@ export const styles = StyleSheet.create({
   actionIcon: {
     fontSize: 30,
     color: Colors.primary,
+    fontSize: 30,
   },
-  centered: {
+  flex: {
+    flex: 1,
+  },
+  text: {
+    color: Colors.text,
+  },
+  triplessContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  triplessText: {
+    fontSize: 18,
   },
 });
