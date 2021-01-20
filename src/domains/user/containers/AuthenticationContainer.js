@@ -15,7 +15,12 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
-import { loginRequest } from 'actions/userActions';
+import { SocialButton } from '../components';
+import {
+  loginRequest,
+  onFacebookButtonPress,
+  onGoogleButtonPress,
+} from 'actions/userActions';
 import { styles } from './AuthenticationContainerStyle';
 
 const AuthenticationContainer = ({ navigation }) => {
@@ -23,6 +28,33 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+
+  const handleGoogle = async () => {
+    setError(null);
+    setIsLoading(true);
+    const action = onGoogleButtonPress();
+    try {
+      setError(null);
+      await dispatch(action);
+      navigation.navigate('My trips');
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
+  const handleFacebook = async () => {
+    setError(null);
+    setIsLoading(true);
+    const action = onFacebookButtonPress();
+    try {
+      setError(null);
+      await dispatch(action);
+      navigation.navigate('My trips');
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     SplashScreen.hide();
@@ -118,6 +150,20 @@ const AuthenticationContainer = ({ navigation }) => {
                 >
                   Create new account
                 </Button>
+                <SocialButton
+                  buttonTitle="Sign In with Facebook"
+                  btnType="facebook"
+                  color="#4867aa"
+                  backgroundColor="#e6eaf4"
+                  onPress={() => handleFacebook()}
+                />
+                <SocialButton
+                  buttonTitle="Sign In with Google"
+                  btnType="google"
+                  color="#de4d41"
+                  backgroundColor="#f5e7ea"
+                  onPress={() => handleGoogle()}
+                />
               </View>
             </ScrollView>
           </View>
