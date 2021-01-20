@@ -117,7 +117,7 @@ const EditTripContainer = ({ route, navigation }) => {
     }
     setIsLoading(false);
   }, [
-    tripId,
+    dispatch,
     destination,
     startDate,
     endDate,
@@ -126,6 +126,10 @@ const EditTripContainer = ({ route, navigation }) => {
     accommodation,
     notes,
     map,
+    destinationIsValid,
+    handleCalendarEvent,
+    navigation,
+    callNotification,
   ]);
 
   useEffect(() => {
