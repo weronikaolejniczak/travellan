@@ -106,6 +106,42 @@ const AccommodationContainer = ({ navigation, route }) => {
       return source;
     }
   };
+  const persistDeletePDF = useCallback(
+    (id) => {
+      setIsRefreshing(true);
+      try {
+        dispatch(accommodationActions.deletePDFRequest(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+      setIsPDFModalOpen(false);
+    },
+    [dispatch, tripId],
+  );
+
+  const handlePDFDelete = useCallback(
+    (items) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Unlink the document',
+        'Are you sure? (Do not worry, the operation will not delete the document from your device)',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDeletePDF(items),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDeletePDF],
+  );
 
   const handleNavigationToMap = (id) => {
     // use: tripId, id
