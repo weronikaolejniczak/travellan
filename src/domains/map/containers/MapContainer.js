@@ -197,10 +197,12 @@ const MapContainer = ({ route, navigation }) => {
   };
 
   const addSearchMarker = (longitude, latitude, title) => {
+    console.log(currentRegion);
     createMarker(longitude, latitude, title);
     currentRegion.longitude = latitude;
     currentRegion.latitude = longitude;
     setSearchQuery('');
+    console.log(currentRegion);
     setIsChoosing(false);
     setSearchAnswer([]);
     // this._map.flyTo([longitude, latitude]);
@@ -256,7 +258,7 @@ const MapContainer = ({ route, navigation }) => {
           zoomLevel={10}
           centerCoordinate={
             // extractRegion().geometry.coordinates - left for further debugging
-            [extractRegion().longitude, extractRegion().latitude]
+            [currentRegion.longitude, currentRegion.latitude]
           }
         />
         {renderMarkers()}
