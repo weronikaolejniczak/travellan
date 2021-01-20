@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'center',
   },
 });

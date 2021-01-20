@@ -15,21 +15,20 @@ import * as accommodationActions from 'actions/accommodationActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { DUMMY_HOTELS_BY_NAME } from 'data/DummyHotelByName';
 
 const AddAccommodationByNameContainer = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDateSame, setIsDateSame] = useState(true);
-  const [error, setError] = useState('');
-  const [value, setValue] = useState('');
-  const [data, setData] = useState(DUMMY_HOTELS_BY_NAME[0]);
   const { tripId, startDate, endDate, cityCode } = props.route.params;
   const dispatch = useDispatch();
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDateSame, setIsDateSame] = useState(true);
+  const [error, setError] = useState('');
+  const [data, setData] = useState();
+
   const formatDate = (date) => {
-    //format to YYYY-MM-DD
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -41,23 +40,17 @@ const AddAccommodationByNameContainer = (props) => {
     return [year, month, day].join('-');
   };
 
-  const handleChange = (val) => setValue(val);
-
-  const fetchHotel = useCallback(async () => {
-    try {
-      const result = await fetchHotelByName(cityCode, value);
-      setData(result);
-    } catch {
-      setError(error);
-    }
-  }, [cityCode, error, value]);
-
-  const handlePress = () => {
-    setIsLoading(true);
-    handleChange();
-    fetchHotel(cityCode, value);
-    setIsLoading(false);
-  };
+  const fetchHotel = useCallback(
+    async (cityCode, hotelName) => {
+      try {
+        const result = await fetchHotelByName(cityCode, hotelName);
+        setData(result);
+      } catch {
+        setError(error);
+      }
+    },
+    [cityCode, error],
+  );
 
   const cancelAction = () => setData(null);
 
@@ -111,7 +104,7 @@ const AddAccommodationByNameContainer = (props) => {
     return (
       <Container contentContainerStyle={styles.container}>
         <View style={styles.paddingTop}>
-          <Headline style={styles.headline}>1. Verify hotel data</Headline>
+          <Headline style={styles.headline}>Verify hotel data</Headline>
           <Subheading style={styles.caution}>
             Be sure to check it's valid!
           </Subheading>
@@ -119,23 +112,21 @@ const AddAccommodationByNameContainer = (props) => {
             <HotelCard {...data} />
           </View>
           <View style={styles.smallPaddingTop}>
-            <Headline style={styles.headline}>
-              2. Is this the hotel thay you were looking for?
-            </Headline>
             <View style={styles.buttonContainer}>
               <Button
                 loading={isLoading}
                 disabled={isLoading}
                 onPress={submitHandler}
               >
-                Yes, save hotel
+                Save hotel
               </Button>
               <Button
                 loading={isLoading}
                 disabled={isLoading}
                 onPress={cancelAction}
+                mode="outlined"
               >
-                No, try again
+                Try again
               </Button>
             </View>
           </View>
@@ -151,24 +142,19 @@ const AddAccommodationByNameContainer = (props) => {
       onSubmit={async (values) => {
         setError(null);
         setIsLoading(true);
+        console.log(values);
         try {
-          fetchHotel(cityCode, value);
+          fetchHotel(cityCode, values.hotelName);
         } catch {
           setError(error);
         }
+        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         hotelName: yup.string().max(40).required('Cannot be left empty'),
       })}
     >
-      {({
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        errors,
-        touched,
-      }) => (
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
           <View style={{ marginBottom: 10, marginTop: 10 }}>
             <Headline>
