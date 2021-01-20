@@ -42,6 +42,19 @@ const AuthenticationContainer = ({ navigation }) => {
     }
     setIsLoading(false);
   };
+  const handleFacebook = async () => {
+    setError(null);
+    setIsLoading(true);
+    const action = onFacebookButtonPress();
+    try {
+      setError(null);
+      dispatch(action);
+      navigation.navigate('My trips');
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     SplashScreen.hide();
@@ -142,9 +155,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   btnType="facebook"
                   color="#4867aa"
                   backgroundColor="#e6eaf4"
-                  onPress={() => {
-                    onFacebookButtonPress();
-                  }}
+                  onPress={() => handleFacebook()}
                 />
                 <SocialButton
                   buttonTitle="Sign In with Google"
