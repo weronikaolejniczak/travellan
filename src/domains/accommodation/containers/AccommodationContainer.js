@@ -25,7 +25,6 @@ const AccommodationContainer = ({ navigation, route }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
     navigation.navigate(screen, {
