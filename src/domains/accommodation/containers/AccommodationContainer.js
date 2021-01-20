@@ -1,5 +1,12 @@
 import React, { createRef, useCallback, useEffect, useState } from 'react';
-import { Animated, Dimensions, FlatList, ScrollView, View } from 'react-native';
+import {
+  Alert,
+  Animated,
+  Dimensions,
+  FlatList,
+  ScrollView,
+  View,
+} from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import * as accommodationActions from 'actions/accommodationActions';
@@ -39,9 +46,30 @@ const AccommodationContainer = ({ navigation, route }) => {
     });
   };
 
-  const handlePDFManagement = (id) => {
-    // use: tripId, id
-  };
+  const handlePDFManagement = useCallback(
+    (PDF, id) => {
+      if (PDF === undefined || PDF === ' ' || PDF === null || PDF === '') {
+        Alert.alert(
+          'Add an accomodation document?',
+          'Attach document to the accomodation.',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => addPDF(id),
+              text: 'OK',
+            },
+          ],
+          { cancelable: true },
+        );
+      } else {
+        openPDFModal(id);
+      }
+    },
+    [addPDF, openPDFModal],
+  );
 
   const handleNavigationToMap = (id) => {
     // use: tripId, id
@@ -129,7 +157,9 @@ const AccommodationContainer = ({ navigation, route }) => {
           <HotelCard
             inAccommodationListing
             cardStyle={styles.accommodation}
-            handlePDFManagement={() => handlePDFManagement(data.item.id)}
+            handlePDFManagement={() =>
+              handlePDFManagement(data.item.PDF, data.item.id)
+            }
             handleNavigationToMap={() => handleNavigationToMap(data.item.id)}
             handleHotelEdit={() => handleHotelEdit(data.item.id)}
             {...data.item}
