@@ -15,13 +15,14 @@ import * as accommodationActions from 'actions/accommodationActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { DUMMY_HOTELS_BY_NAME } from 'data/DummyHotelByName';
 
 const AddAccommodationByNameContainer = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
   const [error, setError] = useState('');
   const [value, setValue] = useState('');
-  const [data, setData] = useState();
+  const [data, setData] = useState(DUMMY_HOTELS_BY_NAME[0]);
   const { tripId, startDate, endDate, cityCode } = props.route.params;
   const dispatch = useDispatch();
   const selectedTrip = useSelector((state) =>
@@ -151,8 +152,7 @@ const AddAccommodationByNameContainer = (props) => {
         setError(null);
         setIsLoading(true);
         try {
-          const result = await fetchHotelByName(cityCode, value);
-          setData(result);
+          fetchHotel(cityCode, value);
         } catch {
           setError(error);
         }
