@@ -1,4 +1,4 @@
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './SocialButtonStyle';
@@ -16,7 +16,7 @@ const SocialButton = ({
       {...rest}
     >
       <View style={styles.iconWrapper}>
-        <Fontisto name={btnType} style={styles.icon} size={22} color={color} />
+        <Icon name={btnType} style={styles.icon} size={22} color={color} />
       </View>
       <View style={styles.btnTxtWrapper}>
         <Text style={[styles.buttonText, { color: color }]}>{buttonTitle}</Text>

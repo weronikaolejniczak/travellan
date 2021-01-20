@@ -50,8 +50,9 @@ export const loginRequest = (email, password) => {
           new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
         );
         dispatch(authenticate(data.localId, data.idToken));
-        saveDataToStorage(data.idToken, data.localId, expirationDate);
+        console.log(data.localId);
         console.log(data.idToken);
+        saveDataToStorage(data.idToken, data.localId, expirationDate);
       })
       .catch((err) => {
         throw new Error('Something went wrong. Try again');
@@ -90,7 +91,7 @@ export async function onFacebookButtonPress() {
   return auth().signInWithCredential(facebookCredential);
 }
 
-export async function onGoogleButtonPress() {
+export const onGoogleButtonPress = () => {
   return async function (dispatch) {
     GoogleSignin.configure({
       webClientId: CLIENT_ID,
@@ -98,14 +99,14 @@ export async function onGoogleButtonPress() {
     const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     auth().signInWithCredential(googleCredential);
-    let user = auth().currentUser;
-    console.log(user.uid);
-    const tokena = user.getIdTokenResult(true);
-    const token = (await tokena).token;
-    console.log(token);
-    dispatch(authenticate(user.uid, token))
+    const user = auth().currentUser;
+    const localId = user.uid;
+    const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+    dispatch(authenticate(localId, idToken));
+    saveDataToStorage(idToken, user.uid, expirationDate);
+
   };
-}
+};
 
 const saveDataToStorage = (token, userId, expirationDate) =>
   AsyncStorage.setItem(

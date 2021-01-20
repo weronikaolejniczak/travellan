@@ -29,6 +29,20 @@ const AuthenticationContainer = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  const handleGoogle = async () => {
+    setError(null);
+    setIsLoading(true);
+    const action = onGoogleButtonPress();
+    try {
+      setError(null);
+      dispatch(action);
+      navigation.navigate('My trips');
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     SplashScreen.hide();
     if (error) {
@@ -137,16 +151,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   btnType="google"
                   color="#de4d41"
                   backgroundColor="#f5e7ea"
-                  onPress={() => {
-                    const action = onGoogleButtonPress();
-                    try {
-                      setError(null);
-                      dispatch(action);
-                      //navigation.navigate('My trips');
-                    } catch (err) {
-                      setError(err.message);
-                    }
-                  }}
+                  onPress={() => handleGoogle()}
                 />
               </View>
             </ScrollView>

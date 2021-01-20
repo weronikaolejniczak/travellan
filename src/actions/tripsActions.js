@@ -46,6 +46,8 @@ export const fetchTripsRequest = () => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
+    console.log(token);
+    console.log(userId);
 
     await axios({
       method: 'GET',
