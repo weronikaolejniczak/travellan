@@ -121,7 +121,7 @@ export default (state = initialState, action) => {
         break;
 
       case SET_MAP:
-        draft.trip[tripIndex].map = action.map;
+        draft.trips[tripIndex].map = action.map;
         break;
 
       default:
