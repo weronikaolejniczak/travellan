@@ -72,6 +72,7 @@ export const fetchAccommodationRequest = (tripId) => {
               accommodation[key].name,
               accommodation[key].phone,
               accommodation[key].reservationDetails,
+              accommodation[key].PDF,
             ),
           );
         }
