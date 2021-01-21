@@ -31,7 +31,7 @@ const AddNoteContainer = ({ route, navigation }) => {
         'Notes',
         2,
         cat,
-        desc.split(' ').join(', '),
+        desc.split(',').join(',\n'),
         {},
         {},
         startDate,
