@@ -16,7 +16,7 @@ const NoteItem = (props) => {
     title,
   } = props;
   const dateOfCreation = new Date(date).toLocaleString();
-  const toDoList = description.split(' ').join('\n');
+  const toDoList = description.join('\n');
 
   return (
     <ScrollView>
