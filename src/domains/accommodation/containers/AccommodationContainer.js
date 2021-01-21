@@ -13,7 +13,8 @@ import * as accommodationActions from 'actions/accommodationActions';
 import DocumentPicker from 'react-native-document-picker';
 import SplashScreen from 'react-native-splash-screen';
 import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { HotelCard, PDFModal } from 'components';
+import { HotelCard } from 'components';
+import { PDFModal } from 'domains/accommodation/components';
 import { styles } from './AccommodationContainerStyle';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -99,9 +99,9 @@ export default (state = initialState, action) => {
         break;
 
       case SET_PDF_ACC:
-        draft.trips[tripIndex].transport[
-          draft.trips[tripIndex].transport.findIndex(
-            (item) => item.id === action.transportId,
+        draft.trips[tripIndex].accommodation[
+          draft.trips[tripIndex].accommodation.findIndex(
+            (item) => item.id === action.accommodationId,
           )
         ].PDF = action.PDF;
         break;
