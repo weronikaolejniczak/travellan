@@ -57,12 +57,12 @@ const TripDetailsContainer = ({ route, navigation }) => {
           tripId={selectedTrip.id}
           icon="map"
         />
-        <NavigationButton
+        {/* <NavigationButton
           navigation={navigation}
           to="Weather"
           tripId={selectedTrip.id}
           icon="cloud"
-        />
+        />*/}
         <NavigationButton
           navigation={navigation}
           to="Budget"
