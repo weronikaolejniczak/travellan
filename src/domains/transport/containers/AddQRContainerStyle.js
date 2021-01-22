@@ -17,7 +17,6 @@ export const styles = StyleSheet.create({
   },
   centered: {
     alignContent: 'center',
-    flex: 1,
     justifyContent: 'center',
   },
   container: {
