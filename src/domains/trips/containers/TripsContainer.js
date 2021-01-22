@@ -168,7 +168,17 @@ const TripsContainer = (props) => {
 
 export const tripsOptions = (navData) => {
   return {
-    headerLeft: null,
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Toggle Drawer"
+          iconName="plus"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
