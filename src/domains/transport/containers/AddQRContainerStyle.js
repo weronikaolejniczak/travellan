@@ -1,5 +1,5 @@
 import Colors from 'constants/Colors';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   buttonContainer: {
@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
+    width: Dimensions.get('window').width ,
   },
-
   icon: {
     color: Colors.text,
     fontSize: 40,
