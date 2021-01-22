@@ -172,7 +172,7 @@ export const tripsOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Toggle Drawer"
-          iconName="plus"
+          iconName="menu"
           onPress={() => {
             navData.navigation.toggleDrawer();
           }}
