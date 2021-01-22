@@ -6,6 +6,7 @@ import Accommodation from 'models/Accommodation';
 export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
 export const DELETE_ACCOMMODATION = 'DELETE_ACCOMMODATION';
+export const SET_PDF_ACC = 'SET_PDF_ACC';
 
 const API_URL = FIREBASE_URL;
 
@@ -30,6 +31,15 @@ export const deleteAccommodation = (tripId, accommodationId) => {
     accommodationId,
     tripId,
     type: DELETE_ACCOMMODATION,
+  };
+};
+
+export const setPDF = (tripId, accommodationId, PDF) => {
+  return {
+    PDF,
+    accommodationId,
+    tripId,
+    type: SET_PDF_ACC,
   };
 };
 
@@ -62,6 +72,7 @@ export const fetchAccommodationRequest = (tripId) => {
               accommodation[key].name,
               accommodation[key].phone,
               accommodation[key].reservationDetails,
+              accommodation[key].PDF,
             ),
           );
         }
@@ -159,6 +170,39 @@ export const createAccommodationRequest = (
       })
       .catch(() => {
         throw new Error('Cannot create accommodation!');
+      });
+  };
+};
+
+export const deletePDFRequest = (tripId, accommodationId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    axios
+      .delete(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${accommodationId}/PDF.json?auth=${token}`,
+      )
+      .then(() => dispatch(setPDF(tripId, accommodationId, PDF)))
+      .catch(() => {
+        throw new Error(`Couldn't delete PDF!`);
+      });
+  };
+};
+
+export const addPDFRequest = (tripId, accommodationId, PDF) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    axios
+      .patch(
+        `${API_URL}/Trips/${userId}/${tripId}/transport/${accommodationId}.json?auth=${token}`,
+        {
+          PDF,
+        },
+      )
+      .then(() => dispatch(setPDF(tripId, accommodationId, PDF)))
+      .catch(() => {
+        throw new Error(`Couldn't update PDF`);
       });
   };
 };
