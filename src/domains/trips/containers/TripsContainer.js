@@ -69,9 +69,9 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
+        cityCode: cityCode,
         destination,
         tripId: id,
-        cityCode: cityCode,
       });
   };
 
@@ -85,13 +85,13 @@ const TripsContainer = (props) => {
     map,
   ) => {
     props.navigation.navigate('Edit trip', {
-      tripId: id,
-      destination,
+      accommodation,
       budget,
+      destination,
+      map,
       notes,
       transport,
-      accommodation,
-      map,
+      tripId: id,
     });
   };
 
