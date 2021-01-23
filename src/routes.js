@@ -70,6 +70,7 @@ const CustomDrawerContent = (props) => (
     <View>
       <DrawerItem
         label={() => <Text>Notifications</Text>}
+        icon={() => <Icon name="notification-clear-all" size={18} />}
         onPress={() => {
           props.navigation.navigate('Notification');
         }}
