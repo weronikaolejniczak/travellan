@@ -4,7 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { FAB } from 'react-native-paper';
 import * as tripsActions from 'actions/tripsActions';
 import Colors from 'constants/Colors';
 import {
@@ -119,7 +119,16 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
-      <FloatingActionButton />
+      <FAB
+        style={styles.fab}
+        small
+        icon="plus"
+        onPress={() => console.log('Pressed')}
+      />
+      <FloatingActionButton
+        loading={isLoading}
+        onPress={() => console.log('Pressed')}
+      />
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
