@@ -40,12 +40,11 @@ const AddTripContainer = ({ navigation }) => {
     (dest, date) => {
       localNotify.configure();
       const notificationDateTrigger = new Date(date);
-      const currentDate = new Date(Date.now());
+      const currentDate = new Date();
+      console.log(currentDate);
 
       if (
-        notificationDateTrigger.getDay() === currentDate.getDay() &&
-        notificationDateTrigger.getMonth() === currentDate.getMonth() &&
-        notificationDateTrigger.getFullYear() === currentDate.getFullYear()
+        notificationDateTrigger.toDateString() === currentDate.toDateString()
       ) {
         return localNotify.scheduleNotification(
           'DepartureAlert',
