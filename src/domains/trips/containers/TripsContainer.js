@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Component, useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ import {
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
-  ScrollView,
 } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
@@ -95,6 +94,10 @@ const TripsContainer = (props) => {
     });
   };
 
+  const renderFooter = () => {
+    return <Container />;
+  };
+
   useEffect(() => {
     loadTrips();
     SplashScreen.hide();
@@ -117,7 +120,7 @@ const TripsContainer = (props) => {
   }
 
   return (
-    <Container contentContainerStyle={styles.container}>
+    <Container>
       <FloatingActionButton
         loading={isLoading}
         disabled={isLoading}
@@ -125,6 +128,7 @@ const TripsContainer = (props) => {
       />
       <FlatList
         data={trips}
+        ListFooterComponent={renderFooter}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <TripItem
