@@ -88,11 +88,7 @@ const CustomDrawerContent = (props) => (
 
 const Trips = () => (
   <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen
-      name="My trips"
-      component={TripsContainer}
-      options={tripsOptions}
-    />
+    <Stack.Screen name="My trips" component={TripsContainer} />
   </Stack.Navigator>
 );
 

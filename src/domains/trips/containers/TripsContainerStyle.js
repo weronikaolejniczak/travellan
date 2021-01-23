@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   triplessText: {
     fontSize: 18,
   },
-  height: {
-    height: 30,
+  container: {
+    marginBottom: 50,
   },
 });

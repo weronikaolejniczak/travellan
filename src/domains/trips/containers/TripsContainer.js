@@ -117,7 +117,7 @@ const TripsContainer = (props) => {
   }
 
   return (
-    <Container>
+    <Container contentContainerStyle={styles.container}>
       <FloatingActionButton
         loading={isLoading}
         disabled={isLoading}
@@ -167,7 +167,6 @@ const TripsContainer = (props) => {
           </TripItem>
         )}
       />
-      <ScrollView style={styles.height}></ScrollView>
     </Container>
   );
 };

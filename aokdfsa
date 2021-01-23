@@ -1,0 +1,25 @@
+  bug/TRIPP-511-TRIPP-510-fix-issues-in-notes-content[m
+  bug/TRIPP-530-Wrong-Notification-for-starting-trip[m
+  develop[m
+* [32menhancment/TRIPP-505-fab-instead-of-plus[m
+  enhancment/TRIPP-513-calendar-with-plus-icon[m
+  [31mremotes/origin/HEAD[m -> origin/develop
+  [31mremotes/origin/bug/435-wrong-view-before-loading-trips[m
+  [31mremotes/origin/bug/500-edit-not-updating-in-redux-store[m
+  [31mremotes/origin/bug/TRIPP-457-redbox-notes[m
+  [31mremotes/origin/bug/TRIPP-511-TRIPP-510-fix-issues-in-notes-content[m
+  [31mremotes/origin/bug/TRIPP-530-Wrong-Notification-for-starting-trip[m
+  [31mremotes/origin/develop[m
+  [31mremotes/origin/enhancment/TRIPP-505-fab-instead-of-plus[m
+  [31mremotes/origin/enhancment/TRIPP-513-calendar-with-plus-icon[m
+  [31mremotes/origin/feature/262-disable-notifications[m
+  [31mremotes/origin/feature/305-actionsheet-on-adding-accommodation[m
+  [31mremotes/origin/feature/416-configure-iOS[m
+  [31mremotes/origin/feature/417-autofix-sort-keys[m
+  [31mremotes/origin/feature/TRIPP-252-accomodation-add-pdf[m
+  [31mremotes/origin/feature/TRIPP-255-add-delete-routes[m
+  [31mremotes/origin/feature/TRIPP-275-autologin-logout[m
+  [31mremotes/origin/feature/TRIPP-373-Refactor-adding-form-validation-to-use-Formik[m
+  [31mremotes/origin/feature/TRIPP-393-Selected-currency-is-undefined[m
+  [31mremotes/origin/feature/TRIPP-441-configure-gitlab-ci-pipeline[m
+  [31mremotes/origin/story/TRIPP-415-As-a-user-I-want-to-select-my-desired-destination-from-autocomplete-to-be-sure-my-trip-destination-is-correct[m
