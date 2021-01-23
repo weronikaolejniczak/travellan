@@ -2,7 +2,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
@@ -10,7 +9,6 @@ import { Colors } from 'constants';
 import {
   View as Container,
   FloatingActionButton,
-  HeaderButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
@@ -170,21 +168,6 @@ const TripsContainer = (props) => {
       />
     </Container>
   );
-};
-
-export const tripsOptions = (navData) => {
-  return {
-    headerLeft: null,
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add trip"
-          iconName="plus"
-          onPress={() => navData.navigation.navigate('Add trip')}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 export default TripsContainer;
