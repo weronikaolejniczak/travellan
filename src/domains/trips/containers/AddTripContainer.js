@@ -371,6 +371,7 @@ const AddTripContainer = ({ navigation }) => {
 
       <BudgetPicker
         data={currencyData}
+        query={currency}
         label="Budget"
         showSwitch
         toggleBudgetSwitch={toggleBudgetSwitch}
