@@ -12,6 +12,7 @@ import {
   HeaderButton,
   ItemlessFrame,
   LoadingFrame,
+  FloatingActionButton,
 } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
@@ -118,6 +119,7 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
+      <FloatingActionButton />
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}

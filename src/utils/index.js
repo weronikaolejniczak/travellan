@@ -23,3 +23,4 @@ export { default as Paragraph } from './Typography/Paragraph';
 export { default as Subheading } from './Typography/Subheading';
 export { default as Text } from './Typography/Text';
 export { default as Title } from './Typography/Title';
+export { default as FloatingActionButton } from './FloatingActionButton/FloatingActionButton';
