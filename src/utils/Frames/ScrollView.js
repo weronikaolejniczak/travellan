@@ -3,7 +3,10 @@ import { ScrollView } from 'react-native';
 
 import AppStyles from 'styles/AppStyles';
 
-const CustomScrollView = ({ children, ...props }, ref) => {
+const CustomScrollView = (
+  { children, contentContainerStyle, ...props },
+  ref,
+) => {
   const scrollViewRef = useRef();
 
   useImperativeHandle(ref, () => ({
@@ -13,7 +16,10 @@ const CustomScrollView = ({ children, ...props }, ref) => {
   return (
     <ScrollView
       ref={scrollViewRef}
-      contentContainerStyle={AppStyles.scrollViewContent}
+      contentContainerStyle={[
+        AppStyles.scrollViewContent,
+        contentContainerStyle,
+      ]}
       indicatorStyle="white"
       style={AppStyles.scrollView}
       {...props}

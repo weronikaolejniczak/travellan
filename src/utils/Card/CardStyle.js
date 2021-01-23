@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.cards,
     borderRadius: 10,
     elevation: 5,
+    overflow: 'hidden',
     shadowColor: Colors.shadow,
     shadowOffset: { height: 2, width: 2 },
     shadowOpacity: 0.3,

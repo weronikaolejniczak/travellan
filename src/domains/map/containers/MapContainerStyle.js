@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Layout } from 'constants';
+import { Layout, Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,5 +8,17 @@ export const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  actionBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  text: { color: 'orange' },
+  overlay: {
+    backgroundColor: Colors.cards,
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    top: 50,
+    width: '100%',
   },
 });

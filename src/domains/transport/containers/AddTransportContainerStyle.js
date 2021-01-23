@@ -40,9 +40,6 @@ export const styles = StyleSheet.create({
   disactiveLabel: {
     color: 'grey',
   },
-  error: {
-    color: Colors.error,
-  },
   errorContainer: {
     marginVertical: 5,
   },
@@ -68,21 +65,6 @@ export const styles = StyleSheet.create({
   metrics: {
     marginTop: '5%',
   },
-  modal: {
-    backgroundColor: Colors.background,
-    flex: 1,
-  },
-  modalContent: {
-    paddingHorizontal: '5%',
-  },
-  modalHeader: {
-    marginTop: '2%',
-  },
-  modalHeaderText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: '5%',
-  },
   nonactiveRadioIcon: {
     color: 'grey',
     fontSize: 26,
@@ -97,12 +79,6 @@ export const styles = StyleSheet.create({
   pickerText: {
     color: Colors.text,
     fontSize: 18,
-  },
-  returnIcon: {
-    color: Colors.text,
-    fontSize: 25,
-    marginRight: '5%',
-    paddingVertical: 7,
   },
   rowAndAlign: {
     alignItems: 'center',

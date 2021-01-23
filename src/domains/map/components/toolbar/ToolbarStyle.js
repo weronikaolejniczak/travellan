@@ -7,11 +7,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  text: { color: 'orange' },
   overlay: {
     backgroundColor: Colors.cards,
     justifyContent: 'flex-end',
     position: 'absolute',
     top: 0,
     width: '100%',
+  },
+  searchResult: {
+    backgroundColor: Colors.background,
+    borderRadius: 50,
+    paddingHorizontal: 25,
+    paddingVertical: 8,
   },
 });

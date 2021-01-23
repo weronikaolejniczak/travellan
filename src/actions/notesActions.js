@@ -138,6 +138,7 @@ export const editNoteRequest = (
       .put(
         `${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,
         {
+          noteId,
           date,
           category,
           title,

@@ -13,12 +13,6 @@ export const styles = StyleSheet.create({
   buttonTouchable: {
     padding: 16,
   },
-  centerText: {
-    color: '#777',
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-  },
   centered: {
     alignContent: 'center',
     flex: 1,
@@ -29,19 +23,19 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: '5%',
-    paddingTop: '12%',
   },
-  containerR: {
-    backgroundColor: Colors.background,
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
+
   icon: {
     color: Colors.text,
     fontSize: 40,
+  },
+  innerQrContainer: {
+    alignSelf: 'stretch',
+  },
+  miniHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   qrstyle: {
     alignContent: 'center',
@@ -53,8 +47,16 @@ export const styles = StyleSheet.create({
     width: '100%',
     zIndex: 5,
   },
-  textBold: {
-    color: '#000',
-    fontWeight: '500',
+  text: {
+    color: Colors.text,
+    fontSize: 13.5,
+    margin: 16,
+    textAlign: 'justify',
+  },
+  textHead: {
+    color: Colors.primary,
+    fontSize: 20,
+    margin: 16,
+    textAlign: 'justify',
   },
 });

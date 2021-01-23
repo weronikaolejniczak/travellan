@@ -11,9 +11,9 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import SplashScreen from 'react-native-splash-screen';
+import DocumentPicker from 'react-native-document-picker';
 import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { TransportItem } from '../components';
+import { PDFModal, QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
@@ -26,11 +26,47 @@ const TransportContainer = ({ route, navigation }) => {
   const transport = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).transport,
   );
-
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
+  const [selectedTransportId, setSelectedTransportId] = useState(' ');
 
+  const handlePressQR = useCallback(
+    (QR, id) => {
+      if (QR === undefined || QR === ' ' || QR === null || QR === '') {
+        addQR(id);
+      } else {
+        openQRModal(id);
+      }
+    },
+    [addQR, openQRModal],
+  );
+  const handlePressPDF = useCallback(
+    (PDF, id) => {
+      if (PDF === undefined || PDF === ' ' || PDF === null || PDF === '') {
+        Alert.alert(
+          'Add a ticket PDF?',
+          'Attach document to the ticket.',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => addPDF(id),
+              text: 'OK',
+            },
+          ],
+          { cancelable: true },
+        );
+      } else {
+        openPDFModal(id);
+      }
+    },
+    [addPDF, openPDFModal],
+  );
   const addQR = useCallback(
     async (id) => {
       setIsRefreshing(true);
@@ -47,15 +83,117 @@ const TransportContainer = ({ route, navigation }) => {
     [navigation, tripId],
   );
 
-  const persistDelete = useCallback(
+  const addPDF = useCallback(
+    async (id) => {
+      setIsRefreshing(true);
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.pdf],
+        });
+        const temp = res.uri;
+        await dispatch(transportActions.addPDFRequest(tripId, id, temp));
+      } catch (err) {
+        if (!DocumentPicker.isCancel(err)) throw err;
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+  const openQRModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsQRModalOpen(true);
+  }, []);
+  const openPDFModal = useCallback((id) => {
+    setSelectedTransportId(id);
+    setIsPDFModalOpen(true);
+  }, []);
+  const findTransportQR = (id) => {
+    if (id === ' ') {
+      return transport[0].QR;
+    } else {
+      const index = transport.findIndex((item) => item.id === id);
+      return transport[index].QR;
+    }
+  };
+  const findTransportPDF = (id) => {
+    if (id === ' ') {
+      let pdf = transport[0].PDF;
+      let source = { uri: pdf };
+      return source;
+    } else {
+      const index = transport.findIndex((item) => item.id === id);
+      let pdf = transport[index].PDF;
+      let source = { uri: pdf };
+      return source;
+    }
+  };
+  const handleQRDelete = useCallback(
+    (items) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Delete QR code',
+        'Are you sure?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDeleteQR(items),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDeleteQR],
+  );
+  const persistDeletePDF = useCallback(
     (id) => {
       setIsRefreshing(true);
       try {
-        dispatch(transportActions.deleteTransportRequest(tripId, id));
+        dispatch(transportActions.deletePDFRequest(tripId, id));
       } catch {
         setError('Something went wrong!');
       }
       setIsRefreshing(false);
+      setIsPDFModalOpen(false);
+    },
+    [dispatch, tripId],
+  );
+  const handlePDFDelete = useCallback(
+    (items) => {
+      setIsRefreshing(true);
+      Alert.alert(
+        'Unlink the document',
+        'Are you sure? (Do not worry, the operation will not delete the document from your device)',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancel',
+          },
+          {
+            onPress: () => persistDeletePDF(items),
+            text: 'OK',
+          },
+        ],
+        { cancelable: true },
+      );
+      setIsRefreshing(false);
+    },
+    [persistDeletePDF],
+  );
+  const persistDeleteQR = useCallback(
+    (id) => {
+      setIsRefreshing(true);
+      try {
+        dispatch(transportActions.deleteQRRequest(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+      setIsQRModalOpen(false);
     },
     [dispatch, tripId],
   );
@@ -64,7 +202,7 @@ const TransportContainer = ({ route, navigation }) => {
     (noteId) => {
       setIsRefreshing(true);
       Alert.alert(
-        'Delete note',
+        'Delete saved ticket',
         'Are you sure?',
         [
           {
@@ -81,6 +219,20 @@ const TransportContainer = ({ route, navigation }) => {
       setIsRefreshing(false);
     },
     [persistDelete],
+  );
+
+  const persistDelete = useCallback(
+    (id) => {
+      setIsRefreshing(true);
+      setSelectedTransportId(' ');
+      try {
+        dispatch(transportActions.deleteTransportRequest(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
   );
 
   const loadTransport = useCallback(() => {
@@ -126,6 +278,20 @@ const TransportContainer = ({ route, navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View>
+        <QRModal
+          QR={findTransportQR(selectedTransportId)}
+          handleDeleteQR={() => handleQRDelete(selectedTransportId)}
+          handleCloseQR={() => setIsQRModalOpen(false)}
+          isQRModalOpen={isQRModalOpen}
+          handleError={() => setError(error)}
+        />
+        <PDFModal
+          PDF={findTransportPDF(selectedTransportId)}
+          handleDeletePDF={() => handlePDFDelete(selectedTransportId)}
+          handleClosePDF={() => setIsPDFModalOpen(false)}
+          isPDFModalOpen={isPDFModalOpen}
+          handleError={() => setError(error)}
+        />
         <FlatList
           onRefresh={loadTransport}
           refreshing={isRefreshing}
@@ -153,9 +319,9 @@ const TransportContainer = ({ route, navigation }) => {
               dateOfDeparture={data.item.dateOfDeparture}
               placeOfDeparture={data.item.placeOfDeparture}
               QR={data.item.QR}
-              PDF={data.item.PDF}
               handleDeleteTransport={() => handleDelete(data.item.id)}
-              handleAddQR={() => addQR(data.item.id)}
+              handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
+              handlePressPDF={() => handlePressPDF(data.item.PDF, data.item.id)}
             />
           )}
         />
