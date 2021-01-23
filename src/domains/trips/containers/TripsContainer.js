@@ -1,15 +1,14 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Component, useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
 import {
   View as Container,
-  HeaderButton,
+  FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
@@ -69,9 +68,9 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
+        cityCode: cityCode,
         destination,
         tripId: id,
-        cityCode: cityCode,
       });
   };
 
@@ -85,14 +84,18 @@ const TripsContainer = (props) => {
     map,
   ) => {
     props.navigation.navigate('Edit trip', {
-      tripId: id,
-      destination,
+      accommodation,
       budget,
+      destination,
+      map,
       notes,
       transport,
-      accommodation,
-      map,
+      tripId: id,
     });
+  };
+
+  const renderFooter = () => {
+    return <Container />;
   };
 
   useEffect(() => {
@@ -118,8 +121,14 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
+      <FloatingActionButton
+        loading={isLoading}
+        disabled={isLoading}
+        onPress={() => props.navigation.navigate('Add trip')}
+      />
       <FlatList
         data={trips}
+        ListFooterComponent={renderFooter}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <TripItem
@@ -164,21 +173,6 @@ const TripsContainer = (props) => {
       />
     </Container>
   );
-};
-
-export const tripsOptions = (navData) => {
-  return {
-    headerLeft: null,
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add trip"
-          iconName="plus"
-          onPress={() => navData.navigation.navigate('Add trip')}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 export default TripsContainer;
