@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 
 import { AccountButton } from 'components';
@@ -21,6 +21,7 @@ const BudgetPicker = ({
   setAccount,
   showSwitch,
   toggleBudgetSwitch,
+  scrollToBottom,
 }) => {
   const query = currency;
 
@@ -45,6 +46,10 @@ const BudgetPicker = ({
     filteredCurrencies.length >= 1 && comp(query, filteredCurrencies[0].name)
       ? []
       : filteredCurrencies;
+
+  useEffect(() => {
+    if (filteredCurrencies.length > 0) scrollToBottom();
+  }, [filteredCurrencies, scrollToBottom]);
 
   return (
     <View style={styles.budgetPickerWrapper}>

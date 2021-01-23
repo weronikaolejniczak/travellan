@@ -32,6 +32,7 @@ const AddTripContainer = ({ navigation }) => {
 
   const [destination, setDestination] = useState('');
   const [destinationError, setDestinationError] = useState('');
+  const [isFromAutocomplete, setIsFromAutocomplete] = useState(false);
   const [autocompleteData, setAutocompleteData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
@@ -267,16 +268,30 @@ const AddTripContainer = ({ navigation }) => {
     showSnackbar,
   ]);
 
+  const scrollToBottom = () => scrollViewRef.current.scrollToBottom();
+
+  const handleDestinationChange = (text) => {
+    setDestination(text);
+    setIsFromAutocomplete(false);
+  };
+
+  const onAutocompleteDestinationPress = (item) => {
+    setDestinationError('');
+    setDestination(`${item.address.name}, ${item.address.country}`);
+    setAutocompleteData([]);
+    setIsFromAutocomplete(true);
+  };
+
   const autocompleteDestination = useCallback(async () => {
-    if (destination.length >= 3) {
+    if (destination.length > 3) {
       const result = await autocompleteCity(destination);
       setAutocompleteData(result);
     }
   }, [destination]);
 
   useEffect(() => {
-    autocompleteDestination();
-  }, [autocompleteDestination, destination]);
+    !isFromAutocomplete && autocompleteDestination();
+  }, [autocompleteDestination, destination, isFromAutocomplete]);
 
   useEffect(() => {
     const fittingCurrenciesNumber = currencies.filter(
@@ -293,7 +308,7 @@ const AddTripContainer = ({ navigation }) => {
     <Container ref={scrollViewRef} keyboardShouldPersistTaps="always">
       <View style={styles.noticeWrapper}>
         <Paragraph style={styles.notice}>
-          Adding a trip may last to a minute!
+          Adding a trip may last up to a minute!
         </Paragraph>
       </View>
 
@@ -303,11 +318,8 @@ const AddTripContainer = ({ navigation }) => {
         query={destination}
         keyExtractor={(item) => item.osm_id.toString()}
         itemLabel={(item) => `${item.address.name}, ${item.address.country}`}
-        onChange={setDestination}
-        onPress={(item) => {
-          setDestinationError('');
-          setDestination(`${item.address.name}, ${item.address.country}`);
-        }}
+        onChange={handleDestinationChange}
+        onPress={onAutocompleteDestinationPress}
         error={destinationError}
       />
 
@@ -341,6 +353,7 @@ const AddTripContainer = ({ navigation }) => {
         handleBudgetValueChange={setBudget}
         currency={currency}
         handleCurrencyChange={setCurrency}
+        scrollToBottom={scrollToBottom}
         account={account}
         currencyError={currencyError}
         setAccount={setAccount}
