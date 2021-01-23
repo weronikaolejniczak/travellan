@@ -76,6 +76,7 @@ const CustomDrawerContent = (props) => (
       />
       <DrawerItem
         label={() => <Text>Privacy Policy</Text>}
+        icon={() => <Icon name="police-badge" size={18} />}
         onPress={() => {
           Linking.openURL('https://travellan.flycricket.io/privacy.html');
         }}
