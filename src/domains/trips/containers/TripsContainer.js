@@ -11,6 +11,7 @@ import {
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
+  ScrollView,
 } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
@@ -166,6 +167,7 @@ const TripsContainer = (props) => {
           </TripItem>
         )}
       />
+      <ScrollView style={styles.height}></ScrollView>
     </Container>
   );
 };
