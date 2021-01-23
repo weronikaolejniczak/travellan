@@ -5,7 +5,7 @@ import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { FAB } from 'react-native-paper';
 import * as tripsActions from 'actions/tripsActions';
 import Colors from 'constants/Colors';
 import {
@@ -120,7 +120,7 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
-      <FloatingActionButton onPress={() => console.log('hey, im working!')} />
+      <FloatingActionButton loading={isLoading} onPress={() => console.log('hey, im working!')} />
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
