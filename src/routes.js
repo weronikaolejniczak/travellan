@@ -75,6 +75,12 @@ const CustomDrawerContent = (props) => (
         }}
       />
       <DrawerItem
+        label={() => <Text>Privacy Policy</Text>}
+        onPress={() => {
+          //props.navigation.navigate('');
+        }}
+      />
+      <DrawerItem
         label={() => <Text>Logout</Text>}
         icon={() => <Icon name="logout" size={18} />}
         onPress={() => {
