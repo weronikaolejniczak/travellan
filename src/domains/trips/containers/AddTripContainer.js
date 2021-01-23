@@ -12,11 +12,13 @@ import {
   Paragraph,
 } from 'utils';
 import { BudgetPicker } from 'components';
+import { CURRENCIES } from 'data/Currencies';
 import {
   addEventToCalendar,
   autocompleteCity,
   notificationManager,
 } from 'services';
+import { compareStrings } from 'helpers';
 import { createTripRequest } from 'actions/tripsActions';
 import { CURRENCIES as currencies } from 'data/Currencies';
 import { styles } from './AddTripContainerStyle';
@@ -79,6 +81,7 @@ const AddTripContainer = ({ navigation }) => {
     [destination, localNotify],
   );
 
+  // $todo: refactor filter function to utility
   const filterDestinations = (input, destinations) =>
     destination === ''
       ? []
@@ -89,8 +92,6 @@ const AddTripContainer = ({ navigation }) => {
           )
           .splice(0, 6);
 
-  const compare = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
   const filteredDestinations = filterDestinations(
     destination,
     autocompleteData,
@@ -98,9 +99,33 @@ const AddTripContainer = ({ navigation }) => {
 
   const destinationData =
     filteredDestinations.length >= 1 &&
-    compare(destination, filteredDestinations[0].display_name)
+    compareStrings(destination, filteredDestinations[0].display_name)
       ? []
       : filteredDestinations;
+  // $end
+
+  // $todo: refactor filter function to utility
+  const filterCurrencies = (input, currs) => {
+    const inputRegex = new RegExp(`${input.trim()}`, 'i');
+    return currency === ''
+      ? []
+      : currs
+          .filter(
+            (curr) =>
+              curr.name.search(inputRegex) >= 0 ||
+              curr.iso.search(inputRegex) >= 0,
+          )
+          .splice(0, 6);
+  };
+
+  const filteredCurrencies = filterCurrencies(currency, CURRENCIES);
+
+  const currencyData =
+    filteredCurrencies.length >= 1 &&
+    compareStrings(currency, filteredCurrencies[0].name)
+      ? []
+      : filteredCurrencies;
+  // $end
 
   const adjustEndDateToStartDate = (currentDate) =>
     currentDate > endDate && setEndDate(currentDate);
@@ -268,8 +293,6 @@ const AddTripContainer = ({ navigation }) => {
     showSnackbar,
   ]);
 
-  const scrollToBottom = () => scrollViewRef.current.scrollToBottom();
-
   const handleDestinationChange = (text) => {
     setDestination(text);
     setIsFromAutocomplete(false);
@@ -303,6 +326,10 @@ const AddTripContainer = ({ navigation }) => {
   useEffect(() => {
     !!budgetValueError && budget.match(budgetRegex) && setBudgetValueError('');
   }, [budget, budgetValueError]);
+
+  useEffect(() => {
+    if (filteredCurrencies.length > 0) scrollViewRef.current?.scrollToEnd();
+  }, [filteredCurrencies]);
 
   return (
     <Container ref={scrollViewRef} keyboardShouldPersistTaps="always">
@@ -343,6 +370,7 @@ const AddTripContainer = ({ navigation }) => {
       />
 
       <BudgetPicker
+        data={currencyData}
         label="Budget"
         showSwitch
         toggleBudgetSwitch={toggleBudgetSwitch}
@@ -353,7 +381,6 @@ const AddTripContainer = ({ navigation }) => {
         handleBudgetValueChange={setBudget}
         currency={currency}
         handleCurrencyChange={setCurrency}
-        scrollToBottom={scrollToBottom}
         account={account}
         currencyError={currencyError}
         setAccount={setAccount}
