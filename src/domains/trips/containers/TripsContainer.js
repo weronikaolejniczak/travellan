@@ -4,16 +4,15 @@ import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
-import { FAB } from 'react-native-paper';
 
 import * as tripsActions from 'actions/tripsActions';
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
 import {
   View as Container,
+  FloatingActionButton,
   HeaderButton,
   ItemlessFrame,
   LoadingFrame,
-  FloatingActionButton,
 } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
@@ -71,9 +70,9 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
+        cityCode: cityCode,
         destination,
         tripId: id,
-        cityCode: cityCode,
       });
   };
 
@@ -87,13 +86,13 @@ const TripsContainer = (props) => {
     map,
   ) => {
     props.navigation.navigate('Edit trip', {
-      tripId: id,
-      destination,
+      accommodation,
       budget,
+      destination,
+      map,
       notes,
       transport,
-      accommodation,
-      map,
+      tripId: id,
     });
   };
 
@@ -120,13 +119,11 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
-      <FAB
-        style={styles.fab}
-        small
-        icon="plus"
-        onPress={() => console.log('Pressed')}
+      <FloatingActionButton
+        loading={isLoading}
+        disabled={isLoading}
+        onPress={() => props.navigation.navigate('Add trip')}
       />
-      <FloatingActionButton onPress={console.log('fdsa')} />
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id}
