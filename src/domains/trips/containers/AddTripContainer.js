@@ -41,7 +41,6 @@ const AddTripContainer = ({ navigation }) => {
       localNotify.configure();
       const notificationDateTrigger = new Date(date);
       const currentDate = new Date();
-      console.log(currentDate);
 
       if (
         notificationDateTrigger.toDateString() === currentDate.toDateString()
