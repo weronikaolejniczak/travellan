@@ -77,7 +77,7 @@ const CustomDrawerContent = (props) => (
       <DrawerItem
         label={() => <Text>Privacy Policy</Text>}
         onPress={() => {
-          Linking.openURL('https://google.com');
+          Linking.openURL('https://travellan.flycricket.io/privacy.html');
         }}
       />
       <DrawerItem
