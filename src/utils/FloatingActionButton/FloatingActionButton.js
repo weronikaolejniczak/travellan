@@ -4,7 +4,7 @@ import { styles } from './FloatingActionButtonStyle';
 
 const FloatingActionButton = ({ onPress, loading }) => (
   <FAB
-    style={[styles.fab]}
+    style={styles.fab}
     icon="plus"
     onPress={onPress}
     loading={loading}
