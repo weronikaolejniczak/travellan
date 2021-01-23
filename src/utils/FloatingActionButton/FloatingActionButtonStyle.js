@@ -9,6 +9,5 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     zIndex: 1,
-    backgroundColor: Colors.primary,
   },
 });
