@@ -1,14 +1,8 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {
-  Alert,
-  FlatList,
-  HeaderButton,
-  Item,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
@@ -16,7 +10,7 @@ import {
   View as Container,
   ErrorFrame,
   FloatingActionButton,
-  HeaderButtons,
+  HeaderButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';

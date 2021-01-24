@@ -47,7 +47,9 @@ import TransportContainer, {
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
-import TripsContainer from 'domains/trips/containers/TripsContainer';
+import TripsContainer, {
+  tripsOptions,
+} from 'domains/trips/containers/TripsContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
 import * as userActions from 'src/actions/userActions.js';
@@ -93,7 +95,11 @@ const CustomDrawerContent = (props) => (
 
 const Trips = () => (
   <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen name="My trips" component={TripsContainer} />
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
   </Stack.Navigator>
 );
 
@@ -104,7 +110,7 @@ const DrawerNavigator = () => (
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="My trips" component={Trips} />
+    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
   </Drawer.Navigator>
 );
 
