@@ -8,6 +8,7 @@ import {
   Headline,
   ItemlessFrame,
   TextInput,
+  Text,
 } from 'utils';
 import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
@@ -139,6 +140,9 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
       <Button loading={isLoading} disabled={isLoading} onPress={handleSubmit}>
         Submit
       </Button>
+      <Text style={styles.text}>
+        Loading recommended hotels may take up to one minute!
+      </Text>
     </Container>
   );
 };
