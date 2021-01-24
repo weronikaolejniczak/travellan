@@ -71,7 +71,7 @@ const TripsContainer = ({ navigation }) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       navigation.navigate('Details', {
-        cityCode: cityCode,
+        cityCode,
         destination,
         tripId: id,
       });
