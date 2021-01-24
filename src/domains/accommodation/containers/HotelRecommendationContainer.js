@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import recommendHotel from 'services/recommendHotel';
 import {
   Button,
-  ScrollView as Container,
+  View as Container,
   Headline,
   ItemlessFrame,
   TextInput,

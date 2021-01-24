@@ -168,11 +168,9 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <View style={styles.headlineWrapper}>
-            <Headline>
-              Add your accomodation by typing name of your hotel
-            </Headline>
-          </View>
+          <Headline styles={styles.headline}>
+            Add your accomodation by typing name of your hotel
+          </Headline>
           <TextInput
             label="Hotel name"
             onChange={handleChange('hotelName')}
