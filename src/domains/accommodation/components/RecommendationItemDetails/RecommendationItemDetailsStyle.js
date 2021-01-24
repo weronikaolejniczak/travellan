@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
 
 const { height, width } = Dimensions.get('window');
 export const cardHeight = height * 0.83;
@@ -8,49 +8,49 @@ export const cardWidth = width * 0.923;
 export const spacingForCardInset = width * 0.03;
 
 export const styles = StyleSheet.create({
-  recommendationCard: {
-    position: 'relative',
-    marginHorizontal: width * 0.04,
-    marginVertical: height * 0.02,
-  },
-  imageContainer: {
-    width: cardWidth,
-    height: cardHeight * 0.4,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-  text: {
-    color: Colors.text,
-  },
-  details: {
-    padding: '5%',
-  },
-  destination: {
-    fontSize: 22,
+  alignRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: '4%',
   },
   date: {
     fontSize: 14,
   },
-  alignRow: {
-    marginHorizontal: '4%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  destination: {
+    fontSize: 22,
+  },
+  details: {
+    padding: '5%',
   },
   header: {
     color: Colors.text,
     fontSize: 18,
   },
-  rating: {
-    position: 'absolute',
-    top: 5,
-    right: 30,
-    padding: 10,
-    backgroundColor: Colors.primary,
-    borderRadius: 50,
-  },
   headerOverImage: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+  },
+  imageContainer: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    height: cardHeight * 0.4,
+    width: cardWidth,
+  },
+  rating: {
+    backgroundColor: Colors.primary,
+    borderRadius: 50,
+    padding: 10,
+    position: 'absolute',
+    right: 30,
+    top: 5,
+  },
+  recommendationCard: {
+    marginHorizontal: width * 0.04,
+    marginVertical: height * 0.02,
+    position: 'relative',
+  },
+  text: {
+    color: Colors.text,
   },
 });

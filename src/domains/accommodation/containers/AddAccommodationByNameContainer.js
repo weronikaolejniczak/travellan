@@ -114,32 +114,30 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
   if (data)
     return (
       <Container contentContainerStyle={styles.container}>
-        <View style={styles.paddingTop}>
-          <Headline style={styles.headline}>Verify hotel data</Headline>
-          <Subheading style={styles.caution}>
-            Be sure to check it's valid!
-          </Subheading>
-          <View style={styles.hotelCardWrapper}>
-            <HotelCard {...data} />
-          </View>
-          <View style={styles.smallPaddingTop}>
-            <View style={styles.buttonContainer}>
-              <Button
-                loading={isLoading}
-                disabled={isLoading}
-                onPress={submitHandler}
-              >
-                Save hotel
-              </Button>
-              <Button
-                loading={isLoading}
-                disabled={isLoading}
-                onPress={cancelAction}
-                mode="outlined"
-              >
-                Try again
-              </Button>
-            </View>
+        <Headline style={styles.headline}>Verify hotel data</Headline>
+        <Subheading style={styles.caution}>
+          Be sure to check it's valid!
+        </Subheading>
+        <View style={styles.hotelCardWrapper}>
+          <HotelCard {...data} />
+        </View>
+        <View style={styles.actionsWrapper}>
+          <View style={styles.buttonContainer}>
+            <Button
+              loading={isLoading}
+              disabled={isLoading}
+              onPress={submitHandler}
+            >
+              Save hotel
+            </Button>
+            <Button
+              loading={isLoading}
+              disabled={isLoading}
+              onPress={cancelAction}
+              mode="outlined"
+            >
+              Try again
+            </Button>
           </View>
         </View>
       </Container>
@@ -151,14 +149,15 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
         hotelName: '',
       }}
       onSubmit={async (values) => {
-        setError(null);
+        setError('');
         setIsLoading(true);
         try {
-          fetchHotel(values.hotelName);
+          await fetchHotel(values.hotelName);
+          setIsLoading(false);
         } catch {
           setError(error);
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         hotelName: yup.string().max(40).required('Cannot be left empty'),
@@ -166,7 +165,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <View style={{ marginBottom: 10, marginTop: 10 }}>
+          <View style={styles.headlineWrapper}>
             <Headline>
               Add your accomodation by typing name of your hotel
             </Headline>

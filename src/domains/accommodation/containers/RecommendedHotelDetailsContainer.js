@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
+
 import { ScrollView as Container } from 'utils';
-import RecommendationItemDetails from '../components/RecommendationItemDetails/RecommendationItemDetails';
+import { RecommendationItemDetails } from '../components';
 
-const HotelRecommendationContainer = (props) => {
-  const hotelInfo = props.route.params.hotelDetails;
-  return (
-    <Container>
-      <RecommendationItemDetails data={hotelInfo} />
-    </Container>
-  );
-};
+// $todo: fix styling - don't duplicate code!
+const HotelRecommendationContainer = ({ route }) => (
+  <Container>
+    <RecommendationItemDetails data={route.params.hotelDetails} />
+  </Container>
+);
 
-export default HotelRecommendationContainer;
+export default memo(HotelRecommendationContainer);

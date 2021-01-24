@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
 import { ErrorFrame, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { PDFModal, QRModal, TransportItem } from '../components';
+import { PDFModal } from 'components';
+import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
 const TransportContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
+  const { tripId } = route.params;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );

@@ -1,16 +1,16 @@
-import React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import React, { memo } from 'react';
 import {
+  ImageBackground,
   Platform,
   Text,
   TouchableOpacity,
   View,
-  ImageBackground,
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
-import { Colors, Layout } from 'constants';
 
 import { Card } from 'utils';
+import { Colors, Layout } from 'constants';
 import { styles } from './RecommendationItemShortStyle';
 
 const RecommendationItemShort = ({ data, onSelect }) => {
@@ -67,4 +67,4 @@ const RecommendationItemShort = ({ data, onSelect }) => {
   );
 };
 
-export default RecommendationItemShort;
+export default memo(RecommendationItemShort);

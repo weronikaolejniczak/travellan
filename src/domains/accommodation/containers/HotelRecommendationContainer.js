@@ -9,7 +9,7 @@ import {
   ItemlessFrame,
   TextInput,
 } from 'utils';
-import { RecommendationItemShort } from '../components/RecommendationItemShort';
+import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
