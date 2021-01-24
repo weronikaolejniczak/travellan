@@ -17,6 +17,9 @@ export default {
   bigMargin: {
     margin: big,
   },
+  bigMarginTop: {
+    marginTop: big,
+  },
   bigPadding: {
     padding: big,
   },
@@ -34,6 +37,9 @@ export default {
   },
   horizontalPadding: {
     paddingHorizontal: normal,
+  },
+  hugeMarginTop: {
+    marginTop: huge,
   },
   hugeTopPadding: {
     paddingTop: huge,
