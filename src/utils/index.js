@@ -4,6 +4,7 @@ export { default as Button } from './Button';
 export { default as Card } from './Card/Card';
 export { default as Checkbox } from './Checkbox';
 export { default as DateTimePicker } from './DateTimePicker/DateTimePicker';
+export { default as FloatingActionButton } from './FloatingActionButton/FloatingActionButton';
 export { default as HeaderButton } from './HeaderButton';
 export { default as RadioButton } from './RadioButton/RadioButton';
 export { default as RadioButtonGroup } from './RadioButtonGroup';
@@ -13,6 +14,7 @@ export { default as Select } from './Select/Select';
 export { default as Switch } from './Switch/Switch';
 export { default as TextInput } from './TextInput';
 
+export { default as ErrorFrame } from './Frames/ErrorFrame/ErrorFrame';
 export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';
 export { default as LoadingFrame } from './Frames/LoadingFrame/LoadingFrame';
 export { default as ScrollView } from './Frames/ScrollView';

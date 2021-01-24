@@ -31,7 +31,10 @@ const AddNoteContainer = ({ route, navigation }) => {
         'Notes',
         2,
         cat,
-        desc.split(' ').join(', '),
+        desc
+          .split(/[\n,]+/)
+          .join(',\n')
+          .trim(),
         {},
         {},
         startDate,
@@ -49,7 +52,9 @@ const AddNoteContainer = ({ route, navigation }) => {
   const submitHandler = async () => {
     setIsLoading(true);
     try {
-      await dispatch(createNoteRequest(tripId, category, title, description));
+      await dispatch(
+        createNoteRequest(tripId, category, title.trim(), description.trim()),
+      );
       navigation.navigate('Notes', {
         tripId: selectedTrip.id,
       });
@@ -58,7 +63,7 @@ const AddNoteContainer = ({ route, navigation }) => {
       setError('Something went wrong!');
     }
     setIsLoading(false);
-    category === 'To Pack' && callNotification(category, description);
+    category === 'To Pack' && callNotification(category, description.trim());
   };
 
   useEffect(() => {

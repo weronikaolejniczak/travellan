@@ -1,4 +1,12 @@
-import React, { createRef, useCallback, useEffect, useState } from 'react';
+import DocumentPicker from 'react-native-document-picker';
+import React, {
+  createRef,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {
   Alert,
   Animated,
@@ -8,15 +16,12 @@ import {
   View,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as accommodationActions from 'actions/accommodationActions';
-import DocumentPicker from 'react-native-document-picker';
-import SplashScreen from 'react-native-splash-screen';
 import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { HotelCard } from 'components';
-import { PDFModal } from 'domains/accommodation/components';
+import { HotelCard, PDFModal } from 'components';
 import { styles } from './AccommodationContainerStyle';
-import { useDispatch, useSelector } from 'react-redux';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.923;
@@ -24,18 +29,20 @@ const actionSheetRef = createRef();
 
 const AccommodationContainer = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
-  const scrollX = new Animated.Value(0);
-  const position = Animated.divide(scrollX, cardWidth);
+  const { tripId } = route.params;
   const accommodation = useSelector(
     (state) =>
       state.trips.trips.find((item) => item.id === tripId).accommodation,
   );
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedAccomodationId, setSelectedAccomodationId] = useState(' ');
+
+  const scrollX = new Animated.Value(0);
+  const position = Animated.divide(scrollX, cardWidth);
 
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
@@ -107,6 +114,7 @@ const AccommodationContainer = ({ navigation, route }) => {
       return source;
     }
   };
+
   const persistDeletePDF = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -176,29 +184,24 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   if (Array.isArray(accommodation) && accommodation.length < 1) {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <ItemlessFrame message="You have no accomodation saved!" />
+      <>
+        <ItemlessFrame>You have no accomodation saved!</ItemlessFrame>
         <ActionSheet
           ref={actionSheetRef}
           elements={[
             {
               id: '0',
-              label: 'Add accommodation manually',
-              onPress: () => navigateToScreen('Add accommodation'),
-            },
-            {
-              id: '1',
               label: 'Add hotel by name',
               onPress: () => navigateToScreen('Add hotel by name'),
             },
             {
-              id: '2',
+              id: '1',
               label: 'Hotel recommendation',
               onPress: () => navigateToScreen('Hotel recommendation'),
             },
           ]}
         />
-      </ScrollView>
+      </>
     );
   }
 
@@ -286,4 +289,4 @@ export const accommodationOptions = (navData) => ({
   ),
 });
 
-export default AccommodationContainer;
+export default memo(AccommodationContainer);
