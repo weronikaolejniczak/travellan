@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   },
   addButtonIcon: {
     color: Colors.cards,
-    fontSize: 28,
+    fontSize: 22,
   },
   container: {
     alignItems: 'center',
@@ -19,19 +19,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     padding: 10,
   },
-  currencyActive: {
-    color: Colors.primary,
-    fontSize: 22,
+  currency: {
+    fontSize: 20,
   },
   currencyBubble: {
     backgroundColor: Colors.background,
     borderRadius: 25,
     paddingHorizontal: 25,
     paddingVertical: 8,
-  },
-  currencyNonactive: {
-    color: Colors.placeholder,
-    fontSize: 22,
   },
   list: {
     width: 200,

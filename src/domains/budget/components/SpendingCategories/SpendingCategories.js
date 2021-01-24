@@ -16,6 +16,7 @@ const SpendingCategories = ({ category, chooseCategory }) => (
     <View style={styles.categoriesContainer}>
       {categories.icons.map((item) => (
         <TouchableOpacity
+          key={item}
           style={styles.button}
           onPress={() => chooseCategory(item)}
         >

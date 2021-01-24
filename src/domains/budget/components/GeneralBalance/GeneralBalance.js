@@ -6,7 +6,7 @@ import { styles } from './GeneralBalanceStyle';
 
 const GeneralBalance = ({ value }) => (
   <View style={styles.container}>
-    <Label>General balance</Label>
+    <Label style={styles.label}>General balance</Label>
     <Text style={[styles.value, value < 0 ? styles.negative : styles.positive]}>
       {value < 0 ? '-' : '+'}
       {value}

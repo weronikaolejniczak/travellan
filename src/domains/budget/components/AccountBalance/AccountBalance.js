@@ -7,7 +7,7 @@ import { styles } from './AccountBalanceStyle';
 
 const AccountBalance = ({ label, value, iconName }) => (
   <View style={styles.container}>
-    <Label>{label}</Label>
+    <Label style={styles.label}>{label}</Label>
     <View style={styles.accounts}>
       <Icon name={iconName} style={styles.icon} />
       <Text

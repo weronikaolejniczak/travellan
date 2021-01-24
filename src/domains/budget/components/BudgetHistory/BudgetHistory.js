@@ -13,7 +13,9 @@ const BudgetHistory = ({ history }) =>
     history
       .slice(0)
       .reverse()
-      .map((item) => <BudgetHistoryTab item={item} />)
+      .map((item) => (
+        <BudgetHistoryTab key={item.date.toString()} item={item} />
+      ))
   );
 
 export default memo(BudgetHistory);

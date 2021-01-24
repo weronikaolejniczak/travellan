@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { Alert, Keyboard, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as categories from 'data/SpendingCategories';
@@ -22,11 +22,10 @@ import { styles } from './BudgetContainerStyle';
 const BudgetContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { tripId } = route.params;
+  let keyboardRef = useRef();
   const budget = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
-
-  //console.log('budget: ', budget);
 
   // $todo: index instead of "selectedCurrency" - choose currencyIndex
   // budget[currencyIndex],
@@ -102,8 +101,8 @@ const BudgetContainer = ({ route, navigation }) => {
   );
 
   const handleSelectCurrency = (item) => {
-    //setSelectedCurrency(item);
-    //setDisplayableValue(item.value);
+    const currIndex = budget.findIndex((el) => el.id === item.id);
+    setCurrencyIndex(currIndex);
     setAccount(item.defaultAccount);
   };
 
@@ -155,6 +154,14 @@ const BudgetContainer = ({ route, navigation }) => {
   useEffect(() => {
     loadBudget();
   }, [loadBudget]);
+
+  Keyboard.addListener('keyboardWillShow', () => {
+    console.log('keyboard will show!');
+  });
+
+  Keyboard.addListener('keyboardWillHide', () => {
+    console.log('keyboard will hide!');
+  });
 
   if (isLoading) return <LoadingFrame />;
 
@@ -227,6 +234,7 @@ const BudgetContainer = ({ route, navigation }) => {
         </View>
       </Container>
 
+      <BalanceDashboard currency={budget[currencyIndex]} />
       <CurrencyPicker
         currencies={budget}
         selectedCurrency={budget[currencyIndex]}
@@ -234,7 +242,6 @@ const BudgetContainer = ({ route, navigation }) => {
         handleDeleteCurrency={handleDeleteCurrency}
         handleAddCurrency={handleAddCurrency}
       />
-      <BalanceDashboard currency={budget[currencyIndex]} />
     </>
   );
 };

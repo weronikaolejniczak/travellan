@@ -9,11 +9,15 @@ export const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
+    flex: 0.2,
     justifyContent: 'center',
   },
   icon: {
     color: Colors.text,
     fontSize: 28,
+  },
+  label: {
+    color: Colors.placeholder,
   },
   negative: {
     color: Colors.negative,

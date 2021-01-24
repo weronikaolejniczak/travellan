@@ -2,6 +2,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
+import { Colors } from 'constants';
 import { styles } from './CurrencyPickerStyle';
 
 const CurrencyPicker = ({
@@ -24,11 +25,12 @@ const CurrencyPicker = ({
           onPress={() => handleSelectCurrency(item)}
         >
           <Text
-            style={
+            style={[
               selectedCurrency.currency === item.currency
-                ? styles.currencyActive
-                : styles.currencyNonactive
-            }
+                ? { color: Colors.primary }
+                : { color: Colors.placeholder },
+              styles.currency,
+            ]}
           >
             {item.currency}
           </Text>

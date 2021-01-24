@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  label: {
+    color: Colors.placeholder,
+  },
   negative: {
     color: Colors.negative,
     fontWeight: 'bold',
@@ -16,6 +19,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   value: {
-    fontSize: 28,
+    fontSize: 30,
   },
 });

@@ -14,7 +14,9 @@ const OperationsForm = ({ onSubmit }) => (
       title: '',
       type: '',
     }}
-    onSubmit={onSubmit}
+    onSubmit={(values) => {
+      console.log(values);
+    }}
     validationSchema={yup.object().shape({
       cost: yup
         .number()
