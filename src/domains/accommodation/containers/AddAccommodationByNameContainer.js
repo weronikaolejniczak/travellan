@@ -78,7 +78,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
         ),
       );
       setIsLoading(false);
-      navigation.navigate('Accomodation', { tripId: selectedTrip.id });
+      navigation.navigate('Accommodation', { tripId: selectedTrip.id });
     } catch {
       setError('Something went wrong!');
     }
