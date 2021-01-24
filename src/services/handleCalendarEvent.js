@@ -48,4 +48,6 @@ class AddEventToCalendar {
   };
 }
 
-export const addEventToCalendar = new AddEventToCalendar();
+const addEventToCalendar = new AddEventToCalendar();
+
+export default addEventToCalendar;
