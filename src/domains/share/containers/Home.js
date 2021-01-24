@@ -8,6 +8,7 @@ import postAccommodation from 'services/accommodation/postAccommodation';
 import { Colors } from 'constants';
 import {
   View as Container,
+  ErrorFrame,
   Headline,
   ScrollView as ScrollContainer,
   Subheading,
@@ -148,13 +149,7 @@ const Home = () => {
       </Container>
     );
 
-  if (error)
-    return (
-      <Container style={styles.helperContainer}>
-        <Headline style={styles.text}>An error has occured!</Headline>
-        <Subheading style={styles.error}>{error}</Subheading>
-      </Container>
-    );
+  if (error) return <ErrorFrame error={error} />;
 
   return (
     <ScrollContainer contentContainerStyle={styles.container}>

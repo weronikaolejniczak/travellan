@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   View as Container,
+  ErrorFrame,
   HeaderButton,
   ItemlessFrame,
   LoadingFrame,
   Searchbar,
-  Text,
 } from 'utils';
 import { NoteItem } from '../components';
 import { deleteNoteRequest, fetchNotesRequest } from 'actions/notesActions';
@@ -18,7 +18,7 @@ import { styles } from './NotesContainerStyle';
 
 const NotesContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
+  const { tripId } = route.params;
   const notes = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).notes,
   );
@@ -112,18 +112,12 @@ const NotesContainer = ({ route, navigation }) => {
   }, [notes]);
 
   if (Array.isArray(notes) && notes.length < 1)
-    return <ItemlessFrame message="You have no notes saved!" />;
+    return <ItemlessFrame>You have no notes saved!</ItemlessFrame>;
 
   if (!Array.isArray(notes) || isRefreshing || isLoading)
     return <LoadingFrame />;
 
-  if (error)
-    return (
-      <Container>
-        <Text>Something went wrong!</Text>
-        <Text>Error: {error}</Text>
-      </Container>
-    );
+  if (error) return <ErrorFrame error={error} />;
 
   return (
     <Container style={styles.container}>
