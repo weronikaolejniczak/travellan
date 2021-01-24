@@ -1,60 +1,62 @@
-import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     margin: 20,
   },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: '12%',
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
-  },
-  textBold: {
-    fontWeight: '500',
-    color: '#000',
-  },
   buttonText: {
-    fontSize: 21,
     color: 'rgb(0,122,255)',
+    fontSize: 21,
   },
   buttonTouchable: {
     padding: 16,
   },
   centered: {
+    alignContent: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignContent: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  icon: {
+    color: Colors.text,
+    fontSize: 40,
+  },
+  innerQrContainer: {
+    alignSelf: 'stretch',
+  },
+  miniHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   qrstyle: {
-    height: '100%',
-    width: '100%',
+    alignContent: 'center',
+    alignItems: 'center',
     borderColor: Colors.white,
     borderWidth: 2,
-    zIndex: 5,
-    alignItems: 'center',
-    alignContent: 'center',
+    height: '100%',
     justifyContent: 'center',
+    width: '100%',
+    zIndex: 5,
   },
-  containerR: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-  },
-  icon: {
-    fontSize: 40,
+  text: {
     color: Colors.text,
+    fontSize: 13.5,
+    margin: 16,
+    textAlign: 'justify',
+  },
+  textHead: {
+    color: Colors.primary,
+    fontSize: 20,
+    margin: 16,
+    textAlign: 'justify',
   },
 });

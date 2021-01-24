@@ -1,72 +1,78 @@
-import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    paddingTop: '12%',
-    paddingHorizontal: '5%',
+  activeLabel: {
+    color: Colors.primary,
   },
-  modal: {
-    flex: 1,
-    backgroundColor: Colors.background,
+  activeRadioIcon: {
+    color: Colors.primary,
+    fontSize: 26,
   },
-  modalContent: {
-    paddingHorizontal: '5%',
+  button: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    margin: '5%',
+    padding: 15,
+    width: '40%',
   },
-  modalHeader: {
-    marginTop: '2%',
+  buttonContainer: {
+    alignItems: 'center',
+    margin: 20,
   },
-  modalHeaderText: {
-    marginLeft: '5%',
-    fontSize: 20,
+  buttonText: {
+    color: Colors.text,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   card: {
-    padding: 15,
+    justifyContent: 'center',
     marginTop: 10,
-    justifyContent: 'center',
+    padding: 15,
   },
-  stageItemBody: {
+  container: {
+    backgroundColor: Colors.background,
     flex: 1,
-    flexDirection: 'row',
-  },
-  stageIcons: {
-    marginRight: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: Colors.text,
-  },
-  title: {
-    fontSize: 18,
-  },
-  metrics: {
-    marginTop: '5%',
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.primary,
-  },
-  activeLabel: {
-    color: Colors.primary,
+    paddingHorizontal: '5%',
+    paddingTop: '12%',
   },
   disactiveLabel: {
     color: 'grey',
   },
-  input: {
+  errorContainer: {
+    marginVertical: 5,
+  },
+  icon: {
     color: Colors.text,
-    fontSize: 18,
+    fontSize: 26,
+  },
+  iconButton: {
+    alignItems: 'center',
+    paddingHorizontal: '2%',
+  },
+  input: {
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
+    color: Colors.text,
+    fontSize: 18,
+  },
+  label: {
+    color: Colors.primary,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  metrics: {
+    marginTop: '5%',
+  },
+  nonactiveRadioIcon: {
+    color: 'grey',
+    fontSize: 26,
   },
   picker: {
-    borderWidth: 2,
-    borderRadius: 10,
     borderColor: Colors.primary,
+    borderRadius: 10,
+    borderWidth: 2,
     marginTop: '5%',
     padding: '4%',
   },
@@ -74,54 +80,24 @@ export const styles = StyleSheet.create({
     color: Colors.text,
     fontSize: 18,
   },
-  returnIcon: {
-    color: Colors.text,
-    fontSize: 25,
-    paddingVertical: 7,
-    marginRight: '5%',
-  },
-  activeRadioIcon: {
-    fontSize: 26,
-    color: Colors.primary,
-  },
-  nonactiveRadioIcon: {
-    fontSize: 26,
-    color: 'grey',
-  },
-  icon: {
-    fontSize: 26,
-    color: Colors.text,
-  },
-  iconButton: {
-    alignItems: 'center',
-    paddingHorizontal: '2%',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    margin: 20,
-  },
-  button: {
-    borderRadius: 25,
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    width: '40%',
-    padding: 15,
-    margin: '5%',
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors.text,
-  },
-  errorContainer: {
-    marginVertical: 5,
-  },
-  error: {
-    color: Colors.error,
-  },
   rowAndAlign: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  stageIcons: {
     alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: '5%',
+  },
+  stageItemBody: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  text: {
+    color: Colors.text,
+  },
+  title: {
+    fontSize: 18,
   },
 });

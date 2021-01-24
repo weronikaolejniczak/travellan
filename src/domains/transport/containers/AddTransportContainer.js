@@ -1,20 +1,20 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as transportActions from 'actions/transportActions';
-import { styles } from './AddTransportContainerStyle';
 import Colors from 'constants/Colors';
+import { styles } from './AddTransportContainerStyle';
 
 const AddTransportContainer = (props) => {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ const AddTransportContainer = (props) => {
 
   const [isTicketTo, setToDestination] = useState(true);
   const [isTicketFrom, setFromDestination] = useState(false);
-  const [QR, setQR] = useState('');
-  const [PDFUri, setPDFUri] = useState('');
+  //const [QR, setQR] = useState('');
+  //const [PDFUri, setPDFUri] = useState('');
   const [dateOfDeparture, setDateOfDeparture] = useState(new Date());
   const [showDateOfDeparture, setShowDateOfDeparture] = useState(false);
   const [hourOfDeparture, setHourOfDeparture] = useState(initialHour);
@@ -105,8 +105,6 @@ const AddTransportContainer = (props) => {
         isTicketFrom,
         prepareDate(dateOfDeparture, hourOfDeparture),
         placeOfDeparture,
-        QR,
-        PDFUri,
       ),
     );
     setIsLoading(false);
@@ -121,8 +119,6 @@ const AddTransportContainer = (props) => {
     dateOfDeparture,
     hourOfDeparture,
     placeOfDeparture,
-    QR,
-    PDFUri,
   ]);
 
   return (
@@ -149,7 +145,7 @@ const AddTransportContainer = (props) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{ marginLeft: '5%', alignItems: 'center' }}>
+          <View style={{ alignItems: 'center', marginLeft: '5%' }}>
             <Text
               style={[
                 styles.label,
@@ -170,7 +166,7 @@ const AddTransportContainer = (props) => {
             </TouchableOpacity>
           </View>
           <View
-            style={{ marginLeft: '7%', marginTop: '5%', alignItems: 'center' }}
+            style={{ alignItems: 'center', marginLeft: '7%', marginTop: '5%' }}
           >
             <Text style={[styles.label, styles.text]}>
               {selectedTrip.destination}

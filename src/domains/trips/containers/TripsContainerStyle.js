@@ -3,30 +3,29 @@ import { StyleSheet } from 'react-native';
 import Colors from 'constants/Colors';
 
 export const styles = StyleSheet.create({
+  actionButton: {
+    padding: 15,
+  },
+  actionIcon: {
+    color: Colors.primary,
+    fontSize: 30,
+  },
   flex: {
     flex: 1,
   },
-  triplessContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  iconContainer: {
     flex: 1,
+    flexDirection: 'row-reverse',
   },
   text: {
     color: Colors.text,
   },
-  triplessText: {
-    fontSize: 18,
-  },
-  deleteButton: {
-    padding: 15,
-  },
-  deleteIcon: {
-    fontSize: 30,
-    color: Colors.primary,
-  },
-  centered: {
+  triplessContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  triplessText: {
+    fontSize: 18,
   },
 });

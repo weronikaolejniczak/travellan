@@ -13,12 +13,15 @@ import AccommodationContainer, {
   accommodationOptions,
 } from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
+import HotelRecommendationContainer from 'domains/accommodation/containers/HotelRecommendationContainer';
 import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
+import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
 import AddTripContainer from 'domains/trips/containers/AddTripContainer';
+import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import AuthenticationContainer, {
   authOptions,
 } from 'domains/user/containers/AuthenticationContainer';
@@ -44,9 +47,7 @@ import TransportContainer, {
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
-import TripsContainer, {
-  tripsOptions,
-} from 'domains/trips/containers/TripsContainer';
+import TripsContainer from 'domains/trips/containers/TripsContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
 import * as userActions from 'src/actions/userActions.js';
@@ -85,11 +86,7 @@ const CustomDrawerContent = (props) => (
 
 const Trips = () => (
   <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen
-      name="My trips"
-      component={TripsContainer}
-      options={tripsOptions}
-    />
+    <Stack.Screen name="My trips" component={TripsContainer} />
   </Stack.Navigator>
 );
 
@@ -100,7 +97,7 @@ const DrawerNavigator = () => (
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
+    <Drawer.Screen name="My trips" component={Trips} />
   </Drawer.Navigator>
 );
 
@@ -135,6 +132,7 @@ export default function Navigation() {
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
+        <Stack.Screen name="Edit trip" component={EditTripContainer} />
         <Stack.Screen
           name="Details"
           component={TripDetailsContainer}
@@ -157,8 +155,16 @@ export default function Navigation() {
           component={AddAccommodationContainer}
         />
         <Stack.Screen
-          name="Add hotel by name "
+          name="Add hotel by name"
           component={AddAccommodationByNameContainer}
+        />
+        <Stack.Screen
+          name="Hotel recommendation"
+          component={HotelRecommendationContainer}
+        />
+        <Stack.Screen
+          name="Recommended Hotel Details"
+          component={RecommendedHotelDetailsContainer}
         />
         <Stack.Screen
           name="Budget"

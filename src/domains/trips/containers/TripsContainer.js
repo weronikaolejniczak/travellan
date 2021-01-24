@@ -1,15 +1,14 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Component, useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
 import {
   View as Container,
-  HeaderButton,
+  FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
@@ -69,10 +68,34 @@ const TripsContainer = (props) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       props.navigation.navigate('Details', {
+        cityCode: cityCode,
         destination,
         tripId: id,
-        cityCode: cityCode,
       });
+  };
+
+  const handleEdit = (
+    id,
+    destination,
+    budget,
+    notes,
+    transport,
+    accommodation,
+    map,
+  ) => {
+    props.navigation.navigate('Edit trip', {
+      accommodation,
+      budget,
+      destination,
+      map,
+      notes,
+      transport,
+      tripId: id,
+    });
+  };
+
+  const renderFooter = () => {
+    return <Container />;
   };
 
   useEffect(() => {
@@ -98,8 +121,14 @@ const TripsContainer = (props) => {
 
   return (
     <Container>
+      <FloatingActionButton
+        loading={isLoading}
+        disabled={isLoading}
+        onPress={() => props.navigation.navigate('Add trip')}
+      />
       <FlatList
         data={trips}
+        ListFooterComponent={renderFooter}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <TripItem
@@ -115,32 +144,35 @@ const TripsContainer = (props) => {
               );
             }}
           >
-            <TouchableHighlight
-              style={styles.deleteButton}
-              onPress={() => handleDeleteTrip(data.item)}
-            >
-              <Icon name="delete" style={styles.deleteIcon} />
-            </TouchableHighlight>
+            <View style={styles.iconContainer}>
+              <TouchableHighlight
+                style={styles.actionButton}
+                onPress={() => handleDeleteTrip(data.item)}
+              >
+                <Icon name="delete" style={styles.actionIcon} />
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={styles.actionButton}
+                onPress={() => {
+                  handleEdit(
+                    data.item.id,
+                    data.item.destination,
+                    data.item.budget,
+                    data.item.notes,
+                    data.item.transport,
+                    data.item.accommodation,
+                    data.item.map,
+                  );
+                }}
+              >
+                <Icon name="edit" style={styles.actionIcon} />
+              </TouchableHighlight>
+            </View>
           </TripItem>
         )}
       />
     </Container>
   );
-};
-
-export const tripsOptions = (navData) => {
-  return {
-    headerLeft: null,
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add trip"
-          iconName="plus"
-          onPress={() => navData.navigation.navigate('Add trip')}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 export default TripsContainer;

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "856606295919-vv69j60euh4ocdo5voulc62e2kgsft41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travellanproject",
+            "certificate_hash": "ecd42bf4ac3ab7aea1245caf27bafc2afe767253"
+          }
+        },
+        {
           "client_id": "856606295919-uu20s1r4ag081l3mavdfpnu4v0ikoch9.apps.googleusercontent.com",
           "client_type": 3
         }

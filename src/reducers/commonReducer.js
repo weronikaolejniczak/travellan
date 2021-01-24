@@ -4,6 +4,7 @@ import {
   CREATE_ACCOMMODATION,
   DELETE_ACCOMMODATION,
   SET_ACCOMMODATION,
+  SET_PDF_ACC,
 } from 'actions/accommodationActions';
 import {
   CREATE_NOTE,
@@ -18,7 +19,12 @@ import {
   SET_QR,
   SET_TRANSPORT,
 } from 'actions/transportActions';
-import { CREATE_TRIP, DELETE_TRIP, SET_TRIPS } from 'actions/tripsActions';
+import {
+  CREATE_TRIP,
+  DELETE_TRIP,
+  EDIT_TRIP,
+  SET_TRIPS,
+} from 'actions/tripsActions';
 import { SET_BUDGET } from 'actions/budgetActions';
 import { SET_MAP } from 'actions/mapActions';
 
@@ -42,6 +48,10 @@ export default (state = initialState, action) => {
 
       case CREATE_TRIP:
         draft.trips = draft.trips.concat(action.newTrip);
+        break;
+
+      case EDIT_TRIP:
+        draft.trips[tripIndex] = action.newTrips;
         break;
 
       case SET_TRANSPORT:
@@ -88,6 +98,14 @@ export default (state = initialState, action) => {
         ].accommodation.filter((item) => item.id !== action.accommodationId);
         break;
 
+      case SET_PDF_ACC:
+        draft.trips[tripIndex].accommodation[
+          draft.trips[tripIndex].accommodation.findIndex(
+            (item) => item.id === action.accommodationId,
+          )
+        ].PDF = action.PDF;
+        break;
+
       case SET_NOTES:
         draft.trips[tripIndex].notes = action.notes;
         break;
@@ -112,7 +130,7 @@ export default (state = initialState, action) => {
         break;
 
       case SET_MAP:
-        draft.trip[tripIndex].map = action.map;
+        draft.trips[tripIndex].map = action.map;
         break;
 
       default:

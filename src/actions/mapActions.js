@@ -34,19 +34,19 @@ export const fetchMapRequest = (tripId) => {
   };
 };
 
-export const patchMapRequest = (tripId, markers, routes, region) => {
+export const patchMapRequest = (tripId, markers, region) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    const map = new Map(markers, routes, region);
+    const map = new Map(markers, region);
     console.log('map on patch:', JSON.stringify(map));
 
     axios
       .patch(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
         map,
       })
-      .then(() => dispatch(setMap(tripId, {})))
+      .then(() => dispatch(setMap(tripId, map)))
       .catch(() => {
         throw new Error(`Couldn't update the map!`);
       });

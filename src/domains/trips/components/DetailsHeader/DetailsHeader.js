@@ -23,7 +23,7 @@ const DetailsHeader = ({
   return (
     <ImageBackground style={styles.image} source={{ uri: image }}>
       <Icon
-        name="calendar"
+        name="calendar-plus"
         onPress={addTripToCalendar}
         size={35}
         style={styles.calendarIcon}
