@@ -152,9 +152,7 @@ const AccommodationContainer = ({ navigation, route }) => {
     [persistDeletePDF],
   );
 
-  const handleNavigationToMap = (id) => {
-    // use: tripId, id
-  };
+  const handleHotelDelete = (id) => {};
 
   const handleHotelEdit = (id) => {
     // use: tripId, id
@@ -236,7 +234,7 @@ const AccommodationContainer = ({ navigation, route }) => {
             handlePDFManagement={() =>
               handlePDFManagement(data.item.PDF, data.item.id)
             }
-            handleNavigationToMap={() => handleNavigationToMap(data.item.id)}
+            handleHotelDelete={() => handleHotelDelete(data.item.id)}
             handleHotelEdit={() => handleHotelEdit(data.item.id)}
             {...data.item}
           />
