@@ -29,6 +29,13 @@ export const signUpRequest = (email, password) => {
           throw new Error(message);
         }
       });
+    const user = auth().currentUser;
+    const localId = user.uid;
+    await user.getIdToken().then(function (idToken) {
+      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+      dispatch(authenticate(localId, idToken));
+      saveDataToStorage(idToken, localId, expirationDate);
+    });
   };
 };
 
