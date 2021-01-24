@@ -6,13 +6,10 @@ export const styles = StyleSheet.create({
   accountsContainer: {
     alignItems: 'center',
     flexDirection: 'row',
+    marginVertical: 10,
   },
   detailsContainer: {
     paddingBottom: '5%',
-    paddingHorizontal: '5%',
-  },
-  historyContainer: {
-    marginTop: '5%',
   },
   label: {
     color: Colors.placeholder,
@@ -32,5 +29,9 @@ export const styles = StyleSheet.create({
   },
   operationsContent: {
     padding: '5%',
+  },
+  //historyContainer: {},
+  operationsSection: {
+    marginTop: 15,
   },
 });

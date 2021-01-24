@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
@@ -8,10 +9,12 @@ const CurrencyPicker = ({
   selectedCurrency,
   handleSelectCurrency,
   handleDeleteCurrency,
+  handleAddCurrency,
 }) => (
   <View style={styles.container}>
     <FlatList
       horizontal
+      contentContainerStyle={styles.list}
       data={currencies}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       renderItem={({ item }) => (
@@ -33,6 +36,9 @@ const CurrencyPicker = ({
       )}
       keyExtractor={(item) => item.id.toString()}
     />
+    <TouchableOpacity onPress={handleAddCurrency} style={styles.addButton}>
+      <Icon style={styles.addButtonIcon} name="plus" />
+    </TouchableOpacity>
   </View>
 );
 

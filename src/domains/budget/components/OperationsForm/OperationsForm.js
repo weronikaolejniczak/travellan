@@ -16,7 +16,11 @@ const OperationsForm = ({ onSubmit }) => (
     }}
     onSubmit={onSubmit}
     validationSchema={yup.object().shape({
-      cost: yup.number().min(0.01).required('Cannot be left empty!'),
+      cost: yup
+        .number()
+        .typeError('Cost must be a number, e.g. 10.59.')
+        .min(0.01)
+        .required('Cannot be left empty!'),
       title: yup.string().required('Cannot be left empty!'),
       type: yup.string().required('Type has to be picked!'),
     })}
@@ -35,15 +39,13 @@ const OperationsForm = ({ onSubmit }) => (
         <TextInput
           label="Title of transaction"
           value={values.title}
-          //onChange={(text) => setTitle(text)}
           onChange={handleChange('title')}
           onBlur={handleBlur('title')}
-          error={errors.title && touched.title ? errors.tile : null}
+          error={errors.title && touched.title ? errors.title : null}
         />
         <TextInput
           label="Cost"
           value={values.cost}
-          //onChange={(number) => amountChangeHandler(number)}
           onChange={handleChange('cost')}
           onBlur={handleBlur('cost')}
           keyboardType="numeric"

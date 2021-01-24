@@ -5,11 +5,11 @@ import { Colors } from 'constants';
 export const styles = StyleSheet.create({
   icon: {
     color: Colors.text,
-    fontSize: 36,
+    fontSize: 24,
   },
   roundButton: {
-    borderRadius: 50,
+    borderRadius: 30,
     margin: 5,
-    padding: 20,
+    padding: 15,
   },
 });

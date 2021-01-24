@@ -18,7 +18,7 @@ const BudgetHistoryTab = ({ item }) => (
         style={styles.secondIcon}
       />
     </View>
-    <View>
+    <View style={styles.content}>
       <Text style={styles.date}>
         {new Date(item.date).toLocaleDateString()} at{' '}
         {new Date(item.date).toLocaleTimeString()}

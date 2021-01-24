@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as categories from 'data/SpendingCategories';
@@ -14,14 +14,14 @@ import {
   SectionHeader,
   SpendingCategories,
 } from '../components';
-import { View as Container, ItemlessFrame, LoadingFrame } from 'utils';
+import { ScrollView as Container, ItemlessFrame, LoadingFrame } from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
 
-const BudgetContainer = (props) => {
+const BudgetContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = props.route.params.tripId;
+  const { tripId } = route.params;
   const budget = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
@@ -107,6 +107,11 @@ const BudgetContainer = (props) => {
     setAccount(item.defaultAccount);
   };
 
+  const handleAddCurrency = () =>
+    navigation.navigate('Add currency', {
+      tripId,
+    });
+
   const handleDeleteCurrency = (id) =>
     Alert.alert(
       'Are you sure?',
@@ -157,16 +162,8 @@ const BudgetContainer = (props) => {
     return <ItemlessFrame message="There is no budget to show!" />;
 
   return (
-    <Container>
-      <CurrencyPicker
-        currencies={budget}
-        selectedCurrency={budget[currencyIndex]}
-        handleSelectCurrency={handleSelectCurrency}
-        handleDeleteCurrency={handleDeleteCurrency}
-      />
-      <BalanceDashboard currency={budget[currencyIndex]} />
-
-      <ScrollView contentContainerStyle={styles.detailsContainer}>
+    <>
+      <Container contentContainerStyle={styles.detailsContainer}>
         {budget[currencyIndex] &&
           Array.isArray(budget[currencyIndex].history) &&
           budget[currencyIndex].history.length > 1 && (
@@ -197,7 +194,7 @@ const BudgetContainer = (props) => {
               chooseCategory={chooseCategory}
             />
 
-            <View>
+            <View style={styles.operationsSection}>
               <Text style={styles.label}>Accounts</Text>
               <View style={styles.accountsContainer}>
                 <AccountButton
@@ -228,26 +225,18 @@ const BudgetContainer = (props) => {
             <BudgetHistory history={budget[currencyIndex].history} />
           </View>
         </View>
-      </ScrollView>
-    </Container>
-  );
-};
+      </Container>
 
-export const budgetOptions = (navData) => {
-  return {
-    headerRight: () => (
-      <TouchableOpacity
-        style={styles.navigationButton}
-        onPress={() =>
-          navData.navigation.navigate('Add currency', {
-            tripId: navData.route.params.tripId,
-          })
-        }
-      >
-        <Text style={styles.navigationText}>Add currency</Text>
-      </TouchableOpacity>
-    ),
-  };
+      <CurrencyPicker
+        currencies={budget}
+        selectedCurrency={budget[currencyIndex]}
+        handleSelectCurrency={handleSelectCurrency}
+        handleDeleteCurrency={handleDeleteCurrency}
+        handleAddCurrency={handleAddCurrency}
+      />
+      <BalanceDashboard currency={budget[currencyIndex]} />
+    </>
+  );
 };
 
 export default BudgetContainer;

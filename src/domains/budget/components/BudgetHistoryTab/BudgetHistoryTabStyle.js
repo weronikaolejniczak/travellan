@@ -9,6 +9,9 @@ export const styles = StyleSheet.create({
     marginTop: '4%',
     padding: '4%',
   },
+  content: {
+    flex: 1,
+  },
   date: {
     color: Colors.placeholder,
   },
@@ -26,6 +29,7 @@ export const styles = StyleSheet.create({
   info: {
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   negative: {
     color: Colors.negative,

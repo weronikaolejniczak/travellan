@@ -6,7 +6,11 @@ import { styles } from './RoundButtonStyle';
 
 const RoundButton = ({ color, iconName, onPress, isValid = true }) => (
   <TouchableOpacity style={[styles.roundButton, { backgroundColor: color }]}>
-    <Icon name={iconName} onPress={isValid ? onPress : () => {}} />
+    <Icon
+      style={styles.icon}
+      name={iconName}
+      onPress={isValid ? onPress : () => {}}
+    />
   </TouchableOpacity>
 );
 
