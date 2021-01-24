@@ -6,8 +6,8 @@ import {
   DrawerItemList,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
+import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaView, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AccommodationContainer, {
@@ -67,8 +67,16 @@ const CustomDrawerContent = (props) => (
     <View>
       <DrawerItem
         label={() => <Text>Notifications</Text>}
+        icon={() => <Icon name="notification-clear-all" size={18} />}
         onPress={() => {
           props.navigation.navigate('Notification');
+        }}
+      />
+      <DrawerItem
+        label={() => <Text>Privacy Policy</Text>}
+        icon={() => <Icon name="police-badge" size={18} />}
+        onPress={() => {
+          Linking.openURL('https://travellan.flycricket.io/privacy.html');
         }}
       />
       <DrawerItem
