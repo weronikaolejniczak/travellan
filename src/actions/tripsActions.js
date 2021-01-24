@@ -205,7 +205,7 @@ export const editTripRequest = (
           cityCode,
         );
 
-        dispatch(editTrip(updatedTrip));
+        dispatch(editTrip(tripId, updatedTrip));
       });
   };
 };
