@@ -63,8 +63,8 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     setRoomQuantity();
   };
 
-  const handleSelectItem = () => {
-    navigation.navigate('Hotel details', {
+  const handleSelectItem = (data) => {
+    navigation.navigate('Recommended Hotel Details', {
       hotelDetails: data,
     });
   };
