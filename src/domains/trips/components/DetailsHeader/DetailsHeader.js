@@ -1,7 +1,7 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 import { Colors } from 'constants';
 import { styles } from './DetailsHeaderStyle';
@@ -22,12 +22,17 @@ const DetailsHeader = ({
 
   return (
     <ImageBackground style={styles.image} source={{ uri: image }}>
-      <Icon
-        name="calendar-plus"
+      <TouchableOpacity
+        activeOpacity={0.7}
         onPress={addTripToCalendar}
-        size={35}
-        style={styles.calendarIcon}
-      />
+        style={styles.calendarButton}
+      >
+        <Icon
+          name="calendar-plus"
+          onPress={addTripToCalendar}
+          style={styles.calendarIcon}
+        />
+      </TouchableOpacity>
       <LinearGradient
         colors={[Colors.transparent, Colors.background]}
         start={{ x: 0.0, y: 0.0 }}

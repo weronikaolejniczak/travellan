@@ -10,15 +10,18 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     justifyContent: 'center',
   },
-  calendarIcon: {
-    backgroundColor: Colors.transparentShadow,
-    borderRadius: 35,
-    color: Colors.text,
+  calendarButton: {
+    backgroundColor: Colors.accent,
+    borderRadius: 30,
     padding: 15,
     position: 'absolute',
     right: 20,
     top: 20,
-    zIndex: 200,
+    zIndex: 2,
+  },
+  calendarIcon: {
+    color: Colors.text,
+    fontSize: 30,
   },
   callToAction: {
     padding: 15,
