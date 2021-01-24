@@ -1,5 +1,6 @@
 const baseColors = {
   black: '#000000',
+  blue: '#00ACFF',
   darkGrey: '#111111',
   green: '#06C258',
   grey: '#222222',
@@ -12,7 +13,7 @@ const baseColors = {
 };
 
 export default {
-  accent: baseColors.green,
+  accent: baseColors.blue,
   background: baseColors.grey,
   cards: baseColors.darkGrey,
   error: baseColors.red,
