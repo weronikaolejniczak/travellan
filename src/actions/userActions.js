@@ -16,7 +16,7 @@ export const authenticate = (userId, token) => {
 
 export const signUpRequest = (email, password) => {
   return async function (dispatch) {
-    auth()
+    await auth()
       .createUserWithEmailAndPassword(email, password)
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
