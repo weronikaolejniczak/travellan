@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 
 import recommendHotel from 'services/recommendHotel';
 import {
@@ -17,8 +17,8 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
-  const [adults, setAdults] = useState(0);
-  const [roomQuantity, setRoomQuantity] = useState(0);
+  const [adults, setAdults] = useState('');
+  const [roomQuantity, setRoomQuantity] = useState('');
   const [data, setData] = useState();
   const [error, setError] = useState('');
 
@@ -48,6 +48,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
         adults,
         roomQuantity,
       );
+
       setData(result);
       setIsLoading(false);
     } catch {
@@ -56,7 +57,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     }
   }, [cityCode, startDate, endDate, adults, roomQuantity, error]);
 
-  const handlePress = () => {
+  const handleSubmit = () => {
     findHotels(cityCode, startDate, endDate, adults, roomQuantity);
     setAdults();
     setRoomQuantity();
@@ -100,9 +101,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           renderItem={(el) => (
             <RecommendationItemShort
               data={el.item}
-              onSelect={() => {
-                handleSelectItem(el.item);
-              }}
+              onSelect={() => handleSelectItem(el.item)}
             />
           )}
         />
@@ -111,30 +110,28 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
 
   return (
     <Container>
-      <View>
-        <Headline style={styles.headline}>
-          We will find the most attractive accommodation offers for your
-          destination
-        </Headline>
+      <Headline style={styles.headline}>
+        We will find the most attractive accommodation offers for your
+        destination
+      </Headline>
 
-        <TextInput
-          label="Number of adults"
-          value={adults}
-          onChange={() => setAdults(adults)}
-          keyboardType="numeric"
-        />
+      <TextInput
+        label="Number of adults"
+        value={adults}
+        onChange={setAdults}
+        keyboardType="numeric"
+      />
 
-        <TextInput
-          label="Room quantity"
-          value={roomQuantity}
-          onChange={() => setAdults(adults)}
-          keyboardType="numeric"
-        />
+      <TextInput
+        label="Room quantity"
+        value={roomQuantity}
+        onChange={setRoomQuantity}
+        keyboardType="numeric"
+      />
 
-        <Button loading={isLoading} disabled={isLoading} onPress={handlePress}>
-          Submit
-        </Button>
-      </View>
+      <Button loading={isLoading} disabled={isLoading} onPress={handleSubmit}>
+        Submit
+      </Button>
     </Container>
   );
 };
