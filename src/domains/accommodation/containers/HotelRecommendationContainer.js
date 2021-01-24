@@ -1,29 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+
+import recommendHotel from 'services/recommendHotel';
 import {
   Button,
   ScrollView as Container,
   Headline,
   ItemlessFrame,
   TextInput,
-  Subheading,
 } from 'utils';
-import { View, FlatList } from 'react-native';
+import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
-import recommendHotel from 'services/recommendHotel';
-import { RecommendationItemShort } from 'domains/accommodation/components';
 
-const HotelRecommendationContainer = (props) => {
-  let { startDate, endDate } = props.route.params;
-  const cityCode = props.route.params.cityCode;
+const HotelRecommendationContainer = ({ navigation, route }) => {
+  const { cityCode, startDate, endDate } = route.params;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
-  const [adults, setAdults] = useState(0);
-  const [roomQuantity, setRoomQuantity] = useState(0);
+  const [adults, setAdults] = useState('');
+  const [roomQuantity, setRoomQuantity] = useState('');
   const [data, setData] = useState();
   const [error, setError] = useState('');
 
   const formatDate = (date) => {
-    //format to YYYY-MM-DD
+    // format to YYYY-MM-DD
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -35,35 +35,36 @@ const HotelRecommendationContainer = (props) => {
     return [year, month, day].join('-');
   };
 
-  const handleAdults = (adults) => setAdults(adults);
-  const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
-
   const findHotels = useCallback(async () => {
-    startDate = formatDate(startDate);
-    endDate = formatDate(endDate);
+    setIsLoading(true);
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
     try {
       const result = await recommendHotel(
         cityCode,
-        startDate,
-        endDate,
+        formattedStartDate,
+        formattedEndDate,
         adults,
         roomQuantity,
       );
+
       setData(result);
+      setIsLoading(false);
     } catch {
       setError(error);
+      setIsLoading(false);
     }
   }, [cityCode, startDate, endDate, adults, roomQuantity, error]);
 
-  const handlePress = () => {
-    setIsLoading(true);
-    handleAdults();
-    handleRoomQuantity();
+  const handleSubmit = () => {
     findHotels(cityCode, startDate, endDate, adults, roomQuantity);
+    setAdults();
+    setRoomQuantity();
   };
 
-  const handleSelectItem = (data) => {
-    props.navigation.navigate('Recommended Hotel Details', {
+  const handleSelectItem = () => {
+    navigation.navigate('Hotel details', {
       hotelDetails: data,
     });
   };
@@ -74,19 +75,21 @@ const HotelRecommendationContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [data]);
+  }, [data, endDate, startDate]);
 
   if (cityCode === undefined)
     return (
-      <ItemlessFrame message="Sorry, recommendation for hotels near your destination is impossible!" />
+      <ItemlessFrame>
+        Sorry, recommendation for hotels near your destination is impossible!
+      </ItemlessFrame>
     );
 
   if (isDateSame)
     return (
-      <ItemlessFrame
-        message="Recommendation for hotels is not possible if you are going on a
-    one day trip!"
-      />
+      <ItemlessFrame>
+        Recommendation for hotels is not possible if you are going on a one day
+        trip!
+      </ItemlessFrame>
     );
 
   if (data)
@@ -95,12 +98,10 @@ const HotelRecommendationContainer = (props) => {
         <FlatList
           data={data}
           keyExtractor={(item) => item.dupeId}
-          renderItem={(data) => (
+          renderItem={(el) => (
             <RecommendationItemShort
-              data={data.item}
-              onSelect={() => {
-                handleSelectItem(data.item);
-              }}
+              data={el.item}
+              onSelect={() => handleSelectItem(el.item)}
             />
           )}
         />
@@ -109,30 +110,28 @@ const HotelRecommendationContainer = (props) => {
 
   return (
     <Container>
-      <View>
-        <Headline style={styles.headline}>
-          We will find the most attractive accommodation offers for your
-          destination
-        </Headline>
-        <Subheading>Add number of adults:</Subheading>
-        <TextInput
-          label="Number of adults"
-          value={adults}
-          onChange={handleAdults}
-          keyboardType="numeric"
-        />
-        <Subheading>Add number of rooms:</Subheading>
-        <TextInput
-          label="Room Quantity"
-          value={roomQuantity}
-          onChange={handleRoomQuantity}
-          keyboardType="numeric"
-        />
+      <Headline style={styles.headline}>
+        We will find the most attractive accommodation offers for your
+        destination
+      </Headline>
 
-        <Button loading={isLoading} disabled={isLoading} onPress={handlePress}>
-          Submit
-        </Button>
-      </View>
+      <TextInput
+        label="Number of adults"
+        value={adults}
+        onChange={setAdults}
+        keyboardType="numeric"
+      />
+
+      <TextInput
+        label="Room quantity"
+        value={roomQuantity}
+        onChange={setRoomQuantity}
+        keyboardType="numeric"
+      />
+
+      <Button loading={isLoading} disabled={isLoading} onPress={handleSubmit}>
+        Submit
+      </Button>
     </Container>
   );
 };

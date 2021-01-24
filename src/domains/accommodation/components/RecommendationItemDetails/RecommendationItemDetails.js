@@ -1,17 +1,17 @@
-import React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import React, { memo } from 'react';
 import {
+  ImageBackground,
+  Linking,
   Platform,
   Text,
   TouchableOpacity,
   View,
-  ImageBackground,
-  Linking,
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
-import { Colors, Layout } from 'constants';
 
 import { Card, ReadMore } from 'utils';
+import { Colors, Layout } from 'constants';
 import { styles } from './RecommendationItemDetailsStyle';
 
 const RecommendationItemDetails = ({ data }) => {
@@ -47,6 +47,7 @@ const RecommendationItemDetails = ({ data }) => {
           </View>
         </LinearGradient>
       </ImageBackground>
+
       <View style={styles.alignRow}>
         <View style={styles.details}>
           <Text style={[styles.text, styles.destination]}>Phone:</Text>
@@ -86,4 +87,4 @@ const RecommendationItemDetails = ({ data }) => {
   );
 };
 
-export default RecommendationItemDetails;
+export default memo(RecommendationItemDetails);

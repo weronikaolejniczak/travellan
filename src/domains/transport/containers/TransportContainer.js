@@ -1,37 +1,35 @@
+import DocumentPicker from 'react-native-document-picker';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Alert,
-  Animated,
-  FlatList,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, Animated, FlatList, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import DocumentPicker from 'react-native-document-picker';
-import { HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
-import { PDFModal, QRModal, TransportItem } from '../components';
+import { ErrorFrame, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import { PDFModal } from 'components';
+import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';
 
 const TransportContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
+  const { tripId } = route.params;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
   const transport = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).transport,
   );
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedTransportId, setSelectedTransportId] = useState(' ');
+
+  const scrollX = new Animated.Value(0);
+  const position = Animated.divide(scrollX, cardWidth);
 
   const handlePressQR = useCallback(
     (QR, id) => {
@@ -43,6 +41,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [addQR, openQRModal],
   );
+
   const handlePressPDF = useCallback(
     (PDF, id) => {
       if (PDF === undefined || PDF === ' ' || PDF === null || PDF === '') {
@@ -67,6 +66,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [addPDF, openPDFModal],
   );
+
   const addQR = useCallback(
     async (id) => {
       setIsRefreshing(true);
@@ -99,14 +99,17 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [dispatch, tripId],
   );
+
   const openQRModal = useCallback((id) => {
     setSelectedTransportId(id);
     setIsQRModalOpen(true);
   }, []);
+
   const openPDFModal = useCallback((id) => {
     setSelectedTransportId(id);
     setIsPDFModalOpen(true);
   }, []);
+
   const findTransportQR = (id) => {
     if (id === ' ') {
       return transport[0].QR;
@@ -115,6 +118,7 @@ const TransportContainer = ({ route, navigation }) => {
       return transport[index].QR;
     }
   };
+
   const findTransportPDF = (id) => {
     if (id === ' ') {
       let pdf = transport[0].PDF;
@@ -127,6 +131,7 @@ const TransportContainer = ({ route, navigation }) => {
       return source;
     }
   };
+
   const handleQRDelete = useCallback(
     (items) => {
       setIsRefreshing(true);
@@ -149,6 +154,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [persistDeleteQR],
   );
+
   const persistDeletePDF = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -162,6 +168,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [dispatch, tripId],
   );
+
   const handlePDFDelete = useCallback(
     (items) => {
       setIsRefreshing(true);
@@ -184,6 +191,7 @@ const TransportContainer = ({ route, navigation }) => {
     },
     [persistDeletePDF],
   );
+
   const persistDeleteQR = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -257,20 +265,12 @@ const TransportContainer = ({ route, navigation }) => {
   }
 
   if (Array.isArray(transport) && transport.length < 1) {
-    return <ItemlessFrame message="You have no transport saved!" />;
+    return <ItemlessFrame>You have no transport saved!</ItemlessFrame>;
   }
 
   if (error) {
-    return (
-      <View>
-        <Text>Something went wrong!</Text>
-        <Text>Error: {error}</Text>
-      </View>
-    );
+    return <ErrorFrame error={error} />;
   }
-
-  let scrollX = new Animated.Value(0);
-  let position = Animated.divide(scrollX, cardWidth);
 
   return (
     <ScrollView
@@ -311,14 +311,9 @@ const TransportContainer = ({ route, navigation }) => {
           keyExtractor={(item) => item.id.toString()}
           renderItem={(data) => (
             <TransportItem
+              {...data.item}
               tripId={tripId}
               destination={selectedTrip.destination}
-              id={data.item.id}
-              isTicketTo={data.item.isTicketTo}
-              isTicketFrom={data.item.isTicketFrom}
-              dateOfDeparture={data.item.dateOfDeparture}
-              placeOfDeparture={data.item.placeOfDeparture}
-              QR={data.item.QR}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}
               handlePressPDF={() => handlePressPDF(data.item.PDF, data.item.id)}
@@ -341,22 +336,20 @@ const TransportContainer = ({ route, navigation }) => {
   );
 };
 
-export const transportOptions = (navData) => {
-  return {
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Create a trip"
-          iconName="plus"
-          onPress={() => {
-            navData.navigation.navigate('Add transport', {
-              tripId: navData.route.params.tripId,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
+export const transportOptions = (navData) => ({
+  headerRight: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Create a trip"
+        iconName="plus"
+        onPress={() => {
+          navData.navigation.navigate('Add transport', {
+            tripId: navData.route.params.tripId,
+          });
+        }}
+      />
+    </HeaderButtons>
+  ),
+});
 
 export default TransportContainer;

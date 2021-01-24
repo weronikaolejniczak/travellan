@@ -13,6 +13,7 @@ export { default as Select } from './Select/Select';
 export { default as Switch } from './Switch/Switch';
 export { default as TextInput } from './TextInput';
 
+export { default as ErrorFrame } from './Frames/ErrorFrame/ErrorFrame';
 export { default as ItemlessFrame } from './Frames/ItemlessFrame/ItemlessFrame';
 export { default as LoadingFrame } from './Frames/LoadingFrame/LoadingFrame';
 export { default as ScrollView } from './Frames/ScrollView';

@@ -3,28 +3,28 @@ import { StyleSheet } from 'react-native';
 import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
-  hotelCardWrapper: {
-    marginVertical: '3%',
-  },
-  container: {
-    paddingTop: '3%',
-  },
-  caution: {
-    color: Colors.primary,
-    textAlign: 'center',
-  },
-  headline: {
-    color: Colors.text,
-    textAlign: 'center',
-  },
-  paddingTop: {
-    paddingTop: 40,
-  },
-  smallPaddingTop: {
+  actionsWrapper: {
     paddingTop: 10,
   },
   buttonContainer: {
     flexDirection: 'row-reverse',
     justifyContent: 'center',
+  },
+  caution: {
+    color: Colors.primary,
+    textAlign: 'center',
+  },
+  container: {
+    paddingTop: 40,
+  },
+  headline: {
+    textAlign: 'center',
+  },
+  headlineWrapper: {
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  hotelCardWrapper: {
+    marginVertical: '3%',
   },
 });
