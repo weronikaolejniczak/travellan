@@ -111,4 +111,6 @@ class NotificationManager {
   };
 }
 
-export const notificationManager = new NotificationManager();
+const notificationManager = new NotificationManager();
+
+export default notificationManager;
