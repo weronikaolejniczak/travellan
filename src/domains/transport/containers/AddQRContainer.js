@@ -60,7 +60,7 @@ const AddQRContainer = (props) => {
     <View style={styles.container}>
       {showQRscanner && (
         <QRCodeScanner
-          style={styles.centered}
+          //style={styles.centered}
           onRead={qrHandler}
           showMarker={true}
           flashMode={
@@ -86,11 +86,9 @@ const AddQRContainer = (props) => {
             )
           }
           bottomContent={
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.buttonTouchable}>
+              <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+            </TouchableOpacity>
           }
         />
       )}

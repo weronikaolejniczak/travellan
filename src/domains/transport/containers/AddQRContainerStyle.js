@@ -16,15 +16,17 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   centered: {
+    backgroundColor: Colors.background,
     alignContent: 'center',
+    height: (Dimensions.get('window').height / 5) * 6,
     justifyContent: 'center',
   },
   container: {
-    alignItems: 'center',
+    //alignItems: 'center',
     backgroundColor: Colors.background,
     flex: 1,
-    justifyContent: 'center',
-    width: Dimensions.get('window').width,
+    //justifyContent: 'center',
+    //width: Dimensions.get('window').width,
   },
   icon: {
     color: Colors.text,
