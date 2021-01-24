@@ -13,7 +13,7 @@ import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
-  const { tripId, cityCode, startDate, endDate } = route.params;
+  const { cityCode, startDate, endDate } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);

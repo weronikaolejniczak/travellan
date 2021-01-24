@@ -14,6 +14,7 @@ import {
   ItemlessFrame,
   Subheading,
   TextInput,
+  Text,
 } from 'utils';
 import { HotelCard } from 'components';
 import { styles } from './AddAccommodationByNameStyleContainer';
@@ -57,6 +58,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
   const cancelAction = () => setData(null);
 
   const submitHandler = async () => {
+    setError('');
     setIsLoading(true);
     try {
       await dispatch(
@@ -81,6 +83,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
       navigation.navigate('Accommodation', { tripId: selectedTrip.id });
     } catch {
       setError('Something went wrong!');
+      setIsLoading(false);
     }
   };
 
@@ -185,6 +188,9 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
           >
             Submit
           </Button>
+          <Text style={styles.text}>
+            Searching for hotel may take up to one minute!
+          </Text>
         </Container>
       )}
     </Formik>

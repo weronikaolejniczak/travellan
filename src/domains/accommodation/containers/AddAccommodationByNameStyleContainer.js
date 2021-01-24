@@ -27,4 +27,9 @@ export const styles = StyleSheet.create({
   hotelCardWrapper: {
     marginVertical: '3%',
   },
+  text: {
+    textAlign: 'center',
+    marginTop: 10,
+    color: Colors.primary,
+  },
 });
