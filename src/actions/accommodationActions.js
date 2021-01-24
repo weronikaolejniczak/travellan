@@ -195,7 +195,7 @@ export const addPDFRequest = (tripId, accommodationId, PDF) => {
     const userId = getState().auth.userId;
     axios
       .patch(
-        `${API_URL}/Trips/${userId}/${tripId}/transport/${accommodationId}.json?auth=${token}`,
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation/${accommodationId}.json?auth=${token}`,
         {
           PDF,
         },
