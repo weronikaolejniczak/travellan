@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ScrollView } from 'react-native';
 
 import AppStyles from 'styles/AppStyles';
 
-const CustomScrollView = ({ children, contentContainerStyle, style }) => (
-  <ScrollView
-    contentContainerStyle={[AppStyles.scrollViewContent, contentContainerStyle]}
-    indicatorStyle="white"
-    style={[AppStyles.scrollView, style]}
-  >
-    {children}
-  </ScrollView>
-);
+const CustomScrollView = (
+  { children, contentContainerStyle, ...props },
+  ref,
+) => {
+  const scrollViewRef = useRef();
 
-export default CustomScrollView;
+  useImperativeHandle(ref, () => ({
+    scrollToEnd: () => scrollViewRef.current.scrollToEnd({ animated: true }),
+  }));
+
+  return (
+    <ScrollView
+      ref={scrollViewRef}
+      contentContainerStyle={[
+        AppStyles.scrollViewContent,
+        contentContainerStyle,
+      ]}
+      indicatorStyle="white"
+      style={AppStyles.scrollView}
+      {...props}
+    >
+      {children}
+    </ScrollView>
+  );
+};
+
+export default forwardRef(CustomScrollView);

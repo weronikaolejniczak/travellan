@@ -1,76 +1,42 @@
-import Autocomplete from 'react-native-autocomplete-input';
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { View } from 'react-native';
 
 import { AccountButton } from 'components';
-import { CURRENCIES } from 'data/Currencies';
+import { Autocomplete, Caption, Switch, Text, TextInput } from 'utils';
 import { Layout } from 'constants';
-import { Switch, TextInput } from 'utils';
 import { styles } from './BudgetPickerStyle';
 
-const BudgetField = ({
+const BudgetPicker = ({
+  data,
+  query,
   account,
   budget,
-  budgetChangeHandler,
+  handleBudgetValueChange,
   budgetIsEnabled,
-  budgetIsValid,
   budgetSubmitted,
+  budgetValueError,
   currency,
-  currencyChangeHandler,
-  error,
+  handleCurrencyChange,
+  currencyError,
   label,
   setAccount,
   showSwitch,
   toggleBudgetSwitch,
-}) => {
-  const query = currency;
+}) => (
+  <View style={styles.budgetPickerWrapper}>
+    <View style={showSwitch ? Layout.fillRowCross : {}}>
+      {showSwitch && (
+        <Switch onToggleSwitch={toggleBudgetSwitch} toggled={budgetIsEnabled}>
+          <Text style={styles.label}>{label}</Text>
+        </Switch>
+      )}
+    </View>
 
-  const filterCurrencies = (input, currencies) => {
-    const regex = new RegExp(`${input.trim()}`, 'i');
-    if (query === '') {
-      return [];
-    } else {
-      const filtered = currencies.filter(
-        (curr) => curr.name.search(regex) >= 0 || curr.iso.search(regex) >= 0,
-      );
-      return filtered.splice(0, 6);
-    }
-  };
-
-  const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
-  const filteredCurrencies = filterCurrencies(query, CURRENCIES);
-
-  const data =
-    filteredCurrencies.length >= 1 && comp(query, filteredCurrencies[0].name)
-      ? []
-      : filteredCurrencies;
-
-  return (
-    <View style={styles.budgetPickerWrapper}>
-      <View style={showSwitch ? Layout.fillRowCross : {}}>
-        {showSwitch && (
-          <Switch onToggleSwitch={toggleBudgetSwitch} toggled={budgetIsEnabled}>
-            <Text style={styles.label}>{label}</Text>
-          </Switch>
-        )}
-      </View>
-
-      {budgetIsEnabled && (
-        <>
-          <TextInput
-            label="Amount"
-            value={budget}
-            onChange={budgetChangeHandler}
-            keyboardType="numeric"
-          />
-
-          <View style={Layout.fillRowCross}>
+    {budgetIsEnabled && (
+      <>
+        <View style={styles.accountsWrapper}>
+          <Caption>Default account</Caption>
+          <View style={styles.accounts}>
             <AccountButton
               account={account}
               value="cash"
@@ -85,49 +51,32 @@ const BudgetField = ({
               icon="credit-card"
               setAccount={setAccount}
             >
-              Cash
+              Card
             </AccountButton>
           </View>
+        </View>
 
-          <KeyboardAvoidingView behavior="padding">
-            <View style={styles.autocompleteContainer}>
-              <Autocomplete
-                data={data}
-                style={styles.input}
-                inputContainerStyle={styles.input}
-                defaultValue={query}
-                listStyle={styles.result}
-                keyExtractor={(item) => item.iso.toString()}
-                renderTextInput={() => (
-                  <TextInput
-                    label="Currency"
-                    value={query}
-                    onChange={(text) => currencyChangeHandler(text)}
-                  />
-                )}
-                renderItem={({ item, i }) => (
-                  <TouchableOpacity
-                    style={styles.result}
-                    onPress={() => currencyChangeHandler(item.name)}
-                  >
-                    <Text style={styles.text}>
-                      {item.name} ({item.iso})
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
+        <TextInput
+          label="Amount"
+          value={budget}
+          error={budgetValueError}
+          onChange={handleBudgetValueChange}
+          keyboardType="numeric"
+        />
 
-            {!!error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>{error}</Text>
-              </View>
-            )}
-          </KeyboardAvoidingView>
-        </>
-      )}
-    </View>
-  );
-};
+        <Autocomplete
+          data={data}
+          query={query}
+          error={currencyError}
+          onChange={handleCurrencyChange}
+          onPress={(item) => handleCurrencyChange(item.name)}
+          keyExtractor={(item) => item.iso.toString()}
+          textInputLabel="Currency"
+          itemLabel={(item) => `${item.name} (${item.iso})`}
+        />
+      </>
+    )}
+  </View>
+);
 
-export default BudgetField;
+export default BudgetPicker;
