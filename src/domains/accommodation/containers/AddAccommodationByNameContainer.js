@@ -1,24 +1,26 @@
+import * as yup from 'yup';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Formik } from 'formik';
+import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
+import * as accommodationActions from 'actions/accommodationActions';
 import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
   ScrollView as Container,
+  ErrorFrame,
   Headline,
   ItemlessFrame,
-  TextInput,
   Subheading,
+  TextInput,
 } from 'utils';
-import { View } from 'react-native';
 import { HotelCard } from 'components';
 import { styles } from './AddAccommodationByNameStyleContainer';
-import * as accommodationActions from 'actions/accommodationActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 
-const AddAccommodationByNameContainer = (props) => {
-  const { tripId, startDate, endDate, cityCode } = props.route.params;
+const AddAccommodationByNameContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { tripId, startDate, endDate, cityCode } = route.params;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
@@ -41,7 +43,7 @@ const AddAccommodationByNameContainer = (props) => {
   };
 
   const fetchHotel = useCallback(
-    async (cityCode, hotelName) => {
+    async (hotelName) => {
       try {
         const result = await fetchHotelByName(cityCode, hotelName);
         setData(result);
@@ -88,16 +90,25 @@ const AddAccommodationByNameContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [data]);
+  }, [data, endDate, startDate]);
+
+  if (error) {
+    return <ErrorFrame error={error} />;
+  }
 
   if (cityCode === undefined)
     return (
-      <ItemlessFrame message="Sorry, searching for hotels by name near your destination is impossible!" />
+      <ItemlessFrame>
+        Sorry, searching for hotels by name near your destination is impossible!
+      </ItemlessFrame>
     );
 
   if (isDateSame)
     return (
-      <ItemlessFrame message="Sorry, searching for hotels by name is not possible if you are going on one day trip!" />
+      <ItemlessFrame>
+        Sorry, searching for hotels by name is not possible if you are going on
+        one day trip!
+      </ItemlessFrame>
     );
 
   if (data)
@@ -142,9 +153,8 @@ const AddAccommodationByNameContainer = (props) => {
       onSubmit={async (values) => {
         setError(null);
         setIsLoading(true);
-        console.log(values);
         try {
-          fetchHotel(cityCode, values.hotelName);
+          fetchHotel(values.hotelName);
         } catch {
           setError(error);
         }
@@ -163,7 +173,6 @@ const AddAccommodationByNameContainer = (props) => {
           </View>
           <TextInput
             label="Hotel name"
-            error={error}
             onChange={handleChange('hotelName')}
             value={values.hotelName}
             error={

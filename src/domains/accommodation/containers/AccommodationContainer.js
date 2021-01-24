@@ -107,6 +107,7 @@ const AccommodationContainer = ({ navigation, route }) => {
       return source;
     }
   };
+
   const persistDeletePDF = useCallback(
     (id) => {
       setIsRefreshing(true);
@@ -176,29 +177,24 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   if (Array.isArray(accommodation) && accommodation.length < 1) {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <ItemlessFrame message="You have no accomodation saved!" />
+      <>
+        <ItemlessFrame>You have no accomodation saved!</ItemlessFrame>
         <ActionSheet
           ref={actionSheetRef}
           elements={[
             {
               id: '0',
-              label: 'Add accommodation manually',
-              onPress: () => navigateToScreen('Add accommodation'),
-            },
-            {
-              id: '1',
               label: 'Add hotel by name',
               onPress: () => navigateToScreen('Add hotel by name'),
             },
             {
-              id: '2',
+              id: '1',
               label: 'Hotel recommendation',
               onPress: () => navigateToScreen('Hotel recommendation'),
             },
           ]}
         />
-      </ScrollView>
+      </>
     );
   }
 

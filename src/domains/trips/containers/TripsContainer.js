@@ -1,13 +1,13 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { Component, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
-import { Colors } from 'constants';
 import {
   View as Container,
+  ErrorFrame,
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
@@ -94,10 +94,6 @@ const TripsContainer = (props) => {
     });
   };
 
-  const renderFooter = () => {
-    return <Container />;
-  };
-
   useEffect(() => {
     loadTrips();
     SplashScreen.hide();
@@ -108,15 +104,11 @@ const TripsContainer = (props) => {
   }
 
   if (error) {
-    return (
-      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
-        <Text style={styles.text}>{error}</Text>
-      </View>
-    );
+    return <ErrorFrame error={error} />;
   }
 
   if (Array.isArray(trips) && trips.length < 1) {
-    return <ItemlessFrame message="You have no trips saved!" />;
+    return <ItemlessFrame>You have no trips saved!</ItemlessFrame>;
   }
 
   return (
@@ -128,7 +120,7 @@ const TripsContainer = (props) => {
       />
       <FlatList
         data={trips}
-        ListFooterComponent={renderFooter}
+        ListFooterComponent={() => <View />}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <TripItem
@@ -144,15 +136,15 @@ const TripsContainer = (props) => {
               );
             }}
           >
-            <View style={styles.iconContainer}>
+            <View style={styles.actionButton}>
               <TouchableHighlight
-                style={styles.actionButton}
+                style={styles.iconWrapper}
                 onPress={() => handleDeleteTrip(data.item)}
               >
                 <Icon name="delete" style={styles.actionIcon} />
               </TouchableHighlight>
               <TouchableHighlight
-                style={styles.actionButton}
+                style={styles.iconWrapper}
                 onPress={() => {
                   handleEdit(
                     data.item.id,
