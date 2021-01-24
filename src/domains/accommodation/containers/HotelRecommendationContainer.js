@@ -13,7 +13,7 @@ import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
-  const { cityCode, startDate, endDate } = route.params;
+  const { tripId, cityCode, startDate, endDate } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
@@ -92,7 +92,14 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
       </ItemlessFrame>
     );
 
-  if (data)
+  if (data && data.length === 0)
+    return (
+      <ItemlessFrame>
+        Sorry, we couldn't find any hotel recommendations for your trip!
+      </ItemlessFrame>
+    );
+
+  if (data && data.length > 0)
     return (
       <Container>
         <FlatList
