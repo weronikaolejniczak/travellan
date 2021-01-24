@@ -18,14 +18,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row-reverse',
   },
+  iconWrapper: {
+    padding: 15,
+  },
   text: {
     color: Colors.text,
-  },
-  triplessContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    justifyContent: 'center',
   },
   triplessContainer: {
     alignItems: 'center',
@@ -34,7 +31,5 @@ export const styles = StyleSheet.create({
   },
   triplessText: {
     fontSize: 18,
-  iconWrapper: {
-    padding: 15,
   },
 });
