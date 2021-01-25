@@ -46,17 +46,27 @@ export const styles = StyleSheet.create({
   loginWrapper: {
     width: '100%',
   },
+  navText: {
+    color: Colors.text,
+    fontFamily: 'Lato-Regular',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  socialsContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
   padding: {
     padding: 20,
-  },
-  register: {
-    color: Colors.text,
-    fontSize: 16.5,
   },
   screen: {
     alignItems: 'center',
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
+    //padding: 20,
+    paddingTop: 50,
   },
 });
