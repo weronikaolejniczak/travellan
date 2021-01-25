@@ -164,6 +164,13 @@ const AuthenticationContainer = ({ navigation }) => {
                   backgroundColor="#f5e7ea"
                   onPress={() => handleGoogle()}
                 />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Register')}
+                >
+                  <Text style={styles.register}>
+                    Don't have an account? Create here
+                  </Text>
+                </TouchableOpacity>
               </View>
             </ScrollView>
           </View>

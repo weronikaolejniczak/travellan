@@ -40,6 +40,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  register: {
+    color: Colors.text,
+    fontSize: 14,
+  },
   screen: {
     alignItems: 'center',
     backgroundColor: Colors.background,
