@@ -1,4 +1,5 @@
 import Colors from 'constants/Colors';
+import { Metrics } from 'constants';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -18,9 +19,6 @@ export const styles = StyleSheet.create({
     margin: 10,
     padding: 12,
     width: '40%',
-  },
-  padding: {
-    padding: 20,
   },
   buttonText: {
     color: Colors.text,
@@ -43,6 +41,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  padding: {
+    padding: 20,
+  },
   register: {
     color: Colors.text,
     fontSize: 16.5,
@@ -52,5 +53,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
+  },
+  submitWrapper: {
+    ...Metrics.bigMarginTop,
   },
 });
