@@ -36,6 +36,7 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import NotificationContainer from 'domains/user/containers/NotificationContainer';
+import SharingContainer from 'domains/share/containers/SharingContainer';
 import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import RegisterContainer from 'domains/user/containers/RegisterContainer';
 import StartupContainer, {
@@ -71,7 +72,7 @@ const CustomDrawerContent = (props) => (
         label={() => <Text>Travellan Share</Text>}
         icon={() => <Icon name="share" size={18} />}
         onPress={() => {
-          props.navigation.navigate('Notification');
+          props.navigation.navigate('Sharing');
         }}
       />
       <DrawerItem
@@ -151,6 +152,7 @@ export default function Navigation() {
           options={forgotOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
+        <Stack.Screen name="Sharing" component={SharingContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen name="Edit trip" component={EditTripContainer} />
         <Stack.Screen
