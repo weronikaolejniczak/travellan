@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 
-import {
-  ScrollView as Container,
-  Text,
-  Headline,
-  Subheading,
-  Paragraph,
-} from 'utils';
+import { ScrollView as Container, Subheading, Paragraph } from 'utils';
 import { Image, View } from 'react-native';
 
 import { styles } from './SharingContainerStyle';
@@ -70,7 +64,7 @@ const SharingContainer = (props) => {
       </Paragraph>
       <View style={styles.imageView}>
         <Image
-          style={styles.imageSmall}
+          style={styles.imageLoading}
           source={require('assets/images/LoadingScreen.jpg')}
         />
       </View>
