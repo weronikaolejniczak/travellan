@@ -15,7 +15,7 @@ import { ScrollView as Container, ReadMore } from 'utils';
 import { styles } from './RecommendedHotelDetailsContainerStyle';
 
 // $todo: fix styling - don't duplicate code!
-const HotelRecommendationContainer = ({ route }) => {
+const RecommendedHotelDetailsContainer = ({ route }) => {
   const {
     amenities,
     creditCardPaymentPossible,
@@ -94,4 +94,4 @@ const HotelRecommendationContainer = ({ route }) => {
   );
 };
 
-export default memo(HotelRecommendationContainer);
+export default memo(RecommendedHotelDetailsContainer);
