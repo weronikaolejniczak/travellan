@@ -137,19 +137,15 @@ const AuthenticationContainer = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.actionsContainer}>
-                <Button
-                  loading={isLoading}
-                  disabled={isLoading}
-                  onPress={handleSubmit}
-                >
-                  Login
-                </Button>
-                <Button
-                  onPress={() => navigation.navigate('Register')}
-                  mode="outlined"
-                >
-                  Create new account
-                </Button>
+                <View style={styles.loginWrapper}>
+                  <Button
+                    loading={isLoading}
+                    disabled={isLoading}
+                    onPress={handleSubmit}
+                  >
+                    Sign in
+                  </Button>
+                </View>
                 <SocialButton
                   buttonTitle="Sign In with Facebook"
                   btnType="facebook"
@@ -167,9 +163,11 @@ const AuthenticationContainer = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Register')}
                 >
-                  <Text style={styles.register}>
-                    Don't have an account? Create here
-                  </Text>
+                  <View style={styles.padding}>
+                    <Text style={styles.register}>
+                      Don't have an account? Create here
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               </View>
             </ScrollView>

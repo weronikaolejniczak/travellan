@@ -19,6 +19,9 @@ export const styles = StyleSheet.create({
     padding: 12,
     width: '40%',
   },
+  padding: {
+    padding: 20,
+  },
   buttonText: {
     color: Colors.text,
     fontSize: 16,
@@ -42,7 +45,7 @@ export const styles = StyleSheet.create({
   },
   register: {
     color: Colors.text,
-    fontSize: 14,
+    fontSize: 16.5,
   },
   screen: {
     alignItems: 'center',
