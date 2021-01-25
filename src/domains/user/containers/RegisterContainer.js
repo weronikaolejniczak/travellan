@@ -3,6 +3,7 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   Text,
@@ -130,12 +131,24 @@ const RegisterContainer = (props) => {
                   <Text style={styles.color_textPrivate}>
                     By registering, you confirm that you accept our{' '}
                   </Text>
-                  <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(
+                        'https://travellan.flycricket.io/terms.html',
+                      )
+                    }
+                  >
                     <Text style={styles.linkText}>Terms of service</Text>
                   </TouchableOpacity>
                   <Text style={styles.color_textPrivate}> and </Text>
-                  <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
-                  <Text style={styles.linkText}>Privacy Policy</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(
+                        'https://travellan.flycricket.io/privacy.html',
+                      )
+                    }
+                  >
+                    <Text style={styles.linkText}>Privacy Policy</Text>
                   </TouchableOpacity>
                 </View>
                 <Button
