@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   color_textPrivate: {
-    fontFamily: 'Lato-Regular',
     color: Colors.text,
+    fontFamily: 'Lato-Regular',
     fontSize: 13,
     fontWeight: '400',
   },
