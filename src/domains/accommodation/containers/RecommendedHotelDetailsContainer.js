@@ -3,12 +3,10 @@ import React, { memo } from 'react';
 import {
   ImageBackground,
   Linking,
-  Platform,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import {
   Caption,

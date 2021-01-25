@@ -5,10 +5,10 @@ import recommendHotel from 'services/recommendHotel';
 import {
   Button,
   View as Container,
-  Headline,
   ItemlessFrame,
   Text,
   TextInput,
+  Title,
 } from 'utils';
 import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
@@ -64,9 +64,9 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     setRoomQuantity();
   };
 
-  const handleSelectItem = (data) => {
-    navigation.navigate('Recommended Hotel Details', {
-      hotelDetails: data,
+  const handleSelectItem = (element) => {
+    navigation.navigate('Recommended hotel details', {
+      hotelDetails: element,
     });
   };
 
@@ -118,10 +118,10 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
 
   return (
     <Container>
-      <Headline style={styles.headline}>
+      <Title style={styles.headline}>
         We will find the most attractive accommodation offers for your
         destination
-      </Headline>
+      </Title>
 
       <TextInput
         label="Number of adults"

@@ -172,7 +172,7 @@ export default function Navigation() {
           component={HotelRecommendationContainer}
         />
         <Stack.Screen
-          name="Recommended Hotel Details"
+          name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
         <Stack.Screen
