@@ -18,7 +18,7 @@ const SharingContainer = (props) => {
       </Subheading>
       <Paragraph style={styles.paragraph}>
         Along with the development of the Travellan application, option of
-        saving information about accommodation has been added. The option is
+        saving information about accommodation has been added. This option is
         intended for users who have already booked their stay in a given hotel
         and want to keep all the most important information about their
         accommodation inside the application.
@@ -27,7 +27,7 @@ const SharingContainer = (props) => {
         What pages can be shared by Travellan?
       </Subheading>
       <Paragraph style={styles.paragraph}>
-        Currently, Travellan share is only compatible with hotel offers on the
+        Currently, Travellan Share is only compatible with hotel offers on the
         booking.com website.
       </Paragraph>
       <Subheading style={styles.subheading}>
