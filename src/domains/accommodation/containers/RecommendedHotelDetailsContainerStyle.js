@@ -1,27 +1,15 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import { Colors } from 'constants';
+import { Colors, Metrics } from 'constants';
 
 const { height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
-  alignRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: '4%',
-  },
-  date: {
-    fontSize: 14,
-  },
-  destination: {
-    fontSize: 22,
+  content: {
+    backgroundColor: Colors.background,
   },
   details: {
-    padding: '5%',
-  },
-  header: {
-    color: Colors.text,
-    fontSize: 18,
+    ...Metrics.bigPadding,
   },
   headerOverImage: {
     alignItems: 'center',
@@ -29,20 +17,44 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   imageContainer: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     height: height * 0.4,
     width: '100%',
   },
-  rating: {
+  linkButton: {
+    alignItems: 'center',
     backgroundColor: Colors.primary,
     borderRadius: 50,
-    padding: 10,
-    position: 'absolute',
-    right: 30,
-    top: 5,
+    justifyContent: 'center',
+    padding: 15,
+    width: 220,
   },
-  text: {
-    color: Colors.text,
+  linkButtonText: {
+    color: Colors.background,
+    fontWeight: '600',
+  },
+  linkButtonWrapper: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  offerColumn: {
+    marginRight: 25,
+  },
+  offerContent: {
+    flexDirection: 'row',
+  },
+  rating: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 50,
+    display: 'flex',
+    height: 50,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 15,
+    top: 15,
+    width: 50,
+  },
+  section: {
+    ...Metrics.verticalMargin,
   },
 });

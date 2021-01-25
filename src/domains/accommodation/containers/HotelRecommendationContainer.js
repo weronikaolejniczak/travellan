@@ -7,8 +7,8 @@ import {
   View as Container,
   Headline,
   ItemlessFrame,
-  TextInput,
   Text,
+  TextInput,
 } from 'utils';
 import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';

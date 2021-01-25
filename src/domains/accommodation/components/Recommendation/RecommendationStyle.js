@@ -15,8 +15,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   imageContainer: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     height: cardHeight * 0.4,
   },
   rating: {
@@ -33,5 +31,6 @@ export const styles = StyleSheet.create({
   },
   recommendationCard: {
     marginVertical: height * 0.02,
+    overflow: 'hidden',
   },
 });
