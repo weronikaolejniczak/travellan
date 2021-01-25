@@ -24,12 +24,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
     borderRadius: 50,
+    flexDirection: 'row',
     justifyContent: 'center',
     padding: 15,
-    width: 220,
+    width: 260,
+  },
+  linkButtonIcon: {
+    fontSize: 24,
+    marginRight: 7,
   },
   linkButtonText: {
     color: Colors.background,
+    fontSize: 16,
     fontWeight: '600',
   },
   linkButtonWrapper: {

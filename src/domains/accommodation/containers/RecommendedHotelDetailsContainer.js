@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import React, { memo } from 'react';
 import {
@@ -62,6 +63,7 @@ const RecommendedHotelDetailsContainer = ({ route }) => {
             style={styles.linkButton}
             onPress={() => Linking.openURL(URL + name + location.address)}
           >
+            <Icon name="search-web" style={styles.linkButtonIcon} />
             <Text style={styles.linkButtonText}>
               Search for this hotel in web
             </Text>
