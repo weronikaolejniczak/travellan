@@ -38,6 +38,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  registerButton: {
+    width: '100%',
+  },
   screen: {
     alignItems: 'center',
     backgroundColor: Colors.background,

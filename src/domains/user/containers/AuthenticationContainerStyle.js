@@ -46,8 +46,14 @@ export const styles = StyleSheet.create({
   loginWrapper: {
     width: '100%',
   },
-  navText: {
+  navTextForgot: {
     color: Colors.text,
+    fontFamily: 'Lato-Regular',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  navTextRegister: {
+    color: Colors.primary,
     fontFamily: 'Lato-Regular',
     fontSize: 16,
     fontWeight: '500',

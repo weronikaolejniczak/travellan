@@ -120,6 +120,7 @@ const RegisterContainer = (props) => {
                   loading={isLoading}
                   disabled={isLoading}
                   onPress={handleSubmit}
+                  style={styles.registerButton}
                 >
                   Sign up
                 </Button>

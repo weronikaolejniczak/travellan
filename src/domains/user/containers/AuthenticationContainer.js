@@ -143,7 +143,7 @@ const AuthenticationContainer = ({ navigation }) => {
               </View>
               <View style={styles.actionsContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.navText}>Forgot Password?</Text>
+                  <Text style={styles.navTextForgot}>Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.socialsContainer}>
                   <SocialButton
@@ -165,7 +165,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   onPress={() => navigation.navigate('Register')}
                 >
                   <View style={styles.padding}>
-                    <Text style={styles.navText}>
+                    <Text style={styles.navTextRegister}>
                       Don't have an account? Create here
                     </Text>
                   </View>
