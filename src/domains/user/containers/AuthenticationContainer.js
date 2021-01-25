@@ -132,9 +132,7 @@ const AuthenticationContainer = ({ navigation }) => {
                     errors.password && touched.password ? errors.password : null
                   }
                 />
-                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.forgot}>Forgot Password?</Text>
-                </TouchableOpacity>
+
               </View>
               <View style={styles.actionsContainer}>
                 <View style={styles.loginWrapper}>
@@ -142,9 +140,13 @@ const AuthenticationContainer = ({ navigation }) => {
                     loading={isLoading}
                     disabled={isLoading}
                     onPress={handleSubmit}
+                    style={styles.loginButton}
                   >
                     Sign in
                   </Button>
+                  <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                  <Text style={styles.forgot}>Forgot Password?</Text>
+                </TouchableOpacity>
                 </View>
                 <SocialButton
                   buttonTitle="Sign In with Facebook"

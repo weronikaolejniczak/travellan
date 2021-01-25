@@ -1,5 +1,4 @@
 import Colors from 'constants/Colors';
-import { Metrics } from 'constants';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -41,6 +40,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  loginButton: {
+    width: '100%',
+  },
+  loginWrapper: {
+    width: '100%',
+  },
   padding: {
     padding: 20,
   },
@@ -53,8 +58,5 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
-  },
-  submitWrapper: {
-    ...Metrics.bigMarginTop,
   },
 });
