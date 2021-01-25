@@ -26,6 +26,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  color_textPrivate: {
+    fontFamily: 'Lato-Regular',
+    color: Colors.text,
+    fontSize: 13,
+    fontWeight: '400',
+  },
   formControl: {
     width: '100%',
   },
@@ -38,6 +44,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  linkText: {
+    color: Colors.primary,
+    fontFamily: 'Lato-Regular',
+    fontSize: 13,
+    fontWeight: '400',
+  },
   registerButton: {
     width: '100%',
   },
@@ -46,5 +58,12 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
+  },
+  textPrivate: {
+    color: Colors.text,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginVertical: 35,
   },
 });

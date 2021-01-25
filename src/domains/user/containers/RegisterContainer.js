@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -124,6 +126,18 @@ const RegisterContainer = (props) => {
                 >
                   Sign up
                 </Button>
+                <View style={styles.textPrivate}>
+                  <Text style={styles.color_textPrivate}>
+                    By registering, you confirm that you accept our{' '}
+                  </Text>
+                  <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+                    <Text style={styles.linkText}>Terms of service</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.color_textPrivate}> and </Text>
+                  <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+                  <Text style={styles.linkText}>Privacy Policy</Text>
+                  </TouchableOpacity>
+                </View>
                 <Button
                   onPress={() => {
                     props.navigation.navigate('Auth');
