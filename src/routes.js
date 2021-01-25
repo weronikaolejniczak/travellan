@@ -68,6 +68,13 @@ const CustomDrawerContent = (props) => (
     </DrawerContentScrollView>
     <View>
       <DrawerItem
+        label={() => <Text>Travellan Share</Text>}
+        icon={() => <Icon name="share" size={18} />}
+        onPress={() => {
+          props.navigation.navigate('Notification');
+        }}
+      />
+      <DrawerItem
         label={() => <Text>Notifications</Text>}
         icon={() => <Icon name="notification-clear-all" size={18} />}
         onPress={() => {
