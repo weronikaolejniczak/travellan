@@ -9,7 +9,7 @@ import {
   ItemlessFrame,
   TextInput,
 } from 'utils';
-import { RecommendationItemShort } from '../components';
+import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
@@ -99,7 +99,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           data={data}
           keyExtractor={(item) => item.dupeId}
           renderItem={(el) => (
-            <RecommendationItemShort
+            <Recommendation
               data={el.item}
               onSelect={() => handleSelectItem(el.item)}
             />

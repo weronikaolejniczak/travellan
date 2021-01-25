@@ -2,10 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 import { Colors } from 'constants';
 
-const { height, width } = Dimensions.get('window');
-export const cardHeight = height * 0.83;
-export const cardWidth = width * 0.923;
-export const spacingForCardInset = width * 0.03;
+const { height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   alignRow: {
@@ -34,8 +31,8 @@ export const styles = StyleSheet.create({
   imageContainer: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    height: cardHeight * 0.4,
-    width: cardWidth,
+    height: height * 0.4,
+    width: '100%',
   },
   rating: {
     backgroundColor: Colors.primary,
@@ -44,11 +41,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 30,
     top: 5,
-  },
-  recommendationCard: {
-    marginHorizontal: width * 0.04,
-    marginVertical: height * 0.02,
-    position: 'relative',
   },
   text: {
     color: Colors.text,
