@@ -152,8 +152,37 @@ const AccommodationContainer = ({ navigation, route }) => {
     [persistDeletePDF],
   );
 
-  const handleNavigationToMap = (id) => {
-    // use: tripId, id
+  const persistDelete = useCallback(
+    (id) => {
+      setIsRefreshing(true);
+      try {
+        dispatch(accommodationActions.deleteAccommodationRequest(tripId, id));
+      } catch {
+        setError('Something went wrong!');
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, tripId],
+  );
+
+  const handleHotelDelete = (id) => {
+    setIsRefreshing(true);
+    Alert.alert(
+      'Delete saved hotel?',
+      'Are you sure?',
+      [
+        {
+          style: 'cancel',
+          text: 'Cancel',
+        },
+        {
+          onPress: () => persistDelete(id),
+          text: 'OK',
+        },
+      ],
+      { cancelable: true },
+    );
+    setIsRefreshing(false);
   };
 
   const handleHotelEdit = (id) => {
@@ -236,7 +265,7 @@ const AccommodationContainer = ({ navigation, route }) => {
             handlePDFManagement={() =>
               handlePDFManagement(data.item.PDF, data.item.id)
             }
-            handleNavigationToMap={() => handleNavigationToMap(data.item.id)}
+            handleHotelDelete={() => handleHotelDelete(data.item.id)}
             handleHotelEdit={() => handleHotelEdit(data.item.id)}
             {...data.item}
           />
