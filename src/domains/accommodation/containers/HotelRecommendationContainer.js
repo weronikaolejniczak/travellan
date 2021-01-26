@@ -120,8 +120,18 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
         }
       }}
       validationSchema={yup.object().shape({
-        adults: yup.number().min(1).max(10).required('Cannot be empty!'),
-        rooms: yup.number().min(1).max(15).required('Cannot be empty!'),
+        adults: yup
+          .number()
+          .min(1)
+          .max(100)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!'),
+        rooms: yup
+          .number()
+          .min(1)
+          .max(50)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!'),
       })}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
@@ -134,6 +144,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           <TextInput
             label="Number of adults"
             onChange={handleChange('adults')}
+            keyboardType={'numeric'}
             value={values.adults}
             error={errors.adults && touched.adults ? errors.adults : null}
           />
@@ -141,6 +152,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           <TextInput
             label="Number of rooms"
             onChange={handleChange('rooms')}
+            keyboardType={'numeric'}
             value={values.rooms}
             error={errors.rooms && touched.rooms ? errors.rooms : null}
           />
