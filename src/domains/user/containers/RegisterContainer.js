@@ -36,7 +36,7 @@ const RegisterContainer = (props) => {
         email: '',
         password: '',
       }}
-      onSubmit={async (values) => {
+      onSubmit={async (values, actions) => {
         setError(null);
         setIsLoading(true);
         let action;
@@ -49,6 +49,7 @@ const RegisterContainer = (props) => {
           setError(err.message);
         }
         setIsLoading(false);
+        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         confirmPassword: yup
