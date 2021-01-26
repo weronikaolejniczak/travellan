@@ -13,10 +13,12 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
 import {
+  authenticate,
   loginRequest,
   onFacebookButtonPress,
   onGoogleButtonPress,
@@ -28,6 +30,29 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+
+  useEffect(() => {
+    const tryLogin = async () => {
+      const userData = await AsyncStorage.getItem('userData');
+
+      if (!userData) {
+        return;
+      }
+
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
+
+      if (expirationDate <= new Date() || !token || !userId) {
+        return;
+      }
+
+      navigation.navigate('My trips');
+      dispatch(authenticate(userId, token));
+    };
+
+    tryLogin();
+  }, [dispatch, navigation]);
 
   const handleGoogle = async () => {
     setError(null);
@@ -134,9 +159,9 @@ const AuthenticationContainer = ({ navigation }) => {
                 />
               </View>
               <View style={styles.actionsContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                <Text style={styles.forgot}>Forgot password?</Text>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                  <Text style={styles.forgot}>Forgot password?</Text>
+                </TouchableOpacity>
                 <View style={styles.innerContainer}>
                   <Button
                     onPress={() => navigation.navigate('Register')}

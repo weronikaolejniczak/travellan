@@ -15,7 +15,6 @@ import { useIsFocused } from '@react-navigation/native';
 
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
-import auth from '@react-native-firebase/auth';
 import { styles } from './StartupContainerStyle';
 
 const StartupContainer = (props) => {
