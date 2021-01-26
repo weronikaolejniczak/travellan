@@ -57,17 +57,20 @@ export default (state = initialState, action) => {
       case SET_TRANSPORT:
         draft.trips[tripIndex].transport = action.transport;
         break;
+
       case CREATE_TRANSPORT:
         draft.trips[tripIndex].transport = [
           ...draft.trips[tripIndex].transport,
           action.newTransport,
         ];
         break;
+
       case DELETE_TRANSPORT:
         draft.trips[tripIndex].transport = draft.trips[
           tripIndex
         ].transport.filter((item) => item.id !== action.transportId);
         break;
+
       case SET_QR:
         draft.trips[tripIndex].transport[
           draft.trips[tripIndex].transport.findIndex(
@@ -75,6 +78,7 @@ export default (state = initialState, action) => {
           )
         ].QR = action.QR;
         break;
+
       case SET_PDF:
         draft.trips[tripIndex].transport[
           draft.trips[tripIndex].transport.findIndex(
@@ -86,12 +90,14 @@ export default (state = initialState, action) => {
       case SET_ACCOMMODATION:
         draft.trips[tripIndex].accommodation = action.accommodation;
         break;
+
       case CREATE_ACCOMMODATION:
         draft.trips[tripIndex].accommodation = [
           ...draft.trips[tripIndex].accommodation,
           action.newAccommodation,
         ];
         break;
+
       case DELETE_ACCOMMODATION:
         draft.trips[tripIndex].accommodation = draft.trips[
           tripIndex
@@ -109,20 +115,28 @@ export default (state = initialState, action) => {
       case SET_NOTES:
         draft.trips[tripIndex].notes = action.notes;
         break;
+
       case CREATE_NOTE:
         draft.trips[tripIndex].notes = [
           ...draft.trips[tripIndex].notes,
           action.newNote,
         ];
         break;
+
       case DELETE_NOTE:
         draft.trips[tripIndex].notes = draft.trips[tripIndex].notes.filter(
           (item) => item.id !== action.noteId,
         );
         break;
+
       case EDIT_NOTE:
-        draft.trips[tripIndex].notes = [...draft.trips[tripIndex].notes];
-        draft.trips[tripIndex].notes[action.noteId] = action.newNote;
+        draft.trips[tripIndex].notes = draft.trips[tripIndex].notes.filter(
+          (item) => item.id !== action.noteId,
+        );
+        draft.trips[tripIndex].notes = [
+          action.updatedNote,
+          ...draft.trips[tripIndex].notes,
+        ];
         break;
 
       case SET_BUDGET:
