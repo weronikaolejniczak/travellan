@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
   },
   registerButton: {
-    width: '48%',
+    width: '99%',
   },
   screen: {
     alignItems: 'center',

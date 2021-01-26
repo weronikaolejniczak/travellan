@@ -190,12 +190,12 @@ const AuthenticationContainer = ({ navigation }) => {
                   />
                 </View>
                 <Button
-                    onPress={() => navigation.navigate('Register')}
-                    mode="outlined"
-                    style={styles.authButton}
-                  >
-                    Sign up
-                  </Button>
+                  onPress={() => navigation.navigate('Register')}
+                  mode="outlined"
+                  style={styles.authButton}
+                >
+                  Sign up with email
+                </Button>
               </View>
             </ScrollView>
           </View>
