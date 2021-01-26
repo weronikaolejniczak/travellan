@@ -10,9 +10,8 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 3,
     flexDirection: 'row',
-    height: Dimensions.get('window').height / 15,
+    height: Dimensions.get('window').height / 20,
     marginTop: 10,
-    padding: 10,
     width: '100%',
   },
   buttonText: {
