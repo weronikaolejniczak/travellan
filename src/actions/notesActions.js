@@ -139,19 +139,19 @@ export const editNoteRequest = (
       .put(
         `${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,
         {
-          category,
-          date,
-          description,
           noteId,
+          date,
+          category,
           title,
+          description,
         },
       )
       .then(() => {
         const updatedNote = new Note(
           noteId,
           date,
-          title,
           category,
+          title,
           description,
         );
 
