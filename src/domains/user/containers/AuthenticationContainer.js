@@ -158,27 +158,10 @@ const AuthenticationContainer = ({ navigation }) => {
                     errors.password && touched.password ? errors.password : null
                   }
                 />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.forgot}>Forgot Password?</Text>
-=======
-=======
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
-=======
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
               </View>
               <View style={styles.actionsContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot password?</Text>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
-=======
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
-=======
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
                 </TouchableOpacity>
                 <View style={styles.innerContainer}>
                   <Button
@@ -194,19 +177,7 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={handleSubmit}
                     style={styles.authButton}
                   >
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    Sign in
-=======
                     Login
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
-=======
-                    Login
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
-=======
-                    Login
->>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
                   </Button>
                 </View>
                 <View style={styles.socialsContainer}>
