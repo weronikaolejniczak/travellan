@@ -160,9 +160,12 @@ const AuthenticationContainer = ({ navigation }) => {
                 />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot Password?</Text>
 =======
+=======
+>>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
 =======
 >>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
               </View>
@@ -170,6 +173,9 @@ const AuthenticationContainer = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot password?</Text>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
+=======
 >>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
 =======
 >>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
@@ -190,7 +196,11 @@ const AuthenticationContainer = ({ navigation }) => {
                   >
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     Sign in
+=======
+                    Login
+>>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
 =======
                     Login
 >>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
