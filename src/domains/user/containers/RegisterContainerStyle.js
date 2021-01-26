@@ -26,12 +26,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  color_textPrivate: {
-    color: Colors.text,
-    fontFamily: 'Lato-Regular',
-    fontSize: 13,
-    fontWeight: '400',
-  },
   formControl: {
     width: '100%',
   },
@@ -42,33 +36,12 @@ export const styles = StyleSheet.create({
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 70,
-  },
-  innerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  linkText: {
-    color: Colors.primary,
-    fontFamily: 'Lato-Regular',
-    fontSize: 13,
-    fontWeight: '400',
-  },
-  registerButton: {
-    width: '48%',
+    marginBottom: 20,
   },
   screen: {
     alignItems: 'center',
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
-  },
-  textPrivate: {
-    color: Colors.text,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginVertical: 35,
   },
 });
