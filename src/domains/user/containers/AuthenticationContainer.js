@@ -149,15 +149,15 @@ const AuthenticationContainer = ({ navigation }) => {
                   <SocialButton
                     buttonTitle="Sign In with Facebook"
                     btnType="facebook"
-                    color="#4867aa"
-                    backgroundColor="#e6eaf4"
+                    color="#e6eaf4"
+                    backgroundColor="#4267b2"
                     onPress={() => handleFacebook()}
                   />
                   <SocialButton
                     buttonTitle="Sign In with Google"
                     btnType="google"
-                    color="#de4d41"
-                    backgroundColor="#f5e7ea"
+                    color="#f5e7ea"
+                    backgroundColor="#de4d41"
                     onPress={() => handleGoogle()}
                   />
                 </View>

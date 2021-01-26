@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
   navTextRegister: {
-    color: Colors.primary,
+    color: Colors.text,
     fontFamily: 'Lato-Regular',
     fontSize: 16,
     fontWeight: '500',
