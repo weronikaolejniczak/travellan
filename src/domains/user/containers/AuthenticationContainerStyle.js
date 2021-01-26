@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   authButton: {
     marginTop: 20,
-    width: '49%',
+    width: '99%',
   },
   authContainer: {
     width: '80%',

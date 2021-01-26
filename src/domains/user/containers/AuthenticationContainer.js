@@ -165,13 +165,6 @@ const AuthenticationContainer = ({ navigation }) => {
                 </TouchableOpacity>
                 <View style={styles.innerContainer}>
                   <Button
-                    onPress={() => navigation.navigate('Register')}
-                    mode="outlined"
-                    style={styles.authButton}
-                  >
-                    Sign up
-                  </Button>
-                  <Button
                     loading={isLoading}
                     disabled={isLoading}
                     onPress={handleSubmit}
@@ -196,6 +189,13 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={() => handleGoogle()}
                   />
                 </View>
+                <Button
+                    onPress={() => navigation.navigate('Register')}
+                    mode="outlined"
+                    style={styles.authButton}
+                  >
+                    Sign up
+                  </Button>
               </View>
             </ScrollView>
           </View>
