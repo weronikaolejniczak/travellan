@@ -1,27 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
+import * as yup from 'yup';
 import recommendHotel from 'services/recommendHotel';
 import {
   Button,
   View as Container,
-  Headline,
   ItemlessFrame,
   TextInput,
-  Text,
+  Title,
 } from 'utils';
-import { RecommendationItemShort } from '../components';
-import { styles } from './HotelRecommendationContainerStyle';
 import { Formik } from 'formik';
-import * as yup from 'yup';
+import { Recommendation } from '../components';
+import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
   const { cityCode, startDate, endDate } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
-  const [adults, setAdults] = useState('');
-  const [roomQuantity, setRoomQuantity] = useState('');
   const [data, setData] = useState();
   const [error, setError] = useState('');
 
@@ -42,6 +39,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     async (adults, roomQuantity) => {
       const formattedStartDate = formatDate(startDate);
       const formattedEndDate = formatDate(endDate);
+
       try {
         const result = await recommendHotel(
           cityCode,
@@ -55,12 +53,12 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
         setError(error);
       }
     },
-    [cityCode, startDate, endDate, adults, roomQuantity, error],
+    [cityCode, startDate, endDate, error],
   );
 
-  const handleSelectItem = (data) => {
-    navigation.navigate('Recommended Hotel Details', {
-      hotelDetails: data,
+  const handleSelectItem = (element) => {
+    navigation.navigate('Recommended hotel details', {
+      hotelDetails: element,
     });
   };
 
@@ -101,7 +99,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           data={data}
           keyExtractor={(item) => item.dupeId}
           renderItem={(el) => (
-            <RecommendationItemShort
+            <Recommendation
               data={el.item}
               onSelect={() => handleSelectItem(el.item)}
             />
@@ -146,15 +144,15 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <Headline style={styles.headline}>
+          <Title style={styles.headline}>
             We will find the most attractive accommodation offers for your
             destination
-          </Headline>
+          </Title>
 
           <TextInput
             label="Number of adults"
             onChange={handleChange('adults')}
-            keyboardType={'numeric'}
+            keyboardType="numeric"
             value={values.adults}
             error={errors.adults && touched.adults ? errors.adults : null}
           />
@@ -162,7 +160,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           <TextInput
             label="Number of rooms"
             onChange={handleChange('rooms')}
-            keyboardType={'numeric'}
+            keyboardType="numeric"
             value={values.rooms}
             error={errors.rooms && touched.rooms ? errors.rooms : null}
           />
