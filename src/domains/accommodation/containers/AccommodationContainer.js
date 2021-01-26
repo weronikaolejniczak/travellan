@@ -287,16 +287,11 @@ const AccommodationContainer = ({ navigation, route }) => {
         elements={[
           {
             id: '0',
-            label: 'Add accommodation manually',
-            onPress: () => navigateToScreen('Add accommodation'),
-          },
-          {
-            id: '1',
             label: 'Add hotel by name',
             onPress: () => navigateToScreen('Add hotel by name'),
           },
           {
-            id: '2',
+            id: '1',
             label: 'Hotel recommendation',
             onPress: () => navigateToScreen('Hotel recommendation'),
           },

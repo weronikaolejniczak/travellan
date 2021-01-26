@@ -4,10 +4,11 @@ import { FlatList } from 'react-native';
 import recommendHotel from 'services/recommendHotel';
 import {
   Button,
-  ScrollView as Container,
+  View as Container,
   Headline,
   ItemlessFrame,
   TextInput,
+  Text,
 } from 'utils';
 import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
@@ -57,8 +58,8 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     [cityCode, startDate, endDate, adults, roomQuantity, error],
   );
 
-  const handleSelectItem = () => {
-    navigation.navigate('Hotel details', {
+  const handleSelectItem = (data) => {
+    navigation.navigate('Recommended Hotel Details', {
       hotelDetails: data,
     });
   };
@@ -86,7 +87,14 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
       </ItemlessFrame>
     );
 
-  if (data)
+  if (data && data.length === 0)
+    return (
+      <ItemlessFrame>
+        Sorry, we couldn't find any hotel recommendations for your trip!
+      </ItemlessFrame>
+    );
+
+  if (data && data.length > 0)
     return (
       <Container>
         <FlatList
