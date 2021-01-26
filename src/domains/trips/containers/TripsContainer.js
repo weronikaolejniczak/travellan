@@ -2,6 +2,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
@@ -9,6 +10,7 @@ import {
   View as Container,
   ErrorFrame,
   FloatingActionButton,
+  HeaderButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
@@ -69,7 +71,7 @@ const TripsContainer = ({ navigation }) => {
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
       navigation.navigate('Details', {
-        cityCode: cityCode,
+        cityCode,
         destination,
         tripId: id,
       });
@@ -158,6 +160,22 @@ const TripsContainer = ({ navigation }) => {
       />
     </Container>
   );
+};
+
+export const tripsOptions = (navData) => {
+  return {
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Toggle Drawer"
+          iconName="menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default TripsContainer;

@@ -18,7 +18,9 @@ const DetailsHeader = ({
     new Date(date).toString().split(' ').splice(0, 3).join(' ');
 
   const extractHour = (date) =>
-    `${new Date(date).getHours()}:${new Date(date).getMinutes()}`;
+    `${('0' + new Date(date).getHours()).substr(-2)}:${(
+      '0' + new Date(date).getMinutes()
+    ).substr(-2)}`;
 
   return (
     <ImageBackground style={styles.image} source={{ uri: image }}>
