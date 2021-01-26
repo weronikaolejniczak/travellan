@@ -89,7 +89,7 @@ const RegisterContainer = (props) => {
                   value={values.email}
                   autoCapitalize="none"
                   onChange={handleChange('email')}
-                  label="E-mail"
+                  label="Email"
                   error={errors.email && touched.email ? errors.email : null}
                 />
               </View>

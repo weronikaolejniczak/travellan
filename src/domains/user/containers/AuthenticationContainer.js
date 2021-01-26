@@ -143,7 +143,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   style={styles.input}
                   onChange={handleChange('email')}
                   autoCapitalize="none"
-                  label="E-mail"
+                  label="Email"
                   error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
