@@ -1,23 +1,26 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { Component, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import { Alert, FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as tripsActions from 'actions/tripsActions';
-import { Colors } from 'constants';
 import {
   View as Container,
+  ErrorFrame,
   FloatingActionButton,
+  HeaderButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
 import { TripItem } from '../components';
 import { styles } from './TripsContainerStyle';
 
-const TripsContainer = (props) => {
+const TripsContainer = ({ navigation }) => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => state.trips.trips);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
@@ -67,35 +70,25 @@ const TripsContainer = (props) => {
 
   const handleSelectItem = (id, destination, cityCode) => {
     !isDeleting &&
-      props.navigation.navigate('Details', {
-        cityCode: cityCode,
+      navigation.navigate('Details', {
+        cityCode,
         destination,
         tripId: id,
       });
   };
 
-  const handleEdit = (
-    id,
-    destination,
-    budget,
-    notes,
-    transport,
-    accommodation,
-    map,
-  ) => {
-    props.navigation.navigate('Edit trip', {
-      accommodation,
-      budget,
-      destination,
-      map,
-      notes,
-      transport,
-      tripId: id,
+  const handleEdit = (item) => {
+    navigation.navigate('Edit trip', {
+      accommodation: item.accommodation,
+      budget: item.budget,
+      currentDestination: item.destination,
+      currentEndDate: item.endDate,
+      currentStartDate: item.startDate,
+      map: item.map,
+      notes: item.notes,
+      transport: item.transport,
+      tripId: item.id,
     });
-  };
-
-  const renderFooter = () => {
-    return <Container />;
   };
 
   useEffect(() => {
@@ -108,15 +101,20 @@ const TripsContainer = (props) => {
   }
 
   if (error) {
-    return (
-      <View style={[styles.centered, { backgroundColor: Colors.background }]}>
-        <Text style={styles.text}>{error}</Text>
-      </View>
-    );
+    return <ErrorFrame error={error} />;
   }
 
   if (Array.isArray(trips) && trips.length < 1) {
-    return <ItemlessFrame message="You have no trips saved!" />;
+    return (
+      <>
+        <FloatingActionButton
+          loading={isLoading}
+          disabled={isLoading}
+          onPress={() => navigation.navigate('Add trip')}
+        />
+        <ItemlessFrame>You have no trips saved!</ItemlessFrame>
+      </>
+    );
   }
 
   return (
@@ -124,16 +122,15 @@ const TripsContainer = (props) => {
       <FloatingActionButton
         loading={isLoading}
         disabled={isLoading}
-        onPress={() => props.navigation.navigate('Add trip')}
+        onPress={() => navigation.navigate('Add trip')}
       />
       <FlatList
         data={trips}
-        ListFooterComponent={renderFooter}
+        ListFooterComponent={() => <View />}
         keyExtractor={(item) => item.id}
         renderItem={(data) => (
           <TripItem
-            image={data.item.image}
-            destination={data.item.destination}
+            {...data.item}
             startDate={data.item.startDate.split(' ').slice(1, 4).join(' ')}
             endDate={data.item.endDate.split(' ').slice(1, 4).join(' ')}
             onSelect={() => {
@@ -144,26 +141,16 @@ const TripsContainer = (props) => {
               );
             }}
           >
-            <View style={styles.iconContainer}>
+            <View style={styles.actionButton}>
               <TouchableHighlight
-                style={styles.actionButton}
+                style={styles.iconWrapper}
                 onPress={() => handleDeleteTrip(data.item)}
               >
                 <Icon name="delete" style={styles.actionIcon} />
               </TouchableHighlight>
               <TouchableHighlight
-                style={styles.actionButton}
-                onPress={() => {
-                  handleEdit(
-                    data.item.id,
-                    data.item.destination,
-                    data.item.budget,
-                    data.item.notes,
-                    data.item.transport,
-                    data.item.accommodation,
-                    data.item.map,
-                  );
-                }}
+                style={styles.iconWrapper}
+                onPress={() => handleEdit(data.item)}
               >
                 <Icon name="edit" style={styles.actionIcon} />
               </TouchableHighlight>
@@ -173,6 +160,22 @@ const TripsContainer = (props) => {
       />
     </Container>
   );
+};
+
+export const tripsOptions = (navData) => {
+  return {
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Toggle Drawer"
+          iconName="menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default TripsContainer;

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ScrollView as Container, Select, TextInput } from 'utils';
 import { createNoteRequest } from 'actions/notesActions';
 import { defaultNoteCategory, noteCategories } from 'data/NoteCategories';
-import { notificationManager } from 'services/manageNotifications';
+import { notificationManager } from 'services';
 import { styles } from './AddNoteContainerStyle';
 
 const AddNoteContainer = ({ route, navigation }) => {

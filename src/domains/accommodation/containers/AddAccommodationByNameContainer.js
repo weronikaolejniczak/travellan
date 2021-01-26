@@ -1,24 +1,27 @@
+import * as yup from 'yup';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Formik } from 'formik';
+import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
+import * as accommodationActions from 'actions/accommodationActions';
 import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
   ScrollView as Container,
+  ErrorFrame,
   Headline,
   ItemlessFrame,
-  TextInput,
   Subheading,
+  TextInput,
+  Text,
 } from 'utils';
-import { View } from 'react-native';
 import { HotelCard } from 'components';
 import { styles } from './AddAccommodationByNameStyleContainer';
-import * as accommodationActions from 'actions/accommodationActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 
-const AddAccommodationByNameContainer = (props) => {
-  const { tripId, startDate, endDate, cityCode } = props.route.params;
+const AddAccommodationByNameContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { tripId, startDate, endDate, cityCode } = route.params;
   const selectedTrip = useSelector((state) =>
     state.trips.trips.find((item) => item.id === tripId),
   );
@@ -41,7 +44,7 @@ const AddAccommodationByNameContainer = (props) => {
   };
 
   const fetchHotel = useCallback(
-    async (cityCode, hotelName) => {
+    async (hotelName) => {
       try {
         const result = await fetchHotelByName(cityCode, hotelName);
         setData(result);
@@ -55,6 +58,7 @@ const AddAccommodationByNameContainer = (props) => {
   const cancelAction = () => setData(null);
 
   const submitHandler = async () => {
+    setError('');
     setIsLoading(true);
     try {
       await dispatch(
@@ -76,9 +80,10 @@ const AddAccommodationByNameContainer = (props) => {
         ),
       );
       setIsLoading(false);
-      navigation.navigate('Accomodation', { tripId: selectedTrip.id });
+      navigation.navigate('Accommodation', { tripId: selectedTrip.id });
     } catch {
       setError('Something went wrong!');
+      setIsLoading(false);
     }
   };
 
@@ -88,47 +93,54 @@ const AddAccommodationByNameContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [data]);
+  }, [data, endDate, startDate]);
+
+  if (error) {
+    return <ErrorFrame error={error} />;
+  }
 
   if (cityCode === undefined)
     return (
-      <ItemlessFrame message="Sorry, searching for hotels by name near your destination is impossible!" />
+      <ItemlessFrame>
+        Sorry, searching for hotels by name near your destination is impossible!
+      </ItemlessFrame>
     );
 
   if (isDateSame)
     return (
-      <ItemlessFrame message="Sorry, searching for hotels by name is not possible if you are going on one day trip!" />
+      <ItemlessFrame>
+        Sorry, searching for hotels by name is not possible if you are going on
+        one day trip!
+      </ItemlessFrame>
     );
 
   if (data)
     return (
       <Container contentContainerStyle={styles.container}>
-        <View style={styles.paddingTop}>
-          <Headline style={styles.headline}>Verify hotel data</Headline>
-          <Subheading style={styles.caution}>
-            Be sure to check it's valid!
-          </Subheading>
-          <View style={styles.hotelCardWrapper}>
-            <HotelCard {...data} />
-          </View>
-          <View style={styles.smallPaddingTop}>
-            <View style={styles.buttonContainer}>
-              <Button
-                loading={isLoading}
-                disabled={isLoading}
-                onPress={submitHandler}
-              >
-                Save hotel
-              </Button>
-              <Button
-                loading={isLoading}
-                disabled={isLoading}
-                onPress={cancelAction}
-                mode="outlined"
-              >
-                Try again
-              </Button>
-            </View>
+        <Headline style={styles.headline}>Verify hotel data</Headline>
+        <Subheading style={styles.caution}>
+          Be sure to check it's valid!
+        </Subheading>
+        <View style={styles.hotelCardWrapper}>
+          <HotelCard {...data} />
+        </View>
+        <View style={styles.actionsWrapper}>
+          <View style={styles.buttonContainer}>
+            <Button
+              loading={isLoading}
+              disabled={isLoading}
+              onPress={submitHandler}
+            >
+              Save hotel
+            </Button>
+            <Button
+              loading={isLoading}
+              disabled={isLoading}
+              onPress={cancelAction}
+              mode="outlined"
+            >
+              Try again
+            </Button>
           </View>
         </View>
       </Container>
@@ -140,15 +152,15 @@ const AddAccommodationByNameContainer = (props) => {
         hotelName: '',
       }}
       onSubmit={async (values) => {
-        setError(null);
+        setError('');
         setIsLoading(true);
-        console.log(values);
         try {
-          fetchHotel(cityCode, values.hotelName);
+          await fetchHotel(values.hotelName);
+          setIsLoading(false);
         } catch {
           setError(error);
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
         hotelName: yup.string().max(40).required('Cannot be left empty'),
@@ -156,14 +168,11 @@ const AddAccommodationByNameContainer = (props) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <View style={{ marginBottom: 10, marginTop: 10 }}>
-            <Headline>
-              Add your accomodation by typing name of your hotel
-            </Headline>
-          </View>
+          <Headline styles={styles.headline}>
+            Add your accomodation by typing name of your hotel
+          </Headline>
           <TextInput
             label="Hotel name"
-            error={error}
             onChange={handleChange('hotelName')}
             value={values.hotelName}
             error={
@@ -177,6 +186,9 @@ const AddAccommodationByNameContainer = (props) => {
           >
             Submit
           </Button>
+          <Text style={styles.text}>
+            Searching for hotel may take up to one minute!
+          </Text>
         </Container>
       )}
     </Formik>

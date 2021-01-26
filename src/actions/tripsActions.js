@@ -3,9 +3,9 @@ import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Map from 'models/Map';
 import Trip from 'models/Trip';
+import fetchCityCode from 'services/fetchCityCode';
 import fetchCoordinates from 'services/fetchCoordinates';
 import fetchDestinationImage from 'services/fetchDestinationImage';
-import fetchCityCode from 'services/fetchCityCode';
 
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
@@ -27,11 +27,11 @@ export const deleteTrip = (tripId) => {
     type: DELETE_TRIP,
   };
 };
-export const editTrip = (tripId, newTrip) => {
+export const editTrip = (tripId, updatedTrip) => {
   return {
     tripId,
-    newTrip,
     type: EDIT_TRIP,
+    updatedTrip,
   };
 };
 
@@ -101,8 +101,9 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const cityCode = await fetchCityCode(destination);
-    const image = await fetchDestinationImage(destination);
+    const city = destination.split(',')[0];
+    const cityCode = await fetchCityCode(city);
+    const image = await fetchDestinationImage(city);
     const location = await fetchCoordinates(destination);
     const region = {
       latitude: location.lat,
@@ -119,6 +120,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
         accommodation,
         budget,
+        cityCode,
         destination,
         endDate,
         image,
@@ -127,7 +129,6 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
         region,
         startDate,
         transport,
-        cityCode,
       })
       .then((res) => res.data)
       .then((data) => {
@@ -165,8 +166,9 @@ export const editTripRequest = (
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
-    const cityCode = await fetchCityCode(destination);
-    const image = await fetchDestinationImage(destination);
+    const city = destination.split(',')[0];
+    const cityCode = await fetchCityCode(city);
+    const image = await fetchDestinationImage(city);
     const location = await fetchCoordinates(destination);
     const region = {
       latitude: location.lat,
@@ -179,6 +181,7 @@ export const editTripRequest = (
       .put(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
         accommodation,
         budget,
+        cityCode,
         destination,
         endDate,
         image,
@@ -187,10 +190,9 @@ export const editTripRequest = (
         region,
         startDate,
         transport,
-        cityCode,
       })
       .then(() => {
-        const newTrip = new Trip(
+        const updatedTrip = new Trip(
           tripId,
           destination,
           region,
@@ -204,7 +206,8 @@ export const editTripRequest = (
           map,
           cityCode,
         );
-        dispatch(editTrip(newTrip));
+
+        dispatch(editTrip(tripId, updatedTrip));
       });
   };
 };

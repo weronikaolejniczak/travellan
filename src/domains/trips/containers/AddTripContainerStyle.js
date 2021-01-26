@@ -1,26 +1,17 @@
-import Colors from 'constants/Colors';
 import { StyleSheet } from 'react-native';
 
+import { Colors, Layout, Metrics } from 'constants';
+
 export const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 25,
-    padding: 15,
-    width: '40%',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    color: Colors.text,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  label: {
+  notice: {
     color: Colors.primary,
-    fontSize: 18,
     fontWeight: 'bold',
+  },
+  noticeWrapper: {
+    ...Metrics.bigVerticalMargin,
+    ...Layout.fillCenter,
+  },
+  submitWrapper: {
+    ...Metrics.bigMarginTop,
   },
 });

@@ -1,6 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { useDispatch } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import {
   Button,
@@ -8,29 +7,59 @@ import {
   DateTimePicker,
   TextInput,
 } from 'utils';
-import { addEventToCalendar } from 'services/handleCalendarEvent';
-import * as tripsActions from 'actions/tripsActions';
-import { notificationManager } from 'services/manageNotifications';
-import { styles } from '././EditTripContainerStyle';
+import { useDispatch } from 'react-redux';
+
+import { addEventToCalendar, notificationManager } from 'services';
+import { editTripRequest } from 'actions/tripsActions';
 
 const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
-  const budget = route.params.budget;
-  const notes = route.params.notes;
-  const transport = route.params.transport;
-  const accommodation = route.params.accommodation;
-  const map = route.params.map;
-  const [destinationIsValid, setDestinationIsValid] = useState(false);
+
+  const {
+    accommodation,
+    budget,
+    currentDestination,
+    currentEndDate,
+    currentStartDate,
+    map,
+    notes,
+    transport,
+    tripId,
+  } = route.params;
+
+  const [destinationIsValid, setDestinationIsValid] = useState(true);
   const [destinationSubmitted, setDestinationSubmitted] = useState(false);
-  const [destination, setDestination] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
+  const [destination, setDestination] = useState(currentDestination);
+  const [startDate, setStartDate] = useState(new Date(currentStartDate));
   const [showStartDate, setShowStartDate] = useState(false);
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date(currentEndDate));
   const [showEndDate, setShowEndDate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const localNotify = notificationManager;
   const handleCalendarEvent = addEventToCalendar;
+
+  const showSnackbar = useCallback(
+    () =>
+      Snackbar.show({
+        action: {
+          onPress: () => {
+            handleCalendarEvent.addToCalendar(
+              'Trip to ' + destination,
+              startDate,
+              endDate,
+              destination,
+              'Remember to pack everything and check weather forecast!',
+            );
+          },
+          text: 'Add',
+          textColor: 'orange',
+        },
+        duration: Snackbar.LENGTH_LONG,
+        text: 'Add Trip to Google Calendar',
+      }),
+    [destination, endDate, handleCalendarEvent, startDate],
+  );
 
   const callNotification = useCallback(
     (dest, date) => {
@@ -79,11 +108,12 @@ const EditTripContainer = ({ route, navigation }) => {
 
   const submitHandler = useCallback(async () => {
     setIsLoading(true);
+
     if (!destinationIsValid) {
       setDestinationSubmitted(true);
     } else {
       await dispatch(
-        tripsActions.editTripRequest(
+        editTripRequest(
           tripId,
           destination,
           startDate.toString(),
@@ -97,27 +127,13 @@ const EditTripContainer = ({ route, navigation }) => {
       );
       navigation.goBack();
       callNotification(destination, startDate);
-      Snackbar.show({
-        action: {
-          onPress: () => {
-            handleCalendarEvent.addToCalendar(
-              'Trip to ' + destination,
-              startDate,
-              endDate,
-              destination,
-              'Remember to pack everything and check weather forecast!',
-            );
-          },
-          text: 'Add',
-          textColor: 'orange',
-        },
-        duration: Snackbar.LENGTH_LONG,
-        text: 'Add Trip to Google Calendar',
-      });
+      showSnackbar();
     }
     setIsLoading(false);
   }, [
+    destinationIsValid,
     dispatch,
+    tripId,
     destination,
     startDate,
     endDate,
@@ -126,10 +142,9 @@ const EditTripContainer = ({ route, navigation }) => {
     accommodation,
     notes,
     map,
-    destinationIsValid,
-    handleCalendarEvent,
     navigation,
     callNotification,
+    showSnackbar,
   ]);
 
   useEffect(() => {
@@ -139,13 +154,13 @@ const EditTripContainer = ({ route, navigation }) => {
   return (
     <Container keyboardShouldPersistTaps="always">
       <TextInput
-        label={'City and/or country'}
+        label="City and country"
         value={destination}
         onChange={destinationChangeHandler}
         error={
           !destinationIsValid &&
           destinationSubmitted &&
-          'Enter valid city/country!'
+          'Enter valid destination!'
         }
       />
 

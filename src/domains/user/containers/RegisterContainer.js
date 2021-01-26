@@ -41,7 +41,7 @@ const RegisterContainer = (props) => {
         try {
           await dispatch(action);
           setIsLoading(false);
-          props.navigation.navigate('Auth');
+          props.navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
         }

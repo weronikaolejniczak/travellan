@@ -1,29 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+
+import * as yup from 'yup';
+import recommendHotel from 'services/recommendHotel';
 import {
   Button,
-  ScrollView as Container,
-  Headline,
+  View as Container,
   ItemlessFrame,
   TextInput,
-  Subheading,
+  Title,
 } from 'utils';
-import { View, FlatList } from 'react-native';
+import { Formik } from 'formik';
+import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
-import recommendHotel from 'services/recommendHotel';
-import { RecommendationItemShort } from 'domains/accommodation/components';
 
-const HotelRecommendationContainer = (props) => {
-  let { startDate, endDate } = props.route.params;
-  const cityCode = props.route.params.cityCode;
+const HotelRecommendationContainer = ({ navigation, route }) => {
+  const { cityCode, startDate, endDate } = route.params;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
-  const [adults, setAdults] = useState(0);
-  const [roomQuantity, setRoomQuantity] = useState(0);
   const [data, setData] = useState();
   const [error, setError] = useState('');
 
   const formatDate = (date) => {
-    //format to YYYY-MM-DD
+    // format to YYYY-MM-DD
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -35,36 +35,30 @@ const HotelRecommendationContainer = (props) => {
     return [year, month, day].join('-');
   };
 
-  const handleAdults = (adults) => setAdults(adults);
-  const handleRoomQuantity = (roomQuantity) => setRoomQuantity(roomQuantity);
+  const findHotels = useCallback(
+    async (adults, roomQuantity) => {
+      const formattedStartDate = formatDate(startDate);
+      const formattedEndDate = formatDate(endDate);
 
-  const findHotels = useCallback(async () => {
-    startDate = formatDate(startDate);
-    endDate = formatDate(endDate);
-    try {
-      const result = await recommendHotel(
-        cityCode,
-        startDate,
-        endDate,
-        adults,
-        roomQuantity,
-      );
-      setData(result);
-    } catch {
-      setError(error);
-    }
-  }, [cityCode, startDate, endDate, adults, roomQuantity, error]);
+      try {
+        const result = await recommendHotel(
+          cityCode,
+          formattedStartDate,
+          formattedEndDate,
+          adults,
+          roomQuantity,
+        );
+        setData(result);
+      } catch {
+        setError(error);
+      }
+    },
+    [cityCode, startDate, endDate, error],
+  );
 
-  const handlePress = () => {
-    setIsLoading(true);
-    handleAdults();
-    handleRoomQuantity();
-    findHotels(cityCode, startDate, endDate, adults, roomQuantity);
-  };
-
-  const handleSelectItem = (data) => {
-    props.navigation.navigate('Recommended Hotel Details', {
-      hotelDetails: data,
+  const handleSelectItem = (element) => {
+    navigation.navigate('Recommended hotel details', {
+      hotelDetails: element,
     });
   };
 
@@ -74,33 +68,40 @@ const HotelRecommendationContainer = (props) => {
     } else {
       setIsDateSame(false);
     }
-  }, [data]);
+  }, [data, endDate, startDate]);
 
   if (cityCode === undefined)
     return (
-      <ItemlessFrame message="Sorry, recommendation for hotels near your destination is impossible!" />
+      <ItemlessFrame>
+        Sorry, recommendation for hotels near your destination is impossible!
+      </ItemlessFrame>
     );
 
   if (isDateSame)
     return (
-      <ItemlessFrame
-        message="Recommendation for hotels is not possible if you are going on a
-    one day trip!"
-      />
+      <ItemlessFrame>
+        Recommendation for hotels is not possible if you are going on a one day
+        trip!
+      </ItemlessFrame>
     );
 
-  if (data)
+  if (data && data.length === 0)
+    return (
+      <ItemlessFrame>
+        Sorry, we couldn't find any hotel recommendations for your trip!
+      </ItemlessFrame>
+    );
+
+  if (data && data.length > 0)
     return (
       <Container>
         <FlatList
           data={data}
           keyExtractor={(item) => item.dupeId}
-          renderItem={(data) => (
-            <RecommendationItemShort
-              data={data.item}
-              onSelect={() => {
-                handleSelectItem(data.item);
-              }}
+          renderItem={(el) => (
+            <Recommendation
+              data={el.item}
+              onSelect={() => handleSelectItem(el.item)}
             />
           )}
         />
@@ -108,32 +109,72 @@ const HotelRecommendationContainer = (props) => {
     );
 
   return (
-    <Container>
-      <View>
-        <Headline style={styles.headline}>
-          We will find the most attractive accommodation offers for your
-          destination
-        </Headline>
-        <Subheading>Add number of adults:</Subheading>
-        <TextInput
-          label="Number of adults"
-          value={adults}
-          onChange={handleAdults}
-          keyboardType="numeric"
-        />
-        <Subheading>Add number of rooms:</Subheading>
-        <TextInput
-          label="Room Quantity"
-          value={roomQuantity}
-          onChange={handleRoomQuantity}
-          keyboardType="numeric"
-        />
+    <Formik
+      initialValues={{
+        adults: '',
+        rooms: '',
+      }}
+      onSubmit={async (values) => {
+        setError('');
+        setIsLoading(true);
+        try {
+          await findHotels(values.adults, values.rooms);
+          setIsLoading(false);
+        } catch {
+          setError(error);
+          setIsLoading(false);
+        }
+      }}
+      validationSchema={yup.object().shape({
+        adults: yup
+          .number()
+          .min(1)
+          .max(100)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
+        rooms: yup
+          .number()
+          .min(1)
+          .max(50)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
+      })}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <Container>
+          <Title style={styles.headline}>
+            We will find the most attractive accommodation offers for your
+            destination
+          </Title>
 
-        <Button loading={isLoading} disabled={isLoading} onPress={handlePress}>
-          Submit
-        </Button>
-      </View>
-    </Container>
+          <TextInput
+            label="Number of adults"
+            onChange={handleChange('adults')}
+            keyboardType="numeric"
+            value={values.adults}
+            error={errors.adults && touched.adults ? errors.adults : null}
+          />
+
+          <TextInput
+            label="Number of rooms"
+            onChange={handleChange('rooms')}
+            keyboardType="numeric"
+            value={values.rooms}
+            error={errors.rooms && touched.rooms ? errors.rooms : null}
+          />
+
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            onPress={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Container>
+      )}
+    </Formik>
   );
 };
 

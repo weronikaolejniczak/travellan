@@ -4,9 +4,9 @@ import Headline from 'utils/Typography/Headline';
 import { View as Container } from 'utils';
 import { styles } from './ItemlessFrameStyle';
 
-const ItemlessFrame = ({ message }) => (
+const ItemlessFrame = ({ children }) => (
   <Container style={styles.container}>
-    <Headline>{message}</Headline>
+    <Headline>{children}</Headline>
   </Container>
 );
 

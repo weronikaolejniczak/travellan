@@ -135,35 +135,39 @@ const AuthenticationContainer = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
-              </View>
-              <View style={styles.actionsContainer}>
-                <Button
-                  loading={isLoading}
-                  disabled={isLoading}
-                  onPress={handleSubmit}
-                >
-                  Login
-                </Button>
-                <Button
-                  onPress={() => navigation.navigate('Register')}
-                  mode="outlined"
-                >
-                  Create new account
-                </Button>
-                <SocialButton
-                  buttonTitle="Sign In with Facebook"
-                  btnType="facebook"
-                  color="#4867aa"
-                  backgroundColor="#e6eaf4"
-                  onPress={() => handleFacebook()}
-                />
-                <SocialButton
-                  buttonTitle="Sign In with Google"
-                  btnType="google"
-                  color="#de4d41"
-                  backgroundColor="#f5e7ea"
-                  onPress={() => handleGoogle()}
-                />
+                <View style={styles.innerContainer}>
+                  <Button
+                    onPress={() => navigation.navigate('Register')}
+                    mode="outlined"
+                    style={styles.authButton}
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    loading={isLoading}
+                    disabled={isLoading}
+                    onPress={handleSubmit}
+                    style={styles.authButton}
+                  >
+                    Sign in
+                  </Button>
+                </View>
+                <View style={styles.socialsContainer}>
+                  <SocialButton
+                    buttonTitle="Sign In with Facebook"
+                    btnType="facebook"
+                    color="#4867aa"
+                    backgroundColor="#e6eaf4"
+                    onPress={() => handleFacebook()}
+                  />
+                  <SocialButton
+                    buttonTitle="Sign In with Google"
+                    btnType="google"
+                    color="#de4d41"
+                    backgroundColor="#f5e7ea"
+                    onPress={() => handleGoogle()}
+                  />
+                </View>
               </View>
             </ScrollView>
           </View>

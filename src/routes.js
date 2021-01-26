@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import {
   DrawerContentScrollView,
@@ -5,15 +6,14 @@ import {
   DrawerItemList,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
+import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaView, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AccommodationContainer, {
   accommodationOptions,
 } from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
-import AddAccommodationContainer from 'domains/accommodation/containers/AddAccommodationContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import AddQRContainer from 'domains/transport/containers/AddQRContainer';
@@ -36,6 +36,7 @@ import NotesContainer, {
 import NotificationContainer from 'domains/user/containers/NotificationContainer';
 import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import RegisterContainer from 'domains/user/containers/RegisterContainer';
+import SharingContainer from 'domains/share/containers/SharingContainer';
 import StartupContainer, {
   startupOptions,
 } from 'domains/user/containers/StartupContainer';
@@ -45,11 +46,12 @@ import TransportContainer, {
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
-import TripsContainer from 'domains/trips/containers/TripsContainer';
+import TripsContainer, {
+  tripsOptions,
+} from 'domains/trips/containers/TripsContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
 import * as userActions from 'src/actions/userActions.js';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors, Layout } from 'constants';
 
 const Stack = createStackNavigator();
@@ -65,9 +67,24 @@ const CustomDrawerContent = (props) => (
     </DrawerContentScrollView>
     <View>
       <DrawerItem
+        label={() => <Text>Travellan Share</Text>}
+        icon={() => <Icon name="share" size={18} />}
+        onPress={() => {
+          props.navigation.navigate('Sharing');
+        }}
+      />
+      <DrawerItem
         label={() => <Text>Notifications</Text>}
+        icon={() => <Icon name="notification-clear-all" size={18} />}
         onPress={() => {
           props.navigation.navigate('Notification');
+        }}
+      />
+      <DrawerItem
+        label={() => <Text>Privacy Policy</Text>}
+        icon={() => <Icon name="police-badge" size={18} />}
+        onPress={() => {
+          Linking.openURL('https://travellan.flycricket.io/privacy.html');
         }}
       />
       <DrawerItem
@@ -84,7 +101,11 @@ const CustomDrawerContent = (props) => (
 
 const Trips = () => (
   <Stack.Navigator screenOptions={defaultNavOptions}>
-    <Stack.Screen name="My trips" component={TripsContainer} />
+    <Stack.Screen
+      name="My trips"
+      component={TripsContainer}
+      options={tripsOptions}
+    />
   </Stack.Navigator>
 );
 
@@ -95,7 +116,7 @@ const DrawerNavigator = () => (
     drawerType="front"
     backBehavior="none"
   >
-    <Drawer.Screen name="My trips" component={Trips} />
+    <Drawer.Screen name="My trips" component={Trips} options={tripsOptions} />
   </Drawer.Navigator>
 );
 
@@ -129,6 +150,7 @@ export default function Navigation() {
           options={forgotOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
+        <Stack.Screen name="Sharing" component={SharingContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen name="Edit trip" component={EditTripContainer} />
         <Stack.Screen
@@ -149,10 +171,6 @@ export default function Navigation() {
           options={accommodationOptions}
         />
         <Stack.Screen
-          name="Add accommodation"
-          component={AddAccommodationContainer}
-        />
-        <Stack.Screen
           name="Add hotel by name"
           component={AddAccommodationByNameContainer}
         />
@@ -161,7 +179,7 @@ export default function Navigation() {
           component={HotelRecommendationContainer}
         />
         <Stack.Screen
-          name="Recommended Hotel Details"
+          name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
         <Stack.Screen name="Budget" component={BudgetContainer} />

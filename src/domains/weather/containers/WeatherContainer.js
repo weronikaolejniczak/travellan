@@ -10,10 +10,9 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import Colors from 'constants/Colors';
-import fetchWeather from 'services/fetchWeather';
 import { Background, Graphics, Ground } from '../components';
-import { notificationManager } from 'services/manageNotifications';
+import { Colors } from 'constants';
+import { fetchWeather, notificationManager } from 'services';
 import { styles } from './WeatherContainerStyle';
 
 const windowHeight = Dimensions.get('window').height;

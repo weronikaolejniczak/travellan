@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import Colors from 'constants/Colors';
+import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   actionButton: {
-    padding: 15,
+    flex: 1,
+    flexDirection: 'row-reverse',
   },
   actionIcon: {
     color: Colors.primary,
@@ -16,6 +17,9 @@ export const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     flexDirection: 'row-reverse',
+  },
+  iconWrapper: {
+    padding: 15,
   },
   text: {
     color: Colors.text,
