@@ -94,7 +94,7 @@ const AuthenticationContainer = ({ navigation }) => {
         email: '',
         password: '',
       }}
-      onSubmit={async (values) => {
+      onSubmit={async (values, actions) => {
         setError(null);
         setIsLoading(true);
         const action = loginRequest(values.email, values.password);
@@ -106,6 +106,7 @@ const AuthenticationContainer = ({ navigation }) => {
           setError(err.message);
         }
         setIsLoading(false);
+        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         email: yup

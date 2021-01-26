@@ -86,7 +86,7 @@ const CustomDrawerContent = (props) => (
         icon={() => <Icon name="logout" size={18} />}
         onPress={() => {
           userActions.logout();
-          props.navigation.navigate('Startup');
+          props.navigation.navigate('Auth');
         }}
       />
     </View>
@@ -119,6 +119,11 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
         <Stack.Screen
+          name="Auth"
+          component={AuthenticationContainer}
+          options={authOptions}
+        />
+        <Stack.Screen
           name="Startup"
           component={StartupContainer}
           options={startupOptions}
@@ -126,11 +131,6 @@ export default function Navigation() {
         <Stack.Screen
           name="Register"
           component={RegisterContainer}
-          options={authOptions}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={AuthenticationContainer}
           options={authOptions}
         />
         <Stack.Screen
