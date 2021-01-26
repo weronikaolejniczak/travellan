@@ -125,13 +125,15 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
           .min(1)
           .max(100)
           .required('Cannot be empty!')
-          .integer('Value must be integer!'),
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
         rooms: yup
           .number()
           .min(1)
           .max(50)
           .required('Cannot be empty!')
-          .integer('Value must be integer!'),
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
       })}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
