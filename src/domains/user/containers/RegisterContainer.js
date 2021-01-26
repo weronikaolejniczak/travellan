@@ -119,14 +119,25 @@ const RegisterContainer = (props) => {
                 />
               </View>
               <View style={styles.actionsContainer}>
+                <View style={styles.innerContainer}>
                 <Button
-                  loading={isLoading}
-                  disabled={isLoading}
-                  onPress={handleSubmit}
-                  style={styles.registerButton}
-                >
-                  Sign up
-                </Button>
+                    onPress={() => {
+                      props.navigation.navigate('Auth');
+                    }}
+                    mode="outlined"
+                    style={styles.registerButton}
+                  >
+                    Sign in
+                  </Button>
+                  <Button
+                    loading={isLoading}
+                    disabled={isLoading}
+                    onPress={handleSubmit}
+                    style={styles.registerButton}
+                  >
+                    Sign up
+                  </Button>
+                </View>
                 <View style={styles.textPrivate}>
                   <Text style={styles.color_textPrivate}>
                     By registering, you confirm that you accept our{' '}
@@ -151,14 +162,6 @@ const RegisterContainer = (props) => {
                     <Text style={styles.linkText}>Privacy Policy</Text>
                   </TouchableOpacity>
                 </View>
-                <Button
-                  onPress={() => {
-                    props.navigation.navigate('Auth');
-                  }}
-                  mode="outlined"
-                >
-                  Or Sign In instead
-                </Button>
               </View>
             </ScrollView>
           </View>

@@ -42,7 +42,12 @@ export const styles = StyleSheet.create({
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 70,
+  },
+  innerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   linkText: {
     color: Colors.primary,
@@ -51,7 +56,7 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
   },
   registerButton: {
-    width: '100%',
+    width: '48%',
   },
   screen: {
     alignItems: 'center',

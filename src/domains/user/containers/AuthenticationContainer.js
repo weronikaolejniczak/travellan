@@ -132,44 +132,42 @@ const AuthenticationContainer = ({ navigation }) => {
                     errors.password && touched.password ? errors.password : null
                   }
                 />
-                <Button
-                  loading={isLoading}
-                  disabled={isLoading}
-                  onPress={handleSubmit}
-                  style={styles.loginButton}
-                >
-                  Sign in
-                </Button>
               </View>
               <View style={styles.actionsContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.navTextForgot}>Forgot password?</Text>
-                </TouchableOpacity>
-                <View style={styles.socialsContainer}>
-                  <SocialButton
-                    buttonTitle="Sign In with Facebook"
-                    btnType="facebook"
-                    color="#e6eaf4"
-                    backgroundColor="#4267b2"
-                    onPress={() => handleFacebook()}
-                  />
-                  <SocialButton
-                    buttonTitle="Sign In with Google"
-                    btnType="google"
-                    color="#f5e7ea"
-                    backgroundColor="#de4d41"
-                    onPress={() => handleGoogle()}
-                  />
+              <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                <Text style={styles.forgot}>Forgot password?</Text>
+              </TouchableOpacity>
+                <View style={styles.innerContainer}>
+                  <Button
+                    onPress={() => navigation.navigate('Register')}
+                    mode="outlined"
+                    style={styles.authButton}
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    loading={isLoading}
+                    disabled={isLoading}
+                    onPress={handleSubmit}
+                    style={styles.authButton}
+                  >
+                    Login
+                  </Button>
                 </View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Register')}
-                >
-                  <View style={styles.padding}>
-                    <Text style={styles.navTextRegister}>
-                      Don't have an account? Create here
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                <SocialButton
+                  buttonTitle="Sign In with Facebook"
+                  btnType="facebook"
+                  color="#4867aa"
+                  backgroundColor="#e6eaf4"
+                  onPress={() => handleFacebook()}
+                />
+                <SocialButton
+                  buttonTitle="Sign In with Google"
+                  btnType="google"
+                  color="#de4d41"
+                  backgroundColor="#f5e7ea"
+                  onPress={() => handleGoogle()}
+                />
               </View>
             </ScrollView>
           </View>
