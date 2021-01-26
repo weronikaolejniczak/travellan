@@ -32,7 +32,7 @@ const HotelCard = ({
   phone,
   reservationDetails,
   handlePDFManagement,
-  handleNavigationToMap,
+  handleHotelDelete,
   handleHotelEdit,
 }) => (
   <Card style={cardStyle}>
@@ -48,7 +48,7 @@ const HotelCard = ({
           {inAccommodationListing && (
             <HotelCardActions
               onPDF={handlePDFManagement}
-              onMap={handleNavigationToMap}
+              onDelete={handleHotelDelete}
               onEdit={handleHotelEdit}
             />
           )}
