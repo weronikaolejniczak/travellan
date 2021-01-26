@@ -12,34 +12,34 @@ const API_URL = FIREBASE_URL;
 
 export const setNotes = (tripId, notes) => {
   return {
-    type: SET_NOTES,
-    tripId,
     notes,
+    tripId,
+    type: SET_NOTES,
   };
 };
 
 export const createNote = (tripId, newNote) => {
   return {
-    type: CREATE_NOTE,
-    tripId,
     newNote,
+    tripId,
+    type: CREATE_NOTE,
   };
 };
 
 export const deleteNote = (tripId, noteId) => {
   return {
-    type: DELETE_NOTE,
-    tripId,
     noteId,
+    tripId,
+    type: DELETE_NOTE,
   };
 };
 
-export const editNote = (tripId, newNote, noteId) => {
+export const editNote = (tripId, updatedNote, noteId) => {
   return {
-    type: EDIT_NOTE,
-    tripId,
-    newNote,
     noteId,
+    tripId,
+    type: EDIT_NOTE,
+    updatedNote,
   };
 };
 
@@ -86,7 +86,7 @@ export const deleteNoteRequest = (tripId, noteId) => {
         dispatch(deleteNote(tripId, noteId));
       })
       .catch(() => {
-        throw new Error("Couldn't delete the note. Are you sure it exists?");
+        throw new Error(`Couldn't delete the note. Are you sure it exists?`);
       });
   };
 };
@@ -99,10 +99,10 @@ export const createNoteRequest = (tripId, category, title, description) => {
 
     axios
       .post(`${API_URL}/Trips/${userId}/${tripId}/notes.json?auth=${token}`, {
-        date,
         category,
-        title,
+        date,
         description,
+        title,
       })
       .then((res) => [res.data, unescape(res.config.data)])
       .then((data) => {
@@ -134,24 +134,32 @@ export const editNoteRequest = (
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const date = new Date();
+
     axios
       .put(
         `${API_URL}/Trips/${userId}/${tripId}/notes/${noteId}.json?auth=${token}`,
         {
-          noteId,
-          date,
           category,
-          title,
+          date,
           description,
+          noteId,
+          title,
         },
       )
       .then(() => {
-        const newNote = new Note(noteId, date, title, category, description);
-        dispatch(editNote(tripId, newNote, noteId));
+        const updatedNote = new Note(
+          noteId,
+          date,
+          title,
+          category,
+          description,
+        );
+
+        dispatch(editNote(tripId, updatedNote, noteId));
       })
 
       .catch(() => {
-        throw new Error("Couldn't edit note");
+        throw new Error(`Couldn't edit note`);
       });
   };
 };
