@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
   wrapper: {
     ...Metrics.verticalMargin,
     alignItems: 'center',
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
