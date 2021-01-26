@@ -3,11 +3,8 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
-  Linking,
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -36,7 +33,7 @@ const RegisterContainer = (props) => {
         email: '',
         password: '',
       }}
-      onSubmit={async (values, actions) => {
+      onSubmit={async (values) => {
         setError(null);
         setIsLoading(true);
         let action;
@@ -49,7 +46,6 @@ const RegisterContainer = (props) => {
           setError(err.message);
         }
         setIsLoading(false);
-        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         confirmPassword: yup
@@ -89,7 +85,7 @@ const RegisterContainer = (props) => {
                   value={values.email}
                   autoCapitalize="none"
                   onChange={handleChange('email')}
-                  label="Email"
+                  label="E-mail"
                   error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
@@ -120,49 +116,21 @@ const RegisterContainer = (props) => {
                 />
               </View>
               <View style={styles.actionsContainer}>
-                <View style={styles.innerContainer}>
                 <Button
-                    onPress={() => {
-                      props.navigation.navigate('Auth');
-                    }}
-                    mode="outlined"
-                    style={styles.registerButton}
-                  >
-                    Sign in
-                  </Button>
-                  <Button
-                    loading={isLoading}
-                    disabled={isLoading}
-                    onPress={handleSubmit}
-                    style={styles.registerButton}
-                  >
-                    Sign up
-                  </Button>
-                </View>
-                <View style={styles.textPrivate}>
-                  <Text style={styles.color_textPrivate}>
-                    By registering, you confirm that you accept our{' '}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        'https://travellan.flycricket.io/terms.html',
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>Terms of service</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.color_textPrivate}> and </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        'https://travellan.flycricket.io/privacy.html',
-                      )
-                    }
-                  >
-                    <Text style={styles.linkText}>Privacy Policy</Text>
-                  </TouchableOpacity>
-                </View>
+                  loading={isLoading}
+                  disabled={isLoading}
+                  onPress={handleSubmit}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  onPress={() => {
+                    props.navigation.navigate('Auth');
+                  }}
+                  mode="outlined"
+                >
+                  Or Sign In instead
+                </Button>
               </View>
             </ScrollView>
           </View>
