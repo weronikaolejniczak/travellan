@@ -90,14 +90,14 @@ const AddNoteContainer = ({ route, navigation }) => {
           />
         </View>
       )}
-
-      <TextInput
-        label="Content"
-        value={description}
-        onChange={descriptionChangeHandler}
-        multiline
-      />
-
+      <View style={styles.smallPaddingTop}>
+        <TextInput
+          label="Content"
+          value={description}
+          onChange={descriptionChangeHandler}
+          multiline
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <Button
           isLoading={isLoading}
