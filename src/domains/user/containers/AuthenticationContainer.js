@@ -177,7 +177,7 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={handleSubmit}
                     style={styles.authButton}
                   >
-                    Login
+                    Sign in
                   </Button>
                 </View>
                 <View style={styles.socialsContainer}>

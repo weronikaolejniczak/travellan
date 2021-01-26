@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 70,
+    marginBottom: 30,
   },
   innerContainer: {
     flex: 1,
