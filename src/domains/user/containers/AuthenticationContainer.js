@@ -13,10 +13,12 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
 import {
+  authenticate,
   loginRequest,
   onFacebookButtonPress,
   onGoogleButtonPress,
@@ -28,6 +30,29 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+
+  useEffect(() => {
+    const tryLogin = async () => {
+      const userData = await AsyncStorage.getItem('userData');
+
+      if (!userData) {
+        return;
+      }
+
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
+
+      if (expirationDate <= new Date() || !token || !userId) {
+        return;
+      }
+
+      navigation.navigate('My trips');
+      dispatch(authenticate(userId, token));
+    };
+
+    tryLogin();
+  }, [dispatch, navigation]);
 
   const handleGoogle = async () => {
     setError(null);
@@ -69,7 +94,7 @@ const AuthenticationContainer = ({ navigation }) => {
         email: '',
         password: '',
       }}
-      onSubmit={async (values) => {
+      onSubmit={async (values, actions) => {
         setError(null);
         setIsLoading(true);
         const action = loginRequest(values.email, values.password);
@@ -81,6 +106,7 @@ const AuthenticationContainer = ({ navigation }) => {
           setError(err.message);
         }
         setIsLoading(false);
+        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         email: yup
@@ -117,7 +143,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   style={styles.input}
                   onChange={handleChange('email')}
                   autoCapitalize="none"
-                  label="E-mail"
+                  label="Email"
                   error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
@@ -132,8 +158,15 @@ const AuthenticationContainer = ({ navigation }) => {
                     errors.password && touched.password ? errors.password : null
                   }
                 />
+<<<<<<< HEAD
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                   <Text style={styles.forgot}>Forgot Password?</Text>
+=======
+              </View>
+              <View style={styles.actionsContainer}>
+                <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                  <Text style={styles.forgot}>Forgot password?</Text>
+>>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
                 </TouchableOpacity>
                 <View style={styles.innerContainer}>
                   <Button
@@ -149,7 +182,11 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={handleSubmit}
                     style={styles.authButton}
                   >
+<<<<<<< HEAD
                     Sign in
+=======
+                    Login
+>>>>>>> parent of 14cba3a (Revert "Merge branch 'enhancement/TRIPP-543-restyle-login' into 'develop'")
                   </Button>
                 </View>
                 <View style={styles.socialsContainer}>
