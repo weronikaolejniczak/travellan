@@ -180,20 +180,22 @@ const AuthenticationContainer = ({ navigation }) => {
                     Login
                   </Button>
                 </View>
-                <SocialButton
-                  buttonTitle="Sign In with Facebook"
-                  btnType="facebook"
-                  color="#4867aa"
-                  backgroundColor="#e6eaf4"
-                  onPress={() => handleFacebook()}
-                />
-                <SocialButton
-                  buttonTitle="Sign In with Google"
-                  btnType="google"
-                  color="#de4d41"
-                  backgroundColor="#f5e7ea"
-                  onPress={() => handleGoogle()}
-                />
+                <View style={styles.socialsContainer}>
+                  <SocialButton
+                    buttonTitle="Sign In with Facebook"
+                    btnType="facebook"
+                    color="#4867aa"
+                    backgroundColor="#e6eaf4"
+                    onPress={() => handleFacebook()}
+                  />
+                  <SocialButton
+                    buttonTitle="Sign In with Google"
+                    btnType="google"
+                    color="#de4d41"
+                    backgroundColor="#f5e7ea"
+                    onPress={() => handleGoogle()}
+                  />
+                </View>
               </View>
             </ScrollView>
           </View>
