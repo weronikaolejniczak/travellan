@@ -4,14 +4,14 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { styles } from './HotelCardActionsStyle';
 
-const HotelCardActions = ({ onPDF, onMap, onEdit }) => (
+const HotelCardActions = ({ onPDF, onDelete, onEdit }) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={onPDF} style={styles.button}>
       <Icon name="pdf-box" style={styles.icon} />
     </TouchableOpacity>
 
-    <TouchableOpacity onPress={onMap} style={styles.button}>
-      <Icon name="map" style={styles.icon} />
+    <TouchableOpacity onPress={onDelete} style={styles.button}>
+      <Icon name="delete" style={styles.icon} />
     </TouchableOpacity>
 
     <TouchableOpacity onPress={onEdit} style={styles.button}>

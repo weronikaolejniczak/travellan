@@ -4,13 +4,16 @@ import { FlatList } from 'react-native';
 import recommendHotel from 'services/recommendHotel';
 import {
   Button,
-  ScrollView as Container,
+  View as Container,
   Headline,
   ItemlessFrame,
   TextInput,
+  Text,
 } from 'utils';
 import { RecommendationItemShort } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
   const { cityCode, startDate, endDate } = route.params;
@@ -35,36 +38,28 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     return [year, month, day].join('-');
   };
 
-  const findHotels = useCallback(async () => {
-    setIsLoading(true);
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
+  const findHotels = useCallback(
+    async (adults, roomQuantity) => {
+      const formattedStartDate = formatDate(startDate);
+      const formattedEndDate = formatDate(endDate);
+      try {
+        const result = await recommendHotel(
+          cityCode,
+          formattedStartDate,
+          formattedEndDate,
+          adults,
+          roomQuantity,
+        );
+        setData(result);
+      } catch {
+        setError(error);
+      }
+    },
+    [cityCode, startDate, endDate, adults, roomQuantity, error],
+  );
 
-    try {
-      const result = await recommendHotel(
-        cityCode,
-        formattedStartDate,
-        formattedEndDate,
-        adults,
-        roomQuantity,
-      );
-
-      setData(result);
-      setIsLoading(false);
-    } catch {
-      setError(error);
-      setIsLoading(false);
-    }
-  }, [cityCode, startDate, endDate, adults, roomQuantity, error]);
-
-  const handleSubmit = () => {
-    findHotels(cityCode, startDate, endDate, adults, roomQuantity);
-    setAdults();
-    setRoomQuantity();
-  };
-
-  const handleSelectItem = () => {
-    navigation.navigate('Hotel details', {
+  const handleSelectItem = (data) => {
+    navigation.navigate('Recommended Hotel Details', {
       hotelDetails: data,
     });
   };
@@ -92,7 +87,14 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
       </ItemlessFrame>
     );
 
-  if (data)
+  if (data && data.length === 0)
+    return (
+      <ItemlessFrame>
+        Sorry, we couldn't find any hotel recommendations for your trip!
+      </ItemlessFrame>
+    );
+
+  if (data && data.length > 0)
     return (
       <Container>
         <FlatList
@@ -109,30 +111,72 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     );
 
   return (
-    <Container>
-      <Headline style={styles.headline}>
-        We will find the most attractive accommodation offers for your
-        destination
-      </Headline>
+    <Formik
+      initialValues={{
+        adults: '',
+        rooms: '',
+      }}
+      onSubmit={async (values) => {
+        setError('');
+        setIsLoading(true);
+        try {
+          await findHotels(values.adults, values.rooms);
+          setIsLoading(false);
+        } catch {
+          setError(error);
+          setIsLoading(false);
+        }
+      }}
+      validationSchema={yup.object().shape({
+        adults: yup
+          .number()
+          .min(1)
+          .max(100)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
+        rooms: yup
+          .number()
+          .min(1)
+          .max(50)
+          .required('Cannot be empty!')
+          .integer('Value must be integer!')
+          .typeError('Digits only!'),
+      })}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <Container>
+          <Headline style={styles.headline}>
+            We will find the most attractive accommodation offers for your
+            destination
+          </Headline>
 
-      <TextInput
-        label="Number of adults"
-        value={adults}
-        onChange={setAdults}
-        keyboardType="numeric"
-      />
+          <TextInput
+            label="Number of adults"
+            onChange={handleChange('adults')}
+            keyboardType={'numeric'}
+            value={values.adults}
+            error={errors.adults && touched.adults ? errors.adults : null}
+          />
 
-      <TextInput
-        label="Room quantity"
-        value={roomQuantity}
-        onChange={setRoomQuantity}
-        keyboardType="numeric"
-      />
+          <TextInput
+            label="Number of rooms"
+            onChange={handleChange('rooms')}
+            keyboardType={'numeric'}
+            value={values.rooms}
+            error={errors.rooms && touched.rooms ? errors.rooms : null}
+          />
 
-      <Button loading={isLoading} disabled={isLoading} onPress={handleSubmit}>
-        Submit
-      </Button>
-    </Container>
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            onPress={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Container>
+      )}
+    </Formik>
   );
 };
 

@@ -98,7 +98,7 @@ const AddTripContainer = ({ navigation }) => {
         );
       }
     },
-    [destination, localNotify],
+    [localNotify],
   );
 
   // $todo: refactor filter function to utility
