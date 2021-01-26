@@ -9,9 +9,8 @@ import {
 } from 'utils';
 import { useDispatch } from 'react-redux';
 
-import { addEventToCalendar } from 'services/handleCalendarEvent';
+import { addEventToCalendar, notificationManager } from 'services';
 import { editTripRequest } from 'actions/tripsActions';
-import { notificationManager } from 'services/manageNotifications';
 
 const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();

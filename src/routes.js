@@ -36,6 +36,7 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import NotificationContainer from 'domains/user/containers/NotificationContainer';
+import SharingContainer from 'domains/share/containers/SharingContainer';
 import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import RegisterContainer from 'domains/user/containers/RegisterContainer';
 import StartupContainer, {
@@ -68,6 +69,13 @@ const CustomDrawerContent = (props) => (
     </DrawerContentScrollView>
     <View>
       <DrawerItem
+        label={() => <Text>Travellan Share</Text>}
+        icon={() => <Icon name="share" size={18} />}
+        onPress={() => {
+          props.navigation.navigate('Sharing');
+        }}
+      />
+      <DrawerItem
         label={() => <Text>Notifications</Text>}
         icon={() => <Icon name="notification-clear-all" size={18} />}
         onPress={() => {
@@ -86,7 +94,7 @@ const CustomDrawerContent = (props) => (
         icon={() => <Icon name="logout" size={18} />}
         onPress={() => {
           userActions.logout();
-          props.navigation.navigate('Startup');
+          props.navigation.navigate('Auth');
         }}
       />
     </View>
@@ -119,6 +127,11 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
         <Stack.Screen
+          name="Auth"
+          component={AuthenticationContainer}
+          options={authOptions}
+        />
+        <Stack.Screen
           name="Startup"
           component={StartupContainer}
           options={startupOptions}
@@ -126,11 +139,6 @@ export default function Navigation() {
         <Stack.Screen
           name="Register"
           component={RegisterContainer}
-          options={authOptions}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={AuthenticationContainer}
           options={authOptions}
         />
         <Stack.Screen
@@ -144,6 +152,7 @@ export default function Navigation() {
           options={forgotOptions}
         />
         <Stack.Screen name="Notification" component={NotificationContainer} />
+        <Stack.Screen name="Sharing" component={SharingContainer} />
         <Stack.Screen name="Add trip" component={AddTripContainer} />
         <Stack.Screen name="Edit trip" component={EditTripContainer} />
         <Stack.Screen
@@ -172,7 +181,7 @@ export default function Navigation() {
           component={HotelRecommendationContainer}
         />
         <Stack.Screen
-          name="Recommended Hotel Details"
+          name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
         <Stack.Screen

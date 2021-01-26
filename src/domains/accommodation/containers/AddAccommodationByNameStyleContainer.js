@@ -19,12 +19,19 @@ export const styles = StyleSheet.create({
   },
   headline: {
     textAlign: 'center',
+    justifyContent: 'center',
   },
   headlineWrapper: {
     marginBottom: 10,
     marginTop: 10,
+    textAlign: 'center',
   },
   hotelCardWrapper: {
     marginVertical: '3%',
+  },
+  text: {
+    textAlign: 'center',
+    marginTop: 10,
+    color: Colors.primary,
   },
 });

@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { DetailsHeader, NavigationButton } from '../components';
-import { addEventToCalendar } from 'services/handleCalendarEvent';
+import { addEventToCalendar } from 'services';
 import { styles } from './TripDetailsContainerStyle.js';
 
 const TripDetailsContainer = ({ route, navigation }) => {

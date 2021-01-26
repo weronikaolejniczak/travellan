@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-import { notificationManager } from 'services/manageNotifications';
-import { styles } from './NotificationContainerStyle';
 import Snackbar from 'react-native-snackbar';
+import { notificationManager } from 'services';
+import { styles } from './NotificationContainerStyle';
 
 const NotificationContainer = (props) => {
   const localNotify = notificationManager;
@@ -19,19 +19,19 @@ const NotificationContainer = (props) => {
           text: 'Cancel',
         },
         {
-          text: 'OK',
           onPress: () => {
             localNotify.configure();
             localNotify.cancelAllLocalNotification();
             Snackbar.show({
-              text: 'You have deleted all scheduled notifications!',
-              duration: Snackbar.LENGTH_LONG,
               action: {
                 text: 'Ok',
                 textColor: 'orange',
               },
+              duration: Snackbar.LENGTH_LONG,
+              text: 'You have deleted all scheduled notifications!',
             });
           },
+          text: 'OK',
         },
       ],
       { cancelable: true },
