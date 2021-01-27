@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, Keyboard, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,7 +14,12 @@ import {
   SectionHeader,
   SpendingCategories,
 } from '../components';
-import { ScrollView as Container, ItemlessFrame, LoadingFrame } from 'utils';
+import {
+  ScrollView as Container,
+  FloatingActionButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
 import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
@@ -166,7 +171,16 @@ const BudgetContainer = ({ route, navigation }) => {
   if (isLoading) return <LoadingFrame />;
 
   if (budget === undefined || (Array.isArray(budget) && budget.length === 0))
-    return <ItemlessFrame message="There is no budget to show!" />;
+    return (
+      <>
+        <ItemlessFrame>There is no budget to show!</ItemlessFrame>
+        <FloatingActionButton
+          onPress={() => navigation.navigate('Add currency', { tripId })}
+          disabled={isLoading}
+          loading={isLoading}
+        />
+      </>
+    );
 
   return (
     <>
