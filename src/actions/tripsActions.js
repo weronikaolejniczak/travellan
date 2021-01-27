@@ -3,9 +3,7 @@ import { FIREBASE_URL } from 'react-native-dotenv';
 
 import Map from 'models/Map';
 import Trip from 'models/Trip';
-import fetchCityCode from 'services/fetchCityCode';
-import fetchCoordinates from 'services/fetchCoordinates';
-import fetchDestinationImage from 'services/fetchDestinationImage';
+import { fetchCoordinates, fetchDestinationImage } from 'services';
 
 export const SET_TRIPS = 'SET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
@@ -102,7 +100,6 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const city = destination.split(',')[0];
-    const cityCode = await fetchCityCode(city);
     const image = await fetchDestinationImage(city);
     const location = await fetchCoordinates(destination);
     const region = {
@@ -120,7 +117,6 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {
         accommodation,
         budget,
-        cityCode,
         destination,
         endDate,
         image,
@@ -144,7 +140,6 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
           budget,
           notes,
           map,
-          cityCode,
         );
 
         dispatch(createTrip(newTrip));
@@ -167,7 +162,6 @@ export const editTripRequest = (
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const city = destination.split(',')[0];
-    const cityCode = await fetchCityCode(city);
     const image = await fetchDestinationImage(city);
     const location = await fetchCoordinates(destination);
     const region = {
@@ -181,7 +175,6 @@ export const editTripRequest = (
       .put(`${API_URL}/Trips/${userId}/${tripId}.json?auth=${token}`, {
         accommodation,
         budget,
-        cityCode,
         destination,
         endDate,
         image,
@@ -204,7 +197,6 @@ export const editTripRequest = (
           budget,
           notes,
           map,
-          cityCode,
         );
 
         dispatch(editTrip(tripId, updatedTrip));

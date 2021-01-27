@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from 'constants';
+import { Colors, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
   actionsWrapper: {
@@ -15,11 +15,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   container: {
-    paddingTop: 40,
+    ...Metrics.bigPaddingTop,
   },
   headline: {
-    textAlign: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
   },
   headlineWrapper: {
     marginBottom: 10,
@@ -29,15 +29,15 @@ export const styles = StyleSheet.create({
   hotelCardWrapper: {
     marginVertical: '3%',
   },
-  text: {
-    textAlign: 'center',
-    marginTop: 10,
-    color: Colors.primary,
-  },
   paragraph: {
+    color: Colors.primary,
     marginBottom: 10,
     marginTop: 10,
     textAlign: 'center',
+  },
+  text: {
     color: Colors.primary,
+    marginTop: 10,
+    textAlign: 'center',
   },
 });

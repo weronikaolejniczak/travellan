@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   pdfCardContainer: {
-    padding: 20,
+    padding: 50,
     //width: Dimensions.get('window').width,
   },
   pdfContainer: {

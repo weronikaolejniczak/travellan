@@ -10,9 +10,7 @@ import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AccommodationContainer, {
-  accommodationOptions,
-} from 'domains/accommodation/containers/AccommodationContainer';
+import AccommodationContainer from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
@@ -162,11 +160,7 @@ export default function Navigation() {
         <Stack.Screen name="Transport" component={TransportContainer} />
         <Stack.Screen name="Add transport" component={AddTransportContainer} />
         <Stack.Screen name="Add QR" component={AddQRContainer} />
-        <Stack.Screen
-          name="Accommodation"
-          component={AccommodationContainer}
-          options={accommodationOptions}
-        />
+        <Stack.Screen name="Accommodation" component={AccommodationContainer} />
         <Stack.Screen
           name="Add hotel by name"
           component={AddAccommodationByNameContainer}

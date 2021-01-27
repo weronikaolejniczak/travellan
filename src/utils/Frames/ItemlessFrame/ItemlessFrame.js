@@ -5,7 +5,7 @@ import { styles } from './ItemlessFrameStyle';
 
 const ItemlessFrame = ({ children }) => (
   <Container style={styles.container}>
-    <Headline>{children}</Headline>
+    <Headline style={styles.headline}>{children}</Headline>
   </Container>
 );
 
