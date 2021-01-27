@@ -186,7 +186,9 @@ const AccommodationContainer = ({ navigation, route }) => {
   };
 
   const handleHotelEdit = (id) => {
-    // use: tripId, id
+    navigation.navigate('Edit accommodation', {
+     
+    });
   };
 
   const loadAccommodation = useCallback(() => {

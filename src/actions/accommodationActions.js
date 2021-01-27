@@ -174,6 +174,75 @@ export const createAccommodationRequest = (
   };
 };
 
+export const editAccommodationRequest = (
+  tripId,
+  amenities,
+  breakfast,
+  checkInExtra,
+  checkInHours,
+  checkOutHours,
+  creditCardPaymentPossible,
+  description,
+  frontDesk24H,
+  image,
+  location,
+  name,
+  phone,
+  reservationDetails,
+) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+
+    await axios
+      .put(
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation.json?auth=${token}`,
+        {
+          amenities,
+          breakfast,
+          checkInExtra,
+          checkInHours,
+          checkOutHours,
+          creditCardPaymentPossible,
+          description,
+          frontDesk24H,
+          image,
+          location,
+          name,
+          phone,
+          reservationDetails,
+          PDF,
+        },
+      )
+      .then((res) => [res.data, unescape(res.config.data)])
+      .then((data) => {
+        const accommodationId = data[0].name;
+        const requestConfig = JSON.parse(data[1]);
+        const newAccommodation = new Accommodation(
+          accommodationId,
+          requestConfig.amenities,
+          requestConfig.breakfast,
+          requestConfig.checkInExtra,
+          requestConfig.checkInHours,
+          requestConfig.checkOutHours,
+          requestConfig.creditCardPaymentPossible,
+          requestConfig.description,
+          requestConfig.frontDesk24H,
+          requestConfig.image,
+          requestConfig.location,
+          requestConfig.name,
+          requestConfig.phone,
+          requestConfig.reservationDetails,
+          requestConfig.PDF,
+        );
+
+        dispatch(editAccommodation(tripId, updatedAccommodation));
+      })
+      .catch(() => {
+        throw new Error('Cannot create accommodation!');
+      });
+};
+
 export const deletePDFRequest = (tripId, accommodationId, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
