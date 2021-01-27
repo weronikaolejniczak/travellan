@@ -6,11 +6,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: 5,
   },
   authButton: {
     marginTop: 20,
-    width: '49%',
+    width: '99%',
   },
   authContainer: {
     width: '80%',
@@ -42,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 70,
+    marginBottom: 30,
   },
   innerContainer: {
     flex: 1,
@@ -80,7 +79,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: 30,
-    marginTop: 10,
+    //marginTop: 10,
     padding: 10,
     width: '100%',
   },

@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 70,
+    marginBottom: 30,
   },
   innerContainer: {
     flex: 1,
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
   },
   registerButton: {
-    width: '48%',
+    width: '99%',
   },
   screen: {
     alignItems: 'center',
