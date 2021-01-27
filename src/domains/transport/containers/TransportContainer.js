@@ -312,7 +312,6 @@ const TransportContainer = ({ route, navigation }) => {
           renderItem={(data) => (
             <TransportItem
               {...data.item}
-              tripId={tripId}
               destination={selectedTrip.destination}
               handleDeleteTransport={() => handleDelete(data.item.id)}
               handlePressQR={() => handlePressQR(data.item.QR, data.item.id)}

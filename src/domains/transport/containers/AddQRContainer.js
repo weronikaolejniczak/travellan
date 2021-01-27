@@ -69,26 +69,30 @@ const AddQRContainer = (props) => {
               : RNCamera.Constants.FlashMode.off
           }
           topContent={
-            torchOn ? (
-              <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={switchLight}
-              >
-                <MaterialIcon name={'flashlight-off'} style={styles.icon} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={switchLight}
-              >
-                <MaterialIcon name={'flashlight'} style={styles.icon} />
-              </TouchableOpacity>
-            )
+            <View style={styles.lightView}>
+              {torchOn ? (
+                <TouchableOpacity
+                  style={styles.buttonTouchable}
+                  onPress={switchLight}
+                >
+                  <MaterialIcon name={'flashlight-off'} style={styles.icon} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.buttonTouchable}
+                  onPress={switchLight}
+                >
+                  <MaterialIcon name={'flashlight'} style={styles.icon} />
+                </TouchableOpacity>
+              )}
+            </View>
           }
           bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
-              <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-            </TouchableOpacity>
+            <View style={{ marginTop: 20 }}>
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
+              </TouchableOpacity>
+            </View>
           }
         />
       )}

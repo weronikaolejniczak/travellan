@@ -8,17 +8,14 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = ({
-  tripId,
   destination,
   isTicketTo,
   dateOfDeparture,
   placeOfDeparture,
-  QR,
   handlePressQR,
   handlePressPDF,
   handleDeleteTransport,
 }) => {
-  const [QRCodeString, setQRCodeString] = useState(QR);
 
   return (
     <Card style={styles.transportCard}>
@@ -59,17 +56,6 @@ const TransportItem = ({
             <Text style={styles.infoText}>Place of departure:</Text>
             <Text style={styles.text}>{placeOfDeparture}</Text>
           </View>
-        </View>
-
-        <View style={styles.QRView}>
-          {!!QRCodeString && (
-            <QRCode
-              style={styles.QR}
-              value={QRCodeString}
-              size={250}
-              logoSize={250}
-            />
-          )}
         </View>
       </ScrollView>
     </Card>
