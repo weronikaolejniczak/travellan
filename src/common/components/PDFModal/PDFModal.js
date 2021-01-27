@@ -21,6 +21,9 @@ const PDFModal = ({
   >
     <View style={styles.pdfContainer}>
       <Card style={styles.pdfCardContainer}>
+        <View>
+          <Pdf source={PDF} style={styles.PDF} onError={handleError} />
+        </View>
         <View style={styles.innerPdfContainer}>
           <View style={styles.miniHeader}>
             <TouchableOpacity onPress={handleClosePDF}>
@@ -30,9 +33,6 @@ const PDFModal = ({
               <Icon name="delete" style={styles.icon} />
             </TouchableOpacity>
           </View>
-        </View>
-        <View>
-          <Pdf source={PDF} style={styles.PDF} onError={handleError} />
         </View>
       </Card>
     </View>
