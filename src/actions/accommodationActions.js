@@ -129,7 +129,7 @@ export const createAccommodationRequest = (
 
     axios
       .post(
-        `${API_URL}/Trips/${userId}/${tripId}/accommodation.json?auth=${token}`,
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation${accommodationId}.json?auth=${token}`,
         {
           amenities,
           breakfast,
