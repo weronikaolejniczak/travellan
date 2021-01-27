@@ -6,14 +6,15 @@ import {
   Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Button, TextInput, Paragraph } from 'utils';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import Colors from 'constants/Colors';
 import { styles } from './AddTransportContainerStyle';
 
 const AddTransportContainer = (props) => {
@@ -41,6 +42,7 @@ const AddTransportContainer = (props) => {
   const [fromPlaceSubmitted, setFromPlaceSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState('');
 
   const cutDate = (date) => date.toString().split(' ').slice(1, 4).join(' ');
 
@@ -96,174 +98,178 @@ const AddTransportContainer = (props) => {
     setShowHourOfDeparture(true);
   };
 
-  const submitHandler = useCallback(async () => {
-    setIsLoading(true);
-    await dispatch(
-      transportActions.createTransportRequest(
-        tripId,
-        isTicketTo,
-        isTicketFrom,
-        prepareDate(dateOfDeparture, hourOfDeparture),
-        placeOfDeparture,
-      ),
-    );
-    setIsLoading(false);
-    props.navigation.navigate('Transport', {
-      tripId: selectedTrip.id,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    tripId,
-    isTicketTo,
-    isTicketFrom,
-    dateOfDeparture,
-    hourOfDeparture,
-    placeOfDeparture,
-  ]);
-
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.metrics}>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <View style={{ alignItems: 'center' }}>
-            <Text
-              style={[
-                styles.label,
-                isTicketTo ? styles.activeLabel : styles.disactiveLabel,
-              ]}
-            >
-              to
-            </Text>
-            <TouchableOpacity onPress={toggleToDestinationSwitch}>
-              <Icon
-                name={isTicketTo ? 'radiobox-marked' : 'radiobox-blank'}
-                style={[
-                  isTicketTo
-                    ? styles.activeRadioIcon
-                    : styles.nonactiveRadioIcon,
-                ]}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ alignItems: 'center', marginLeft: '5%' }}>
-            <Text
-              style={[
-                styles.label,
-                isTicketFrom ? styles.activeLabel : styles.disactiveLabel,
-              ]}
-            >
-              from
-            </Text>
-            <TouchableOpacity onPress={toggleFromDestinationSwitch}>
-              <Icon
-                name={isTicketFrom ? 'radiobox-marked' : 'radiobox-blank'}
-                style={[
-                  isTicketFrom
-                    ? styles.activeRadioIcon
-                    : styles.nonactiveRadioIcon,
-                ]}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{ alignItems: 'center', marginLeft: '7%', marginTop: '5%' }}
-          >
-            <Text style={[styles.label, styles.text]}>
-              {selectedTrip.destination}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={{ marginTop: '5%' }}>
-        <View style={styles.metrics}>
-          <Text style={styles.label}>Date of departure</Text>
-          <View style={styles.pickerContainer}>
-            <TouchableOpacity
-              onPress={showDateOfDeparturePicker}
-              style={styles.picker}
-            >
-              <View style={styles.rowAndAlign}>
-                <Icon
-                  name="calendar"
-                  style={[styles.icon, { marginRight: '10%' }]}
-                />
-                <Text style={styles.pickerText}>
-                  {cutDate(dateOfDeparture)}
+    <Formik
+      initialValues={{
+        address: '',
+      }}
+      onSubmit={async (values) => {
+        setError('');
+        setIsLoading(true);
+        try {
+          await dispatch(
+            transportActions.createTransportRequest(
+              tripId,
+              isTicketTo,
+              isTicketFrom,
+              prepareDate(dateOfDeparture, hourOfDeparture),
+              values.address,
+            ),
+          );
+          props.navigation.navigate('Transport', {
+            tripId: selectedTrip.id,
+          });
+        } catch {
+          setError(error);
+        }
+        setIsLoading(false);
+      }}
+      validationSchema={yup.object().shape({
+        address: yup.string().min(1).max(100).required('Cannot be empty!'),
+      })}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <ScrollView style={styles.container}>
+          <View style={styles.metrics}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={{ alignItems: 'center' }}>
+                <Text
+                  style={[
+                    styles.label,
+                    isTicketTo ? styles.activeLabel : styles.disactiveLabel,
+                  ]}
+                >
+                  to
+                </Text>
+                <TouchableOpacity onPress={toggleToDestinationSwitch}>
+                  <Icon
+                    name={isTicketTo ? 'radiobox-marked' : 'radiobox-blank'}
+                    style={[
+                      isTicketTo
+                        ? styles.activeRadioIcon
+                        : styles.nonactiveRadioIcon,
+                    ]}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ alignItems: 'center', marginLeft: '5%' }}>
+                <Text
+                  style={[
+                    styles.label,
+                    isTicketFrom ? styles.activeLabel : styles.disactiveLabel,
+                  ]}
+                >
+                  from
+                </Text>
+                <TouchableOpacity onPress={toggleFromDestinationSwitch}>
+                  <Icon
+                    name={isTicketFrom ? 'radiobox-marked' : 'radiobox-blank'}
+                    style={[
+                      isTicketFrom
+                        ? styles.activeRadioIcon
+                        : styles.nonactiveRadioIcon,
+                    ]}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginLeft: '7%',
+                  marginTop: '5%',
+                }}
+              >
+                <Text style={[styles.label, styles.text]}>
+                  {selectedTrip.destination}
                 </Text>
               </View>
-            </TouchableOpacity>
-          </View>
-          {showDateOfDeparture && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              timeZoneOffsetInMinutes={0}
-              value={dateOfDeparture}
-              minimumDate={Date.now()}
-              mode="date"
-              is24Hour={true}
-              display="default"
-              onChange={dateOfDepartureChangeHandler}
-            />
-          )}
-        </View>
-
-        <View style={styles.metrics}>
-          <Text style={styles.label}>Hour of departure</Text>
-          <View style={styles.pickerContainer}>
-            <TouchableOpacity
-              onPress={showHourOfDeparturePicker}
-              style={styles.picker}
-            >
-              <View style={styles.rowAndAlign}>
-                <Icon
-                  name="clock"
-                  style={[styles.icon, { marginRight: '10%' }]}
-                />
-                <Text style={styles.pickerText}>{hourOfDeparture}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {showHourOfDeparture && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              timeZoneOffsetInMinutes={0}
-              value={parseFloat(hourOfDeparture.replace(':', '.'))}
-              mode="time"
-              is24Hour={true}
-              display="default"
-              onChange={hourOfDepartureChangeHandler}
-            />
-          )}
-        </View>
-
-        <View style={styles.metrics}>
-          <Text style={styles.label}>From place</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Address"
-            placeholderTextColor="grey"
-            value={placeOfDeparture}
-            onChangeText={(text) => placeChangeHandler(text)}
-          />
-          {!placeOfDepartureIsValid && fromPlaceSubmitted && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.error}>Enter a valid address!</Text>
             </View>
-          )}
-        </View>
-      </View>
+          </View>
 
-      <View style={styles.buttonContainer}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color={Colors.white} />
-        ) : (
-          <TouchableOpacity style={styles.button} onPress={submitHandler}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </ScrollView>
+          <View style={{ marginTop: '5%' }}>
+            <View style={styles.metrics}>
+              <Text style={styles.label}>Date of departure</Text>
+              <View style={styles.pickerContainer}>
+                <TouchableOpacity
+                  onPress={showDateOfDeparturePicker}
+                  style={styles.picker}
+                >
+                  <View style={styles.rowAndAlign}>
+                    <Icon
+                      name="calendar"
+                      style={[styles.icon, { marginRight: '10%' }]}
+                    />
+                    <Text style={styles.pickerText}>
+                      {cutDate(dateOfDeparture)}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {showDateOfDeparture && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  timeZoneOffsetInMinutes={0}
+                  value={dateOfDeparture}
+                  minimumDate={Date.now()}
+                  mode="date"
+                  is24Hour={true}
+                  display="default"
+                  onChange={dateOfDepartureChangeHandler}
+                />
+              )}
+            </View>
+
+            <View style={styles.metrics}>
+              <Text style={styles.label}>Hour of departure</Text>
+              <View style={styles.pickerContainer}>
+                <TouchableOpacity
+                  onPress={showHourOfDeparturePicker}
+                  style={styles.picker}
+                >
+                  <View style={styles.rowAndAlign}>
+                    <Icon
+                      name="clock"
+                      style={[styles.icon, { marginRight: '10%' }]}
+                    />
+                    <Text style={styles.pickerText}>{hourOfDeparture}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {showHourOfDeparture && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  timeZoneOffsetInMinutes={0}
+                  value={parseFloat(hourOfDeparture.replace(':', '.'))}
+                  mode="time"
+                  is24Hour={true}
+                  display="default"
+                  onChange={hourOfDepartureChangeHandler}
+                />
+              )}
+            </View>
+
+            <View style={styles.metrics}>
+              <Text style={styles.label}>From place</Text>
+              <TextInput
+                label="Address"
+                onChange={handleChange('address')}
+                value={values.address}
+                error={
+                  errors.address && touched.address ? errors.address : null
+                }
+              />
+            </View>
+          </View>
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            onPress={handleSubmit}
+          >
+            Submit
+          </Button>
+        </ScrollView>
+      )}
+    </Formik>
   );
 };
 
