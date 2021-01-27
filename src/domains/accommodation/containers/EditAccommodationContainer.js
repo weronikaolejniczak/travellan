@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const EditAccommodationContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const {
@@ -78,17 +78,16 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         <Container keyboardShouldPersistTaps="always">
           <TextInput
             value={values.phone}
-            onChange={handleChange('email')}
+            onChange={handleChange('phone')}
             autoCapitalize="none"
-            label="Email"
+            label="Phone"
             error={errors.phone && touched.phone ? errors.phone : null}
           />
           <TextInput
-            value={values.password}
+            value={values.reservationDetails}
             autoCapitalize="none"
-            onChange={handleChange('password')}
-            secureTextEntry={true}
-            label="Password"
+            onChange={handleChange('reservationDetails')}
+            label="Reservation Details"
             error={
               errors.reservationDetails && touched.reservationDetails
                 ? errors.reservationDetails
