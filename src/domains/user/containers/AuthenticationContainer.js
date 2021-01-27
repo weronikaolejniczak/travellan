@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, TextInput } from 'utils';
+import { Button, LoadingFrame, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
 import {
@@ -30,13 +30,18 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
+    setIsChecking(true);
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem('userData');
 
       if (!userData) {
-        return;
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
       }
 
       const transformedData = JSON.parse(userData);
@@ -44,15 +49,19 @@ const AuthenticationContainer = ({ navigation }) => {
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
-        return;
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
       }
 
       navigation.navigate('My trips');
       dispatch(authenticate(userId, token));
+      setIsChecking(false);
     };
 
     tryLogin();
-  }, [dispatch, navigation]);
+  }, [dispatch, error, navigation]);
 
   const handleGoogle = async () => {
     setError(null);
@@ -80,13 +89,19 @@ const AuthenticationContainer = ({ navigation }) => {
     }
     setIsLoading(false);
   };
-
+  /**
   useEffect(() => {
     SplashScreen.hide();
     if (error) {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
+
+  */
+
+  if (isChecking) {
+    return <LoadingFrame />;
+  }
 
   return (
     <Formik
