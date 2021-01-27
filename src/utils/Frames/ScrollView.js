@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ScrollView } from 'react-native';
 
 import AppStyles from 'styles/AppStyles';
@@ -29,4 +29,4 @@ const CustomScrollView = (
   );
 };
 
-export default forwardRef(memo(CustomScrollView));
+export default forwardRef(CustomScrollView);
