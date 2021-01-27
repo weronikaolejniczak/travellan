@@ -17,14 +17,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as accommodationActions from 'actions/accommodationActions';
 import {
   ActionSheet,
   FloatingActionButton,
-  HeaderButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
