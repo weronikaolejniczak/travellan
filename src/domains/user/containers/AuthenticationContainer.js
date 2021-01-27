@@ -33,8 +33,8 @@ const AuthenticationContainer = ({ navigation }) => {
   const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
-    setIsChecking(true);
     const tryLogin = async () => {
+      setIsChecking(true);
       const userData = await AsyncStorage.getItem('userData');
 
       if (!userData) {
@@ -42,8 +42,9 @@ const AuthenticationContainer = ({ navigation }) => {
         if (error) {
           Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
         }
+        setIsChecking(false);
+        return;
       }
-
       const transformedData = JSON.parse(userData);
       const { token, userId, expiryDate } = transformedData;
       const expirationDate = new Date(expiryDate);
@@ -53,6 +54,8 @@ const AuthenticationContainer = ({ navigation }) => {
         if (error) {
           Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
         }
+        setIsChecking(false);
+        return;
       }
 
       navigation.navigate('My trips');
@@ -110,18 +113,17 @@ const AuthenticationContainer = ({ navigation }) => {
         password: '',
       }}
       onSubmit={async (values, actions) => {
-        setError(null);
         setIsLoading(true);
         const action = loginRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
+          actions.resetForm();
           navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
         }
         setIsLoading(false);
-        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         email: yup
