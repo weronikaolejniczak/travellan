@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, TextInput } from 'utils';
+import { Button, LoadingFrame, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
 import {
@@ -30,29 +30,41 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
     const tryLogin = async () => {
+      setIsChecking(true);
       const userData = await AsyncStorage.getItem('userData');
 
       if (!userData) {
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
+        setIsChecking(false);
         return;
       }
-
       const transformedData = JSON.parse(userData);
       const { token, userId, expiryDate } = transformedData;
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
+        setIsChecking(false);
         return;
       }
 
       navigation.navigate('My trips');
       dispatch(authenticate(userId, token));
+      setIsChecking(false);
     };
 
     tryLogin();
-  }, [dispatch, navigation]);
+  }, [dispatch, error, navigation]);
 
   const handleGoogle = async () => {
     setError(null);
@@ -80,13 +92,19 @@ const AuthenticationContainer = ({ navigation }) => {
     }
     setIsLoading(false);
   };
-
+  /**
   useEffect(() => {
     SplashScreen.hide();
     if (error) {
       Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
+
+  */
+
+  if (isChecking) {
+    return <LoadingFrame />;
+  }
 
   return (
     <Formik
@@ -95,18 +113,17 @@ const AuthenticationContainer = ({ navigation }) => {
         password: '',
       }}
       onSubmit={async (values, actions) => {
-        setError(null);
         setIsLoading(true);
         const action = loginRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
+          actions.resetForm();
           navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
         }
         setIsLoading(false);
-        actions.resetForm();
       }}
       validationSchema={yup.object().shape({
         email: yup
@@ -165,19 +182,12 @@ const AuthenticationContainer = ({ navigation }) => {
                 </TouchableOpacity>
                 <View style={styles.innerContainer}>
                   <Button
-                    onPress={() => navigation.navigate('Register')}
-                    mode="outlined"
-                    style={styles.authButton}
-                  >
-                    Sign up
-                  </Button>
-                  <Button
                     loading={isLoading}
                     disabled={isLoading}
                     onPress={handleSubmit}
                     style={styles.authButton}
                   >
-                    Login
+                    Sign in
                   </Button>
                 </View>
                 <View style={styles.socialsContainer}>
@@ -196,6 +206,13 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={() => handleGoogle()}
                   />
                 </View>
+                <Button
+                  onPress={() => navigation.navigate('Register')}
+                  mode="outlined"
+                  style={styles.authButton}
+                >
+                  Sign up with email
+                </Button>
               </View>
             </ScrollView>
           </View>

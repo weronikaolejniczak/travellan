@@ -121,15 +121,6 @@ const RegisterContainer = (props) => {
               </View>
               <View style={styles.actionsContainer}>
                 <View style={styles.innerContainer}>
-                <Button
-                    onPress={() => {
-                      props.navigation.navigate('Auth');
-                    }}
-                    mode="outlined"
-                    style={styles.registerButton}
-                  >
-                    Sign in
-                  </Button>
                   <Button
                     loading={isLoading}
                     disabled={isLoading}
@@ -163,6 +154,15 @@ const RegisterContainer = (props) => {
                     <Text style={styles.linkText}>Privacy Policy</Text>
                   </TouchableOpacity>
                 </View>
+                <Button
+                    onPress={() => {
+                      props.navigation.navigate('Auth');
+                    }}
+                    mode="outlined"
+                    style={styles.registerButton}
+                  >
+                    Switch to sign in
+                  </Button>
               </View>
             </ScrollView>
           </View>

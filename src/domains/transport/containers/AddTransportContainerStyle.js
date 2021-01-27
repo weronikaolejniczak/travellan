@@ -1,103 +1,48 @@
-import Colors from 'constants/Colors';
 import { StyleSheet } from 'react-native';
+
+import { Colors, Metrics } from 'constants';
 
 export const styles = StyleSheet.create({
   activeLabel: {
     color: Colors.primary,
+    fontSize: 18,
   },
   activeRadioIcon: {
     color: Colors.primary,
     fontSize: 26,
   },
-  button: {
+  destination: {
     alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 25,
-    margin: '5%',
-    padding: 15,
-    width: '40%',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    margin: 20,
-  },
-  buttonText: {
-    color: Colors.text,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  card: {
-    justifyContent: 'center',
-    marginTop: 10,
-    padding: 15,
-  },
-  container: {
-    backgroundColor: Colors.background,
-    flex: 1,
-    paddingHorizontal: '5%',
-    paddingTop: '12%',
+    marginLeft: '5%',
   },
   disactiveLabel: {
-    color: 'grey',
+    color: Colors.placeholder,
+    fontSize: 18,
   },
-  errorContainer: {
-    marginVertical: 5,
-  },
-  icon: {
-    color: Colors.text,
-    fontSize: 26,
-  },
-  iconButton: {
+  header: {
     alignItems: 'center',
-    paddingHorizontal: '2%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
-  input: {
-    borderBottomColor: Colors.primary,
-    borderBottomWidth: 1,
-    color: Colors.text,
-    fontSize: 18,
+  inputWrapper: {
+    ...Metrics.verticalMargin,
+    ...Metrics.bigMarginBottom,
   },
-  label: {
-    color: Colors.primary,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  metrics: {
-    marginTop: '5%',
-  },
-  nonactiveRadioIcon: {
-    color: 'grey',
+  nonActiveRadioIcon: {
+    color: Colors.placeholder,
     fontSize: 26,
   },
   picker: {
-    borderColor: Colors.primary,
-    borderRadius: 10,
-    borderWidth: 2,
-    marginTop: '5%',
-    padding: '4%',
+    ...Metrics.bigMarginTop,
   },
-  pickerText: {
-    color: Colors.text,
-    fontSize: 18,
-  },
-  rowAndAlign: {
+  radio: {
     alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...Metrics.horizontalMargin,
   },
-  stageIcons: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '5%',
+  validationError: {
+    color: Colors.error,
   },
-  stageItemBody: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  text: {
-    color: Colors.text,
-  },
-  title: {
-    fontSize: 18,
+  validationErrorWrapper: {
+    ...Metrics.bigMarginTop,
   },
 });

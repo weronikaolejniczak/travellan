@@ -1,11 +1,23 @@
 import DocumentPicker from 'react-native-document-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Animated, FlatList, ScrollView, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {
+  Alert,
+  Animated,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
-import { ErrorFrame, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import {
+  ErrorFrame,
+  FloatingActionButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
 import { PDFModal } from 'components';
 import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
@@ -174,7 +186,7 @@ const TransportContainer = ({ route, navigation }) => {
       setIsRefreshing(true);
       Alert.alert(
         'Unlink the document',
-        'Are you sure? (Do not worry, the operation will not delete the document from your device)',
+        'Are you sure?',
         [
           {
             style: 'cancel',
@@ -265,7 +277,16 @@ const TransportContainer = ({ route, navigation }) => {
   }
 
   if (Array.isArray(transport) && transport.length < 1) {
-    return <ItemlessFrame>You have no transport saved!</ItemlessFrame>;
+    return (
+      <>
+        <ItemlessFrame>You have no transport saved!</ItemlessFrame>
+        <FloatingActionButton
+          loading={isLoading}
+          disabled={isLoading}
+          onPress={() => navigation.navigate('Add transport', { tripId })}
+        />
+      </>
+    );
   }
 
   if (error) {
@@ -319,7 +340,7 @@ const TransportContainer = ({ route, navigation }) => {
             />
           )}
         />
-        <View style={styles.justifyRow}>
+        <View style={styles.dotsWrapper}>
           {transport.map((_, i) => {
             let opacity = position.interpolate({
               extrapolate: 'clamp',
@@ -329,26 +350,20 @@ const TransportContainer = ({ route, navigation }) => {
 
             return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
           })}
+          <TouchableOpacity
+            style={styles.plusButton}
+            onPress={() => {
+              navigation.navigate('Add transport', {
+                tripId,
+              });
+            }}
+          >
+            <Icon name="plus" style={styles.plusIcon} />
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
   );
 };
-
-export const transportOptions = (navData) => ({
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title="Create a trip"
-        iconName="plus"
-        onPress={() => {
-          navData.navigation.navigate('Add transport', {
-            tripId: navData.route.params.tripId,
-          });
-        }}
-      />
-    </HeaderButtons>
-  ),
-});
 
 export default TransportContainer;

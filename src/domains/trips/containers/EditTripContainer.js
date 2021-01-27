@@ -65,11 +65,12 @@ const EditTripContainer = ({ route, navigation }) => {
     (dest, date) => {
       localNotify.configure();
       localNotify.cancelScheduledLocalNotification(5);
-      const notificationDateTrigger = new Date();
-      const currentDate = new Date(Date.now());
-      notificationDateTrigger.setDate(date.getDate() - 1);
+      const notificationDateTrigger = new Date(date);
+      const currentDate = new Date();
 
-      if (date.getDate() <= currentDate.getDate()) {
+      if (
+        notificationDateTrigger.toDateString() === currentDate.toDateString()
+      ) {
         return localNotify.scheduleNotification(
           'DepartureAlert',
           5,
@@ -79,11 +80,30 @@ const EditTripContainer = ({ route, navigation }) => {
           {},
           notificationDateTrigger,
         );
-      } else {
+      } else if (
+        notificationDateTrigger.getDay() - 1 === currentDate.getDay() &&
+        notificationDateTrigger.getMonth() === currentDate.getMonth() &&
+        notificationDateTrigger.getFullYear() === currentDate.getFullYear()
+      ) {
+        const notificationDate = new Date(notificationDateTrigger);
+        notificationDate.setDate(notificationDate.getDate() - 1);
         return localNotify.scheduleNotification(
           'DepartureAlert',
           5,
-          'Journey to ' + destination + ' starts tomorrow!',
+          'Journey to ' + dest + ' starts tomorrow!',
+          'We wish you a great trip!',
+          {},
+          {},
+          notificationDate,
+        );
+      } else if (
+        notificationDateTrigger.getDay() - 1 > currentDate.getDay() &&
+        notificationDateTrigger.getTime() > currentDate.getTime()
+      ) {
+        return localNotify.scheduleNotification(
+          'DepartureAlert',
+          5,
+          'Journey to ' + dest + ' starts today!',
           'We wish you a great trip!',
           {},
           {},
@@ -91,7 +111,7 @@ const EditTripContainer = ({ route, navigation }) => {
         );
       }
     },
-    [destination, localNotify],
+    [localNotify],
   );
 
   const destinationRegex = new RegExp(

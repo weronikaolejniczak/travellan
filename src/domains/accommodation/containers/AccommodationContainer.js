@@ -134,7 +134,7 @@ const AccommodationContainer = ({ navigation, route }) => {
       setIsRefreshing(true);
       Alert.alert(
         'Unlink the document',
-        'Are you sure? (Do not worry, the operation will not delete the document from your device)',
+        'Are you sure?',
         [
           {
             style: 'cancel',
