@@ -36,15 +36,13 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import NotificationContainer from 'domains/user/containers/NotificationContainer';
-import SharingContainer from 'domains/share/containers/SharingContainer';
 import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import RegisterContainer from 'domains/user/containers/RegisterContainer';
+import SharingContainer from 'domains/share/containers/SharingContainer';
 import StartupContainer, {
   startupOptions,
 } from 'domains/user/containers/StartupContainer';
-import TransportContainer, {
-  transportOptions,
-} from 'domains/transport/containers/TransportContainer';
+import TransportContainer from 'domains/transport/containers/TransportContainer';
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
@@ -160,11 +158,7 @@ export default function Navigation() {
           component={TripDetailsContainer}
           options={tripDetailsOptions}
         />
-        <Stack.Screen
-          name="Transport"
-          component={TransportContainer}
-          options={transportOptions}
-        />
+        <Stack.Screen name="Transport" component={TransportContainer} />
         <Stack.Screen name="Add transport" component={AddTransportContainer} />
         <Stack.Screen name="Add QR" component={AddQRContainer} />
         <Stack.Screen

@@ -1,5 +1,6 @@
-import Colors from 'constants/Colors';
 import { Platform, StyleSheet } from 'react-native';
+
+import { Colors } from 'constants';
 import { spacingForCardInset } from '../components/TransportItem/TransportItemStyle';
 
 export const styles = StyleSheet.create({
@@ -43,12 +44,26 @@ export const styles = StyleSheet.create({
     margin: 8,
     width: 10,
   },
+  dotsWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   icon: {
     margin: 10,
   },
-  justifyRow: {
-    flexDirection: 'row',
+  plusButton: {
+    alignItems: 'center',
+    backgroundColor: Colors.accent,
+    borderRadius: 25,
+    height: 35,
     justifyContent: 'center',
+    margin: 5,
+    width: 35,
+  },
+  plusIcon: {
+    color: Colors.background,
+    fontSize: 26,
   },
   scrollView: {
     backgroundColor: Colors.background,

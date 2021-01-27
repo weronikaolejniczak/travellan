@@ -5,7 +5,6 @@ import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as tripsActions from 'actions/tripsActions';
 import {
   View as Container,
   ErrorFrame,
@@ -15,6 +14,7 @@ import {
   LoadingFrame,
 } from 'utils';
 import { TripItem } from '../components';
+import { deleteTripRequest, fetchTripsRequest } from 'actions/tripsActions';
 import { styles } from './TripsContainerStyle';
 
 const TripsContainer = ({ navigation }) => {
@@ -27,7 +27,7 @@ const TripsContainer = ({ navigation }) => {
 
   const loadTrips = useCallback(async () => {
     try {
-      await dispatch(tripsActions.fetchTripsRequest());
+      await dispatch(fetchTripsRequest());
     } catch {
       setError('Something went wrong!');
     }
@@ -38,7 +38,7 @@ const TripsContainer = ({ navigation }) => {
     (id) => {
       setIsLoading(true);
       try {
-        dispatch(tripsActions.deleteTripRequest(id));
+        dispatch(deleteTripRequest(id));
       } catch {
         setError('Something went wrong!');
       }
