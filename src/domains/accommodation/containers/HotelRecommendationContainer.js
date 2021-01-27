@@ -7,16 +7,15 @@ import {
   Button,
   View as Container,
   ItemlessFrame,
-  TextInput,
-  Title,
   Paragraph,
+  TextInput,
 } from 'utils';
 import { Formik } from 'formik';
 import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
-  const { cityCode, startDate, endDate } = route.params;
+  const { latitude, longitude, startDate, endDate } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
@@ -43,7 +42,8 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
 
       try {
         const result = await recommendHotel(
-          cityCode,
+          latitude,
+          longitude,
           formattedStartDate,
           formattedEndDate,
           adults,
@@ -54,7 +54,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
         setError(error);
       }
     },
-    [cityCode, startDate, endDate, error],
+    [startDate, endDate, latitude, longitude, error],
   );
 
   const handleSelectItem = (element) => {
@@ -71,7 +71,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     }
   }, [data, endDate, startDate]);
 
-  if (cityCode === undefined)
+  if (!latitude || !longitude)
     return (
       <ItemlessFrame>
         Sorry, recommendation for hotels near your destination is impossible!

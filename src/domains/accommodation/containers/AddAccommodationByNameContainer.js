@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as accommodationActions from 'actions/accommodationActions';
 import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
@@ -13,19 +12,16 @@ import {
   Headline,
   ItemlessFrame,
   Subheading,
-  TextInput,
   Text,
-  Paragraph,
+  TextInput,
 } from 'utils';
 import { HotelCard } from 'components';
+import { createAccommodationRequest } from 'actions/accommodationActions';
 import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { tripId, startDate, endDate, cityCode } = route.params;
-  const selectedTrip = useSelector((state) =>
-    state.trips.trips.find((item) => item.id === tripId),
-  );
+  const { tripId, startDate, endDate, latitude, longitude } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
@@ -47,23 +43,23 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
   const fetchHotel = useCallback(
     async (hotelName) => {
       try {
-        const result = await fetchHotelByName(cityCode, hotelName);
+        const result = await fetchHotelByName(latitude, longitude, hotelName);
         setData(result);
       } catch {
         setError(error);
       }
     },
-    [cityCode, error],
+    [error, latitude, longitude],
   );
 
   const cancelAction = () => setData(null);
 
   const submitHandler = async () => {
     setError('');
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       await dispatch(
-        accommodationActions.createAccommodationRequest(
+        createAccommodationRequest(
           tripId,
           data.amenities,
           '',
@@ -80,8 +76,8 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
           '',
         ),
       );
+      navigation.navigate('Accommodation', { tripId });
       setIsLoading(false);
-      navigation.navigate('Accommodation', { tripId: selectedTrip.id });
     } catch {
       setError('Something went wrong!');
       setIsLoading(false);
@@ -100,7 +96,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
     return <ErrorFrame error={error} />;
   }
 
-  if (cityCode === undefined)
+  if (!latitude || !longitude)
     return (
       <ItemlessFrame>
         Sorry, searching for hotels by name near your destination is impossible!
