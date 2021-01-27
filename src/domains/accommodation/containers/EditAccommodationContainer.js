@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import { editAccommodationRequest } from 'actions/accommodationActions';
 import { useDispatch } from 'react-redux';
 
-const EditAccommodation = ({ route, navigation }) => {
+const EditAccommodationContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -108,4 +108,4 @@ const EditAccommodation = ({ route, navigation }) => {
   );
 };
 
-export default EditAccommodation;
+export default EditAccommodationContainer;

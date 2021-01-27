@@ -199,6 +199,7 @@ export const editAccommodationRequest = (
       .put(
         `${API_URL}/Trips/${userId}/${tripId}/accommodation.json?auth=${token}`,
         {
+          PDF,
           amenities,
           breakfast,
           checkInExtra,
@@ -212,14 +213,13 @@ export const editAccommodationRequest = (
           name,
           phone,
           reservationDetails,
-          PDF,
         },
       )
       .then((res) => [res.data, unescape(res.config.data)])
       .then((data) => {
         const accommodationId = data[0].name;
         const requestConfig = JSON.parse(data[1]);
-        const newAccommodation = new Accommodation(
+        const updatedAccommodation = new Accommodation(
           accommodationId,
           requestConfig.amenities,
           requestConfig.breakfast,
@@ -237,11 +237,12 @@ export const editAccommodationRequest = (
           requestConfig.PDF,
         );
 
-        dispatch(editAccommodation(tripId, updatedAccommodation));
+        dispatch(editAccommodationRequest(tripId, updatedAccommodation));
       })
       .catch(() => {
         throw new Error('Cannot update accommodation!');
       });
+  };
 };
 
 export const deletePDFRequest = (tripId, accommodationId, PDF) => {
