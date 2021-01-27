@@ -9,6 +9,7 @@ import {
   ItemlessFrame,
   TextInput,
   Title,
+  Paragraph,
 } from 'utils';
 import { Formik } from 'formik';
 import { Recommendation } from '../components';
@@ -144,10 +145,10 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <Title style={styles.headline}>
+          <Paragraph style={styles.paragraph}>
             We will find the most attractive accommodation offers for your
             destination
-          </Title>
+          </Paragraph>
 
           <TextInput
             label="Number of adults"

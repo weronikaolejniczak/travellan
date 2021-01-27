@@ -15,6 +15,7 @@ import {
   Subheading,
   TextInput,
   Text,
+  Paragraph,
 } from 'utils';
 import { HotelCard } from 'components';
 import { styles } from './AddAccommodationByNameStyleContainer';
@@ -168,9 +169,9 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <Headline styles={styles.headline}>
-            Add your accomodation by typing name of your hotel
-          </Headline>
+          <Subheading style={styles.paragraph}>
+            Add your accomodation by typing name of your hotel:
+          </Subheading>
           <TextInput
             label="Hotel name"
             onChange={handleChange('hotelName')}
