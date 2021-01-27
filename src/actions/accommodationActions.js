@@ -189,6 +189,7 @@ export const editAccommodationRequest = (
   name,
   phone,
   reservationDetails,
+  PDF,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -239,7 +240,7 @@ export const editAccommodationRequest = (
         dispatch(editAccommodation(tripId, updatedAccommodation));
       })
       .catch(() => {
-        throw new Error('Cannot create accommodation!');
+        throw new Error('Cannot update accommodation!');
       });
 };
 

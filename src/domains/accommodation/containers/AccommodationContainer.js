@@ -187,7 +187,21 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   const handleHotelEdit = (id) => {
     navigation.navigate('Edit accommodation', {
-     
+      PDF: id.PDF,
+      amenities: id.amenities,
+      breakfast: id.breakfast,
+      checkInExtra: id.checkInExtra,
+      checkInHours: id.checkInHours,
+      checkOutHours: id.checkOutHours,
+      creditCardPaymentPossible: id.creditCardPaymentPossible,
+      description: id.description,
+      frontDesk24H: id.frontDesk24H,
+      image: id.image,
+      location: id.location,
+      name: id.name,
+      phone: id.phone,
+      reservationDetails: id.reservationDetails,
+      tripId: id.tripId,
     });
   };
 
