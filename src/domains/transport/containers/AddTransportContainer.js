@@ -1,12 +1,12 @@
 import * as yup from 'yup';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo, useState } from 'react';
 import { Formik } from 'formik';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
+  Checkbox,
   ScrollView as Container,
   DateTimePicker,
   Text,
@@ -26,7 +26,7 @@ const AddTransportContainer = ({ route, navigation }) => {
     state.trips.trips.find((item) => item.id === tripId),
   ).startDate;
 
-  const [isTicketTo, setToDestination] = useState(true);
+  const [isTicketTo, setToDestination] = useState(false);
   const [isTicketFrom, setFromDestination] = useState(false);
   // const [QR, setQR] = useState('');
   // const [PDFUri, setPDFUri] = useState('');
@@ -35,16 +35,17 @@ const AddTransportContainer = ({ route, navigation }) => {
   );
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [validationError, setValidationError] = useState('');
   const [error, setError] = useState('');
 
-  const toggleToDestinationSwitch = () => {
+  const toggleToDestination = () => {
     setToDestination((previousState) => !previousState);
-    setFromDestination((previousState) => !previousState);
+    setValidationError('');
   };
 
-  const toggleFromDestinationSwitch = () => {
+  const toggleFromDestination = () => {
     setFromDestination((previousState) => !previousState);
-    setToDestination((previousState) => !previousState);
+    setValidationError('');
   };
 
   return (
@@ -55,21 +56,25 @@ const AddTransportContainer = ({ route, navigation }) => {
       onSubmit={async (values) => {
         setError('');
         setIsLoading(true);
-        try {
-          await dispatch(
-            createTransportRequest(
+        if (isTicketFrom || isTicketTo) {
+          try {
+            await dispatch(
+              createTransportRequest(
+                tripId,
+                isTicketTo,
+                isTicketFrom,
+                dateOfDeparture.toString(),
+                values.address,
+              ),
+            );
+            navigation.navigate('Transport', {
               tripId,
-              isTicketTo,
-              isTicketFrom,
-              dateOfDeparture.toString(),
-              values.address,
-            ),
-          );
-          navigation.navigate('Transport', {
-            tripId,
-          });
-        } catch {
-          setError(error);
+            });
+          } catch {
+            setError(error);
+          }
+        } else {
+          setValidationError('Choose type of ticket!');
         }
         setIsLoading(false);
       }}
@@ -81,45 +86,34 @@ const AddTransportContainer = ({ route, navigation }) => {
         <Container>
           <View style={styles.header}>
             <View style={styles.radio}>
-              <Text
-                style={isTicketTo ? styles.activeLabel : styles.disactiveLabel}
-              >
-                to
-              </Text>
-              <TouchableOpacity onPress={toggleToDestinationSwitch}>
-                <Icon
-                  name={isTicketTo ? 'radiobox-marked' : 'radiobox-blank'}
-                  style={[
-                    isTicketTo
-                      ? styles.activeRadioIcon
-                      : styles.nonActiveRadioIcon,
-                  ]}
-                />
-              </TouchableOpacity>
+              <Checkbox
+                checked={isTicketTo}
+                onPress={toggleToDestination}
+                textStyle={
+                  isTicketTo ? styles.activeLabel : styles.disactiveLabel
+                }
+              />
+              <Text>to</Text>
             </View>
             <View style={styles.radio}>
-              <Text
-                style={
+              <Checkbox
+                checked={isTicketFrom}
+                onPress={toggleFromDestination}
+                textStyle={
                   isTicketFrom ? styles.activeLabel : styles.disactiveLabel
                 }
-              >
-                from
-              </Text>
-              <TouchableOpacity onPress={toggleFromDestinationSwitch}>
-                <Icon
-                  name={isTicketFrom ? 'radiobox-marked' : 'radiobox-blank'}
-                  style={[
-                    isTicketFrom
-                      ? styles.activeRadioIcon
-                      : styles.nonActiveRadioIcon,
-                  ]}
-                />
-              </TouchableOpacity>
+              />
+              <Text>from</Text>
             </View>
             <View style={styles.destination}>
               <Title>{selectedTrip.destination}</Title>
             </View>
           </View>
+          {!!validationError && (
+            <View style={styles.validationErrorWrapper}>
+              <Text style={styles.validationError}>{validationError}</Text>
+            </View>
+          )}
 
           <View style={styles.picker}>
             <DateTimePicker

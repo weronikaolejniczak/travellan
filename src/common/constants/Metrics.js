@@ -17,6 +17,9 @@ export default {
   bigMargin: {
     margin: big,
   },
+  bigMarginBottom: {
+    marginBottom: big,
+  },
   bigMarginTop: {
     marginTop: big,
   },

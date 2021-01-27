@@ -13,31 +13,36 @@ export const styles = StyleSheet.create({
   },
   destination: {
     alignItems: 'center',
-    marginLeft: '7%',
-    marginTop: '5%',
+    marginLeft: '5%',
   },
   disactiveLabel: {
-    color: 'grey',
+    color: Colors.placeholder,
     fontSize: 18,
   },
   header: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: '5%',
   },
   inputWrapper: {
     ...Metrics.verticalMargin,
+    ...Metrics.bigMarginBottom,
   },
   nonActiveRadioIcon: {
-    color: 'grey',
+    color: Colors.placeholder,
     fontSize: 26,
   },
   picker: {
-    marginTop: '5%',
+    ...Metrics.bigMarginTop,
   },
   radio: {
     alignItems: 'center',
-    marginHorizontal: 10,
+    ...Metrics.horizontalMargin,
+  },
+  validationError: {
+    color: Colors.error,
+  },
+  validationErrorWrapper: {
+    ...Metrics.bigMarginTop,
   },
 });

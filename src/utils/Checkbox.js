@@ -1,10 +1,8 @@
 import React from 'react';
 import { Checkbox } from 'react-native-paper';
 
-const CustomCheckbox = (props) => {
-  const { label, checked, onPress } = props;
-
-  return label ? (
+const CustomCheckbox = ({ label, checked, onPress }) =>
+  label ? (
     <Checkbox.Item
       label={label}
       onPress={onPress}
@@ -13,6 +11,5 @@ const CustomCheckbox = (props) => {
   ) : (
     <Checkbox onPress={onPress} status={checked ? 'checked' : 'unchecked'} />
   );
-};
 
 export default CustomCheckbox;
