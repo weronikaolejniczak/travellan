@@ -10,9 +10,7 @@ import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AccommodationContainer, {
-  accommodationOptions,
-} from 'domains/accommodation/containers/AccommodationContainer';
+import AccommodationContainer from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
@@ -40,9 +38,7 @@ import SharingContainer from 'domains/share/containers/SharingContainer';
 import StartupContainer, {
   startupOptions,
 } from 'domains/user/containers/StartupContainer';
-import TransportContainer, {
-  transportOptions,
-} from 'domains/transport/containers/TransportContainer';
+import TransportContainer from 'domains/transport/containers/TransportContainer';
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
@@ -92,7 +88,7 @@ const CustomDrawerContent = (props) => (
         icon={() => <Icon name="logout" size={18} />}
         onPress={() => {
           userActions.logout();
-          props.navigation.navigate('Startup');
+          props.navigation.navigate('Auth');
         }}
       />
     </View>
@@ -125,6 +121,11 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultNavOptions}>
         <Stack.Screen
+          name="Auth"
+          component={AuthenticationContainer}
+          options={authOptions}
+        />
+        <Stack.Screen
           name="Startup"
           component={StartupContainer}
           options={startupOptions}
@@ -132,11 +133,6 @@ export default function Navigation() {
         <Stack.Screen
           name="Register"
           component={RegisterContainer}
-          options={authOptions}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={AuthenticationContainer}
           options={authOptions}
         />
         <Stack.Screen
@@ -158,18 +154,10 @@ export default function Navigation() {
           component={TripDetailsContainer}
           options={tripDetailsOptions}
         />
-        <Stack.Screen
-          name="Transport"
-          component={TransportContainer}
-          options={transportOptions}
-        />
+        <Stack.Screen name="Transport" component={TransportContainer} />
         <Stack.Screen name="Add transport" component={AddTransportContainer} />
         <Stack.Screen name="Add QR" component={AddQRContainer} />
-        <Stack.Screen
-          name="Accommodation"
-          component={AccommodationContainer}
-          options={accommodationOptions}
-        />
+        <Stack.Screen name="Accommodation" component={AccommodationContainer} />
         <Stack.Screen
           name="Add hotel by name"
           component={AddAccommodationByNameContainer}
@@ -203,12 +191,17 @@ export default function Navigation() {
 }
 
 const defaultNavOptions = {
+  headerLeftContainerStyle: {
+    textShadowColor: Colors.cards,
+    textShadowOffset: { height: 2, width: 2 },
+    textShadowRadius: 15,
+  },
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
-    textShadowColor: Colors.transparentShadow,
-    textShadowOffset: { height: 1, width: 1 },
-    textShadowRadius: 7,
+    textShadowColor: Colors.cards,
+    textShadowOffset: { height: 2, width: 2 },
+    textShadowRadius: 15,
   },
   headerTransparent: {
     backgroundColor: Colors.transparent,
