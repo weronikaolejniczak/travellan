@@ -198,6 +198,7 @@ const AccommodationContainer = ({ navigation, route }) => {
   const handleHotelEdit = (id) => {
     navigation.navigate('Edit accommodation', {
       PDF: id.PDF,
+      accomodationId: id,
       amenities: id.amenities,
       breakfast: id.breakfast,
       checkInExtra: id.checkInExtra,

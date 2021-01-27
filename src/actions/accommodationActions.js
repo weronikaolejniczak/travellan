@@ -109,6 +109,7 @@ export const deleteAccommodationRequest = (tripId, accommodationId) => {
 
 export const createAccommodationRequest = (
   tripId,
+  accommodationId,
   amenities,
   breakfast,
   checkInExtra,

@@ -1,6 +1,5 @@
 import * as yup from 'yup';
-import React, { useCallback, useEffect, useState } from 'react';
-import SplashScreen from 'react-native-splash-screen';
+import React, { useState } from 'react';
 import { Button, ScrollView as Container, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { editAccommodationRequest } from 'actions/accommodationActions';
@@ -13,6 +12,7 @@ const EditAccommodationContainer = ({ route, navigation }) => {
 
   const {
     tripId,
+    accomodationId,
     amenities,
     breakfast,
     checkInExtra,
@@ -39,6 +39,7 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         setIsLoading(true);
         const action = editAccommodationRequest(
           tripId,
+          accomodationId,
           amenities,
           breakfast,
           checkInExtra,
