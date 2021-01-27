@@ -42,9 +42,9 @@ const TransportItem = ({
       >
         <View style={styles.rowCenter}>
           {isTicketTo === true ? (
-            <Text style={styles.header}>to {destination}</Text>
+            <Text style={styles.header}>Ticket to {destination}</Text>
           ) : (
-            <Text style={styles.header}>from {destination}</Text>
+            <Text style={styles.header}>Ticket from {destination}</Text>
           )}
         </View>
 
