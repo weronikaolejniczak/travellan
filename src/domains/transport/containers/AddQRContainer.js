@@ -89,9 +89,7 @@ const AddQRContainer = (props) => {
           }
           bottomContent={
             <View style={{ marginTop: 20 }}>
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-              </TouchableOpacity>
+              <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
             </View>
           }
         />
