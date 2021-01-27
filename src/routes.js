@@ -203,12 +203,17 @@ export default function Navigation() {
 }
 
 const defaultNavOptions = {
+  headerLeftContainerStyle: {
+    textShadowColor: Colors.cards,
+    textShadowOffset: { height: 2, width: 2 },
+    textShadowRadius: 15,
+  },
   headerTintColor: Colors.text,
   headerTitleStyle: {
     fontWeight: 'bold',
-    textShadowColor: Colors.transparentShadow,
-    textShadowOffset: { height: 1, width: 1 },
-    textShadowRadius: 7,
+    textShadowColor: Colors.cards,
+    textShadowOffset: { height: 2, width: 2 },
+    textShadowRadius: 15,
   },
   headerTransparent: {
     backgroundColor: Colors.transparent,
