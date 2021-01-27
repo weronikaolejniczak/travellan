@@ -1,12 +1,7 @@
 import * as yup from 'yup';
 import React, { useCallback, useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {
-  Button,
-  ScrollView as Container,
-  DateTimePicker,
-  TextInput,
-} from 'utils';
+import { Button, ScrollView as Container, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { editAccommodationRequest } from 'actions/accommodationActions';
 import { useDispatch } from 'react-redux';
@@ -63,63 +58,49 @@ const EditAccommodation = ({ route, navigation }) => {
           await dispatch(action);
           setIsLoading(false);
           actions.resetForm();
-          navigation.navigate('My trips');
+          navigation.navigate('Accommodation');
         } catch (err) {
           setError(err.message);
         }
         setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
-        phone: yup.string().email('Invalid email address'),
-
-        reservationDetails: yup
+        phone: yup
           .string()
-          .min(6)
-          .max(20)
           .matches(
-            /[a-zA-Z0-9_]/,
-            'Password only contains Latin letters and numbers.',
+            /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
           ),
+
+        reservationDetails: yup.string().max(100),
       })}
     >
       {({ values, handleChange, errors, isValid, handleSubmit, touched }) => (
         <Container keyboardShouldPersistTaps="always">
           <TextInput
-            label="City and country"
-            value={destination}
-            onChange={destinationChangeHandler}
-            error={
-              !destinationIsValid &&
-              destinationSubmitted &&
-              'Enter valid destination!'
-            }
-          />
-          <TextInput
-            value={values.email}
-            style={styles.input}
+            value={values.phone}
             onChange={handleChange('email')}
             autoCapitalize="none"
             label="Email"
-            error={errors.email && touched.email ? errors.email : null}
+            error={errors.phone && touched.phone ? errors.phone : null}
           />
-          <View style={styles.formControl}>
-            <TextInput
-              value={values.password}
-              autoCapitalize="none"
-              onChange={handleChange('password')}
-              secureTextEntry={true}
-              label="Password"
-              error={
-                errors.password && touched.password ? errors.password : null
-              }
-            />
-          </View>
+          <TextInput
+            value={values.password}
+            autoCapitalize="none"
+            onChange={handleChange('password')}
+            secureTextEntry={true}
+            label="Password"
+            error={
+              errors.reservationDetails && touched.reservationDetails
+                ? errors.reservationDetails
+                : null
+            }
+          />
           <Button
             loading={isLoading}
             disabled={isLoading}
             onPress={handleSubmit}
           >
-            Sign in
+            Submit
           </Button>
         </Container>
       )}
