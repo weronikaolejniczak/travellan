@@ -13,10 +13,12 @@ import {
 import { useDispatch } from 'react-redux';
 
 import * as yup from 'yup';
-import { Button, TextInput } from 'utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button, LoadingFrame, TextInput } from 'utils';
 import { Formik } from 'formik';
 import { SocialButton } from '../components';
 import {
+  authenticate,
   loginRequest,
   onFacebookButtonPress,
   onGoogleButtonPress,
@@ -28,6 +30,41 @@ const AuthenticationContainer = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [isChecking, setIsChecking] = useState(false);
+
+  useEffect(() => {
+    const tryLogin = async () => {
+      setIsChecking(true);
+      const userData = await AsyncStorage.getItem('userData');
+
+      if (!userData) {
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
+        setIsChecking(false);
+        return;
+      }
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
+
+      if (expirationDate <= new Date() || !token || !userId) {
+        SplashScreen.hide();
+        if (error) {
+          Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+        }
+        setIsChecking(false);
+        return;
+      }
+
+      navigation.navigate('My trips');
+      dispatch(authenticate(userId, token));
+      setIsChecking(false);
+    };
+
+    tryLogin();
+  }, [dispatch, error, navigation]);
 
   const handleGoogle = async () => {
     setError(null);
@@ -55,7 +92,7 @@ const AuthenticationContainer = ({ navigation }) => {
     }
     setIsLoading(false);
   };
-
+  /**
   useEffect(() => {
     SplashScreen.hide();
     if (error) {
@@ -63,19 +100,25 @@ const AuthenticationContainer = ({ navigation }) => {
     }
   }, [error]);
 
+  */
+
+  if (isChecking) {
+    return <LoadingFrame />;
+  }
+
   return (
     <Formik
       initialValues={{
         email: '',
         password: '',
       }}
-      onSubmit={async (values) => {
-        setError(null);
+      onSubmit={async (values, actions) => {
         setIsLoading(true);
         const action = loginRequest(values.email, values.password);
         try {
           await dispatch(action);
           setIsLoading(false);
+          actions.resetForm();
           navigation.navigate('My trips');
         } catch (err) {
           setError(err.message);
@@ -117,7 +160,7 @@ const AuthenticationContainer = ({ navigation }) => {
                   style={styles.input}
                   onChange={handleChange('email')}
                   autoCapitalize="none"
-                  label="E-mail"
+                  label="Email"
                   error={errors.email && touched.email ? errors.email : null}
                 />
               </View>
@@ -132,17 +175,12 @@ const AuthenticationContainer = ({ navigation }) => {
                     errors.password && touched.password ? errors.password : null
                   }
                 />
+              </View>
+              <View style={styles.actionsContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.forgot}>Forgot Password?</Text>
+                  <Text style={styles.forgot}>Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.innerContainer}>
-                  <Button
-                    onPress={() => navigation.navigate('Register')}
-                    mode="outlined"
-                    style={styles.authButton}
-                  >
-                    Sign up
-                  </Button>
                   <Button
                     loading={isLoading}
                     disabled={isLoading}
@@ -168,6 +206,13 @@ const AuthenticationContainer = ({ navigation }) => {
                     onPress={() => handleGoogle()}
                   />
                 </View>
+                <Button
+                  onPress={() => navigation.navigate('Register')}
+                  mode="outlined"
+                  style={styles.authButton}
+                >
+                  Sign up with email
+                </Button>
               </View>
             </ScrollView>
           </View>

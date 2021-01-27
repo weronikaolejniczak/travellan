@@ -4,12 +4,12 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { styles } from './RadioButtonStyle';
 
-const CustomRadioButton = ({ name, value, text, setValue }) => (
+const CustomRadioButton = ({ name, value, textStyle, text, onPress }) => (
   <View style={styles.container}>
-    <TouchableOpacity style={styles.radioCircle} onPress={() => setValue(name)}>
+    <TouchableOpacity style={styles.radioCircle} onPress={onPress}>
       {value === name && <View style={styles.selectedRadioButton} />}
     </TouchableOpacity>
-    <Text>{text}</Text>
+    <Text style={textStyle}>{text}</Text>
   </View>
 );
 

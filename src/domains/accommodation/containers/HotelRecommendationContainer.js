@@ -7,15 +7,15 @@ import {
   Button,
   View as Container,
   ItemlessFrame,
+  Paragraph,
   TextInput,
-  Title,
 } from 'utils';
 import { Formik } from 'formik';
 import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 
 const HotelRecommendationContainer = ({ navigation, route }) => {
-  const { cityCode, startDate, endDate } = route.params;
+  const { latitude, longitude, startDate, endDate } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDateSame, setIsDateSame] = useState(true);
@@ -42,7 +42,8 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
 
       try {
         const result = await recommendHotel(
-          cityCode,
+          latitude,
+          longitude,
           formattedStartDate,
           formattedEndDate,
           adults,
@@ -53,7 +54,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
         setError(error);
       }
     },
-    [cityCode, startDate, endDate, error],
+    [startDate, endDate, latitude, longitude, error],
   );
 
   const handleSelectItem = (element) => {
@@ -70,7 +71,7 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     }
   }, [data, endDate, startDate]);
 
-  if (cityCode === undefined)
+  if (!latitude || !longitude)
     return (
       <ItemlessFrame>
         Sorry, recommendation for hotels near your destination is impossible!
@@ -144,10 +145,10 @@ const HotelRecommendationContainer = ({ navigation, route }) => {
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <Container>
-          <Title style={styles.headline}>
+          <Paragraph style={styles.paragraph}>
             We will find the most attractive accommodation offers for your
             destination
-          </Title>
+          </Paragraph>
 
           <TextInput
             label="Number of adults"

@@ -7,7 +7,7 @@ const baseColors = {
   lightGrey: '#777777',
   orange: '#FF8C00',
   red: 'red',
-  semiTransparent: 'rgba(0, 0, 0, 0.5)',
+  semiTransparent: 'rgba(0, 0, 0, 0.7)',
   transparent: 'rgba(0,0,0,0)',
   white: '#FFFFFF',
 };

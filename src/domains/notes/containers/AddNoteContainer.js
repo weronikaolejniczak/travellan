@@ -7,6 +7,8 @@ import { createNoteRequest } from 'actions/notesActions';
 import { defaultNoteCategory, noteCategories } from 'data/NoteCategories';
 import { notificationManager } from 'services';
 import { styles } from './AddNoteContainerStyle';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 
 const AddNoteContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -43,71 +45,96 @@ const AddNoteContainer = ({ route, navigation }) => {
     [localNotify, startDate],
   );
 
-  const descriptionChangeHandler = (text) => setDescription(text);
-
   const categoryChangeHandler = (cat) => setCategory(cat);
-
-  const titleChangeHandler = (text) => setTitle(text);
-
-  const submitHandler = async () => {
-    setIsLoading(true);
-    try {
-      await dispatch(
-        createNoteRequest(tripId, category, title.trim(), description.trim()),
-      );
-      navigation.navigate('Notes', {
-        tripId: selectedTrip.id,
-      });
-      setIsLoading(false);
-    } catch {
-      setError('Something went wrong!');
-    }
-    setIsLoading(false);
-    category === 'To Pack' && callNotification(category, description.trim());
-  };
 
   useEffect(() => {
     setCategory(defaultNoteCategory.value);
   }, []);
 
   return (
-    <Container>
-      <View style={styles.smallPaddingTop}>
-        <Select
-          onChangeText={categoryChangeHandler}
-          items={noteCategories}
-          placeholder={defaultNoteCategory}
-          onValueChange={(value) => setCategory(value)}
-        />
-      </View>
+    <Formik
+      initialValues={{
+        category: 'Without category',
+        title: '',
+        description: '',
+      }}
+      onSubmit={async (values) => {
+        setError('');
+        setIsLoading(true);
+        try {
+          await dispatch(
+            createNoteRequest(
+              tripId,
+              values.category,
+              values.title,
+              values.description,
+            ),
+          );
+          navigation.navigate('Notes', {
+            tripId: selectedTrip.id,
+          });
+          setIsLoading(false);
+        } catch {
+          setError(error);
+        }
+        values.category === 'To Pack' &&
+          callNotification(values.category, values.description);
+      }}
+      validationSchema={yup.object().shape({
+        title: yup.string().when('category', {
+          is: 'To Pack',
+          then: yup.string(),
+          otherwise: yup.string().min(1).max(50).required('Cannot be empty!'),
+        }),
+        description: yup.string().min(1).max(500).required('Cannot be empty!'),
+      })}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <Container>
+          <View style={styles.smallPaddingTop}>
+            <Select
+              onChangeText={categoryChangeHandler}
+              items={noteCategories}
+              placeholder={defaultNoteCategory}
+              onValueChange={handleChange('category')}
+            />
+          </View>
 
-      {category !== 'To Pack' && (
-        <View style={styles.smallPaddingTop}>
-          <TextInput
-            label="Title"
-            value={title}
-            onChange={titleChangeHandler}
-          />
-        </View>
+          {values.category !== 'To Pack' && (
+            <View style={styles.smallPaddingTop}>
+              <TextInput
+                label="Title"
+                value={values.title}
+                onChange={handleChange('title')}
+                error={errors.title && touched.title ? errors.title : null}
+              />
+            </View>
+          )}
+          <View style={styles.smallPaddingTop}>
+            <TextInput
+              label="Content"
+              value={values.description}
+              onChange={handleChange('description')}
+              multiline
+              error={
+                errors.description && touched.description
+                  ? errors.description
+                  : null
+              }
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              isLoading={isLoading}
+              isDisabled={isLoading}
+              onPress={handleSubmit}
+            >
+              Submit
+            </Button>
+          </View>
+        </Container>
       )}
-
-      <TextInput
-        label="Content"
-        value={description}
-        onChange={descriptionChangeHandler}
-        multiline
-      />
-
-      <View style={styles.buttonContainer}>
-        <Button
-          isLoading={isLoading}
-          isDisabled={isLoading}
-          onPress={submitHandler}
-        >
-          Submit
-        </Button>
-      </View>
-    </Container>
+    </Formik>
   );
 };
 

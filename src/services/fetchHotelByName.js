@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { BACKEND_URL } from 'react-native-dotenv';
 
-async function fetchHotelByName(cityCode, hotel) {
+async function fetchHotelByName(latitude, longitude, hotel) {
   return await axios
     .get(
-      `${BACKEND_URL}/accommodation/hotelByName?cityCode=${cityCode}&radius=50&hotelName=${hotel}`,
+      `${BACKEND_URL}/accommodation/hotelByName?latitude=${latitude}&longitude=${longitude}&radius=30&hotelName=${hotel}`,
     )
     .then((json) => json.data)
     .catch((error) => {

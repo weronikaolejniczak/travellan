@@ -5,6 +5,8 @@ import { Layout } from 'constants';
 export const styles = StyleSheet.create({
   container: {
     ...Layout.center,
+  },
+  headline: {
     textAlign: 'center',
   },
 });

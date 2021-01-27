@@ -58,12 +58,26 @@ export const styles = StyleSheet.create({
     margin: 8,
     width: 10,
   },
+  dotsWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   icon: {
     margin: 10,
   },
-  rowDirection: {
-    flexDirection: 'row',
+  plusButton: {
+    alignItems: 'center',
+    backgroundColor: Colors.accent,
+    borderRadius: 25,
+    height: 35,
     justifyContent: 'center',
+    margin: 5,
+    width: 35,
+  },
+  plusIcon: {
+    color: Colors.background,
+    fontSize: 26,
   },
   text: {
     color: Colors.text,
