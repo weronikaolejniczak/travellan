@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
   header: {
     color: Colors.text,
     fontSize: 24,
+    padding: '5%',
   },
   icon: {
     color: Colors.text,
