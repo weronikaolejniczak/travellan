@@ -11,10 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Headline, Paragraph } from 'utils';
+import { Headline, Paragraph, HeaderButton } from 'utils';
 import { RNCamera } from 'react-native-camera';
 import { styles } from './AddQRContainerStyle';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();
@@ -128,6 +129,22 @@ const AddQRContainer = (props) => {
       )}
     </View>
   );
+};
+
+export const qrOptions = (props) => {
+  return {
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Set Torch"
+          iconName="flashlight"
+          onPress={() => {
+            //
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default AddQRContainer;

@@ -16,7 +16,9 @@ import AccommodationContainer, {
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
-import AddQRContainer from 'domains/transport/containers/AddQRContainer';
+import AddQRContainer, {
+  qrOptions,
+} from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
 import AddTripContainer from 'domains/trips/containers/AddTripContainer';
 import AuthenticationContainer, {
@@ -160,7 +162,11 @@ export default function Navigation() {
         />
         <Stack.Screen name="Transport" component={TransportContainer} />
         <Stack.Screen name="Add transport" component={AddTransportContainer} />
-        <Stack.Screen name="Add QR" component={AddQRContainer} />
+        <Stack.Screen
+          name="Add QR"
+          component={AddQRContainer}
+          options={qrOptions}
+        />
         <Stack.Screen
           name="Accommodation"
           component={AccommodationContainer}
