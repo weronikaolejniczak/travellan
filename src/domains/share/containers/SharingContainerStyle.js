@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import Colors from 'constants/Colors';
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get('window').height * 0.65;
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
@@ -20,27 +20,27 @@ export const styles = StyleSheet.create({
     paddingBottom: '5%',
   },
   image: {
-    height: windowHeight * 0.7,
-    resizeMode: 'stretch',
-    width: windowWidth * 0.7,
+    height: windowHeight,
+    resizeMode: 'center',
+    width: windowWidth,
   },
   imageSmall: {
-    height: windowHeight * 0.4,
-    resizeMode: 'stretch',
-    width: windowWidth * 0.8,
+    height: windowHeight,
+    resizeMode: 'center',
+    width: windowWidth,
   },
   imageMedium: {
-    height: windowHeight * 0.7,
-    resizeMode: 'stretch',
-    width: windowWidth * 0.8,
+    height: windowHeight,
+    resizeMode: 'center',
+    width: windowWidth,
   },
   imageView: {
     alignItems: 'center',
-    marginBottom: 20,
+    padding: '5%',
   },
   imageLoading: {
-    height: windowHeight * 0.4,
-    resizeMode: 'stretch',
+    height: windowHeight,
+    resizeMode: 'center',
     width: windowWidth,
   },
   color: {
