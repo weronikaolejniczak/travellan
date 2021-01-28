@@ -1,4 +1,5 @@
 import DocumentPicker from 'react-native-document-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, {
   createRef,
   memo,
@@ -13,13 +14,18 @@ import {
   Dimensions,
   FlatList,
   ScrollView,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as accommodationActions from 'actions/accommodationActions';
-import { ActionSheet, HeaderButton, ItemlessFrame, LoadingFrame } from 'utils';
+import {
+  ActionSheet,
+  FloatingActionButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
 import { HotelCard, PDFModal } from 'components';
 import { styles } from './AccommodationContainerStyle';
 
@@ -30,6 +36,9 @@ const actionSheetRef = createRef();
 const AccommodationContainer = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { tripId } = route.params;
+  const selectedTrip = useSelector((state) =>
+    state.trips.trips.find((item) => item.id === tripId),
+  );
   const accommodation = useSelector(
     (state) =>
       state.trips.trips.find((item) => item.id === tripId).accommodation,
@@ -47,11 +56,12 @@ const AccommodationContainer = ({ navigation, route }) => {
   const navigateToScreen = (screen) => {
     actionSheetRef.current?.hide();
     navigation.navigate(screen, {
-      cityCode: route.params.cityCode,
-      destination: route.params.destination,
-      endDate: route.params.endDate,
-      startDate: route.params.startDate,
-      tripId: route.params.tripId,
+      destination: selectedTrip.destination,
+      endDate: selectedTrip.endDate,
+      latitude: selectedTrip.region.latitude,
+      longitude: selectedTrip.region.longitude,
+      startDate: selectedTrip.startDate,
+      tripId,
     });
   };
 
@@ -185,8 +195,25 @@ const AccommodationContainer = ({ navigation, route }) => {
     setIsRefreshing(false);
   };
 
-  const handleHotelEdit = (id) => {
-    // use: tripId, id
+  const handleHotelEdit = (accommodationId, id) => {
+    navigation.navigate('Edit accommodation', {
+      PDF: id.PDF,
+      accommodationId,
+      amenities: id.amenities,
+      breakfast: id.breakfast,
+      checkInExtra: id.checkInExtra,
+      checkInHours: id.checkInHours,
+      checkOutHours: id.checkOutHours,
+      creditCardPaymentPossible: id.creditCardPaymentPossible,
+      description: id.description,
+      frontDesk24H: id.frontDesk24H,
+      image: id.image,
+      location: id.location,
+      name: id.name,
+      phone: id.phone,
+      reservationDetails: id.reservationDetails,
+      tripId,
+    });
   };
 
   const loadAccommodation = useCallback(() => {
@@ -215,6 +242,11 @@ const AccommodationContainer = ({ navigation, route }) => {
     return (
       <>
         <ItemlessFrame>You have no accomodation saved!</ItemlessFrame>
+        <FloatingActionButton
+          loading={isLoading}
+          disabled={isLoading}
+          onPress={() => actionSheetRef.current?.setModalVisible()}
+        />
         <ActionSheet
           ref={actionSheetRef}
           elements={[
@@ -266,12 +298,12 @@ const AccommodationContainer = ({ navigation, route }) => {
               handlePDFManagement(data.item.PDF, data.item.id)
             }
             handleHotelDelete={() => handleHotelDelete(data.item.id)}
-            handleHotelEdit={() => handleHotelEdit(data.item.id)}
+            handleHotelEdit={() => handleHotelEdit(data.item.id, data.item)}
             {...data.item}
           />
         )}
       />
-      <View style={styles.rowDirection}>
+      <View style={styles.dotsWrapper}>
         {accommodation.map((_, i) => {
           let opacity = position.interpolate({
             extrapolate: 'clamp',
@@ -281,6 +313,12 @@ const AccommodationContainer = ({ navigation, route }) => {
 
           return <Animated.View key={i} style={{ opacity, ...styles.dot }} />;
         })}
+        <TouchableOpacity
+          style={styles.plusButton}
+          onPress={() => actionSheetRef.current?.setModalVisible()}
+        >
+          <Icon name="plus" style={styles.plusIcon} />
+        </TouchableOpacity>
       </View>
       <ActionSheet
         ref={actionSheetRef}
@@ -300,17 +338,4 @@ const AccommodationContainer = ({ navigation, route }) => {
     </ScrollView>
   );
 };
-
-export const accommodationOptions = (navData) => ({
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title="Create an accommodation"
-        iconName="plus"
-        onPress={() => actionSheetRef.current?.setModalVisible()}
-      />
-    </HeaderButtons>
-  ),
-});
-
 export default memo(AccommodationContainer);

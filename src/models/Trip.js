@@ -11,7 +11,6 @@ class Trip {
     budget,
     notes,
     map,
-    cityCode,
   ) {
     this.id = id;
     this.destination = destination;
@@ -24,7 +23,6 @@ class Trip {
     this.budget = budget;
     this.notes = notes;
     this.map = map;
-    this.cityCode = cityCode;
   }
 }
 

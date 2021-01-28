@@ -2,19 +2,23 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
 import SplashScreen from 'react-native-splash-screen';
 import {
+  Autocomplete,
   Button,
   ScrollView as Container,
   DateTimePicker,
-  TextInput,
 } from 'utils';
 import { useDispatch } from 'react-redux';
 
-import { addEventToCalendar, notificationManager } from 'services';
+import {
+  addEventToCalendar,
+  autocompleteCity,
+  notificationManager,
+} from 'services';
+import { compareStrings } from 'helpers';
 import { editTripRequest } from 'actions/tripsActions';
 
 const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
-
   const {
     accommodation,
     budget,
@@ -27,9 +31,10 @@ const EditTripContainer = ({ route, navigation }) => {
     tripId,
   } = route.params;
 
-  const [destinationIsValid, setDestinationIsValid] = useState(true);
-  const [destinationSubmitted, setDestinationSubmitted] = useState(false);
   const [destination, setDestination] = useState(currentDestination);
+  const [destinationError, setDestinationError] = useState('');
+  const [isFromAutocomplete, setIsFromAutocomplete] = useState(false);
+  const [autocompleteData, setAutocompleteData] = useState([]);
   const [startDate, setStartDate] = useState(new Date(currentStartDate));
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date(currentEndDate));
@@ -114,24 +119,49 @@ const EditTripContainer = ({ route, navigation }) => {
     [localNotify],
   );
 
-  const destinationRegex = new RegExp(
-    `^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$`,
-  );
-  const destinationChangeHandler = (text) => {
-    text.trim().length === 0 || !destinationRegex.test(text)
-      ? setDestinationIsValid(false)
-      : setDestinationIsValid(true);
-    setDestination(text);
-  };
   const adjustEndDateToStartDate = (currentDate) =>
     currentDate > endDate && setEndDate(currentDate);
 
-  const submitHandler = useCallback(async () => {
-    setIsLoading(true);
+  // $todo: refactor filter function to utility
+  const filterDestinations = (input, destinations) =>
+    destination === ''
+      ? []
+      : destinations
+          .filter(
+            (dest) =>
+              dest.display_name.search(new RegExp(`${input.trim()}`, 'i')) >= 0,
+          )
+          .splice(0, 6);
 
-    if (!destinationIsValid) {
-      setDestinationSubmitted(true);
-    } else {
+  const filteredDestinations = filterDestinations(
+    destination,
+    autocompleteData,
+  );
+
+  const destinationData =
+    filteredDestinations.length >= 1 &&
+    compareStrings(destination, filteredDestinations[0].display_name)
+      ? []
+      : filteredDestinations;
+  // $end
+
+  const validate = useCallback(() => {
+    const destinationIsValid =
+      !(destinationData.length > 0) && destination.length >= 3;
+
+    destinationIsValid
+      ? setDestinationError('')
+      : setDestinationError('Choose an existing destination!');
+
+    return destinationIsValid;
+  }, [destination.length, destinationData.length]);
+
+  const submitHandler = useCallback(async () => {
+    const dataIsValid = validate();
+
+    if (dataIsValid) {
+      setIsLoading(true);
+
       await dispatch(
         editTripRequest(
           tripId,
@@ -145,13 +175,15 @@ const EditTripContainer = ({ route, navigation }) => {
           map,
         ),
       );
+
       navigation.goBack();
       callNotification(destination, startDate);
       showSnackbar();
+
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [
-    destinationIsValid,
+    validate,
     dispatch,
     tripId,
     destination,
@@ -167,21 +199,44 @@ const EditTripContainer = ({ route, navigation }) => {
     showSnackbar,
   ]);
 
+  const handleDestinationChange = (text) => {
+    setDestination(text);
+    setIsFromAutocomplete(false);
+  };
+
+  const onAutocompleteDestinationPress = (item) => {
+    setDestinationError('');
+    setDestination(`${item.address.name}, ${item.address.country}`);
+    setAutocompleteData([]);
+    setIsFromAutocomplete(true);
+  };
+
+  const autocompleteDestination = useCallback(async () => {
+    if (destination.length > 3) {
+      const result = await autocompleteCity(destination);
+      setAutocompleteData(result);
+    }
+  }, [destination]);
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
+  useEffect(() => {
+    !isFromAutocomplete && autocompleteDestination();
+  }, [autocompleteDestination, destination, isFromAutocomplete]);
+
   return (
     <Container keyboardShouldPersistTaps="always">
-      <TextInput
-        label="City and country"
-        value={destination}
-        onChange={destinationChangeHandler}
-        error={
-          !destinationIsValid &&
-          destinationSubmitted &&
-          'Enter valid destination!'
-        }
+      <Autocomplete
+        data={destinationData}
+        textInputLabel="City and country"
+        query={destination}
+        keyExtractor={(item) => item.osm_id.toString()}
+        itemLabel={(item) => `${item.address.name}, ${item.address.country}`}
+        onChange={handleDestinationChange}
+        onPress={onAutocompleteDestinationPress}
+        error={destinationError}
       />
 
       <DateTimePicker

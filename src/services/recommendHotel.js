@@ -2,7 +2,8 @@ import axios from 'axios';
 import { BACKEND_URL } from 'react-native-dotenv';
 
 async function recommendHotel(
-  cityCode,
+  latitude,
+  longitude,
   checkInDate,
   checkOutDate,
   adults,
@@ -10,7 +11,7 @@ async function recommendHotel(
 ) {
   return await axios
     .get(
-      `${BACKEND_URL}/accommodation/recommendation?cityCode=${cityCode}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&radius=100&adults=${adults}&roomQuantity=${roomQuantity}`,
+      `${BACKEND_URL}/accommodation/recommendation?latitude=${latitude}&longitude=${longitude}&radius=30&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adults=${adults}&roomQuantity=${roomQuantity}`,
     )
     .then((json) => json.data)
     .catch((error) => {

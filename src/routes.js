@@ -10,9 +10,7 @@ import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AccommodationContainer, {
-  accommodationOptions,
-} from 'domains/accommodation/containers/AccommodationContainer';
+import AccommodationContainer from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
@@ -24,9 +22,14 @@ import AddTripContainer from 'domains/trips/containers/AddTripContainer';
 import AuthenticationContainer, {
   authOptions,
 } from 'domains/user/containers/AuthenticationContainer';
+<<<<<<< src/routes.js
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
+import EditAccommodationContainer from 'domains/accommodation/containers/EditAccommodationContainer';
+=======
+import BudgetContainer from 'domains/budget/containers/BudgetContainer';
+>>>>>>> src/routes.js
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import ForgotPasswordContainer, {
@@ -162,6 +165,7 @@ export default function Navigation() {
         />
         <Stack.Screen name="Transport" component={TransportContainer} />
         <Stack.Screen name="Add transport" component={AddTransportContainer} />
+<<<<<<< src/routes.js
         <Stack.Screen
           name="Add QR"
           component={AddQRContainer}
@@ -172,9 +176,17 @@ export default function Navigation() {
           component={AccommodationContainer}
           options={accommodationOptions}
         />
+=======
+        <Stack.Screen name="Add QR" component={AddQRContainer} />
+        <Stack.Screen name="Accommodation" component={AccommodationContainer} />
+>>>>>>> src/routes.js
         <Stack.Screen
           name="Add hotel by name"
           component={AddAccommodationByNameContainer}
+        />
+        <Stack.Screen
+          name="Edit accommodation"
+          component={EditAccommodationContainer}
         />
         <Stack.Screen
           name="Hotel recommendation"
@@ -184,11 +196,7 @@ export default function Navigation() {
           name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
-        <Stack.Screen
-          name="Budget"
-          component={BudgetContainer}
-          options={budgetOptions}
-        />
+        <Stack.Screen name="Budget" component={BudgetContainer} />
         <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
         <Stack.Screen
           name="Notes"

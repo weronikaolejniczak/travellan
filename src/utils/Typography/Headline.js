@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Headline } from 'react-native-paper';
 
 const CustomHeadline = ({
@@ -20,4 +20,4 @@ const CustomHeadline = ({
   </Headline>
 );
 
-export default CustomHeadline;
+export default memo(CustomHeadline);

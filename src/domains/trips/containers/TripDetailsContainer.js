@@ -51,7 +51,7 @@ const TripDetailsContainer = ({ route, navigation }) => {
           endDate={endDate}
           icon="hotel"
         />
-        {/* 
+        {/*
         <NavigationButton
           navigation={navigation}
           to="Map"

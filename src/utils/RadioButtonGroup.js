@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 
-import { RadioButton } from './';
+import { RadioButton } from './RadioButton/RadioButton';
 
-const RadioButtonGroup = (props) => {
-  const { options, value, onSelect } = props;
+const RadioButtonGroup = ({ options, value, onSelect }) => (
+  <View>
+    {options &&
+      options.map((option) => (
+        <RadioButton
+          key={option.key}
+          name={option.key}
+          text={option.text}
+          value={value}
+          setValue={onSelect}
+        />
+      ))}
+  </View>
+);
 
-  return (
-    <View>
-      {options &&
-        options.map((option) => (
-          <RadioButton
-            key={option.key}
-            name={option.key}
-            text={option.text}
-            value={value}
-            setValue={onSelect}
-          />
-        ))}
-    </View>
-  );
-};
-
-export default RadioButtonGroup;
+export default memo(RadioButtonGroup);

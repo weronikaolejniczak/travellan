@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Title } from 'react-native-paper';
 
 const CustomTitle = ({ children, style }) => (
   <Title style={style}>{children}</Title>
 );
 
-export default CustomTitle;
+export default memo(CustomTitle);

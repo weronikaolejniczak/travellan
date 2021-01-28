@@ -1,6 +1,6 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './DateTimePickerStyle';
@@ -69,4 +69,4 @@ const CustomDateTimePicker = (props) => {
   );
 };
 
-export default CustomDateTimePicker;
+export default memo(CustomDateTimePicker);

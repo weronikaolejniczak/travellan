@@ -174,12 +174,7 @@ const AddTripContainer = ({ navigation }) => {
     );
     const fittingCurrenciesNumber = fittingCurrencies.length;
 
-    if (
-      !destinationError &&
-      budgetIsEnabled &&
-      budgetValueError &&
-      fittingCurrenciesNumber === 1
-    ) {
+    if (budgetIsEnabled && !budgetValueError && fittingCurrenciesNumber === 1) {
       return [
         new Budget(
           0,
@@ -200,17 +195,10 @@ const AddTripContainer = ({ navigation }) => {
           account.toString(),
         ),
       ];
-    } else if (!!destinationError && !budgetIsEnabled) {
+    } else if (!budgetIsEnabled) {
       return undefined;
     }
-  }, [
-    account,
-    budget,
-    budgetIsEnabled,
-    budgetValueError,
-    currency,
-    destinationError,
-  ]);
+  }, [account, budget, budgetIsEnabled, budgetValueError, currency]);
 
   const showSnackbar = useCallback(
     () =>
@@ -361,7 +349,7 @@ const AddTripContainer = ({ navigation }) => {
 
       <Autocomplete
         data={destinationData}
-        textInputLabel="City and/or country"
+        textInputLabel="City and country"
         query={destination}
         keyExtractor={(item) => item.osm_id.toString()}
         itemLabel={(item) => `${item.address.name}, ${item.address.country}`}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Checkbox } from 'react-native-paper';
 
 const CustomCheckbox = ({ label, checked, onPress }) =>
@@ -12,4 +12,4 @@ const CustomCheckbox = ({ label, checked, onPress }) =>
     <Checkbox onPress={onPress} status={checked ? 'checked' : 'unchecked'} />
   );
 
-export default CustomCheckbox;
+export default memo(CustomCheckbox);

@@ -7,6 +7,7 @@ export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
 export const DELETE_ACCOMMODATION = 'DELETE_ACCOMMODATION';
 export const SET_PDF_ACC = 'SET_PDF_ACC';
+export const EDIT_ACCOMMODATION = 'EDIT_ACCOMMODATION';
 
 const API_URL = FIREBASE_URL;
 
@@ -31,6 +32,19 @@ export const deleteAccommodation = (tripId, accommodationId) => {
     accommodationId,
     tripId,
     type: DELETE_ACCOMMODATION,
+  };
+};
+
+export const editAccommodation = (
+  tripId,
+  updatedAccommodation,
+  accommodationId,
+) => {
+  return {
+    accommodationId,
+    tripId,
+    type: EDIT_ACCOMMODATION,
+    updatedAccommodation,
   };
 };
 
@@ -122,6 +136,7 @@ export const createAccommodationRequest = (
   name,
   phone,
   reservationDetails,
+  PDF,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -144,6 +159,7 @@ export const createAccommodationRequest = (
           name,
           phone,
           reservationDetails,
+          PDF,
         },
       )
       .then((res) => [res.data, unescape(res.config.data)])
@@ -165,11 +181,83 @@ export const createAccommodationRequest = (
           requestConfig.name,
           requestConfig.phone,
           requestConfig.reservationDetails,
+          requestConfig.PDF,
         );
         dispatch(createAccommodation(tripId, newAccommodation));
       })
       .catch(() => {
         throw new Error('Cannot create accommodation!');
+      });
+  };
+};
+
+export const editAccommodationRequest = (
+  tripId,
+  accommodationId,
+  amenities,
+  breakfast,
+  checkInExtra,
+  checkInHours,
+  checkOutHours,
+  creditCardPaymentPossible,
+  description,
+  frontDesk24H,
+  image,
+  location,
+  name,
+  phone,
+  reservationDetails,
+  PDF,
+) => {
+  return async function (dispatch, getState) {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+
+    await axios
+      .patch(
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation/${accommodationId}.json?auth=${token}`,
+        {
+          PDF,
+          amenities,
+          breakfast,
+          checkInExtra,
+          checkInHours,
+          checkOutHours,
+          creditCardPaymentPossible,
+          description,
+          frontDesk24H,
+          image,
+          location,
+          name,
+          phone,
+          reservationDetails,
+        },
+      )
+
+      .then(() => {
+        const updatedAccommodation = new Accommodation(
+          accommodationId,
+          amenities,
+          breakfast,
+          checkInExtra,
+          checkInHours,
+          checkOutHours,
+          creditCardPaymentPossible,
+          description,
+          frontDesk24H,
+          image,
+          location,
+          name,
+          phone,
+          reservationDetails,
+          PDF,
+        );
+        dispatch(
+          editAccommodation(tripId, updatedAccommodation, accommodationId),
+        );
+      })
+      .catch(() => {
+        throw new Error('Cannot update accommodation!');
       });
   };
 };
