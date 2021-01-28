@@ -67,7 +67,6 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   const handlePDFManagement = useCallback(
     (PDF, id) => {
-      console.log(PDF);
       if (PDF === undefined || PDF === ' ' || PDF === null || PDF === '') {
         Alert.alert(
           'Add an accomodation document?',
@@ -197,7 +196,6 @@ const AccommodationContainer = ({ navigation, route }) => {
   };
 
   const handleHotelEdit = (accommodationId, id) => {
-    console.log(id.PDF);
     navigation.navigate('Edit accommodation', {
       PDF: id.PDF,
       accommodationId,

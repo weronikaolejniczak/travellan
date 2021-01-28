@@ -57,9 +57,6 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         );
         try {
           await dispatch(action);
-          //if (PDF !== undefined || PDF !== ' ' || PDF !== null || PDF !== '') {
-            //await dispatch(addPDF(tripId, accommodationId, PDF));
-          //}
           setIsLoading(false);
           actions.resetForm();
           navigation.navigate('Accommodation');
