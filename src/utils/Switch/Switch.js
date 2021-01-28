@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Switch } from 'react-native-paper';
 import { View } from 'react-native';
 
@@ -15,4 +15,4 @@ const CustomSwitch = ({ children, toggled, onToggleSwitch }) => (
   </View>
 );
 
-export default CustomSwitch;
+export default memo(CustomSwitch);

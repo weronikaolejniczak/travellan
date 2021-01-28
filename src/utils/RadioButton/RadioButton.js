@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native-paper';
 import { TouchableOpacity, View } from 'react-native';
 
@@ -13,4 +13,4 @@ const CustomRadioButton = ({ name, value, textStyle, text, onPress }) => (
   </View>
 );
 
-export default CustomRadioButton;
+export default memo(CustomRadioButton);

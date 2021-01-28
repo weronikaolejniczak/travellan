@@ -1,22 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import {
-  ActivityIndicator,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Budget from 'models/Budget';
-import Colors from 'constants/Colors';
 import { BudgetPicker } from 'components';
+import { Button, ScrollView as Container } from 'utils';
 import { CURRENCIES } from 'data/Currencies';
+import { compareStrings, prepareValue } from 'helpers';
 import { patchBudgetRequest } from 'actions/budgetActions';
-import { prepareValue } from 'helpers';
-import { styles } from './AddCurrencyContainerStyle';
 
-let incorrectCurrency =
+const incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';
 
 const AddCurrencyContainer = ({ route, navigation }) => {
@@ -26,50 +18,44 @@ const AddCurrencyContainer = ({ route, navigation }) => {
     (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
 
-  const [budget, setBudget] = useState('');
-  const [budgetIsValid, setBudgetIsValid] = useState(false);
+  const [budgetValue, setBudgetValue] = useState('');
+  const [budgetValueError, setBudgetValueError] = useState('');
   const [budgetSubmitted, setBudgetSubmitted] = useState(false);
   const [currency, setCurrency] = useState('');
-  const [currencyIsValid, setCurrencyIsValid] = useState(false);
+  const [currencyError, setCurrencyError] = useState('');
   const [account, setAccount] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const currencyChangeHandler = (text) => {
-    let currencyISO =
-      CURRENCIES.filter((item) => item.name === text)[0] !== undefined
-        ? CURRENCIES.filter((item) => item.name === text)[0].iso
-        : undefined;
-
-    let exists = CURRENCIES.filter((item) => item.name === text).length > 0;
-
-    let isAlreadyDeclared =
-      currentBudget !== undefined
-        ? currentBudget.filter((item) => item.currency === currencyISO).length >
-          0
-        : false;
-
-    let validator = exists && !isAlreadyDeclared;
-
-    validator ? setCurrencyIsValid(true) : setCurrencyIsValid(false);
-    validator ? setError(null) : setError(incorrectCurrency);
-    setCurrency(text);
+  // $todo: refactor filter function to utility
+  const filterCurrencies = (input, currs) => {
+    const inputRegex = new RegExp(`${input.trim()}`, 'i');
+    return currency === ''
+      ? []
+      : currs
+          .filter(
+            (curr) =>
+              curr.name.search(inputRegex) >= 0 ||
+              curr.iso.search(inputRegex) >= 0,
+          )
+          .splice(0, 6);
   };
 
-  let budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');
-  const budgetChangeHandler = (text) => {
-    !(!budgetRegex.test(text) || text.trim().length === 0)
-      ? setBudgetIsValid(true)
-      : setBudgetIsValid(false);
-    setBudget(text);
-  };
+  const filteredCurrencies = filterCurrencies(currency, CURRENCIES);
+
+  const currencyData =
+    filteredCurrencies.length >= 1 &&
+    compareStrings(currency, filteredCurrencies[0].name)
+      ? []
+      : filteredCurrencies;
+  // $end
 
   const submitHandler = useCallback(async () => {
     setBudgetSubmitted(true);
-    if (budgetIsValid && currencyIsValid) {
-      let newCurrency = new Budget(
+    if (!budgetValueError && !currencyError) {
+      const newCurrency = new Budget(
         new Date().toString(),
-        prepareValue(budget),
+        prepareValue(budgetValue),
         CURRENCIES.filter((item) => item.name === currency).length > 0
           ? CURRENCIES.filter(
               (item) => item.name === currency,
@@ -82,13 +68,13 @@ const AddCurrencyContainer = ({ route, navigation }) => {
             date: new Date(),
             id: 0,
             title: 'Initial budget',
-            value: prepareValue(budget),
+            value: prepareValue(budgetValue),
           },
         ],
         account.toString(),
       );
 
-      let budgetToSubmit = currentBudget
+      const budgetToSubmit = currentBudget
         ? [...currentBudget, newCurrency]
         : [newCurrency];
 
@@ -100,16 +86,16 @@ const AddCurrencyContainer = ({ route, navigation }) => {
           tripId: tripId,
         });
       } catch {
-        setError('Something went wrong...');
+        setError('Something went wrong!');
       }
     } else if (!error) {
-      setError('Something went wrong...');
+      setError('Something went wrong!');
     }
   }, [
-    budgetIsValid,
-    currencyIsValid,
+    budgetValueError,
+    currencyError,
     error,
-    budget,
+    budgetValue,
     account,
     currentBudget,
     currency,
@@ -118,41 +104,31 @@ const AddCurrencyContainer = ({ route, navigation }) => {
     navigation,
   ]);
 
+  // $todo: refactor validation with Formik
+  // $todo: is keyboardShouldPersistTaps necessary?
   return (
-    <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
+    <Container keyboardShouldPersistTaps="always">
       <BudgetPicker
-        label="Enter initial value"
-        showSwitch={false}
-        toggleBudgetSwitch={() => {}}
-        budget={budget}
-        budgetIsEnabled={true}
-        budgetIsValid={budgetIsValid}
+        data={currencyData}
+        query={currency}
+        label="Initial value"
+        budget={budgetValue}
+        budgetIsEnabled
+        budgetValueError={budgetValueError}
         budgetSubmitted={budgetSubmitted}
-        budgetChangeHandler={budgetChangeHandler}
+        handleBudgetValueChange={setBudgetValue}
         currency={currency}
-        currencyChangeHandler={currencyChangeHandler}
+        handleCurrencyChange={setCurrency}
         account={account}
+        currencyError={currencyError}
         setAccount={setAccount}
-        error={error}
-        setError={setError}
       />
 
-      {isLoading ? (
-        <View style={styles.smallMarginTop}>
-          <ActivityIndicator color={Colors.primary} />
-        </View>
-      ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => submitHandler()}
-          >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </ScrollView>
+      <Button loading={isLoading} disabled={isLoading} onPress={submitHandler}>
+        Submit
+      </Button>
+    </Container>
   );
 };
 
-export default AddCurrencyContainer;
+export default memo(AddCurrencyContainer);

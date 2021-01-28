@@ -11,6 +11,9 @@ export const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 30,
   },
+  container: {
+    padding: 0,
+  },
   flex: {
     flex: 1,
   },

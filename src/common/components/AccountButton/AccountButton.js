@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import { styles } from './AccountButtonStyle';
@@ -24,4 +24,4 @@ const AccountButton = ({ account, value, children, icon, setAccount }) => (
   </TouchableOpacity>
 );
 
-export default AccountButton;
+export default memo(AccountButton);
