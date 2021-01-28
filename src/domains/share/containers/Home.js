@@ -21,7 +21,7 @@ import { homeStyle as styles } from './HomeStyle';
 const COULD_NOT_SCRAPE_HOTEL_ERROR = `Sorry, we couldn't get your hotel info!\nAre you sure you have internet connection?`;
 const INCORRECT_SHARING_DATA_ERROR = `You didn't share a Booking.com hotel page!\nUnfortunately, we don't support any other sharing data.`;
 const USER_NOT_LOGGED_IN_ERROR = `You are not logged in!\nPlease, log in and share the webpage again!`;
-const SHARING_INTENT_ERROR = `Hey! Something went wrong while sharing. Try again!`;
+const SHARING_INTENT_ERROR = `Hey! Something went wrong while sharing.\nTry again!`;
 const NO_TRIPS_SELECTED_ERROR = `You haven't selected any trip!`;
 const COULD_NOT_SAVE_ACCOMMODATION_ERROR = `Sorry, we could't save the accommodation!\nAre you sure you are logged in and have internet connection?`;
 const APP_URL = 'travellan://app';
