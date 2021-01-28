@@ -16,7 +16,7 @@ const CustomButton = ({
     icon={icon}
     loading={loading}
     mode={mode || 'contained'}
-    onPress={!disabled && onPress}
+    onPress={disabled ? () => {} : onPress}
     style={{ ...Metrics.tinyMargin, ...style }}
   >
     {children}

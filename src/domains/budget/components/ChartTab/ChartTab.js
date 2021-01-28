@@ -8,13 +8,15 @@ const ChartTab = ({ date, title, value }) => (
   <View
     style={[
       styles.container,
-      { backgroundColor: value < 0 ? Colors.negative : Colors.green },
+      { borderColor: value < 0 ? Colors.negative : Colors.positive },
     ]}
   >
-    <Text style={styles.date}>{new Date(date).toLocaleDateString()}</Text>
     <View style={styles.info}>
+      <View>
+        <Text style={styles.date}>{new Date(date).toLocaleString()}</Text>
+        <Text style={styles.title}>{title}</Text>
+      </View>
       <Text style={styles.value}>{value}</Text>
-      <Text style={styles.title}>{title}</Text>
     </View>
   </View>
 );

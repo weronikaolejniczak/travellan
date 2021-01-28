@@ -14,9 +14,7 @@ const OperationsForm = ({ onSubmit }) => (
       title: '',
       type: '',
     }}
-    onSubmit={(values) => {
-      console.log(values);
-    }}
+    onSubmit={(values) => onSubmit(values)}
     validationSchema={yup.object().shape({
       cost: yup
         .number()
@@ -36,6 +34,7 @@ const OperationsForm = ({ onSubmit }) => (
       isValid,
       touched,
       setFieldValue,
+      isSubmitting,
     }) => (
       <>
         <TextInput
@@ -56,21 +55,23 @@ const OperationsForm = ({ onSubmit }) => (
 
         <View style={styles.actionsContainer}>
           <RoundButton
-            isValid={isValid}
+            disabled={isSubmitting}
+            loading={isSubmitting}
             color={Colors.positive}
             iconName="plus"
-            onPress={(event) => {
+            onPress={() => {
               setFieldValue('type', 'plus');
-              handleSubmit(event);
+              handleSubmit();
             }}
           />
           <RoundButton
-            isValid={isValid}
+            disabled={isSubmitting}
+            loading={isSubmitting}
             color={Colors.negative}
             iconName="minus"
-            onPress={(event) => {
+            onPress={() => {
               setFieldValue('type', 'minus');
-              handleSubmit(event);
+              handleSubmit();
             }}
           />
         </View>

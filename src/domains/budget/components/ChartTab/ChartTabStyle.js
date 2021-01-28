@@ -4,7 +4,8 @@ import { Colors } from 'constants';
 
 export const styles = StyleSheet.create({
   container: {
-    borderRadius: 20,
+    borderRadius: 25,
+    borderWidth: 2,
     marginTop: '5%',
     padding: 15,
   },
@@ -18,6 +19,8 @@ export const styles = StyleSheet.create({
   },
   title: {
     color: Colors.text,
+    fontWeight: 'bold',
+    marginTop: 5,
   },
   value: {
     color: Colors.text,

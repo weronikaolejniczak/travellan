@@ -28,6 +28,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   value: {
-    fontSize: 18,
+    fontSize: 15,
   },
 });

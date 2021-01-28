@@ -11,9 +11,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     width: '99%',
   },
-  authContainer: {
-    width: '80%',
-  },
   buttonContainer: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
@@ -71,7 +68,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     flex: 1,
     justifyContent: 'center',
-    paddingTop: 50,
+    padding: 30,
   },
   socialsContainer: {
     alignItems: 'center',

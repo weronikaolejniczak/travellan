@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Keyboard, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as categories from 'data/SpendingCategories';
@@ -16,6 +16,7 @@ import {
 } from '../components';
 import {
   ScrollView as Container,
+  ErrorFrame,
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
@@ -27,22 +28,17 @@ import { styles } from './BudgetContainerStyle';
 const BudgetContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { tripId } = route.params;
-  let keyboardRef = useRef();
   const budget = useSelector(
     (state) => state.trips.trips.find((item) => item.id === tripId).budget,
   );
 
-  // $todo: index instead of "selectedCurrency" - choose currencyIndex
-  // budget[currencyIndex],
-  // budget[currencyIndex].value,
-  // budget[currencyIndex].defaultAccount
   const [currencyIndex, setCurrencyIndex] = useState(0);
-  // $todo: index instead of "selectedHistoryItem" - choose historyItemIndex
-  // budget[currencyIndex].history[historyItemIndex],
   const [historyItemIndex, setHistoryItemIndex] = useState(0);
   const [category, setCategory] = useState('general');
   const [account, setAccount] = useState(
-    Array.isArray(budget) && budget[0] ? budget[0].defaultAccount : 'card',
+    Array.isArray(budget) && budget[currencyIndex]
+      ? budget[currencyIndex].defaultAccount
+      : 'card',
   );
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -54,54 +50,50 @@ const BudgetContainer = ({ route, navigation }) => {
       ),
     );
 
-  const modifyAmount = ({ title, cost, type }) => {
-    /* const changedCurrency = selectedCurrency;
+  const modifyAmount = async ({ title, cost, type }) => {
+    setIsLoading(true);
+    setError('');
 
-    type === 'plus'
-      ? (setDisplayableValue(displayableValue + Math.abs(prepareValue(cost))),
-        (changedCurrency.value =
-          changedCurrency.value + Math.abs(prepareValue(cost))))
-      : (setDisplayableValue(displayableValue + -Math.abs(prepareValue(cost))),
-        (changedCurrency.value =
-          changedCurrency.value - Math.abs(prepareValue(cost))));
-
-    changedCurrency.history.push({
+    const newHistoryItem = {
       account: account,
       category: category,
       date: new Date(),
-      id: changedCurrency.history.length + 1,
+      id: budget[currencyIndex].history.length + 1,
       title: title,
       value:
         type === 'plus'
           ? Math.abs(prepareValue(cost))
           : -Math.abs(prepareValue(cost)),
-    });
+    };
+
+    const updatedBudget = [...budget];
+    updatedBudget[currencyIndex].history = updatedBudget[
+      currencyIndex
+    ].history.concat(newHistoryItem);
+
+    type === 'plus'
+      ? (updatedBudget[currencyIndex].value =
+          updatedBudget[currencyIndex].value + Math.abs(prepareValue(cost)))
+      : (updatedBudget[currencyIndex].value =
+          updatedBudget[currencyIndex].value - Math.abs(prepareValue(cost)));
 
     try {
-      persistBudget();
+      await dispatch(patchBudgetRequest(tripId, updatedBudget));
+      setIsLoading(false);
     } catch {
       setError('Something went wrong!');
+      setIsLoading(false);
     }
-
-    const index = budget.findIndex((item) => item.id === selectedCurrency.id);
-    budget[index] = changedCurrency; */
-    console.log('title: ', title);
-    console.log('type: ', type);
-    console.log('cost: ', cost);
   };
 
   const deleteCurrency = useCallback(
-    () => console.log('delete currency...'),
-    /* async (id) => {
-      setIsRefreshing(true);
-      const filteredActiveCurrencies = budget.filter((item) => item.id !== id);
-      await dispatch(patchBudgetRequest(tripId, filteredActiveCurrencies));
-      budget !== undefined
-        ? setSelectedCurrency(filteredActiveCurrencies[0])
-        : setSelectedCurrency(null);
-      setIsRefreshing(false);
+    async (id) => {
+      setIsLoading(true);
+      const filteredCurrencies = budget.filter((item) => item.id !== id);
+      await dispatch(patchBudgetRequest(tripId, filteredCurrencies));
+      setIsLoading(false);
     },
-    [budget, dispatch, tripId], */
+    [budget, dispatch, setIsLoading, tripId],
     [],
   );
 
@@ -135,17 +127,6 @@ const BudgetContainer = ({ route, navigation }) => {
       { cancelable: true },
     );
 
-  /* const persistBudget = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      await dispatch(patchBudgetRequest(tripId, budget));
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  }, [budget, dispatch, tripId]); */
-
   const loadBudget = useCallback(() => {
     setIsLoading(true);
     try {
@@ -160,22 +141,20 @@ const BudgetContainer = ({ route, navigation }) => {
     loadBudget();
   }, [loadBudget]);
 
-  Keyboard.addListener('keyboardWillShow', () => {
-    console.log('keyboard will show!');
-  });
-
-  Keyboard.addListener('keyboardWillHide', () => {
-    console.log('keyboard will hide!');
-  });
+  useEffect(() => {
+    console.log(historyItemIndex);
+  }, [historyItemIndex]);
 
   if (isLoading) return <LoadingFrame />;
+
+  if (error) return <ErrorFrame error={error} />;
 
   if (budget === undefined || (Array.isArray(budget) && budget.length === 0))
     return (
       <>
         <ItemlessFrame>There is no budget to show!</ItemlessFrame>
         <FloatingActionButton
-          onPress={() => navigation.navigate('Add currency', { tripId })}
+          onPress={handleAddCurrency}
           disabled={isLoading}
           loading={isLoading}
         />
@@ -192,17 +171,13 @@ const BudgetContainer = ({ route, navigation }) => {
               <Chart
                 getValue={(index) => budget[currencyIndex].history[index].value}
                 data={budget[currencyIndex].history}
-                onDataPointClick={(item) =>
-                  setHistoryItemIndex(budget[currencyIndex].history[item.index])
-                }
+                onDataPointClick={(item) => setHistoryItemIndex(item.index)}
               />
-              {!!historyItemIndex && (
-                <ChartTab
-                  date={budget[currencyIndex].history[historyItemIndex].date}
-                  title={budget[currencyIndex].history[historyItemIndex].title}
-                  value={budget[currencyIndex].history[historyItemIndex].value}
-                />
-              )}
+              <ChartTab
+                date={budget[currencyIndex].history[historyItemIndex].date}
+                title={budget[currencyIndex].history[historyItemIndex].title}
+                value={budget[currencyIndex].history[historyItemIndex].value}
+              />
             </>
           )}
 

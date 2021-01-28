@@ -118,7 +118,7 @@ const TripsContainer = ({ navigation }) => {
   }
 
   return (
-    <Container>
+    <Container style={styles.container}>
       <FloatingActionButton
         loading={isLoading}
         disabled={isLoading}

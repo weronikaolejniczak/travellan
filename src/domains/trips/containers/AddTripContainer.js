@@ -349,7 +349,7 @@ const AddTripContainer = ({ navigation }) => {
 
       <Autocomplete
         data={destinationData}
-        textInputLabel="City and/or country"
+        textInputLabel="City and country"
         query={destination}
         keyExtractor={(item) => item.osm_id.toString()}
         itemLabel={(item) => `${item.address.name}, ${item.address.country}`}
