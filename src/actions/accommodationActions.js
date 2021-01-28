@@ -136,6 +136,7 @@ export const createAccommodationRequest = (
   name,
   phone,
   reservationDetails,
+  PDF,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -158,6 +159,7 @@ export const createAccommodationRequest = (
           name,
           phone,
           reservationDetails,
+          PDF,
         },
       )
       .then((res) => [res.data, unescape(res.config.data)])
@@ -179,6 +181,7 @@ export const createAccommodationRequest = (
           requestConfig.name,
           requestConfig.phone,
           requestConfig.reservationDetails,
+          requestConfig.PDF,
         );
         dispatch(createAccommodation(tripId, newAccommodation));
       })

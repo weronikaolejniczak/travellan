@@ -74,6 +74,7 @@ const AddAccommodationByNameContainer = ({ route, navigation }) => {
           data.name,
           data.phone,
           '',
+          '',
         ),
       );
       navigation.navigate('Accommodation', { tripId });
