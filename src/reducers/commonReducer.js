@@ -106,9 +106,12 @@ export default (state = initialState, action) => {
         break;
 
       case EDIT_ACCOMMODATION:
+        draft.trips[tripIndex].accommodation = draft.trips[
+          tripIndex
+        ].accommodation.filter((item) => item.id !== action.accommodationId);
         draft.trips[tripIndex].accommodation = [
+          action.updatedAccommodation,
           ...draft.trips[tripIndex].accommodation,
-          action.newAccommodation,
         ];
         break;
 

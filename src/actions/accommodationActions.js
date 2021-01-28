@@ -35,8 +35,13 @@ export const deleteAccommodation = (tripId, accommodationId) => {
   };
 };
 
-export const editAccommodation = (tripId, updatedAccommodation) => {
+export const editAccommodation = (
+  tripId,
+  updatedAccommodation,
+  accommodationId,
+) => {
   return {
+    accommodationId,
     tripId,
     type: EDIT_ACCOMMODATION,
     updatedAccommodation,
@@ -131,7 +136,6 @@ export const createAccommodationRequest = (
   name,
   phone,
   reservationDetails,
-
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
@@ -245,7 +249,9 @@ export const editAccommodationRequest = (
           reservationDetails,
           PDF,
         );
-        dispatch(editAccommodationRequest(tripId, updatedAccommodation));
+        dispatch(
+          editAccommodation(tripId, updatedAccommodation, accommodationId),
+        );
       })
       .catch(() => {
         throw new Error('Cannot update accommodation!');
