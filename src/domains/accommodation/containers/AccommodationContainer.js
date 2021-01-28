@@ -195,8 +195,25 @@ const AccommodationContainer = ({ navigation, route }) => {
     setIsRefreshing(false);
   };
 
-  const handleHotelEdit = (id) => {
-    // use: tripId, id
+  const handleHotelEdit = (accommodationId, id) => {
+    navigation.navigate('Edit accommodation', {
+      PDF: id.PDF,
+      accommodationId,
+      amenities: id.amenities,
+      breakfast: id.breakfast,
+      checkInExtra: id.checkInExtra,
+      checkInHours: id.checkInHours,
+      checkOutHours: id.checkOutHours,
+      creditCardPaymentPossible: id.creditCardPaymentPossible,
+      description: id.description,
+      frontDesk24H: id.frontDesk24H,
+      image: id.image,
+      location: id.location,
+      name: id.name,
+      phone: id.phone,
+      reservationDetails: id.reservationDetails,
+      tripId,
+    });
   };
 
   const loadAccommodation = useCallback(() => {
@@ -281,7 +298,7 @@ const AccommodationContainer = ({ navigation, route }) => {
               handlePDFManagement(data.item.PDF, data.item.id)
             }
             handleHotelDelete={() => handleHotelDelete(data.item.id)}
-            handleHotelEdit={() => handleHotelEdit(data.item.id)}
+            handleHotelEdit={() => handleHotelEdit(data.item.id, data.item)}
             {...data.item}
           />
         )}

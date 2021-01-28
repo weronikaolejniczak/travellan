@@ -14,7 +14,9 @@ import AccommodationContainer from 'domains/accommodation/containers/Accommodati
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
-import AddQRContainer from 'domains/transport/containers/AddQRContainer';
+import AddQRContainer, {
+  qrOptions,
+} from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
 import AddTripContainer from 'domains/trips/containers/AddTripContainer';
 import AuthenticationContainer, {
@@ -23,6 +25,7 @@ import AuthenticationContainer, {
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
+import EditAccommodationContainer from 'domains/accommodation/containers/EditAccommodationContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import ForgotPasswordContainer, {
@@ -165,6 +168,10 @@ export default function Navigation() {
           component={AddAccommodationByNameContainer}
         />
         <Stack.Screen
+          name="Edit accommodation"
+          component={EditAccommodationContainer}
+        />
+        <Stack.Screen
           name="Hotel recommendation"
           component={HotelRecommendationContainer}
         />
@@ -172,11 +179,7 @@ export default function Navigation() {
           name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
-        <Stack.Screen
-          name="Budget"
-          component={BudgetContainer}
-          options={budgetOptions}
-        />
+        <Stack.Screen name="Budget" component={BudgetContainer} />
         <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
         <Stack.Screen
           name="Notes"

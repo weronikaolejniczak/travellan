@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 import AppStyles from 'styles/AppStyles';
 
 const CustomScrollView = (
-  { children, contentContainerStyle, ...props },
+  { children, contentContainerStyle, style, ...props },
   ref,
 ) => {
   const scrollViewRef = useRef();
@@ -21,7 +21,7 @@ const CustomScrollView = (
         contentContainerStyle,
       ]}
       indicatorStyle="white"
-      style={AppStyles.scrollView}
+      style={[AppStyles.scrollView, style]}
       {...props}
     >
       {children}

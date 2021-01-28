@@ -14,6 +14,7 @@ class Accommodation {
     name,
     phone,
     reservationDetails,
+    PDF,
   ) {
     this.id = id;
     this.amenities = amenities;
@@ -29,6 +30,7 @@ class Accommodation {
     this.name = name;
     this.phone = phone;
     this.reservationDetails = reservationDetails;
+    this.PDF = PDF;
   }
 }
 
