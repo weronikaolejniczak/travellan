@@ -1,33 +1,39 @@
 import Colors from 'constants/Colors';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     margin: 20,
   },
   buttonText: {
-    color: 'rgb(0,122,255)',
+    color: Colors.primary,
     fontSize: 21,
   },
   buttonTouchable: {
+    justifyContent: 'center',
     padding: 16,
   },
   centered: {
     alignContent: 'center',
-    flex: 1,
+    backgroundColor: Colors.background,
+    height: (Dimensions.get('window').height / 5) * 10,
     justifyContent: 'center',
+
   },
   container: {
     alignItems: 'center',
     backgroundColor: Colors.background,
     flex: 1,
+    height: Dimensions.get('window').height / 5,
     justifyContent: 'center',
+    width: Dimensions.get('window').width,
   },
-
+  lightView: { alignSelf: 'flex-end', marginBottom: 20 },
   icon: {
     color: Colors.text,
-    fontSize: 40,
+    fontSize: 35,
   },
   innerQrContainer: {
     alignSelf: 'stretch',

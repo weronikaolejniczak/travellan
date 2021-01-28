@@ -7,13 +7,11 @@ import { Caption, Card, Paragraph, Title } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';
 
 const TransportItem = ({
-  tripId,
   destination,
   isTicketTo,
   isTicketFrom,
   dateOfDeparture,
   placeOfDeparture,
-  QR,
   handlePressQR,
   handlePressPDF,
   handleDeleteTransport,

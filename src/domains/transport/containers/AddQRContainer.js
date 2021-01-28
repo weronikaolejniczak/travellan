@@ -11,10 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Headline, Paragraph } from 'utils';
+import { Headline, Paragraph, HeaderButton } from 'utils';
 import { RNCamera } from 'react-native-camera';
 import { styles } from './AddQRContainerStyle';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const AddQRContainer = (props) => {
     <View style={styles.container}>
       {showQRscanner && (
         <QRCodeScanner
-          style={styles.centered}
+          //style={styles.centered}
           onRead={qrHandler}
           showMarker={true}
           flashMode={
@@ -69,27 +70,27 @@ const AddQRContainer = (props) => {
               : RNCamera.Constants.FlashMode.off
           }
           topContent={
-            torchOn ? (
-              <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={switchLight}
-              >
-                <MaterialIcon name={'flashlight-off'} style={styles.icon} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.buttonTouchable}
-                onPress={switchLight}
-              >
-                <MaterialIcon name={'flashlight'} style={styles.icon} />
-              </TouchableOpacity>
-            )
+            <View style={styles.lightView}>
+              {torchOn ? (
+                <TouchableOpacity
+                  style={styles.buttonTouchable}
+                  onPress={switchLight}
+                >
+                  <MaterialIcon name={'flashlight-off'} style={styles.icon} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.buttonTouchable}
+                  onPress={switchLight}
+                >
+                  <MaterialIcon name={'flashlight'} style={styles.icon} />
+                </TouchableOpacity>
+              )}
+            </View>
           }
           bottomContent={
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
-              </TouchableOpacity>
+            <View style={{ marginTop: 20 }}>
+              <Text style={styles.buttonText}>Track Ticket's QR-code</Text>
             </View>
           }
         />
@@ -128,6 +129,22 @@ const AddQRContainer = (props) => {
       )}
     </View>
   );
+};
+
+export const qrOptions = (props) => {
+  return {
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Set Torch"
+          iconName="flashlight"
+          onPress={() => {
+            //
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default AddQRContainer;
