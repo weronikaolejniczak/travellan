@@ -7,7 +7,7 @@ export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
 export const DELETE_ACCOMMODATION = 'DELETE_ACCOMMODATION';
 export const SET_PDF_ACC = 'SET_PDF_ACC';
-export const EDIT_TRIP = 'EDIT_ACCOMMODATION';
+export const EDIT_ACCOMMODATION = 'EDIT_ACCOMMODATION';
 
 const API_URL = FIREBASE_URL;
 
@@ -38,7 +38,7 @@ export const deleteAccommodation = (tripId, accommodationId) => {
 export const editAccommodation = (tripId, updatedAccommodation) => {
   return {
     tripId,
-    type: EDIT_TRIP,
+    type: EDIT_ACCOMMODATION,
     updatedAccommodation,
   };
 };
