@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import React, { useState } from 'react';
 import { Button, ScrollView as Container, TextInput } from 'utils';
 import { Formik } from 'formik';
-import { editAccommodationRequest } from 'actions/accommodationActions';
+import { addPDF, editAccommodationRequest } from 'actions/accommodationActions';
 import { useDispatch } from 'react-redux';
 
 const EditAccommodationContainer = ({ route, navigation }) => {
@@ -57,6 +57,9 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         );
         try {
           await dispatch(action);
+          //if (PDF !== undefined || PDF !== ' ' || PDF !== null || PDF !== '') {
+            //await dispatch(addPDF(tripId, accommodationId, PDF));
+          //}
           setIsLoading(false);
           actions.resetForm();
           navigation.navigate('Accommodation');

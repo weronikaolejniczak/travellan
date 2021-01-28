@@ -211,7 +211,7 @@ export const editAccommodationRequest = (
     const userId = getState().auth.userId;
 
     await axios
-      .put(
+      .patch(
         `${API_URL}/Trips/${userId}/${tripId}/accommodation/${accommodationId}.json?auth=${token}`,
         {
           PDF,
