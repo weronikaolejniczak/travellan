@@ -235,7 +235,6 @@ export const editAccommodationRequest = (
           reservationDetails,
           PDF,
         );
-
         dispatch(editAccommodationRequest(tripId, updatedAccommodation));
       })
       .catch(() => {

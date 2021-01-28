@@ -195,10 +195,10 @@ const AccommodationContainer = ({ navigation, route }) => {
     setIsRefreshing(false);
   };
 
-  const handleHotelEdit = (id) => {
+  const handleHotelEdit = (accommodationId, id) => {
     navigation.navigate('Edit accommodation', {
       PDF: id.PDF,
-      accomodationId: id,
+      accommodationId,
       amenities: id.amenities,
       breakfast: id.breakfast,
       checkInExtra: id.checkInExtra,
@@ -298,7 +298,7 @@ const AccommodationContainer = ({ navigation, route }) => {
               handlePDFManagement(data.item.PDF, data.item.id)
             }
             handleHotelDelete={() => handleHotelDelete(data.item.id)}
-            handleHotelEdit={() => handleHotelEdit(data.item.id)}
+            handleHotelEdit={() => handleHotelEdit(data.item.id, data.item)}
             {...data.item}
           />
         )}

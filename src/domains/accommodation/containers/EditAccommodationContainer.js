@@ -12,7 +12,7 @@ const EditAccommodationContainer = ({ route, navigation }) => {
 
   const {
     tripId,
-    accomodationId,
+    accommodationId,
     amenities,
     breakfast,
     checkInExtra,
@@ -39,7 +39,7 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         setIsLoading(true);
         const action = editAccommodationRequest(
           tripId,
-          accomodationId,
+          accommodationId,
           amenities,
           breakfast,
           checkInExtra,
@@ -66,11 +66,7 @@ const EditAccommodationContainer = ({ route, navigation }) => {
         setIsLoading(false);
       }}
       validationSchema={yup.object().shape({
-        phone: yup
-          .string()
-          .matches(
-            /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, "Invalid phone number"
-          ),
+        phone: yup.string().max(15),
 
         reservationDetails: yup.string().max(100),
       })}
