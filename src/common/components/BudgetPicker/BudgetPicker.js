@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 
 import { AccountButton } from 'components';
@@ -79,4 +79,4 @@ const BudgetPicker = ({
   </View>
 );
 
-export default BudgetPicker;
+export default memo(BudgetPicker);

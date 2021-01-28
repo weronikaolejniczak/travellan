@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
+import * as yup from 'yup';
 import { Button, ScrollView as Container, Select, TextInput } from 'utils';
+import { Formik } from 'formik';
 import { createNoteRequest } from 'actions/notesActions';
 import { defaultNoteCategory, noteCategories } from 'data/NoteCategories';
 import { notificationManager } from 'services';
 import { styles } from './AddNoteContainerStyle';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 
 const AddNoteContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -55,8 +55,8 @@ const AddNoteContainer = ({ route, navigation }) => {
     <Formik
       initialValues={{
         category: 'Without category',
-        title: '',
         description: '',
+        title: '',
       }}
       onSubmit={async (values) => {
         setError('');
@@ -81,12 +81,12 @@ const AddNoteContainer = ({ route, navigation }) => {
           callNotification(values.category, values.description);
       }}
       validationSchema={yup.object().shape({
+        description: yup.string().min(1).max(500).required('Cannot be empty!'),
         title: yup.string().when('category', {
           is: 'To Pack',
-          then: yup.string(),
           otherwise: yup.string().min(1).max(50).required('Cannot be empty!'),
+          then: yup.string(),
         }),
-        description: yup.string().min(1).max(500).required('Cannot be empty!'),
       })}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (

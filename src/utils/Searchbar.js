@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Searchbar } from 'react-native-paper';
 
 const CustomSearchbar = ({ icon, onChangeText, placeholder, value }) => (
@@ -10,4 +10,4 @@ const CustomSearchbar = ({ icon, onChangeText, placeholder, value }) => (
   />
 );
 
-export default CustomSearchbar;
+export default memo(CustomSearchbar);

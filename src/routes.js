@@ -20,10 +20,14 @@ import AddTripContainer from 'domains/trips/containers/AddTripContainer';
 import AuthenticationContainer, {
   authOptions,
 } from 'domains/user/containers/AuthenticationContainer';
+<<<<<<< src/routes.js
 import BudgetContainer, {
   budgetOptions,
 } from 'domains/budget/containers/BudgetContainer';
 import EditAccommodationContainer from 'domains/accommodation/containers/EditAccommodationContainer';
+=======
+import BudgetContainer from 'domains/budget/containers/BudgetContainer';
+>>>>>>> src/routes.js
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
 import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import ForgotPasswordContainer, {
@@ -177,11 +181,7 @@ export default function Navigation() {
           name="Recommended hotel details"
           component={RecommendedHotelDetailsContainer}
         />
-        <Stack.Screen
-          name="Budget"
-          component={BudgetContainer}
-          options={budgetOptions}
-        />
+        <Stack.Screen name="Budget" component={BudgetContainer} />
         <Stack.Screen name="Add currency" component={AddCurrencyContainer} />
         <Stack.Screen
           name="Notes"

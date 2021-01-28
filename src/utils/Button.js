@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from 'react-native-paper';
+
 import { Metrics } from 'constants';
 
 const CustomButton = ({
@@ -15,11 +16,11 @@ const CustomButton = ({
     icon={icon}
     loading={loading}
     mode={mode || 'contained'}
-    onPress={!disabled && onPress}
+    onPress={disabled ? () => {} : onPress}
     style={{ ...Metrics.tinyMargin, ...style }}
   >
     {children}
   </Button>
 );
 
-export default CustomButton;
+export default memo(CustomButton);
