@@ -212,7 +212,7 @@ const AccommodationContainer = ({ navigation, route }) => {
       name: id.name,
       phone: id.phone,
       reservationDetails: id.reservationDetails,
-      tripId: id.tripId,
+      tripId,
     });
   };
 

@@ -109,7 +109,6 @@ export const deleteAccommodationRequest = (tripId, accommodationId) => {
 
 export const createAccommodationRequest = (
   tripId,
-  accommodationId,
   amenities,
   breakfast,
   checkInExtra,
@@ -130,7 +129,7 @@ export const createAccommodationRequest = (
 
     axios
       .post(
-        `${API_URL}/Trips/${userId}/${tripId}/accommodation${accommodationId}.json?auth=${token}`,
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation.json?auth=${token}`,
         {
           amenities,
           breakfast,
@@ -177,6 +176,7 @@ export const createAccommodationRequest = (
 
 export const editAccommodationRequest = (
   tripId,
+  accommodationId,
   amenities,
   breakfast,
   checkInExtra,
@@ -198,7 +198,7 @@ export const editAccommodationRequest = (
 
     await axios
       .put(
-        `${API_URL}/Trips/${userId}/${tripId}/accommodation.json?auth=${token}`,
+        `${API_URL}/Trips/${userId}/${tripId}/accommodation/${accommodationId}.json?auth=${token}`,
         {
           PDF,
           amenities,
@@ -216,26 +216,24 @@ export const editAccommodationRequest = (
           reservationDetails,
         },
       )
-      .then((res) => [res.data, unescape(res.config.data)])
-      .then((data) => {
-        const accommodationId = data[0].name;
-        const requestConfig = JSON.parse(data[1]);
+
+      .then(() => {
         const updatedAccommodation = new Accommodation(
           accommodationId,
-          requestConfig.amenities,
-          requestConfig.breakfast,
-          requestConfig.checkInExtra,
-          requestConfig.checkInHours,
-          requestConfig.checkOutHours,
-          requestConfig.creditCardPaymentPossible,
-          requestConfig.description,
-          requestConfig.frontDesk24H,
-          requestConfig.image,
-          requestConfig.location,
-          requestConfig.name,
-          requestConfig.phone,
-          requestConfig.reservationDetails,
-          requestConfig.PDF,
+          amenities,
+          breakfast,
+          checkInExtra,
+          checkInHours,
+          checkOutHours,
+          creditCardPaymentPossible,
+          description,
+          frontDesk24H,
+          image,
+          location,
+          name,
+          phone,
+          reservationDetails,
+          PDF,
         );
 
         dispatch(editAccommodationRequest(tripId, updatedAccommodation));
