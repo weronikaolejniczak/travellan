@@ -1,0 +1,35 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "arrow-spacing": "error",
+    "capitalized-comments": ["error", "never"],
+    "eqeqeq": ["error", "always"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "no-console": "warn",
+    "no-const-assign": "error",
+    "no-shadow": "error",
+    "no-trailing-spaces": "error",
+    "no-unneeded-ternary": "error",
+    "no-var": "error",
+    "object-curly-spacing": ["error", "always"],
+    "prettier/prettier": "error",
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "single", "multiple"]
+      }
+    ],
+    "sort-keys": ["error", "asc", { "natural": true }],
+    "sort-keys-fix/sort-keys-fix": "error",
+    "space-before-blocks": ["error", "always"]
+  },
+  "plugins": ["sort-imports-es6-autofix", "sort-keys-fix", "prettier"]
+}
