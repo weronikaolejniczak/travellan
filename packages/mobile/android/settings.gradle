@@ -1,13 +1,17 @@
 rootProject.name = 'TravellanProject'
+
 include ':react-native-push-notification'
 project(':react-native-push-notification').projectDir = file('../node_modules/react-native-push-notification/android')
+
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+
 include ':@react-native-community_progress-bar-android'
 project(':@react-native-community_progress-bar-android').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/progress-bar-android/android')
+
 include ':react-native-permissions'
 project(':react-native-permissions').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-permissions/android')
-include ':app'
+
 include ':react-native-splash-screen'   
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
 
@@ -18,3 +22,5 @@ include ':rn-extensions-share'
 project(':rn-extensions-share').projectDir = new File(rootProject.projectDir, '../node_modules/rn-extensions-share/android')
 
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+includeBuild('../node_modules/@react-native/gradle-plugin')
