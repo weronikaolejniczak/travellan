@@ -1,5 +1,5 @@
 {
-  "name": "travellan-api",
+  "name": "back-end",
   "version": "1.0.0",
   "description": "Backend application for Travellan Project",
   "main": "index.js",
@@ -8,10 +8,6 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/travellan/travellan-api"
   },
   "dependencies": {
     "amadeus": "^5.6.0",
