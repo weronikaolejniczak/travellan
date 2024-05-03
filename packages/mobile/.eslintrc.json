@@ -1,0 +1,10 @@
+{
+  "extends": ["../../.eslintrc.json", "@react-native"],
+  "env": {
+    "react-native/react-native": true
+  },
+  "rules": {
+    "jsx-quotes": ["error", "prefer-double"]
+  },
+  "ignorePatterns": ["babel.config.js"]
+}

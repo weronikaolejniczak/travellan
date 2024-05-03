@@ -4,12 +4,19 @@
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "jest",
+    "@typescript-eslint",
+    "sort-imports-es6-autofix",
+    "sort-keys-fix",
+    "prettier"
+  ],
   "rules": {
     "arrow-spacing": "error",
     "capitalized-comments": ["error", "never"],
     "eqeqeq": ["error", "always"],
-    "jsx-quotes": ["error", "prefer-double"],
     "no-console": "warn",
     "no-const-assign": "error",
     "no-shadow": "error",
@@ -30,6 +37,5 @@
     "sort-keys": ["error", "asc", { "natural": true }],
     "sort-keys-fix/sort-keys-fix": "error",
     "space-before-blocks": ["error", "always"]
-  },
-  "plugins": ["sort-imports-es6-autofix", "sort-keys-fix", "prettier"]
+  }
 }
