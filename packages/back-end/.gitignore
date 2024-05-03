@@ -1,0 +1,10 @@
+.DS_Store
+
+# database
+database
+
+# environmental variables
+.env
+
+# dependencies
+node_modules
