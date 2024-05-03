@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
-import Headline from 'utils/Typography/Headline';
 import { View as Container } from 'utils';
+import Headline from 'utils/Typography/Headline';
 import { styles } from './ItemlessFrameStyle';
 
 const ItemlessFrame = ({ children }) => (

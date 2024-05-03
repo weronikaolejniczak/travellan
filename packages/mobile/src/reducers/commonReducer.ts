@@ -7,6 +7,8 @@ import {
   SET_ACCOMMODATION,
   SET_PDF_ACC,
 } from 'actions/accommodationActions';
+import { SET_BUDGET } from 'actions/budgetActions';
+import { SET_MAP } from 'actions/mapActions';
 import {
   CREATE_NOTE,
   DELETE_NOTE,
@@ -26,8 +28,6 @@ import {
   EDIT_TRIP,
   SET_TRIPS,
 } from 'actions/tripsActions';
-import { SET_BUDGET } from 'actions/budgetActions';
-import { SET_MAP } from 'actions/mapActions';
 
 export const initialState = {
   trips: [],

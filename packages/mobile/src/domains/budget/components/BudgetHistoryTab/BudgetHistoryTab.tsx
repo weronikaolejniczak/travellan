@@ -1,6 +1,6 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as categories from 'data/SpendingCategories';
 import { Card } from 'utils';

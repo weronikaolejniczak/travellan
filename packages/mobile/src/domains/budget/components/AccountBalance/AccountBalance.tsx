@@ -1,6 +1,6 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Text as Label } from 'utils';
 import { styles } from './AccountBalanceStyle';

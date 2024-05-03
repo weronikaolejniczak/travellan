@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Snackbar from 'react-native-snackbar';
 import SplashScreen from 'react-native-splash-screen';
+import { useDispatch } from 'react-redux';
 import {
   Autocomplete,
   Button,
   ScrollView as Container,
   DateTimePicker,
 } from 'utils';
-import { useDispatch } from 'react-redux';
 
+import { editTripRequest } from 'actions/tripsActions';
+import { compareStrings } from 'helpers';
 import {
   addEventToCalendar,
   autocompleteCity,
   notificationManager,
 } from 'services';
-import { compareStrings } from 'helpers';
-import { editTripRequest } from 'actions/tripsActions';
 
 const EditTripContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();

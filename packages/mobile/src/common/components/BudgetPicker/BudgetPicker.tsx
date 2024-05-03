@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 
+import { Layout } from 'constants';
 import { AccountButton } from 'components';
 import { Autocomplete, Caption, Switch, Text, TextInput } from 'utils';
-import { Layout } from 'constants';
 import { styles } from './BudgetPickerStyle';
 
 const BudgetPicker = ({

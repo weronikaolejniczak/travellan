@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
-import * as yup from 'yup';
+import { Formik } from 'formik';
 import recommendHotel from 'services/recommendHotel';
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   Paragraph,
   TextInput,
 } from 'utils';
-import { Formik } from 'formik';
+import * as yup from 'yup';
 import { Recommendation } from '../components';
 import { styles } from './HotelRecommendationContainerStyle';
 

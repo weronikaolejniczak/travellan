@@ -1,6 +1,6 @@
-import Autocomplete from 'react-native-autocomplete-input';
 import React, { memo } from 'react';
 import { KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import Autocomplete from 'react-native-autocomplete-input';
 
 import { Text, TextInput } from 'utils';
 import { styles } from './AutocompleteStyle';

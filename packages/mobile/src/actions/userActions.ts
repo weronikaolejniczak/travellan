@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 import { AUTH_URL, WEB_CLIENT_ID } from 'react-native-dotenv';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { GoogleSignin } from '@react-native-community/google-signin';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 

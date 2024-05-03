@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 
-import * as yup from 'yup';
 import { Colors } from 'constants';
 import { Formik } from 'formik';
 import { RoundButton, TextInput } from 'utils';
+import * as yup from 'yup';
 import { styles } from './OperationsFormStyle';
 
 const OperationsForm = ({ onSubmit }) => (

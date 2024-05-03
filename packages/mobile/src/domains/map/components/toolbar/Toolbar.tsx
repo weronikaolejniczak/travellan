@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
-import ToolbarButton from './toolbarButton/ToolbarButton';
 import { Searchbar } from 'utils';
 import { styles } from './ToolbarStyle';
+import ToolbarButton from './toolbarButton/ToolbarButton';
 
 const Toolbar = ({
   addingActivityHandler,

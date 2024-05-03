@@ -1,5 +1,3 @@
-import DocumentPicker from 'react-native-document-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
@@ -9,16 +7,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as transportActions from 'actions/transportActions';
+import { PDFModal } from 'components';
 import {
   ErrorFrame,
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
-import { PDFModal } from 'components';
 import { QRModal, TransportItem } from '../components';
 import { cardWidth } from '../components/TransportItem/TransportItemStyle';
 import { styles } from './TransportContainerStyle';

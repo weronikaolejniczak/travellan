@@ -2,8 +2,8 @@ import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, ScrollView as Container, TextInput } from 'utils';
 import { editNoteRequest } from 'actions/notesActions';
+import { Button, ScrollView as Container, TextInput } from 'utils';
 import { styles } from './EditNoteContainerStyle';
 
 const EditNoteContainer = ({ route, navigation }) => {

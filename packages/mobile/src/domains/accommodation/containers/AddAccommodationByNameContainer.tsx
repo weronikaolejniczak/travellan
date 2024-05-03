@@ -1,9 +1,11 @@
-import * as yup from 'yup';
-import React, { useCallback, useEffect, useState } from 'react';
 import { Formik } from 'formik';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
 
+import { createAccommodationRequest } from 'actions/accommodationActions';
+import { HotelCard } from 'components';
 import fetchHotelByName from 'services/fetchHotelByName';
 import {
   Button,
@@ -15,8 +17,6 @@ import {
   Text,
   TextInput,
 } from 'utils';
-import { HotelCard } from 'components';
-import { createAccommodationRequest } from 'actions/accommodationActions';
 import { styles } from './AddAccommodationByNameStyleContainer';
 
 const AddAccommodationByNameContainer = ({ route, navigation }) => {

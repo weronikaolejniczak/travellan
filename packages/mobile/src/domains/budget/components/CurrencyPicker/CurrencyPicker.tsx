@@ -1,6 +1,6 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Colors } from 'constants';
 import { styles } from './CurrencyPickerStyle';

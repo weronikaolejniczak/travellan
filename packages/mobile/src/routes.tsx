@@ -1,59 +1,59 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import React from 'react';
 import {
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { Linking, SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { Linking, SafeAreaView, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import AccommodationContainer from 'domains/accommodation/containers/AccommodationContainer';
 import AddAccommodationByNameContainer from 'domains/accommodation/containers/AddAccommodationByNameContainer';
+import EditAccommodationContainer from 'domains/accommodation/containers/EditAccommodationContainer';
+import HotelRecommendationContainer from 'domains/accommodation/containers/HotelRecommendationContainer';
+import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
+import BudgetContainer, {
+  budgetOptions,
+} from 'domains/budget/containers/BudgetContainer';
+import MapContainer from 'domains/map/containers/MapContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
+import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
+import NotesContainer, {
+  notesOptions,
+} from 'domains/notes/containers/NotesContainer';
+import SharingContainer from 'domains/share/containers/SharingContainer';
 import AddQRContainer, {
   qrOptions,
 } from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
-import AddTripContainer from 'domains/trips/containers/AddTripContainer';
-import AuthenticationContainer, {
-  authOptions,
-} from 'domains/user/containers/AuthenticationContainer';
-import BudgetContainer, {
-  budgetOptions,
-} from 'domains/budget/containers/BudgetContainer';
-import EditAccommodationContainer from 'domains/accommodation/containers/EditAccommodationContainer';
-import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
-import EditTripContainer from 'domains/trips/containers/EditTripContainer';
-import ForgotPasswordContainer, {
-  forgotOptions,
-} from 'domains/user/containers/ForgotPasswordContainer';
-import HotelRecommendationContainer from 'domains/accommodation/containers/HotelRecommendationContainer';
-import MapContainer from 'domains/map/containers/MapContainer';
-import NotesContainer, {
-  notesOptions,
-} from 'domains/notes/containers/NotesContainer';
-import NotificationContainer from 'domains/user/containers/NotificationContainer';
-import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
-import RegisterContainer from 'domains/user/containers/RegisterContainer';
-import SharingContainer from 'domains/share/containers/SharingContainer';
-import StartupContainer, {
-  startupOptions,
-} from 'domains/user/containers/StartupContainer';
 import TransportContainer from 'domains/transport/containers/TransportContainer';
+import AddTripContainer from 'domains/trips/containers/AddTripContainer';
+import EditTripContainer from 'domains/trips/containers/EditTripContainer';
 import TripDetailsContainer, {
   tripDetailsOptions,
 } from 'domains/trips/containers/TripDetailsContainer';
 import TripsContainer, {
   tripsOptions,
 } from 'domains/trips/containers/TripsContainer';
+import AuthenticationContainer, {
+  authOptions,
+} from 'domains/user/containers/AuthenticationContainer';
+import ForgotPasswordContainer, {
+  forgotOptions,
+} from 'domains/user/containers/ForgotPasswordContainer';
+import NotificationContainer from 'domains/user/containers/NotificationContainer';
+import RegisterContainer from 'domains/user/containers/RegisterContainer';
+import StartupContainer, {
+  startupOptions,
+} from 'domains/user/containers/StartupContainer';
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
-import * as userActions from 'src/actions/userActions.js';
 import { Colors, Layout } from 'constants';
+import * as userActions from 'src/actions/userActions.js';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

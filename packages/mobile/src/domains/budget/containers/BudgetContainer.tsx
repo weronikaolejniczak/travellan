@@ -2,8 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as categories from 'data/SpendingCategories';
+import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
 import { AccountButton } from 'components';
+import * as categories from 'data/SpendingCategories';
+import { prepareValue } from 'helpers';
+import {
+  ScrollView as Container,
+  ErrorFrame,
+  FloatingActionButton,
+  ItemlessFrame,
+  LoadingFrame,
+} from 'utils';
 import {
   BalanceDashboard,
   BudgetHistory,
@@ -14,15 +23,6 @@ import {
   SectionHeader,
   SpendingCategories,
 } from '../components';
-import {
-  ScrollView as Container,
-  ErrorFrame,
-  FloatingActionButton,
-  ItemlessFrame,
-  LoadingFrame,
-} from 'utils';
-import { fetchBudgetRequest, patchBudgetRequest } from 'actions/budgetActions';
-import { prepareValue } from 'helpers';
 import { styles } from './BudgetContainerStyle';
 
 const BudgetContainer = ({ route, navigation }) => {
@@ -67,9 +67,8 @@ const BudgetContainer = ({ route, navigation }) => {
     };
 
     const updatedBudget = [...budget];
-    updatedBudget[currencyIndex].history = updatedBudget[
-      currencyIndex
-    ].history.concat(newHistoryItem);
+    updatedBudget[currencyIndex].history =
+      updatedBudget[currencyIndex].history.concat(newHistoryItem);
 
     type === 'plus'
       ? (updatedBudget[currencyIndex].value =

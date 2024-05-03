@@ -1,5 +1,5 @@
-import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import moment from 'moment';
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
 
 const utcDateToString = (momentInUTC) =>
   moment.utc(momentInUTC).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');

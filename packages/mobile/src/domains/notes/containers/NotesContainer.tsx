@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import filter from 'lodash.filter';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { deleteNoteRequest, fetchNotesRequest } from 'actions/notesActions';
 import {
   View as Container,
   ErrorFrame,
@@ -13,7 +14,6 @@ import {
   Searchbar,
 } from 'utils';
 import { NoteItem } from '../components';
-import { deleteNoteRequest, fetchNotesRequest } from 'actions/notesActions';
 import { styles } from './NotesContainerStyle';
 
 const NotesContainer = ({ route, navigation }) => {

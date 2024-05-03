@@ -1,7 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo, useState } from 'react';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { styles } from './DateTimePickerStyle';
 
@@ -34,11 +34,7 @@ const CustomDateTimePicker = (props) => {
   const toggleDatePicker = () => setShowPicker(true);
 
   const formatDate = () =>
-    `${date
-      .toString()
-      .split(' ')
-      .slice(1, 4)
-      .join(' ')}, ${date
+    `${date.toString().split(' ').slice(1, 4).join(' ')}, ${date
       .toString()
       .split(' ')
       .slice(1, 5)[3]

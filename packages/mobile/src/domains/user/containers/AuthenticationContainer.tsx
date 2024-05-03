@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SplashScreen from 'react-native-splash-screen';
 import {
   Alert,
   Image,
@@ -10,19 +9,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import { useDispatch } from 'react-redux';
 
-import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, LoadingFrame, TextInput } from 'utils';
-import { Formik } from 'formik';
-import { SocialButton } from '../components';
 import {
   authenticate,
   loginRequest,
   onFacebookButtonPress,
   onGoogleButtonPress,
 } from 'actions/userActions';
+import { Formik } from 'formik';
+import { Button, LoadingFrame, TextInput } from 'utils';
+import * as yup from 'yup';
+import { SocialButton } from '../components';
 import { styles } from './AuthenticationContainerStyle';
 
 const AuthenticationContainer = ({ navigation }) => {

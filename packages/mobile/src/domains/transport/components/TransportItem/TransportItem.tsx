@@ -1,7 +1,7 @@
-import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { memo } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Caption, Card, Paragraph, Title } from 'utils';
 import { cardHeight, styles } from './TransportItemStyle';

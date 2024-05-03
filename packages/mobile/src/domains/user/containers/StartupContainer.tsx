@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -11,11 +12,10 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
 
+import auth from '@react-native-firebase/auth';
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
-import auth from '@react-native-firebase/auth';
 import { styles } from './StartupContainerStyle';
 
 const StartupContainer = (props) => {

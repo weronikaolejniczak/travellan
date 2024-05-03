@@ -1,9 +1,9 @@
-import * as yup from 'yup';
-import React, { useState } from 'react';
-import { Button, ScrollView as Container, TextInput } from 'utils';
-import { Formik } from 'formik';
 import { addPDF, editAccommodationRequest } from 'actions/accommodationActions';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Button, ScrollView as Container, TextInput } from 'utils';
+import * as yup from 'yup';
 
 const EditAccommodationContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();

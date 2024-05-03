@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { Card, Paragraph, Title } from 'utils';
 import { Colors } from 'constants';
+import { Card, Paragraph, Title } from 'utils';
 import { styles } from './TripCardStyle';
 
 const TripCard = ({

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 
-import { ScrollView as Container, Paragraph, Subheading } from 'utils';
 import { Image, View } from 'react-native';
+import { ScrollView as Container, Paragraph, Subheading } from 'utils';
 
 import { styles } from './SharingContainerStyle';
 
@@ -37,9 +37,7 @@ const SharingContainer = (props) => {
         <Paragraph style={([styles.paragraph], [styles.color])}>1.</Paragraph>{' '}
         Go to the website booking.com and find your hotel offer which you
         already booked {'\n'}
-        <Paragraph style={([styles.paragraph], [styles.color])}>
-          2.
-        </Paragraph>{' '}
+        <Paragraph style={([styles.paragraph], [styles.color])}>2.</Paragraph>{' '}
         Click on 'more' button and choose 'Share'{'\n'}
       </Paragraph>
       <View style={styles.imageView}>

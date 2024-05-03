@@ -1,9 +1,10 @@
-import * as yup from 'yup';
-import React, { memo, useState } from 'react';
 import { Formik } from 'formik';
+import React, { memo, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
 
+import { createTransportRequest } from 'actions/transportActions';
 import {
   Button,
   Checkbox,
@@ -13,7 +14,6 @@ import {
   TextInput,
   Title,
 } from 'utils';
-import { createTransportRequest } from 'actions/transportActions';
 import { styles } from './AddTransportContainerStyle';
 
 const AddTransportContainer = ({ route, navigation }) => {

@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Budget from 'models/Budget';
+import { patchBudgetRequest } from 'actions/budgetActions';
 import { BudgetPicker } from 'components';
-import { Button, ScrollView as Container } from 'utils';
 import { CURRENCIES } from 'data/Currencies';
 import { compareStrings, prepareValue } from 'helpers';
-import { patchBudgetRequest } from 'actions/budgetActions';
+import Budget from 'models/Budget';
+import { Button, ScrollView as Container } from 'utils';
 
 const incorrectCurrency =
   'There is no such currency or the currency already exists in your budget.';

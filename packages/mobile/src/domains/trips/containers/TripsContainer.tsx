@@ -1,10 +1,11 @@
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useEffect, useState } from 'react';
-import SplashScreen from 'react-native-splash-screen';
 import { Alert, FlatList, TouchableHighlight, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { deleteTripRequest, fetchTripsRequest } from 'actions/tripsActions';
 import {
   View as Container,
   ErrorFrame,
@@ -14,7 +15,6 @@ import {
   LoadingFrame,
 } from 'utils';
 import { TripItem } from '../components';
-import { deleteTripRequest, fetchTripsRequest } from 'actions/tripsActions';
 import { styles } from './TripsContainerStyle';
 
 const TripsContainer = ({ navigation }) => {

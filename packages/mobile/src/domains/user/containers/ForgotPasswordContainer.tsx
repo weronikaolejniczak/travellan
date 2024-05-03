@@ -1,13 +1,13 @@
-import * as yup from 'yup';
+import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { View as Container } from 'utils';
-import { Formik } from 'formik';
+import * as yup from 'yup';
 
-import { Button, TextInput } from 'utils';
 import { sendResetEmail } from 'actions/userActions';
-import { styles } from './ForgotPasswordContainerStyle';
 import { useDispatch } from 'react-redux';
+import { Button, TextInput } from 'utils';
+import { styles } from './ForgotPasswordContainerStyle';
 
 const ForgotContainer = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);

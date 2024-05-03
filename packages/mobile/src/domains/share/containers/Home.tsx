@@ -1,11 +1,13 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import ShareExtension from 'rn-extensions-share';
 import axios from 'axios';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Linking, Text, View } from 'react-native';
 import { BACKEND_URL } from 'react-native-dotenv';
+import ShareExtension from 'rn-extensions-share';
 
-import postAccommodation from 'services/accommodation/postAccommodation';
 import { Colors } from 'constants';
+import { HotelCard } from 'components';
+import postAccommodation from 'services/accommodation/postAccommodation';
+import { store } from 'src/store';
 import {
   View as Container,
   ErrorFrame,
@@ -13,9 +15,7 @@ import {
   ScrollView as ScrollContainer,
   Subheading,
 } from 'utils';
-import { HotelCard } from 'components';
 import { SubmitButton, TripCard } from '../components';
-import { store } from 'src/store';
 import { homeStyle as styles } from './HomeStyle';
 
 const COULD_NOT_SCRAPE_HOTEL_ERROR =

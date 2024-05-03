@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { Text } from 'react-native-paper';
 import { TouchableOpacity, View } from 'react-native';
+import { Text } from 'react-native-paper';
 
 import { styles } from './RadioButtonStyle';
 

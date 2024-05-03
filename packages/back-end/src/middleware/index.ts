@@ -8,20 +8,20 @@ const isDev = env === 'development';
 const isProd = env === 'production';
 
 module.exports = (app) => {
-    if (isProd) {
-        // app.use(compression());
-        // app.use(helmet());
-        // app.use(morgan('tiny'));
-    }
+  if (isProd) {
+    // app.use(compression());
+    // app.use(helmet());
+    // app.use(morgan('tiny'));
+  }
 
-    app.use(bodyParser.json());
+  app.use(bodyParser.json());
 
-    if (isDev) {
-        const corsOptions = {
-            origin: '*'
-        }
+  if (isDev) {
+    const corsOptions = {
+      origin: '*',
+    };
 
-        app.use(cors(corsOptions));
-        // app.use(morgan('dev'));
-    }
-}
+    app.use(cors(corsOptions));
+    // app.use(morgan('dev'));
+  }
+};

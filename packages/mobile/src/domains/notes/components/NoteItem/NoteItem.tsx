@@ -1,20 +1,13 @@
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Card, ReadMore } from 'utils';
 import { styles } from './NoteItemStyle';
 
 const NoteItem = (props) => {
-  const {
-    category,
-    date,
-    description,
-    handleDelete,
-    handleEdit,
-    id,
-    title,
-  } = props;
+  const { category, date, description, handleDelete, handleEdit, id, title } =
+    props;
   const dateOfCreation = new Date(date).toLocaleString();
   const toDoList = description
     .split(/[\n,]+/)

@@ -1,5 +1,3 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import React, { memo } from 'react';
 import {
   ImageBackground,
@@ -8,7 +6,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { Colors, Layout } from 'constants';
 import {
   Caption,
   Headline,
@@ -18,7 +19,6 @@ import {
   Text,
   Title,
 } from 'utils';
-import { Colors, Layout } from 'constants';
 import { styles } from './RecommendedHotelDetailsContainerStyle';
 
 // $todo: fix styling - don't duplicate code!

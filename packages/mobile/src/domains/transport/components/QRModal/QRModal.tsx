@@ -1,7 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import QRCode from 'react-native-qrcode-svg';
 import React from 'react';
 import { Dimensions, Modal, TouchableOpacity, View } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { styles } from './QRModalStyle';
 
 import { Card } from 'utils';

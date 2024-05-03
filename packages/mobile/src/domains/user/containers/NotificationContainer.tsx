@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import SplashScreen from 'react-native-splash-screen';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 import Snackbar from 'react-native-snackbar';
 import { notificationManager } from 'services';

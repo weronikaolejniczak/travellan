@@ -1,7 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import RNPickerSelect from 'react-native-picker-select';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Colors } from 'constants';
 import { selectStyle, styles } from './SelectStyle';

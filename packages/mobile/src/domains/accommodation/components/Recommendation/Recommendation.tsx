@@ -1,4 +1,3 @@
-import LinearGradient from 'react-native-linear-gradient';
 import React, { memo } from 'react';
 import {
   ImageBackground,
@@ -7,9 +6,10 @@ import {
   View,
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 
-import { Caption, Card, Headline, Paragraph, Subheading } from 'utils';
 import { Colors, Layout } from 'constants';
+import { Caption, Card, Headline, Paragraph, Subheading } from 'utils';
 import { styles } from './RecommendationStyle';
 
 const Recommendation = ({ data, onSelect }) => {

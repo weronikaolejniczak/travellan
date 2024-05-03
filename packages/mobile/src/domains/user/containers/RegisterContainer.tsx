@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import * as yup from 'yup';
-import { Button, TextInput } from 'utils';
-import { Formik } from 'formik';
 import { signUpRequest } from 'actions/userActions';
+import { Formik } from 'formik';
+import { Button, TextInput } from 'utils';
+import * as yup from 'yup';
 import { styles } from './RegisterContainerStyle';
 
 const RegisterContainer = (props) => {

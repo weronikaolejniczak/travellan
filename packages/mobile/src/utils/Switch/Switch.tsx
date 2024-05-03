@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { Switch } from 'react-native-paper';
 import { View } from 'react-native';
+import { Switch } from 'react-native-paper';
 
 import { styles } from './SwitchStyle';
 

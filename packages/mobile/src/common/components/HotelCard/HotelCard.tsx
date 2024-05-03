@@ -1,7 +1,8 @@
-import LinearGradient from 'react-native-linear-gradient';
 import React, { memo } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
+import { Colors } from 'constants';
 import {
   Caption,
   Card,
@@ -11,7 +12,6 @@ import {
   Subheading,
   Text,
 } from 'utils';
-import { Colors } from 'constants';
 import { HotelCardActions, HotelCardSection } from '..';
 import { styles } from './HotelCardStyle';
 

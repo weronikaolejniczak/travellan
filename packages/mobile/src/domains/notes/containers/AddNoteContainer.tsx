@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as yup from 'yup';
-import { Button, ScrollView as Container, Select, TextInput } from 'utils';
-import { Formik } from 'formik';
 import { createNoteRequest } from 'actions/notesActions';
 import { defaultNoteCategory, noteCategories } from 'data/NoteCategories';
+import { Formik } from 'formik';
 import { notificationManager } from 'services';
+import { Button, ScrollView as Container, Select, TextInput } from 'utils';
+import * as yup from 'yup';
 import { styles } from './AddNoteContainerStyle';
 
 const AddNoteContainer = ({ route, navigation }) => {

@@ -1,9 +1,19 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Snackbar from 'react-native-snackbar';
 import { View } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import { useDispatch } from 'react-redux';
 
+import { createTripRequest } from 'actions/tripsActions';
+import { BudgetPicker } from 'components';
+import { CURRENCIES } from 'data/Currencies';
+import { CURRENCIES as currencies } from 'data/Currencies';
+import { compareStrings } from 'helpers';
 import Budget from 'models/Budget';
+import {
+  addEventToCalendar,
+  autocompleteCity,
+  notificationManager,
+} from 'services';
 import {
   Autocomplete,
   Button,
@@ -11,16 +21,6 @@ import {
   DateTimePicker,
   Paragraph,
 } from 'utils';
-import { BudgetPicker } from 'components';
-import { CURRENCIES } from 'data/Currencies';
-import {
-  addEventToCalendar,
-  autocompleteCity,
-  notificationManager,
-} from 'services';
-import { compareStrings } from 'helpers';
-import { createTripRequest } from 'actions/tripsActions';
-import { CURRENCIES as currencies } from 'data/Currencies';
 import { styles } from './AddTripContainerStyle';
 
 const budgetRegex = new RegExp('^\\d+(( \\d+)*|(,\\d+)*)(.\\d+)?$');

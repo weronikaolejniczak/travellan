@@ -1,5 +1,3 @@
-import DocumentPicker from 'react-native-document-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, {
   createRef,
   memo,
@@ -7,7 +5,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import SplashScreen from 'react-native-splash-screen';
 import {
   Alert,
   Animated,
@@ -17,16 +14,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
+import SplashScreen from 'react-native-splash-screen';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as accommodationActions from 'actions/accommodationActions';
+import { HotelCard, PDFModal } from 'components';
 import {
   ActionSheet,
   FloatingActionButton,
   ItemlessFrame,
   LoadingFrame,
 } from 'utils';
-import { HotelCard, PDFModal } from 'components';
 import { styles } from './AccommodationContainerStyle';
 
 const { width } = Dimensions.get('window');

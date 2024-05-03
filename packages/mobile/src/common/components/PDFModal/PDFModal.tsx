@@ -1,7 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Pdf from 'react-native-pdf';
 import React, { memo } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
+import Pdf from 'react-native-pdf';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Card } from 'utils';
 import { styles } from './PDFModalStyle';

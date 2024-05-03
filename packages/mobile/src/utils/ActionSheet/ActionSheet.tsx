@@ -1,6 +1,6 @@
-import ActionSheet from 'react-native-actions-sheet';
 import React, { forwardRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import ActionSheet from 'react-native-actions-sheet';
 
 import { styles } from './ActionSheetStyle';
 

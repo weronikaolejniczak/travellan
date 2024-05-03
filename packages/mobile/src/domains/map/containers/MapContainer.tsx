@@ -12,12 +12,12 @@ import {
 import { MAPBOX_API_KEY } from 'react-native-dotenv';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import Colors from 'constants/Colors';
 import PointOfInterest from 'models/PointOfInterest';
 import fetchMapSearch from 'services/fetchMapSearch';
 import { Searchbar } from 'utils';
 import { Toolbar } from '../components';
-import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
 import { styles } from './MapContainerStyle';
 
 MapboxGL.setAccessToken(MAPBOX_API_KEY);

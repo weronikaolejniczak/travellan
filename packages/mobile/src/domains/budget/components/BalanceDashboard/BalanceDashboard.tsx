@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 
+import { calculateCard, calculateCash } from 'helpers';
 import AccountBalance from '../AccountBalance/AccountBalance';
 import GeneralBalance from '../GeneralBalance/GeneralBalance';
-import { calculateCard, calculateCash } from 'helpers';
 import { styles } from './BalanceDashboardStyle';
 
 const BudgetDashboard = ({ currency }) => (

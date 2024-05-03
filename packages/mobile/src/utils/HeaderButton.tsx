@@ -1,7 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { memo } from 'react';
-import { HeaderButton } from 'react-navigation-header-buttons';
 import { Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { HeaderButton } from 'react-navigation-header-buttons';
 
 import { Colors } from 'constants';
 

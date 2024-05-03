@@ -1,8 +1,5 @@
 import * as transportActions from 'actions/transportActions';
 import Colors from 'constants/Colors';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import QRCode from 'react-native-qrcode-svg';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
@@ -11,11 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { HeaderButton, Headline, Paragraph } from 'utils';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { RNCamera } from 'react-native-camera';
-import { styles } from './AddQRContainerStyle';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRCode from 'react-native-qrcode-svg';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButton, Headline, Paragraph } from 'utils';
+import { styles } from './AddQRContainerStyle';
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();

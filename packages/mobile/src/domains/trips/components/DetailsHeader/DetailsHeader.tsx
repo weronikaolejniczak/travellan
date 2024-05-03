@@ -1,7 +1,7 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Colors } from 'constants';
 import { styles } from './DetailsHeaderStyle';

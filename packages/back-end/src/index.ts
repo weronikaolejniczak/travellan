@@ -11,10 +11,10 @@ apiEndpoints(app);
 
 const PORT = constants.PORT;
 app.listen(PORT, (err) => {
-    if (err) {
-        console.log('Error!');
-        throw err;
-    } else {
-        console.log(`Server is running at http://localhost:${PORT}/`);
-    }
+  if (err) {
+    console.log('Error!');
+    throw err;
+  } else {
+    console.log(`Server is running at http://localhost:${PORT}/`);
+  }
 });
