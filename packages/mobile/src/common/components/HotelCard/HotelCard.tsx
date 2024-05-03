@@ -12,7 +12,7 @@ import {
   Text,
 } from 'utils';
 import { Colors } from 'constants';
-import { HotelCardActions, HotelCardSection } from '../';
+import { HotelCardActions, HotelCardSection } from '..';
 import { styles } from './HotelCardStyle';
 
 const HotelCard = ({

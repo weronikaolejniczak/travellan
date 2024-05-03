@@ -5,5 +5,5 @@
     "outDir": "./dist",
     "baseUrl": "./src"
   },
-  "include": ["src/**/*"]
+  "include": ["index.ts", "metro.config.ts", "wdyr.ts", "src/**/*"]
 }
