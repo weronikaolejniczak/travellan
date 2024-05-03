@@ -116,13 +116,13 @@ const AccommodationContainer = ({ navigation, route }) => {
 
   const findAccomodationPDF = (id) => {
     if (id === ' ') {
-      let pdf = accommodation[0].PDF;
-      let source = { uri: pdf };
+      const pdf = accommodation[0].PDF;
+      const source = { uri: pdf };
       return source;
     } else {
       const index = accommodation.findIndex((item) => item.id === id);
-      let pdf = accommodation[index].PDF;
-      let source = { uri: pdf };
+      const pdf = accommodation[index].PDF;
+      const source = { uri: pdf };
       return source;
     }
   };
@@ -307,7 +307,7 @@ const AccommodationContainer = ({ navigation, route }) => {
       />
       <View style={styles.dotsWrapper}>
         {accommodation.map((_, i) => {
-          let opacity = position.interpolate({
+          const opacity = position.interpolate({
             extrapolate: 'clamp',
             inputRange: [i - 1, i, i + 1],
             outputRange: [0.3, 1, 0.3],

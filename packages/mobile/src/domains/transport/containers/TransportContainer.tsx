@@ -135,13 +135,13 @@ const TransportContainer = ({ route, navigation }) => {
 
   const findTransportPDF = (id) => {
     if (id === ' ') {
-      let pdf = transport[0].PDF;
-      let source = { uri: pdf };
+      const pdf = transport[0].PDF;
+      const source = { uri: pdf };
       return source;
     } else {
       const index = transport.findIndex((item) => item.id === id);
-      let pdf = transport[index].PDF;
-      let source = { uri: pdf };
+      const pdf = transport[index].PDF;
+      const source = { uri: pdf };
       return source;
     }
   };
@@ -344,7 +344,7 @@ const TransportContainer = ({ route, navigation }) => {
         />
         <View style={styles.dotsWrapper}>
           {transport.map((_, i) => {
-            let opacity = position.interpolate({
+            const opacity = position.interpolate({
               extrapolate: 'clamp',
               inputRange: [i - 1, i, i + 1],
               outputRange: [0.3, 1, 0.3],
