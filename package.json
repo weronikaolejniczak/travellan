@@ -5,10 +5,15 @@
   "scripts": {
     "lint": "turbo run lint"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
-    "prettier": "^3.2.5",
     "typescript": "^5.4.5"
-  }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@3.6.4"
 }
