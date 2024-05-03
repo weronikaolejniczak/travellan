@@ -10,7 +10,6 @@
     "AUTH_URL"
   ],
   "globalDotEnv": [".env"],
-  "globalDependencies": [".gitattributes", ".gitignore", ".prettierc"],
   "pipeline": {
     "lint": {},
     "dev": {
