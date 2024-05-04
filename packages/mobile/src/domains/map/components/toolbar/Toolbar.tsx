@@ -3,7 +3,7 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
 import { Searchbar } from 'utils';
 import { styles } from './ToolbarStyle';
-import ToolbarButton from './toolbarButton/ToolbarButton';
+import ToolbarButton from './ToolbarButton/ToolbarButton';
 
 const Toolbar = ({
   addingActivityHandler,

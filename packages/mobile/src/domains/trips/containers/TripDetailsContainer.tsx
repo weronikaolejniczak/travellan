@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { addEventToCalendar } from 'services';
 import { DetailsHeader, NavigationButton } from '../components';
-import { styles } from './TripDetailsContainerStyle.js';
+import { styles } from './TripDetailsContainerStyle';
 
 const TripDetailsContainer = ({ route, navigation }) => {
   const tripId = route.params.tripId;

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+// import { MAPBOX_API_KEY } from 'react-native-config';
 
-const API_KEY = MAPBOX_API_KEY;
+const API_KEY = '';
 
 async function fetchMapSearch(query, longitude, latitude) {
   return await axios

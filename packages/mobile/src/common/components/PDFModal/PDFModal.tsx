@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
-import Pdf from 'react-native-pdf';
+// import Pdf from 'react-native-pdf';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Card } from 'utils';
@@ -22,7 +22,7 @@ const PDFModal = ({
     <View style={styles.pdfContainer}>
       <Card style={styles.pdfCardContainer}>
         <View>
-          <Pdf source={PDF} style={styles.PDF} onError={handleError} />
+          {/* <Pdf source={PDF} style={styles.PDF} onError={handleError} /> */}
         </View>
         <View style={styles.innerPdfContainer}>
           <View style={styles.miniHeader}>

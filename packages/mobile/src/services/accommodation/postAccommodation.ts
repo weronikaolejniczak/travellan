@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FIREBASE_URL } from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-config';
 
 const API_URL = FIREBASE_URL;
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_URL } from 'react-native-dotenv';
+import { BACKEND_URL } from 'react-native-config';
 
 async function fetchCoordinates(keyword) {
   return await axios

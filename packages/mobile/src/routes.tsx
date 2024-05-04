@@ -16,9 +16,7 @@ import EditAccommodationContainer from 'domains/accommodation/containers/EditAcc
 import HotelRecommendationContainer from 'domains/accommodation/containers/HotelRecommendationContainer';
 import RecommendedHotelDetailsContainer from 'domains/accommodation/containers/RecommendedHotelDetailsContainer';
 import AddCurrencyContainer from 'domains/budget/containers/AddCurrencyContainer';
-import BudgetContainer, {
-  budgetOptions,
-} from 'domains/budget/containers/BudgetContainer';
+import BudgetContainer from 'domains/budget/containers/BudgetContainer';
 import MapContainer from 'domains/map/containers/MapContainer';
 import AddNoteContainer from 'domains/notes/containers/AddNoteContainer';
 import EditNoteContainer from 'domains/notes/containers/EditNoteContainer';
@@ -53,7 +51,7 @@ import StartupContainer, {
 import WeatherContainer from 'domains/weather/containers/WeatherContainer';
 
 import { Colors, Layout } from 'constants';
-import * as userActions from 'src/actions/userActions.js';
+import * as userActions from 'actions/userActions';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

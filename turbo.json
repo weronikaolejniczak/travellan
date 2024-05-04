@@ -6,7 +6,6 @@
     "BACKEND_API_KEY",
     "LOCATION_IQ_API_KEY",
     "FIREBASE_API_KEY",
-    "MAPBOX_API_KEY",
     "AUTH_URL"
   ],
   "globalDotEnv": [".env"],
@@ -15,6 +14,7 @@
     "dev": {
       "cache": false,
       "persistent": true
-    }
+    },
+    "start": {}
   }
 }

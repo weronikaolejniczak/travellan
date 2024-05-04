@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_URL } from 'react-native-dotenv';
+import { BACKEND_URL } from 'react-native-config';
 
 async function fetchWeather(latitude, longitude) {
   return await axios

@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import auth from '@react-native-firebase/auth';
 import * as userActions from 'actions/userActions';
 import Colors from 'constants/Colors';
 import { styles } from './StartupContainerStyle';

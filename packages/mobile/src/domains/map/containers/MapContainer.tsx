@@ -1,27 +1,19 @@
 import Geolocation from '@react-native-community/geolocation';
-import MapboxGL from '@react-native-mapbox-gl/maps';
+// import MapboxGL from '@react-native-mapbox-gl/maps';
 import React, { useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { ActivityIndicator, Alert, View } from 'react-native';
+// import { MAPBOX_API_KEY } from 'react-native-config';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchMapRequest, patchMapRequest } from 'actions/mapActions';
+import { patchMapRequest } from 'actions/mapActions';
 import Colors from 'constants/Colors';
 import PointOfInterest from 'models/PointOfInterest';
 import fetchMapSearch from 'services/fetchMapSearch';
-import { Searchbar } from 'utils';
 import { Toolbar } from '../components';
 import { styles } from './MapContainerStyle';
 
-MapboxGL.setAccessToken(MAPBOX_API_KEY);
-MapboxGL.setConnected(true);
+/* MapboxGL.setAccessToken(MAPBOX_API_KEY);
+MapboxGL.setConnected(true); */
 
 const MapContainer = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -31,7 +23,7 @@ const MapContainer = ({ route, navigation }) => {
   );
 
   const [currentPosition, setCurrentPosition] = useState(selectedTrip.region);
-  const [currentRegion, setCurrentRegion] = useState(selectedTrip.region);
+  const [currentRegion] = useState(selectedTrip.region);
   const [markers, setMarkers] = useState(
     selectedTrip.map ? selectedTrip.map.nodes : [],
   );
@@ -47,14 +39,7 @@ const MapContainer = ({ route, navigation }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchAnswer, setSearchAnswer] = useState([]);
 
-  const extractRegion = () =>
-    selectedTrip.map
-      ? selectedTrip.map.region
-        ? selectedTrip.map.region
-        : selectedTrip.region
-      : selectedTrip.region;
-
-  const renderMarkers = () =>
+  /* const renderMarkers = () =>
     !!markers &&
     markers.map((marker) => (
       <MapboxGL.PointAnnotation
@@ -65,7 +50,7 @@ const MapContainer = ({ route, navigation }) => {
       >
         <MapboxGL.Callout title={marker.title} />
       </MapboxGL.PointAnnotation>
-    ));
+    )); */
 
   const currentRegionHandler = (region) => {
     currentRegion.longitude = region.geometry.coordinates[0];
@@ -104,7 +89,7 @@ const MapContainer = ({ route, navigation }) => {
     }
   };
 
-  const handleDeleteMarker = (event, title) => {
+  /* const handleDeleteMarker = (event, title) => {
     if (deletingMarkerActive) {
       setIsSelected(false);
       Alert.alert(
@@ -124,7 +109,7 @@ const MapContainer = ({ route, navigation }) => {
         { cancelable: true, onDismiss: () => setIsSelected(false) },
       );
     }
-  };
+  }; */
 
   const onExitHandler = async () => {
     setIsLoading(true);
@@ -140,14 +125,14 @@ const MapContainer = ({ route, navigation }) => {
     }
   };
 
-  const markerOnPressHandler = async (coords) => {
+  /* const markerOnPressHandler = async (coords) => {
     const [latitude, longitude] = coords.geometry.coordinates;
     const marker = markers.filter(
       (item) => item.lat === latitude && item.lon === longitude,
     )[0];
     deletingMarkerActive &&
       setMarkers(markers.filter((item) => item.id !== marker.id));
-  };
+  }; */
 
   const mapOnPressHandler = async (event) => {
     const [latitude, longitude] = event.geometry.coordinates;
@@ -211,7 +196,7 @@ const MapContainer = ({ route, navigation }) => {
     // this._map.flyTo([longitude, latitude]);
   };
 
-  renderFooter = () => {
+  /* const renderFooter = () => {
     if (!isSearching) {
       return null;
     }
@@ -227,7 +212,7 @@ const MapContainer = ({ route, navigation }) => {
         <ActivityIndicator size="small" color={Colors.primary} />
       </View>
     );
-  };
+  }; */
 
   useEffect(() => {
     try {
@@ -252,7 +237,7 @@ const MapContainer = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <MapboxGL.MapView
+      {/*  <MapboxGL.MapView
         ref={(c) => (this._map = c)}
         style={styles.map}
         styleURL="mapbox://styles/travellan/ckju6y3ae119l19o6od0j9wi5"
@@ -268,8 +253,7 @@ const MapContainer = ({ route, navigation }) => {
         />
         {renderMarkers()}
         <MapboxGL.UserLocation />
-      </MapboxGL.MapView>
-
+      </MapboxGL.MapView> */}
       <Toolbar
         styles={styles}
         navigation={navigation}

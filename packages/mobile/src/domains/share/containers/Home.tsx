@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Linking, Text, View } from 'react-native';
-import { BACKEND_URL } from 'react-native-dotenv';
+import { BACKEND_URL } from 'react-native-config';
 import ShareExtension from 'rn-extensions-share';
 
 import { Colors } from 'constants';

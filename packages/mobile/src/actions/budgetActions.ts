@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FIREBASE_URL } from 'react-native-dotenv';
+import { FIREBASE_URL } from 'react-native-config';
 
 import Budget from 'models/Budget';
 

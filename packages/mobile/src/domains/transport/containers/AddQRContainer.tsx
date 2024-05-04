@@ -8,14 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RNCamera } from 'react-native-camera';
-import QRCodeScanner from 'react-native-qrcode-scanner';
+// import { Camera } from 'react-native-vision-camera';
+// import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButton, Headline, Paragraph } from 'utils';
 import { styles } from './AddQRContainerStyle';
+
+const QRCodeScanner = () => {
+  return null;
+};
 
 const AddQRContainer = (props) => {
   const dispatch = useDispatch();
@@ -64,11 +68,11 @@ const AddQRContainer = (props) => {
           //style={styles.centered}
           onRead={qrHandler}
           showMarker={true}
-          flashMode={
+          /* flashMode={
             torchOn
               ? RNCamera.Constants.FlashMode.torch
               : RNCamera.Constants.FlashMode.off
-          }
+          } */
           topContent={
             <View style={styles.lightView}>
               {torchOn ? (

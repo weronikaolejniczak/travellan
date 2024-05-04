@@ -1,9 +1,9 @@
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
+// import PushNotificationIOS from '@react-native-community/push-notification-ios';
+// import PushNotification from 'react-native-push-notification';
 
 class NotificationManager {
   configure = () => {
-    PushNotification.createChannel({
+    /* PushNotification.createChannel({
       channelId: 'Weather', // (required)
       channelName: 'Weather',
       // (optional) See `soundName` parameter of `localNotification` function
@@ -40,7 +40,7 @@ class NotificationManager {
       },
       popInitialNotification: true,
       requestPermissions: true,
-    });
+    }); */
   };
 
   _buildAndroidNotifcation = (id, title, message, data = {}, options = {}) => {
@@ -67,14 +67,14 @@ class NotificationManager {
     data = {},
     options = {},
   ) => {
-    PushNotification.localNotification({
+    /*  PushNotification.localNotification({
       channelId,
       data,
       id,
       message,
       options,
       title,
-    });
+    }); */
   };
 
   scheduleNotification = (
@@ -86,7 +86,7 @@ class NotificationManager {
     options = {},
     date,
   ) => {
-    PushNotification.localNotificationSchedule({
+    /* PushNotification.localNotificationSchedule({
       channelId,
       data,
       date,
@@ -94,20 +94,20 @@ class NotificationManager {
       message,
       options,
       title,
-    });
+    }); */
   };
 
   cancelAllLocalNotification = () => {
-    PushNotification.cancelAllLocalNotifications();
+    /* PushNotification.cancelAllLocalNotifications(); */
   };
 
   cancelScheduledLocalNotification = (id) => {
     const cancelId = id;
-    PushNotification.cancelLocalNotifications({ id: cancelId });
+    /* PushNotification.cancelLocalNotifications({ id: cancelId }); */
   };
 
   unregister = () => {
-    PushNotification.unregister();
+    /* PushNotification.unregister(); */
   };
 }
 
