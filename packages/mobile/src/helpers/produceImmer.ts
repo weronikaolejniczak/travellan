@@ -1,8 +1,11 @@
-import produce, { enableES5 } from 'immer';
+import { produce } from 'immer';
 
-const produceImmer = (...args) => {
-  enableES5();
-  return produce(...args);
+const produceImmer = (baseState, recipe) => {
+  if (typeof baseState === 'undefined' || typeof recipe !== 'function') {
+    throw new Error('Invalid arguments passed to produce');
+  }
+
+  return produce(baseState, recipe);
 };
 
 export default produceImmer;
