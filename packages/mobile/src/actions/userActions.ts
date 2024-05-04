@@ -3,7 +3,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 import { AUTH_URL, WEB_CLIENT_ID } from 'react-native-config';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+// import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
@@ -76,7 +76,7 @@ export const sendResetEmail = (email) =>
   };
 
 export const onFacebookButtonPress = () => {
-  return async function (dispatch) {
+  /* return async function (dispatch) {
     const result = await LoginManager.logInWithPermissions([
       'public_profile',
       'email',
@@ -99,7 +99,7 @@ export const onFacebookButtonPress = () => {
       dispatch(authenticate(localId, idToken));
       saveDataToStorage(idToken, localId, expirationDate);
     });
-  };
+  }; */
 };
 
 export const onGoogleButtonPress = () => {
