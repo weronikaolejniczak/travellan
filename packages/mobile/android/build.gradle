@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        googleServicesVersion = "4.4.1"
         buildToolsVersion = "34.0.0"
         minSdkVersion = 23
         compileSdkVersion = 34
@@ -13,8 +14,9 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.2")
-        classpath("com.facebook.react:react-native-gradle-plugin:0.73.5")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.google.gms:google-services:$googleServicesVersion")
+        classpath("com.facebook.react:react-native-gradle-plugin:0.73.5")
     }
 }
 
