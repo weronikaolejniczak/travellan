@@ -23,6 +23,14 @@ target 'travellan' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Firebase and authentication pods
+  pod 'Firebase/Core', '~> 10.8'
+  pod 'Firebase/Auth', '~> 10.8'
+  pod 'GoogleSignIn', '~> 7.0'
+  pod 'FBSDKCoreKit', '~> 17.0'
+  pod 'FBSDKLoginKit', '~> 17.0'
+  pod 'FBSDKShareKit', '~> 17.0'  
+
   target 'travellanTests' do
     inherit! :complete
     # Pods for testing
