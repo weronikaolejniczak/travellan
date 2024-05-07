@@ -14,10 +14,11 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.2")
+        classpath("com.facebook.react:react-native-gradle-plugin:0.74.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.gms:google-services:$googleServicesVersion")
-        classpath("com.facebook.react:react-native-gradle-plugin:0.73.5")
     }
 }
 
+apply from: "secrets.gradle"
 apply plugin: "com.facebook.react.rootproject"

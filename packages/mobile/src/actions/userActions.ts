@@ -1,67 +1,87 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin } from 'react-native-google-signin';
-import auth from '@react-native-firebase/auth';
-import axios from 'axios';
-import { AUTH_URL, WEB_CLIENT_ID } from 'react-native-config';
-// import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import Config from 'react-native-config';
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { Dispatch } from 'redux';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 
-const URL = AUTH_URL;
-const CLIENT_ID = WEB_CLIENT_ID;
+const CLIENT_ID = Config.FIREBASE_CLIENT_ID;
 
-export const authenticate = (userId, token) => {
-  return { token: token, type: AUTHENTICATE, userId: userId };
+export interface AuthenticateAction {
+  type: typeof AUTHENTICATE;
+  token: string;
+  userId: string;
+}
+
+export type AuthActionTypes = AuthenticateAction;
+
+const isFirebaseAuthError = (
+  error: unknown,
+): error is FirebaseAuthTypes.NativeFirebaseAuthError => {
+  return (
+    error instanceof Error &&
+    (error as FirebaseAuthTypes.NativeFirebaseAuthError).code !== undefined
+  );
 };
 
-export const signUpRequest = (email, password) => {
-  return async function (dispatch) {
-    await auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          const message = 'That email address is invalid!';
-          throw new Error(message);
-        }
+export const authenticate = (
+  userId: string,
+  token: string,
+): AuthenticateAction => {
+  return { type: AUTHENTICATE, token, userId };
+};
 
-        if (error.code === 'auth/invalid-email') {
-          const message = 'That email address is invalid!';
-          throw new Error(message);
+export const signUpRequest = (email: string, password: string) => {
+  return async function (dispatch: Dispatch<AuthActionTypes>) {
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+      const user = auth().currentUser;
+      if (user) {
+        const localId = user.uid;
+        const idToken = await user.getIdToken();
+        const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+
+        dispatch(authenticate(localId, idToken));
+        saveDataToStorage(idToken, localId, expirationDate);
+      }
+    } catch (error: unknown) {
+      if (isFirebaseAuthError(error)) {
+        if (
+          error.code === 'auth/email-already-in-use' ||
+          error.code === 'auth/invalid-email'
+        ) {
+          throw new Error('That email address is invalid!');
+        } else {
+          throw error;
         }
-      });
-    const user = auth().currentUser;
-    const localId = user.uid;
-    await user.getIdToken().then(function (idToken) {
-      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
-      dispatch(authenticate(localId, idToken));
-      saveDataToStorage(idToken, localId, expirationDate);
-    });
+      } else {
+        throw new Error('Unknown error occurred during sign-up.');
+      }
+    }
   };
 };
 
-export const loginRequest = (email, password) => {
-  return async function (dispatch) {
-    await axios({
-      data: {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      },
-      method: 'POST',
-      url: URL,
-    })
-      .then((res) => res.data)
-      .then((data) => {
-        const expirationDate = new Date(
-          new Date().getTime() + parseInt(data.expiresIn, 10) * 1000,
-        );
-        dispatch(authenticate(data.localId, data.idToken));
-        saveDataToStorage(data.idToken, data.localId, expirationDate);
-      })
-      .catch((err) => {
+export const loginRequest = (email: string, password: string) => {
+  return async function (dispatch: Dispatch<AuthActionTypes>) {
+    try {
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      const user = userCredential.user;
+      const idToken = await user.getIdToken();
+      const localId = user.uid;
+      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+
+      dispatch(authenticate(localId, idToken));
+      saveDataToStorage(idToken, localId, expirationDate);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         throw new Error('Something went wrong. Try again');
-      });
-    auth().signInWithEmailAndPassword(email, password);
+      }
+    }
   };
 };
 
@@ -70,62 +90,100 @@ export const logout = () => {
   AsyncStorage.removeItem('userData');
 };
 
-export const sendResetEmail = (email) =>
-  async function (dispatch) {
-    auth().sendPasswordResetEmail(email);
+export const sendResetEmail = (email: string) => {
+  return async function () {
+    await auth().sendPasswordResetEmail(email);
   };
+};
 
 export const onFacebookButtonPress = () => {
-  /* return async function (dispatch) {
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
+  return async function (dispatch: Dispatch<AuthActionTypes>) {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        throw new Error('User cancelled the login process');
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw new Error('Something went wrong obtaining access token');
+      }
+
+      const facebookCredential = auth.FacebookAuthProvider.credential(
+        data.accessToken,
+      );
+
+      await auth().signInWithCredential(facebookCredential);
+
+      const user = auth().currentUser;
+
+      if (user) {
+        const localId = user.uid;
+        const idToken = await user.getIdToken();
+        const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+        dispatch(authenticate(localId, idToken));
+        saveDataToStorage(idToken, localId, expirationDate);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error('Unknown error occurred during Facebook sign-in.');
+      }
     }
-    const data = await AccessToken.getCurrentAccessToken();
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-    await auth().signInWithCredential(facebookCredential);
-    const user = auth().currentUser;
-    const localId = user.uid;
-    await user.getIdToken().then(function (idToken) {
-      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
-      dispatch(authenticate(localId, idToken));
-      saveDataToStorage(idToken, localId, expirationDate);
-    });
-  }; */
+  };
 };
 
 export const onGoogleButtonPress = () => {
-  return async function (dispatch) {
-    GoogleSignin.configure({
-      webClientId: CLIENT_ID,
-    });
-    const { idToken } = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    await auth().signInWithCredential(googleCredential);
-    const user = auth().currentUser;
-    const localId = user.uid;
-    await user.getIdToken().then(function (idToken) {
-      const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
-      dispatch(authenticate(localId, idToken));
-      saveDataToStorage(idToken, localId, expirationDate);
-    });
+  return async function (dispatch: Dispatch<AuthActionTypes>) {
+    try {
+      GoogleSignin.configure({
+        webClientId: CLIENT_ID,
+      });
+
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      console.log(idToken, googleCredential);
+
+      await auth().signInWithCredential(googleCredential);
+
+      const user = auth().currentUser;
+
+      console.log(user);
+
+      if (user) {
+        const localId = user.uid;
+        const idToken = await user.getIdToken();
+        const expirationDate = new Date(new Date().getTime() + 59 * 60 * 1000);
+        dispatch(authenticate(localId, idToken));
+        saveDataToStorage(idToken, localId, expirationDate);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error('Unknown error occurred during Google sign-in.');
+      }
+    }
   };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) =>
+const saveDataToStorage = (
+  token: string,
+  userId: string,
+  expirationDate: Date,
+) =>
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
       expiryDate: expirationDate.toISOString(),
-      token: token,
-      userId: userId,
+      token,
+      userId,
     }),
   );

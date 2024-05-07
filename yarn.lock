@@ -2018,7 +2018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.24.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.24.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.24.5
   resolution: "@babel/runtime@npm:7.24.5"
   dependencies:
@@ -2940,6 +2940,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-google-signin/google-signin@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "@react-native-google-signin/google-signin@npm:11.0.1"
+  peerDependencies:
+    expo: ">=47.0.0"
+    react: "*"
+    react-native: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 2b9c90c8b7e198484f30ae1be0d5d77d7ba31648962e777cff043c1fc634a720f00552da1e4bced7a049d407f444efedc49cfc0a776268f57e536e92c7beb02d
+  languageName: node
+  linkType: hard
+
 "@react-native-picker/picker@npm:^2.7.5":
   version: 2.7.5
   resolution: "@react-native-picker/picker@npm:2.7.5"
@@ -3265,6 +3279,18 @@ __metadata:
     react-native-safe-area-context: ">= 3.0.0"
     react-native-screens: ">= 3.0.0"
   checksum: 2f32a45d02e1f8ea612c2c679dcdbf2274070cd41641aefa50524df4626cf2389ae03a9490271f37e4b9877c1a6350c65fcb27ead6fe559a8656efde7ffe260a
+  languageName: node
+  linkType: hard
+
+"@redux-devtools/extension@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@redux-devtools/extension@npm:3.3.0"
+  dependencies:
+    "@babel/runtime": ^7.23.2
+    immutable: ^4.3.4
+  peerDependencies:
+    redux: ^3.1.0 || ^4.0.0 || ^5.0.0
+  checksum: bb7e3cd79c9a06871819ed7cf8f16a195253b59d1712c5f0dafeb40a0cdb3fd69783ad6c2032590b13c0dcda69fab3f5e0beb36ec32499d5cc7e5273fe3043eb
   languageName: node
   linkType: hard
 
@@ -7384,6 +7410,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.3.4":
+  version: 4.3.5
+  resolution: "immutable@npm:4.3.5"
+  checksum: 0e25dd5c314421faede9e1122ab26cdb638cc3edc8678c4a75dee104279b12621a30c80a480fae7f68bc7e81672f1e672e454dc0fdc7e6cf0af10809348387b8
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^2.0.0":
   version: 2.0.0
   resolution: "import-fresh@npm:2.0.0"
@@ -9390,6 +9423,7 @@ __metadata:
     "@react-native-community/push-notification-ios": ^1.11.0
     "@react-native-firebase/app": ^19.2.2
     "@react-native-firebase/auth": ^19.2.2
+    "@react-native-google-signin/google-signin": ^11.0.1
     "@react-native-picker/picker": ^2.7.5
     "@react-native/babel-preset": 0.74.83
     "@react-native/metro-config": 0.74.83
@@ -9398,6 +9432,7 @@ __metadata:
     "@react-navigation/drawer": 6.6.15
     "@react-navigation/native": 6.1.17
     "@react-navigation/stack": ^6.3.29
+    "@redux-devtools/extension": ^3.3.0
     "@types/react": ^18.3.1
     "@types/react-test-renderer": ^18.3.0
     axios: ^0.28.1
@@ -9419,8 +9454,8 @@ __metadata:
     react-native-chart-kit: ^6.12.0
     react-native-config: ^1.5.1
     react-native-document-picker: ^9.2.0
+    react-native-fbsdk-next: ^13.0.0
     react-native-gesture-handler: ^2.16.1
-    react-native-google-signin: ^2.1.1
     react-native-linear-gradient: ^2.8.3
     react-native-paper: ^5.12.3
     react-native-pdf: ^6.7.5
@@ -9438,7 +9473,6 @@ __metadata:
     react-redux: 8.1.1
     react-test-renderer: 18.3.1
     redux: 4.2.1
-    redux-devtools-extension: ^2.13.9
     redux-thunk: ^3.1.0
     yup: ^1.4.0
   languageName: unknown
@@ -10648,6 +10682,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-fbsdk-next@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "react-native-fbsdk-next@npm:13.0.0"
+  peerDependencies:
+    expo: ">=47.0.0"
+    react-native: ">=0.63.3"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: ba0cd96ad369b5607b27fad3cc49cdc58a3428a7c90343caac52af019fe43b8558b449edbb9a2dcf215d6280c985b7724e1a65ee5999f7532c97400124aebf3b
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:^2.16.1":
   version: 2.16.1
   resolution: "react-native-gesture-handler@npm:2.16.1"
@@ -10661,17 +10708,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 8c49773474da7d6e31669479786ade58bf583f4affe5df81701a7a82dc42e8298fc99b30ff11c9a909bdc515cbc4e9d1462f264467b5d062aa11ccbc33c9947d
-  languageName: node
-  linkType: hard
-
-"react-native-google-signin@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "react-native-google-signin@npm:2.1.1"
-  peerDependencies:
-    prop-types: ^15.5.10
-    react: ">=15.4.0 || ^16.0.0-alpha"
-    react-native: ">=0.40"
-  checksum: 446e5014eef9fa87d206b1d69fa603fd73c564f613df3ef92aca10d645142e423cbdbc5e3acd9323ac2887f91283f463574eeef1150004ac2ac7f922b48e8522
   languageName: node
   linkType: hard
 
@@ -11067,15 +11103,6 @@ __metadata:
     source-map: ~0.6.1
     tslib: ^2.0.1
   checksum: 03cc7f57562238ba258d468be67bf7446ce7a707bc87a087891dad15afead46c36e9aaeedf2130e2ab5a465244a9c62bfd4127849761cf8f4085abe2f3e5f485
-  languageName: node
-  linkType: hard
-
-"redux-devtools-extension@npm:^2.13.9":
-  version: 2.13.9
-  resolution: "redux-devtools-extension@npm:2.13.9"
-  peerDependencies:
-    redux: ^3.1.0 || ^4.0.0
-  checksum: 603d48fd6acf3922ef373b251ab3fdbb990035e90284191047b29d25b06ea18122bc4ef01e0704ccae495acb27ab5e47b560937e98213605dd88299470025db9
   languageName: node
   linkType: hard
 

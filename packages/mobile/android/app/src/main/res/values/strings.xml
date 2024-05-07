@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Travellan</string>
     <string name="launch_screen_description">Launch Screen</string>
+
+    <!-- Facebook SDK -->
+    <string name="facebook_app_id">@string/facebook_app_id</string>
+    <string name="facebook_client_token">@string/facebook_client_token</string>
+    <string name="fb_login_protocol_scheme">@string/fb_login_protocol_scheme</string>
 </resources>
