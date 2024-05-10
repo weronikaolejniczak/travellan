@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "lint": "turbo run lint",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "postinstall": "lefthook install"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
+    "lefthook": "^1.6.10",
     "typescript": "^5.4.5"
   },
   "engines": {

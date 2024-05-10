@@ -8576,6 +8576,97 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lefthook-darwin-arm64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-darwin-arm64@npm:1.6.10"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-darwin-x64@npm:1.6.10"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-freebsd-arm64@npm:1.6.10"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-freebsd-x64@npm:1.6.10"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-linux-arm64@npm:1.6.10"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-linux-x64@npm:1.6.10"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-windows-arm64@npm:1.6.10"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.6.10":
+  version: 1.6.10
+  resolution: "lefthook-windows-x64@npm:1.6.10"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:^1.6.10":
+  version: 1.6.10
+  resolution: "lefthook@npm:1.6.10"
+  dependencies:
+    lefthook-darwin-arm64: 1.6.10
+    lefthook-darwin-x64: 1.6.10
+    lefthook-freebsd-arm64: 1.6.10
+    lefthook-freebsd-x64: 1.6.10
+    lefthook-linux-arm64: 1.6.10
+    lefthook-linux-x64: 1.6.10
+    lefthook-windows-arm64: 1.6.10
+    lefthook-windows-x64: 1.6.10
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: fb7bfb24e8f338b26e3faae15b081d7013178fa20743eff7bb5d550ec7f51758e2f0eab73dd748e9047ed0dfe5594699c9c49b78dd8205b3fbe0452bedebffee
+  languageName: node
+  linkType: hard
+
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
@@ -12555,6 +12646,7 @@ __metadata:
   resolution: "travellan@workspace:."
   dependencies:
     "@biomejs/biome": 1.7.2
+    lefthook: ^1.6.10
     typescript: ^5.4.5
   languageName: unknown
   linkType: soft
