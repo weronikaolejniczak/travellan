@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from 'react-native-config';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { Dispatch } from 'redux';
