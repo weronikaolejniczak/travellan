@@ -19,6 +19,7 @@ module.exports = {
     commitsPath: '.',
     commitMessage: `feat(${scope}): released version v${version} [no ci]`,
     requireBranch: 'main',
+    requireCleanWorkingDir: false,
     requireCommits: true,
     requireCommitsFail: false,
   },
