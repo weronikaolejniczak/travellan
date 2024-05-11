@@ -7,16 +7,42 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: 📥 Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: ⚙️ Setup Node cache
+        id: node-cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: yarn-${{ hashFiles('yarn.lock') }}-${{ hashFiles('package.json') }}
+          restore-keys: yarn-
+
+      - name: ⚙️ Setup Turbo cache
+        uses: actions/cache@v3
+        with:
+          path: '.turbo'
+          key: turbo-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.ref_name }}-
+            turbo-main-
+
       - name: ⚙️ git config
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
       - name: 📦 Install dependencies
         run: yarn
+
       - name: 🚀 Release packages
         run: yarn release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
