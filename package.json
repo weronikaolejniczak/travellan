@@ -7,7 +7,7 @@
     "start": "turbo run start",
     "postinstall": "lefthook install"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/back-end", "packages/mobile"],
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
     "lefthook": "^1.6.10",
