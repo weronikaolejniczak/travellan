@@ -4,13 +4,18 @@
   "private": true,
   "scripts": {
     "lint": "turbo run lint",
-    "start": "turbo run start",
-    "postinstall": "lefthook install"
+    "postinstall": "lefthook install",
+    "release": "turbo release --concurrency=1",
+    "start": "turbo run start"
   },
-  "workspaces": ["apps/back-end", "apps/mobile"],
+  "workspaces": ["apps/back-end", "apps/mobile", "configs/release-it"],
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@release-it/conventional-changelog": "^8.0.1",
     "lefthook": "^1.6.10",
+    "release-it": "^17.2.1",
     "typescript": "^5.4.5"
   },
   "engines": {

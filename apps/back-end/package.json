@@ -1,14 +1,14 @@
 {
-  "name": "back-end",
+  "name": "@travellan/back-end",
   "version": "1.0.0",
-  "description": "Backend application for Travellan Project",
-  "main": "index.js",
-  "author": "Travellan",
-  "license": "ISC",
+  "description": "Back-end application for the Travellan project",
+  "private": true,
+  "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
-    "lint": "biome check --apply-unsafe src"
+    "dev": "nodemon src/index.ts",
+    "lint": "biome check --apply-unsafe src",
+    "release": "release-it --ci",
+    "start": "node src/index.ts"
   },
   "dependencies": {
     "amadeus": "^10.0.0",
@@ -23,6 +23,7 @@
     "url": "^0.11.3"
   },
   "devDependencies": {
+    "@travellan/release-it": "*",
     "nodemon": "^3.1.0"
   }
 }

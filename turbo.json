@@ -10,11 +10,17 @@
   ],
   "globalDotEnv": [".env"],
   "pipeline": {
-    "lint": {},
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "start": {}
+    "lint": {},
+    "release": {
+      "dependsOn": ["^release"],
+      "outputMode": "new-only"
+    },
+    "start": {
+      "cache": false
+    }
   }
 }

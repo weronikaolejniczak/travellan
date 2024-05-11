@@ -1,14 +1,16 @@
 {
-  "name": "mobile",
+  "name": "@travellan/mobile",
   "version": "1.0.0",
+  "description": "React Native application for the Travellan project",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "devtools": "react-devtools",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
     "lint": "biome check --apply-unsafe src",
-    "devtools": "react-devtools"
+    "release": "release-it --ci",
+    "start": "react-native start",
+    "test": "jest"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
@@ -70,6 +72,7 @@
     "@react-native/babel-preset": "0.74.83",
     "@react-native/metro-config": "0.74.83",
     "@react-native/typescript-config": "0.74.83",
+    "@travellan/release-it": "*",
     "@types/react": "^18.3.1",
     "@types/react-test-renderer": "^18.3.0",
     "babel-jest": "^29.7.0",
