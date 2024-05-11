@@ -4801,9 +4801,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"back-end@workspace:packages/back-end":
+"back-end@workspace:apps/back-end":
   version: 0.0.0-use.local
-  resolution: "back-end@workspace:packages/back-end"
+  resolution: "back-end@workspace:apps/back-end"
   dependencies:
     amadeus: ^10.0.0
     body-parser: ^1.20.2
@@ -9500,9 +9500,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobile@workspace:packages/mobile":
+"mobile@workspace:apps/mobile":
   version: 0.0.0-use.local
-  resolution: "mobile@workspace:packages/mobile"
+  resolution: "mobile@workspace:apps/mobile"
   dependencies:
     "@babel/core": ^7.24.5
     "@babel/preset-env": ^7.24.5
