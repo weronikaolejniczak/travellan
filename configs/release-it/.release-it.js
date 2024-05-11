@@ -18,6 +18,7 @@ module.exports = {
     tagName: `${packageName}-v${version}`,
     commitsPath: '.',
     commitMessage: `feat(${scope}): released version v${version} [no ci]`,
+    requireBranch: 'main',
     requireCommits: true,
     requireCommitsFail: false,
   },
