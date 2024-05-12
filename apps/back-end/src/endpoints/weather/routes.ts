@@ -1,9 +1,8 @@
-const express = require('express');
-const url = require('url');
+import url from 'url';
+import { Request, Response, Router } from 'express';
 
-const fetchWeather = require('../../services/fetchWeather');
+import fetchWeather from '../../services/fetchWeather';
 
-const Router = express.Router;
 const routes = new Router();
 /**
  * GET /v1/weather?latitude={latitude}&longitude={longitude}
@@ -11,7 +10,7 @@ const routes = new Router();
  * GET /v1/weather?latitude=52.4064&longitude=16.9252
  * */
 
-const getWeather = (req, res) => {
+const getWeather = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const { latitude, longitude } = query;
 
@@ -23,4 +22,4 @@ const getWeather = (req, res) => {
 
 routes.get('/', getWeather);
 
-module.exports = routes;
+export default routes;

@@ -1,5 +1,5 @@
-const capitalizeEachWord = require('./capitalizeEachWord');
-const countryCodes = require('../data/countryCodes.json');
+import countryCodes from '../data/countryCodes.json';
+import capitalizeEachWord from './capitalizeEachWord';
 
 const formatLocationData = (hotelData) => {
   const latitude = hotelData.latitude;
@@ -15,4 +15,4 @@ const formatLocationData = (hotelData) => {
   return { address, latitude, longitude };
 };
 
-module.exports = formatLocationData;
+export default formatLocationData;

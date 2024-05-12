@@ -1,12 +1,12 @@
-const request = require('request-promise');
+import request from 'request-promise';
 
-const Weather = require('../models/Weather');
+import createWeather from '../models/Weather';
 
 const fetchWeather = (latitude: string, longitude: string) => {
   return request({
     method: 'GET',
     uri: encodeURI(
-      `http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${process.env.WEATHER_API_KEY}&units=metric`,
+      `http:api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={hourly,current,minutely}&APPID=${process.env.WEATHER_API_KEY}&units=metric`,
     ),
     json: true,
   })
@@ -16,29 +16,29 @@ const fetchWeather = (latitude: string, longitude: string) => {
         timezone: data.timezone,
         offset: data.timezone_offset,
       };
-      const forecast = [];
+      const forecast: ReturnType<typeof createWeather>[] = [];
 
       data.daily.map((day) =>
         forecast.push(
-          new Weather(
-            new Date(day.dt * 1000),
-            new Date(day.sunrise * 1000),
-            new Date(day.sunset * 1000),
-            day.temp.max, // celsius
-            day.temp.min, // celsius
-            day.temp.day, // celsius
-            day.temp.night, // celsius
-            day.feels_like.day, // celsius
-            day.feels_like.night, // celsius
-            day.pressure, // hPa
-            day.humidity, // %
-            day.wind_speed, // m/s
-            day.clouds, //  %
-            day.weather[0].description, // string
-            day.pop, // probability
-            day.weather[0].icon, // icon id
-            day.weather[0].main,
-          ),
+          createWeather({
+            date: new Date(day.dt * 1000),
+            sunrise: new Date(day.sunrise * 1000),
+            sunset: new Date(day.sunset * 1000),
+            maxTemp: day.temp.max,
+            minTemp: day.temp.min,
+            tempDay: day.temp.day,
+            tempNight: day.temp.night,
+            tempDayFeelsLike: day.feels_like.day,
+            tempNightFeelsLike: day.feels_like.night,
+            pressure: day.pressure,
+            humidity: day.humidity,
+            windSpeed: day.wind_speed,
+            cloudiness: day.clouds,
+            description: day.weather[0].description,
+            rain: day.pop,
+            icon: day.weather[0].icon,
+            main: day.weather[0].main,
+          }),
         ),
       );
 
@@ -47,4 +47,4 @@ const fetchWeather = (latitude: string, longitude: string) => {
     .catch((error) => error);
 };
 
-module.exports = fetchWeather;
+export default fetchWeather;

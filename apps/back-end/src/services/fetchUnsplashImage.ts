@@ -1,4 +1,4 @@
-const request = require('request-promise');
+import request from 'request-promise';
 
 const defaultImage = {
   authorName: 'Annie Spratt',
@@ -7,7 +7,7 @@ const defaultImage = {
   username: 'anniespratt',
 };
 
-const fetchUnsplashImage = (keyword) => {
+const fetchUnsplashImage = (keyword: string) => {
   return request({
     method: 'GET',
     uri: encodeURI(
@@ -29,4 +29,4 @@ const fetchUnsplashImage = (keyword) => {
     });
 };
 
-module.exports = fetchUnsplashImage;
+export default fetchUnsplashImage;

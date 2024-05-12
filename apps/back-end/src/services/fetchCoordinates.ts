@@ -1,6 +1,6 @@
-const request = require('request-promise');
+import request from 'request-promise';
 
-const fetchCoordinates = (keyword) => {
+const fetchCoordinates = (keyword: string) => {
   return request({
     method: 'GET',
     uri: encodeURI(
@@ -10,4 +10,4 @@ const fetchCoordinates = (keyword) => {
   }).then((data) => data.results[0].position);
 };
 
-module.exports = fetchCoordinates;
+export default fetchCoordinates;

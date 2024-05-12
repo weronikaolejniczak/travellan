@@ -1,10 +1,9 @@
-const express = require('express');
-const url = require('url');
-const Amadeus = require('amadeus');
+import url from 'url';
+import Amadeus from 'amadeus';
+import { Request, Response, Router } from 'express';
 
-const fetchCoordinates = require('../../services/fetchCoordinates');
+import fetchCoordinates from '../../services/fetchCoordinates';
 
-const Router = express.Router;
 const routes = new Router();
 const amadeus = new Amadeus({
   clientId: process.env.AMADEUS_API_KEY,
@@ -17,7 +16,7 @@ const amadeus = new Amadeus({
  * GET /v1/location/cityCode?keyword=Barcelona
  * */
 
-const getCityCode = (req, res) => {
+const getCityCode = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const { keyword } = query;
 
@@ -27,8 +26,8 @@ const getCityCode = (req, res) => {
       keyword,
     })
     .then((response) => res.json(response.data[0].address.cityCode))
-    .catch((err) => {
-      throw new Error(`Error ${err.code}: ${err.message}`);
+    .catch((error) => {
+      throw new Error(`Error ${error.code}: ${error.message}`);
     });
 };
 
@@ -40,7 +39,7 @@ routes.get('/cityCode', getCityCode);
  * GET /v1/location/coordinates?keyword=Barcelona
  * */
 
-const getCoordinates = (req, res) => {
+const getCoordinates = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const { keyword } = query;
 
@@ -52,4 +51,4 @@ const getCoordinates = (req, res) => {
 
 routes.get('/coordinates', getCoordinates);
 
-module.exports = routes;
+export default routes;

@@ -1,5 +1,39 @@
-class Hotel {
-  constructor(
+interface HotelParams {
+  amenities: string[];
+  breakfast?: boolean;
+  checkInExtra?: string;
+  checkInHours?: string;
+  checkOutHours?: string;
+  creditCardPaymentPossible?: boolean;
+  description: string;
+  dupeId?: string;
+  frontDesk24H?: boolean;
+  image: string;
+  location: string;
+  name: string;
+  offer?: string;
+  phone: string;
+  rating?: number;
+}
+
+function createHotel({
+  amenities,
+  breakfast,
+  checkInExtra,
+  checkInHours,
+  checkOutHours,
+  creditCardPaymentPossible,
+  description,
+  dupeId,
+  frontDesk24H,
+  image,
+  location,
+  name,
+  offer,
+  phone,
+  rating,
+}: HotelParams) {
+  return {
     amenities,
     breakfast,
     checkInExtra,
@@ -15,23 +49,7 @@ class Hotel {
     offer,
     phone,
     rating,
-  ) {
-    this.amenities = amenities;
-    this.breakfast = breakfast;
-    this.checkInExtra = checkInExtra;
-    this.checkInHours = checkInHours;
-    this.checkOutHours = checkOutHours;
-    this.creditCardPaymentPossible = creditCardPaymentPossible;
-    this.description = description;
-    this.dupeId = dupeId;
-    this.frontDesk24H = frontDesk24H;
-    this.image = image;
-    this.location = location;
-    this.name = name;
-    this.offer = offer;
-    this.phone = phone;
-    this.rating = rating;
-  }
+  };
 }
 
-module.exports = Hotel;
+export default createHotel;

@@ -1,8 +1,8 @@
-const cheerio = require('cheerio');
-const request = require('request-promise');
+import * as cheerio from 'cheerio';
+import request from 'request-promise';
 
-const Hotel = require('../models/Hotel');
-const fetchCoordinates = require('./fetchCoordinates');
+import createHotel from '../models/Hotel';
+import fetchCoordinates from './fetchCoordinates';
 
 const isCreditCardPaymentPossible = (html) => {
   const creditCards = [];
@@ -98,7 +98,7 @@ const scrapeBooking = (url) => {
 
       const location = await fetchCoordinates(address);
 
-      const hotel = new Hotel(
+      const hotel = createHotel({
         amenities,
         breakfast,
         checkInExtra,
@@ -109,16 +109,13 @@ const scrapeBooking = (url) => {
         undefined,
         frontDesk24H,
         image,
-        {
+        location: {
           address,
           latitude: location.lat,
           longitude: location.lon,
         },
         name,
-        undefined,
-        undefined,
-        undefined,
-      );
+      });
 
       if (hotel) {
         return hotel;
@@ -131,4 +128,4 @@ const scrapeBooking = (url) => {
     });
 };
 
-module.exports = scrapeBooking;
+export default scrapeBooking;

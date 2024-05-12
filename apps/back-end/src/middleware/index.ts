@@ -1,11 +1,11 @@
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';
 const isProd = env === 'production';
 
-module.exports = (app) => {
+export default (app) => {
   if (isProd) {
     // app.use(compression());
     // app.use(helmet());

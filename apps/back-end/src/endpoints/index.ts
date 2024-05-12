@@ -1,9 +1,9 @@
-const accommodationRoutes = require('./accommodation/routes');
-const weatherRoutes = require('./weather/routes');
-const imagesRoutes = require('./images/routes');
-const locationRoutes = require('./location/routes');
+import accommodationRoutes from './accommodation/routes';
+import imagesRoutes from './images/routes';
+import locationRoutes from './location/routes';
+import weatherRoutes from './weather/routes';
 
-module.exports = (app) => {
+export default (app) => {
   const version = process.env.API_VERSION;
 
   app.use(`/v${version}/accommodation`, accommodationRoutes);

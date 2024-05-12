@@ -1,15 +1,13 @@
-const express = require('express');
-const url = require('url');
-const Amadeus = require('amadeus');
+import url from 'url';
+import Amadeus from 'amadeus';
+import { Request, Response, Router } from 'express';
 
-const Hotel = require('../../models/Hotel');
-const scrapeBooking = require('../../services/scrapeBooking');
-// const checkIfCreditCardPaymentIsPossible = require('../../helpers/checkIfCreditCardPaymentIsPossible');
-const formatLocationData = require('../../helpers/formatLocationData');
-const capitalizeEachWord = require('../../helpers/capitalizeEachWord');
-const getHotelOffer = require('../../helpers/getHotelOffer');
+import capitalizeEachWord from '../../helpers/capitalizeEachWord';
+import formatLocationData from '../../helpers/formatLocationData';
+import getHotelOffer from '../../helpers/getHotelOffer';
+import createHotel from '../../models/Hotel';
+import scrapeBooking from '../../services/scrapeBooking';
 
-const Router = express.Router;
 const routes = new Router();
 const amadeus = new Amadeus({
   clientId: process.env.AMADEUS_API_KEY,
@@ -22,7 +20,7 @@ const amadeus = new Amadeus({
  * GET /v1/accommodation/hotelByName?latitude=53.4285&longitude=14.5528&radius=5&hotelName=CAMPANILE
  * */
 
-const getHotelByName = (req, res) => {
+const getHotelByName = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const { latitude, longitude, hotelName, radius } = query;
 
@@ -35,36 +33,26 @@ const getHotelByName = (req, res) => {
       radiusUnit: 'KM',
       includeClosed: true,
     })
-    .then((response) => {
+    .then((response: Response) => {
       if (response.data.length === 0) res.json([]);
 
       const data = response.data[0];
-      // const offers = data.offers && data.offers[0];
-      const amenities = data.hotel.amenities.map((item) =>
+      const amenities = data.hotel.amenities.map((item: string) =>
         item.toLowerCase().split('_').join(' '),
       );
-      // const image = data.hotel.media[0].uri;
       const image =
         'https://images.unsplash.com/photo-1445991842772-097fea258e7b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
 
-      // $todo: check possiblity of credit card payment
-      const hotel = new Hotel(
+      // TODO: check possiblity of credit card payment
+      const hotel = createHotel({
         amenities,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        true, // offers ? checkIfCreditCardPaymentIsPossible(offers) : true,
-        data.hotel.description.text,
-        undefined,
-        undefined,
+        creditCardPaymentPossible: true,
+        description: data.hotel.description.text,
         image,
-        formatLocationData(data.hotel),
-        capitalizeEachWord(data.hotel.name),
-        undefined,
-        data.hotel.contact.phone,
-        undefined,
-      );
+        location: formatLocationData(data.hotel),
+        name: capitalizeEachWord(data.hotel.name),
+        phone: data.hotel.contact.phone,
+      });
 
       res.json(hotel);
     })
@@ -82,7 +70,7 @@ routes.get('/hotelByName', getHotelByName);
  * GET /v1/accommodation/recommendation?latitude=53.4285&longitude=14.5528&radius=30&checkInDate=2021-03-15&checkOutDate=2021-03-18&roomQuantity=1&adults=1
  * */
 
-const getHotelRecommendation = (req, res) => {
+const getHotelRecommendation = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const {
     latitude,
@@ -106,40 +94,30 @@ const getHotelRecommendation = (req, res) => {
       adults,
       page: 7,
     })
-    .then((response) => {
-      //if (response.data.length === 0) res.json([]);
-      //if (response.errors.length > 0) res.json('ERROR');
-
+    .then((response: Response) => {
       const list = [];
       const data = response.data;
 
       for (let i = 0; i < data.length; i++) {
         const item = response.data[i];
-        const amenities = item.hotel.amenities.map((item) =>
+        const amenities = item.hotel.amenities.map((item: string) =>
           item.toLowerCase().split('_').join(' '),
         );
-        // const image = item.hotel.media[0].uri;
         const image =
           'https://images.unsplash.com/photo-1445991842772-097fea258e7b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
 
-        // $todo: check possiblity of credit card payment
-        const hotel = new Hotel(
+        // TODO: check possiblity of credit card payment
+        const hotel = createHotel({
           amenities,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          true, // checkIfCreditCardPaymentIsPossible(item.offers[0]),
-          item.hotel.description.text,
-          item.hotel.dupeId,
-          undefined,
+          description: item.hotel.description.text,
+          dupeId: item.hotel.dupeId,
           image,
-          formatLocationData(item.hotel),
-          capitalizeEachWord(item.hotel.name),
-          getHotelOffer(item.offers),
-          item.hotel.contact.phone,
-          item.hotel.rating,
-        );
+          location: formatLocationData(item.hotel),
+          name: capitalizeEachWord(item.hotel.name),
+          offer: getHotelOffer(item.offers),
+          phone: item.hotel.contact.phone,
+          rating: item.hotel.rating,
+        });
 
         list.push(hotel);
       }
@@ -160,7 +138,7 @@ routes.get('/recommendation', getHotelRecommendation);
  * GET /v1/accommodation/booking?region=ch&name=longemalle
  * */
 
-const getBookingHotel = (req, res) => {
+const getBookingHotel = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const region = query.region;
   const name = query.name;
@@ -168,7 +146,7 @@ const getBookingHotel = (req, res) => {
   scrapeBooking(
     encodeURI(`https://www.booking.com/hotel/${region}/${name}.html`),
   )
-    .then((result) => {
+    .then((result: Response) => {
       if (result === -1) res.json('There was an error fetching data.');
       else res.json(result);
     })
@@ -185,4 +163,4 @@ const getBookingHotel = (req, res) => {
 
 routes.get('/booking', getBookingHotel);
 
-module.exports = routes;
+export default routes;

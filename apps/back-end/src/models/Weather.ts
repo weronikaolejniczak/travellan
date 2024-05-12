@@ -1,5 +1,43 @@
-class Weather {
-  constructor(
+interface WeatherParams {
+  date: Date;
+  sunrise: Date;
+  sunset: Date;
+  maxTemp: number;
+  minTemp: number;
+  tempDay: number;
+  tempNight: number;
+  tempDayFeelsLike: number;
+  tempNightFeelsLike: number;
+  pressure: number;
+  humidity: number;
+  windSpeed: number;
+  cloudiness: number;
+  description: string;
+  rain?: number;
+  icon: string;
+  main: string;
+}
+
+function createWeather({
+  date,
+  sunrise,
+  sunset,
+  maxTemp, // celsius
+  minTemp, // celsius
+  tempDay, // celsius
+  tempNight, // celsius
+  tempDayFeelsLike, // celsius
+  tempNightFeelsLike, // celsius
+  pressure, // hPa
+  humidity, // %
+  windSpeed, // m/s
+  cloudiness, // %
+  description, // string
+  rain, // probability
+  icon, // icon id
+  main,
+}: WeatherParams) {
+  return {
     date,
     sunrise,
     sunset,
@@ -14,28 +52,10 @@ class Weather {
     windSpeed,
     cloudiness,
     description,
-    rain,
+    rain: rain ?? 0,
     icon,
     main,
-  ) {
-    this.date = date;
-    this.sunrise = sunrise;
-    this.sunset = sunset;
-    this.maxTemp = maxTemp;
-    this.minTemp = minTemp;
-    this.tempDay = tempDay;
-    this.tempNight = tempNight;
-    this.tempDayFeelsLike = tempDayFeelsLike;
-    this.tempNightFeelsLike = tempNightFeelsLike;
-    this.pressure = pressure;
-    this.humidity = humidity;
-    this.windSpeed = windSpeed;
-    this.cloudiness = cloudiness;
-    this.description = description;
-    this.rain = rain;
-    this.icon = icon;
-    this.main = main;
-  }
+  };
 }
 
-module.exports = Weather;
+export default createWeather;

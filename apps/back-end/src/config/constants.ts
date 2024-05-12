@@ -3,12 +3,11 @@ const testConfig = {};
 const prodConfig = {};
 
 const defaultConfig = {
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT ?? 3000,
   TOKEN_HEADER: 'x-access-token',
-  // ...
 };
 
-const envConfig = (env) => {
+const envConfig = (env: string | undefined) => {
   switch (env) {
     case 'development':
       return devConfig;
