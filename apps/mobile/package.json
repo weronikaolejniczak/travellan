@@ -10,7 +10,8 @@
     "lint": "biome check --apply-unsafe src",
     "release": "release-it --ci",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "types": "tsc --noEmit"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",

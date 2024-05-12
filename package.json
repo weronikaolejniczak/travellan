@@ -6,7 +6,8 @@
     "lint": "turbo run lint",
     "postinstall": "lefthook install",
     "release": "turbo release --concurrency=1",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "types": "turbo run types"
   },
   "workspaces": ["apps/back-end", "apps/mobile", "configs/release-it"],
   "devDependencies": {

@@ -21,6 +21,7 @@
     },
     "start": {
       "cache": false
-    }
+    },
+    "types": {}
   }
 }
