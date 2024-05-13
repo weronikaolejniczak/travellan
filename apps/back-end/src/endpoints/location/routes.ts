@@ -4,10 +4,10 @@ import { Request, Response, Router } from 'express';
 
 import fetchCoordinates from '../../services/fetchCoordinates';
 
-const routes = new Router();
+const routes = Router();
 const amadeus = new Amadeus({
-  clientId: process.env.AMADEUS_API_KEY,
-  clientSecret: process.env.AMADEUS_API_SECRET,
+  clientId: String(process.env.AMADEUS_API_KEY),
+  clientSecret: String(process.env.AMADEUS_API_SECRET),
 });
 
 /**

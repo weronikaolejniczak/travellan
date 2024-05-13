@@ -3,7 +3,7 @@ import { Request, Response, Router } from 'express';
 
 import fetchWeather from '../../services/fetchWeather';
 
-const routes = new Router();
+const routes = Router();
 /**
  * GET /v1/weather?latitude={latitude}&longitude={longitude}
  * e.g.

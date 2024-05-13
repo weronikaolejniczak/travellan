@@ -3,7 +3,7 @@ import { Request, Response, Router } from 'express';
 
 import fetchUnsplashImage from '../../services/fetchUnsplashImage';
 
-const routes = new Router();
+const routes = Router();
 
 /**
  * GET /v1/images/unsplash?keyword={keyword}
