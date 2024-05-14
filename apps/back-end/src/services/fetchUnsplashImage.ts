@@ -1,32 +1,62 @@
-import request from 'request-promise';
+import fetch from 'node-fetch';
 
-const defaultImage = {
+interface UnsplashUser {
+  name: string;
+  username: string;
+}
+
+interface UnsplashUrl {
+  regular: string;
+}
+
+interface UnsplashResult {
+  urls: UnsplashUrl;
+  user: UnsplashUser;
+}
+
+interface UnsplashResponse {
+  results: UnsplashResult[];
+}
+
+interface UnsplashImage {
+  authorName: string;
+  imageUrl: string;
+  username: string;
+}
+
+const defaultImage: UnsplashImage = {
   authorName: 'Annie Spratt',
   imageUrl:
     'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1866&q=80',
   username: 'anniespratt',
 };
 
-const fetchUnsplashImage = (keyword: string) => {
-  return request({
-    method: 'GET',
-    uri: encodeURI(
-      `https://api.unsplash.com/search/photos?page=1&query=${keyword}&client_id=${process.env.UNSPLASH_API_KEY}`,
-    ),
-    json: true,
-  })
-    .then((data) => {
-      const imageUrl = data.results[0].urls.regular.toString();
-      const authorName = data.results[0].user.name.toString();
-      const username = data.results[0].user.username.toString();
+const fetchUnsplashImage = async (keyword: string): Promise<UnsplashImage> => {
+  const uri = encodeURI(
+    `https://api.unsplash.com/search/photos?page=1&query=${keyword}&client_id=${process.env.UNSPLASH_API_KEY}`,
+  );
 
-      const image = { authorName, imageUrl, username };
+  try {
+    const response = await fetch(uri);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = (await response.json()) as UnsplashResponse;
 
-      return image;
-    })
-    .catch(() => {
+    if (data.results.length > 0 && data.results[0]) {
+      const imageUrl = data.results[0].urls.regular;
+      const authorName = data.results[0].user.name;
+      const username = data.results[0].user.username;
+
+      return { authorName, imageUrl, username };
+    } else {
+      console.warn('No results found for the keyword');
       return defaultImage;
-    });
+    }
+  } catch (error) {
+    console.error('Fetch failed: ', error);
+    return defaultImage;
+  }
 };
 
 export default fetchUnsplashImage;

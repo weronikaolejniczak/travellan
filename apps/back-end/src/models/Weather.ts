@@ -12,10 +12,10 @@ interface WeatherParams {
   humidity: number;
   windSpeed: number;
   cloudiness: number;
-  description: string;
+  description?: string;
   rain?: number;
-  icon: string;
-  main: string;
+  icon?: string;
+  main?: string;
 }
 
 function createWeather({

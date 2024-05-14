@@ -1,6 +1,6 @@
 interface HotelParams {
   amenities: string[];
-  breakfast?: boolean;
+  breakfast?: string[];
   checkInExtra?: string;
   checkInHours?: string;
   checkOutHours?: string;
@@ -8,11 +8,11 @@ interface HotelParams {
   description: string;
   dupeId?: string;
   frontDesk24H?: boolean;
-  image: string;
-  location: string;
-  name: string;
+  image?: string;
+  location: { address: string; latitude: number; longitude: number };
+  name?: string;
   offer?: string;
-  phone: string;
+  phone?: string;
   rating?: number;
 }
 

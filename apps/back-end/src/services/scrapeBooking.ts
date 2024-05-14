@@ -1,131 +1,92 @@
 import * as cheerio from 'cheerio';
-import request from 'request-promise';
-
+import fetch from 'node-fetch';
 import createHotel from '../models/Hotel';
 import fetchCoordinates from './fetchCoordinates';
 
-const isCreditCardPaymentPossible = (html) => {
-  const creditCards = [];
-
-  cheerio('.payment_methods_overall', html)
-    .find('img')
-    .map(function () {
-      creditCards.push(cheerio(this).attr('alt'));
-    });
-
+const isCreditCardPaymentPossible = (html: string): boolean => {
+  const $ = cheerio.load(html);
+  const creditCards = $('img.payment_methods_overall')
+    .map((_, el) => $(el).attr('alt'))
+    .get();
   return creditCards.length > 0;
 };
 
-const parseImages = (html) => {
-  const images = [];
-  const imageRegex = new RegExp('/images/hotel/', 'i');
-
-  cheerio('img', html).map(function () {
-    images.push(cheerio(this).attr('src'));
-  });
-
-  return images.filter((image) => image && image.match(imageRegex))[0];
+const parseImages = (html: string): string | undefined => {
+  const $ = cheerio.load(html);
+  const imageRegex = /\/images\/hotel\//i;
+  return $('img')
+    .map((_, el) => $(el).attr('src'))
+    .get()
+    .find((src) => imageRegex.test(src));
 };
 
-const parseBreakfast = (html) => {
-  const breakfast = [];
-
-  const parsedBreakfast = cheerio('span.ph-item-copy-breakfast-option', html)
+const parseBreakfast = (html: string): string[] | undefined => {
+  const $ = cheerio.load(html);
+  const breakfast = $('span.ph-item-copy-breakfast-option')
     .text()
-    .split(', ');
-
-  parsedBreakfast.forEach((item) => item && breakfast.push(item));
-
-  return breakfast.length > 0 ? breakfast : undefined;
+    .split(', ')
+    .filter(Boolean);
+  return breakfast.length ? breakfast : undefined;
 };
 
-const scrapeBooking = (url) => {
-  return request({
-    method: 'GET',
-    uri: encodeURI(url),
-    json: true,
-  })
-    .then(async (html) => {
-      const address = cheerio(
-        '#showMap2 > span.hp_address_subtitle.js-hp_address_subtitle.jq_tooltip',
-        html,
-      )
-        .text()
-        .replace(/\nul. /g, '')
-        .replace(/\n/g, '')
-        .trim();
-      const amenities = cheerio(
-        '#hotel_main_content > div.hp_hotel_description_hightlights_wrapper > div.hotel_description_wrapper_exp.hp-description > div.hp_desc_important_facilities.clearfix.hp_desc_important_facilities--bui > div',
-        html,
-      )
-        .text()
-        .split('\n')
-        .filter((item) => item !== '')
-        .map((item) => item.toLowerCase());
-      const breakfast = parseBreakfast(html);
-      const checkInHours = cheerio(
-        '#checkin_policy > p:nth-child(2) > span',
-        html,
-      )
-        .text()
-        .replace(/\n/g, ' ')
-        .trim();
-      const checkInExtra = cheerio('#checkin_policy > p.hp-checkin-extra', html)
-        .text()
-        .replace(/\n/g, ' ')
-        .trim();
-      const checkOutHours = cheerio(
-        '#checkout_policy > p:nth-child(2) > span',
-        html,
-      )
-        .text()
-        .replace(/\n/g, ' ')
-        .trim();
-      const creditCardPaymentPossible = isCreditCardPaymentPossible(html);
-      const description = cheerio('#property_description_content', html)
-        .text()
-        .replace('\n', '')
-        .replace(/\n/g, ' ')
-        .trim();
-      const frontDesk24H = !!cheerio(
-        '#hp_facilities_box > div.facilitiesChecklist > div.facilitiesChecklistSection[data-section-id=3] > ul > li',
-        html,
-      )
-        .text()
-        .match(/24/);
-      const image = parseImages(html);
-      const name = cheerio('#hp_hotel_name', html).text().split('\n')[2];
+const scrapeBooking = async (url: string) => {
+  const response = await fetch(url);
+  const html = await response.text();
 
-      const location = await fetchCoordinates(address);
+  const $ = cheerio.load(html);
+  const address = $(
+    '#showMap2 > span.hp_address_subtitle.js-hp_address_subtitle.jq_tooltip',
+  )
+    .text()
+    .replace(/\nul. | \n/g, '')
+    .trim();
+  const amenities = $(
+    '#hotel_main_content .hp_hotel_description_hightlights_wrapper .hotel_description_wrapper_exp .hp_desc_important_facilities.clearfix .hp_desc_important_facilities--bui div',
+  )
+    .text()
+    .split('\n')
+    .filter((item) => item)
+    .map((item) => item.toLowerCase().trim());
+  const breakfast = parseBreakfast(html);
+  const checkInHours = $('#checkin_policy > p:nth-child(2) > span')
+    .text()
+    .trim();
+  const checkInExtra = $('#checkin_policy > p.hp-checkin-extra').text().trim();
+  const checkOutHours = $('#checkout_policy > p:nth-child(2) > span')
+    .text()
+    .trim();
+  const creditCardPaymentPossible = isCreditCardPaymentPossible(html);
+  const description = $('#property_description_content')
+    .text()
+    .replace(/\n/g, ' ')
+    .trim();
+  const frontDesk24H = !!$(
+    '#hp_facilities_box .facilitiesChecklist .facilitiesChecklistSection[data-section-id="3"] ul li',
+  )
+    .text()
+    .includes('24');
+  const image = parseImages(html);
+  const name = $('#hp_hotel_name').text().split('\n')[2]?.trim();
 
-      const hotel = createHotel({
-        amenities,
-        breakfast,
-        checkInExtra,
-        checkInHours,
-        checkOutHours,
-        creditCardPaymentPossible,
-        description,
-        undefined,
-        frontDesk24H,
-        image,
-        location: {
-          address,
-          latitude: location.lat,
-          longitude: location.lon,
-        },
-        name,
-      });
+  const location = await fetchCoordinates(address);
 
-      if (hotel) {
-        return hotel;
-      } else {
-        return -1;
-      }
-    })
-    .catch((err) => {
-      throw err;
-    });
+  return createHotel({
+    amenities,
+    breakfast,
+    checkInExtra,
+    checkInHours,
+    checkOutHours,
+    creditCardPaymentPossible,
+    description,
+    frontDesk24H,
+    image,
+    location: {
+      address,
+      latitude: Number(location?.lat),
+      longitude: Number(location?.lon),
+    },
+    name,
+  });
 };
 
 export default scrapeBooking;
