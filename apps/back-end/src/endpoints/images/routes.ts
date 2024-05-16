@@ -9,16 +9,22 @@ const routes = Router();
  * GET /v1/images/unsplash?keyword={keyword}
  * e.g.
  * GET /v1/images/unsplash?keyword=Barcelona
- * */
+ */
 
 const getUnsplashImage = (req: Request, res: Response) => {
   const query = url.parse(req.url, true).query;
   const { keyword } = query;
 
-  fetchUnsplashImage(keyword).then((result) => {
-    if (result === -1) throw new Error('Something went wrong...');
-    else res.json(result);
-  });
+  if (typeof keyword === 'string') {
+    fetchUnsplashImage(keyword).then((result) => {
+      if (typeof result === 'object') res.json(result);
+      else throw new Error('Received type is not of type: UnsplashImage.');
+    });
+  } else {
+    throw new Error(
+      'Expected the keywoard query parameter to be of type: string',
+    );
+  }
 };
 
 routes.get('/unsplash', getUnsplashImage);
