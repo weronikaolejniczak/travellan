@@ -33,12 +33,15 @@ interface WeatherAPIResponse {
   daily: WeatherDay[];
 }
 
+export type WeatherResponse = [
+  ReturnType<typeof createWeather>[],
+  { timezone: string; offset: number },
+];
+
 const fetchWeather = async (
   latitude: string,
   longitude: string,
-): Promise<
-  [ReturnType<typeof createWeather>[], { timezone: string; offset: number }]
-> => {
+): Promise<WeatherResponse> => {
   const uri = encodeURI(
     `http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,current,minutely&APPID=${process.env.WEATHER_API_KEY}&units=metric`,
   );
