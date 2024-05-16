@@ -18,11 +18,11 @@ const getUnsplashImage = (req: Request, res: Response) => {
   if (typeof keyword === 'string') {
     fetchUnsplashImage(keyword).then((result) => {
       if (typeof result === 'object') res.json(result);
-      else throw new Error('Received type is not of type: UnsplashImage.');
+      else throw new Error('Received data is not of type: `UnsplashImage`.');
     });
   } else {
     throw new Error(
-      'Expected the keywoard query parameter to be of type: string',
+      'Expected the `keyword` query parameter to be of type: `string`.',
     );
   }
 };
