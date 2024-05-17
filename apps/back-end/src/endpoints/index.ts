@@ -1,9 +1,11 @@
+import { Express } from 'express';
+
 import accommodationRoutes from './accommodation/routes';
 import imagesRoutes from './images/routes';
 import locationRoutes from './location/routes';
 import weatherRoutes from './weather/routes';
 
-export default (app) => {
+export default (app: Express) => {
   const version = process.env.API_VERSION;
 
   app.use(`/v${version}/accommodation`, accommodationRoutes);
