@@ -18,7 +18,7 @@ const envConfig = (env: string | undefined) => {
   }
 };
 
-module.exports = {
+export default {
   ...defaultConfig,
   ...envConfig(process.env.NODE_ENV),
 };
