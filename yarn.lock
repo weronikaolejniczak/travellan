@@ -2771,19 +2771,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/datetimepicker@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@react-native-community/datetimepicker@npm:8.0.0"
+"@react-native-community/datetimepicker@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@react-native-community/datetimepicker@npm:8.0.1"
   dependencies:
     invariant: ^2.2.4
   peerDependencies:
     react: "*"
-    react-native: ^0.73.0
-    react-native-windows: ^0.73.0
+    react-native: "*"
+    react-native-windows: "*"
   peerDependenciesMeta:
     react-native-windows:
       optional: true
-  checksum: 25292edd5e87d1b71711cd6a961c8ffba884dfa398b8b83b1a5433216bfc77cc49c710c18bb65859a3994274d8cf09b93a12a2a4dee097d8106ad2decdbbc6e1
+  checksum: 553a40ebb3adadbe6f6d4d9e6ab9d72761014ee47614bff0888e4e38bd430f22947e34cdc11e8a97ebf97811986939ca25e79c98bf7a9baef51476481385adab
   languageName: node
   linkType: hard
 
@@ -3484,7 +3484,6 @@ __metadata:
     node-fetch: ^3.3.2
     nodemon: ^3.1.0
     request: ^2.88.2
-    request-promise: ^4.2.6
     url: ^0.11.3
   languageName: unknown
   linkType: soft
@@ -3497,7 +3496,7 @@ __metadata:
     "@babel/preset-env": ^7.24.5
     "@babel/runtime": ^7.24.5
     "@react-native-async-storage/async-storage": ^1.23.1
-    "@react-native-community/datetimepicker": ^8.0.0
+    "@react-native-community/datetimepicker": ^8.0.1
     "@react-native-community/geolocation": ^3.2.1
     "@react-native-community/masked-view": ^0.1.11
     "@react-native-community/push-notification-ios": ^1.11.0
@@ -3514,7 +3513,7 @@ __metadata:
     "@react-navigation/stack": ^6.3.29
     "@redux-devtools/extension": ^3.3.0
     "@travellan/release-it": "*"
-    "@types/react": ^18.3.1
+    "@types/react": ^18.3.2
     "@types/react-test-renderer": ^18.3.0
     axios: ^0.28.1
     babel-jest: ^29.7.0
@@ -3536,7 +3535,7 @@ __metadata:
     react-native-config: ^1.5.1
     react-native-document-picker: ^9.2.0
     react-native-fbsdk-next: ^13.0.0
-    react-native-gesture-handler: ^2.16.1
+    react-native-gesture-handler: ^2.16.2
     react-native-linear-gradient: ^2.8.3
     react-native-paper: ^5.12.3
     react-native-pdf: ^6.7.5
@@ -3839,7 +3838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.3.1":
+"@types/react@npm:*, @types/react@npm:^18.3.2":
   version: 18.3.2
   resolution: "@types/react@npm:18.3.2"
   dependencies:
@@ -5111,13 +5110,6 @@ __metadata:
     inherits: ^2.0.4
     readable-stream: ^3.4.0
   checksum: 9e8521fa7e83aa9427c6f8ccdcba6e8167ef30cc9a22df26effcc5ab682ef91d2cbc23a239f945d099289e4bbcfae7a192e9c28c84c6202e710a0dfec3722662
-  languageName: node
-  linkType: hard
-
-"bluebird@npm:^3.5.0":
-  version: 3.7.2
-  resolution: "bluebird@npm:3.7.2"
-  checksum: 869417503c722e7dc54ca46715f70e15f4d9c602a423a02c825570862d12935be59ed9c7ba34a9b31f186c017c23cac6b54e35446f8353059c101da73eac22ef
   languageName: node
   linkType: hard
 
@@ -10351,7 +10343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:^4.17.13, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.6.1":
+"lodash@npm:4.17.21, lodash@npm:^4.17.13, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.6.1":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -12577,7 +12569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:^2.16.1":
+"react-native-gesture-handler@npm:^2.16.2":
   version: 2.16.2
   resolution: "react-native-gesture-handler@npm:2.16.2"
   dependencies:
@@ -13216,31 +13208,6 @@ __metadata:
   bin:
     release-it: bin/release-it.js
   checksum: e2eda38c2492ecaba2aa0c07c0c74cea846b0b15f45710db6659329e8e3975abbec5e386c7391566419025c1e522d83571510d42e16af8797003945ed0ce9629
-  languageName: node
-  linkType: hard
-
-"request-promise-core@npm:1.1.4":
-  version: 1.1.4
-  resolution: "request-promise-core@npm:1.1.4"
-  dependencies:
-    lodash: ^4.17.19
-  peerDependencies:
-    request: ^2.34
-  checksum: c798bafd552961e36fbf5023b1d081e81c3995ab390f1bc8ef38a711ba3fe4312eb94dbd61887073d7356c3499b9380947d7f62faa805797c0dc50f039425699
-  languageName: node
-  linkType: hard
-
-"request-promise@npm:^4.2.6":
-  version: 4.2.6
-  resolution: "request-promise@npm:4.2.6"
-  dependencies:
-    bluebird: ^3.5.0
-    request-promise-core: 1.1.4
-    stealthy-require: ^1.1.1
-    tough-cookie: ^2.3.3
-  peerDependencies:
-    request: ^2.34
-  checksum: 1856c718cb4b888db8b6a206537ecac47390ea4fbdaef00da9a6169a03dd66a95c38493713f927f78a19bfeb28dcb28f5d20f6ab927d644d9e0626847d808f9f
   languageName: node
   linkType: hard
 
@@ -14093,13 +14060,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stealthy-require@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "stealthy-require@npm:1.1.1"
-  checksum: 6805b857a9f3a6a1079fc6652278038b81011f2a5b22cbd559f71a6c02087e6f1df941eb10163e3fdc5391ab5807aa46758d4258547c1f5ede31e6d9bfda8dd3
-  languageName: node
-  linkType: hard
-
 "stop-iteration-iterator@npm:^1.0.0":
   version: 1.0.0
   resolution: "stop-iteration-iterator@npm:1.0.0"
@@ -14586,7 +14546,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tough-cookie@npm:^2.3.3, tough-cookie@npm:~2.5.0":
+"tough-cookie@npm:~2.5.0":
   version: 2.5.0
   resolution: "tough-cookie@npm:2.5.0"
   dependencies:
