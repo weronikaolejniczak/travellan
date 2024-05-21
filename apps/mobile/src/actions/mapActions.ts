@@ -7,7 +7,7 @@ export const SET_MAP = 'SET_MAP';
 
 const API_URL = FIREBASE_URL;
 
-export const setMap = (tripId, map) => {
+export const setMap = (tripId: string, map) => {
   return {
     map,
     tripId,
@@ -15,7 +15,7 @@ export const setMap = (tripId, map) => {
   };
 };
 
-export const fetchMapRequest = (tripId) => {
+export const fetchMapRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -34,7 +34,7 @@ export const fetchMapRequest = (tripId) => {
   };
 };
 
-export const patchMapRequest = (tripId, markers, region) => {
+export const patchMapRequest = (tripId: string, markers, region) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

@@ -11,7 +11,7 @@ export const EDIT_ACCOMMODATION = 'EDIT_ACCOMMODATION';
 
 const API_URL = FIREBASE_URL;
 
-export const setAccommodation = (tripId, accommodation) => {
+export const setAccommodation = (tripId: string, accommodation) => {
   return {
     accommodation,
     tripId,
@@ -19,7 +19,7 @@ export const setAccommodation = (tripId, accommodation) => {
   };
 };
 
-export const createAccommodation = (tripId, newAccommodation) => {
+export const createAccommodation = (tripId: string, newAccommodation) => {
   return {
     newAccommodation,
     tripId,
@@ -27,7 +27,7 @@ export const createAccommodation = (tripId, newAccommodation) => {
   };
 };
 
-export const deleteAccommodation = (tripId, accommodationId) => {
+export const deleteAccommodation = (tripId: string, accommodationId) => {
   return {
     accommodationId,
     tripId,
@@ -36,7 +36,7 @@ export const deleteAccommodation = (tripId, accommodationId) => {
 };
 
 export const editAccommodation = (
-  tripId,
+  tripId: string,
   updatedAccommodation,
   accommodationId,
 ) => {
@@ -48,7 +48,7 @@ export const editAccommodation = (
   };
 };
 
-export const setPDF = (tripId, accommodationId, PDF) => {
+export const setPDF = (tripId: string, accommodationId, PDF) => {
   return {
     PDF,
     accommodationId,
@@ -57,7 +57,7 @@ export const setPDF = (tripId, accommodationId, PDF) => {
   };
 };
 
-export const fetchAccommodationRequest = (tripId) => {
+export const fetchAccommodationRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -101,7 +101,7 @@ export const fetchAccommodationRequest = (tripId) => {
   };
 };
 
-export const deleteAccommodationRequest = (tripId, accommodationId) => {
+export const deleteAccommodationRequest = (tripId: string, accommodationId) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -122,7 +122,7 @@ export const deleteAccommodationRequest = (tripId, accommodationId) => {
 };
 
 export const createAccommodationRequest = (
-  tripId,
+  tripId: string,
   amenities,
   breakfast,
   checkInExtra,
@@ -192,8 +192,8 @@ export const createAccommodationRequest = (
 };
 
 export const editAccommodationRequest = (
-  tripId,
-  accommodationId,
+  tripId: string,
+  accommodationId: string,
   amenities,
   breakfast,
   checkInExtra,
@@ -262,7 +262,11 @@ export const editAccommodationRequest = (
   };
 };
 
-export const deletePDFRequest = (tripId, accommodationId, PDF) => {
+export const deletePDFRequest = (
+  tripId: string,
+  accommodationId: string,
+  PDF,
+) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -277,7 +281,7 @@ export const deletePDFRequest = (tripId, accommodationId, PDF) => {
   };
 };
 
-export const addPDFRequest = (tripId, accommodationId, PDF) => {
+export const addPDFRequest = (tripId: string, accommodationId: string, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

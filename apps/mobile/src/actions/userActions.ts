@@ -149,13 +149,9 @@ export const onGoogleButtonPress = () => {
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      console.log(idToken, googleCredential);
-
       await auth().signInWithCredential(googleCredential);
 
       const user = auth().currentUser;
-
-      console.log(user);
 
       if (user) {
         const localId = user.uid;

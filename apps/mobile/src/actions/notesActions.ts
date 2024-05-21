@@ -10,7 +10,7 @@ export const EDIT_NOTE = 'EDIT_NOTE';
 
 const API_URL = FIREBASE_URL;
 
-export const setNotes = (tripId, notes) => {
+export const setNotes = (tripId: string, notes) => {
   return {
     notes,
     tripId,
@@ -18,7 +18,7 @@ export const setNotes = (tripId, notes) => {
   };
 };
 
-export const createNote = (tripId, newNote) => {
+export const createNote = (tripId: string, newNote) => {
   return {
     newNote,
     tripId,
@@ -26,7 +26,7 @@ export const createNote = (tripId, newNote) => {
   };
 };
 
-export const deleteNote = (tripId, noteId) => {
+export const deleteNote = (tripId: string, noteId: string) => {
   return {
     noteId,
     tripId,
@@ -34,7 +34,7 @@ export const deleteNote = (tripId, noteId) => {
   };
 };
 
-export const editNote = (tripId, updatedNote, noteId) => {
+export const editNote = (tripId: string, updatedNote, noteId: string) => {
   return {
     noteId,
     tripId,
@@ -43,7 +43,7 @@ export const editNote = (tripId, updatedNote, noteId) => {
   };
 };
 
-export const fetchNotesRequest = (tripId) => {
+export const fetchNotesRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -73,7 +73,7 @@ export const fetchNotesRequest = (tripId) => {
   };
 };
 
-export const deleteNoteRequest = (tripId, noteId) => {
+export const deleteNoteRequest = (tripId: string, noteId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -91,7 +91,12 @@ export const deleteNoteRequest = (tripId, noteId) => {
   };
 };
 
-export const createNoteRequest = (tripId, category, title, description) => {
+export const createNoteRequest = (
+  tripId: string,
+  category,
+  title: string,
+  description: string,
+) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -124,11 +129,11 @@ export const createNoteRequest = (tripId, category, title, description) => {
 };
 
 export const editNoteRequest = (
-  tripId,
-  noteId,
-  title,
+  tripId: string,
+  noteId: string,
+  title: string,
   category,
-  description,
+  description: string,
 ) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;

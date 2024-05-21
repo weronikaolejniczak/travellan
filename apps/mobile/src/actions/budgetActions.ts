@@ -7,7 +7,7 @@ export const SET_BUDGET = 'SET_BUDGET';
 
 const API_URL = FIREBASE_URL;
 
-export const setBudget = (tripId, budget) => {
+export const setBudget = (tripId: string, budget) => {
   return {
     budget,
     tripId,
@@ -15,7 +15,7 @@ export const setBudget = (tripId, budget) => {
   };
 };
 
-export const fetchBudgetRequest = (tripId) => {
+export const fetchBudgetRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -45,7 +45,7 @@ export const fetchBudgetRequest = (tripId) => {
   };
 };
 
-export const patchBudgetRequest = (tripId, budget) => {
+export const patchBudgetRequest = (tripId: string, budget) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

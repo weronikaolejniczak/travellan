@@ -11,7 +11,7 @@ export const SET_PDF = 'SET_PDF';
 
 const API_URL = FIREBASE_URL;
 
-export const setTransport = (tripId, transport) => {
+export const setTransport = (tripId: string, transport) => {
   return {
     transport,
     tripId,
@@ -19,7 +19,7 @@ export const setTransport = (tripId, transport) => {
   };
 };
 
-export const createTransport = (tripId, newTransport) => {
+export const createTransport = (tripId: string, newTransport) => {
   return {
     newTransport,
     tripId,
@@ -27,7 +27,7 @@ export const createTransport = (tripId, newTransport) => {
   };
 };
 
-export const deleteTransport = (tripId, transportId) => {
+export const deleteTransport = (tripId: string, transportId: string) => {
   return {
     transportId,
     tripId,
@@ -35,7 +35,7 @@ export const deleteTransport = (tripId, transportId) => {
   };
 };
 
-export const setQR = (tripId, transportId, QR) => {
+export const setQR = (tripId: string, transportId: string, QR) => {
   return {
     QR,
     transportId,
@@ -44,7 +44,7 @@ export const setQR = (tripId, transportId, QR) => {
   };
 };
 
-export const setPDF = (tripId, transportId, PDF) => {
+export const setPDF = (tripId: string, transportId: string, PDF) => {
   return {
     PDF,
     transportId,
@@ -53,7 +53,7 @@ export const setPDF = (tripId, transportId, PDF) => {
   };
 };
 
-export const fetchTransportRequest = (tripId) => {
+export const fetchTransportRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -85,7 +85,7 @@ export const fetchTransportRequest = (tripId) => {
   };
 };
 
-export const deleteTransportRequest = (tripId, transportId) => {
+export const deleteTransportRequest = (tripId: string, transportId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -106,7 +106,7 @@ export const deleteTransportRequest = (tripId, transportId) => {
 };
 
 export const createTransportRequest = (
-  tripId,
+  tripId: string,
   isTicketTo,
   isTicketFrom,
   dateOfDeparture,
@@ -151,7 +151,7 @@ export const createTransportRequest = (
   };
 };
 
-export const deleteQRRequest = (tripId, transportId, QR) => {
+export const deleteQRRequest = (tripId: string, transportId: string, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -166,7 +166,7 @@ export const deleteQRRequest = (tripId, transportId, QR) => {
   };
 };
 
-export const addQRRequest = (tripId, transportId, QR) => {
+export const addQRRequest = (tripId: string, transportId: string, QR) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -184,7 +184,7 @@ export const addQRRequest = (tripId, transportId, QR) => {
   };
 };
 
-export const deletePDFRequest = (tripId, transportId, PDF) => {
+export const deletePDFRequest = (tripId: string, transportId: string, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -199,7 +199,7 @@ export const deletePDFRequest = (tripId, transportId, PDF) => {
   };
 };
 
-export const addPDFRequest = (tripId, transportId, PDF) => {
+export const addPDFRequest = (tripId: string, transportId: string, PDF) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;

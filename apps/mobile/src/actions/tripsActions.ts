@@ -19,13 +19,13 @@ export const setTrips = (loadedTrips) => {
   };
 };
 
-export const deleteTrip = (tripId) => {
+export const deleteTrip = (tripId: string) => {
   return {
     tripId,
     type: DELETE_TRIP,
   };
 };
-export const editTrip = (tripId, updatedTrip) => {
+export const editTrip = (tripId: string, updatedTrip) => {
   return {
     tripId,
     type: EDIT_TRIP,
@@ -76,7 +76,7 @@ export const fetchTripsRequest = () => {
   };
 };
 
-export const deleteTripRequest = (tripId) => {
+export const deleteTripRequest = (tripId: string) => {
   return async function (dispatch, getState) {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -148,7 +148,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
 };
 
 export const editTripRequest = (
-  tripId,
+  tripId: string,
   destination,
   startDate,
   endDate,
