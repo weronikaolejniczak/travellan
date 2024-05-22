@@ -24,9 +24,7 @@ import NotesContainer, {
   notesOptions,
 } from 'domains/notes/containers/NotesContainer';
 import SharingContainer from 'domains/share/containers/SharingContainer';
-import AddQRContainer, {
-  qrOptions,
-} from 'domains/transport/containers/AddQRContainer';
+import AddQRContainer from 'domains/transport/containers/AddQRContainer';
 import AddTransportContainer from 'domains/transport/containers/AddTransportContainer';
 import TransportContainer from 'domains/transport/containers/TransportContainer';
 import AddTripContainer from 'domains/trips/containers/AddTripContainer';
