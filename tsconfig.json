@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
@@ -9,6 +10,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "noEmit": true,
     "typeRoots": ["../../node_modules/@types"]
   },
   "exclude": ["node_modules"]
