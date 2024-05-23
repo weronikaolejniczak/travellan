@@ -176,13 +176,14 @@ const AddTripContainer = ({ navigation }) => {
 
     if (budgetIsEnabled && !budgetValueError && fittingCurrenciesNumber === 1) {
       return [
-        new Budget(
-          0,
-          budget ? parseFloat(budget) : 0,
-          fittingCurrenciesNumber > 0
-            ? fittingCurrencies[0].iso.toString()
-            : undefined,
-          [
+        Budget({
+          id: 'id-' + Math.random().toString(16).slice(2),
+          value: budget ? parseFloat(budget) : 0,
+          currency:
+            fittingCurrenciesNumber > 0
+              ? fittingCurrencies[0]?.iso.toString()
+              : undefined,
+          history: [
             {
               account: account.toString(),
               category: '',
@@ -192,8 +193,8 @@ const AddTripContainer = ({ navigation }) => {
               value: parseFloat(budget),
             },
           ],
-          account.toString(),
-        ),
+          defaultAccount: account.toString(),
+        }),
       ];
     } else if (!budgetIsEnabled) {
       return undefined;

@@ -53,15 +53,16 @@ const AddCurrencyContainer = ({ route, navigation }) => {
   const submitHandler = useCallback(async () => {
     setBudgetSubmitted(true);
     if (!budgetValueError && !currencyError) {
-      const newCurrency = new Budget(
-        new Date().toString(),
-        prepareValue(budgetValue),
-        CURRENCIES.filter((item) => item.name === currency).length > 0
-          ? CURRENCIES.filter(
-              (item) => item.name === currency,
-            )[0].iso.toString()
-          : undefined,
-        [
+      const newCurrency = Budget({
+        id: new Date().toString(),
+        value: prepareValue(budgetValue),
+        currency:
+          CURRENCIES.filter((item) => item.name === currency).length > 0
+            ? CURRENCIES.filter(
+                (item) => item.name === currency,
+              )[0]?.iso.toString()
+            : undefined,
+        history: [
           {
             account: account.toString(),
             category: '',
@@ -71,8 +72,8 @@ const AddCurrencyContainer = ({ route, navigation }) => {
             value: prepareValue(budgetValue),
           },
         ],
-        account.toString(),
-      );
+        defaultAccount: account.toString(),
+      });
 
       const budgetToSubmit = currentBudget
         ? [...currentBudget, newCurrency]

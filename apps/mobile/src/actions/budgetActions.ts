@@ -27,13 +27,13 @@ export const fetchBudgetRequest = (tripId: string) => {
         const loadedBudget = [];
         for (const key in budget) {
           loadedBudget.push(
-            new Budget(
-              key,
-              budget[key].value,
-              budget[key].currency,
-              budget[key].history,
-              budget[key].defaultAccount,
-            ),
+            Budget({
+              currency: budget[key].currency,
+              defaultAccount: budget[key].defaultAccount,
+              history: budget[key].history,
+              id: key,
+              value: budget[key].value,
+            }),
           );
         }
 
