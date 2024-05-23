@@ -1,37 +1,53 @@
-class Accommodation {
-  constructor(
-    id,
-    amenities,
-    breakfast,
-    checkInExtra,
-    checkInHours,
-    checkOutHours,
-    creditCardPaymentPossible,
-    description,
-    frontDesk24H,
-    image,
-    location,
-    name,
-    phone,
-    reservationDetails,
-    PDF,
-  ) {
-    this.id = id;
-    this.amenities = amenities;
-    this.breakfast = breakfast;
-    this.checkInExtra = checkInExtra;
-    this.checkInHours = checkInHours;
-    this.checkOutHours = checkOutHours;
-    this.creditCardPaymentPossible = creditCardPaymentPossible;
-    this.description = description;
-    this.frontDesk24H = frontDesk24H;
-    this.image = image;
-    this.location = location;
-    this.name = name;
-    this.phone = phone;
-    this.reservationDetails = reservationDetails;
-    this.PDF = PDF;
-  }
+interface AccommodationParams {
+  id: string;
+  amenities: string[];
+  breakfast: boolean;
+  checkInExtra: boolean;
+  checkInHours: string;
+  checkOutHours: string;
+  creditCardPaymentPossible: boolean;
+  description: string;
+  frontDesk24H: boolean;
+  image: string;
+  location: string;
+  name: string;
+  phone: string;
+  reservationDetails: string;
+  PDF: string;
 }
 
-module.exports = Accommodation;
+const Accomodation = ({
+  id,
+  amenities,
+  breakfast,
+  checkInExtra,
+  checkInHours,
+  checkOutHours,
+  creditCardPaymentPossible,
+  description,
+  frontDesk24H,
+  image,
+  location,
+  name,
+  phone,
+  reservationDetails,
+  PDF,
+}: AccommodationParams) => ({
+  id,
+  amenities,
+  breakfast,
+  checkInExtra,
+  checkInHours,
+  checkOutHours,
+  creditCardPaymentPossible,
+  description,
+  frontDesk24H,
+  image,
+  location,
+  name,
+  phone,
+  reservationDetails,
+  PDF,
+});
+
+export default Accomodation;

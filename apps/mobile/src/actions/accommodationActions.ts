@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
 import Accommodation from 'models/Accommodation';
+import Accomodation from 'models/Accommodation';
 
 export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
@@ -71,23 +72,24 @@ export const fetchAccommodationRequest = (tripId: string) => {
         const loadedAccommodation = [];
         for (const key in accommodation) {
           loadedAccommodation.push(
-            new Accommodation(
-              key,
-              accommodation[key].amenities,
-              accommodation[key].breakfast,
-              accommodation[key].checkInExtra,
-              accommodation[key].checkInHours,
-              accommodation[key].checkOutHours,
-              accommodation[key].creditCardPaymentPossible,
-              accommodation[key].description,
-              accommodation[key].frontDesk24H,
-              accommodation[key].image,
-              accommodation[key].location,
-              accommodation[key].name,
-              accommodation[key].phone,
-              accommodation[key].reservationDetails,
-              accommodation[key].PDF,
-            ),
+            Accomodation({
+              PDF: accommodation[key].PDF,
+              amenities: accommodation[key].amenities,
+              breakfast: accommodation[key].breakfast,
+              checkInExtra: accommodation[key].checkInExtra,
+              checkInHours: accommodation[key].checkInHours,
+              checkOutHours: accommodation[key].checkOutHours,
+              creditCardPaymentPossible:
+                accommodation[key].creditCardPaymentPossible,
+              description: accommodation[key].description,
+              frontDesk24H: accommodation[key].frontDesk24H,
+              id: key,
+              image: accommodation[key].image,
+              location: accommodation[key].location,
+              name: accommodation[key].name,
+              phone: accommodation[key].phone,
+              reservationDetails: accommodation[key].reservationDetails,
+            }),
           );
         }
 
@@ -166,23 +168,23 @@ export const createAccommodationRequest = (
       .then((data) => {
         const accommodationId = data[0].name;
         const requestConfig = JSON.parse(data[1]);
-        const newAccommodation = new Accommodation(
-          accommodationId,
-          requestConfig.amenities,
-          requestConfig.breakfast,
-          requestConfig.checkInExtra,
-          requestConfig.checkInHours,
-          requestConfig.checkOutHours,
-          requestConfig.creditCardPaymentPossible,
-          requestConfig.description,
-          requestConfig.frontDesk24H,
-          requestConfig.image,
-          requestConfig.location,
-          requestConfig.name,
-          requestConfig.phone,
-          requestConfig.reservationDetails,
-          requestConfig.PDF,
-        );
+        const newAccommodation = Accommodation({
+          PDF: requestConfig.PDF,
+          amenities: requestConfig.amenities,
+          breakfast: requestConfig.breakfast,
+          checkInExtra: requestConfig.checkInExtra,
+          checkInHours: requestConfig.checkInHours,
+          checkOutHours: requestConfig.checkOutHours,
+          creditCardPaymentPossible: requestConfig.creditCardPaymentPossible,
+          description: requestConfig.description,
+          frontDesk24H: requestConfig.frontDesk24H,
+          id: accommodationId,
+          image: requestConfig.image,
+          location: requestConfig.location,
+          name: requestConfig.name,
+          phone: requestConfig.phone,
+          reservationDetails: requestConfig.reservationDetails,
+        });
         dispatch(createAccommodation(tripId, newAccommodation));
       })
       .catch(() => {
@@ -235,8 +237,8 @@ export const editAccommodationRequest = (
       )
 
       .then(() => {
-        const updatedAccommodation = new Accommodation(
-          accommodationId,
+        const updatedAccommodation = Accommodation({
+          PDF,
           amenities,
           breakfast,
           checkInExtra,
@@ -245,13 +247,13 @@ export const editAccommodationRequest = (
           creditCardPaymentPossible,
           description,
           frontDesk24H,
+          id: accommodationId,
           image,
           location,
           name,
           phone,
           reservationDetails,
-          PDF,
-        );
+        });
         dispatch(
           editAccommodation(tripId, updatedAccommodation, accommodationId),
         );
