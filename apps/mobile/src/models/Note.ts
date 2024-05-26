@@ -1,11 +1,23 @@
-class Note {
-  constructor(id, date, category, title, description) {
-    this.id = id;
-    this.date = date;
-    this.category = category;
-    this.title = title;
-    this.description = description;
-  }
+export interface NoteModelParams {
+  category: string;
+  date: Date;
+  description: string;
+  id: string;
+  title: string;
 }
 
-export default Note;
+const NoteModel = ({
+  category,
+  date,
+  description,
+  id,
+  title,
+}: NoteModelParams) => ({
+  category,
+  date,
+  description,
+  id,
+  title,
+});
+
+export default NoteModel;

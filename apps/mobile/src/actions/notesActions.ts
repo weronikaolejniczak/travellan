@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
-import Note from 'models/Note';
+import NoteModel from 'models/Note';
 
 export const SET_NOTES = 'SET_NOTES';
 export const CREATE_NOTE = 'CREATE_NOTE';
@@ -55,13 +55,13 @@ export const fetchNotesRequest = (tripId: string) => {
         const loadedNotes = [];
         for (const key in notes) {
           loadedNotes.push(
-            new Note(
-              key,
-              notes[key].date,
-              notes[key].category,
-              notes[key].title,
-              notes[key].description,
-            ),
+            NoteModel({
+              category: notes[key].category,
+              date: notes[key].date,
+              description: notes[key].description,
+              id: key,
+              title: notes[key].title,
+            }),
           );
         }
 
@@ -93,7 +93,7 @@ export const deleteNoteRequest = (tripId: string, noteId: string) => {
 
 export const createNoteRequest = (
   tripId: string,
-  category,
+  category: string,
   title: string,
   description: string,
 ) => {
@@ -113,13 +113,13 @@ export const createNoteRequest = (
       .then((data) => {
         const noteId = data[0].name;
         const requestConfig = JSON.parse(data[1]);
-        const newNote = new Note(
-          noteId,
-          requestConfig.date,
-          requestConfig.category,
-          requestConfig.title,
-          requestConfig.description,
-        );
+        const newNote = NoteModel({
+          category: requestConfig.category,
+          date: requestConfig.date,
+          description: requestConfig.description,
+          id: noteId,
+          title: requestConfig.title,
+        });
         dispatch(createNote(tripId, newNote));
       })
       .catch(() => {
@@ -132,7 +132,7 @@ export const editNoteRequest = (
   tripId: string,
   noteId: string,
   title: string,
-  category,
+  category: string,
   description: string,
 ) => {
   return async function (dispatch, getState) {
@@ -152,13 +152,13 @@ export const editNoteRequest = (
         },
       )
       .then(() => {
-        const updatedNote = new Note(
-          noteId,
-          date,
+        const updatedNote = NoteModel({
           category,
-          title,
+          date,
           description,
-        );
+          id: noteId,
+          title,
+        });
 
         dispatch(editNote(tripId, updatedNote, noteId));
       })
