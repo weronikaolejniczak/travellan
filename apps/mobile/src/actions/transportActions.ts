@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
-import Transport from 'models/Transport';
+import TransportModel from 'models/Transport';
 
 export const SET_TRANSPORT = 'SET_TRANSPORT';
 export const CREATE_TRANSPORT = 'CREATE_TRANSPORT';
@@ -65,15 +65,15 @@ export const fetchTransportRequest = (tripId: string) => {
         const loadedTransport = [];
         for (const key in transport) {
           loadedTransport.push(
-            new Transport(
-              key,
-              transport[key].isTicketTo,
-              transport[key].isTicketFrom,
-              transport[key].dateOfDeparture,
-              transport[key].placeOfDeparture,
-              transport[key].QR,
-              transport[key].PDF,
-            ),
+            TransportModel({
+              PDF: transport[key].PDF,
+              QR: transport[key].QR,
+              dateOfDeparture: transport[key].dateOfDeparture,
+              id: key,
+              isTicketFrom: transport[key].isTicketFrom,
+              isTicketTo: transport[key].isTicketTo,
+              placeOfDeparture: transport[key].placeOfDeparture,
+            }),
           );
         }
 
@@ -134,15 +134,15 @@ export const createTransportRequest = (
       .then((data) => {
         const transportId = data[0].name;
         const requestConfig = JSON.parse(data[1]);
-        const newTransport = new Transport(
-          transportId,
-          requestConfig.isTicketTo,
-          requestConfig.isTicketFrom,
-          requestConfig.dateOfDeparture,
-          requestConfig.placeOfDeparture,
-          //requestConfig.QR,
+        const newTransport = TransportModel({
           //requestConfig.PDF,
-        );
+          //requestConfig.QR,
+          dateOfDeparture: requestConfig.dateOfDeparture,
+          id: transportId,
+          isTicketFrom: requestConfig.isTicketFrom,
+          isTicketTo: requestConfig.isTicketTo,
+          placeOfDeparture: requestConfig.placeOfDeparture,
+        });
         dispatch(createTransport(tripId, newTransport));
       })
       .catch(() => {

@@ -1,21 +1,29 @@
-class Transport {
-  constructor(
-    id,
-    isTicketTo,
-    isTicketFrom,
-    dateOfDeparture,
-    placeOfDeparture,
-    QR,
-    PDF,
-  ) {
-    this.id = id;
-    this.isTicketTo = isTicketTo;
-    this.isTicketFrom = isTicketFrom;
-    this.dateOfDeparture = dateOfDeparture;
-    this.placeOfDeparture = placeOfDeparture;
-    this.QR = QR;
-    this.PDF = PDF;
-  }
+interface TransportModelParams {
+  PDF: string;
+  QR: string;
+  dateOfDeparture: Date;
+  id: string;
+  isTicketFrom: boolean;
+  isTicketTo: boolean;
+  placeOfDeparture: string;
 }
 
-export default Transport;
+const TransportModel = ({
+  PDF,
+  QR,
+  dateOfDeparture,
+  id,
+  isTicketFrom,
+  isTicketTo,
+  placeOfDeparture,
+}: TransportModelParams) => ({
+  PDF,
+  QR,
+  dateOfDeparture,
+  id,
+  isTicketFrom,
+  isTicketTo,
+  placeOfDeparture,
+});
+
+export default TransportModel;
