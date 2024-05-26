@@ -52,22 +52,23 @@ export const fetchTripsRequest = () => {
       .then((res) => res.data)
       .then((data) => {
         const loadedTrips = [];
+
         for (const key in data) {
           loadedTrips.push(
-            new Trip(
-              key,
-              data[key].destination,
-              data[key].region,
-              data[key].image,
-              data[key].startDate,
-              data[key].endDate,
-              data[key].transport,
-              data[key].accommodation,
-              data[key].budget,
-              data[key].notes,
-              data[key].map,
-              data[key].cityCode,
-            ),
+            Trip({
+              accommodation: data[key].accommodation,
+              budget: data[key].budget,
+              cityCode: data[key].cityCode,
+              destination: data[key].destination,
+              endDate: data[key].endDate,
+              id: key,
+              image: data[key].image,
+              map: data[key].map,
+              notes: data[key].notes,
+              region: data[key].region,
+              startDate: data[key].startDate,
+              transport: data[key].transport,
+            }),
           );
         }
 
@@ -108,9 +109,9 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       longitude: location.lon,
       longitudeDelta: 0.0421,
     };
-    const transport = [];
-    const accommodation = [];
-    const notes = [];
+    const transport: never[] = [];
+    const accommodation: never[] = [];
+    const notes: never[] = [];
     const map = new MapModel([], [], null);
 
     await axios
@@ -128,19 +129,19 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       })
       .then((res) => res.data)
       .then((data) => {
-        const newTrip = new Trip(
-          data.name,
-          destination,
-          region,
-          image,
-          startDate,
-          endDate,
-          transport,
+        const newTrip = Trip({
           accommodation,
           budget,
-          notes,
+          destination,
+          endDate,
+          image,
           map,
-        );
+          id: data.name,
+          notes,
+          region,
+          startDate,
+          transport,
+        });
 
         dispatch(createTrip(newTrip));
       });
@@ -149,9 +150,9 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
 
 export const editTripRequest = (
   tripId: string,
-  destination,
-  startDate,
-  endDate,
+  destination: string,
+  startDate: Date,
+  endDate: Date,
   budget,
   transport,
   accommodation,
@@ -185,19 +186,19 @@ export const editTripRequest = (
         transport,
       })
       .then(() => {
-        const updatedTrip = new Trip(
-          tripId,
-          destination,
-          region,
-          image,
-          startDate,
-          endDate,
-          transport,
+        const updatedTrip = Trip({
           accommodation,
           budget,
-          notes,
+          destination,
+          endDate,
+          id: tripId,
+          image,
           map,
-        );
+          notes,
+          region,
+          startDate,
+          transport,
+        });
 
         dispatch(editTrip(tripId, updatedTrip));
       });
