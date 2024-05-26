@@ -1,13 +1,6 @@
-import MapModel from './Map';
+import MapModel, { Region } from './Map';
 
-interface Region {
-  latitude: number;
-  latitudeDelta: number;
-  longitude: number;
-  longitudeDelta: number;
-}
-
-interface TripModelParams {
+export interface TripModelParams {
   accommodation: string[];
   budget: number;
   cityCode?: string;
@@ -15,7 +8,7 @@ interface TripModelParams {
   endDate: Date;
   id: string;
   image: string;
-  map: MapModel;
+  map: ReturnType<typeof MapModel>;
   notes: string[];
   region: Region;
   startDate: Date;

@@ -112,7 +112,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
     const transport: never[] = [];
     const accommodation: never[] = [];
     const notes: never[] = [];
-    const map = new MapModel([], [], null);
+    const map = MapModel({ nodes: [], region: null });
 
     await axios
       .post(`${API_URL}/Trips/${userId}.json?auth=${token}`, {

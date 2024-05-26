@@ -39,7 +39,7 @@ export const patchMapRequest = (tripId: string, markers, region) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    const map = new MapModel(markers, region);
+    const map = MapModel({ nodes: markers, region });
     console.log('map on patch:', JSON.stringify(map));
 
     axios
