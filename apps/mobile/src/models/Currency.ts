@@ -1,10 +1,11 @@
-class Currency {
+interface CurrencyParams {
   iso: string;
   name: string;
-  constructor(iso, name) {
-    this.iso = iso;
-    this.name = name;
-  }
 }
+
+const Currency = ({ iso, name }: CurrencyParams) => ({
+  iso,
+  name,
+});
 
 export default Currency;
