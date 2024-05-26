@@ -8,7 +8,7 @@ import { BudgetPicker } from 'components';
 import { CURRENCIES } from 'data/Currencies';
 import { CURRENCIES as currencies } from 'data/Currencies';
 import { compareStrings } from 'helpers';
-import Budget from 'models/Budget';
+import BudgetModel from 'models/Budget';
 import {
   addEventToCalendar,
   autocompleteCity,
@@ -176,7 +176,7 @@ const AddTripContainer = ({ navigation }) => {
 
     if (budgetIsEnabled && !budgetValueError && fittingCurrenciesNumber === 1) {
       return [
-        Budget({
+        BudgetModel({
           id: 'id-' + Math.random().toString(16).slice(2),
           value: budget ? parseFloat(budget) : 0,
           currency:

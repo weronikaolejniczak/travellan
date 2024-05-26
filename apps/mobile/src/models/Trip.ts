@@ -7,7 +7,7 @@ interface Region {
   longitudeDelta: number;
 }
 
-interface TripParams {
+interface TripModelParams {
   accommodation: string[];
   budget: number;
   cityCode?: string;
@@ -22,7 +22,7 @@ interface TripParams {
   transport: string[];
 }
 
-const Trip = ({
+const TripModel = ({
   accommodation,
   budget,
   cityCode,
@@ -35,7 +35,7 @@ const Trip = ({
   region,
   startDate,
   transport,
-}: TripParams) => ({
+}: TripModelParams) => ({
   accommodation,
   budget,
   cityCode,
@@ -50,4 +50,4 @@ const Trip = ({
   transport,
 });
 
-export default Trip;
+export default TripModel;

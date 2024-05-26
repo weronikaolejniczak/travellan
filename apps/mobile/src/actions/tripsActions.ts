@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
 import MapModel from 'models/Map';
-import Trip from 'models/Trip';
+import TripModel from 'models/Trip';
 import { fetchCoordinates, fetchDestinationImage } from 'services';
 
 export const SET_TRIPS = 'SET_TRIPS';
@@ -55,7 +55,7 @@ export const fetchTripsRequest = () => {
 
         for (const key in data) {
           loadedTrips.push(
-            Trip({
+            TripModel({
               accommodation: data[key].accommodation,
               budget: data[key].budget,
               cityCode: data[key].cityCode,
@@ -129,7 +129,7 @@ export const createTripRequest = (destination, startDate, endDate, budget) => {
       })
       .then((res) => res.data)
       .then((data) => {
-        const newTrip = Trip({
+        const newTrip = TripModel({
           accommodation,
           budget,
           destination,
@@ -186,7 +186,7 @@ export const editTripRequest = (
         transport,
       })
       .then(() => {
-        const updatedTrip = Trip({
+        const updatedTrip = TripModel({
           accommodation,
           budget,
           destination,

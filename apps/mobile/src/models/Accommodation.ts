@@ -1,4 +1,4 @@
-interface AccommodationParams {
+interface AccommodationModelParams {
   id: string;
   amenities: string[];
   breakfast: boolean;
@@ -16,7 +16,7 @@ interface AccommodationParams {
   PDF: string;
 }
 
-const Accomodation = ({
+const AccomodationModel = ({
   id,
   amenities,
   breakfast,
@@ -32,7 +32,7 @@ const Accomodation = ({
   phone,
   reservationDetails,
   PDF,
-}: AccommodationParams) => ({
+}: AccommodationModelParams) => ({
   id,
   amenities,
   breakfast,
@@ -50,4 +50,4 @@ const Accomodation = ({
   PDF,
 });
 
-export default Accomodation;
+export default AccomodationModel;

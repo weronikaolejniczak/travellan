@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
 import Accommodation from 'models/Accommodation';
-import Accomodation from 'models/Accommodation';
+import AccomodationModel from 'models/Accommodation';
 
 export const SET_ACCOMMODATION = 'SET_ACCOMMODATION';
 export const CREATE_ACCOMMODATION = 'CREATE_ACCOMMODATION';
@@ -72,7 +72,7 @@ export const fetchAccommodationRequest = (tripId: string) => {
         const loadedAccommodation = [];
         for (const key in accommodation) {
           loadedAccommodation.push(
-            Accomodation({
+            AccomodationModel({
               PDF: accommodation[key].PDF,
               amenities: accommodation[key].amenities,
               breakfast: accommodation[key].breakfast,

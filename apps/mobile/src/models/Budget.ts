@@ -7,7 +7,7 @@ interface HistoryItem {
   value: number;
 }
 
-interface BudgetParams {
+interface BudgetModelParams {
   id: string;
   value: number;
   currency?: string;
@@ -15,13 +15,13 @@ interface BudgetParams {
   defaultAccount: string;
 }
 
-const Budget = ({
+const BudgetModel = ({
   id,
   value,
   currency,
   history,
   defaultAccount,
-}: BudgetParams) => ({
+}: BudgetModelParams) => ({
   id,
   value,
   currency,
@@ -29,4 +29,4 @@ const Budget = ({
   defaultAccount,
 });
 
-export default Budget;
+export default BudgetModel;

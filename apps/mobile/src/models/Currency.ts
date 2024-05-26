@@ -1,11 +1,11 @@
-interface CurrencyParams {
+interface CurrencyModelParams {
   iso: string;
   name: string;
 }
 
-const Currency = ({ iso, name }: CurrencyParams) => ({
+const CurrencyModel = ({ iso, name }: CurrencyModelParams) => ({
   iso,
   name,
 });
 
-export default Currency;
+export default CurrencyModel;

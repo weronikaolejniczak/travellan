@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FIREBASE_URL } from 'react-native-config';
 
-import Budget from 'models/Budget';
+import BudgetModel from 'models/Budget';
 
 export const SET_BUDGET = 'SET_BUDGET';
 
@@ -27,7 +27,7 @@ export const fetchBudgetRequest = (tripId: string) => {
         const loadedBudget = [];
         for (const key in budget) {
           loadedBudget.push(
-            Budget({
+            BudgetModel({
               currency: budget[key].currency,
               defaultAccount: budget[key].defaultAccount,
               history: budget[key].history,

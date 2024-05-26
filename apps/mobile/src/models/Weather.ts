@@ -1,4 +1,4 @@
-interface WeatherParams {
+interface WeatherModelParams {
   cloudiness: number;
   date: Date;
   description: string;
@@ -18,7 +18,7 @@ interface WeatherParams {
   windSpeed: number;
 }
 
-const Weather = ({
+const WeatherModel = ({
   cloudiness,
   date,
   description,
@@ -36,7 +36,7 @@ const Weather = ({
   tempNight,
   tempNightFeelsLike,
   windSpeed,
-}: WeatherParams) => ({
+}: WeatherModelParams) => ({
   cloudiness,
   date,
   description,
@@ -56,4 +56,4 @@ const Weather = ({
   windSpeed,
 });
 
-export default Weather;
+export default WeatherModel;

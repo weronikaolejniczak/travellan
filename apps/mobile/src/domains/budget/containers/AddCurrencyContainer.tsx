@@ -5,7 +5,7 @@ import { patchBudgetRequest } from 'actions/budgetActions';
 import { BudgetPicker } from 'components';
 import { CURRENCIES } from 'data/Currencies';
 import { compareStrings, prepareValue } from 'helpers';
-import Budget from 'models/Budget';
+import BudgetModel from 'models/Budget';
 import { Button, ScrollView as Container } from 'utils';
 
 /* const incorrectCurrency =
@@ -53,7 +53,7 @@ const AddCurrencyContainer = ({ route, navigation }) => {
   const submitHandler = useCallback(async () => {
     setBudgetSubmitted(true);
     if (!budgetValueError && !currencyError) {
-      const newCurrency = Budget({
+      const newCurrency = BudgetModel({
         id: new Date().toString(),
         value: prepareValue(budgetValue),
         currency:
