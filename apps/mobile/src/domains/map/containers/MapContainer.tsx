@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { patchMapRequest } from 'actions/mapActions';
-import PointOfInterest from 'models/PointOfInterest';
+import PointOfInterestModel from 'models/PointOfInterest';
 import fetchMapSearch from 'services/fetchMapSearch';
 import { Toolbar } from '../components';
 import { styles } from './MapContainerStyle';
@@ -151,22 +151,22 @@ const MapContainer = ({ route, navigation }) => {
       markers
         ? [
             ...markers,
-            new PointOfInterest(
-              new Date().getTime().toString(),
-              new Date().toString(),
+            PointOfInterestModel({
+              id: new Date().getTime().toString(),
+              key: new Date().toString(),
               latitude,
               longitude,
               title,
-            ),
+            }),
           ]
         : [
-            new PointOfInterest(
-              new Date().getTime().toString(),
-              new Date().toString(),
+            PointOfInterestModel({
+              id: new Date().getTime().toString(),
+              key: new Date().toString(),
               latitude,
               longitude,
               title,
-            ),
+            }),
           ],
     );
   };

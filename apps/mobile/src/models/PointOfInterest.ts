@@ -1,11 +1,23 @@
-class PointOfInterest {
-  constructor(key, id, lat, lon, title) {
-    this.key = key;
-    this.id = id;
-    this.lat = lat;
-    this.lon = lon;
-    this.title = title;
-  }
+interface PointOfInterestModelParams {
+  id: string;
+  key: string;
+  latitude: number;
+  longitude: number;
+  title: string;
 }
 
-export default PointOfInterest;
+const PointOfInterestModel = ({
+  id,
+  key,
+  latitude,
+  longitude,
+  title,
+}: PointOfInterestModelParams) => ({
+  id,
+  key,
+  latitude,
+  longitude,
+  title,
+});
+
+export default PointOfInterestModel;
